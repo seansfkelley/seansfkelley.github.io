@@ -83,7 +83,7 @@ The best technique I've found still requires some patience and luck, unfortunate
 
 ![img-6](/assets/oculus-teardown/img-6-3665-annotated.jpg)
 
-Once you've separated the first tab, you'll gain some flexibility to move the plsatic ring around. The next snaps are considerably easier and can be done by inserting the screwdriver between the lens and plastic ring, then sliding them around to pop off the tabs, much like you did when separating the shroud from the outer housing.
+Once you've separated the first tab, you'll gain some flexibility to move the plastic ring around. The next snaps are considerably easier and can be done by inserting the screwdriver between the lens and plastic ring, then sliding them around to pop off the tabs, much like you did when separating the shroud from the outer housing.
 
 ![img-7](/assets/oculus-teardown/img-7-3668.jpg)
 
@@ -91,28 +91,29 @@ After you've done one eye, you should have considerable leeway to move your tool
 
 ### 3. IPD Slider
 
-Before removing the outer housing, the **IPD slider** on the bottom right has to be taken out. It's held in **1x T4 screw**, so remove that first.
+Before removing the outer housing, the **IPD slider** on the bottom right has to be taken out. It's held in by **1x T4 screw**, so remove that first.
 
-(image)
+![img-8](/assets/oculus-teardown/img-8-3672-annotated.jpg)
 
 Next, release the front two plastic snaps holding the **outer ring** using the small flathead screwdriver or flathead screwdriver by pressing them in and down.
 
-(image)
+![img-9](/assets/oculus-teardown/img-9-combined.jpg)
 
-Once you'd pushed the snaps in, you should see a small crack open up between the main housing and the outer slider ring.
+Once you'd pushed the snaps in, you should see a small crack open up between the main housing and the outer slider ring. Put your flathead screwdriver in the crack between those two parts and slowly pry off the outer ring. It's held in by inaccessible snaps on the back of the assembly, so you're trying to tilt it until those snaps simply pull away from their anchors.
 
-(image)
-
-// TODO: Can this be stylized to be red and annoying?
+{% include alert.html content="
 Warning! Underneath the switch's thumb there are two tiny springs. Make sure you work methodically and/or in an enclosed space to prevent them flying off into the distance.
+" %}
 
-Put your flathead screwdriver in the crack between those two parts and slowly pry off the outer ring. It's held in by inaccessible snaps on the back of the assembly, so you're trying to tilt it until those snaps simply pull away from their anchors.
+![img-10](/assets/oculus-teardown/img-10-3693.jpg)
 
-(image)
+At this point, the **slider thumb** and **springs** have probably launched themselves at you, so put them aside.
 
-At this point, the **slider thumb** and **springs** have probably launched themselves at you, so put them aside. Move the slider all the way to the left (this is the resting position for the lens mount), then pop out the **rack gear** with a flathead screwdriver or your fingers.
+{% include captioned-image.html url="/assets/oculus-teardown/img-11-3695.jpg" description="I made the picture tiny because these are tiny. It's amazing I never lost any of these." %}
 
-(image)
+Lastly, pop out the **rack gear** with a flathead screwdriver or your fingers.
+
+![img-11](/assets/oculus-teardown/img-12-3698.jpg)
 
 ### 4. Outer Housing
 
