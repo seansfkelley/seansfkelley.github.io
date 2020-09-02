@@ -6,7 +6,7 @@ date: 2020-08-31 23:00:00 -0700
 
 During quarantine, I came into possession of a used Oculus Rift CV1 setup (that's the original one) that had an infuriating tendency to disconnect if you moved your head around too fast. After some basic debugging techniques (ahem, turning it off and on again), I determined that there was a hardware issue in the headset and, since the CV1 has been discontinued for some time, I would have to fix it myself.
 
-I was disappointed to find that there were no good teardown guides for the CV1. iFixit's guide was light on details and incomplete. The best content I could find was a series of unedited (and, therefore, lengthy) YouTube videos that ended up only being useful for the first couple steps.\*
+I was disappointed to find that there were no good teardown guides for the CV1. iFixit's guide was light on details and incomplete. The best content I could find was a series of unedited (and, therefore, lengthy) YouTube videos that ended up only being useful for the first couple steps.[^1]
 
 Fast forward through two more pre-broken headsets from eBay and a handful of individually-purchased components, some of which I personally broke and some of which were sold as working but weren't, and I've gotten pretty good at disassembling and reassembling CV1s. Unfortunately, I only ended up with the equivalent of my first headset (complete with hardware flaw) and one other frankensteined, but functioning, headset, so I wouldn't say it was worth the money. But at least it was a fun quarantine project, and I hope someone finds this guide useful if their need to do their own CV1 surgery!
 
@@ -128,7 +128,7 @@ The shoulder screw is tucked away such that it is only accessible using a narrow
 
 (image)
 
-The other small Phillips head is hidden behind the sliding lenses. If there isn't enough friction in the system to keep the lenses in place, you might have to hold them apart with your free hand.\*
+The other small Phillips head is hidden behind the sliding lenses. If there isn't enough friction in the system to keep the lenses in place, you might have to hold them apart with your free hand.[^2]
 
 Once all the screws are out, it's time to separate the outer housing from the front of the headset.
 
@@ -166,7 +166,7 @@ The breakout board will flop around a bit for the rest of this step, so be caref
 
 Warning! The next step is by far the riskiest when it comes to breaking your headset unintentionally.
 
-Once the breakout board is free, you'll want to separate the **main board** and the **main board support**. The board and its support have a tendency to flop around too once their screws are removed, so be very careful, because there is a _tiny_ plastic handle on the IPD sensor attached to the board that lodges into the right lens housing. It is _very_ easy to snap the handle off and permanently break your IPD sensor.\* Also, there are more ribbon cables tethering the main board to rest of the headset that you have to be careful not to break.
+Once the breakout board is free, you'll want to separate the **main board** and the **main board support**. The board and its support have a tendency to flop around too once their screws are removed, so be very careful, because there is a _tiny_ plastic handle on the IPD sensor attached to the board that lodges into the right lens housing. It is _very_ easy to snap the handle off and permanently break your IPD sensor.[^3] Also, there are more ribbon cables tethering the main board to rest of the headset that you have to be careful not to break.
 
 First, make sure the lenses are as close to each other as possible. As noted before, this is the resting position for the lens mount, so moving the lenses first will prevent any abrupt sliding that could break the IPD sensor.
 
@@ -182,8 +182,6 @@ Once the screws are removed, carefully move the main board and its support strai
 
 ### 6. Main Board (again) and Other PCBs
 
-\* Also, I don't like guides in video form because they're a pain in the ass to navigate as a user. That's why this one is pictures!
-
-\* In earlier teardowns I tried to remove this screw before the IPD slider, which you can do, but I found it was easier to keep track of what I was doing if I didn't split the outer housing screws across two chunks of work.
-
-\* _How to footnote?_ Trust me, I did it twice.
+[^1]: Also, I don't like guides in video form because they're a pain in the ass to navigate as a user. That's why this one is pictures!
+[^2]: In earlier teardowns I tried to remove this screw before the IPD slider, which you can do, but I found it was easier to keep track of what I was doing if I didn't split the outer housing screws across two chunks of work.
+[^3]: Trust me, I did it twice.
