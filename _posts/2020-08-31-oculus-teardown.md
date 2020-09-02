@@ -14,7 +14,7 @@ Fast forward through two more pre-broken headsets from eBay and a handful of ind
 
 - T4 Torx screwdriver
 - #0 Phillips head screwdriver with a narrow shaft 3" or longer
-- medium-sized flathead screwdriver or spudger
+- medium-large flathead screwdriver or spudger
 - small flathead screwdriver, ~1/16" wide
 
 The Phillips head will have to fit in a very narrow space, so most replaceable-bit screwdrivers with a bulky socket for the bits won't fit.
@@ -211,15 +211,35 @@ Put the PCBs aside, and unthread the ribbon cables from the main board support. 
 
 TODO: Include image here calling out how the ribbon cables are threaded.
 
-## 7. Display Assemblies
+## 7. Lens Assemblies
+
+The final step is to separate the lens assemblies from the front of the headset. There are **4x small Phillips head screws** holding the displays in, two on each side.
+
+![img-29](/assets/oculus-teardown/img-29-3727-annotated.jpg)
+
+The lens assemblies are also held in by metal clips. Pry them away while lifting the assembly slightly.
+
+![img-30](/assets/oculus-teardown/img-30-3729.jpg)
 
 ## 8. Wrap-up
 
 ...and here you have it, the fully-disassembled CV1!
 
-(image)
+![img-31](/assets/oculus-teardown/img-31-3733.jpg)
 
-If you're curious, I used [Skitch](https://evernote.com/products/skitch) to produce the annotated images.
+As usual for teardowns, reassembly is just following the instructions in reverse.
+
+That's all, folks! I hope you found this interesting and/or helpful. If you're curious, I used [Skitch](https://evernote.com/products/skitch) to annotate some of the images.
+
+## Some Thoughts on Repairs
+
+While I was at first put off by the difficulty of removing the shroud, the CV1 is actually quite repairable. The real difficulty lies in finding replacement parts, since it's discontinued.
+
+I had surprisingly good luck buying headsets and parts off of eBay. There were a number of broken headsets that just had a single display that was out for a pretty low price. There were also a handful of sellers with individual parts -- boards, mostly -- that were more hit-and-miss. I once blindly bought a main board that turned out to have a broken HDMI connector and/or chip, but within minutes of finding that out I had ripped off the entire IPD sensor (not just the plastic handle -- all of it) so I didn't bother to try to return it. Oops. Still, three out of four sales were exactly as broken as advertised.
+
+As for my own headset, the issue turned out to be a faulty main board. Twisting or bending the board slightly causes it to lose power, so I guess that when I swing my head around too fast the acceleration of the board against the headset body causes it to bend ever so slightly and drop out. Very, very annoying.
+
+## Footnotes
 
 [^1]: Also, I don't like guides in video form because they're a pain in the ass to navigate. That's why this one is pictures!
 [^2]: In earlier teardowns I tried to remove this screw before the IPD slider, which you can do, but I found it was easier to keep track of what I was doing if I didn't split the outer housing screws across two chunks of work.
