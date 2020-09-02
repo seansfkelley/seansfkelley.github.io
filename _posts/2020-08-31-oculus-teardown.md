@@ -161,27 +161,35 @@ Now the outer housing should be free, so put it aside.
 
 Once the outer housing is separated, you have a lot more room to work.
 
-First, release the **breakout board** by taking out the **2x T4 screws**.
+First, release the **breakout board** by taking out the **2x T4 screws** and popping off the last ribbon cable connector (if you haven't already).
 
-(image)
+![img-20](/assets/oculus-teardown/img-20-3715-annotated.jpg)
 
 The breakout board will flop around a bit for the rest of this step, so be careful. I've found that removing it first is ultimately easier and less dangerous to the boards.
 
+{% include alert.html content="
 Warning! The next step is by far the riskiest when it comes to breaking your headset unintentionally.
+" %}
 
-Once the breakout board is free, you'll want to separate the **main board** and the **main board support**. The board and its support have a tendency to flop around too once their screws are removed, so be very careful, because there is a _tiny_ plastic handle on the IPD sensor attached to the board that lodges into the right lens housing. It is _very_ easy to snap the handle off and permanently break your IPD sensor.[^3] Also, there are more ribbon cables tethering the main board to rest of the headset that you have to be careful not to break.
+Once the breakout board is free, you'll want to separate the **main board** and the **main board support**. The board and its support have a tendency to flop around too once their screws are removed, so be very careful, because there is a _tiny_ plastic handle on the IPD sensor attached to the board that lodges into a lot on the right lens housing. It is _very_ easy to snap the handle off and permanently break your IPD sensor.[^3] Also, there are more ribbon cables tethering the main board to rest of the headset that you have to be careful not to break.
 
-First, make sure the lenses are as close to each other as possible. As noted before, this is the resting position for the lens mount, so moving the lenses first will prevent any abrupt sliding that could break the IPD sensor.
+The following picture shows the IPD sensor handle and the slot on the lens housing after the parts have been separated.
+
+![img-21](/assets/oculus-teardown/img-21-3827-annotated.jpg)
+
+First, make sure the lenses are as close to each other as possible. This is the resting position for the lens mount, so moving the lenses first will prevent any abrupt sliding that could break the IPD sensor.
 
 Then, note that there are two plastic pegs that help align the main board support with the front of the headset.
 
-(image)
+TODO: One image that shows the pegs.
 
 While stabilizing the main board and its support with one hand by relying on these pegs, remove the **2x small Phillips head screws** holding it in place.
 
-(image)
+TODO: Same image, but highlights the screws instead of the pegs.
 
 Once the screws are removed, carefully move the main board and its support straight up a little bit and then tilt it away from the headset. It's attached by two large ribbon cables that you can't yet remove.
+
+![img-22](/assets/oculus-teardown/img-22-3718.jpg)
 
 ### 6. Main Board (again) and Other PCBs
 
