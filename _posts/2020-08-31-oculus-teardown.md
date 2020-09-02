@@ -189,10 +189,40 @@ TODO: Same image, but highlights the screws instead of the pegs.
 
 Once the screws are removed, carefully move the main board and its support straight up a little bit and then tilt it away from the headset. It's attached by two large ribbon cables that you can't yet remove.
 
-![img-22](/assets/oculus-teardown/img-22-3718.jpg)
+![img-24](/assets/oculus-teardown/img-24-3718.jpg)
 
 ### 6. Main Board (again) and Other PCBs
 
-[^1]: Also, I don't like guides in video form because they're a pain in the ass to navigate as a user. That's why this one is pictures!
+The **main board** is attached to the plastic **main board support** by **5x T4 screws** and some plastic clips and pegs. The **proximity board** is attached to the main board by a ribbon cable and the main board support by **1x T4 screw**. Remove all six screws. The proximity board will flop a bit, but it's only twice the size of its own ribbon cable so it won't move very far or fast.
+
+![img-25](/assets/oculus-teardown/img-25-3718-annotated.jpg)
+
+Once all the screws have been removed, carefully tilt and maneuver the main board out of its plastic clips and pegs. There is one of each on each end of the board.
+
+TODO: Include an image of the pegs and clips.
+
+Once the main board is no longer attached to its support, pull it out slightly to expose the ribbon cable connectors.
+
+Pop off all the connectors on the main board with your fingernails: two large ribbon cables connected to the display, one small ribbon cable going to the breakout board, and the gold-plated antenna connector on the right side. (As far as I can tell, the Touch controllers use Bluetooth to talk to the headset, and the headset forwards control inputs over USB to the computer.[^4])
+
+![img-27](/assets/oculus-teardown/img-27-3723-annotated.jpg)
+
+Put the PCBs aside, and unthread the ribbon cables from the main board support. Take note of the way that they pass through the support; you'll want to make sure that when you reassemble the headset that you do it the same way. If you don't, you risk pinching/breaking the cables or even causing the displays to get caught when adjusting the IPD.[^5]
+
+TODO: Include image here calling out how the ribbon cables are threaded.
+
+## 7. Display Assemblies
+
+## 8. Wrap-up
+
+...and here you have it, the fully-disassembled CV1!
+
+(image)
+
+If you're curious, I used [Skitch](https://evernote.com/products/skitch) to produce the annotated images.
+
+[^1]: Also, I don't like guides in video form because they're a pain in the ass to navigate. That's why this one is pictures!
 [^2]: In earlier teardowns I tried to remove this screw before the IPD slider, which you can do, but I found it was easier to keep track of what I was doing if I didn't split the outer housing screws across two chunks of work.
 [^3]: Trust me, I did it twice.
+[^4]: I found this out by accident. I was testing a mostly-disassembled headset by plugging just the displays into the board without any housing or anything else, and had a hell of a time getting the controllers to sync. As soon as I plugged the antenna back in, all my problems were solved. Some futher investigation revealed a Bluetooth chip on the main board, and my computer doesn't have Bluetooth, so there you have it.
+[^5]: These ribbon cables are covered in little obstructive components and are surprisingly tough. I once put one in improperly and it would cause the display to catch and then suddenly snap into position when adjusting the IPD.
