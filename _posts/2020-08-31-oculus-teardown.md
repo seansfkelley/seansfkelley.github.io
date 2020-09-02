@@ -14,8 +14,8 @@ Fast forward through two more pre-broken headsets from eBay and a handful of ind
 
 - T4 Torx screwdriver
 - #0 Phillips head screwdriver with a narrow shaft 3" or longer
-- plastic spudger or medium-sized flathead screwdriver
-- small plastic spudger or small flathead screwdriver, ~1/16" wide
+- medium-sized flathead screwdriver or spudger
+- small flathead screwdriver, ~1/16" wide
 
 The Phillips head will have to fit in a very narrow space, so most replaceable-bit screwdrivers with a bulky socket for the bits won't fit.
 
@@ -61,27 +61,33 @@ Removing the flexible **fabric shroud** is one of the more stressful parts of th
 
 First, remove the **6x T4 screws**.
 
-(image)
+![img-1](/assets/oculus-teardown/img-1-3805-annotated.jpg)
 
-Next, you have to pry the fabric shroud away from the lenses. Each eye hole in the should has a plastic ring with three snaps that attach to three anchors on the lens housing. The best technique I've found for separating the snaps is to put the spudger in between the lens and the plastic ring halfway between two anchor points.
+Next, you want to separate the tabs on the left and right sides of the shroud from the outer housing. Here's a view of what the tabs look like once you've separated the two components.
 
-(image)
+![img-2](/assets/oculus-teardown/img-2-combined.jpg)
 
-Then, without removing the spudger from between the two pieces, slide it over towards one of the anchor points.
+There's more than just these tabs holding the shroud in place, so don't pull too hard yet. With your flathead screwdriver, you should be able to just insert it between the two parts, slide it over towards the tabs, and force the components apart.
 
-(image)
+![img-3](/assets/oculus-teardown/img-3-combined.jpg)
 
-The goal is to pull the entire plastic ring far enough away from the lens housing that it releases from the anchor. Try to avoid levering the ring too much -- you should be able to get enough clearance simply by sliding the spudger over and getting it nearby the anchor without having to rock it back and forth.
+Next, you have to pry the fabric shroud away from the lenses. Each eye hole in the shroud has a plastic ring with three snaps that attach to three anchors on the lens housing. Here's what the tabs look like from the inside.
 
-(image?)
+![img-4](/assets/oculus-teardown/img-4-combined.jpg)
 
-You can use the following pictures for reference to know where the snaps and anchors are.
+The tab locations are mirrored for the left and right lenses. Here's a reference for where the left lens tabs can be found.
 
-(image)
+![img-5](/assets/oculus-teardown/img-5-3805-annotated.jpg)
 
-I also had some luck getting a fingernail or spudger underneath the plastic snap _through_ the fabric with no apparent lasting damage, but it was laborious and seemed prone to tearing the fabric. I wouldn't recommend it, but you can try it if you aren't having luck with the prying technique.
+The best technique I've found still requires some patience and luck, unfortunately. The tab on the bottom side of the lens can be reached with the flathead screwdriver if you pry apart the shroud's plastic frame and the outer housing. Photographing the moment of release is difficult, so here's what it looks like right after the tab has been separated.
 
-After you've done one eye, you should have considerable leeway to move your tools around and the second eye should come off no problem.
+![img-6](/assets/oculus-teardown/img-6-3665-annotated.jpg)
+
+Once you've separated the first tab, you'll gain some flexibility to move the plsatic ring around. The next snaps are considerably easier and can be done by inserting the screwdriver between the lens and plastic ring, then sliding them around to pop off the tabs, much like you did when separating the shroud from the outer housing.
+
+![img-7](/assets/oculus-teardown/img-7-3668.jpg)
+
+After you've done one eye, you should have considerable leeway to move your tools around and the second eye should come off much more easily.
 
 ### 3. IPD Slider
 
@@ -89,7 +95,7 @@ Before removing the outer housing, the **IPD slider** on the bottom right has to
 
 (image)
 
-Next, release the front two plastic snaps holding the outer ring using the small spudger or flathead screwdriver by pressing them in and down.
+Next, release the front two plastic snaps holding the **outer ring** using the small flathead screwdriver or flathead screwdriver by pressing them in and down.
 
 (image)
 
@@ -100,11 +106,11 @@ Once you'd pushed the snaps in, you should see a small crack open up between the
 // TODO: Can this be stylized to be red and annoying?
 Warning! Underneath the switch's thumb there are two tiny springs. Make sure you work methodically and/or in an enclosed space to prevent them flying off into the distance.
 
-Put your spudger in the crack between those two parts and slowly pry off the outer ring. It's held in by inaccessible snaps on the back of the assembly, so you're trying to tilt it until those snaps simply pull away from their anchors.
+Put your flathead screwdriver in the crack between those two parts and slowly pry off the outer ring. It's held in by inaccessible snaps on the back of the assembly, so you're trying to tilt it until those snaps simply pull away from their anchors.
 
 (image)
 
-At this point, the slider thumb and springs have probably launched themselves at you, so put them aside. Move the slider all the way to the left (this is the resting position for the lens mount), then pop out the rack gear with a spudger or your fingers.
+At this point, the **slider thumb** and **springs** have probably launched themselves at you, so put them aside. Move the slider all the way to the left (this is the resting position for the lens mount), then pop out the **rack gear** with a flathead screwdriver or your fingers.
 
 (image)
 
@@ -122,19 +128,19 @@ The shoulder screw is tucked away such that it is only accessible using a narrow
 
 (image)
 
-The other small Phillips head is hidden behind the sliding lenses. If there isn't enough friction in the system to keep the lenses in place, you might have to hold them apart with your free hand. In earlier teardowns I tried to remove this screw before the IPD slider, which you can do, but I found it was easier to keep track of what I was doing if I didn't split the outer housing screws across two chunks of work.
+The other small Phillips head is hidden behind the sliding lenses. If there isn't enough friction in the system to keep the lenses in place, you might have to hold them apart with your free hand.\*
 
 Once all the screws are out, it's time to separate the outer housing from the front of the headset.
 
 Warning! The outer housing is connected to the front of the headset by several small ribbon cables. Don't rush this part.
 
-To initially separate the outer housing, bend the top middle up about 1/4" to allow the bracket that was holding the shoulder screw to clear the main board support.
+To initially separate the outer housing, bend the top middle of the housing up about 1/4" to allow the bracket that was holding the shoulder screw to clear the main board support.
 
 (image?)
 
-This should allow you to make a 1/4-1/2" gap between the front of the headset and the outer housing by pulling it straight away from the front of the headset.
+Pull the outer housing straight out from the front of the headset until you've got a 1/4-1/2" gap between the two. Don't pull it all the way!
 
-Then, slowly tilt the outer housing towards the right side until it's lying flat on the work surface. There are several ribbon cables that run along the right side and will keep the outer housing tethered to the front for the moment. I suggest you find something to lay on the now-flat headband to keep the outer housing from sliding around and endangering the cables.
+Then, slowly tilt the outer housing towards the right side until it's lying flat on the work surface. There are several ribbon cables that run along the right side and will keep the outer housing tethered to the front for the moment. I suggest you find something to lay on the now-flat headband to keep the outer housing from falling over and twisting the cables.
 
 The small PCB on the right side that terminates the ribbon cables coming from the outer housing is the breakout board. The ribbon cables are held against it with a small metal brace.
 
@@ -142,7 +148,7 @@ Remove the **2x small Phillips head screws** holding the brace in place.
 
 (image)
 
-Then, pop the ribbon cable connections off with a plastic spudger or your fingernails. I don't suggest using a screwdriver for this step.
+Then, pop the ribbon cable connections off with a plastic flathead screwdriver or your fingernails. I don't suggest using a screwdriver for this step.
 
 (image)
 
@@ -177,5 +183,7 @@ Once the screws are removed, carefully move the main board and its support strai
 ### 6. Main Board (again) and Other PCBs
 
 \* Also, I don't like guides in video form because they're a pain in the ass to navigate as a user. That's why this one is pictures!
+
+\* In earlier teardowns I tried to remove this screw before the IPD slider, which you can do, but I found it was easier to keep track of what I was doing if I didn't split the outer housing screws across two chunks of work.
 
 \* _How to footnote?_ Trust me, I did it twice.

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+# https://stackoverflow.com/questions/59895/how-to-get-the-source-directory-of-a-bash-script-from-within-the-script-itself
+cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1
+
+rm -rf stripped converted
+mkdir stripped converted
+
+for img in *.HEIC; do
+  # This stripping uncompresses and recompresses the image, but whatever, they don't need to be photo quality.
+  convert "$img" -strip "stripped/$img"
+  convert "$img" -geometry 1024x -strip "converted/$(echo "$img" | sed -E -e 's/HEIC/jpg/g')"
+done
