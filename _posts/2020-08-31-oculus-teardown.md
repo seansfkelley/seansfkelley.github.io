@@ -47,7 +47,7 @@ Ignoring the parts that can be removed without any tools, these are the parts yo
 
 ## Step-by-step Teardown
 
-I've torn down headsets half a dozen times following these instructions, but keep in mind that I am not an expert and if you aren't careful you may damage your headset. Proceed with caution!
+I've torn down headsets half a dozen times following these instructions, but keep in mind that I am not an expert and if you aren't careful you may damage your headset. **Proceed with caution!**
 
 I strongly suggest that you read each section in its entirety before performing the steps there. This way you'll know what the end goal is and can set up your light source/tools/workspace for best effect.
 
@@ -57,7 +57,7 @@ Before getting into the teardown proper, start by removing all the extranous par
 
 ### 2. Face Shroud
 
-Removing the flexible **fabric shroud** is one of the more stressful parts of the process, because you're doing it almost totally blind and it requires a good amount of prying.
+Removing the flexible **fabric shroud** is, right out the gate, one of the more stressful parts of the process, because you're doing it almost totally blind and it requires a good amount of prying that makes you feel like you're about to break the headset.
 
 First, remove the **6x T4 screws**.
 
@@ -73,7 +73,7 @@ There's more than just these tabs holding the shroud in place, so don't pull too
 
 Next, you have to pry the fabric shroud away from the lenses. Each eye hole in the shroud has a plastic ring with three snaps that attach to three anchors on the lens housing. Here's what the tabs look like from the inside.
 
-![img-4](/assets/oculus-teardown/img-4-combined.jpg)
+![img-4](/assets/oculus-teardown/img-4-combined-annotated.jpg)
 
 The tab locations are mirrored for the left and right lenses. Here's a reference for where the left lens tabs can be found.
 
@@ -83,7 +83,7 @@ The best technique I've found still requires some patience and luck, unfortunate
 
 ![img-6](/assets/oculus-teardown/img-6-3665-annotated.jpg)
 
-Once you've separated the first tab, you'll gain some flexibility to move the plastic ring around. The next snaps are considerably easier and can be done by inserting the screwdriver between the lens and plastic ring, then sliding them around to pop off the tabs, much like you did when separating the shroud from the outer housing.
+Once you've separated the first tab, you'll gain some flexibility to move the plastic ring around. The next snaps are much easier and can be done by inserting the screwdriver between the lens and plastic ring, then sliding them around to pop off the tabs, much like you did when separating the shroud from the outer housing.
 
 ![img-7](/assets/oculus-teardown/img-7-3668.jpg)
 
@@ -99,10 +99,10 @@ Next, release the front two plastic snaps holding the **outer ring** using the s
 
 ![img-9](/assets/oculus-teardown/img-9-combined.jpg)
 
-Once you'd pushed the snaps in, you should see a small crack open up between the main housing and the outer slider ring. Put your flathead screwdriver in the crack between those two parts and slowly pry off the outer ring. It's held in by inaccessible snaps on the back of the assembly, so you're trying to tilt it until those snaps simply pull away from their anchors.
+Once you've pushed the snaps in, you should see a small crack open up between the main housing and the outer slider ring. Put your flathead screwdriver in the crack between those two parts and slowly pry off the outer ring. It's held in by inaccessible snaps on the back of the assembly, so you're trying to tilt it until those snaps simply pull away from their anchors.
 
 {% include alert.html content="
-Warning! Underneath the switch's thumb there are two tiny springs. Make sure you work methodically and/or in an enclosed space to prevent them flying off into the distance.
+Warning! Underneath the switch's thumb there are two tiny springs. Make sure you work slowly and/or in an enclosed space to prevent them flying off into the distance.
 " %}
 
 ![img-10](/assets/oculus-teardown/img-10-3693.jpg)
@@ -123,7 +123,7 @@ The following image shows the location of **2x T4 screws**, **2x small Phillips 
 
 ![img-13](/assets/oculus-teardown/img-13-3673-annotated.jpg)
 
-There are two screws here that are not obvious to remove. The easier of the two is another **1x small Phillips head screw** hiding under the sliding lenses. If there isn't enough friction in the system to keep the lenses in place, you might have to hold them apart with your free hand.[^2]
+There are two more screws here that are not obvious to find. The easier of the two is another **1x small Phillips head screw** hiding under the sliding lenses. If there isn't enough friction in the system to keep the lenses in place, you might have to hold them apart with your free hand.[^2]
 
 ![img-14](/assets/oculus-teardown/img-14-3674-annotated.jpg)
 
@@ -147,7 +147,7 @@ Pull the outer housing straight out from the front of the headset until you've g
 
 ![img-17](/assets/oculus-teardown/img-17-3700.jpg)
 
-Lay the headset's top flat on the work surface. Turn its right side towards you, where you will see a small metal **ribbon cable brace**. This brace holds the ribbon cables ends against a PCB while you flail wildly playing VR. Remove the **2x small Phillips head screws** holding the brace in place to expose the ribbon cable connectors.
+Lay the headset's top flat on the work surface. Turn its right side towards you, where you will see a small metal **ribbon cable brace**. This brace holds the ribbon cable connectors against a PCB while you flail wildly playing VR. Remove the **2x small Phillips head screws** holding the brace in place to expose the ribbon cable connectors.
 
 ![img-18](/assets/oculus-teardown/img-18-3705-annotated.jpg)
 
@@ -171,9 +171,9 @@ The breakout board will flop around a bit for the rest of this step, so be caref
 Warning! The next step is by far the riskiest when it comes to breaking your headset unintentionally.
 " %}
 
-Once the breakout board is free, you'll want to separate the **main board** and the **main board support**. The board and its support have a tendency to flop around too once their screws are removed, so be very careful, because there is a _tiny_ plastic handle on the IPD sensor attached to the board that lodges into a lot on the right lens housing. It is _very_ easy to snap the handle off and permanently break your IPD sensor.[^3] Also, there are more ribbon cables tethering the main board to rest of the headset that you have to be careful not to break.
+Once the breakout board is free, you'll want to separate the **main board** and the **main board support**. The board and its support have a tendency to flop around too once their screws are removed, so be very careful, because there is a _tiny_ plastic handle on the IPD sensor attached to the board that lodges into a slot on the right lens housing. It is _very_ easy to snap the handle off and permanently break your IPD sensor.[^3] Also, there are more ribbon cables tethering the main board to rest of the headset that you have to be careful not to break.
 
-The following picture shows the IPD sensor handle and the slot on the lens housing after the parts have been separated.
+The following picture shows the IPD sensor handle and the slot on the right lens housing after the parts have been separated.
 
 ![img-21](/assets/oculus-teardown/img-21-3827-annotated.jpg)
 
@@ -197,17 +197,17 @@ The **main board** is attached to the plastic **main board support** by **5x T4 
 
 ![img-25](/assets/oculus-teardown/img-25-3718-annotated.jpg)
 
-Once all the screws have been removed, carefully tilt and maneuver the main board out of its plastic clips and pegs. There is one of each on each end of the board.
+Once all the screws have been removed, carefully tilt and maneuver the main board out of its plastic clips and pegs. There is one of each on each end of the board. I suggest you release the right side of the board first.
 
 TODO: Include an image of the pegs and clips.
 
 Once the main board is no longer attached to its support, pull it out slightly to expose the ribbon cable connectors.
 
-Pop off all the connectors on the main board with your fingernails: two large ribbon cables connected to the display, one small ribbon cable going to the breakout board, and the gold-plated antenna connector on the right side. (As far as I can tell, the Touch controllers use Bluetooth to talk to the headset, and the headset forwards control inputs over USB to the computer.[^4])
+Pop off all the connectors on the main board with your fingernails: two large ribbon cables connected to the display, one small ribbon cable going to the breakout board, and the gold-plated antenna connector on the right side.[^4]
 
 ![img-27](/assets/oculus-teardown/img-27-3723-annotated.jpg)
 
-Put the PCBs aside, and unthread the ribbon cables from the main board support. Take note of the way that they pass through the support; you'll want to make sure that when you reassemble the headset that you do it the same way. If you don't, you risk pinching/breaking the cables or even causing the displays to get caught when adjusting the IPD.[^5]
+Put the PCBs aside, and unthread the ribbon cables from the main board support. Take note of the way that they pass through the support; you'll want to make sure that when you reassemble the headset you do it the same way. If you don't, you risk pinching/breaking the cables or even causing the displays to get caught when adjusting the IPD.[^5]
 
 TODO: Include image here calling out how the ribbon cables are threaded.
 
@@ -235,14 +235,14 @@ That's all, folks! I hope you found this interesting and/or helpful. If you're c
 
 While I was at first put off by the difficulty of removing the shroud, the CV1 is actually quite repairable. The real difficulty lies in finding replacement parts, since it's discontinued.
 
-I had surprisingly good luck buying headsets and parts off of eBay. There were a number of broken headsets that just had a single display that was out for a pretty low price. There were also a handful of sellers with individual parts -- boards, mostly -- that were more hit-and-miss. I once blindly bought a main board that turned out to have a broken HDMI connector and/or chip, but within minutes of finding that out I had ripped off the entire IPD sensor (not just the plastic handle -- all of it) so I didn't bother to try to return it. Oops. Still, three out of four sales were exactly as broken as advertised.
+I had surprisingly good luck buying headsets and parts off of eBay. There were a number of broken headsets that just had a single display that wasn't working that you could get for a pretty low price. There were also a handful of sellers with individual parts -- boards, mostly -- that were more hit-and-miss. I once blindly bought a main board that turned out to have a broken HDMI connector and/or chip, but within minutes of finding that out I had ripped off the entire IPD sensor (not just the plastic handle -- all of it) so I didn't bother to try to return it. Oops. Still, three out of four sales were exactly as broken as advertised.
 
-As for my own headset, the issue turned out to be a faulty main board. Twisting or bending the board slightly causes it to lose power, so I guess that when I swing my head around too fast the acceleration of the board against the headset body causes it to bend ever so slightly and drop out. Very, very annoying.
+As for my own headset, the issue turned out to be a faulty main board. Twisting or bending the board slightly causes it to lose power, so I guess that when I swing my head around too fast the acceleration of the board against the headset body causes it to bend ever so slightly and drop out. Very, very annoying, and really destroys the immersion even in a relatively low-immersion game like Beat Saber.
 
 ## Footnotes
 
 [^1]: Also, I don't like guides in video form because they're a pain in the ass to navigate. That's why this one is pictures!
 [^2]: In earlier teardowns I tried to remove this screw before the IPD slider, which you can do, but I found it was easier to keep track of what I was doing if I didn't split the outer housing screws across two chunks of work.
 [^3]: Trust me, I did it twice.
-[^4]: I found this out by accident. I was testing a mostly-disassembled headset by plugging just the displays into the board without any housing or anything else, and had a hell of a time getting the controllers to sync. As soon as I plugged the antenna back in, all my problems were solved. Some futher investigation revealed a Bluetooth chip on the main board, and my computer doesn't have Bluetooth, so there you have it.
+[^4]: As far as I can tell, the Touch controllers use Bluetooth to talk to the headset, and the headset forwards control inputs over USB to the computer. I found this out by accident: I was testing a mostly-disassembled headset by plugging just the displays into the board without any housing or anything else, and had a hell of a time getting the controllers to sync. As soon as I plugged the antenna back in, all my problems were solved. Some futher investigation revealed a Bluetooth chip on the main board, and my computer doesn't have Bluetooth, so there you have it.
 [^5]: These ribbon cables are covered in little obstructive components and are surprisingly tough. I once put one in improperly and it would cause the display to catch and then suddenly snap into position when adjusting the IPD.
