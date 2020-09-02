@@ -113,45 +113,47 @@ At this point, the **slider thumb** and **springs** have probably launched thems
 
 Lastly, pop out the **rack gear** with a flathead screwdriver or your fingers.
 
-![img-11](/assets/oculus-teardown/img-12-3698.jpg)
+![img-12](/assets/oculus-teardown/img-12-3698.jpg)
 
 ### 4. Outer Housing
 
 The **outer housing** is attached to the front of the headset by a bunch of screws of all sizes.
 
-The following image shows the location of **2x T4 screws**, **3x small Phillips head screws**, **4x large Phillips head screws** and **1x Phillips head shoulder screw**.
+The following image shows the location of **2x T4 screws**, **2x small Phillips head screws** and **4x large Phillips head screws**. Remove all of these.
 
-(image)
+![img-13](/assets/oculus-teardown/img-13-3673-annotated.jpg)
 
-Of these screws, only the shoulder screw and one of the small Phillips head screws are a little tricky.
+There are two screws here that are not obvious to remove. The easier of the two is another **1x small Phillips head screw** hiding under the sliding lenses. If there isn't enough friction in the system to keep the lenses in place, you might have to hold them apart with your free hand.[^2]
 
-The shoulder screw is tucked away such that it is only accessible using a narrow-shaft Phillips head crossing right over the main board support. This is why replaceable-bit screwdrivers don't cut it!
+![img-14](/assets/oculus-teardown/img-14-3674-annotated.jpg)
 
-(image)
+There is also **1x Phillips head shoulder screw** tucked away such that it is only accessible using a narrow-shaft Phillips head crossing right over the main board support. This is why replaceable-bit screwdrivers don't cut it!
 
-The other small Phillips head is hidden behind the sliding lenses. If there isn't enough friction in the system to keep the lenses in place, you might have to hold them apart with your free hand.[^2]
+![img-15](/assets/oculus-teardown/img-15-combined-annotated.jpg)
 
 Once all the screws are out, it's time to separate the outer housing from the front of the headset.
 
+{% include alert.html content="
 Warning! The outer housing is connected to the front of the headset by several small ribbon cables. Don't rush this part.
+" %}
 
-To initially separate the outer housing, bend the top middle of the housing up about 1/4" to allow the bracket that was holding the shoulder screw to clear the main board support.
+To initially separate the outer housing, bend the top middle of the housing up about 3/16" to allow the bracket that was holding the shoulder screw to clear the main board support.
 
-(image?)
+TODO: Retake this image cause you can tell it's fake.
 
-Pull the outer housing straight out from the front of the headset until you've got a 1/4-1/2" gap between the two. Don't pull it all the way!
+![img-16](/assets/oculus-teardown/img-16-3826-annotated.jpg)
 
-Then, slowly tilt the outer housing towards the right side until it's lying flat on the work surface. There are several ribbon cables that run along the right side and will keep the outer housing tethered to the front for the moment. I suggest you find something to lay on the now-flat headband to keep the outer housing from falling over and twisting the cables.
+Pull the outer housing straight out from the front of the headset until you've got a 1/4-1/2" gap between the two. Don't pull it all the way! There are ribbon cables connecting the outer housing to the rest of the headset.
 
-The small PCB on the right side that terminates the ribbon cables coming from the outer housing is the breakout board. The ribbon cables are held against it with a small metal brace.
+![img-17](/assets/oculus-teardown/img-17-3700.jpg)
 
-Remove the **2x small Phillips head screws** holding the brace in place.
+Lay the headset's top flat on the work surface. Turn its right side towards you, where you will see a small metal **ribbon cable brace**. This brace holds the ribbon cables ends against a PCB while you flail wildly playing VR. Remove the **2x small Phillips head screws** holding the brace in place to expose the ribbon cable connectors.
 
-(image)
+![img-18](/assets/oculus-teardown/img-18-3705-annotated.jpg)
 
-Then, pop the ribbon cable connections off with a plastic flathead screwdriver or your fingernails. I don't suggest using a screwdriver for this step.
+Lastly, pop the ribbon cable connectors off by sticking your fingernail under their edges and giving them a little tug. They should come off with very little force and a satisfying pop. I don't suggest using a screwdriver for this step.
 
-(image)
+![img-19](/assets/oculus-teardown/img-19-3708.jpg)
 
 Now the outer housing should be free, so put it aside.
 
