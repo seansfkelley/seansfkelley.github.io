@@ -47,9 +47,9 @@ Ignoring the parts that can be removed without any tools, these are the parts yo
 
 ## Step-by-step Teardown
 
-I've torn down headsets half a dozen times following these instructions, but keep in mind that I am not an expert and if you aren't careful you may damage your headset. **Proceed with caution!**
+The next several sections are separated somewhat arbitrarily into sets of steps that felt like useful checkpoints. I suggest you skim each section before following the steps, just to get a feel for what you're about to do and to maybe help set up your light/tools/workspace for best effect.
 
-I strongly suggest that you read each section in its entirety before performing the steps there. This way you'll know what the end goal is and can set up your light source/tools/workspace for best effect.
+I've torn down headsets half a dozen times following these instructions, but keep in mind that I am not an expert and if you aren't careful you may damage your headset. I am not responsible for any such damage! With that disclaimer out of the way, let's get started!
 
 ### 1. Preliminaries
 
@@ -57,37 +57,51 @@ Before getting into the teardown proper, start by removing all the extranous par
 
 ### 2. Face Shroud
 
-Removing the flexible **fabric shroud** is, right out the gate, one of the more stressful parts of the process, because you're doing it almost totally blind and it requires a good amount of prying that makes you feel like you're about to break the headset.
+Removing the flexible **fabric shroud** is, right out the gate, one of the more stressful parts of the process, because you're doing it almost totally blind and it requires a good amount of prying that makes you feel like you're about to break the headset. The fabric is held in shape by an outer plastic frame, which is screwed into the outer housing of the headset.
 
 First, remove the **6x T4 screws**.
 
 ![img-1](/assets/oculus-teardown/img-1-3805-annotated.jpg)
 
-Next, you want to separate the tabs on the left and right sides of the shroud from the outer housing. Here's a view of what the tabs look like once you've separated the two components.
+Next, you have to separate the tabs that keep the left and right sides of the plastic frame attached to the outer housing.
 
-![img-2](/assets/oculus-teardown/img-2-combined.jpg)
+Insert your screwdriver between the plastic frame and the outer housing, without going too deep, and slide it along until it's at the far left (or far right) side of the headset. If you can pull the plastic frame ~1/4" away from the outer housing, you know you've separated the tabs. You can let the now-separated frame rest back against the outer housing; it doesn't tend to re-engage unless you push it.
 
-There's more than just these tabs holding the shroud in place, so don't pull too hard yet. With your flathead screwdriver, you should be able to just insert it between the two parts, slide it over towards the tabs, and force the components apart.
+{% include alert.html content="
+Warning! Keep your screwdriver head tilted away from the inside surface of the outer housing. Some infrared LEDs are adhered there and you don't want to disturb them.
+" %}
 
-![img-3](/assets/oculus-teardown/img-3-combined.jpg)
+{% include captioned-image.html
+url="/assets/oculus-teardown/img-2-combined.jpg"
+description="There will be plenty of jabs at the insides of expensive electronics with pointy metal sticks."
+%}
 
-Next, you have to pry the fabric shroud away from the lenses. Each eye hole in the shroud has a plastic ring with three snaps that attach to three anchors on the lens housing. Here's what the tabs look like from the inside.
+Next, you have to separate the fabric shroud from the lenses. Each eye hole in the shroud has a floating plastic ring attached to the fabric with three tabs that clip onto anchors on the lens housing. This picture is a view from the inside so you can see what you'll be blindly working with.
 
-![img-4](/assets/oculus-teardown/img-4-combined-annotated.jpg)
+{% include captioned-image.html
+url="/assets/oculus-teardown/img-4-combined-annotated.jpg"
+description="This isn't the view you'll have; it's from the future."
+%}
 
-The tab locations are mirrored for the left and right lenses. Here's a reference for where the left lens tabs can be found.
+This step is probably the one that most makes you feel like you're going to break the headset. It's also a pain to get a light into the right place to see what you're doing. It's the best technique I've found to do this, however.
 
-![img-5](/assets/oculus-teardown/img-5-3805-annotated.jpg)
-
-The best technique I've found still requires some patience and luck, unfortunately. The tab on the bottom side of the lens can be reached with the flathead screwdriver if you pry apart the shroud's plastic frame and the outer housing. Photographing the moment of release is difficult, so here's what it looks like right after the tab has been separated.
+The tab on the bottom side of the lens can be reached with the flathead screwdriver if you gently pull the shroud's plastic frame away from the outer housing of the headset. Photographing the moment of release is difficult, so here's what it looks like right after the tab has been separated. Note that the screwdriver is held at a shallow angle so it can get under the tab.
 
 ![img-6](/assets/oculus-teardown/img-6-3665-annotated.jpg)
 
-Once you've separated the first tab, you'll gain some flexibility to move the plastic ring around. The next snaps are much easier and can be done by inserting the screwdriver between the lens and plastic ring, then sliding them around to pop off the tabs, much like you did when separating the shroud from the outer housing.
+Once you've separated the first tab, you'll gain some flexibility to move the plastic ring up a little bit, which will help with the next two tabs. Here's a reference for where all three of the left lens tabs can be found. (The tab locations are mirrored for the left and right lenses.)
+
+![img-5](/assets/oculus-teardown/img-5-3805-annotated.jpg)
+
+Lightly tug on the ring to pull it away from the lens, and slot the screwdriver in the gap. Slide the screwdriver around the ring, which should pop off the remaining two tabs with not much effort.
 
 ![img-7](/assets/oculus-teardown/img-7-3668.jpg)
 
-After you've done one eye, you should have considerable leeway to move your tools around and the second eye should come off much more easily.
+After you've done one lens, you should be able to tug most of the shroud out at least 1/2". That will make it easier to maneuver your hands and screwdriver in order to repeat these steps for the other lens.
+
+When you've got them apart, your headset should look like this!
+
+![img-7a](/assets/oculus-teardown/img-7a-3835.jpg)
 
 ### 3. IPD Slider
 
@@ -95,11 +109,11 @@ Before removing the outer housing, the **IPD slider** on the bottom right has to
 
 ![img-8](/assets/oculus-teardown/img-8-3672-annotated.jpg)
 
-Next, release the front two plastic snaps holding the **outer ring** using the small flathead screwdriver or flathead screwdriver by pressing them in and down.
+Next, release the front two plastic snaps holding the **outer ring** using the small flathead screwdriver by pressing them in and down.
 
 ![img-9](/assets/oculus-teardown/img-9-combined.jpg)
 
-Once you've pushed the snaps in, you should see a small crack open up between the main housing and the outer slider ring. Put your flathead screwdriver in the crack between those two parts and slowly pry off the outer ring. It's held in by inaccessible snaps on the back of the assembly, so you're trying to tilt it until those snaps simply pull away from their anchors.
+Once you've pushed the snaps in, you should see a crack open up between the outer housing and the outer slider ring. Use your screwdriver to lever the ring away from the housing. It's held in by inaccessible snaps on the inside and back of the slider assembly, so you're trying to tilt it until those snaps simply pull away from their anchors.
 
 {% include alert.html content="
 Warning! Underneath the switch's thumb there are two tiny springs. Make sure you work slowly and/or in an enclosed space to prevent them flying off into the distance.
@@ -109,11 +123,20 @@ Warning! Underneath the switch's thumb there are two tiny springs. Make sure you
 
 At this point, the **slider thumb** and **springs** have probably launched themselves at you, so put them aside.
 
-{% include captioned-image.html url="/assets/oculus-teardown/img-11-3695.jpg" description="I made the picture tiny because these are tiny. It's amazing I never lost any of these." %}
+A note on reassembly: the slider thumb is asymmmetrical and only goes in one way.
+
+{% include captioned-image.html
+url="/assets/oculus-teardown/img-11-3695.jpg"
+description="I made the picture tiny because these are tiny. It's amazing I never lost any of these."
+%}
 
 Lastly, pop out the **rack gear** with a flathead screwdriver or your fingers.
 
+Another note on reassembly: make sure you place the rack gear so you get the full range of the slider.
+
 ![img-12](/assets/oculus-teardown/img-12-3698.jpg)
+
+TODO: Checkpoint image?
 
 ### 4. Outer Housing
 
@@ -145,17 +168,24 @@ TODO: Retake this image cause you can tell it's fake.
 
 Pull the outer housing straight out from the front of the headset until you've got a 1/4-1/2" gap between the two. Don't pull it all the way! There are ribbon cables connecting the outer housing to the rest of the headset.
 
+TODO: Retake this image because of the poor composition.
+
 ![img-17](/assets/oculus-teardown/img-17-3700.jpg)
 
-Lay the headset's top flat on the work surface. Turn its right side towards you, where you will see a small metal **ribbon cable brace**. This brace holds the ribbon cable connectors against a PCB while you flail wildly playing VR. Remove the **2x small Phillips head screws** holding the brace in place to expose the ribbon cable connectors.
+Lay the headset's top flat on the work surface. Turn its right side towards you, where you will see a small metal **ribbon cable brace**. Remove the **2x small Phillips head screws** holding the brace in place to expose the ribbon cable connectors.
 
-![img-18](/assets/oculus-teardown/img-18-3705-annotated.jpg)
+{% include captioned-image.html
+url="/assets/oculus-teardown/img-18-3705-annotated.jpg"
+description="This brace holds the ribbon cable connectors against a PCB while you accidentally punch yourself in the head trying to pull off those head crabs."
+%}
 
 Lastly, pop the ribbon cable connectors off by sticking your fingernail under their edges and giving them a little tug. They should come off with very little force and a satisfying pop. I don't suggest using a screwdriver for this step.
 
 ![img-19](/assets/oculus-teardown/img-19-3708.jpg)
 
 Now the outer housing should be free, so put it aside.
+
+TODO: Checkpoint image!
 
 ### 5. Main Board
 
