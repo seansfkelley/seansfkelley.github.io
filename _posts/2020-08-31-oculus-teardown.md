@@ -6,7 +6,7 @@ date: 2020-08-31 23:00:00 -0700
 
 During quarantine, I came into possession of a used Oculus Rift CV1 setup (that's the original one) that had an infuriating tendency to disconnect if you moved your head around too fast. After some basic debugging techniques (ahem, turning it off and on again), I determined that there was a hardware issue in the headset and, since the CV1 has been discontinued for some time, I would have to fix it myself.
 
-I was disappointed to find that there were no good teardown guides for repairing the CV1. [iFixit's guide](https://www.ifixit.com/Teardown/Oculus+Rift+CV1+Teardown/60612) was light on details you'd want for taking apart your own CV1. The best content I could find was a series of unedited (and, therefore, lengthy) YouTube videos that ended up only being useful for the first couple steps.[^1]
+I was disappointed to find that there were no good teardown guides for repairing the CV1. [iFixit's guide](https://www.ifixit.com/Teardown/Oculus+Rift+CV1+Teardown/60612) was light on details you'd want for taking apart your own CV1. The best content I could find was a [series of unedited (and, therefore, lengthy) YouTube videos](https://www.youtube.com/watch?v=l1kTD5qQ5Vo) that ended up only being useful for the first couple steps.[^1]
 
 Fast forward through two more pre-broken headsets from eBay and a handful of individually-purchased components, some of which I personally broke and some of which were sold as working but weren't, and I've gotten pretty good at disassembling and reassembling CV1s. Unfortunately, I only ended up with the equivalent of my first headset (complete with hardware flaw) and one other frankensteined, but functioning, headset, so I wouldn't say it was worth the money. But at least it was a fun quarantine project, and I hope someone finds this guide useful if their need to do their own CV1 surgery!
 
@@ -221,6 +221,8 @@ Once the screws are removed, carefully move the main board and its support strai
 
 ![img-24](/assets/oculus-teardown/img-24-3718.jpg)
 
+TODO: Checkpoint image!
+
 ### 6. Main Board (again) and Other PCBs
 
 The **main board** is attached to the plastic **main board support** by **5x T4 screws** and some plastic clips and pegs. The **proximity board** is attached to the main board by a ribbon cable and the main board support by **1x T4 screw**. Remove all six screws. The proximity board will flop a bit, but it's only twice the size of its own ribbon cable so it won't move very far or fast.
@@ -241,13 +243,15 @@ Put the PCBs aside, and unthread the ribbon cables from the main board support. 
 
 TODO: Include image here calling out how the ribbon cables are threaded.
 
+TODO: Checkpoint image!
+
 ## 7. Lens Assemblies
 
-The final step is to separate the lens assemblies from the front of the headset. There are **4x small Phillips head screws** holding the displays in, two on each side.
+The final step is to separate the lens assemblies from the front of the headset. There are **4x small Phillips head screws** holding the displays in, two on each side. Remove all four screws.
 
 ![img-29](/assets/oculus-teardown/img-29-3727-annotated.jpg)
 
-The lens assemblies are also held in by metal clips. Pry them away while lifting the assembly slightly.
+The lens assemblies are also held in by metal clips. Pry them away while lifting the assembly slightly away from the front of the headet.
 
 ![img-30](/assets/oculus-teardown/img-30-3729.jpg)
 
