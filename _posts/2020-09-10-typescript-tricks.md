@@ -8,6 +8,13 @@ I've been using TypeScript since about 1.8-ish (released early 2016), and in tha
 
 This post is a hodge-podge of tricks I've found to improve ergonomics or maintainability of code that's written types-first. That is, I usually try to specify problems entirely in types before writing any business logic around them.[^1] That way, I can make changes type-first, and if I've done my job right, the compiler will guide me to all the places I need to update or, in its own roundabout way via the error messages, tell me exactly what I have to write.
 
+## Table of Contents
+{:.no_toc}
+
+* TOC
+{:toc}
+
+
 ## Shadowing Types with Values
 
 ```ts
@@ -94,7 +101,7 @@ async function fetchUser(id: UserId) {
 
 [(Playground Link)](https://www.typescriptlang.org/play?#code/PTAEBEFMDMEsDtKgC4AskCMBOBDeATSfFATwAdIA6AKGXKQFUBnSLASWIF5QnksEA5qABkoAN6gA+pICuLdvgBCuAgC5QM+AGt4AewDu8UAF8A3NWohQAZV0BbJDOSwANrDqgHaXfiYAaDSZBFHRSCh5UHHwDYLIcZGRWeBoAY114XlBmVg5QbjFqUFArABV6UAEZHCxiaF0sCshEfhSePkEmGiLYJnUACgA3dV5+eAEASnUB0B6s+VzOAD4s6wBRACVJNnBJddWAcVWADUpE3kHxv0LisGscaCQUnEzoLHtG5thWkY6u0Gf+kM2qMJupsgo8ssCkVutBQH1wRxKD0LuNxNcYaAsJBkDIsEZps85jl8OZMcZQJAXCx0Ziimg3vpQIgmassG8sH0AERpGQuYh6ZCgNLwAasIXIXSBVigbZc8ZkmHGa7GK5FKwMDL3R7PIWvd4CJqsL7A37XTRMbUAQV68KBPzGk2JEKWoEJTGdHCuZgsVgA8vAXCR-i4XAZQGGosEcNKGnJo26cC4ZEgdAYjJLQBgkDG5DLtgFcGgZWg8P8sBh3LgsMGHQJOtRniR4K1oJoUs50qAHsgUqhwX1YPgwfN8GjoTdQJRp9RjEA)
 
-### Branded Types with Payloads
+## Branded Types with Payloads
 
 ```ts
 // Define a generic branded type.
@@ -303,7 +310,7 @@ const DEFAULT_MEDIA_BY_KIND: {
 
 Both `PropertyNamesOfType` and `DiscriminateUnion` crop up in every project at least once, but rarely more than that. The definitions are quite obtuse though, so I always find myself scrambling to dig through old projects to find the definitions before I forget what I was trying to write.
 
-## Libraries
+## Other Type Libraries
 
 There's a handful of libraries out there that can do some pretty neat stuff in in the type space. Here's a non-exhaustive list if you want to see more weird abuses of the type system in action.
 
@@ -314,6 +321,7 @@ There's a handful of libraries out there that can do some pretty neat stuff in i
 type-zoo is the one I use for production most frequently, because it has the tiny set of most-useful utilities I use most often.
 
 ## Footnotes
+{:.no_toc}
 
 [^1]: Here is the part where I mention the [Fred Brooks quote](https://en.wikiquote.org/wiki/Fred_Brooks) about flowcharts and tables.
 [^2]: Since [type-only imports](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-8.html#type-only-imports-and-export) were added, you can now separate the type from its const namespace if you so desire.
