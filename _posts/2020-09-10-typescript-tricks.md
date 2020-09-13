@@ -6,7 +6,7 @@ date: 2020-09-10 19:00:00 -0700
 
 I've been using TypeScript since about 1.8-ish (released early 2016), and in that time I've adopted a habit of trying to encode as much behavior as possible into the type system. After all, why think about writing code when I can tell TypeScript what kind of code I can write and it'll tell me how to do half of it? A few months ago I saw the phrase "type system maximalist" on either Hacker News or a blog linked from it, and since then I've used that phrase to describe myself.
 
-So without further ado, here are, in no particular order, a number of neat TypeScript tricks/patterns I've found or (rarely) invented over the years that just resonated with my type system maximalism.
+This post is a hodge-podge of tricks I've found to improve ergonomics or maintainability of code that's written types-first. That is, I usually try to specify problems entirely in types before writing any business logic around them.[^1] That way, I can make changes type-first, and if I've done my job right, the compiler will guide me to all the places I need to update or, in its own roundabout way via the error messages, tell me exactly what I have to write.
 
 ## Shadowing Types with Values
 
@@ -37,7 +37,7 @@ if (Foo.is(fooBar)) {
 
 [(Playground Link)](https://www.typescriptlang.org/play?#code/PTAEBEFMDMEsDtKgIagC4E8AOkA0oAbWAayVQFd5YB7edbJDa80Ad2XjXWsOTUgBOoACawAzgGMBsALYI+kAHQAoBPwHRkEpADFqPAN7LQoaPoBcoMWmnwA5gG5lAX2WrOgzdtAAhZEKMTACN-S2tbRxc3TBxQPWo-IQBeOP1QAB9ffydlEFAAQQIxHmEYBDJQCVprDi40HjEAC2RhalZ0ZrqGFSr4a1SeFMDQcUsACgA3S3jEgEpLCZGxAdAkgD5QSZRl+NnFMx4AQhT4cgICXBccvIAVRsg6JhYJDlByMSQ0e6tm1tZIYSgeDIGRkZaoGJkeCA1ATZAEchIMSyM5oDiQZhiAgYHrVLgHRLTfSJVagAymCygADkBypoGcOVg0E28UU4jGBP8s1mZOMlWq1AISgI1DsHOJ-n2+lmTmcQA)
 
-One of my favorite patterns for cleaning up the ergonomics around type definitions is to shadow them with "namespace" consts with the same name. In this way, you can associate "static" methods with the type, and make them almost[^1] inseparable from their type. In particular, I often use this for type guards, because I like the ergonomics of importing a union type along with the type guards that allow me to inspect it simultaneously.
+One of my favorite patterns for cleaning up the ergonomics around type definitions is to shadow them with "namespace" consts with the same name. In this way, you can associate "static" methods with the type, and make them almost[^2] inseparable from their type. In particular, I often use this for type guards, because I like the ergonomics of importing a union type along with the type guards that allow me to inspect it simultaneously.
 
 This is very similar to [how classes affect the type and value namespaces](https://www.typescriptlang.org/docs/handbook/declaration-merging.html#basic-concepts), though this technique can be applied to non-class types including unions, primitives and branded types (see below).
 
@@ -62,7 +62,7 @@ const anotherUserId: UserId = someId;
 
 Branded types are a well-known type trick, but I include them here because as far as I know they are, in their particulars, unique to TypeScript and they're the first type hack I ever came across, so I still have a soft spot for them.
 
-Branded types inject a splash of nominal typing into an otherwise structurally-typed language by abusing the notion of a structural type. In the example above, I define a `UserId` type that is a string with an additional, _mandatory_ (and that's important) field. But a value that actually matches this type is never constructed at runtime: it's only ever regular strings. The brand field exists only in the space of types, and creating an "instance" of a branded type is generally accomplished by a type assertion (or equivalent).[^2]
+Branded types inject a splash of nominal typing into an otherwise structurally-typed language by abusing the notion of a structural type. In the example above, I define a `UserId` type that is a string with an additional, _mandatory_ (and that's important) field. But a value that actually matches this type is never constructed at runtime: it's only ever regular strings. The brand field exists only in the space of types, and creating an "instance" of a branded type is generally accomplished by a type assertion (or equivalent).[^3]
 
 Once can build all kinds of niceties around branded types, especially if you combine it with shadowing (described above).
 
@@ -315,5 +315,6 @@ type-zoo is the one I use for production most frequently, because it has the tin
 
 ## Footnotes
 
-[^1]: Since [type-only imports](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-8.html#type-only-imports-and-export) were added, you can now separate the type from its const namespace if you so desire.
-[^2]: Equivalent might be typing the output of `JSON.parse`, or declaring the types of some API call going over the wire without runtime validating them.
+[^1]: Here is the part where I mention the [Fred Brooks quote](https://en.wikiquote.org/wiki/Fred_Brooks) about flowcharts and tables.
+[^2]: Since [type-only imports](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-8.html#type-only-imports-and-export) were added, you can now separate the type from its const namespace if you so desire.
+[^3]: Equivalent might be typing the output of `JSON.parse`, or declaring the types of some API call going over the wire without runtime validating them.
