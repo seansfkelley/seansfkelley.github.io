@@ -320,6 +320,12 @@ There's a handful of libraries out there that can do some pretty neat stuff in i
 
 type-zoo is the one I use for production most frequently, because it has the tiny set of most-useful utilities I use most often.
 
+### Other Explorations of the Type System
+
+I recently came across [TSpell](https://github.com/kkuchta/TSpell) and I just had to share. What a lovely monstrosity.
+
+Somewhat more practically, [type-challenges](https://github.com/type-challenges/type-challenges) is a good way to exercise some of the more esoteric aspects of the type system.
+
 ## Footnotes
 {:.no_toc}
 
