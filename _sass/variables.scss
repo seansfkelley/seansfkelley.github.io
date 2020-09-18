@@ -1,14 +1,14 @@
 // Common
-$base-font-family: "SourceSansPro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Segoe UI Symbol", "Segoe UI Emoji", "Apple Color Emoji", Roboto, Helvetica, Arial, sans-serif !default;
+$font-family-base: "SourceSansPro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Segoe UI Symbol", "Segoe UI Emoji", "Apple Color Emoji", Roboto, Helvetica, Arial, sans-serif !default;
 $font-family-base-no-emoji: "SourceSansPro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Segoe UI Symbol", Roboto, Helvetica, Arial, sans-serif !default;
-$code-font-family: "Inconsolata", "Consolas", "Roboto Mono", "Ubuntu Mono", "Menlo", "Liberation Mono", "Courier New", monospace;
-$base-font-size:   16px !default;
-$base-font-weight: 400 !default;
-$small-font-size:  $base-font-size * 0.875 !default;
-$base-line-height: 1.5 !default;
+$font-family-code: "Inconsolata", "Consolas", "Roboto Mono", "Ubuntu Mono", "Menlo", "Liberation Mono", "Courier New", monospace;
+$font-size-base:   16px !default;
+$font-weight-base: 400 !default;
+$font-size-small:  $font-size-base * 0.875 !default;
+$line-height-base: 1.5 !default;
 $spacing:          12px !default;
-$mobile-width:     600px !default;
-$desktop-width:    800px !default;
+$width-mobile:     600px !default;
+$width-desktop:    800px !default;
 
 // Theming; TODO: dark mode
 $brand-color:           #828282 !default;
@@ -18,6 +18,6 @@ $site-title-color:      $brand-color-dark !default;
 $text-color:            #111111 !default;
 $background-color:      #fdfdfd !default;
 $code-background-color: #eeeeee !default;
-$link-base-color:       #2a7ae2 !default;
-$link-visited-color:    darken($link-base-color, 15%) !default;
-$link-hover-color:      $text-color !default;
+$link-color-base:       #2a7ae2 !default;
+$link-color-visited:    darken($link-color-base, 15%) !default;
+$link-color-hover:      $text-color !default;
