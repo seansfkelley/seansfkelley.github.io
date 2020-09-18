@@ -11,7 +11,7 @@ layout: base
         {{ page.date | date: site.date_format }}
       </time>
       {%- if page.modified_date -%}
-        ~
+        ~ updated
         <time datetime="{{ page.modified_date | date_to_xmlschema }}" itemprop="dateModified">
           {{ page.modified_date | date: site.date_format }}
         </time>
@@ -19,7 +19,7 @@ layout: base
     </p>
   </header>
 
-  <div class="post-content e-content">
+  <div class="post-content">
     {{ content }}
   </div>
 </article>

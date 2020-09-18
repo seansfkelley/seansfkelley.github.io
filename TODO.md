@@ -1,0 +1,2 @@
+- next/previous/home footer for posts
+- logo!
