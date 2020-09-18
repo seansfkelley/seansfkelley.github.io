@@ -67,9 +67,10 @@ Next, you have to separate the tabs that keep the left and right sides of the pl
 
 Insert your screwdriver between the plastic frame and the outer housing, without going too deep, and slide it along until it's at the far left (or far right) side of the headset. If you can pull the plastic frame ~1/4" away from the outer housing, you know you've separated the tabs. You can let the now-separated frame rest back against the outer housing; it doesn't tend to re-engage unless you push it.
 
-{% include alert.html content="
-Warning! Keep your screwdriver head tilted away from the inside surface of the outer housing. Some infrared LEDs are adhered there and you don't want to disturb them.
-" %}
+{% include alert.html
+title="Watch Your Screwdriver"
+content="Keep your screwdriver head tilted away from the inside surface of the outer housing. Some infrared LEDs are adhered there and you don't want to disturb them."
+%}
 
 {% include captioned-image.html
 url="/assets/oculus-teardown/img-2-combined.jpg"
@@ -115,9 +116,10 @@ Next, release the front two plastic snaps holding the **outer ring** using the s
 
 Once you've pushed the snaps in, you should see a crack open up between the outer housing and the outer slider ring. Use your screwdriver to lever the ring away from the housing. It's held in by inaccessible snaps on the inside and back of the slider assembly, so you're trying to tilt it until those snaps simply pull away from their anchors.
 
-{% include alert.html content="
-Warning! Underneath the switch's thumb there are two tiny springs. Make sure you work slowly and/or in an enclosed space to prevent them flying off into the distance.
-" %}
+{% include alert.html
+title="Don't Lose the Springs"
+content="Underneath the switch's thumb there are two tiny springs. Make sure you work slowly and/or in an enclosed space to prevent them flying off into the distance."
+%}
 
 ![img-10](/assets/oculus-teardown/img-10-3693.jpg)
 
@@ -156,9 +158,11 @@ There is also **1x Phillips head shoulder screw** tucked away such that it is on
 
 Once all the screws are out, it's time to separate the outer housing from the front of the headset.
 
-{% include alert.html content="
-Warning! The outer housing is connected to the front of the headset by several small ribbon cables. Don't rush this part.
-" %}
+{% include alert.html
+kind="warning"
+title="Take It Slow!"
+content="The outer housing is connected to the front of the headset by several small ribbon cables. Don't rush this part."
+%}
 
 To initially separate the outer housing, bend the top middle of the housing up about 3/16" to allow the bracket that was holding the shoulder screw to clear the main board support.
 
@@ -197,9 +201,11 @@ First, release the **breakout board** by taking out the **2x T4 screws** and pop
 
 The breakout board will flop around a bit for the rest of this step, so be careful. I've found that removing it first is ultimately easier and less dangerous to the boards.
 
-{% include alert.html content="
-Warning! The next step is by far the riskiest when it comes to breaking your headset unintentionally.
-" %}
+{% include alert.html
+kind="warning"
+title="Don't Break Your Headset!"
+content="The next step is by far the riskiest when it comes to breaking your headset unintentionally."
+%}
 
 Once the breakout board is free, you'll want to separate the **main board** and the **main board support**. The board and its support have a tendency to flop around too once their screws are removed, so be very careful, because there is a _tiny_ plastic handle on the IPD sensor attached to the board that lodges into a slot on the right lens housing. It is _very_ easy to snap the handle off and permanently break your IPD sensor.[^3] Also, there are more ribbon cables tethering the main board to rest of the headset that you have to be careful not to break.
 

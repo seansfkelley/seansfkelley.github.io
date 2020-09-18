@@ -1,0 +1,26 @@
+// Colors in here are lifted from blueprintjs.
+.alert {
+  background-color: #b3cfff;
+  border: 1px solid #91ace5;
+  padding: $spacing;
+  border-radius: 3px;
+
+  &.alert-success {
+    background-color: #b1ecb5;
+    border-color: #8dcd8f;
+  }
+
+  &.alert-warning {
+    background-color: #ffe4a0;
+    border-color: #eac87d;
+  }
+
+  &.alert-danger {
+    background-color: #ffb7a5;
+    border-color: #e9947d;
+  }
+}
+
+.alert-title {
+  font-weight: 600;
+}
