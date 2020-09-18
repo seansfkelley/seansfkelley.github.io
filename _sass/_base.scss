@@ -1,9 +1,9 @@
 html {
-  font-size: $base-font-size;
+  font-size: $font-size-base;
 }
 
 body {
-  font: $base-font-weight #{$base-font-size}/#{$base-line-height} $base-font-family;
+  font: $font-weight-base #{$font-size-base}/#{$line-height-base} $font-family-base;
   color: $text-color;
   background-color: $background-color;
   font-kerning: normal;
@@ -16,15 +16,15 @@ body {
 }
 
 a {
-  color: $link-base-color;
+  color: $link-color-base;
   text-decoration: none;
 
   &:visited {
-    color: $link-visited-color;
+    color: $link-color-visited;
   }
 
   &:hover {
-    color: $link-hover-color;
+    color: $link-color-hover;
     text-decoration: underline;
   }
 }
@@ -41,7 +41,7 @@ h1, h2, h3, h4, h5, h6 {
 
 pre,
 code {
-  font-family: $code-font-family;
+  font-family: $font-family-code;
   font-size: 0.9375em;
   border-radius: 1px;
   background-color: $code-background-color;
@@ -63,14 +63,14 @@ pre {
 }
 
 .content-wrapper {
-  max-width: calc(#{$mobile-width} - (#{$spacing} * 2));
+  max-width: calc(#{$width-mobile} - (#{$spacing} * 2));
   margin-right: auto;
   margin-left: auto;
   padding-right: $spacing;
   padding-left: $spacing;
 
-  @media screen and (min-width: $mobile-width) {
-    max-width: calc(#{$desktop-width} - (#{$spacing} * 4));
+  @media screen and (min-width: $width-mobile) {
+    max-width: calc(#{$width-desktop} - (#{$spacing} * 4));
     padding-right: $spacing * 2;
     padding-left: $spacing * 2;
   }
