@@ -2,6 +2,11 @@
 <html>
   {%- include head.html -%}
   <body>
-    {{ content }}
+    {%- include header.html -%}
+    <main>
+      <div class="content-wrapper">
+        {{ content }}
+      </div>
+    </main>
   </body>
 </html>
