@@ -11,6 +11,8 @@ body {
   min-height: 100vh;
   flex-direction: column;
   overflow-wrap: break-word;
+  margin: 0;
+  padding: 0;
 }
 
 a {
@@ -25,6 +27,10 @@ a {
     color: $link-hover-color;
     text-decoration: underline;
   }
+}
+
+strong {
+  font-weight: 600;
 }
 
 .content-wrapper {
