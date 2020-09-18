@@ -1,0 +1,22 @@
+.post-list {
+  margin-left: 0;
+  list-style: none;
+
+  > li {
+    margin-bottom: $spacing;
+  }
+}
+
+.post-date {
+  font-size: $small-font-size;
+  color: $brand-color;
+}
+
+.post-heading {
+  margin: 0;
+}
+
+.post-link {
+  display: block;
+  font-size: 1.5rem;
+}
