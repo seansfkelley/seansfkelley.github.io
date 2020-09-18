@@ -15,6 +15,15 @@ body {
   padding: 0;
 }
 
+body, h1, h2, h3, h4, h5, h6, p, blockquote, pre, hr, dl, dd, ol, ul, figure {
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, ul, ol, dl, figure {
+  margin-bottom: $spacing;
+}
+
 a {
   color: $link-color-base;
   text-decoration: none;
@@ -28,6 +37,21 @@ a {
     text-decoration: underline;
   }
 }
+
+ul, ol {
+  margin-left: $spacing * 2;
+}
+
+li {
+  > ul, > ol {
+    margin-bottom: 0;
+  }
+}
+
+ul {
+  list-style-type: "• ";
+}
+
 
 strong {
   font-weight: 600;
@@ -61,6 +85,22 @@ pre {
     padding-left: 0;
   }
 }
+
+img {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+figure > img {
+  display: block;
+}
+
+figcaption {
+  font-size: $font-size-small;
+  margin-top: 2px;
+  font-style: italic;
+}
+
 
 .content-wrapper {
   max-width: calc(#{$width-mobile} - (#{$spacing} * 2));

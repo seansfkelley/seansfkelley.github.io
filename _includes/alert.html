@@ -1,3 +1,7 @@
-<p class="alert alert-info" style="border: 1px solid red" role="alert">
+<p class="alert alert-{{ include.kind | default: "info" }}">
+  {%- if include.title -%}
+    <span class="alert-title">{{ include.title }}</span>
+    <br/>
+  {%- endif -%}
   {{ include.content }}
 </p>
