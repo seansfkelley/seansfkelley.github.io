@@ -2,3 +2,4 @@
 - dark theme
 - better syntax highlight theme (pygments?)
 - 404 page
+- rewrite history to remove email?
