@@ -3,6 +3,10 @@
   justify-content: space-between;
 }
 
+.next-previous-icon {
+  width: $spacing;
+}
+
 .next-previous-placeholder {
   flex: 1;
 }
@@ -44,4 +48,14 @@
 
 .next-previous-title {
   font-size: 1.25rem;
+}
+
+@media screen and (min-width: $width-mobile) {
+  .next-previous-left {
+    margin-left: -($spacing * 2);
+  }
+
+  .next-previous-right {
+    margin-right: -($spacing * 2);
+  }
 }
