@@ -1,7 +1,6 @@
 ---
 layout: post
-title: "Oculus Rift CV1 Teardown"
-date: 2020-08-31 23:00:00 -0700
+title: Oculus Rift CV1 Teardown
 ---
 
 During quarantine, I came into possession of a used Oculus Rift CV1 setup (that's the original one) that had an infuriating tendency to disconnect if you moved your head around too fast. After some basic debugging techniques (ahem, turning it off and on again), I determined that there was a hardware issue in the headset and, since the CV1 has been discontinued for some time, I would have to fix it myself.
