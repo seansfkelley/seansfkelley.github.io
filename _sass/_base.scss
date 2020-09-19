@@ -99,6 +99,11 @@ figcaption {
   font-style: italic;
 }
 
+hr {
+  margin: ($spacing * 2) $spacing;
+  border: none;
+  border-bottom: 1px solid $brand-color-light;
+}
 
 .content-wrapper {
   max-width: calc(#{$width-mobile} - (#{$spacing} * 2));
