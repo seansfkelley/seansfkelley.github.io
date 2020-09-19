@@ -326,6 +326,8 @@ I recently came across [TSpell](https://github.com/kkuchta/TSpell) and I just ha
 
 Somewhat more practically, [type-challenges](https://github.com/type-challenges/type-challenges) is a good way to exercise some of the more esoteric aspects of the type system.
 
+{% include next-previous.html %}
+
 -------------------------------------------------------------------------------
 
 [^1]: Here is the part where I mention the [Fred Brooks quote](https://en.wikiquote.org/wiki/Fred_Brooks) about flowcharts and tables.

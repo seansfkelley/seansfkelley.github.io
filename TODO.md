@@ -1,4 +1,3 @@
-- next/previous/home footer for posts
 - logo!
 - dark theme
 - better syntax highlight theme (pygments?)

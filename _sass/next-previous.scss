@@ -1,0 +1,47 @@
+.next-previous {
+  display: flex;
+  justify-content: space-between;
+}
+
+.next-previous-placeholder {
+  flex: 1;
+}
+
+.next-previous-link {
+  display: flex;
+  align-items: center;
+  flex: 1;
+
+  .next-previous-label, .next-previous-icon {
+    color: $text-color;
+  }
+
+  &:hover  {
+    text-decoration: none;
+
+    .next-previous-title {
+      text-decoration: underline;
+    }
+
+    .next-previous-label, .next-previous-icon {
+      color: $text-color;
+    }
+  }
+}
+
+.next-previous-name {
+  margin: 0 $spacing;
+}
+
+.next-previous-right {
+  text-align: right;
+  justify-content: right;
+}
+
+.next-previous-label {
+  font-size: 0.75rem;
+}
+
+.next-previous-title {
+  font-size: 1.25rem;
+}
