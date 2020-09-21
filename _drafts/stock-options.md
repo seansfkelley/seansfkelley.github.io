@@ -47,7 +47,7 @@ In summary: exercising NSOs is a way to get a bit of stock without paying the ma
 
 ISOs do a weird sort of speculative taxation-ahead-of-time thing which is why it took me so long to wrap my head around it.
 
-The first imporatnt difference between an ISO and an NSO is that an ISO _doesn't behave like an ISO unless certain conditions are met_.[^5] Specifically, you must hold it:
+The first important difference between an ISO and an NSO is that an ISO _doesn't behave like an ISO unless certain conditions are met_.[^5] Specifically, you must hold it:
 
 - more than a year after exercise
 - more than two years after grant
@@ -56,7 +56,7 @@ If you don't, it's instead taxed as an NSO. Put another way: you _must_ pursue t
 
 The speculative behavior of ISO taxation stems from the desire of the IRS to tax you at exercise, before either you or they know whether it's ultimately supposed to be taxed as an ISO or an NSO. So they "guess" at a reasonable tax rate but acknowledge that it's yet to be determined, waiting for the sale, at which point the speculative taxes will be cleaned up to match whatever it was supposed to be.
 
-Here we have to introduce the Alternative Minimum Tax. The AMT is an incredible hack: when the IRS discovered all kinds of fun loopholes in the tax code, the closed them by inventing a whole _new_ tax code, and then hiding it as just a couple lines inside the normal tax code. It's kind of like you followed a footnote on this post, and the footnote was a whole other tangential-but-related post on its own.[^6]
+Here we have to introduce the Alternative Minimum Tax. The AMT is an incredible hack: when the IRS discovered all kinds of fun loopholes in the tax code, the closed them by inventing a whole _new_ tax code, and then hiding it as just a couple lines inside the normal tax code. It's kind of like you followed a footnote on this post, and the footnote was a whole other tangential-but-related post on its own.[^6] After doing your taxes in two different ways, you pay the larger of the two.
 
 When you exercise an ISO, it doesn't count for regular income like an NSO and no withholding is done. Instead, it counts as AMT income: bizarro-world income that you don't actually have yet and couldn't turn into real money for at least another year, because if you tried the stock would actually be NSOs, and the AMT would not apply.[^7] If you exercise enough ISOs, your AMT tax gets larger than your ordinary income tax, and you end up paying it instead!
 
@@ -78,13 +78,15 @@ Remember than an NSO was taxed first at exercise on `market value at exercise - 
 
 So, while an NSO can capture the preferential long term capital gains rate on the only on the second gain (from exercise to sale), an ISO can capture it for the _entire_ gain you realized: from strike to sale.
 
-At this point, the dust settles, and like the first scenario, money is refunded from here (like the AMT) and instead paid to there. The end result is that you pay tax as if everyone knew it was going to be an ISO all along.
+At this point, the dust settles, and like the first scenario, money is shuffled around and the end result is that you pay tax as if everyone knew it was going to be an ISO all along.
 
 ## Summary
 
 Exercising ISOs triggers a speculative taxation before anyone knows if the stock will ultimately be classed as an ISO or an NSO. When you sell the stock, taxes are cleaned up after the fact to make them consistent with whichever form the stock ended up in: ISO or NSO. The key difference between ISOs and NSOs -- given the same timeline of grant/exercise/sale and prices, and assuming the ISO conditions are met -- is that ISOs will apply the lower tax rate of long term capital gains to a chunk of gains that NSOs use the higher income tax rate for.
 
-And of course, there is a _whole lot_ of tweaking you can do around the timing and margins to squeeze out extra value, which is why you hire a tax professional.
+So what's the point of all this complexity? To encourage and reward risk-taking: spend a year hoping for the best and maybe you'll save some money on your taxes.
+
+And of course, there is a _whole lot_ of tweaking you can do around the timing and margins to squeeze out extra value, which is why you hire a tax professional. Or a doctor.
 
 {% include next-previous.html %}
 
