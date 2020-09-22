@@ -17,7 +17,7 @@ If you just have some iTunes music files that you want to strip the metadata fro
 
 ## Prerequisites
 
-These instructions assume some familiarity with the terminal. Grab [this gist I forked from someone on the internet](https://gist.github.com/seansfkelley/69743345339520e75016e010a894ade7) and install the dependencies noted there.[^1] This script is where the magic happens; the rest of the instructions are just to make iOS and the Music app happy with your changes. The script is just a wrapper around libav and AtomicParsley, which do the heavy lifting.
+These instructions assume some familiarity with the terminal. Grab [this gist I forked from someone on the internet](https://gist.github.com/seansfkelley/69743345339520e75016e010a894ade7) and install the dependencies noted there.[^1] This script is where the magic actually happens; the rest of the instructions are just to make iOS and the Music app happy with your changes. Additionally, the script is just a wrapper around [libav](https://libav.org/) and [AtomicParsley](http://atomicparsley.sourceforge.net/), which do the heavy lifting.
 
 ## Caveats/Warnings
 
@@ -30,11 +30,11 @@ Also, I think, but haven't verified, that when you "hide" the songs from your li
 These instructions are not completely streamlined, but they get the job done.
 
 1. Find your files. Right-click > Show in Finder should suffice for any song in your library.
-2. Copy the music files anywhere else, such as your desktop.
+2. Copy the music files to a working directory anywhere else, such as your desktop.
 3. Back in the Music app, delete the songs/albums. It might prompt you with a rather confusing dialog saying something to the effect of "you can still play these songs but they'll be deleted" and asking if you want to "hide" the songs.[^2] Yes, hide them. And yes, remove the files.
 4. If you also want to make these changes on your iPhone: sync your phone now. It'll ask if you want to sync your purchases off your phone and back to your computer, which you should of course not do. The goal here is to remove them from the phone entirely.
 5. Run the Python script on your files. It should rewrite them in-place, but don't worry, you can always redownload them from the iTunes store if you mangle them.
-6. Re-add the copied files to the Music app. You probably want to make sure you have the "Copy files to Music Media folder when adding to library" option checked in preferences so you don't have to leave them lying around your desktop or wherever you cached them.
+6. Re-add the copied files to the Music app. You probably want to make sure you have the "Copy files to Music Media folder when adding to library" option checked in preferences so you don't have to leave them lying around your desktop or wherever you stashed them.
 7. Your artwork is probably missing; this is because purchased music doesn't store the artwork in-file but rather in some other folder/database... somewhere. If you'd like, go get some artwork and add it to your songs.
 8. And again if you're using your phone too: sync your phone now. It should have no idea that these songs were originally purchased, and consequently will not show all the stars and copyright and "more like this please sign up for Apple Music" sections.
 

@@ -54,7 +54,7 @@ The first important difference between an ISO and an NSO is that an ISO _doesn't
 
 If you don't, it's instead taxed as an NSO. Put another way: you _must_ pursue the long term capital gains route with an ISO if you want any tax advantage from it at all. And then there's the grant date restriction on top of that.
 
-The speculative behavior of ISO taxation stems from the desire of the IRS to tax you at exercise, before either you or they know whether it's ultimately supposed to be taxed as an ISO or an NSO. So they "guess" at a reasonable tax rate but acknowledge that it's yet to be determined, waiting for the sale, at which point the speculative taxes will be cleaned up to match whatever it was supposed to be.
+The speculative behavior of ISO taxation stems from the desire of the IRS to tax you at exercise, before either you or they know whether it's ultimately supposed to be taxed as an ISO or an NSO. So they "guess" at a reasonable tax rate but acknowledge that it's yet to be determined, waiting for the sale, after which the speculative taxes will be cleaned up to match whatever it was supposed to be.
 
 Here we have to introduce the Alternative Minimum Tax. The AMT is an incredible hack: when the IRS discovered all kinds of fun loopholes in the tax code, the closed them by inventing a whole _new_ tax code, and then hiding it as just a couple lines inside the normal tax code. It's kind of like you followed a footnote on this post, and the footnote was a whole other tangential-but-related post on its own.[^6] After doing your taxes in two different ways, you pay the larger of the two.
 
@@ -66,7 +66,7 @@ So what happens when you sell?
 
 If you end up selling the ISO too early and don't meet the conditions, the stock is treated as an NSO, the dust settles, taxes are calculated, AMTs are credited, and the end result is that you pay tax as if it was an NSO all along.
 
-Or at least, I'm pretty sure that's what happens: it can be a little hard to sift through the noise, since the actual implementation of this idea involves getting some refunds here but having to pay more there: lots of shuffling dollars around to make the math work out and have the right numbers in the right place for classification purposes.
+Or at least, I'm pretty sure that's what happens: it can be a little hard to sift through the noise, since the actual implementation of this idea involves getting some refunds here but having to pay more there: lots of shuffling dollars around to make the math work out and have the right numbers in the right place for classification purposes. Sometimes the refund takes multiple years to materialize, too, depending on your income during those years.
 
 ### Scenario 2: Wait Long Enough
 
@@ -76,9 +76,9 @@ If you wait to meet the ISO conditions and then sell, you pay long term capital 
 
 Remember than an NSO was taxed first at exercise on `market value at exercise - strike price` and then at sale as `sale price - market value at exercise`. Adding those together, you get exactly `sale price - strike price`, which is what the ISO is ultimately taxed based on.
 
-So, while an NSO can capture the preferential long term capital gains rate on the only on the second gain (from exercise to sale), an ISO can capture it for the _entire_ gain you realized: from strike to sale.
+So, while an NSO can capture the preferential long term capital gains rate only on the second gain (from exercise to sale), an ISO can capture it for the _entire_ gain you realized: from strike to sale.
 
-At this point, the dust settles, and like the first scenario, money is shuffled around and the end result is that you pay tax as if everyone knew it was going to be an ISO all along.
+At this point, the dust settles, and like the first scenario, money is shuffled around and the end result is that you pay tax as if everyone knew it was going to be an ISO all along. More or less.
 
 ## Summary
 
