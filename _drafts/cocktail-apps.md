@@ -41,6 +41,23 @@ A pixel-art cocktail app with a LOT of features and (as usual) the concept of ke
 
 ## [Kindred Cocktails](https://kindredcocktails.com/)
 
+A community site specializing in weird, fancy or homemade cocktails, with an extensive ingredient inventory and not an IBA cocktail in sight.
+
+### Pros
+
+- "A spontaneous libation for your consideration." As someone who wanders around these sources looking for something interesting, this is great place to start.
+- Similar recipes. I'll often search for some ingredients, find something that's almost what I want, and then follow a series of "similar to" links until I've found the thing I didn't know I was looking for.
+- Ingredient metadata works surprisingly well given how obviously detailed their taxonomy is.
+- Many, many ingredients have their own pages which don't just link out to example recipes (nice!) but also have a picture and a blurb, which can allow you to make educated substitutions.
+- Shows you ingredients alongside cocktail names in the lists, so you don't have to click into them to find out if they sound good to you.
+
+### Cons
+
+- Cannot be a one-stop-shop, because it tries very hard to keep the submitted recipes interesting and unique.
+- Miscellaneous UX awkwardness, especially around the somewhat buggy ingredient autocomplete and results navigation.
+- The community is nice, but is a distraction from what I'm trying to do. Star ratings, comments, etc.
+- Not an app, and not fluid/non-expert-friendly enough to use while you're hosting a cocktail party or making drinks for someone else.
+
 ## Takeaways
 
 Things I want:
