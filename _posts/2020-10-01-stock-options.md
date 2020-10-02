@@ -35,9 +35,9 @@ When buying and selling NSOs and the resultant stock, there are three payments y
 
 The **strike price** is your discounted purchase price for the stock. Pretty straightforward; that's the whole point of the option.
 
-The **tax at exercise** is tax you pay on the difference between the strike price and the current market value[^2] (the "bargain element") of the stock. Specifically, this is regular income tax (and can raise your income tax bracket like it, too). The idea here is that if you have a strike price of $1 for an option on a stock that's trading at $3, that difference is just as good as cash: you could just turn around and sell it on the market and net a cool $2.
+The **tax at exercise** is tax you pay on the difference between the strike price and the current market value[^2] of the stock (the "bargain element" or "spread"). Specifically, this is regular income tax (and can raise your income tax bracket like it, too). The idea here is that if you have a strike price of $1 for an option on a stock that's trading at $3, that difference is just as good as cash: you could just turn around and sell it on the market and net a cool $2. So they tax that $2.
 
-The **tax at sale** varies, and in both cases is taxed as capital gains, either short term or long term. Short term becomes long term at the one-year mark; if you sell a stock less than a year after you exercised the option for it, you get a worse tax rate.[^3] Short term capital gains is currently (and generally) taxed as if it's ordinary income; long term capital gains is much lower. Short term capital gains can _also_ raise your income tax bracket.
+The **tax at sale** varies, and in both cases is taxed as capital gains, either short term or long term. Short term becomes long term at the one-year mark; if you sell a stock less than a year after you exercised the option for it, you get a worse tax rate.[^3] Short term capital gains is currently (and generally) taxed as if it's ordinary income and can _also_ raise your income tax bracket. Long term capital gains is much lower.
 
 When exercising NSOs, the strike price and tax are bundled up in a single payment, and the tax is done by withholding at a rate that is really a best-guess more than an accurate estimate.[^4]
 
@@ -86,7 +86,7 @@ Exercising ISOs triggers a speculative taxation before anyone knows if the stock
 
 So what's the point of all this complexity? To encourage and reward risk-taking: spend a year hoping for the best and maybe you'll save some money on your taxes.
 
-And of course, there is a _whole lot_ of tweaking you can do around the timing and margins to squeeze out extra value, which is why you hire a tax professional. Or a doctor.
+And of course, there is a _whole lot_ of tweaking you can do around the timing and margins to squeeze out extra value, which is why you hire a tax professional and don't blindly trust the internet for financial advice.
 
 {% include next-previous.html %}
 
