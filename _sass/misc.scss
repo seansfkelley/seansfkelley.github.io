@@ -5,3 +5,7 @@
     text-decoration: none;
   }
 }
+
+.footnotes :target {
+  background-color: $highlight-background-color;
+}
