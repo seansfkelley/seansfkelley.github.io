@@ -34,6 +34,7 @@ A pixel-art cocktail app with a LOT of features and (as usual) the concept of ke
 - Recipe packs are meh. I guess they're a way to monetize it, so I can't blame them, but as an organization scheme I find it useless.
 - The minimal recipe view is kind of silly and adds another button -- why not just tidy up the main recipe view?
 - I don't understand why you would need to have saved filter sets.
+- Filtering capabilities are borderline overwhelming, and while undeniably powerful, require a lot of attention to use fully.
 
 ## [Cocktail Flow](https://apps.apple.com/us/app/cocktail-flow-drink-recipes/id486811622)
 
