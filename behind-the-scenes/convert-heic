@@ -10,6 +10,7 @@ mkdir stripped converted
 
 for img in *.HEIC; do
   # This stripping uncompresses and recompresses the image, but whatever, they don't need to be photo quality.
-  convert "$img" -strip "stripped/$img"
-  convert "$img" -geometry 1024x -strip "converted/$(echo "$img" | sed -E -e 's/HEIC/jpg/g')"
+  # convert "$img" -strip "stripped/$img"
+  # To jpg.
+  convert "$img" -geometry 2048x -strip "converted/$(echo "$img" | sed -E -e 's/HEIC/jpg/g')"
 done
