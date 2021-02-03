@@ -63,48 +63,69 @@ JavaScript's dynamic `this` is nothing more than a trap that ends up netting zer
 
 ## Conflation of "Record" and "Map" Types
 
+```js
+const map = {};
+map[{ my: "object" }] = 10;
+assert(map['[object Object]'] === 10);
+```
+
 First, some definitions. A "record" type is one which has a well-known set of field names that can be accessed to retreive values. A "map" is a data structure that pairs up arbitrary keys with arbitrary values. A record can be thought of as a special case of a map that only allows string keys.
 
-Until the introduction of ES6 `Map`, JavaScript had no map type. I have personally made and witnessed some pretty absurd workarounds for this shortcoming, including serializing map keys to JSON, which is both tedious and of questionable correctness (what if your serialization changes key ordering?). Before `Map`, JavaScript's answer to this extremely common operation was objectively and comprehensively bad.
+Until the introduction of ES6 `Map`, JavaScript had no real map type at all. I have personally made and witnessed some pretty absurd workarounds for this shortcoming, including serializing objects as map keys into JSON, which is both tedious and of questionable correctness (what if your serialization changes key ordering?).
 
-## Value Semantics and the Failures of `Map` and `Set`
+Before `Map`, JavaScript had no way to performantly _and_ correctly implement the basic map type that comes with all standard libraries. What one would expect to do when coming from other languages -- that is, to provide the object directly as the key -- would silently "succeed" with the utterly useless, dreaded `[object Object]` map key. Home-grown map solutions had to use expensive serialization or tree structures in order to maintain correctness, and did not have the slick syntactic support that objects-as-maps did.
+
+## Reference Semantics and the Failures of `Map` and `Set`
+
+```js
+assert(new Set([1, 1]).size === 1);
+assert(new Set([{}, {}]).size === 2);
+```
 
 Following on from the previous section, `Map` didn't really fix many problems, practically speaking. Yes, JavaScript now had a dedicated map type, so objects-as-maps were theoretically obsolete. But  `Map` (and `Set`, which has all the same problems) operates using reference equality, not value equality.
 
 The choice to use reference equality instead of value equality makes a lot of sense in context: JavaScript has a weak-to-nonexistent notion of value equality (or, more generally, comparisons by value). The only values for which value and reference equality are the same are primitives, so in the case where you were using objects as maps whose values were strings, numbers (coerced to strings) or booleans (coerced to strings), you may see an improvement in type sanity.
 
-The use of reference equality mean that `Map` and `Set` wildly underdeliver on their promise to provide a sane alternative to JSON serializing objects to use them as map keys, because if you aren't extremely careful about maintaining reference equality
+However, the use of reference equality mean that `Map` and `Set` wildly underdeliver on their promise to provide a sane alternative to JSON serializing objects to use them as map keys, because if you aren't extremely careful about maintaining reference equality in the rest of your code, you will run into all manner of correctness issues: keys missing that you thought would be there, keys present that you thought you had deleted, duplicates...
 
-### The Failures of Map (and Set)
+Reference equality of objects and arrays is something that is generally swept under the rug in many idiomatic usages of objects in JavaScript. Spreading, destructuring and object literals in particular make it very easy to slice and dice and reassemmble objects that are reference-different but value-equals. Some libraries, like React, strongly encourage you to use spreading and destructuring extensively to ensure that any given object is immutable over its lifetime, while still allowing you to easily construct new, different objects. But if those objects are reference-different and value-equals, correctness checks and performance optimizations that would be obvious and free in other languages -- such as checking for cache hits with an object key -- are difficult to implement.
 
-After `Map` (and `Set`)
+## Things People Complain About That I Don't Think Matter
 
-### and the lack of a true map type
+### Prototypal Inheritance
 
-### and no, ES6 `Map` doesn't really count
+I can't recall ever seeing any significant usage of prototypal inheritance that isn't exactly equivalent to a class hierarchy in other languages. Yes, you can reassign `__proto__`, and yes, non-class things can have prototypes that make them behave sort of like subclasses. I've seen the occasionally usage of these things, but in every single case they have boiled down to an unusual and roundabout way of saying `extends`. With "true" classes now in JavaScript, I think prototypal inheritance is basically irrelevant.
 
-## lack of useful collection types (set, map)
+### Dynamic Nature of Closure References
 
-## legacy
+A motivating code sample:
 
-### `with` blocks
+```js
+const fns = [];
+for (var i = 0; i < 3; ++i) {
+  fns.push(() => i);
+}
+fns.forEach(fn => { console.log(fn()); });
+```
 
-### `eval`
+(Note: this works "as expected" if you declare `let i` instead.)
 
-### `var`
+I think this is fine. Some languages capture closed-over values by direct reference and some capture the whole environment and evaluate the reference later. They're better for different things, and you can always express patterns that are easier in one in some fashion in the other. You just have to learn which way your language functions.
 
-### `new Boolean` versus `Boolean`
+### No Integers and No Doubles
 
-## things that don't really matter that people like to complain about (or think are cool and unique)
+The vast majority of code uses small integers and small floating-point numbers. It's somewhat frustrating that JavaScript uses an unusual standard that allows neither full (32- or 64-bit) integers or floats. But if these lower-than-normal limits or lack of integer/float separation matter to you, you should probably be using a different representation anyway, such as `BigInt` for currencies or strings for 64-bit database IDs.
 
-### prototypal inheritance
+### Optional Semicolons
 
-### dynamicity of closure references (or: why do all of my closures defined in a loop refer to the same value)
+I cannot fathom why the language designers bothered with this. Either make the language require seimcolons or not. Why is this a choice that developers have to make? Unlike `'` versus `"` (which allow nesting) or `var` versus `let` (which have different semantics), there is literally zero value to optional semicolons. It's pure flamebait.
 
-### floating-point-only numbers
+## Lightning Round: Things That Thankfully Don't Matter Anymore
 
-### optional semicolons
-
+- `with`: terrible idea, glad it was dead on arrival.
+- `eval`: fun while it lasted, but always a bad idea.
+- `var`: block-scoped declarations are the right choice.
+- `new Boolean()` versus `Boolean` (etc.): technically still an issue, but new standard library types are taking a stance to avoid more confusion.
 
 {% include next-previous.html %}
 
