@@ -143,6 +143,16 @@ I am relieved that these have become effective non-issues.
 - `var`: block-scoped declarations are the right choice.
 - `new Boolean()` versus `Boolean` (etc.): technically still an issue, but new standard library types are taking a stance to avoid more confusion.
 
+## What About Records and Tuples?
+
+The [record and tuple proposal](https://github.com/tc39/proposal-record-tuple) that introduced this post is interesting to me because it solves, or contributes to a solution for, the worst of the above problems.
+
+With language-level immutability, I can spend less mental energy on careful use of spread and destructuring, and can use `Map` and `Set` for what they're meant for -- basic collection types respecting value equality. I can also almost entirely stop using objects, since I generally either way a `Map` or a `Record`, and not some weird hybrid.
+
+Arrays continue be useful, but they've always been less weird than objects, so it's okay.
+
+As for `===` and dynamic `this`, well, I have linters and more brainspace to dedicate now that I'm not thinking about the pitfalls of objects all the time.
+
 {% include next-previous.html %}
 
 -------------------------------------------------------------------------------
