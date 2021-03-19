@@ -22,3 +22,5 @@ $highlight-background-color: #fdffdd !default;
 $link-color-base:            #2a7ae2 !default;
 $link-color-visited:         darken($link-color-base, 15%) !default;
 $link-color-hover:           $text-color !default;
+$text-color-blockquote:      lighten($text-color, 30%) !default;
+$border-color-blockquote:    lighten($text-color-blockquote, 30%) !default;

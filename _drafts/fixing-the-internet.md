@@ -3,16 +3,17 @@ layout: post
 title: A Theory on Regulating Social Media
 ---
 
-Social media has been on peoples' minds with over the last few years, more so in the last few months, and even _more_ so even in the last few days. Regardless of where you stand on Twitter moderation, or the general lack thereof on Facebook, or the continued existence of Parler, surely you agree that _something_ is broken. Nobody is happy with the way things are working except those who stand to make money from it.
+Social media has been on poeples' minds increasingly often these last few years. Regardless of where you stand on Twitter moderation, or the relative lack thereof on Facebook, or the continued existence of Parler, surely you agree that _something_ is broken. It appears that nobody is happy with the way things are working except those who stand to make money from it.[^1]
 
-While I am relieved to never again have to hear about Twitter as the mouthpiece of a sitting president[^1], my first thought after the banhammer came down is nicely summarized by this quote:
+While I am relieved to never again have to hear about Twitter as the mouthpiece of a sitting president[^2], my first thought after the banhammer came down is [nicely summarized by the ACLU](https://www.aclu.org/podcast/what-does-free-speech-mean-online-ep-139), which I have excerpted here:
 
-> "We understand the desire to permanently suspend him now, but it should concern everyone when companies like Facebook and Twitter wield the unchecked power to remove people from platforms that have become indispensable for the speech of billions," said Kate Ruane, an A.C.L.U. lawyer. "President Trump can turn to his press team or Fox News to communicate with the public, but others -- like the many Black, brown and L.G.B.T.Q. activists who have been censored by social media companies -- will not have that luxury."
+> We understand the desire to permanently suspend him now, but it should concern everyone when companies like Facebook and Twitter wield the unchecked power to remove people from platforms that have become indispensable for the speech of billions...  President Trump can turn to his press team or Fox News to communicate with the public, but others... will not have that luxury.
 
-// TODO: format block quotes
-// TODO: figure out the source of the original quote and cite it
+The ACLU has a history of defending rights regardless of ideology -- a [press release in 2012](https://www.aclu.org/press-releases/aclu-em-defends-kkks-right-free-speech) advertises that they defended the First Amendment rights of the KKK -- and that's reflected in this quote as well. This type of across-the-board defense of civil rights[^3] is appealing for its consistency, and lends the ACLU quite a lot of credibility when it takes positions on these cases.
 
-// TODO: talk about why I like the quote before I talk about what it reveals that I think is wrong (which is what's below)
+
+
+-------------------------------------------------------------------------------
 
 _"...platforms that have become indispensable for the speech of billions"._ To be beholden to the whims of a for-profit company for access to a wide audience is a concerning thought. Or rather, it sounds like it is, but it's been generally accepted as both unavaoidable and reasonable for hundreds of years in the form of newspapers, radio, and television.
 
@@ -49,8 +50,6 @@ The idea here is that you have a right to be able to produce content on the inte
 
 // TODO: Talk about private 1:1 messages (not publishing).
 
-[^1]: Time will tell, but one can hope.
-
 "self-evidently good or useful": how about an aside on Facebook thinking that connecting the world is objectively a good and correct thing to do?
 
 compare to traditional media: TV has public access channels, newspaper have editorials, but you don't have a right to blast your opinion to everyone, which is the problem with the internet now
@@ -78,3 +77,11 @@ Many of the ideas here grew out of a train of thought focusing on regulating soc
 The basic argument was as follows:
 
 - social media companies exercise direct and strong control over what content reaches users -- ranking algorithms, suggested content and at times, censorship
+
+{% include next-previous.html %}
+
+-------------------------------------------------------------------------------
+
+[^1]: Ah, the way of the world.
+[^2]: Time will tell, but one can hope.
+[^3]: The [ACLU's page on freedom of expression](https://www.aclu.org/other/freedom-expression) outlines their position nicely, and even has some illuminating clarifications, such as explaining why requiring permits for demonstrations is legal under the First Amendment. Unrelated fun fact: [that Voltaire quote isn't a Voltaire quote](https://quoteinvestigator.com/2015/06/01/defend-say/).
