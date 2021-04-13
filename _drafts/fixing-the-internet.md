@@ -5,13 +5,57 @@ title: A Theory on Regulating Social Media
 
 Social media has been on poeples' minds increasingly often these last few years. Regardless of where you stand on Twitter moderation, or the relative lack thereof on Facebook, or the continued existence of Parler, surely you agree that _something_ is broken. It appears that nobody is happy with the way things are working except those who stand to make money from it.[^1]
 
-While I am relieved to never again have to hear about Twitter as the mouthpiece of a sitting president[^2], my first thought after the banhammer came down is [nicely summarized by the ACLU](https://www.aclu.org/podcast/what-does-free-speech-mean-online-ep-139), which I have excerpted here:
+While I am relieved to never again have to hear about Twitter as the mouthpiece of a sitting president[^2], my first thought after the banhammer came down in January 2021 is [nicely summarized by the ACLU](https://www.aclu.org/podcast/what-does-free-speech-mean-online-ep-139), which I have excerpted here:
 
 > We understand the desire to permanently suspend him now, but it should concern everyone when companies like Facebook and Twitter wield the unchecked power to remove people from platforms that have become indispensable for the speech of billions...  President Trump can turn to his press team or Fox News to communicate with the public, but others... will not have that luxury.
 
 The ACLU has a history of defending rights regardless of ideology -- a [press release in 2012](https://www.aclu.org/press-releases/aclu-em-defends-kkks-right-free-speech) advertises that they defended the First Amendment rights of the KKK -- and that's reflected in this quote as well. This type of across-the-board defense of civil rights[^3] is appealing for its consistency, and lends the ACLU quite a lot of credibility when it takes positions on these cases.
 
+To me, what's really concerning is not so much that "Facebook and Twitter wield the unchecked power to remove people from [their] platforms" as it is that Facebook and Twitter are "platforms that have become indispensable for the speech of billions". It's concerning for two reasons.
 
+-------------------------------------------------------------------------------
+
+The first reason is that we should never find ourselves in a situation where a for-profit company is the conduit through which billions exercise their fundamental rights. We already have problems when for-profit companies are in charge of things not enumerated as fundamental rights but widely considered necessary to life, such as water (cite: Detroit), power (cite: ERCOT) and healthcare (cite: not sure, seems obvious).
+
+These are three areas that are usually heavily regulated specifically in order to prevent for-profit companies from becoming too predatory. Does anybody regret breaking up AT&T and Standard Oil? (TODO: is PG&E actualy public-private?) Libertarians nonwithstanding, it seems like if we agree that the unenumerated right of clean drinking water is too important to be left (only) in the hands of private companies, that free speech should be equally unencumbered by predatory capitalism is a no-brainer, especially because the Constitution explicitly bars government tampering.
+
+It shouldn't need repeating, but I think I will anyway: Facebook and Twitter are not (currently[^4]) beholden to _anybody_ except their shareholders. That Twitter comes off as the more ban-happy and left-leaning of the two is not out of the goodness of Jack Dorsey's heart in wanting to promote civil discourse, but rather that he and other Twitter executives have calculated that taking such actions makes them look good among their target demographics (both user and advertiser), and that keeps the gravy train chugging. Not to mention that the First Amendment doesn't apply to them, as everybody keeps trying to tell the flag-waving loonies that Facebook bans.
+
+The second reason, the more provocative of the two and the one that I will focus on for the rest of this post, is that we should not consider the forum these companies provide to be so useful as to be considered "indispensible". Beyond the well-documented harm these companies facilitate and turn a blind eye to (cite: anti-Rohingya campaign), they also don't seem to provide a service sufficiently unique to justify their downsides, even if you buy into Zuckerberg's naive notion (cite!) that more interpersonal connectivity is inherently, objectively good and everything would be solved if people would just talk.
+
+Refine this sentence: They are successful the same way any aggregator (or walled garden) is: the network effect. Maybe compare to Apple or Reddit? The point is that they are an amalgamation of existing solutions, and not actually a solution on their own. Tim Berners-Lee wanted the whole internet to be interconnected for this reason.
+
+-------------------------------------------------------------------------------
+
+Why would Facebook be considered indispensible? (I'll be focusing on Facebook for much of the remainder of this post; between their copying of features like hashtags from Twitter and their increasing aggression in surfacing content from strangers, the difference between Facebook and Twitter is more one of culture than features.)
+
+I think it would be illustrative to start by enumerating the core features of Facebook. To its users (i.e., not advertisers), Facebook is a:
+
+- contact list and personal calendar
+- storage organizer for multimedia
+- way to organize and discover interest groups and events
+- channel to broadcast information from few to many
+- messaging application for both public and private communications
+- platform for people to self-promote and find an audience
+
+None of the concrete features of Facebook -- contact lists, media, messaging, etc. -- are novel. Indeed, some of them have existed in various forms for hundreds or thousands of years and are simply reimagined for the internet era. I would argue that what makes Facebook Facebook is not this list of features, but the services it is able to provide by virtue of "everyone" having a Facebook account:
+
+- centralization of all these related features, so you can, for instance, seamlessly hop between joining groups, messaging individuals in them, and putting their events on your calendar
+- discoverability, a.k.a., a ready-made audience of billions for anyone with enough patience and keep yelling into the void until someone acknowledges you
+
+This reading is supported by the widely-held belief (cite!) that Instagram was acquired for its users, not its product or employees.
+
+You know what this sounds like? The internet, as envisioned by Tim Berners-Lee and friends.
+
+Do people with TikTok have Facebook or Twitter accounts? is TikTok actually a much healthier type of social network?
+
+-------------------------------------------------------------------------------
+
+There's a broader trend on the internet nowadays towards centralization. Centralization is not inherently a bad thing, though it should be noted that decentralization was a core founding principle of the internet, and why it's able to self-heal from outages or problems, routine or sudden, localized or not, malicious or accidental, physical or social.
+
+TODO ^^^
+
+Do I want to get into a long thing about Tim Berners-Lee and the semantic web, or keep talking about how to recreate social media from its constituent parts?
 
 -------------------------------------------------------------------------------
 
@@ -85,3 +129,5 @@ The basic argument was as follows:
 [^1]: Ah, the way of the world.
 [^2]: Time will tell, but one can hope.
 [^3]: The [ACLU's page on freedom of expression](https://www.aclu.org/other/freedom-expression) outlines their position nicely, and even has some illuminating clarifications, such as explaining why requiring permits for demonstrations is legal under the First Amendment. Unrelated fun fact: [that Voltaire quote isn't a Voltaire quote](https://quoteinvestigator.com/2015/06/01/defend-say/).
+[^4]: Foreshadowing!
+
