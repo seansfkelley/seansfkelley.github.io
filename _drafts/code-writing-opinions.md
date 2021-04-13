@@ -9,15 +9,17 @@ title: Code Writing and Review Opinions
 * TOC
 {:toc}
 
-## How to Read This Document
+## How to Read This
 
-I titled this page "opinions" on purpose. Nothing here is objectively correct, but these opinions and styles are the main pillars which support my code writing and as such are the things I look for in code reviews.
+I titled this post "opinions" on purpose. Nothing here is objectively correct, but these opinions and styles are the main pillars which support my code writing and as such are the things I look for in code reviews.
 
 Unless otherwise specified, none of these opinions are hard and fast. They overlap and sometimes trade off. Ultimately, code needs to serve an end, and sometimes that requires compromising on principles. Not often, though. :wink:
 
-## Underlying Philosophy
+## But First: The Underlying Philosophy
 
-These are more abstract concepts that drive the more specific opinions, below. These philosophies are idealistic and can't always be achieved within in the constraints of any given code review, but nevertheless should be strived for.
+Before wading into the crossfire on when and how to write comments, I want to outline some more abstract concepts that are reflected in the more-specific opinions that follow.
+
+The philosophical points below are idealistic and can't always be achieved within in the constraints of any given code review, but I strive for them when possible.
 
 ### Data First, Business Logic Second
 
@@ -25,7 +27,7 @@ These are more abstract concepts that drive the more specific opinions, below. T
 >
 > - Fred Brooks, Mythical Man Month
 
-If you don't know what values you're operating with, you can't do anything with them. Names, types and relationships between types should be the primary driver for how code is structured.
+If you don't know what values you're operating with, you can't do anything with them. The names of values, the types of values, and the relationships between values based on their types should be the primary driver for how code is structured.
 
 ### Tools, Not Process
 
@@ -39,11 +41,11 @@ Don't do manually what can be done automatically. Put the work in now to find, c
 
 Code is an unambiguous, precise specification of behavior, so treat it like one. Computers don't need to have code explained to them, but people do. Write your code so it's clear what you intend to have happen, so that when it inevitably doesn't, someone can understand what you were trying to do.
 
-This is intended to be a broader umbrella than "don't be clever", which is a corollary.
+This is intended to be a broader umbrella than the oft-cited "don't be clever", which is a consequence of striving to explain intent.
 
 ### Write Quality Code the First Time
 
-Spend the time now to save the time later. Every corner you cut will be paid for dozens of times over with every reader of your code. Bike shed your names before you merge.
+Spend the time now to save the time later. Every corner you cut will be paid for dozens of times over with every reader of your code. Bike shed your names before you merge. Your prototype is most likely going to end up in production.
 
 ## Basic Code Style + Linting
 
@@ -66,11 +68,17 @@ In this case, automated formatters are likely to wreck your significant indentat
 
 ## Comments
 
-Comments should be used to explain _why_, not _what_ and definitely never _how_. Use them sparingly.
+Comments should be used to explain _why_, not _what_ and definitely never _how_.
 
-Code should strive to be self-explanatory. It is a specification of behavior, unlike comments, which are neither type-checked nor executed. If you're discussing behavior, it belongs in the code. If there is no way to write the code without making your reader wonder "why?", _then_ you put in a comment.
+### When to Use Comments
 
-### Useful Comments
+Use comments sparingly.
+
+Code should strive to be self-explanatory. It is a precise specification of behavior covering both the _what_ and the _how_ by definition, and usually the _why_ by virtue of naming, organization and common contextual knowledge (i.e. what the whole program is designed to do).
+
+Comments are suitable only when there is no reasonable naming or organization of the code that can address the _why_. Explaining _what_ or _how_ risks the comment becoming misleading in the future, since comments are not checked for consistency or sanity by any automated tool, and misleading comments are worse than no comments.
+
+### Examples of Useful Comments
 
 Useful comments are those that explain necessary but unusual code constructs, such as:
 
@@ -81,7 +89,7 @@ Useful comments are those that explain necessary but unusual code constructs, su
 - Magic constants.
 - Hacks.
 
-### Extraneous Comments
+### Examples of Extraneous Comments
 
 Common cases where comments are used and shouldn't be:
 
@@ -90,56 +98,93 @@ Common cases where comments are used and shouldn't be:
   - In the specific cases of numbers or strings, it can sometimes be useful to break the derivation of the value out into steps for emphasis, e.g., `const FIFTEEN_MINUTES = 15 * 60 * 1000;`
 - Explaining a boolean parameter at a call site.
   - Instead, consider rewriting the called function to accept an enumeration or keyword arguments, forcing the call site to be clearer.
-- Restating adjacent code, e.g., annotating the line `sorted_values = sorted(values, key=lambda v: v.name)` with  `# sort the values by name`
+- Restating adjacent code, e.g., annotating the line `sorted_values = sorted(values, key=lambda v: v.name)` with `# sort the values by name`.
   - Instead, delete the comment.
-
-### Comments Age Poorly
-
-Comments get stale. When writing comments, keeping it about the _why_ makes the comment both more useful and more likely to last. Again, since comments are neither type-checked nor executed, they often get forgotten or ignored. Be careful when authoring comments to write them so they last: it's better to have no comment at all than a misleading one.
 
 ## Naming
 
 Good names go a long way towards pre-empting comments. Following certain conventions make the code-reading experience smoother by not surprising your reader. They can even speed up code-writing by making you think "What exactly am I trying to express here?" rather than reaching for the first thing that comes to mind.
 
-- **General**
-  - Try to use at least two words to describe each thing. The clarity of any given name goes way up from one word to two. This is a guideline, not a hard rule; sometimes just `data` is the only suitable name.
-    - Exception: in certain inline contexts, shorter names can improve clarity by reducing repetitive noise, such as in e.g. `all_possible_entries.filter(e => e.enabled)`.
-  - When in doubt, more words in a name is better than fewer. Overshare.
-  - Prefer well-known words like "get" rather than synonyms like "obtain".
-    - Corollary: use boring, clear names almost all the time. Don't make your reader need a dictionary.
-    - Exception: don't be afraid to use jargon when it's suitable. If you're overloading the subtraction operator, it's okay to say "subtrahend".
-    - Exception: if you want to define something new with _very particular_ semantics, it can be useful to choose a word that doesn't have baggage and define it to mean what you want.
-  - Try to avoid abbreviations. Your editor has autocomplete and it takes very little time to read "long" words. If you still want to, only do it if they are either (preferably both)...
-    - _common in English_, such as "appt" for "appointment"
-    - _obvious in context_, such as referring to the `mag` of a `Vector3`
-  - Treat initialisms and acronyms as words for the purposes of casing. Write `OwaspVpnHttpHandler` instead of `OWASPVPNHTTPHandler`.
-- **Functions** should have verb-y names including words like "get", "commit" or "write". This communicates that a function _performs an action_.
-- **Variables and parameters** should have noun-y names that communicate _what_ role they play, but rarely _how_ (i.e., avoid including the type of the variable in its name).
-- **Booleans** should be phrased...
+### General Naming Principles
+
+In no particular order.
+
+- Try to use at least two words to describe each thing. The clarity of any given name goes way up from one word to two. This is a guideline, not a hard rule; sometimes just `data` is the only suitable name.
+  - Exception: in certain inline contexts, shorter names can improve clarity by reducing repetitive noise, such as in e.g. `all_entries.filter(e => e.enabled)`.
+- When in doubt, more words in a name is better than fewer. Overshare.
+- Prefer well-known words like "get" rather than synonyms like "obtain".
+  - Corollary: use boring, clear names almost all the time. Don't make your reader need a dictionary.
+  - Exception: don't be afraid to use jargon when it's suitable. If you're overloading the subtraction operator, it's okay to say "subtrahend".
+  - Exception: if you want to define something new with _very particular_ semantics, it can be useful to choose a word that doesn't have baggage and define it to mean what you want.
+- Try to avoid abbreviations. Your editor has autocomplete and it takes very little time to read "long" words. If you still want to, only do it if they are either (or, preferably, both)...
+  - _common in English_, such as "appt" for "appointment"
+  - _obvious in context_, such as referring to the `mag` of a `Vector3`
+- Treat initialisms and acronyms as words for the purposes of casing. Write `OwaspVpnHttpHandler` instead of `OWASPVPNHTTPHandler`.
+
+### Naming Functions
+
+Functions should have verb-y names including words like "get", "commit" or "write". This communicates that a function _performs an action_.
+
+### Naming Values
+
+Values, like variables and parameters, should have noun-y names that communicate _what_ role they play, but rarely _how_ (i.e., avoid including the type of the variable in its name).
+
+#### Booleans
+
+Empirically, boolean values benefit from some special considerations. They should be phrased...
   - _declaratively_, like `is_something()` rather than `check_if_something()`.
   - _positively_, e.g. `is_something_enabled`, not negatively, e.g., `is_something_disabled`. This reduces indirection by one level and helps avoid double negatives.
 
-## Mutations, Lifetimes and Branching
+## Control Flow, Variable Scope and Mutation
 
-Complexity in most run-of-the-mill programming comes from two sources: branching (control flow) and state management (variables).
+In most run-of-the-mill programming, the complexity you and your reader have to deal with comes from having to track three things:
+
+- **control flow** paths, in order to understand all the possible paths through a piece of code
+- **variable scopes**, in order to understand what values are currently in play and could interact with each other
+- **mutations** made to a value after it is initially declared, changing how it may interact with other values or control flow constructs
+
+Designing your code in order to reduce the complexity introduced by these three things can significantly reduce the surface area for bugs and make the code easier to both read and write.
 
 ### Control Flow
 
-When writing code, you should strive to reduce the number of possible paths control can take through a given piece of code. This reduces the surface area for bugs and keeps complexity lower for your reader.
+Try to reduce the number of possible paths control can take through a given piece of code (the "cyclomatic complexity"). Ideally, this means eliminating branches entirely.
 
-_Ideally_, you can eliminate a branch entirely by rolling it into another branch. A common pattern to achieve this is to use empty collections rather than null in the "empty" case.
+Each independent group of control flow constructs multiplies the number of paths to keep track of. For instance, a function with three sequential `if`s already has 8 different flows! If instead those could make sense as a group of `if`-`else if`-`else if` or even `if`-`else if`-`else`, the number of paths is reduced to 4 and 3 (respectively).
 
-If that isn't possible, try to consider the appropriate place for branching. Should it be aggressively localized, such as to a ternary? Should it be broadened to the point where it's selecting between different classes that implement some common interface?
+#### Techniques for Controlling Branching
 
-### Variables
+TODO
 
-When writing code, you should strive to reduce the number of possible states. This reduces the surface area for bugs and keeps complexity lower for your reader.
+- empty collections and optional types instead of null
+- bounded loops instead of unbounded loops with continue/break
+- move the branching elsewhere to localize the blast radius: "If that isn't possible, try to consider the appropriate place for taking a branch. Should it be aggressively localized, such as to a ternary? Should it be broadened to the point where it's selecting between different objects that implement some common interface?"
 
-_Ideally_, you can eliminate a variable entirely because its value can be derived from other value when necessary.
+### Variable Scope
 
-If that isn't possible, try to reduce the lifetime of the variable. Rather than defining it at the top of the enclosing function, calculate it right before it's used the first time. This reduces the number of ways that variable can interact with other variables and functions.
+Try to reduce the number of ways variables could potentially interact with each other. Ideally, this means eliminating a variable entirely.
 
-In languages that support it, declaring variables `const` is recommended in all cases where it's possible. We aren't writing highly performance-sensitive code, so it's okay to make the computer do a little extra work rather than using extensive in-place mutation or reusing names.
+Every declared variable is another item for you and your reader to keep track of. The larger the scope of the variable, the longer one has to remember what the value is for and what changes, if any, the value has undergone since its declaration. Longer-lived variables also overlap with more other variables, increasing the number of possible interactions an unfamiliar reader has to potentially consider.
+
+#### Techniques
+
+TODO
+
+- on-the-fly derivations (e.g. @property in Python, thunks in JavaScript)
+- deferred declaration
+- break up functions (since functions are usually also scope boundaries)
+
+### Side Effects
+
+Try to reduce the number of possible states your program can be in. Ideally, values can be initialized onces and never changed.
+
+TODO: In languages that support it, declaring variables constant (the irony!) is recommended in all cases where it's possible. The majority of modern application glue code is not a performance bottleneck, and writing fast but unreadable code is rarely the best way to scale.
+
+#### Techniques
+
+TODO
+
+- declare variables requiring complex control flow in blocks or dedicated functions
+- eliminate variables that can be derived from another
 
 ## If Block Matching
 
