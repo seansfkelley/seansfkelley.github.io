@@ -57,6 +57,8 @@ TODO ^^^
 
 Do I want to get into a long thing about Tim Berners-Lee and the semantic web, or keep talking about how to recreate social media from its constituent parts?
 
+Hate groups and public shaming spin out of control when you can self-promote. Classical centralization -- radio, TV, newspapers -- and decentralization make that more difficult. We should try to get the best of both.
+
 -------------------------------------------------------------------------------
 
 _"...platforms that have become indispensable for the speech of billions"._ To be beholden to the whims of a for-profit company for access to a wide audience is a concerning thought. Or rather, it sounds like it is, but it's been generally accepted as both unavaoidable and reasonable for hundreds of years in the form of newspapers, radio, and television.
