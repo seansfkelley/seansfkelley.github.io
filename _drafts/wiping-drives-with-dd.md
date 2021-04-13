@@ -19,19 +19,19 @@ while [ 1 ]; do
 done
 ```
 
-This script loops forever, writing 1000000 * 1000 = 1000000000 bytes (a gigabyte, in the true sense) of zeroes to the beginning of `/dev/disk6`. Since partition tables are located near the beginning of the disk, this will wipe them and effectively "factory reset" the drive.
+This script loops forever, writing 1000000 * 1000 = 1000000000 bytes (a gigabyte, in the true sense) of zeroes to the beginning of `/dev/disk6`. Since partition tables are located near the beginning of the disk, this will trash them and effectively "factory reset" the drive.
 
-To run this script, first determine what disk identifier the corrupted disk will have when you plug it in. I did this by plugging and unplugging it a few times to verify it always got assigned the same identifier (well, when it wasn't leaving zombie disks behind). Put that identifier into the script.
+To run this script, first determine what disk identifier the corrupted disk will have when you plug it in. I did this by plugging and unplugging it a few times to verify it always got assigned the same identifier (well, when it wasn't leaving zombie disks behind). Put that identifier into the script in place of `/dev/disk6`.
 
-Run the modified script before the disk is plugged in. That'll prompt for the first `sudo`, then start looping and failing forever. Plug in the corrupted disk and wait. A successful run will be a lot quieter than the wall of errors you get while the disk isn't plugged in, and when it finishes, you can kill the script.
+Run the modified script before the disk is plugged in. That'll prompt for the first `sudo`, then start looping (and failing) forever. Plug in the corrupted disk and wait. A successful run will be a lot quieter than the wall of errors you get while the disk isn't plugged in, and when it finishes, you can kill the script.
 
 After running this, then unplugging and replugging the drive, Disk Utility found an empty disk and was happy to partition it for me.
 
 A couple notes on the implementation.
 
-`dd` is being used because the disk is unmountable and we specifically want to wipe the entire thing, partition tables included. This is a different, much harsher version of wiping a disk than what one normally does.
+First, the infinite loop is used to grab the disk before the higher-level parts of the operating system can. The lower-level parts are demonstrably working (hence the presence of `/dev/disk6`), but the higher-level parts get stuck forever trying to mount it (or something of the sort), failing, and trying again, thus preventing anything else from accessing the disk.
 
-The disk is corrupted in a manner where the operating system is trying to mount it (or something or the sort) forever, but failing, preventing other access to the disk even though the low-level interfaces. By wrapping `dd` in an infinite loop with no wait, we can grab the disk before the operating system tries (and fails) to do anything fancy with it.
+Second, `dd` is being used because the disk is unmountable and we specifically want to wipe the entire thing, partition tables included. This is a different, much harsher version of wiping a disk than what one normally does.
 
 {% include next-previous.html %}
 
