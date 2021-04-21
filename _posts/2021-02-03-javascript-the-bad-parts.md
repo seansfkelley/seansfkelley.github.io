@@ -41,7 +41,7 @@ JavaScript kind of worked itself into a corner on this one, because it wanted to
 
 When supporting silently returning null from a nonexistent field, how would one differentiate between "object does not have this field" and "object has this field, but it's null"? Do you even need to? This is actually a very tricky question which most languages sidestep by not having this feature at all -- it is an error to access an unknown field, even in languages where you can define fields dynamically through introspection.
 
-JavaScript's approach is to instead dump this tricky question onto the end user, again and again and again. Some standard library methods return `null` in failure or no-op cases, some `undefined`. Some accept only one of them as the "do nothing" input and throw errors on the other. JSON serialization treats them differently. You can assign an object field to `undefined`, which makes it truly weird to understand if the field in question exists (but is undefined) or doesn't exist at all. They respond differently to `typeof` and `===`. Every corner of the language becoems a trap, even more so than the [billion-dollar mistake](https://en.wikipedia.org/wiki/Null_pointer#History) that it already was.[^2]
+JavaScript's approach is to instead dump this tricky question onto the end user, again and again and again. Some standard library methods return `null` in failure or no-op cases, some `undefined`. Some accept only one of them as the "do nothing" input and throw errors on the other. JSON serialization treats them differently. You can assign an object field to `undefined`, which makes it truly weird to understand if the field in question exists (but is undefined) or doesn't exist at all. They respond differently to `typeof` and `===`. Every corner of the language becomes a trap, even more so than the [billion-dollar mistake](https://en.wikipedia.org/wiki/Null_pointer#History) that it already was.[^2]
 
 Thankfully, and with immense irony, `==` can be used to mostly ignore the differences when doing the most common operation with null values, checking if they are null, since coercion treats them both the same.
 
@@ -53,9 +53,9 @@ const fn = new Foo().getThis;
 assert(fn() === undefined);
 ```
 
-Dyanmic `this` whose design goal makes sense when you think about it, but whose implementation and usage is at least confusing if not outright developer-hostile. In JavaScript, `this` is just syntactic sugar to name an implicit argument to an instance method, so in a sense, dynamic `this` is just giving you a mechanism to provide a value for that parameter.
+Dynamic `this` is an interesting feature in theory, but in practice the implementation and usage is confusing if not outright developer-hostile. In every language with it, `this` is just syntactic sugar to name an implicit argument to an instance method. Dynamic `this` is just giving you a mechanism to provide a value for that parameter, which sounds simple on paper.
 
-The problem is that it's half-baked: you have to step carefully when passing around a function reference from an object lest you end up with `this === window` or `this === undefined`, both of which are certainly undesirable when dealing with those function references. But the implicit-by-definition nature of the `this` keyword strongly evokes C-family-style non-dynamic `this`, which is incorrect.
+The problem is that it's half-baked: you have to step carefully when passing around a function reference from an object lest you end up with `this === window` or `this === undefined`, both of which are certainly undesirable when dealing with those function references. But the implicit-by-definition nature of the `this` keyword strongly evokes C-family-style non-dynamic (...static?) `this`, which is incorrect.
 
 The closest fully-baked comparison I can think of is Python. Python offers the same semantics in the end, but differs in two crucial ways:
 
@@ -147,7 +147,7 @@ I am relieved that these have become effective non-issues.
 
 The [record and tuple proposal](https://github.com/tc39/proposal-record-tuple) that introduced this post is interesting to me because it solves, or contributes to a solution for, the worst of the above problems.
 
-With language-level immutability, I can spend less mental energy on careful use of spread and destructuring, and can use `Map` and `Set` for what they're meant for -- basic collection types respecting value equality. I can also almost entirely stop using objects, since I generally either way a `Map` or a `Record`, and not some weird hybrid.
+With language-level immutability, I can spend less mental energy on careful use of spread and destructuring, and can use `Map` and `Set` for what they're meant for -- basic collection types respecting value equality. I can also almost entirely stop using objects, since I generally either want a `Map` or a `Record`, and not some weird hybrid.
 
 Arrays continue be useful, but they've always been less weird than objects, so it's okay.
 
