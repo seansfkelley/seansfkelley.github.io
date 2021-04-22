@@ -1,6 +1,6 @@
 ---
 layout: post
-title: A Theory on Regulating Social Media
+title: Facebook is Too Big
 ---
 
 Social media has been on poeples' minds increasingly often these last few years. Regardless of where you stand on Twitter moderation, or the relative lack thereof on Facebook, or the continued existence of Parler, surely you agree that _something_ is broken. It appears that nobody is happy with the way things are working except those who stand to make money from it.[^1]
@@ -9,19 +9,28 @@ While I am relieved to never again have to hear about Twitter as the mouthpiece 
 
 > We understand the desire to permanently suspend him now, but it should concern everyone when companies like Facebook and Twitter wield the unchecked power to remove people from platforms that have become indispensable for the speech of billions...  President Trump can turn to his press team or Fox News to communicate with the public, but others... will not have that luxury.
 
-What's really concerning is not so much that "Facebook and Twitter wield the unchecked power to remove people from [their] platforms" as it is that Facebook and Twitter are considered "platforms that have become indispensable for the speech of billions". It's concerning for two reasons.
+What's really concerning is not so much that "Facebook and Twitter wield the unchecked power to remove people from [their] platforms" as it is that Facebook and Twitter are considered "platforms that have become indispensable for the speech of billions".
 
-The first reason is that we should never find ourselves in a situation where a for-profit company is the conduit through which billions exercise their fundamental rights. This seems like a self-evident thing to say -- after all, such companies' primary goal is money, not your rights -- but in case it's not, there is a long list of domains where a lack of sufficiently aggressive regulation has led to companies abusing the populace: Flint's water problems, ERCOT's unwillingness to prepare for cold weather, the entire healthcare system (remember pre-existing conditions?), Intuit lobbying for more difficult taxes, for-profit prisons being paid by the prisoner... the list goes on.
+If history is any guide, we know that allowing for-profit companies to become "indispensible" is dangerous. The recklessness of banks and their subsequent bailout during 2008 looms large.[^4] More recently, Texas was rudely reminded of the dangers of for-profit utility infrastructure in February 2021. In the past, we used to break up companies like AT&T and Standard Oil, and it's safe to say those breakups have served consumer and country well.
+
+But Facebook -- I'll be focusing on Facebook for much of the rest of the post -- doesn't have to be indispensible. It appears as such because to leave it is to lose easy connectivity not just to friends and family but to more loosely-connected social events and groups you're unlikely to discover and keep up with any other way. This [network effect](https://en.wikipedia.org/wiki/Network_effect) is so strong that it is almost singlehandedly reponsible for the company's dominant position.
 
 -------------------------------------------------------------------------------
 
-Notably, none of these examples cover rights enumerated in the Constitution,[^4] but that hasn't historically stopped the government from intervening for the sake of the consumer. Does anybody regret breaking up AT&T or Standard Oil? Why are most utility companies public-prviate? Libertarians nonwithstanding, it seems like if we agree that the unenumerated right of clean drinking water is too important to be left (only) in the hands of private companies, that free speech should be equally unencumbered by predatory capitalism is a no-brainer, especially because the Constitution explicitly bars government tampering (unlike in the case of clean drinking water).
+Counterintuitively, it is these looser connections that contribute the most to Facebook's staying power. You can transplant Messenger conversations to SMS, iMessage, Telegram, Signal or any number of comparable services and get more or less the same experience. Photo albums can be put on Google Photos, iCloud, or even Flickr. Your computer and phone have calendars and contact lists built-in. Email will always be around. But there is no good answer for discovering events or interest groups. You could scour Craigslist, or ask your friends, or go to the local cafe's posting board (if it even has one), or just visit the site of every concert venue in your city individually once a month.
 
-It shouldn't need repeating, but I think I will anyway: Facebook and Twitter are not (currently[^5]) beholden to _anybody_ except their shareholders. That Twitter comes off as the more ban-happy and left-leaning of the two is not out of the goodness of Jack Dorsey's heart in wanting to promote civil discourse, but rather that he and other Twitter executives have calculated that taking such actions makes them look good among their target demographics (both user and advertiser), and that keeps the gravy train chugging. Not to mention that the First Amendment doesn't apply to them, as everybody keeps trying to tell the flag-waving loonies that Facebook bans.
+Complementing the network effect is the [walled garden](https://en.wikipedia.org/wiki/Closed_platform) of tightly-integrated features for communicating with your network. Taken individually, all of Facebook's main features -- contact lists, instant messaging, local events and groups, calendars, media storage and tagging, public status updates -- have competitors that are comparable or better. But no competitor has _all_ of these things and also all of your friends, family and acquaintances. No single competitor enables you to seamlessly switch from messaging to event hosting to status updates and allow your audience follow along too.
+
+Facebook is leaning into the network effect/walled garden strategy
+
+- unbundling as a strategy: https://bits.blogs.nytimes.com/2014/04/16/can-facebook-innovate-a-conversation-with-mark-zuckerberg/
+- giving up on groups: https://www.facebook.com/fbfacts/390237724681928
+
+The ready-made audience of all your friends, family and acquaintances (including those left behind from an earlier life and those not yet discovered) coupled with the easy-to-use walled garden of communication features make Facebook fertile ground for discovering like-minded people who share interests. Indeed, Facebook's Free Basics, which offers internet connectivity to rural and underdeveloped areas free of charge, is [a transparent attempt to hook new users and conflate Facebook with the wider internet](https://globalmedia.mit.edu/2020/04/21/the-rise-and-fall-and-rise-again-of-facebooks-free-basics-civil-and-the-challenge-of-resistance-to-corporate-connectivity-projects/).
+
+-------------------------------------------------------------------------------
 
 The second reason, which is the more provocative of the two and the one that I will focus on for the rest of this post, is that we should not consider the forum these companies provide to be so useful as to be considered "indispensible". Beyond the [well-documented harm these companies facilitate](https://www.bbc.com/news/world-asia-46105934) and turn a blind eye to, they also don't seem to provide a service sufficiently unique to justify their downsides, even if you buy into [Facebook's naive notion that more interpersonal connectivity is inherently, objectively good](https://www.buzzfeednews.com/article/ryanmac/growth-at-any-cost-top-facebook-executive-defended-data#.eeggDmkA3) and everything would be solved if people would just talk.
-
-So why would Facebook be considered indispensible to your average user? (I'll be focusing on Facebook for much of the remainder of this post; it's more featureful and has a larger user base than any other social network, especially when you include WhatsApp and Instagram.)
 
 Centralization.
 
@@ -111,6 +120,4 @@ The basic argument was as follows:
 [^1]: Ah, the way of the world.
 [^2]: Time will tell, but one can hope.
 [^3]: The ACLU has a history of defending rights regardless of ideology -- a [press release in 2012](https://www.aclu.org/press-releases/aclu-em-defends-kkks-right-free-speech) advertises that they defended the First Amendment rights of the KKK -- and that's reflected in this quote as well. This type of across-the-board defense of civil rights is appealing for its consistency, and lends the ACLU quite a lot of credibility when it takes positions on these cases. Indeed, the [ACLU's page on freedom of expression](https://www.aclu.org/other/freedom-expression) outlines their position nicely, and even has some illuminating clarifications, such as explaining why requiring permits for demonstrations is legal under the First Amendment.
-[^4]: The Constitution is focused on higher ideals than potable water, and I haven't yet formed an opinion on whether I think it should have been a little more precise on some of the more practical issues.
-[^5]: Foreshadowing!
-
+[^4]: Back then it was called "too big to fail".
