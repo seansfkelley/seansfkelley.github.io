@@ -13,30 +13,25 @@ What's really concerning is not so much that "Facebook and Twitter wield the unc
 
 If history is any guide, we know that allowing for-profit companies to become "indispensible" is dangerous. The recklessness of banks and their subsequent bailout during 2008 looms large.[^4] More recently, Texas was rudely reminded of the dangers of for-profit utility infrastructure in February 2021. In the past, we used to break up companies like AT&T and Standard Oil, and it's safe to say those breakups have served consumer and country well.
 
-But Facebook -- I'll be focusing on Facebook for much of the rest of the post -- doesn't have to be indispensible. It appears as such because to leave it is to lose easy connectivity not just to friends and family but to more loosely-connected social events and groups you're unlikely to discover and keep up with any other way. This [network effect](https://en.wikipedia.org/wiki/Network_effect) is so strong that it is almost singlehandedly reponsible for the company's dominant position.
+But Facebook -- I'll be focusing on Facebook for the next little bit -- doesn't have to be indispensible. It appears as such because to leave it is to lose easy connectivity not just to friends and family but to more loosely-connected social events and groups you're unlikely to discover and keep up with any other way. This [network effect](https://en.wikipedia.org/wiki/Network_effect) is so strong that it is almost singlehandedly reponsible for the company's dominant position.
+
+Complementing the network effect is the [walled garden](https://en.wikipedia.org/wiki/Closed_platform) of tightly-integrated features for communicating with your network. Taken individually, all of Facebook's main features have competitors that are comparable or better. But no single competitor enables you to seamlessly switch from messaging to event hosting to status updates and allow your friends, family and acquaintances to follow along too.
+
+Facebook is leaning into the network effect/walled garden strategy with [supposedly-philanthropic AOL-like initiatives like Free Basics](https://globalmedia.mit.edu/2020/04/21/the-rise-and-fall-and-rise-again-of-facebooks-free-basics-civil-and-the-challenge-of-resistance-to-corporate-connectivity-projects/), which is a little tone-deaf coming from a company that [turns a blind eye to systematic abuse in those same areas of the world](https://www.bbc.com/news/world-asia-46105934).[^5] Interestingly, they did go through a phase where they thought [unbundling their main features into separate apps](https://bits.blogs.nytimes.com/2014/04/16/can-facebook-innovate-a-conversation-with-mark-zuckerberg/) was the way of the future, but only a few years later they [quietly gave up on that](https://www.facebook.com/fbfacts/390237724681928) since it undermines the walled garden aspect of the strategy.
+
+TODO: Need a better transition here.
+
+What would happen if we broke up Facebook? What if all those features were unbundled? What if you didn't have to be in the walled garden to discover like-minded people, or to express yourself to a large audience? These are the questions I would like to explore.
 
 -------------------------------------------------------------------------------
 
-Counterintuitively, it is these looser connections that contribute the most to Facebook's staying power. You can transplant Messenger conversations to SMS, iMessage, Telegram, Signal or any number of comparable services and get more or less the same experience. Photo albums can be put on Google Photos, iCloud, or even Flickr. Your computer and phone have calendars and contact lists built-in. Email will always be around. But there is no good answer for discovering events or interest groups. You could scour Craigslist, or ask your friends, or go to the local cafe's posting board (if it even has one), or just visit the site of every concert venue in your city individually once a month.
+Let's jump right in with some of the simpler features and a little bit of technical detail.
 
-Complementing the network effect is the [walled garden](https://en.wikipedia.org/wiki/Closed_platform) of tightly-integrated features for communicating with your network. Taken individually, all of Facebook's main features -- contact lists, instant messaging, local events and groups, calendars, media storage and tagging, public status updates -- have competitors that are comparable or better. But no competitor has _all_ of these things and also all of your friends, family and acquaintances. No single competitor enables you to seamlessly switch from messaging to event hosting to status updates and allow your audience follow along too.
+These are called App Links on Android.
 
-Facebook is leaning into the network effect/walled garden strategy
+iOS has a small but powerful feature called Universal Links. In short, when you follow a link anywhere on an iOS device, it'll prefer to open up the associated app if you have it. There's nothing special required by the sender or the receiver -- all the work is done by the app developer. If I send you a link to `yelp.com` and you have the Yelp app installed, your iPhone will open the Yelp app to the right place instead of dropping you on the less-featureful and less-mobile-optimized site. If you don't you get the site instead -- totally seamless.
 
-- unbundling as a strategy: https://bits.blogs.nytimes.com/2014/04/16/can-facebook-innovate-a-conversation-with-mark-zuckerberg/
-- giving up on groups: https://www.facebook.com/fbfacts/390237724681928
-
-The ready-made audience of all your friends, family and acquaintances (including those left behind from an earlier life and those not yet discovered) coupled with the easy-to-use walled garden of communication features make Facebook fertile ground for discovering like-minded people who share interests. Indeed, Facebook's Free Basics, which offers internet connectivity to rural and underdeveloped areas free of charge, is [a transparent attempt to hook new users and conflate Facebook with the wider internet](https://globalmedia.mit.edu/2020/04/21/the-rise-and-fall-and-rise-again-of-facebooks-free-basics-civil-and-the-challenge-of-resistance-to-corporate-connectivity-projects/).
-
--------------------------------------------------------------------------------
-
-The second reason, which is the more provocative of the two and the one that I will focus on for the rest of this post, is that we should not consider the forum these companies provide to be so useful as to be considered "indispensible". Beyond the [well-documented harm these companies facilitate](https://www.bbc.com/news/world-asia-46105934) and turn a blind eye to, they also don't seem to provide a service sufficiently unique to justify their downsides, even if you buy into [Facebook's naive notion that more interpersonal connectivity is inherently, objectively good](https://www.buzzfeednews.com/article/ryanmac/growth-at-any-cost-top-facebook-executive-defended-data#.eeggDmkA3) and everything would be solved if people would just talk.
-
-Centralization.
-
-Centralization has two aspects when considering Facebook: the **centralization of features** -- contact lists, messaging, calendars and media/tagging are all tightly integrated -- and the **centralization of an audience** -- enabling authors to broadcast to billions of potential readers, or, enabling readers to discover and choose among millions of authors.
-
-The centralization of features (while I'll call "integration" from now on) is secondary to the centralization of an audience, which is another name for the [network effect](https://en.wikipedia.org/wiki/Network_effect). This is obvious if you compare Facebook to Twitter: Twitter has far fewer features and interacts with fewer aspects of one's life, yet has a comparably large community finding value in it all the same. Even social networks with restrictive gimmicks like Snapchat and TikTok do just fine, as long as they've attracted enough users.
+Now imagine the same thing for photos.
 
 -------------------------------------------------------------------------------
 
@@ -121,3 +116,4 @@ The basic argument was as follows:
 [^2]: Time will tell, but one can hope.
 [^3]: The ACLU has a history of defending rights regardless of ideology -- a [press release in 2012](https://www.aclu.org/press-releases/aclu-em-defends-kkks-right-free-speech) advertises that they defended the First Amendment rights of the KKK -- and that's reflected in this quote as well. This type of across-the-board defense of civil rights is appealing for its consistency, and lends the ACLU quite a lot of credibility when it takes positions on these cases. Indeed, the [ACLU's page on freedom of expression](https://www.aclu.org/other/freedom-expression) outlines their position nicely, and even has some illuminating clarifications, such as explaining why requiring permits for demonstrations is legal under the First Amendment.
 [^4]: Back then it was called "too big to fail".
+[^5]: Then again, they do seem to have a [wide-eyed high-schooler's understanding of interpersonal communication](https://www.buzzfeednews.com/article/ryanmac/growth-at-any-cost-top-facebook-executive-defended-data#.eeggDmkA3).
