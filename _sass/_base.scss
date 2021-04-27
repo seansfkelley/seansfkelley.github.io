@@ -4,8 +4,8 @@ html {
 
 body {
   font: $font-weight-base #{$font-size-base}/#{$line-height-base} $font-family-base;
-  color: $text-color;
-  background-color: $background-color;
+  color: var(--text-color);
+  background-color: var(--background-color);
   font-kerning: normal;
   display: flex;
   min-height: 100vh;
@@ -25,15 +25,15 @@ h1, h2, h3, h4, h5, h6, p, blockquote, pre, ul, ol, dl, figure {
 }
 
 a {
-  color: $link-color-base;
+  color: var(--link-color-base);
   text-decoration: none;
 
   &:visited {
-    color: $link-color-visited;
+    color: var(--link-color-visited);
   }
 
   &:hover {
-    color: $link-color-hover;
+    color: var(--link-color-hover);
     text-decoration: underline;
   }
 }
@@ -63,8 +63,8 @@ h1, h2, h3, h4, h5, h6 {
 
 blockquote {
   padding-left: 12px;
-  border-left: 3px solid $border-color-blockquote;
-  color: $text-color-blockquote;
+  border-left: 3px solid var(--border-color-blockquote);
+  color: var(--text-color-blockquote);
 }
 
 pre,
@@ -72,7 +72,7 @@ code {
   font-family: $font-family-code;
   font-size: 0.9375em;
   border-radius: 1px;
-  background-color: $code-background-color;
+  background-color: var(--code-background-color);
 }
 
 code {
@@ -108,7 +108,7 @@ figcaption {
 hr {
   margin: ($spacing * 2) $spacing;
   border: none;
-  border-bottom: 1px solid $brand-color-light;
+  border-bottom: 1px solid var(--brand-color-light);
 }
 
 .content-wrapper {

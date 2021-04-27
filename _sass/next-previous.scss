@@ -17,7 +17,7 @@
   flex: 1;
 
   .next-previous-label, .next-previous-icon {
-    color: $text-color;
+    color: var(--text-color);
   }
 
   &:hover  {
@@ -28,7 +28,7 @@
     }
 
     .next-previous-label, .next-previous-icon {
-      color: $text-color;
+      color: var(--text-color);
     }
   }
 }
