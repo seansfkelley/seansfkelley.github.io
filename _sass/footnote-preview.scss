@@ -1,0 +1,57 @@
+.footnote-preview {
+  background-color: var(--tooltip-color);
+  color: var(--text-color);
+  font-size: $font-size-small;
+  border: 1px solid var(--tooltip-color);
+  padding: ($spacing / 4) ($spacing / 2);
+  border-radius: 2px;
+  max-width: 300px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 100ms;
+  box-shadow: rgba(149, 157, 165, 0.6) 0px 0px 8px;
+
+  &[data-show] {
+    opacity: 1;
+    pointer-events: initial;
+  }
+
+  p:last-of-type {
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .arrow,
+  .arrow::before {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--tooltip-color);
+  }
+
+  .arrow {
+    visibility: hidden;
+  }
+
+  .arrow::before {
+    visibility: visible;
+    content: '';
+    transform: rotate(45deg);
+  }
+
+  &[data-popper-placement^='top'] > .arrow {
+    bottom: -4px;
+  }
+
+  &[data-popper-placement^='bottom'] > .arrow {
+    top: -4px;
+  }
+
+  &[data-popper-placement^='left'] > .arrow {
+    right: -4px;
+  }
+
+  &[data-popper-placement^='right'] > .arrow {
+    left: -4px;
+  }
+}
