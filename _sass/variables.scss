@@ -10,17 +10,24 @@ $spacing:          12px !default;
 $width-mobile:     600px !default;
 $width-desktop:    800px !default;
 
-// Theming; TODO: dark mode
-$brand-color:                #828282 !default;
-$brand-color-light:          lighten($brand-color, 40%) !default;
-$brand-color-dark:           darken($brand-color, 25%) !default;
-$site-title-color:           $brand-color-dark !default;
-$text-color:                 #111111 !default;
-$background-color:           #fdfdfd !default;
-$code-background-color:      #eeeeee !default;
-$highlight-background-color: #fdffdd !default;
-$link-color-base:            #2a7ae2 !default;
-$link-color-visited:         darken($link-color-base, 15%) !default;
-$link-color-hover:           $text-color !default;
-$text-color-blockquote:      lighten($text-color, 30%) !default;
-$border-color-blockquote:    lighten($text-color-blockquote, 30%) !default;
+:root {
+  --brand-color:                #828282;
+  --brand-color-light:          #e8e8e8;
+  --brand-color-dark:           #424242;
+  --site-title-color:           var(--brand-color-dark);
+  --text-color:                 #111111;
+  --background-color:           #fdfdfd;
+  --code-background-color:      #eeeeee;
+  --highlight-background-color: #fdffdd;
+  --link-color-base:            #2a7ae2;
+  --link-color-visited:         #1756a9;
+  --link-color-hover:           var(--text-color);
+  --text-color-blockquote:      #5e5e5e;
+  --border-color-blockquote:    #aaaaaa;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    // TODO: Dark mode!
+  }
+}
