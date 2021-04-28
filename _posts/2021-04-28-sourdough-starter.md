@@ -1,6 +1,7 @@
 ---
 layout: post
-title: "World's Easiest Pet: Caring for Soursough Starter"
+title: "World's Easiest Pet: Caring for Sourdough Starter"
+redirect_from: /sourdough
 ---
 
 Sourdough starter are the easiest pet you can have. Easier than plants or cats. They have a feeding cycle, but once they’re alive and strong, they’re resilient to your inevitable negligence. If you got a starter from me, know that it's almost old enough to vote at this point (the person I got it from said it was from 2005-ish). I've also definitely forgotten it in the fridge for longer than I'm willing to admit, and it's doing just fine.

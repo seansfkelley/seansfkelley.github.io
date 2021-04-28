@@ -4,6 +4,7 @@ url: "https://sea.nkelley.me"
 date_format: "%Y-%m-%d"
 plugins:
   - jekyll-feed
+  - jekyll-redirect-from
 exclude:
   - .sass-cache/
   - .jekyll-cache/
