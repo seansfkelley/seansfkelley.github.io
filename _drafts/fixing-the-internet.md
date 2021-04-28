@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Break Up Facebook
+title: Breaking Up Facebook
 ---
 
 Social media has been on peoples' minds increasingly often these last few years. Regardless of where you stand on Twitter moderation, or the relative lack thereof on Facebook, or the continued existence of Parler, surely you agree that _something_ is broken. It appears that nobody is happy with the way things are working except those who stand to make money from it.[^1]
@@ -107,6 +107,8 @@ Many of the ideas here grew out of a train of thought focusing on regulating soc
 The basic argument was as follows:
 
 - social media companies exercise direct and strong control over what content reaches users -- ranking algorithms, suggested content and at times, censorship
+
+https://www.theatlantic.com/magazine/archive/2021/04/the-internet-doesnt-have-to-be-awful/618079/ (originally printed as "The Internet Doesn't Have to Be Awful", though I like both titles).
 
 {% include next-previous.html %}
 
