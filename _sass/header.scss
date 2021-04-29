@@ -21,3 +21,15 @@
     color: var(--site-title-color);
   }
 }
+
+body[data-theme="auto"] #theme-switcher:after {
+  content: 'auto';
+}
+
+body[data-theme="dark"] #theme-switcher:after {
+  content: 'dark';
+}
+
+body[data-theme="light"] #theme-switcher:after {
+  content: 'light';
+}
