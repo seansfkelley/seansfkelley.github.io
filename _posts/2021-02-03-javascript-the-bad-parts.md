@@ -21,6 +21,8 @@ assert([] == "");
 assert({} != "");
 ```
 
+(FYI: This page has a basic `assert` function defined if you want to pop open the browser console and copy-paste these examples in.)
+
 Maybe in the early days of the web when everyone was flying by the seat of their pants it made sense to paper over newbie mistakes like comparing a stringified number to a number literal.
 
 That said, automatic type coercion is a feature very rarely seen in other programming languages to this degree. Even Python, which lets you overload almost every conceivable hook, tends to avoid this type of behavior. The cases it does appear in are usually highly restricted, such as allowing comparison between a datetime and a string, or a datetime and a number.
@@ -30,7 +32,7 @@ I can't think of a single case where it is desirable, from a correctness, readab
 ## Two Null Types: `null` and `undefined`
 
 ```js
-assert(/foo/.test("bar") === undefined);
+assert(({}).foo === undefined);
 assert("bar".match(/foo/) === null);
 assert(JSON.stringify({ foo: null, bar: undefined }) === '{"foo":null}');
 assert(typeof null === "object");
@@ -160,3 +162,11 @@ As for `===` and dynamic `this`, well, I have linters and more brainspace to ded
 [^1]: Objective-C is an extensively flawed and weird language in its own right, but let's not get into that here.
 [^2]: Inflation and the pervasiveness of software mean that this cost is definitely _well_ above a billion at this point. But I don't fault C.A.R. Hoare, the null reference was inevitable and entirely reasonable. Optional types are big in imperative languages now, anyway.
 [^3]: It's entirely possible there are other incantations that allow configuring `self` that I don't know about. But the point stands: Python does the sane thing by default when using method references, and requires extra effort to do weird stuff.
+
+<script type="text/javascript">
+  function assert(c) {
+    if (!c) {
+      throw new Error("assertion failure");
+    }
+  }
+</script>
