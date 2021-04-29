@@ -1,70 +1,34 @@
-// Colors in here are lifted from blueprintjs.
 .alert {
-  background-color: rgba(19,124,189,.15);
+  background-color: var(--intent-default-background-color);
   padding: $spacing;
   border-radius: 3px;
 
   .alert-title {
     font-weight: 600;
-    color: #106ba3;
+    color: var(--intent-default-text-color);
   }
 
   &.alert-success {
-    background-color: rgba(15, 153, 96, 0.15);
+    background-color: var(--intent-success-background-color);
 
     .alert-title {
-      color: #0d8050;
+      color: var(--intent-success-text-color);
     }
   }
 
   &.alert-warning {
-    background-color: rgba(217, 130, 43, 0.15);
+    background-color: var(--intent-warning-background-color);
 
     .alert-title {
-      color: #bf7326;
+      color: var(--intent-warning-text-color);
     }
   }
 
   &.alert-danger {
-    background-color: rgba(219, 55, 55, 0.15);
+    background-color: var(--intent-danger-background-color);
 
     .alert-title {
-      color: #c23030;
-    }
-  }
-}
-
-
-@media (prefers-color-scheme: dark) {
-  .alert {
-    background-color: rgba(19,124,189,.25);
-
-    .alert-title {
-      color: #48aff0;
-    }
-
-    &.alert-success {
-      background-color: rgba(15,153,96,.25);
-
-      .alert-title {
-        color: #3dcc91;
-      }
-    }
-
-    &.alert-warning {
-      background-color: rgba(217, 130, 43, 0.25);
-
-      .alert-title {
-        color: #ffb366;
-      }
-    }
-
-    &.alert-danger {
-      background-color: rgba(219, 55, 55, 0.25);
-
-      .alert-title {
-        color: #ff7373;
-      }
+      color: var(--intent-danger-text-color);
     }
   }
 }
