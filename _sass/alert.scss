@@ -1,26 +1,70 @@
 // Colors in here are lifted from blueprintjs.
 .alert {
-  background-color: #b3cfff;
-  border: 1px solid #91ace5;
+  background-color: rgba(19,124,189,.15);
   padding: $spacing;
   border-radius: 3px;
 
+  .alert-title {
+    font-weight: 600;
+    color: #106ba3;
+  }
+
   &.alert-success {
-    background-color: #b1ecb5;
-    border-color: #8dcd8f;
+    background-color: rgba(15, 153, 96, 0.15);
+
+    .alert-title {
+      color: #0d8050;
+    }
   }
 
   &.alert-warning {
-    background-color: #ffe4a0;
-    border-color: #eac87d;
+    background-color: rgba(217, 130, 43, 0.15);
+
+    .alert-title {
+      color: #bf7326;
+    }
   }
 
   &.alert-danger {
-    background-color: #ffb7a5;
-    border-color: #e9947d;
+    background-color: rgba(219, 55, 55, 0.15);
+
+    .alert-title {
+      color: #c23030;
+    }
   }
 }
 
-.alert-title {
-  font-weight: 600;
+
+@media (prefers-color-scheme: dark) {
+  .alert {
+    background-color: rgba(19,124,189,.25);
+
+    .alert-title {
+      color: #48aff0;
+    }
+
+    &.alert-success {
+      background-color: rgba(15,153,96,.25);
+
+      .alert-title {
+        color: #3dcc91;
+      }
+    }
+
+    &.alert-warning {
+      background-color: rgba(217, 130, 43, 0.25);
+
+      .alert-title {
+        color: #ffb366;
+      }
+    }
+
+    &.alert-danger {
+      background-color: rgba(219, 55, 55, 0.25);
+
+      .alert-title {
+        color: #ff7373;
+      }
+    }
+  }
 }
