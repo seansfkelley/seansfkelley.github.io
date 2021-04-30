@@ -51,11 +51,23 @@
 }
 
 @media screen and (min-width: $width-mobile) {
+  .next-previous-icon {
+    transition: transform 100ms ease-in;
+  }
+
   .next-previous-left {
     margin-left: -($spacing * 2);
+
+    &:hover .next-previous-icon {
+      transform: translateX(-($spacing / 2));
+    }
   }
 
   .next-previous-right {
     margin-right: -($spacing * 2);
+
+    &:hover .next-previous-icon {
+      transform: translateX($spacing / 2);
+    }
   }
 }
