@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Breaking Up Facebook
+title: Facebook is a Glorified Yellow Pages
 ---
 
 Social media has been on peoples' minds increasingly often these last few years. Regardless of where you stand on Twitter moderation, or the relative lack thereof on Facebook, or the continued existence of Parler, surely you agree that _something_ is broken. It appears that nobody is happy with the way things are working except those who stand to make money from it.[^1]

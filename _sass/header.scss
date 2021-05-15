@@ -1,11 +1,21 @@
+$font-size-site-title: 1.5rem;
+$header-vertical-spacing: $spacing;
+
+html {
+  // mathmathmath
+  // this reproduces the various bits that contribute to the height of the site header in a DRY way
+  // this is so when following anchors, we scroll to the right place, since the header is sticky!
+  scroll-padding-top: calc(#{$line-height-base * $font-size-site-title} + #{$header-vertical-spacing * 2 + 1});
+}
+
 .site-header {
-  padding: $spacing 0;
+  padding: $header-vertical-spacing 0;
   border-bottom: 1px solid var(--brand-color-light);
+  background-color: var(--background-color);
   position: sticky;
   top: 0;
-  background-color: var(--background-color);
 
-  .content-wrapper {
+  .centering-wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;;
@@ -15,7 +25,7 @@
 .site-title {
   font-family: $font-family-code;
   font-weight: 300;
-  font-size: 1.5rem;
+  font-size: $font-size-site-title;
 
   &, &:hover, &:visited {
     color: var(--site-title-color);

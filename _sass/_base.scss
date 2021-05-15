@@ -111,7 +111,8 @@ hr {
   border-bottom: 1px solid var(--brand-color-light);
 }
 
-.content-wrapper {
+.centering-wrapper {
+  width: 100%;
   max-width: calc(#{$width-mobile} - (#{$spacing} * 2));
   margin-right: auto;
   margin-left: auto;
