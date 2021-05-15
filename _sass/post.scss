@@ -2,13 +2,19 @@
   margin-bottom: $spacing;
 }
 
-.post-title {
-  margin-bottom: 0;
+.post-title, .post-subtitle {
+  margin-top: $spacing;
 }
 
-.post-title,
-.post-content h1 {
+h1, h2, h3 {
+  margin-top: $spacing * 1.5;
+}
+
+h4, h5, h6 {
   margin-top: $spacing;
+}
+
+h1 {
   font-size: 2rem;
   line-height: 1.15;
 
@@ -17,46 +23,39 @@
   }
 }
 
-.post-content {
-  margin-bottom: $spacing;
+h2 {
+  font-size: 1.5rem;
 
-  h1, h2, h3 {
-    margin-top: $spacing * 1.5;
-  }
-
-  h4, h5, h6 {
-    margin-top: $spacing;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-
-    @media screen and (min-width: $width-mobile) {
-      font-size: 1.75rem;
-    }
-  }
-
-  h3 {
-    font-size: 1.25rem;
-
-    @media screen and (min-width: $width-mobile) {
-      font-size: 1.375rem;
-    }
-  }
-
-  h4 {
-    font-size: 1.125rem;
-  }
-
-  h5 {
-    font-size: 1.125rem;
-  }
-
-  h6 {
-    font-size: 1rem;
-  }
-
-  sup {
-    vertical-align: top;
+  @media screen and (min-width: $width-mobile) {
+    font-size: 1.75rem;
   }
 }
+
+h3 {
+  font-size: 1.25rem;
+
+  @media screen and (min-width: $width-mobile) {
+    font-size: 1.375rem;
+  }
+}
+
+h4 {
+  font-size: 1.125rem;
+}
+
+h5 {
+  font-size: 1.125rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+sup {
+  vertical-align: top;
+}
+
+.post-content {
+  margin-bottom: $spacing;
+}
+
