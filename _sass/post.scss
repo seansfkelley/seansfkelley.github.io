@@ -6,6 +6,11 @@
   margin-top: $spacing;
 }
 
+.post-subtitle {
+  color: var(--text-color-blockquote);
+  font-style: italic;
+}
+
 h1, h2, h3 {
   margin-top: $spacing * 1.5;
 }
