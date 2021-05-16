@@ -88,6 +88,8 @@ So what's the point of all this complexity? To encourage and reward risk-taking:
 
 And of course, there is a _whole lot_ of tweaking you can do around the timing and margins to squeeze out extra value, which is why you hire a tax professional and don't blindly trust the internet for financial advice.
 
+-------------------------------------------------------------------------------
+
 {% include next-previous.html %}
 
 -------------------------------------------------------------------------------

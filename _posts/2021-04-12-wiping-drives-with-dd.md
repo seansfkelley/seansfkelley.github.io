@@ -33,4 +33,6 @@ First, the infinite loop is used to grab the disk before the higher-level parts 
 
 Second, `dd` is being used because the disk is unmountable and we specifically want to wipe the entire thing, partition tables included. This is a different, much harsher version of wiping a disk than what one normally does.
 
+-------------------------------------------------------------------------------
+
 {% include next-previous.html %}

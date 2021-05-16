@@ -325,6 +325,8 @@ I recently came across [TSpell](https://github.com/kkuchta/TSpell) and I just ha
 
 Somewhat more practically, [type-challenges](https://github.com/type-challenges/type-challenges) is a good way to exercise some of the more esoteric aspects of the type system.
 
+-------------------------------------------------------------------------------
+
 {% include next-previous.html %}
 
 -------------------------------------------------------------------------------

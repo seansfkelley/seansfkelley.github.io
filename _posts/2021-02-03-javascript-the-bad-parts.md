@@ -155,6 +155,8 @@ Arrays continue be useful, but they've always been less weird than objects, so i
 
 As for `===` and dynamic `this`, well, I have linters and more brainspace to dedicate now that I'm not thinking about the pitfalls of objects all the time.
 
+-------------------------------------------------------------------------------
+
 {% include next-previous.html %}
 
 -------------------------------------------------------------------------------

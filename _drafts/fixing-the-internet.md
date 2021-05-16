@@ -130,6 +130,8 @@ The basic argument was as follows:
 
 https://www.theatlantic.com/magazine/archive/2021/04/the-internet-doesnt-have-to-be-awful/618079/ (originally printed as "The Internet Doesn't Have to Be Awful", though I like both titles).
 
+-------------------------------------------------------------------------------
+
 {% include next-previous.html %}
 
 -------------------------------------------------------------------------------
