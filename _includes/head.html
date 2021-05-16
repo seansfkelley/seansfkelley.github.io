@@ -4,5 +4,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {%- seo -%}
   <link rel="stylesheet" href="{{ "/assets/style.css" | relative_url }}">
+  {% for path in page.custom-css-list %}
+  <link rel="stylesheet" href="{{ path | relative_url }}">
+  {% endfor %}
   {%- feed_meta -%}
 </head>

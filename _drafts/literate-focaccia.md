@@ -1,6 +1,10 @@
 ---
 layout: post
 title: Ligurian Focaccia (Literate Recipe)
+custom-js-list:
+  - /assets/literate-recipe/literate-recipe.js
+custom-css-list:
+  - /assets/literate-recipe/literate-recipe.css
 ---
 
 (timeline graphic)
@@ -116,5 +120,3 @@ Release focaccia from pan with metal spatula and transfer to a cooling rack to c
 -------------------------------------------------------------------------------
 
 {% include next-previous.html %}
-
-<script src="/assets/literate-recipe/literate-recipe.js"></script>
