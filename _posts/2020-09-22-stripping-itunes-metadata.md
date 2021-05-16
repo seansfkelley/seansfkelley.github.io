@@ -42,6 +42,8 @@ And you're done! If you find any errors in these steps, please let me know or co
 
 If you're curious to verify the files, you can use `atomicparsley <file path> -t` and it'll dump a list of all the tags.
 
+-------------------------------------------------------------------------------
+
 {% include next-previous.html %}
 
 -------------------------------------------------------------------------------

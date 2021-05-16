@@ -276,6 +276,8 @@ I had surprisingly good luck buying headsets and parts off of eBay. There were a
 
 As for my own headset, the issue turned out to be a faulty main board. Twisting or bending the board slightly causes it to lose power, so I guess that when I swing my head around too fast the acceleration of the board against the headset body causes it to bend ever so slightly and drop out. Very, very annoying, and really destroys the immersion even in a relatively low-immersion game like Beat Saber.
 
+-------------------------------------------------------------------------------
+
 {% include next-previous.html %}
 
 -------------------------------------------------------------------------------
