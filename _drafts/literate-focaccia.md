@@ -21,13 +21,18 @@ Why rearrange it so? I know how to make this recipe and I know I have all the in
 
 In the interest of streamlining, I have also made some tweaks the to content, both in removing now-redundant text (namely, some of that having to do with timing) and skipping detail I consider extraneous to bakers experienced with the recipe (such as volume measurements or the type of salt).
 
+As always with a recipe, you should read the entire thing before starting. In particular, there are some steps that specify time ranges, such as the main part of the bake (25-30 minutes). I have chosen to use the smaller of the two values to organize and estimate those steps to nudge the baker towards checking in as soon as is reasonable and with the assumption that it is easier and more apparent to extend a step's estimated time rather than notice that you can start a step earlier than the name suggests.
+
 ### List of Steps
 {:.no_toc}
 
 * TOC
 {:toc}
 
-### t=0 (5 minutes work)
+{% include literate-recipe-step-header.html
+  number="0"
+  text="t=0 (5 minutes work)"
+%}
 
 In a medium bowl, stir together
 
@@ -48,7 +53,14 @@ Add yeast mixture and
 
 to flour mixture. Stir with a rubber spatula until just incorporated, then scrape the sides of the bowl clean and cover with plastic wrap. Leave out at room temperature to ferment for 12 to 14 hours until at least doubled in volume.
 
-### 12 hours later (5 minutes work, t=12:00)
+{% include literate-recipe-step-footer.html
+  number="0"
+%}
+
+{% include literate-recipe-step-header.html
+  number="1"
+  text="12 hours later (5 minutes work, t=12:00)"
+%}
 
 Spread
 
@@ -89,7 +101,7 @@ Bake for 25 to 30 minutes directly on top of stone or inverted pan until bottom 
 
 To finish browning top crust, place focaccia on upper rack and bake for 5 to 7 minutes more.
 
-### 5 minutes later (5 minute work, t=13:45)
+### 5 minutes later (5 minutes work, t=13:45)
 
 Remove from oven and brush or douse with
 
@@ -104,3 +116,5 @@ Release focaccia from pan with metal spatula and transfer to a cooling rack to c
 -------------------------------------------------------------------------------
 
 {% include next-previous.html %}
+
+<script src="/assets/literate-recipe/literate-recipe.js"></script>
