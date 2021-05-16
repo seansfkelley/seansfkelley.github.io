@@ -81,7 +81,8 @@ code {
 
 pre {
   padding: 8px 12px;
-  overflow-x: auto;
+  // TODO: Would prefer horizontal scrolling, but this is better than forcing the page too wide.
+  white-space: pre-wrap;
 
   > code {
     border: 0;
@@ -112,16 +113,21 @@ hr {
 }
 
 .centering-wrapper {
-  width: 100%;
-  max-width: calc(#{$width-mobile} - (#{$spacing} * 2));
+  max-width: $width-mobile - ($spacing * 2);
   margin-right: auto;
   margin-left: auto;
   padding-right: $spacing;
   padding-left: $spacing;
 
   @media screen and (min-width: $width-mobile) {
-    max-width: calc(#{$width-desktop} - (#{$spacing} * 8));
+    max-width: $width-desktop - ($spacing * 8);
     padding-right: $spacing * 4;
     padding-left: $spacing * 4;
   }
+}
+
+.horizontal-expander {
+  height: 0;
+  overflow: hidden;
+  user-select: none;
 }

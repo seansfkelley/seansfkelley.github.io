@@ -4,7 +4,17 @@
   <body data-theme="auto">
     {%- include header.html -%}
     <main class="centering-wrapper">
-        {{ content }}
+      {{ content }}
+      <!--
+        This filthy trick makes sure that the content always weakly tries to expand to the full
+        width available, but allows for linebreaks if the viewport is too small. It produces a
+        better result than, say, width: 100%; or width: some-fixed-pixel-amount; and doesn't require
+        rewriting everything to flexbox (which would mess with the <html>-level scroll behavior and
+        sticky header) or adding extra DOM (which I'm trying to minimize to make myself feel good).
+      -->
+      <div class="horizontal-expander" aria-hidden="true">
+        Throughout human history, we have been dependent on machines to survive. Fate, it seems, is not without a sense of irony.
+      </div>
     </main>
   </body>
   <script src="/assets/js/theme-switcher.js"></script>
