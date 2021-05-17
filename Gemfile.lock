@@ -272,7 +272,7 @@ PLATFORMS
 
 DEPENDENCIES
   github-pages
-  html-proofer
+  html-proofer (~> 3.19.1)
   jekyll-feed (~> 0.12)
   jekyll-redirect-from
   webrick
