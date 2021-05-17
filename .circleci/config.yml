@@ -21,33 +21,26 @@ jobs:
     <<: *job_defaults
     environment:
       - TARGET_BRANCH: gh-pages
+      - DEPLOY_EMAIL: circleci-deploy-task@nope.nope
+      - DEPLOY_NAME: CircleCI Deploy Task
     steps:
       - deploy:
-          name: Deploy
+          name: Commit to gh-pages
           command: |
-            if [ $CIRCLE_BRANCH == $SOURCE_BRANCH ]; then
-              git config --global user.email $GH_EMAIL
-              git config --global user.name $GH_NAME
+            git config --global user.email "$DEPLOY_EMAIL"
+            git config --global user.name "$DEPLOY_NAME"
 
-              git clone $CIRCLE_REPOSITORY_URL out
+            git checkout "$TARGET_BRANCH" || git checkout --orphan "$TARGET_BRANCH"
+            git reset
 
-              cd out
-              git checkout $TARGET_BRANCH || git checkout --orphan $TARGET_BRANCH
-              git rm -rf .
-              cd ..
+            find . -depth 1 -not -name '_site' -not -name '.git' | xargs rm -rf
+            mv _site/* .
+            rmdir _site
 
-              bundle exec jekyll build
+            git add .
+            git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-empty
 
-              cp -a build/. out/.
-
-              mkdir -p out/.circleci && cp -a .circleci/. out/.circleci/.
-              cd out
-
-              git add -A
-              git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-empty
-
-              # git push origin $TARGET_BRANCH
-            fi
+            # git push origin "$TARGET_BRANCH"
 
 workflows:
   build-deploy:
