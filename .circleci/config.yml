@@ -32,7 +32,7 @@ jobs:
               git config --global user.email "$DEPLOY_EMAIL"
               git config --global user.name "$DEPLOY_NAME"
 
-              git checkout "$TARGET_BRANCH" || git checkout --orphan "$TARGET_BRANCH"
+              git checkout --force "$TARGET_BRANCH" || git checkout --orphan "$TARGET_BRANCH"
               git reset
 
               find . -maxdepth 1 -not -name '_site' -not -name '.git' -not -name '.' -not -name '..' | xargs rm -rf
