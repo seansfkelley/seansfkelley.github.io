@@ -2,10 +2,60 @@
 # including front matter = "please compile this Jekyll"
 ---
 
-.complete {
-  text-decoration: line-through;
+@import "variables";
+
+section.recipe-step {
+  margin-top: $spacing * 4;
+
+  h3 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .duration {
+      font-size: $font-size-small;
+      margin-left: auto;
+      padding-right: $spacing;
+      border-right: 1px solid var(--text-color-faded);
+      margin-right: $spacing - 1;
+    }
+
+    .elapsed {
+      font-size: $font-size-small;
+    }
+  }
+
+  button {
+    display: none;
+    appearance: none;
+    margin-top: $spacing * 1.5;
+    margin-bottom: $spacing;
+    cursor: pointer;
+    border: 1px solid var(--text-color);
+    background-color: transparent;
+    color: var(--text-color);
+    padding: 4px 8px;
+    font-size: $font-size-small;
+    border-radius: 4px;
+  }
 }
 
-.up-next {
-  color: red;
+article.interaction-enabled section.recipe-step {
+  &.current {
+    margin-left: -16px;
+    border-left: 2px solid var(--text-color);
+    padding-left: 14px;
+
+    button.done-button {
+      display: inherit;
+    }
+  }
+
+  &.complete {
+    color: var(--text-color-faded);
+
+    .duration {
+      border-color: var(--text-color-faded);
+    }
+  }
 }

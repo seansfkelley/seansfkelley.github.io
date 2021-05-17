@@ -36,13 +36,14 @@ body[data-theme="auto"], body[data-theme="light"] {
   --brand-color-dark:           #424242;
   --site-title-color:           var(--brand-color-dark);
   --text-color:                 #111111;
+  --text-color-faded:           #5e5e5e;
   --background-color:           #fdfdfd;
   --code-background-color:      #eeeeee;
   --highlight-background-color: #fdffdd;
   --link-color-base:            #2a7ae2;
   --link-color-visited:         #1756a9;
   --link-color-hover:           var(--text-color);
-  --text-color-blockquote:      #5e5e5e;
+  --text-color-blockquote:      var(--text-color-faded);
   --border-color-blockquote:    #aaaaaa;
 
   // Colors in here are lifted from blueprintjs.
@@ -69,13 +70,14 @@ body[data-theme="auto"], body[data-theme="light"] {
   --brand-color-dark:           #e8e8e8;
   --site-title-color:           var(--brand-color-dark);
   --text-color:                 #d0d0d0;
+  --text-color-faded:           #909090;
   --background-color:           #202020;
   --code-background-color:      #404040;
   --highlight-background-color: #434418;
   --link-color-base:            #689fe6;
   --link-color-visited:         #567bac;
   --link-color-hover:           var(--text-color);
-  --text-color-blockquote:      #909090;
+  --text-color-blockquote:      var(--text-color-faded);
   --border-color-blockquote:    #808080;
 
   // Colors in here are lifted from blueprintjs.

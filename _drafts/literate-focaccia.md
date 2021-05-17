@@ -27,16 +27,12 @@ In the interest of streamlining, I have also made some tweaks the to content, bo
 
 As always with a recipe, you should read the entire thing before starting. In particular, there are some steps that specify time ranges, such as the main part of the bake (25-30 minutes). I have chosen to use the smaller of the two values to organize and estimate those steps to nudge the baker towards checking in as soon as is reasonable and with the assumption that it is easier and more apparent to extend a step's estimated time rather than notice that you can start a step earlier than the name suggests.
 
-### List of Steps
-{:.no_toc}
+<label style="display: none;" id="interactive-checkbox">
+  <input type="checkbox" />
+  enable mark-as-done feature
+</label>
 
-* TOC
-{:toc}
-
-{% include literate-recipe-step-header.html
-  number="0"
-  text="t=0 (5 minutes work)"
-%}
+{% literate_recipe_step duration="5m" %}
 
 In a medium bowl, stir together
 
@@ -57,14 +53,8 @@ Add yeast mixture and
 
 to flour mixture. Stir with a rubber spatula until just incorporated, then scrape the sides of the bowl clean and cover with plastic wrap. Leave out at room temperature to ferment for 12 to 14 hours until at least doubled in volume.
 
-{% include literate-recipe-step-footer.html
-  number="0"
-%}
-
-{% include literate-recipe-step-header.html
-  number="1"
-  text="12 hours later (5 minutes work, t=12:00)"
-%}
+{% endliterate_recipe_step %}
+{% literate_recipe_step wait="12h" duration="5m" %}
 
 Spread
 
@@ -76,11 +66,13 @@ evenly onto a 18-by-13 inch (46-by-33 cm) rimmed baking sheet. Use a spatula or 
 
 over dough and gently spread across. Gently stretch the dough to the edge of the sheet by placing your hands underneath and pulling outward. The dough will shrink a bit, so repeat stretching once or twice over the course of 30 minutes to ensure dough remains stretched.
 
-### 15 minutes later (1 minute work, t=12:15)
+{% endliterate_recipe_step %}
+{% literate_recipe_step wait="15m" duration="1m" %}
 
 Repeat gentle stretching of dough.
 
-### 15 minutes later (5 minutes work, t=12:30)
+{% endliterate_recipe_step %}
+{% literate_recipe_step wait="15m" duration="5m" %}
 
 Dimple the dough by pressing the pads of your first three fingers in at an angle. Make the brine by stirring together
 
@@ -89,11 +81,13 @@ Dimple the dough by pressing the pads of your first three fingers in at an angle
 
 until salt is dissolved. Pour the brine over the dough to fill dimples. Proof focaccia for 45 minutes until the dough is light and bubbly.
 
-### 30 minutes later (1 minute work, t=13:00)
+{% endliterate_recipe_step %}
+{% literate_recipe_step wait="30m" duration="1m" %}
 
 Adjust rack to center position and preheat oven to 450°F (235°C). If you have a baking stone, place it on rack. Otherwise, invert another sturdy baking sheet and place on rack. Allow to preheat with the oven until very hot, before proceeding with baking.
 
-### 15 minutes later (1 minute work, t=13:15)
+{% endliterate_recipe_step %}
+{% literate_recipe_step wait="15m" duration="1m" %}
 
 Sprinkle focaccia with
 
@@ -101,11 +95,13 @@ Sprinkle focaccia with
 
 Bake for 25 to 30 minutes directly on top of stone or inverted pan until bottom crust is crisp and golden brown when checked with a metal spatula.
 
-### 25 minutes later (1 minute work, t=13:40)
+{% endliterate_recipe_step %}
+{% literate_recipe_step wait="25m" duration="1m" %}
 
 To finish browning top crust, place focaccia on upper rack and bake for 5 to 7 minutes more.
 
-### 5 minutes later (5 minutes work, t=13:45)
+{% endliterate_recipe_step %}
+{% literate_recipe_step wait="5m" duration="5m" %}
 
 Remove from oven and brush or douse with
 
@@ -113,9 +109,12 @@ Remove from oven and brush or douse with
 
 over the whole surface (don’t worry if the olive pools in pockets, it will absorb as it sits). Let cool for 5 minutes.
 
-### 5 minutes later (1 minute work, t=13:50)
+{% endliterate_recipe_step %}
+{% literate_recipe_step wait="5m" duration="1m" %}
 
 Release focaccia from pan with metal spatula and transfer to a cooling rack to cool completely.
+
+{% endliterate_recipe_step %}
 
 -------------------------------------------------------------------------------
 
