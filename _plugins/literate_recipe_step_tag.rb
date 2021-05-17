@@ -81,8 +81,10 @@ class LiterateRecipeStepTag < Liquid::Block
         "<section class=\"recipe-step\" data-step-number=\"#{steps.length}\">
           <h3>
             #{title}
-            <span class=\"duration\">#{self.print_duration_longform(duration)} of work</span>
-            <span class=\"elapsed\">elapsed: #{self.print_duration_shortform(elapsed)}</span>
+            <span class=\"metadata\">
+              <span class=\"duration\">#{self.print_duration_longform(duration)} of work</span>
+              <span class=\"elapsed\">elapsed: #{self.print_duration_shortform(elapsed)}</span>
+            </span>
           </h3>
           #{converter.convert(text)}
           <button class=\"done-button\">
