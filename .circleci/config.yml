@@ -14,10 +14,13 @@ jobs:
       - DEPLOY_EMAIL: circleci-deploy-task@nope.nope
       - DEPLOY_NAME: CircleCI Deploy Task
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "3a:ae:ba:28:f0:06:37:11:15:42:31:d2:5e:f4:2a:69"
       - checkout
       - ruby/install-deps
       - run:
-          name: Jekyll Build
+          name: Jekyll build
           command: bundle exec jekyll build
       - run:
           name: HTMLProofer
@@ -32,14 +35,14 @@ jobs:
               git checkout "$TARGET_BRANCH" || git checkout --orphan "$TARGET_BRANCH"
               git reset
 
-              find . -depth 1 -not -name '_site' -not -name '.git' | xargs rm -rf
+              find . -maxdepth 1 -not -name '_site' -not -name '.git' -not -name '.' -not -name '..' | xargs rm -rf
               mv _site/* .
               rmdir _site
 
               git add .
               git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-empty
 
-              # git push origin "$TARGET_BRANCH"
+              git push origin "$TARGET_BRANCH"
             else
               echo "Not on $SOURCE_BRANCH branch, nothing to do."
             fi
