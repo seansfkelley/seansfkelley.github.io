@@ -32,16 +32,24 @@ jobs:
               git config --global user.email "$DEPLOY_EMAIL"
               git config --global user.name "$DEPLOY_NAME"
 
+              # upsert an orphan branch
               git checkout --force "$TARGET_BRANCH" || git checkout --orphan "$TARGET_BRANCH"
+
+              # git will stage changes when creating orphan branches, so don't
               git reset
 
+              # delete everything except .git (we need that) and _site (the compiled content)
+              # note that `find -delete` does not work for our uses here
               find . -maxdepth 1 -not -name '_site' -not -name '.git' -not -name '.' -not -name '..' | xargs rm -rf
+
+              # pull out the files we care about, which includes... ourself!
               mv _site/* .
               rmdir _site
+              git checkout "$CIRCLE_SHA1" -- .circleci
 
+              # push it!
               git add .
               git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-empty
-
               git push origin "$TARGET_BRANCH"
             else
               echo "Not on $SOURCE_BRANCH branch, nothing to do."
