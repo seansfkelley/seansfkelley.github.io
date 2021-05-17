@@ -7,18 +7,6 @@ custom-css-list:
   - /assets/literate-recipe/literate-recipe.css
 ---
 
-(timeline graphic)
-
-t=0 5min
-t=12h 5min
-t=12:15 1min
-t=12:30 5min
-t=13 1min [oven start during this]
-t=13:15 1min
-t=13:40 1min
-t=13:45 5min [oven stop after this]
-t=13:50 1min
-
 This recipe is my adaptation of [Samin Nosrat's Ligurian Focaccia](https://www.saltfatacidheat.com/fat/ligurian-focaccia), rewritten in a style inspired by [literate programming](https://en.wikipedia.org/wiki/Literate_programming).
 
 Why rearrange it so? I know how to make this recipe and I know I have all the ingredients, but I always forget the timings and orderings. Here, the timing is the most prominent organizing principle (as opposed to, say, the ingredients list) so that you can at a glance see how much work needs to be done when, thereby making it easier to both plan around it and jump back into it when your timer goes off.
