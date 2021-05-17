@@ -1,0 +1,56 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@1.0
+job_defaults: &job_defaults
+  docker:
+    - image: cimg/ruby:3.0.1
+  working_directory: ~/repo
+jobs:
+  build:
+    <<: *job_defaults
+    environment:
+      - SOURCE_BRANCH: master
+      - TARGET_BRANCH: gh-pages
+      - DEPLOY_EMAIL: circleci-deploy-task@nope.nope
+      - DEPLOY_NAME: CircleCI Deploy Task
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "3a:ae:ba:28:f0:06:37:11:15:42:31:d2:5e:f4:2a:69"
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Jekyll build
+          command: bundle exec jekyll build
+      - run:
+          name: HTMLProofer
+          command: bundle exec htmlproofer ./_site --check-html --disable-external --allow-hash-href
+      - deploy:
+          name: Commit to gh-pages
+          command: |
+            if [ $CIRCLE_BRANCH == $SOURCE_BRANCH ]; then
+              git config --global user.email "$DEPLOY_EMAIL"
+              git config --global user.name "$DEPLOY_NAME"
+
+              git checkout "$TARGET_BRANCH" || git checkout --orphan "$TARGET_BRANCH"
+              git reset
+
+              find . -maxdepth 1 -not -name '_site' -not -name '.git' -not -name '.' -not -name '..' | xargs rm -rf
+              mv _site/* .
+              rmdir _site
+
+              git add .
+              git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-empty
+
+              git push origin "$TARGET_BRANCH"
+            else
+              echo "Not on $SOURCE_BRANCH branch, nothing to do."
+            fi
+
+workflows:
+  build:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore: gh-pages
