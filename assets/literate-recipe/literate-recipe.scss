@@ -12,22 +12,32 @@ section.recipe-step {
     align-items: center;
     justify-content: space-between;
 
-    .duration {
+    .duration, .elapsed {
       font-size: $font-size-small;
-      margin-left: auto;
-      padding-right: $spacing;
-      border-right: 1px solid var(--text-color-faded);
-      margin-right: $spacing - 1;
     }
 
-    .elapsed {
-      font-size: $font-size-small;
+    .metadata {
+      text-align: right;
+    }
+
+    .duration {
+      display: block;
+    }
+
+    @media screen and (min-width: $width-mobile) {
+      .duration {
+        display: initial;
+        padding-right: $spacing;
+        border-right: 1px solid var(--text-color-faded);
+        margin-right: $spacing - 1;
+      }
     }
   }
 
   button {
     display: none;
     appearance: none;
+    font: inherit;
     margin-top: $spacing * 1.5;
     margin-bottom: $spacing;
     cursor: pointer;
@@ -42,9 +52,12 @@ section.recipe-step {
 
 article.interaction-enabled section.recipe-step {
   &.current {
-    margin-left: -16px;
     border-left: 2px solid var(--text-color);
     padding-left: 14px;
+
+    @media screen and (min-width: $width-mobile) {
+      margin-left: -16px;
+    }
 
     button.done-button {
       display: inherit;
