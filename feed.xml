@@ -1,4 +1,243 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2021-05-17T20:50:50+00:00</updated><id>https://sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">World’s Easiest Pet: Caring for Sourdough Starter</title><link href="https://sea.nkelley.me/2021/04/28/sourdough-starter/" rel="alternate" type="text/html" title="World’s Easiest Pet: Caring for Sourdough Starter" /><published>2021-04-28T00:00:00+00:00</published><updated>2021-04-28T00:00:00+00:00</updated><id>https://sea.nkelley.me/2021/04/28/sourdough-starter</id><content type="html" xml:base="https://sea.nkelley.me/2021/04/28/sourdough-starter/">&lt;p&gt;Sourdough starter are the easiest pet you can have. Easier than plants or cats. They have a feeding cycle, but once they’re alive and strong, they’re resilient to your inevitable negligence. If you got a starter from me, know that it’s almost old enough to vote at this point (the person I got it from said it was from 2005-ish). I’ve also definitely forgotten it in the fridge for longer than I’m willing to admit, and it’s doing just fine.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2021-05-17T22:43:25+00:00</updated><id>https://sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Ligurian Focaccia (Literate Recipe)</title><link href="https://sea.nkelley.me/2021/05/17/literate-focaccia/" rel="alternate" type="text/html" title="Ligurian Focaccia (Literate Recipe)" /><published>2021-05-17T00:00:00+00:00</published><updated>2021-05-17T00:00:00+00:00</updated><id>https://sea.nkelley.me/2021/05/17/literate-focaccia</id><content type="html" xml:base="https://sea.nkelley.me/2021/05/17/literate-focaccia/">&lt;p&gt;(timeline graphic)&lt;/p&gt;
+
+&lt;p&gt;t=0 5min
+t=12h 5min
+t=12:15 1min
+t=12:30 5min
+t=13 1min [oven start during this]
+t=13:15 1min
+t=13:40 1min
+t=13:45 5min [oven stop after this]
+t=13:50 1min&lt;/p&gt;
+
+&lt;p&gt;This recipe is my adaptation of &lt;a href=&quot;https://www.saltfatacidheat.com/fat/ligurian-focaccia&quot;&gt;Samin Nosrat’s Ligurian Focaccia&lt;/a&gt;, rewritten in a style inspired by &lt;a href=&quot;https://en.wikipedia.org/wiki/Literate_programming&quot;&gt;literate programming&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Why rearrange it so? I know how to make this recipe and I know I have all the ingredients, but I always forget the timings and orderings. Here, the timing is the most prominent organizing principle (as opposed to, say, the ingredients list) so that you can at a glance see how much work needs to be done when, thereby making it easier to both plan around it and jump back into it when your timer goes off.&lt;/p&gt;
+
+&lt;p&gt;In the interest of streamlining, I have also made some tweaks the to content, both in removing now-redundant text (namely, some of that having to do with timing) and skipping detail I consider extraneous to bakers experienced with the recipe (such as volume measurements or the type of salt).&lt;/p&gt;
+
+&lt;p&gt;As always with a recipe, you should read the entire thing before starting. In particular, there are some steps that specify time ranges, such as the main part of the bake (25-30 minutes). I have chosen to use the smaller of the two values to organize and estimate those steps to nudge the baker towards checking in as soon as is reasonable and with the assumption that it is easier and more apparent to extend a step’s estimated time rather than notice that you can start a step earlier than the name suggests.&lt;/p&gt;
+
+&lt;p&gt;&lt;label style=&quot;display: none;&quot; id=&quot;interactive-checkbox&quot;&gt;
+  &lt;input type=&quot;checkbox&quot; /&gt;
+  enable mark-as-done feature
+&lt;/label&gt;&lt;/p&gt;
+
+&lt;section class=&quot;recipe-step&quot; data-step-number=&quot;1&quot;&gt;
+          &lt;h3&gt;
+            to begin
+            &lt;span class=&quot;metadata&quot;&gt;
+              &lt;span class=&quot;duration&quot;&gt;5 minutes of work&lt;/span&gt;
+              &lt;span class=&quot;elapsed&quot;&gt;elapsed: 0:00&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/h3&gt;
+          
+&lt;p&gt;In a medium bowl, stir together&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;600 grams lukewarm water&lt;/li&gt;
+  &lt;li&gt;½ teaspoon dry yeast&lt;/li&gt;
+  &lt;li&gt;15 grams honey&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;until dissolved.&lt;/p&gt;
+
+&lt;p&gt;In a very large bowl, whisk together&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;800 grams all-purpose flour&lt;/li&gt;
+  &lt;li&gt;18 grams salt&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Add yeast mixture and&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;50 grams olive oil&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;to flour mixture. Stir with a rubber spatula until just incorporated, then scrape the sides of the bowl clean and cover with plastic wrap. Leave out at room temperature to ferment for 12 to 14 hours until at least doubled in volume.&lt;/p&gt;
+
+
+          &lt;button class=&quot;done-button&quot;&gt;
+            mark as done
+          &lt;/button&gt;
+        &lt;/section&gt;
+&lt;section class=&quot;recipe-step&quot; data-step-number=&quot;2&quot;&gt;
+          &lt;h3&gt;
+            12 hours later
+            &lt;span class=&quot;metadata&quot;&gt;
+              &lt;span class=&quot;duration&quot;&gt;5 minutes of work&lt;/span&gt;
+              &lt;span class=&quot;elapsed&quot;&gt;elapsed: 12:00&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/h3&gt;
+          
+&lt;p&gt;Spread&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;2 to 3 tablespoons olive oil&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;evenly onto a 18-by-13 inch (46-by-33 cm) rimmed baking sheet. Use a spatula or your hand to release it from the sides of the bowl and fold it onto itself gently, then pour out onto pan. Pour an additional&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;2 tablespoons olive oil&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;over dough and gently spread across. Gently stretch the dough to the edge of the sheet by placing your hands underneath and pulling outward. The dough will shrink a bit, so repeat stretching once or twice over the course of 30 minutes to ensure dough remains stretched.&lt;/p&gt;
+
+
+          &lt;button class=&quot;done-button&quot;&gt;
+            mark as done
+          &lt;/button&gt;
+        &lt;/section&gt;
+&lt;section class=&quot;recipe-step&quot; data-step-number=&quot;3&quot;&gt;
+          &lt;h3&gt;
+            15 minutes later
+            &lt;span class=&quot;metadata&quot;&gt;
+              &lt;span class=&quot;duration&quot;&gt;1 minute of work&lt;/span&gt;
+              &lt;span class=&quot;elapsed&quot;&gt;elapsed: 12:15&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/h3&gt;
+          
+&lt;p&gt;Repeat gentle stretching of dough.&lt;/p&gt;
+
+
+          &lt;button class=&quot;done-button&quot;&gt;
+            mark as done
+          &lt;/button&gt;
+        &lt;/section&gt;
+&lt;section class=&quot;recipe-step&quot; data-step-number=&quot;4&quot;&gt;
+          &lt;h3&gt;
+            15 minutes later
+            &lt;span class=&quot;metadata&quot;&gt;
+              &lt;span class=&quot;duration&quot;&gt;5 minutes of work&lt;/span&gt;
+              &lt;span class=&quot;elapsed&quot;&gt;elapsed: 12:30&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/h3&gt;
+          
+&lt;p&gt;Dimple the dough by pressing the pads of your first three fingers in at an angle. Make the brine by stirring together&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;80 grams lukewarm water&lt;/li&gt;
+  &lt;li&gt;5 grams salt&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;until salt is dissolved. Pour the brine over the dough to fill dimples. Proof focaccia for 45 minutes until the dough is light and bubbly.&lt;/p&gt;
+
+
+          &lt;button class=&quot;done-button&quot;&gt;
+            mark as done
+          &lt;/button&gt;
+        &lt;/section&gt;
+&lt;section class=&quot;recipe-step&quot; data-step-number=&quot;5&quot;&gt;
+          &lt;h3&gt;
+            30 minutes later
+            &lt;span class=&quot;metadata&quot;&gt;
+              &lt;span class=&quot;duration&quot;&gt;1 minute of work&lt;/span&gt;
+              &lt;span class=&quot;elapsed&quot;&gt;elapsed: 13:00&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/h3&gt;
+          
+&lt;p&gt;Adjust rack to center position and preheat oven to 450°F (235°C). If you have a baking stone, place it on rack. Otherwise, invert another sturdy baking sheet and place on rack. Allow to preheat with the oven until very hot, before proceeding with baking.&lt;/p&gt;
+
+
+          &lt;button class=&quot;done-button&quot;&gt;
+            mark as done
+          &lt;/button&gt;
+        &lt;/section&gt;
+&lt;section class=&quot;recipe-step&quot; data-step-number=&quot;6&quot;&gt;
+          &lt;h3&gt;
+            15 minutes later
+            &lt;span class=&quot;metadata&quot;&gt;
+              &lt;span class=&quot;duration&quot;&gt;1 minute of work&lt;/span&gt;
+              &lt;span class=&quot;elapsed&quot;&gt;elapsed: 13:15&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/h3&gt;
+          
+&lt;p&gt;Sprinkle focaccia with&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;flaky salt&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Bake for 25 to 30 minutes directly on top of stone or inverted pan until bottom crust is crisp and golden brown when checked with a metal spatula.&lt;/p&gt;
+
+
+          &lt;button class=&quot;done-button&quot;&gt;
+            mark as done
+          &lt;/button&gt;
+        &lt;/section&gt;
+&lt;section class=&quot;recipe-step&quot; data-step-number=&quot;7&quot;&gt;
+          &lt;h3&gt;
+            25 minutes later
+            &lt;span class=&quot;metadata&quot;&gt;
+              &lt;span class=&quot;duration&quot;&gt;1 minute of work&lt;/span&gt;
+              &lt;span class=&quot;elapsed&quot;&gt;elapsed: 13:40&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/h3&gt;
+          
+&lt;p&gt;To finish browning top crust, place focaccia on upper rack and bake for 5 to 7 minutes more.&lt;/p&gt;
+
+
+          &lt;button class=&quot;done-button&quot;&gt;
+            mark as done
+          &lt;/button&gt;
+        &lt;/section&gt;
+&lt;section class=&quot;recipe-step&quot; data-step-number=&quot;8&quot;&gt;
+          &lt;h3&gt;
+            5 minutes later
+            &lt;span class=&quot;metadata&quot;&gt;
+              &lt;span class=&quot;duration&quot;&gt;5 minutes of work&lt;/span&gt;
+              &lt;span class=&quot;elapsed&quot;&gt;elapsed: 13:45&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/h3&gt;
+          
+&lt;p&gt;Remove from oven and brush or douse with&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;2 to 3 tablespoons olive oil&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;over the whole surface (don’t worry if the olive pools in pockets, it will absorb as it sits). Let cool for 5 minutes.&lt;/p&gt;
+
+
+          &lt;button class=&quot;done-button&quot;&gt;
+            mark as done
+          &lt;/button&gt;
+        &lt;/section&gt;
+&lt;section class=&quot;recipe-step&quot; data-step-number=&quot;9&quot;&gt;
+          &lt;h3&gt;
+            5 minutes later
+            &lt;span class=&quot;metadata&quot;&gt;
+              &lt;span class=&quot;duration&quot;&gt;1 minute of work&lt;/span&gt;
+              &lt;span class=&quot;elapsed&quot;&gt;elapsed: 13:50&lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/h3&gt;
+          
+&lt;p&gt;Release focaccia from pan with metal spatula and transfer to a cooling rack to cool completely.&lt;/p&gt;
+
+
+          &lt;button class=&quot;done-button&quot;&gt;
+            mark as done
+          &lt;/button&gt;
+        &lt;/section&gt;
+
+&lt;hr /&gt;
+
+&lt;section class=&quot;next-previous&quot;&gt;
+  
+  &lt;a href=&quot;/2021/04/28/sourdough-starter/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: World&apos;s Easiest Pet: Caring for Sourdough Starter&quot;&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;World&apos;s Easiest Pet: Caring for Sourdough Starter&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+  
+  
+  &lt;div class=&quot;next-previous-placeholder&quot;&gt;&lt;/div&gt;
+  
+&lt;/section&gt;</content><author><name></name></author><summary type="html">(timeline graphic)</summary></entry><entry><title type="html">World’s Easiest Pet: Caring for Sourdough Starter</title><link href="https://sea.nkelley.me/2021/04/28/sourdough-starter/" rel="alternate" type="text/html" title="World’s Easiest Pet: Caring for Sourdough Starter" /><published>2021-04-28T00:00:00+00:00</published><updated>2021-04-28T00:00:00+00:00</updated><id>https://sea.nkelley.me/2021/04/28/sourdough-starter</id><content type="html" xml:base="https://sea.nkelley.me/2021/04/28/sourdough-starter/">&lt;p&gt;Sourdough starter are the easiest pet you can have. Easier than plants or cats. They have a feeding cycle, but once they’re alive and strong, they’re resilient to your inevitable negligence. If you got a starter from me, know that it’s almost old enough to vote at this point (the person I got it from said it was from 2005-ish). I’ve also definitely forgotten it in the fridge for longer than I’m willing to admit, and it’s doing just fine.&lt;/p&gt;
 
 &lt;p&gt;I like keeping starters at 100% hydration, which means it’s half water and half flour. That makes it a “liquid” starter (as opposed a “stiff” starter). You can tweak the balance all you want once you know what you’re doing; there is nothing magical about any numbers you’ll see here except for convenience.&lt;/p&gt;
 
@@ -31,7 +270,13 @@
   &lt;/a&gt;
   
   
-  &lt;div class=&quot;next-previous-placeholder&quot;&gt;&lt;/div&gt;
+  &lt;a href=&quot;/2021/05/17/literate-focaccia/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: Ligurian Focaccia (Literate Recipe)&quot;&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;Ligurian Focaccia (Literate Recipe)&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
+  &lt;/a&gt;
   
 &lt;/section&gt;
 
@@ -998,37 +1243,4 @@
       &lt;p&gt;I guess they’re trying to blur the line between what’s on your local machine versus what’s credited to your account. I suppose that makes sense for your average person, but I’m not a big believer in streaming services and have, on more than one occasion, been the only provider of music because there was no cell signal. Take that, Spotify! &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name></name></author><summary type="html">When Apple announced years ago that the iTunes Store was going DRM-free, I was ecstatic. This was during the height of the DRM controversy years, and it was nice to see a company with clout taking a stand against it. It’s a little perversely American to be rooting for one abusive corporation to give it to another abusive corporation, but hey, I’ll take what I can get.</summary></entry><entry><title type="html">Hello, world.</title><link href="https://sea.nkelley.me/2020/09/19/intro/" rel="alternate" type="text/html" title="Hello, world." /><published>2020-09-19T00:00:00+00:00</published><updated>2020-09-19T00:00:00+00:00</updated><id>https://sea.nkelley.me/2020/09/19/intro</id><content type="html" xml:base="https://sea.nkelley.me/2020/09/19/intro/">&lt;p&gt;I’ve always found it odd, as a reader, when the very beginning of a blog or a web comic launches right into whatever topic was on the mind of the author, as if some earlier content had been lost and you’re picking up the story part of the way through.&lt;/p&gt;
-
-&lt;p&gt;Similarly, many blogs I read purely for technical, philosophical, or otherwise impersonal reasons, so it makes me uncomfortable when the introduction is, instead, introspective or self-introductory, as if I’ve accidentally stumbled upon a diary entry that I didn’t want to.&lt;/p&gt;
-
-&lt;p&gt;So here we are: I have successfully acknowledged that this is the beginning of time without making anyone uncomfortable. Like most blogs, there is no real intent, goal or theme here, though I will attempt to keep the content somewhat impersonal, like the blogs I prefer to read. If a theme should develop later and you find yourself reading this post, well, the next bunch of posts you read in order might be a surprising hodge-podge. Those &lt;em&gt;are&lt;/em&gt; what was on my mind when this whole thing started.&lt;/p&gt;
-
-&lt;p&gt;According to Wikipedia,&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; the original hello world program was stylized (if I may use the term) as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hello, world&lt;/code&gt;. Most instantiations I’ve seen are written &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Hello, world!&lt;/code&gt;, though I myself prefer the still-syntatically-correct, less exuberant &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Hello, world.&lt;/code&gt;. Let’s keep it calm, people.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;section class=&quot;next-previous&quot;&gt;
-  
-  &lt;div class=&quot;next-previous-placeholder&quot;&gt;&lt;/div&gt;
-  
-  
-  &lt;a href=&quot;/2020/09/22/stripping-itunes-metadata/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: Stripping iTunes Music Store Metadata from Purchased Music&quot;&gt;
-    &lt;div class=&quot;next-previous-name&quot;&gt;
-      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
-      &lt;div class=&quot;next-previous-title&quot;&gt;Stripping iTunes Music Store Metadata from Purchased Music&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
-  &lt;/a&gt;
-  
-&lt;/section&gt;
-
-&lt;hr /&gt;
-
-&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Citation &lt;del&gt;needed&lt;/del&gt; provided, if you &lt;a href=&quot;https://en.wikipedia.org/wiki/%22Hello,_World!%22_program&quot;&gt;go check out the article&lt;/a&gt;. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;</content><author><name></name></author><summary type="html">I’ve always found it odd, as a reader, when the very beginning of a blog or a web comic launches right into whatever topic was on the mind of the author, as if some earlier content had been lost and you’re picking up the story part of the way through.</summary></entry></feed>
+&lt;/div&gt;</content><author><name></name></author><summary type="html">When Apple announced years ago that the iTunes Store was going DRM-free, I was ecstatic. This was during the height of the DRM controversy years, and it was nice to see a company with clout taking a stand against it. It’s a little perversely American to be rooting for one abusive corporation to give it to another abusive corporation, but hey, I’ll take what I can get.</summary></entry></feed>
