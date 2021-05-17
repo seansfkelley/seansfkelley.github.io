@@ -1,0 +1,54 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@1.0
+jobs:
+  build:
+    docker:
+      - image: cimg/ruby:3.0.1
+    working_directory: ~/repo
+    environment:
+      - SOURCE_BRANCH: master
+      - TARGET_BRANCH: gh-pages
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Jekyll Build
+          command: bundle exec jekyll build
+      - run:
+          name: HTMLProofer
+          command: bundle exec htmlproofer ./_site --check-html --disable-external
+      # - deploy:
+      #     name: Deploy
+      #     command: |
+      #       if [ $CIRCLE_BRANCH == $SOURCE_BRANCH ]; then
+      #         git config --global user.email $GH_EMAIL
+      #         git config --global user.name $GH_NAME
+
+      #         git clone $CIRCLE_REPOSITORY_URL out
+
+      #         cd out
+      #         git checkout $TARGET_BRANCH || git checkout --orphan $TARGET_BRANCH
+      #         git rm -rf .
+      #         cd ..
+
+      #         npm run build
+
+      #         cp -a build/. out/.
+
+      #         mkdir -p out/.circleci && cp -a .circleci/. out/.circleci/.
+      #         cd out
+
+      #         git add -A
+      #         git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-empty
+
+      #         git push origin $TARGET_BRANCH
+      #       fi
+
+workflows:
+  build:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master
