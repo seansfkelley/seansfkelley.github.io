@@ -82,8 +82,8 @@ class LiterateRecipeStepTag < Liquid::Block
           <h3>
             #{title}
             <span class=\"metadata\">
-              <span class=\"duration\">#{self.print_duration_longform(duration)} of work</span>
-              <span class=\"elapsed\">elapsed: #{self.print_duration_shortform(elapsed)}</span>
+              <span class=\"duration\">#{self.print_duration_longform(duration)} of work</span><!--
+           --><span class=\"elapsed\">elapsed: #{self.print_duration_shortform(elapsed)}</span>
             </span>
           </h3>
           #{converter.convert(text)}
