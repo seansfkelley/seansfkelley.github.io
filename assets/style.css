@@ -121,11 +121,13 @@ body[data-theme="light"] #theme-switcher:after { content: 'light'; }
 
 .post-link { display: block; font-weight: normal; font-size: 1.5rem; }
 
+.post { margin-bottom: 12px; }
+
 .post-header { margin-bottom: 12px; }
 
-.post-title, .post-subtitle { margin-top: 12px; }
+.post-header .post-title, .post-header .post-subtitle { margin-top: 12px; }
 
-.post-subtitle { color: var(--text-color-blockquote); font-style: italic; }
+.post-header .post-subtitle { color: var(--text-color-blockquote); font-style: italic; }
 
 h1, h2, h3 { margin-top: 18px; }
 
@@ -150,8 +152,6 @@ h5 { font-size: 1.125rem; }
 h6 { font-size: 1rem; }
 
 sup { vertical-align: top; }
-
-.post-content { margin-bottom: 12px; }
 
 .alert { background-color: var(--intent-default-background-color); padding: 12px; border-radius: 3px; }
 
