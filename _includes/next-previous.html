@@ -1,21 +1,29 @@
 {% if page.next or page.previous %}
 <section class="next-previous">
   {% if page.previous %}
-  <a href="{{page.previous.url}}" class="next-previous-link next-previous-left" title="Previous Post: {{page.previous.title}}">
+  <a
+    href="{{ page.previous.url }}"
+    class="next-previous-link next-previous-left"
+    title="Previous Post: {{ page.previous.title }}"
+  >
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
       <div class="next-previous-label">Previous Post</div>
-      <div class="next-previous-title">{{page.previous.title}}</div>
+      <div class="next-previous-title">{{ page.previous.title }}</div>
     </div>
   </a>
   {% else %}
   <div class="next-previous-placeholder"></div>
   {% endif %}
   {% if page.next %}
-  <a href="{{page.next.url}}" class="next-previous-link next-previous-right" title="Next Post: {{page.next.title}}">
+  <a
+    href="{{ page.next.url }}"
+    class="next-previous-link next-previous-right"
+    title="Next Post: {{ page.next.title }}"
+  >
     <div class="next-previous-name">
       <div class="next-previous-label">Next Post</div>
-      <div class="next-previous-title">{{page.next.title}}</div>
+      <div class="next-previous-title">{{ page.next.title }}</div>
     </div>
     <span class="next-previous-icon">→</span>
   </a>

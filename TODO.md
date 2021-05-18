@@ -1,5 +1,3 @@
 - logo!
-- dark theme
 - better syntax highlight theme (pygments?)
 - rewrite history to remove email?
-- sticky header makes footnote return links end up under the header

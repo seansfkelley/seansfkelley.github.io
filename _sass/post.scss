@@ -1,14 +1,18 @@
-.post-header {
+.post {
   margin-bottom: $spacing;
 }
 
-.post-title, .post-subtitle {
-  margin-top: $spacing;
-}
+.post-header {
+  margin-bottom: $spacing;
 
-.post-subtitle {
-  color: var(--text-color-blockquote);
-  font-style: italic;
+  .post-title, .post-subtitle {
+    margin-top: $spacing;
+  }
+
+  .post-subtitle {
+    color: var(--text-color-blockquote);
+    font-style: italic;
+  }
 }
 
 h1, h2, h3 {
@@ -59,8 +63,3 @@ h6 {
 sup {
   vertical-align: top;
 }
-
-.post-content {
-  margin-bottom: $spacing;
-}
-
