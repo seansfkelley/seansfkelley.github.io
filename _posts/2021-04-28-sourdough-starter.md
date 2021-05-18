@@ -4,7 +4,7 @@ title: "World's Easiest Pet: Caring for Sourdough Starter"
 redirect_from: /sourdough
 ---
 
-Sourdough starter are the easiest pet you can have. Easier than plants or cats. They have a feeding cycle, but once they’re alive and strong, they’re resilient to your inevitable negligence. If you got a starter from me, know that it's almost old enough to vote at this point (the person I got it from said it was from 2005-ish). I've also definitely forgotten it in the fridge for longer than I'm willing to admit, and it's doing just fine.
+Sourdough starters are the easiest pet you can have. Easier than plants or cats. They have a feeding cycle, but once they’re alive and strong, they’re resilient to your inevitable negligence. If you got a starter from me, know that it's almost old enough to vote at this point (the person I got it from said it was from 2005-ish). I've also definitely forgotten it in the fridge for longer than I'm willing to admit, and it's doing just fine.
 
 I like keeping starters at 100% hydration, which means it's half water and half flour. That makes it a “liquid” starter (as opposed a “stiff” starter). You can tweak the balance all you want once you know what you’re doing; there is nothing magical about any numbers you’ll see here except for convenience.
 
@@ -23,6 +23,8 @@ You can leave your starter unattended for about a week on the counter or 1-2 mon
 When using your starter, you can use the float test to determine if it’s ready for baking: if a dollop of it floats in water, it’s good to go. After a while, you’ll be able to tell by eye and by smell (smell for “yogurt sour, not vinegar sour”, as a bagel lady told me once).
 
 I find you can ignore anything on the internet you find about feeding your starter exactly this often, or not using stainless steel, or demanding fancy flour instead of regular all-purpose, or other such commandments. Those people are either referring to new starters (which are indeed fragile), but are usually just misinformed. It’s a colony of billions of highly successful organisms: they aren’t going to spontaneously die because you used the wrong utensil. That said, I just use my finger, because why dirty another utensil?
+
+-------------------------------------------------------------------------------
 
 {% include next-previous.html %}
 
