@@ -2,9 +2,6 @@ title: fiddlybits
 # email: your-email@example.com
 url: "https://sea.nkelley.me"
 date_format: "%Y-%m-%d"
-plugins:
-  - jekyll-feed
-  - jekyll-redirect-from
 permalink: pretty
 exclude:
   - behind-the-scenes/
