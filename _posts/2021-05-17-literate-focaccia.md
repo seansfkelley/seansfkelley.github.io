@@ -5,6 +5,7 @@ custom-js-list:
   - /assets/literate-recipe/literate-recipe.js
 custom-css-list:
   - /assets/literate-recipe/literate-recipe.css
+redirect_from: /focaccia
 ---
 
 This recipe is my adaptation of [Samin Nosrat's Ligurian Focaccia](https://www.saltfatacidheat.com/fat/ligurian-focaccia), rewritten in a style inspired by [literate programming](https://en.wikipedia.org/wiki/Literate_programming).
