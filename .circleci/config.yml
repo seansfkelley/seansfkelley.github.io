@@ -1,13 +1,11 @@
 version: 2.1
 orbs:
   ruby: circleci/ruby@1.0
-job_defaults: &job_defaults
-  docker:
-    - image: cimg/ruby:3.0.1
-  working_directory: ~/repo
 jobs:
   build:
-    <<: *job_defaults
+    docker:
+      - image: cimg/ruby:3.0.1
+    working_directory: ~/repo
     environment:
       - SOURCE_BRANCH: master
       - TARGET_BRANCH: gh-pages
