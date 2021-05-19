@@ -26,11 +26,12 @@ jobs:
       - deploy:
           name: Commit to gh-pages
           command: |
-            if [ $CIRCLE_BRANCH == $SOURCE_BRANCH ]; then
+            if [ "$CIRCLE_BRANCH" == "$SOURCE_BRANCH" ]; then
               git config --global user.email "$DEPLOY_EMAIL"
               git config --global user.name "$DEPLOY_NAME"
 
               # upsert an orphan branch
+              git fetch origin "$TARGET_BRANCH" || true
               git checkout --force "$TARGET_BRANCH" || git checkout --orphan "$TARGET_BRANCH"
 
               # git will stage changes when creating orphan branches, so don't
@@ -40,18 +41,31 @@ jobs:
               # note that `find -delete` does not work for our uses here
               find . -maxdepth 1 -not -name '_site' -not -name '.git' -not -name '.' -not -name '..' | xargs rm -rf
 
-              # pull out the files we care about, which includes... ourself!
+              # pull out the files we care about
               mv _site/* .
               rmdir _site
-              git checkout "$CIRCLE_SHA1" -- .circleci
 
-              # push it!
-              git add .
-              git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-empty
-              git push origin "$TARGET_BRANCH"
+              # silence CircleCI complaining about a lack of configuration -- though the rules
+              # elsewhere in this file prevent this branch from ever actually running the config
+              git checkout "$CIRCLE_SHA1" -- .circleci
+              # unstage any changes that we brought in so they appear in the diff checks below
+              git reset
+
+              # check if we have any changes to push
+              # feed.xml changes timestamp every run, so ignore it -- if the feed changed
+              # meaningfully, other files would appear in the diff too
+              if [[ ! -z "$(git --no-pager diff --name-only | grep -v feed.xml)" ]]; then
+                git add .
+                git commit -q -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}"
+                git --no-pager show --stat
+                git push origin "$TARGET_BRANCH"
+              else
+                echo "no non-feed.xml changes detected; not publishing another commit"
+              fi
             else
-              echo "Not on $SOURCE_BRANCH branch, nothing to do."
+              echo "skipping deploy: not on $SOURCE_BRANCH branch"
             fi
+
 
 workflows:
   build:
