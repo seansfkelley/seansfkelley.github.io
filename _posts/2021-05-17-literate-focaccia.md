@@ -21,7 +21,7 @@ As always with a recipe, you should read the entire thing before starting. In pa
   enable mark-as-done feature
 </label>
 
-{% literate_recipe_step duration="5m" %}
+{% literate_recipe_step duration="10m" %}
 
 In a medium bowl, stir together
 

@@ -77,25 +77,19 @@ class LiterateRecipeStepTag < Liquid::Block
                 "#{self.print_duration_longform(self.parse_duration(params["wait"]))} later"
               end
 
-      begin
-        "<section class=\"recipe-step\" data-step-number=\"#{steps.length}\">
-          <h3>
-            #{title}
-            <span class=\"metadata\">
-              <span class=\"duration\">#{self.print_duration_longform(duration)} of work</span><!--
-           --><span class=\"elapsed\">elapsed: #{self.print_duration_shortform(elapsed)}</span>
-            </span>
-          </h3>
-          #{converter.convert(text)}
-          <button class=\"done-button\">
-            mark as done
-          </button>
-        </section>"
-      rescue Liquid::Error => e
-        e.template_name = path
-        e.markup_context = "included " if e.markup_context.nil?
-        raise e
-      end
+      "<section class=\"recipe-step\" data-step-number=\"#{steps.length}\">
+        <h3>
+          #{title}
+          <span class=\"metadata\">
+            <span class=\"duration\">#{self.print_duration_longform(duration)} of work</span><!--
+          --><span class=\"elapsed\">elapsed: #{self.print_duration_shortform(elapsed)}</span>
+          </span>
+        </h3>
+        #{converter.convert(text)}
+        <button class=\"done-button\">
+          mark as done
+        </button>
+      </section>"
     end
   end
 
