@@ -68,16 +68,17 @@ class LiterateRecipeStepTag < Liquid::Block
 
     context.stack do
       duration = self.parse_duration(params["duration"])
+      wait = self.parse_duration(params["wait"] || "0m")
       waits = steps.map { |s| self.parse_duration(s["wait"] || "0m") }
       elapsed = waits.reduce(0, :+)
 
       title = if steps.length == 1
                 "to begin"
               else
-                "#{self.print_duration_longform(self.parse_duration(params["wait"]))} later"
+                "#{self.print_duration_longform(wait)} later"
               end
 
-      "<section class=\"recipe-step\" data-step-number=\"#{steps.length}\">
+      "<section class=\"recipe-step\" data-step-index=\"#{steps.length - 1}\" data-duration=\"#{duration}\" data-wait=\"#{wait}\">
         <h3>
           <hr />
           #{title}
