@@ -17,11 +17,6 @@ In the interest of streamlining, I have also made some tweaks the to content, bo
 
 As always with a recipe, you should read the entire thing before starting. In particular, there are some steps that specify time ranges, such as the main part of the bake (25-30 minutes). I have chosen to use the smaller of the two values to organize and estimate those steps to nudge the baker towards checking in as soon as is reasonable and with the assumption that it is easier and more apparent to extend a step's estimated time rather than notice that you can start a step earlier than the name suggests.
 
-<label style="display: none;" id="interactive-checkbox">
-  <input type="checkbox" />
-  enable mark-as-done feature
-</label>
-
 {% literate_recipe_step duration="10m" %}
 
 In a medium bowl, stir together

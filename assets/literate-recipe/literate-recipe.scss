@@ -22,42 +22,4 @@ section.recipe-step {
       margin-left: auto;
     }
   }
-
-  button {
-    display: none;
-    appearance: none;
-    font: inherit;
-    margin-top: $spacing * 1.5;
-    margin-bottom: $spacing;
-    cursor: pointer;
-    border: 1px solid var(--text-color);
-    background-color: transparent;
-    color: var(--text-color);
-    padding: 4px 8px;
-    font-size: $font-size-small;
-    border-radius: 4px;
-  }
-}
-
-article.interaction-enabled section.recipe-step {
-  &.current {
-    border-left: 2px solid var(--text-color);
-    padding-left: 14px;
-
-    @media screen and (min-width: $width-mobile) {
-      margin-left: -16px;
-    }
-
-    button.done-button {
-      display: inherit;
-    }
-  }
-
-  &.complete {
-    color: var(--text-color-faded);
-
-    .duration {
-      border-color: var(--text-color-faded);
-    }
-  }
 }
