@@ -5,32 +5,21 @@
 @import "variables";
 
 section.recipe-step {
-  margin-top: $spacing * 4;
-
   h3 {
     display: flex;
     align-items: center;
-    justify-content: space-between;
 
-    .duration, .elapsed {
-      font-size: $font-size-small;
+    hr {
+      flex: 1;
     }
+  }
 
-    .metadata {
-      text-align: right;
-    }
+  .metadata {
+    display: flex;
+    align-items: center;
 
-    .duration {
-      display: block;
-    }
-
-    @media screen and (min-width: $width-mobile) {
-      .duration {
-        display: initial;
-        padding-right: $spacing;
-        border-right: 1px solid var(--text-color-faded);
-        margin-right: $spacing - 1;
-      }
+    .elapsed {
+      margin-left: auto;
     }
   }
 
