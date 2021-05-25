@@ -88,9 +88,6 @@ class LiterateRecipeStepTag < Liquid::Block
           <span class=\"elapsed\">elapsed: #{self.print_duration_shortform(elapsed)}</span>
         </h4>
         #{converter.convert(text)}
-        <button class=\"done-button\">
-          mark as done
-        </button>
       </section>"
     end
   end
