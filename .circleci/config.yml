@@ -26,6 +26,7 @@ jobs:
       - deploy:
           name: Commit to gh-pages
           command: |
+            # check here rather than whitelisting the source branch so that unrelated branches still get built
             if [ "$CIRCLE_BRANCH" == "$SOURCE_BRANCH" ]; then
               git config --global user.email "$DEPLOY_EMAIL"
               git config --global user.name "$DEPLOY_NAME"
@@ -41,7 +42,7 @@ jobs:
               # note that `find -delete` does not work for our uses here
               find . -maxdepth 1 -not -name '_site' -not -name '.git' -not -name '.' -not -name '..' | xargs rm -rf
 
-              # pull out the files we care about
+              # pull out the interesting files to the top level (also for ease of server configuration)
               mv _site/* .
               rmdir _site
 
@@ -65,8 +66,6 @@ jobs:
             else
               echo "skipping deploy: not on $SOURCE_BRANCH branch"
             fi
-
-
 workflows:
   build:
     jobs:
