@@ -69,8 +69,6 @@ class LiterateRecipeStepTag < Liquid::Block
     context.stack do
       duration = self.parse_duration(params["duration"])
       wait = self.parse_duration(params["wait"] || "0m")
-      waits = steps.map { |s| self.parse_duration(s["wait"] || "0m") }
-      elapsed = waits.reduce(0, :+)
 
       title = if steps.length == 1
                 "to begin"
@@ -86,7 +84,6 @@ class LiterateRecipeStepTag < Liquid::Block
         </h3>
         <h4 class=\"metadata\">
           <span class=\"duration\">#{self.print_duration_longform(duration)} of work</span>
-          <span class=\"elapsed\">elapsed: #{self.print_duration_shortform(elapsed)}</span>
         </h4>
         #{converter.convert(text)}
       </section>"
@@ -101,10 +98,6 @@ class LiterateRecipeStepTag < Liquid::Block
     minutes = (matched["minutes"] || "0").strip.to_i
 
     hours * 60 + minutes
-  end
-
-  def print_duration_shortform(duration)
-    "%i:%02i" % [duration / 60, duration % 60]
   end
 
   def print_duration_longform(duration)

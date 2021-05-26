@@ -26,22 +26,6 @@
         minutes < 10 ? "0" : ""
       }${minutes}`;
     }
-
-    toTextString() {
-      if (this.minutes === 0) {
-        return "now";
-      } else {
-        const [hours, minutes] = Duration._toHoursAndMinutes(
-          Math.abs(this.minutes)
-        );
-        const formatted = `${hours}:${minutes < 10 ? "0" : ""}${minutes}`;
-        return this.minutes < 0 ? `${formatted} ago` : `in ${formatted}`;
-      }
-    }
-
-    asMinutes() {
-      return this.minutes;
-    }
   }
 
   const steps = [];
@@ -50,15 +34,9 @@
     const selectedTime = Duration.fromTimeInputValue(
       steps[stepIndex].timeInput.value
     );
-
-    // TODO:
-    // - show both "in x minutes" and "at x time" (relative to now) text
-    // - figure out which element should be interactive
-    // - make it obvious it's interactive
-    steps.forEach(({ offset, timeDisplay, timeInput }) => {
-      const deltaMinutes = offset - steps[stepIndex].offset;
+    steps.forEach(({ offset, timeInput }) => {
       timeInput.value = new Duration(
-        selectedTime.minutes + deltaMinutes
+        selectedTime.minutes + offset - steps[stepIndex].offset
       ).toTimeInputValue();
     });
   }
@@ -84,7 +62,6 @@
       recalculateOffsetsRelativeTo(index);
     });
 
-    step.querySelector(".elapsed").remove();
     step.querySelector(".metadata").appendChild(setToNowButton);
     step.querySelector(".metadata").appendChild(timeInput);
 

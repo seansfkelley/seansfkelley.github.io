@@ -18,12 +18,12 @@ section.recipe-step {
     display: flex;
     align-items: center;
 
-    .elapsed,
-    input[type="button"] {
-      margin-left: auto;
+    input {
+      -webkit-appearance: none;
     }
 
     input[type="button"] {
+      margin-left: auto;
       opacity: 0;
       transition: opacity 100ms;
     }
@@ -35,5 +35,11 @@ section.recipe-step {
 
   &:hover .metadata input[type="button"] {
     opacity: 1;
+  }
+
+  @media screen and (max-width: $width-mobile) {
+    .metadata input[type="button"] {
+      opacity: 1;
+    }
   }
 }
