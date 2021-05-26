@@ -3,7 +3,8 @@ html {
 }
 
 body {
-  font: $font-weight-base #{$font-size-base}/#{$line-height-base} $font-family-base;
+  font: $font-weight-base #{$font-size-base}/#{$line-height-base}
+    $font-family-base;
   color: var(--text-color);
   background-color: var(--background-color);
   font-kerning: normal;
@@ -15,12 +16,59 @@ body {
   padding: 0;
 }
 
-body, h1, h2, h3, h4, h5, h6, p, blockquote, pre, hr, dl, dd, ol, ul, figure {
+input {
+  color: var(--text-color);
+  background-color: var(--input-background-color);
+  font: inherit;
+  font-size: $font-size-small;
+  border-radius: $input-border-radius;
+  border: 1px solid var(--input-border-color);
+  padding: 2px 4px;
+
+  &[type="button"] {
+    transition: background-color 100ms;
+    padding: 2px 6px;
+
+    &:hover:not(:disabled) {
+      cursor: pointer;
+      background-color: var(--input-hover-color);
+    }
+  }
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+hr,
+dl,
+dd,
+ol,
+ul,
+figure {
   margin: 0;
   padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6, p, blockquote, pre, ul, ol, dl, figure {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+ul,
+ol,
+dl,
+figure {
   margin-bottom: $spacing;
 }
 
@@ -38,12 +86,14 @@ a {
   }
 }
 
-ul, ol {
+ul,
+ol {
   margin-left: $spacing * 2;
 }
 
 li {
-  > ul, > ol {
+  > ul,
+  > ol {
     margin-bottom: 0;
   }
 }
@@ -52,12 +102,16 @@ ul {
   list-style-type: "• ";
 }
 
-
 strong {
   font-weight: 600;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 400;
 }
 

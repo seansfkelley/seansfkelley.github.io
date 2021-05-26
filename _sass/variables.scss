@@ -1,14 +1,15 @@
 // Common
-$font-family-base: "SourceSansPro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Segoe UI Symbol", "Segoe UI Emoji", "Apple Color Emoji", Roboto, Helvetica, Arial, sans-serif !default;
+$font-family-base:          "SourceSansPro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Segoe UI Symbol", "Segoe UI Emoji", "Apple Color Emoji", Roboto, Helvetica, Arial, sans-serif !default;
 $font-family-base-no-emoji: "SourceSansPro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Segoe UI Symbol", Roboto, Helvetica, Arial, sans-serif !default;
-$font-family-code: "Inconsolata", "Consolas", "Roboto Mono", "Ubuntu Mono", "Menlo", "Liberation Mono", "Courier New", monospace;
-$font-size-base:   16px !default;
-$font-weight-base: 400 !default;
-$font-size-small:  $font-size-base * 0.875 !default;
-$line-height-base: 1.5 !default;
-$spacing:          12px !default;
-$width-mobile:     600px !default;
-$width-desktop:    800px !default;
+$font-family-code:          "Inconsolata", "Consolas", "Roboto Mono", "Ubuntu Mono", "Menlo", "Liberation Mono", "Courier New", monospace;
+$font-size-base:            16px !default;
+$font-weight-base:          400 !default;
+$font-size-small:           $font-size-base * 0.875 !default;
+$line-height-base:          1.5 !default;
+$spacing:                   12px !default;
+$width-mobile:              600px !default;
+$width-desktop:             800px !default;
+$input-border-radius:       2px;
 
 // Syntax highlighting. Lifted from minima's Solarized port.
 :root {
@@ -40,6 +41,9 @@ body[data-theme="auto"], body[data-theme="light"] {
   --background-color:           #fdfdfd;
   --code-background-color:      #eeeeee;
   --highlight-background-color: #fdffdd;
+  --input-background-color:     #ffffff;
+  --input-border-color:         #dddddd;
+  --input-hover-color:          #eeeeee;
   --link-color-base:            #2a7ae2;
   --link-color-visited:         #1756a9;
   --link-color-hover:           var(--text-color);
@@ -73,6 +77,9 @@ body[data-theme="auto"], body[data-theme="light"] {
   --text-color-faded:           #909090;
   --background-color:           #202020;
   --code-background-color:      #404040;
+  --input-background-color:     #404040;
+  --input-border-color:         transparent;
+  --input-hover-color:          #505050;
   --highlight-background-color: #434418;
   --link-color-base:            #689fe6;
   --link-color-visited:         #567bac;
