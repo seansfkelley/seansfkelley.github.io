@@ -1,39 +1,90 @@
 (function () {
-  const steps = [...document.querySelectorAll(".recipe-step")];
-  const fixmeScannedWaits = [];
+  class Duration {
+    constructor(minutes) {
+      this.minutes = minutes;
+    }
 
-  steps.forEach((step, index) => {
-    step.addEventListener("click", () => {
-      recalculateOffsetsFrom(index);
-    });
+    static fromDate(date, roundUpTo = 1) {
+      const minutes = date.getHours() * 60 + date.getMinutes();
+      return new Duration(Math.ceil(minutes / roundUpTo) * roundUpTo);
+    }
 
-    fixmeScannedWaits.push(
-      (fixmeScannedWaits[fixmeScannedWaits.length - 1] ?? 0) +
-        +step.dataset.wait
+    static fromTimeInputValue(string) {
+      const [hours, minutes] = string.split(":");
+      return new Duration(+hours * 60 + +minutes);
+    }
+
+    static _toHoursAndMinutes(minutes) {
+      return [Math.floor(minutes / 60), minutes % 60];
+    }
+
+    toTimeInputValue() {
+      const [hours, minutes] = Duration._toHoursAndMinutes(
+        (this.minutes < 0 ? this.minutes + 24 * 60 : this.minutes) % (24 * 60)
+      );
+      return `${hours < 10 ? "0" : ""}${hours}:${
+        minutes < 10 ? "0" : ""
+      }${minutes}`;
+    }
+
+    toTextString() {
+      if (this.minutes === 0) {
+        return "now";
+      } else {
+        const [hours, minutes] = Duration._toHoursAndMinutes(
+          Math.abs(this.minutes)
+        );
+        const formatted = `${hours}:${minutes < 10 ? "0" : ""}${minutes}`;
+        return this.minutes < 0 ? `${formatted} ago` : `in ${formatted}`;
+      }
+    }
+
+    asMinutes() {
+      return this.minutes;
+    }
+  }
+
+  const steps = [];
+
+  function recalculateOffsetsRelativeTo(stepIndex) {
+    const selectedTime = Duration.fromTimeInputValue(
+      steps[stepIndex].timeInput.value
     );
-  });
 
-  function recalculateOffsetsFrom(stepIndex) {
     // TODO:
     // - show both "in x minutes" and "at x time" (relative to now) text
     // - figure out which element should be interactive
     // - make it obvious it's interactive
-    // - make the code less bad
-
-    const offset = fixmeScannedWaits[stepIndex];
-    const offsets = fixmeScannedWaits.map(w => w - offset);
-    steps.forEach((step, i) => {
-      step.querySelector('.elapsed').textContent = formatMinutes(offsets[i]);
-    })
+    steps.forEach(({ offset, timeDisplay, timeInput }) => {
+      const deltaMinutes = offset - steps[stepIndex].offset;
+      timeDisplay.textContent = new Duration(deltaMinutes).toTextString();
+      timeInput.value = new Duration(
+        selectedTime.minutes + deltaMinutes
+      ).toTimeInputValue();
+    });
   }
 
-  function formatMinutes(minutesInput) {
-    const isNegative = minutesInput < 0;
-    minutesInput = Math.abs(minutesInput);
-    const hours = Math.floor(minutesInput / 60);
-    const minutes = minutesInput % 60;
+  const nowDuration = Duration.fromDate(new Date());
 
-    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes.toString();
-    return `${isNegative ? '' : 'in '}${hours}:${formattedMinutes}${isNegative ? ' ago' : ''}`;
-  }
+  document.querySelectorAll(".recipe-step").forEach((step, index) => {
+    const offset = (steps[steps.length - 1]?.offset ?? 0) + +step.dataset.wait;
+
+    const timeInput = document.createElement("input");
+    timeInput.type = "time";
+    timeInput.step = "300";
+    timeInput.value = nowDuration.toTimeInputValue();
+    timeInput.addEventListener("change", (e) => {
+      recalculateOffsetsRelativeTo(index);
+    });
+
+    step.querySelector(".metadata").appendChild(timeInput);
+
+    steps.push({
+      offset,
+      timeDisplay: step.querySelector(".elapsed"),
+      timeInput,
+    });
+  });
+
+  recalculateOffsetsRelativeTo(0);
 })();
