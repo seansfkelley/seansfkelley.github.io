@@ -57,14 +57,13 @@
     // - make it obvious it's interactive
     steps.forEach(({ offset, timeDisplay, timeInput }) => {
       const deltaMinutes = offset - steps[stepIndex].offset;
-      timeDisplay.textContent = new Duration(deltaMinutes).toTextString();
       timeInput.value = new Duration(
         selectedTime.minutes + deltaMinutes
       ).toTimeInputValue();
     });
   }
 
-  const nowDuration = Duration.fromDate(new Date());
+  const nowDuration = Duration.fromDate(new Date(), 5);
 
   document.querySelectorAll(".recipe-step").forEach((step, index) => {
     const offset = (steps[steps.length - 1]?.offset ?? 0) + +step.dataset.wait;
@@ -77,11 +76,20 @@
       recalculateOffsetsRelativeTo(index);
     });
 
+    const setToNowButton = document.createElement("input");
+    setToNowButton.type = "button";
+    setToNowButton.value = "set to now";
+    setToNowButton.addEventListener("click", () => {
+      timeInput.value = Duration.fromDate(new Date(), 5).toTimeInputValue();
+      recalculateOffsetsRelativeTo(index);
+    });
+
+    step.querySelector(".elapsed").remove();
+    step.querySelector(".metadata").appendChild(setToNowButton);
     step.querySelector(".metadata").appendChild(timeInput);
 
     steps.push({
       offset,
-      timeDisplay: step.querySelector(".elapsed"),
       timeInput,
     });
   });

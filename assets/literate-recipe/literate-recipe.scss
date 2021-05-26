@@ -18,8 +18,22 @@ section.recipe-step {
     display: flex;
     align-items: center;
 
-    .elapsed {
+    .elapsed,
+    input[type="button"] {
       margin-left: auto;
     }
+
+    input[type="button"] {
+      opacity: 0;
+      transition: opacity 100ms;
+    }
+
+    input[type="time"] {
+      margin-left: 4px;
+    }
+  }
+
+  &:hover .metadata input[type="button"] {
+    opacity: 1;
   }
 }
