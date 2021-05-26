@@ -21,7 +21,7 @@ Lastly, the times shown in each step are all linked to one another and you can a
 
 Enjoy!
 
-{% literate_recipe_step duration="10m" %}
+{% literate_recipe_step duration="10m" shortname="mix dough" %}
 
 In a medium bowl, stir together
 
@@ -43,7 +43,7 @@ Add yeast mixture and
 to flour mixture. Stir with a rubber spatula until just incorporated, then scrape the sides of the bowl clean and cover with plastic wrap. Leave out at room temperature to ferment for 12 to 14 hours until at least doubled in volume.
 
 {% endliterate_recipe_step %}
-{% literate_recipe_step wait="12h" duration="5m" %}
+{% literate_recipe_step wait="12h" duration="5m" shortname="move to pan" %}
 
 Spread
 
@@ -56,12 +56,12 @@ evenly onto a 18-by-13 inch (46-by-33 cm) rimmed baking sheet. Use a spatula or 
 over dough and gently spread across. Gently stretch the dough to the edge of the sheet by placing your hands underneath and pulling outward. The dough will shrink a bit, so rest it for 15 minutes, then repeat stretching.
 
 {% endliterate_recipe_step %}
-{% literate_recipe_step wait="15m" duration="1m" %}
+{% literate_recipe_step wait="15m" duration="1m" shortname="stretch dough" %}
 
 Repeat gentle stretching of dough. Rest another 15 minutes.
 
 {% endliterate_recipe_step %}
-{% literate_recipe_step wait="15m" duration="5m" %}
+{% literate_recipe_step wait="15m" duration="5m" shortname="dimple and brine" %}
 
 Dimple the dough by pressing the pads of your first three fingers in at an angle. Make the brine by stirring together
 
@@ -71,7 +71,7 @@ Dimple the dough by pressing the pads of your first three fingers in at an angle
 until salt is dissolved. Pour the brine over the dough to fill dimples. Proof focaccia until light and bubbly, about 45 minutes.
 
 {% endliterate_recipe_step %}
-{% literate_recipe_step wait="30m" duration="1m" %}
+{% literate_recipe_step wait="30m" duration="1m" shortname="preheat oven" %}
 
 Adjust oven rack to center position.
 
@@ -80,7 +80,7 @@ If you prefer a crispy bottom, place a baking stone or inverted, sturdy baking s
 Preheat oven to 450°F (235°C).
 
 {% endliterate_recipe_step %}
-{% literate_recipe_step wait="15m" duration="1m" %}
+{% literate_recipe_step wait="15m" duration="1m" shortname="put in oven" %}
 
 Sprinkle focaccia with
 
@@ -89,12 +89,12 @@ Sprinkle focaccia with
 Bake for 25 to 30 minutes directly on top of stone or inverted pan (if using) until bottom crust is crisp and golden brown when checked with a metal spatula.
 
 {% endliterate_recipe_step %}
-{% literate_recipe_step wait="25m" duration="1m" %}
+{% literate_recipe_step wait="25m" duration="1m" shortname="finish browning" %}
 
 To finish browning top crust, place focaccia on upper rack and bake for 5 to 7 minutes more.
 
 {% endliterate_recipe_step %}
-{% literate_recipe_step wait="5m" duration="5m" %}
+{% literate_recipe_step wait="5m" duration="5m" shortname="remove from oven" %}
 
 Remove from oven and brush or douse with
 
@@ -103,7 +103,7 @@ Remove from oven and brush or douse with
 over the whole surface (don’t worry if the olive pools in pockets, it will absorb as it sits). Let cool for 5 minutes.
 
 {% endliterate_recipe_step %}
-{% literate_recipe_step wait="5m" duration="1m" %}
+{% literate_recipe_step wait="5m" duration="1m" shortname="final cooling" %}
 
 Release focaccia from pan with metal spatula and transfer to a cooling rack to cool completely.
 

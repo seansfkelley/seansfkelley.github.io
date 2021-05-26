@@ -30,46 +30,77 @@
 
   const steps = [];
 
-  function recalculateOffsetsRelativeTo(stepIndex) {
-    const selectedTime = Duration.fromTimeInputValue(
-      steps[stepIndex].timeInput.value
-    );
-    steps.forEach(({ offset, timeInput }) => {
-      timeInput.value = new Duration(
+  function recalculateOffsetsRelativeTo(stepIndex, inputValue) {
+    const selectedTime = Duration.fromTimeInputValue(inputValue);
+    steps.forEach(({ offset, inlineTimeInput, scheduleTimeInput }) => {
+      const value = new Duration(
         selectedTime.minutes + offset - steps[stepIndex].offset
       ).toTimeInputValue();
+      inlineTimeInput.value = value;
+      scheduleTimeInput.value = value;
     });
   }
+
+  const scheduleSection = document.createElement("section");
+  scheduleSection.classList.add("schedule");
+  const scheduleHeader = document.createElement("h3");
+  scheduleHeader.appendChild(document.createElement("hr"));
+  scheduleHeader.appendChild(document.createTextNode("Overview"));
+  scheduleHeader.appendChild(document.createElement("hr"));
+  scheduleSection.appendChild(scheduleHeader);
+  const scheduleList = document.createElement("ul");
+  scheduleSection.appendChild(scheduleList);
 
   const nowDuration = Duration.fromDate(new Date(), 5);
 
   document.querySelectorAll(".recipe-step").forEach((step, index) => {
     const offset = (steps[steps.length - 1]?.offset ?? 0) + +step.dataset.wait;
 
-    const timeInput = document.createElement("input");
-    timeInput.type = "time";
-    timeInput.step = "300";
-    timeInput.value = nowDuration.toTimeInputValue();
-    timeInput.addEventListener("change", (e) => {
-      recalculateOffsetsRelativeTo(index);
+    const inlineTimeInput = document.createElement("input");
+    inlineTimeInput.type = "time";
+    inlineTimeInput.step = "300";
+    inlineTimeInput.value = nowDuration.toTimeInputValue();
+
+    const scheduleTimeInput = inlineTimeInput.cloneNode();
+
+    inlineTimeInput.addEventListener("change", () => {
+      recalculateOffsetsRelativeTo(index, inlineTimeInput.value);
+    });
+    scheduleTimeInput.addEventListener("change", () => {
+      recalculateOffsetsRelativeTo(index, scheduleTimeInput.value);
     });
 
     const setToNowButton = document.createElement("input");
     setToNowButton.type = "button";
     setToNowButton.value = "set to now";
     setToNowButton.addEventListener("click", () => {
-      timeInput.value = Duration.fromDate(new Date(), 5).toTimeInputValue();
-      recalculateOffsetsRelativeTo(index);
+      inlineTimeInput.value = Duration.fromDate(
+        new Date(),
+        5
+      ).toTimeInputValue();
+      recalculateOffsetsRelativeTo(index, inlineTimeInput.value);
     });
 
     step.querySelector(".metadata").appendChild(setToNowButton);
-    step.querySelector(".metadata").appendChild(timeInput);
+    step.querySelector(".metadata").appendChild(inlineTimeInput);
+
+    const scheduleLine = document.createElement("li");
+    scheduleLine.appendChild(scheduleTimeInput);
+    scheduleLine.appendChild(document.createTextNode(step.dataset.shortname));
+    scheduleList.appendChild(scheduleLine);
 
     steps.push({
       offset,
-      timeInput,
+      inlineTimeInput,
+      scheduleTimeInput,
     });
   });
 
-  recalculateOffsetsRelativeTo(0);
+  const firstStep = document.querySelector(".recipe-step");
+  firstStep.parentNode.insertBefore(scheduleSection, firstStep);
+
+  recalculateOffsetsRelativeTo(
+    0,
+    firstStep.querySelector('input[type="time"]').value
+  );
 })();
