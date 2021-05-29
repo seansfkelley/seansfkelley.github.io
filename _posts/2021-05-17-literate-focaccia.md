@@ -9,13 +9,17 @@ redirect_from: /focaccia
 last_modified_at: 2021-05-28
 ---
 
-This recipe is my adaptation of [Samin Nosrat's Ligurian Focaccia](https://www.saltfatacidheat.com/fat/ligurian-focaccia), rewritten in a style inspired by [literate programming](https://en.wikipedia.org/wiki/Literate_programming).
+This recipe is my adaptation of [Samin Nosrat's Ligurian Focaccia](https://www.saltfatacidheat.com/fat/ligurian-focaccia), rewritten in a style loosely inspired by [literate programming](https://en.wikipedia.org/wiki/Literate_programming).
 
-Why rearrange it so? I know how to make this recipe and I know I have all the ingredients, but I always forget the timings and orderings. Here, the timing is the most prominent organizing principle (as opposed to, say, the ingredients list) so that you can at a glance see how much work needs to be done when, thereby making it easier to both plan around it and jump back into it when your timer goes off.
+Why rearrange it so? I know how to make this recipe and I know I have all the ingredients, but I always forget the timings and orderings. Here, the timing is the most prominent organizing principle (as opposed to, say, the ingredients list) so that you can at-a-glance see how much work needs to be done when, thereby making it easier to both plan around it and jump back into it when your timer goes off.
 
-In the interest of streamlining, I have also made some tweaks the to content, both in removing now-redundant text (namely, some of that having to do with timing) and skipping detail I consider extraneous to bakers experienced with the recipe (such as volume measurements or the type of salt).
+In addition to organizing the whole recipe around the timings, I've also replaced an up-front ingredient list with prominent per-step lists (for a recipe that takes this long, it doesn't always make sense to pull everything out at the beginning), streamlined some of the content (by removing some volume measurements and changing text related to timing) and added my own tweaks (like how to make it soft-bottomed).
 
-As always with a recipe, you should read the entire thing before starting. In particular, there are some steps that specify time ranges, such as the main part of the bake (25-30 minutes). I have chosen to use the smaller of the two values to organize and estimate those steps to nudge the baker towards checking in as soon as is reasonable and with the assumption that it is easier and more apparent to extend a step's estimated time rather than notice that you can start a step earlier than the name suggests.
+As always with any recipe, you should read the entire thing before starting. While the steps as written are spaced precisely (5 minutes here, 15 minutes there), some gaps between steps are actually ranges and are noted as such in the step's text. For organizing, I use the lower end of the range so that you don't accidentally overshoot, but it also means that the time estimates provided are not exact.
+
+Lastly, the times shown in each step are all linked to one another and you can adjust any of them to see how all the steps can fit around your meetings or chores. That is, assuming you aren't reading this in an RSS reader or a browser from 1994, in which case you'll see no times at all (sorry!).
+
+Enjoy!
 
 {% literate_recipe_step duration="10m" %}
 
