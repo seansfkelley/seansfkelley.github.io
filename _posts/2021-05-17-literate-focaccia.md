@@ -6,7 +6,7 @@ custom-js-list:
 custom-css-list:
   - /assets/literate-recipe/literate-recipe.css
 redirect_from: /focaccia
-last_modified_at: 2021-05-25
+last_modified_at: 2021-05-28
 ---
 
 This recipe is my adaptation of [Samin Nosrat's Ligurian Focaccia](https://www.saltfatacidheat.com/fat/ligurian-focaccia), rewritten in a style inspired by [literate programming](https://en.wikipedia.org/wiki/Literate_programming).
@@ -45,16 +45,16 @@ Spread
 
 - 2 to 3 tablespoons olive oil
 
-evenly onto a 18-by-13 inch (46-by-33 cm) rimmed baking sheet. Use a spatula or your hand to release it from the sides of the bowl and fold it onto itself gently, then pour out onto pan. Pour an additional
+evenly onto a 18-by-13 inch (46-by-33 cm) rimmed baking sheet. Use a spatula or your hand to release it from the sides of the bowl and pour out onto pan. Pour an additional
 
 - 2 tablespoons olive oil
 
-over dough and gently spread across. Gently stretch the dough to the edge of the sheet by placing your hands underneath and pulling outward. The dough will shrink a bit, so repeat stretching once or twice over the course of 30 minutes to ensure dough remains stretched.
+over dough and gently spread across. Gently stretch the dough to the edge of the sheet by placing your hands underneath and pulling outward. The dough will shrink a bit, so rest it for 15 minutes, then repeat stretching.
 
 {% endliterate_recipe_step %}
 {% literate_recipe_step wait="15m" duration="1m" %}
 
-Repeat gentle stretching of dough.
+Repeat gentle stretching of dough. Rest another 15 minutes.
 
 {% endliterate_recipe_step %}
 {% literate_recipe_step wait="15m" duration="5m" %}
@@ -64,12 +64,16 @@ Dimple the dough by pressing the pads of your first three fingers in at an angle
 - 80 grams lukewarm water
 - 5 grams salt
 
-until salt is dissolved. Pour the brine over the dough to fill dimples. Proof focaccia for 45 minutes until the dough is light and bubbly.
+until salt is dissolved. Pour the brine over the dough to fill dimples. Proof focaccia until light and bubbly, about 45 minutes.
 
 {% endliterate_recipe_step %}
 {% literate_recipe_step wait="30m" duration="1m" %}
 
-Adjust rack to center position and preheat oven to 450°F (235°C). If you have a baking stone, place it on rack. Otherwise, invert another sturdy baking sheet and place on rack. Allow to preheat with the oven until very hot, before proceeding with baking.
+Adjust oven rack to center position.
+
+If you prefer a crispy bottom, place a baking stone or inverted, sturdy baking sheet on the rack and allow it to preheat with the oven until very hot. If you prefer a soft bottom, place another rack below the first and put an empty baking sheet on it to insulate the upper rack from the heat source below.
+
+Preheat oven to 450°F (235°C).
 
 {% endliterate_recipe_step %}
 {% literate_recipe_step wait="15m" duration="1m" %}
@@ -78,7 +82,7 @@ Sprinkle focaccia with
 
 - flaky salt
 
-Bake for 25 to 30 minutes directly on top of stone or inverted pan until bottom crust is crisp and golden brown when checked with a metal spatula.
+Bake for 25 to 30 minutes directly on top of stone or inverted pan (if using) until bottom crust is crisp and golden brown when checked with a metal spatula.
 
 {% endliterate_recipe_step %}
 {% literate_recipe_step wait="25m" duration="1m" %}
@@ -98,6 +102,8 @@ over the whole surface (don’t worry if the olive pools in pockets, it will abs
 {% literate_recipe_step wait="5m" duration="1m" %}
 
 Release focaccia from pan with metal spatula and transfer to a cooling rack to cool completely.
+
+Store on the counter wrapped in wax paper.
 
 {% endliterate_recipe_step %}
 
