@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2021-05-26T18:30:25+00:00</updated><id>https://sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Ligurian Focaccia (and Recipe Planner)</title><link href="https://sea.nkelley.me/2021/05/17/literate-focaccia/" rel="alternate" type="text/html" title="Ligurian Focaccia (and Recipe Planner)" /><published>2021-05-17T00:00:00+00:00</published><updated>2021-05-25T00:00:00+00:00</updated><id>https://sea.nkelley.me/2021/05/17/literate-focaccia</id><content type="html" xml:base="https://sea.nkelley.me/2021/05/17/literate-focaccia/">&lt;p&gt;This recipe is my adaptation of &lt;a href=&quot;https://www.saltfatacidheat.com/fat/ligurian-focaccia&quot;&gt;Samin Nosrat’s Ligurian Focaccia&lt;/a&gt;, rewritten in a style inspired by &lt;a href=&quot;https://en.wikipedia.org/wiki/Literate_programming&quot;&gt;literate programming&lt;/a&gt;.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2021-05-29T00:58:23+00:00</updated><id>https://sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Ligurian Focaccia (and Recipe Planner)</title><link href="https://sea.nkelley.me/2021/05/17/literate-focaccia/" rel="alternate" type="text/html" title="Ligurian Focaccia (and Recipe Planner)" /><published>2021-05-17T00:00:00+00:00</published><updated>2021-05-28T00:00:00+00:00</updated><id>https://sea.nkelley.me/2021/05/17/literate-focaccia</id><content type="html" xml:base="https://sea.nkelley.me/2021/05/17/literate-focaccia/">&lt;p&gt;This recipe is my adaptation of &lt;a href=&quot;https://www.saltfatacidheat.com/fat/ligurian-focaccia&quot;&gt;Samin Nosrat’s Ligurian Focaccia&lt;/a&gt;, rewritten in a style inspired by &lt;a href=&quot;https://en.wikipedia.org/wiki/Literate_programming&quot;&gt;literate programming&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Why rearrange it so? I know how to make this recipe and I know I have all the ingredients, but I always forget the timings and orderings. Here, the timing is the most prominent organizing principle (as opposed to, say, the ingredients list) so that you can at a glance see how much work needs to be done when, thereby making it easier to both plan around it and jump back into it when your timer goes off.&lt;/p&gt;
 
@@ -59,13 +59,13 @@
   &lt;li&gt;2 to 3 tablespoons olive oil&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;evenly onto a 18-by-13 inch (46-by-33 cm) rimmed baking sheet. Use a spatula or your hand to release it from the sides of the bowl and fold it onto itself gently, then pour out onto pan. Pour an additional&lt;/p&gt;
+&lt;p&gt;evenly onto a 18-by-13 inch (46-by-33 cm) rimmed baking sheet. Use a spatula or your hand to release it from the sides of the bowl and pour out onto pan. Pour an additional&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;2 tablespoons olive oil&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;over dough and gently spread across. Gently stretch the dough to the edge of the sheet by placing your hands underneath and pulling outward. The dough will shrink a bit, so repeat stretching once or twice over the course of 30 minutes to ensure dough remains stretched.&lt;/p&gt;
+&lt;p&gt;over dough and gently spread across. Gently stretch the dough to the edge of the sheet by placing your hands underneath and pulling outward. The dough will shrink a bit, so rest it for 15 minutes, then repeat stretching.&lt;/p&gt;
 
 
       &lt;/section&gt;
@@ -79,7 +79,7 @@
           &lt;span class=&quot;duration&quot;&gt;1 minute of work&lt;/span&gt;
         &lt;/h4&gt;
         
-&lt;p&gt;Repeat gentle stretching of dough.&lt;/p&gt;
+&lt;p&gt;Repeat gentle stretching of dough. Rest another 15 minutes.&lt;/p&gt;
 
 
       &lt;/section&gt;
@@ -100,7 +100,7 @@
   &lt;li&gt;5 grams salt&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;until salt is dissolved. Pour the brine over the dough to fill dimples. Proof focaccia for 45 minutes until the dough is light and bubbly.&lt;/p&gt;
+&lt;p&gt;until salt is dissolved. Pour the brine over the dough to fill dimples. Proof focaccia until light and bubbly, about 45 minutes.&lt;/p&gt;
 
 
       &lt;/section&gt;
@@ -114,7 +114,11 @@
           &lt;span class=&quot;duration&quot;&gt;1 minute of work&lt;/span&gt;
         &lt;/h4&gt;
         
-&lt;p&gt;Adjust rack to center position and preheat oven to 450°F (235°C). If you have a baking stone, place it on rack. Otherwise, invert another sturdy baking sheet and place on rack. Allow to preheat with the oven until very hot, before proceeding with baking.&lt;/p&gt;
+&lt;p&gt;Adjust oven rack to center position.&lt;/p&gt;
+
+&lt;p&gt;If you prefer a crispy bottom, place a baking stone or inverted, sturdy baking sheet on the rack and allow it to preheat with the oven until very hot. If you prefer a soft bottom, place another rack below the first and put an empty baking sheet on it to insulate the upper rack from the heat source below.&lt;/p&gt;
+
+&lt;p&gt;Preheat oven to 450°F (235°C).&lt;/p&gt;
 
 
       &lt;/section&gt;
@@ -134,7 +138,7 @@
   &lt;li&gt;flaky salt&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Bake for 25 to 30 minutes directly on top of stone or inverted pan until bottom crust is crisp and golden brown when checked with a metal spatula.&lt;/p&gt;
+&lt;p&gt;Bake for 25 to 30 minutes directly on top of stone or inverted pan (if using) until bottom crust is crisp and golden brown when checked with a metal spatula.&lt;/p&gt;
 
 
       &lt;/section&gt;
@@ -183,6 +187,8 @@
         &lt;/h4&gt;
         
 &lt;p&gt;Release focaccia from pan with metal spatula and transfer to a cooling rack to cool completely.&lt;/p&gt;
+
+&lt;p&gt;Store on the counter wrapped in wax paper.&lt;/p&gt;
 
 
       &lt;/section&gt;
