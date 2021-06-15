@@ -7,6 +7,14 @@ I've been using TypeScript since about 1.8-ish (released early 2016), and in tha
 
 This post is a hodge-podge of tricks I've found to improve ergonomics or maintainability of code that's written types-first. That is, I usually try to specify problems entirely in types before writing any business logic around them.[^1] That way, I can make changes type-first, and if I've done my job right, the compiler will guide me to all the places I need to update or, in its own roundabout way via the error messages, tell me exactly what I have to write.
 
+<!--
+TODO
+
+- validator specs from type definitions
+- NoInfer and abusing compiler heuristics to get desired behaviors
+- immutability-helper's crazy typedefs
+-->
+
 ## Table of Contents
 {:.no_toc}
 
