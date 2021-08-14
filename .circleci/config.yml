@@ -33,6 +33,8 @@ jobs:
 
               # upsert an orphan branch
               git fetch origin "$TARGET_BRANCH" || true
+              # --force is fine because we know that _site won't get overwritten (it doesn't exist on
+              # the target branch) and it's the only thing we really care about
               git checkout --force "$TARGET_BRANCH" || git checkout --orphan "$TARGET_BRANCH"
 
               # git will stage changes when creating orphan branches, so don't
@@ -46,8 +48,8 @@ jobs:
               mv _site/* .
               rmdir _site
 
-              # silence CircleCI complaining about a lack of configuration -- though the rules
-              # elsewhere in this file prevent this branch from ever actually running the config
+              # bring in the config to silence CircleCI complaining about a lack of configuration,
+              # though the rules elsewhere in the config prevent this branch from ever actually building
               git checkout "$CIRCLE_SHA1" -- .circleci
               # unstage any changes that we brought in so they appear in the diff checks below
               git reset
