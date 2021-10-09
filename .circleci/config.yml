@@ -23,51 +23,51 @@ jobs:
       - run:
           name: HTMLProofer
           command: bundle exec htmlproofer ./_site --check-html --disable-external --allow-hash-href
-      - deploy:
-          name: Commit to gh-pages
-          command: |
-            # check here rather than whitelisting the source branch so that unrelated branches still get built
-            if [ "$CIRCLE_BRANCH" == "$SOURCE_BRANCH" ]; then
-              git config --global user.email "$DEPLOY_EMAIL"
-              git config --global user.name "$DEPLOY_NAME"
+      # check here rather than at the job level cause we still want to run checks on other branches!
+      - when:
+          condition:
+            equal: [<< pipeline.git.branch >>, master]
+          steps:
+            - run:
+                name: Commit to gh-pages
+                command: |
+                  git config --global user.email "$DEPLOY_EMAIL"
+                  git config --global user.name "$DEPLOY_NAME"
 
-              # upsert an orphan branch
-              git fetch origin "$TARGET_BRANCH" || true
-              # --force is fine because we know that _site won't get overwritten (it doesn't exist on
-              # the target branch) and it's the only thing we really care about
-              git checkout --force "$TARGET_BRANCH" || git checkout --orphan "$TARGET_BRANCH"
+                  # upsert an orphan branch
+                  git fetch origin "$TARGET_BRANCH" || true
+                  # --force is fine because we know that _site won't get overwritten (it doesn't exist on
+                  # the target branch) and it's the only thing we really care about
+                  git checkout --force "$TARGET_BRANCH" || git checkout --orphan "$TARGET_BRANCH"
 
-              # git will stage changes when creating orphan branches, so don't
-              git reset
+                  # git will stage changes when creating orphan branches, so don't
+                  git reset
 
-              # delete everything except .git (we need that) and _site (the compiled content)
-              # note that `find -delete` does not work for our uses here
-              find . -maxdepth 1 -not -name '_site' -not -name '.git' -not -name '.' -not -name '..' | xargs rm -rf
+                  # delete everything except .git (we need that) and _site (the compiled content)
+                  # note that `find -delete` does not work for our uses here
+                  find . -maxdepth 1 -not -name '_site' -not -name '.git' -not -name '.' -not -name '..' | xargs rm -rf
 
-              # pull out the interesting files to the top level (also for ease of server configuration)
-              mv _site/* .
-              rmdir _site
+                  # pull out the interesting files to the top level (also for ease of server configuration)
+                  mv _site/* .
+                  rmdir _site
 
-              # bring in the config to silence CircleCI complaining about a lack of configuration,
-              # though the rules elsewhere in the config prevent this branch from ever actually building
-              git checkout "$CIRCLE_SHA1" -- .circleci
-              # unstage any changes that we brought in so they appear in the diff checks below
-              git reset
+                  # bring in the config to silence CircleCI complaining about a lack of configuration,
+                  # though the rules elsewhere in the config prevent this branch from ever actually building
+                  git checkout "$CIRCLE_SHA1" -- .circleci
+                  # unstage any changes that we brought in so they appear in the diff checks below
+                  git reset
 
-              # check if we have any changes to push
-              # feed.xml changes timestamp every run, so ignore it -- if the feed changed
-              # meaningfully, other files would appear in the diff too
-              if [[ ! -z "$(git --no-pager diff --name-only | grep -v feed.xml)" ]]; then
-                git add .
-                git commit -q -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}"
-                git --no-pager show --stat
-                git push origin "$TARGET_BRANCH"
-              else
-                echo "no non-feed.xml changes detected; not publishing another commit"
-              fi
-            else
-              echo "skipping deploy: not on $SOURCE_BRANCH branch"
-            fi
+                  # check if we have any changes to push
+                  # feed.xml changes timestamp every run, so ignore it -- if the feed changed
+                  # meaningfully, other files would appear in the diff too
+                  if [[ ! -z "$(git --no-pager diff --name-only | grep -v feed.xml)" ]]; then
+                    git add .
+                    git commit -q -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}"
+                    git --no-pager show --stat
+                    git push origin "$TARGET_BRANCH"
+                  else
+                    echo "no non-feed.xml changes detected; not publishing another commit"
+                  fi
 workflows:
   build:
     jobs:
