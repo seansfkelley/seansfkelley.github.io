@@ -90,11 +90,11 @@ As it turns out, if I had taken a digital electronics course and/or paid attenti
 Then you find rectangles like they describe on Wikipedia, and back out the boolean algebra expressions that describe them:
 
 <div class="center" markdown="1">
-A&#772;B + A&#772;BC + A&#772;B&#772;CD
+AB&#772; + A&#772;BC + A&#772;B&#772;CD
 
 <span class="small">(or)</span>
 
-A&#772;B + A&#772;CD + A&#772;BCD&#772;
+AB&#772; + A&#772;CD + A&#772;BCD&#772;
 </div>
 
 That's the top light. Yes, it has two different representations.
