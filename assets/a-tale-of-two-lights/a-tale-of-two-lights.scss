@@ -1,0 +1,109 @@
+---
+# why do I have to put this nonsense header in and break my syntax highlighter
+---
+
+@import "variables";
+
+#data-table table {
+  font-family: $font-family-code;
+  margin: auto;
+  margin-bottom: $spacing;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding-left: $spacing;
+    padding-right: $spacing;
+  }
+
+  th {
+    border-bottom: 1px solid var(--text-color-faded);
+  }
+
+  td:nth-child(5),
+  td:nth-child(6) {
+    text-align: center;
+  }
+
+  td:nth-child(5),
+  td:nth-child(6),
+  th:nth-child(5),
+  th:nth-child(6) {
+    border-left: 1px solid var(--text-color-faded);
+  }
+}
+
+div.center {
+  text-align: center;
+
+  .small {
+    font-size: $font-size-small;
+    color: var(--text-color-faded);
+  }
+}
+
+$karnaugh-grid-size: $font-size-base * $line-height-base;
+
+.karnaugh-maps {
+  display: flex;
+  justify-content: center;
+
+  .karnaugh:not(:last-child) {
+    margin-right: $spacing * 2;
+  }
+
+  .karnaugh:first-child {
+    // Bump it over so it's centered by the 5x5 table, ignoring the floating labels.
+    margin-left: -$karnaugh-grid-size;
+  }
+}
+
+.karnaugh {
+  font-family: $font-family-code;
+
+  table {
+    td {
+      padding: 0;
+      height: $karnaugh-grid-size;
+      width: $karnaugh-grid-size;
+      text-align: center;
+      vertical-align: center;
+    }
+
+    tr:nth-child(1),
+    td:nth-child(1) {
+      color: var(--text-color-faded);
+      font-size: $font-size-small;
+    }
+  }
+
+  .left-label-wrapper {
+    display: flex;
+    align-items: center;
+
+    .karnaugh-label.left {
+      transform: rotate(-90deg);
+      margin: 0;
+      // The table has 5 rows but we want to center the label between the 3rd and 4th (because
+      // the top row and left column are headers and we shouldn't center around them), so we have
+      // to push it down one unit, where a unit is font-size * line-height.
+      margin-top: $karnaugh-grid-size;
+      // make it square so the top label is easy to align
+      width: $karnaugh-grid-size;
+      text-align: center;
+      // except also bump it out a little bit because it's very cozy
+      margin-right: $spacing / 2;
+    }
+  }
+
+  .karnaugh-label.top {
+    margin-bottom: 0;
+    margin-left: $spacing / 2 + ($karnaugh-grid-size * 4);
+  }
+
+  .karnaugh-label.bottom {
+    text-align: center;
+    margin-top: $spacing;
+    margin-left: $karnaugh-grid-size * 1.5;
+  }
+}
