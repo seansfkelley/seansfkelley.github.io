@@ -90,24 +90,20 @@ As it turns out, if I had taken a digital electronics course and/or paid attenti
 Then you find rectangles like they describe on Wikipedia, and back out the boolean algebra expressions that describe them:
 
 <div class="center" markdown="1">
-AB&#772; + A&#772;BC + A&#772;B&#772;CD
-
-<span class="small">(or)</span>
-
-AB&#772; + A&#772;CD + A&#772;BCD&#772;
-</div>
-
-That's the top light. Yes, it has two different representations.
-
-<div class="center" markdown="1">
 A&#772;C + AB&#772;D
 </div>
 
-And that's the bottom. At least it's simpler.
+That's the bottom light. I started with that one because it's simpler.
+
+<div class="center" markdown="1">
+AB&#772; + A&#772;BC + A&#772;CD
+</div>
+
+That's the top light. Interesting to note: the rectangles represented by the last two terms overlap. They both include the case A&#772;BCD.[^2]
 
 In fact, I was surprised by how much simpler an expression this process yielded. Scroll back up and look at my first attempts with boolean algebra expressions -- it would have taken a lot of staring and comparing _this_ group of symbols, some of which are negated just so, with _that_ group of symbols, some of which are negated just so, in order to factor out commonalities which could be reduced.
 
-That said, look at how ridiculous this is. Let's attempt to interpret A&#772;C + AB&#772;D, which is the bottom light.[^2]
+That said, look at how ridiculous this is. Let's attempt to interpret A&#772;C + AB&#772;D, which is the bottom light.[^3]
 
 First off, notice that all four symbols are present. This means that all four switches can control this light, but more importantly, it means I'm _not_ crazy and it really is weird and confusing. Maybe the electrician was the crazy one.
 
@@ -124,4 +120,5 @@ Or you can just mash the switches and hope for the best.
 -------------------------------------------------------------------------------
 
 [^1]: Excuse the tiny, tiny negation bars. I couldn't figure out why the proper combining overline `&#773;` wouldn't work.
-[^2]: The interpretation of the control scheme for the top light is left as an exercise to the reader.
+[^2]: One could come up with many different representations that don't have overlapping rectangles, up to and including one that has a term for each 1. That would be equivalent to the original, lengthy boolean algebra expression I started with, which defeats the point of Karnaugh maps. This expression has fewer terms, and simpler terms, than any other representation that doesn't have overlapping terms.
+[^3]: The interpretation of the control scheme for the top light is left as an exercise to the reader.
