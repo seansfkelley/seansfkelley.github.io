@@ -36,7 +36,7 @@ I've been here for literally weeks and I haven't been able to figure out the way
 
 I stared at this for a while, and even drew out little truth tables for AND, OR, XOR and [IMPLY](https://en.wikipedia.org/wiki/IMPLY_gate) (just learned about that one) as well as their NOT'd equivalents in an attempt to pattern match. The hope was to eventually draw a logic gate diagram (which I am sort of familiar with) and then back out a wiring diagram from that.
 
-Instead, I floundered a bit on the internet and discovered that all these years that people have been saying "boolean algebra", they literally meant that you can do algebra with it. Like numbers. But not quite, because the laws are different. Then I discovered [products of sums and sums of products](https://www.electronics-tutorials.ws/boolean/product-of-sum.html)! I eagerly translated my data for the bottom light into the naive algebraic expression, and then attempted to copy-cat the simplificiations from that site:
+Instead, I floundered a bit on the internet and discovered that all these years that people have been saying "boolean algebra", they literally meant that you can do algebra with it. Like numbers. But not quite, because the laws are different. Then I discovered [products of sums and sums of products](https://www.electronics-tutorials.ws/boolean/product-of-sum.html)! I eagerly translated my data for the top light into the naive algebraic expression, and then attempted to copy-cat the simplificiations from that site:
 
 <div class="center" markdown="1">
 A&#772;B&#772;CD&#772; + A&#772;BCD&#772; + AB&#772;C&#772;D + A&#772;B&#772;CD + AB&#772;CD + A&#772;BCD[^1]
