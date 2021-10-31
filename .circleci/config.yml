@@ -62,7 +62,7 @@ jobs:
                   # meaningfully, other files would appear in the diff too
                   if [[ ! -z "$(git --no-pager diff --name-only | grep -v feed.xml)" ]]; then
                     git add .
-                    git commit -q -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}"
+                    git commit -q -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" -m "Commit title: $(git log --oneline --format=%B -n 1 ${CIRCLE_SHA1} | head -n1)"
                     git --no-pager show --stat
                     git push origin "$TARGET_BRANCH"
                   else
