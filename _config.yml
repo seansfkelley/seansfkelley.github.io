@@ -6,3 +6,5 @@ exclude:
   - behind-the-scenes/
   - TODO.md
   - README.md
+sass:
+  sourcemap: never
