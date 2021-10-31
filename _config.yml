@@ -4,6 +4,7 @@ date_format: "%Y-%m-%d"
 permalink: pretty
 exclude:
   - behind-the-scenes/
+  - hooks/
   - TODO.md
   - README.md
 sass:

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -euo pipefail
+
+for f in $(git diff --cached --name-only --diff-filter=d) ; do
+  if [[ "$(file "$f")" =~ "image data" ]]; then
+    if identify -verbose "$f" | grep -q exif ; then
+      echo "Failing commit: $f has EXIF data!"
+      exit 1
+    fi
+  fi
+done
+
+exit 0
