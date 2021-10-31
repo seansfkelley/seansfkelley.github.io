@@ -6,7 +6,7 @@ title: JSC > JSX
 where does jsx cause problems?
 - hooks violate true functions
 - hooks want static analysis but are Hungarian notated
-- dependencies are obnoxious
+- dependencies are obnoxiousj
 - verbose closing tags
   - https://stackoverflow.com/questions/4370488/why-does-xml-have-such-verbose-closing-tags
   - counterargument: react components are small and validated by a compiler (unlike illegal XML which could end up sent over the network before being caught)
@@ -14,6 +14,7 @@ where does jsx cause problems?
 - not allowing compact literal syntax
 - hooks allow complex logic between function definitions (this is a blessing and a curse... I've seen it put to good use with things like useDebounced)
 
+// https://github.com/tc39/proposal-decorators/blob/master/EXTENSIONS.md#let-decorators
 
 ## today
 
