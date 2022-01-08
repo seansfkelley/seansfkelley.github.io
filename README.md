@@ -1,6 +1,6 @@
 # seansfkelley.github.io
 
-After cloning, don't forget to install the Git hooks~
+After cloning, don't forget to install the Git hooks:
 
 ```sh
 ./hooks/install.sh

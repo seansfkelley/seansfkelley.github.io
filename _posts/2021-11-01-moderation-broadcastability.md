@@ -3,6 +3,7 @@ layout: post
 title: Why Is Facebook So Awful?
 # disable the excerpt because it picks the image caption and I can't choose anything more specific
 excerpt_separator: ""
+last_modified_at: 2022-01-07
 ---
 
 <figure>
@@ -54,6 +55,9 @@ If you'd like to read more like this, check out:
 
 - [If your website's full of assholes, it's your fault](https://anildash.com/2011/07/20/if_your_websites_full_of_assholes_its_your_fault-2/) -- Anil Dash
 - [People Aren’t Meant to Talk This Much](https://www.theatlantic.com/technology/archive/2021/10/fix-facebook-making-it-more-like-google/620456/) -- The Atlantic (and at times eerily similar to this post)
+- [The Largest Autocracy on Earth](https://www.theatlantic.com/magazine/archive/2021/11/facebook-authoritarian-hostile-foreign-power/620168/) -- The Atlantic (originally published as _Facebookland_, and yes, I like the Atlantic)
+
+_Updated 2022-01-07: added another link to the reading list._
 
 -------------------------------------------------------------------------------
 
