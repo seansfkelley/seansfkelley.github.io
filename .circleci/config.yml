@@ -38,7 +38,7 @@ jobs:
                   git fetch origin "$TARGET_BRANCH" || true
                   # --force is fine because we know that _site won't get overwritten (it doesn't exist on
                   # the target branch) and it's the only thing we really care about
-                  git checkout --force "$TARGET_BRANCH" || git checkout --orphan "$TARGET_BRANCH"
+                  git checkout --force "$TARGET_BRANCH" -- || git checkout --orphan "$TARGET_BRANCH"
 
                   # git will stage changes when creating orphan branches, so don't
                   git reset
@@ -60,7 +60,7 @@ jobs:
                   # check if we have any changes to push
                   # feed.xml changes timestamp every run, so ignore it -- if the feed changed
                   # meaningfully, other files would appear in the diff too
-                  if [[ ! -z "$(git --no-pager diff --name-only | grep -v feed.xml)" ]]; then
+                  if [[ "$(git log 2>&1)" =~ "does not have any commits yet" ]] || [[ ! -z "$(git --no-pager diff --name-only | grep -v feed.xml)" ]]; then
                     git add .
                     git commit -q -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" -m "Commit title: $(git log --oneline --format=%B -n 1 ${CIRCLE_SHA1} | head -n1)"
                     git --no-pager show --stat
