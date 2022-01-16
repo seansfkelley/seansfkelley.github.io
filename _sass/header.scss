@@ -5,7 +5,10 @@ html {
   // mathmathmath
   // this reproduces the various bits that contribute to the height of the site header in a DRY way
   // this is so when following anchors, we scroll to the right place, since the header is sticky!
-  scroll-padding-top: calc(#{$line-height-base * $font-size-site-title} + #{$header-vertical-spacing * 2 + 1});
+  scroll-padding-top: calc(
+    #{$line-height-base * $font-size-site-title} + #{$header-vertical-spacing * 2 +
+      1}
+  );
 }
 
 .site-header {
@@ -14,11 +17,13 @@ html {
   background-color: var(--background-color);
   position: sticky;
   top: 0;
+  // Because this comes before post content but is sticky, it can sometimes end up underneath it without this.
+  z-index: 1;
 
   .centering-wrapper {
     display: flex;
     align-items: center;
-    justify-content: space-between;;
+    justify-content: space-between;
   }
 }
 
@@ -27,19 +32,21 @@ html {
   font-weight: 300;
   font-size: $font-size-site-title;
 
-  &, &:hover, &:visited {
+  &,
+  &:hover,
+  &:visited {
     color: var(--site-title-color);
   }
 }
 
 body[data-theme="auto"] #theme-switcher:after {
-  content: 'auto';
+  content: "auto";
 }
 
 body[data-theme="dark"] #theme-switcher:after {
-  content: 'dark';
+  content: "dark";
 }
 
 body[data-theme="light"] #theme-switcher:after {
-  content: 'light';
+  content: "light";
 }
