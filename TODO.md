@@ -1,3 +1,2 @@
 - logo!
 - better syntax highlight theme (pygments?)
-- rewrite history to remove email?
