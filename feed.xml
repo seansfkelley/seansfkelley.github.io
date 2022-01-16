@@ -1,0 +1,1452 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2022-01-16T04:51:03+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Why Is Facebook So Awful?</title><link href="https://blog.sea.nkelley.me/2021/11/01/moderation-broadcastability/" rel="alternate" type="text/html" title="Why Is Facebook So Awful?" /><published>2021-11-01T00:00:00+00:00</published><updated>2022-01-07T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2021/11/01/moderation-broadcastability</id><content type="html" xml:base="https://blog.sea.nkelley.me/2021/11/01/moderation-broadcastability/">&lt;figure&gt;
+&lt;!-- I wanted to call this post facebook-moderation-broadcastability but then uBlock Origin saw `facebook` in the URL and blocked it. :( --&gt;
+&lt;img src=&quot;/assets/moderation-broadcastability/street-art.jpg&quot; alt=&quot;Street art showing Facebook logo as a cigarette.&quot; /&gt;
+&lt;figcaption&gt;
+    &lt;p&gt;In a nice coincidence, I stumbled upon this art while this post was forming in my head. &lt;a href=&quot;https://www.google.com/maps/@51.5202493,-0.0699047,3a,75y,209.65h,83.89t/data=!3m6!1e1!3m4!1sYtB3iBiH61iUjZhV3V7fbQ!2e0!7i16384!8i8192&quot;&gt;51° 31’ 12.89” N, 0° 4’ 11.65” W&lt;/a&gt;&lt;/p&gt;
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;The stream of bad press for &lt;del&gt;Facebook&lt;/del&gt; &lt;del&gt;Meta&lt;/del&gt; Facebook&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; has been going steady for a while now.&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; As someone who finally deleted my Facebook account some time around or after the Cambridge Analytica scandal, I’d say: deservedly so.&lt;/p&gt;
+
+&lt;p&gt;To the extent that I continue to think about Facebook, I’ve been trying on-and-off to find a succinct and satisfying explanation for why Facebook, in particular, has become so influential and so toxic. To be sure, it’s not alone – Twitter comes to mind – but it seems like the worst offender. What did/does it do that made it so different and so much more problematic than its competitors and predecessors?&lt;/p&gt;
+
+&lt;p&gt;The problem, as I see it, is that Facebook is the first to simultaneously enable, on the truly ridiculous scale of its user base, both:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;em&gt;non-moderation&lt;/em&gt;, or, the ability to say whatever you want&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;broadcastability&lt;/em&gt;, or, the ability to send what you say to a huge audience&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;That Facebook enables these together is hopefully obvious, their &lt;a href=&quot;https://apnews.com/article/myanmar-business-d55600bf3f683d863682c0480a298a0a&quot;&gt;weak attempts at “moderation”&lt;/a&gt; notwithstanding. Perhaps less obvious is that a functional separation between these two has historically existed, but I think that is the case.&lt;/p&gt;
+
+&lt;p&gt;(Non-)moderation and broadcastability are both a spectrum, and they are largely inverses. As one builds a big idea from a kitchen table conversation, though self-published flyers and town paper letters-to-the-editor up to national TV news interviews, one is subject to increasing moderation. To be granted access to the TV audience is to have your idea vetted as “something worth saying”, for some definition of “worth” that (used to) exclude the kind of stuff on Facebook that is prompting this national conversation.&lt;/p&gt;
+
+&lt;p&gt;The mixing of non-moderation and broadcastability on Facebook plays out mostly in the blurrily public/private zones of Groups, Timeline and perhaps Events. An incendiary post from your weird uncle gets reshared by your other weird uncle on the other side. They know each other, sure, but it’s not the kind of thing they would have brought up casually at the next family gathering. Even if they had, the passive audience would be significantly smaller. Timeline is “private” enough that they feel comfortable sharing, but public enough that hundreds or thousands of bystanders are caught in the blast radius of negativity – all with the effort of a single click on “Reshare”.&lt;/p&gt;
+
+&lt;p&gt;Such interactions are the lifeblood of Facebook – engagement translates directly to revenue – hence the endless tweaking of the ever-inscrutable Algorithm to encourage them. Leading up to the 2020 election, we all learned for the first time of something that a lot of us suspected: Facebook knowingly exercises &lt;a href=&quot;https://usatoday.com/story/tech/2020/11/05/facebook-election-misinformation-crackdown-emergency-measures-trump/6182001002/&quot;&gt;direct control&lt;/a&gt; over the degree of both moderation and broadcast of posts, dampening them only in emergencies.&lt;/p&gt;
+
+&lt;p&gt;Facebook isn’t the only entity that exercises such malicious, or at least, spectacularly tone-deaf control over the audience they have cultivated. Yelp’s questionable “editorial” processes frequently get them criticized as abusive, to the degree that they have a &lt;a href=&quot;https://www.yelp-support.com/article/Does-Yelp-extort-small-businesses&quot;&gt;support page&lt;/a&gt; describing how they don’t extort businesses. Even a misguided or rogue moderator in an enthusiasts’ forum can single-handedly derail it.&lt;/p&gt;
+
+&lt;p&gt;These sites, and countless others like them, exist because of and are protected by the now (in?)famous Section 230:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;No provider or user of an interactive computer service shall be treated as the publisher or speaker of any information provided by another information content provider.&lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;That’s the full text of Section 230(c)(1), and is the heart of the Communications Decency Act of 1996.&lt;/p&gt;
+
+&lt;p&gt;As it stands, Facebook, Yelp and all the others are still well within their (current) rights to manipulate content on their platforms.&lt;sup id=&quot;fnref:4&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt; I would go so far as to say that Section 230 all but invites their creation and consequent manipulative behavior. After all, if you aren’t responsible for moderating what your users post and you can cherry-pick what should be broadcast, why &lt;em&gt;wouldn’t&lt;/em&gt; a for-profit ad-driven company steer towards maximum engagement?&lt;/p&gt;
+
+&lt;p&gt;It’s clear, then, that the only way out of this predicament is with a change to Section 230.&lt;sup id=&quot;fnref:5&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:5&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;Some on the Section 230-protected intertubes have been advocating for full repeal, which is throwing the baby out with the bathwater. My blissfully Facebook-free internet life would be much the worse if almost every other site I frequented were forced to choose between taking on liability for their users or simply shutting down. Instead, I’d like to see a sliding scale of sorts that allows the small-time sites to stay unencumbered but mandates some degree of responsibility to ones with a larger blast radius.&lt;/p&gt;
+
+&lt;p&gt;Others say the problem can be solved by spinning off, say, Instagram. In the absence of regulatory changes, an AT&amp;amp;T-style breakup (regardless of whether it’s along horizontal or vertical lines) would merely waste everyone’s time. Without a paying user base&lt;sup id=&quot;fnref:6&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:6&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;6&lt;/a&gt;&lt;/sup&gt; or significant physical infrastructure to induce drag, the reconsolidation would be swift. Instead, I’d like to see some kind of forced decentralization of Timeline, Groups and their ilk, which is where the damage is really done. Prying those apart is unlikely to happen in such a breakup, however.&lt;/p&gt;
+
+&lt;p&gt;We’ve been trained to expect non-moderation and broadcastability almost as an inherent right of using the internet, but this is a destructive aberration. A combination of forced decentralization (to control broadcastability) and transference of responsibility back to the platforms (to encourage non-negligible moderation) will be messy, painful and awkward. Our collective Facebook-trained expectations may make it politically difficult. But I find it hard to believe that the cure could be worse than the disease, and the disease is not going away by itself – in fact, it’s Metastasizing.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;If you’d like to read more like this, check out:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://anildash.com/2011/07/20/if_your_websites_full_of_assholes_its_your_fault-2/&quot;&gt;If your website’s full of assholes, it’s your fault&lt;/a&gt; – Anil Dash&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.theatlantic.com/technology/archive/2021/10/fix-facebook-making-it-more-like-google/620456/&quot;&gt;People Aren’t Meant to Talk This Much&lt;/a&gt; – The Atlantic (and at times eerily similar to this post)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.theatlantic.com/magazine/archive/2021/11/facebook-authoritarian-hostile-foreign-power/620168/&quot;&gt;The Largest Autocracy on Earth&lt;/a&gt; – The Atlantic (originally published as &lt;em&gt;Facebookland&lt;/em&gt;, and yes, I like the Atlantic)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;Updated 2022-01-07: added another link to the reading list.&lt;/em&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;section class=&quot;next-previous&quot;&gt;
+  
+  &lt;a href=&quot;/2021/10/29/a-tale-of-two-lights/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: A Tale of Two Lights&quot;&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;A Tale of Two Lights&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+  
+  
+  &lt;div class=&quot;next-previous-placeholder&quot;&gt;&lt;/div&gt;
+  
+&lt;/section&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;I was drafting this post in the weeks leading up to The Announcement. I don’t think the name Facebook is going any any time soon, and I don’t think a regulation-dodging rename makes any of these observations less relevant. So I’ll continue to use the name Facebook. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Since at least &lt;a href=&quot;https://en.wikipedia.org/wiki/2021_United_States_Capitol_attack&quot;&gt;2021-01-06&lt;/a&gt;, if not &lt;a href=&quot;https://en.wikipedia.org/wiki/Facebook%E2%80%93Cambridge_Analytica_data_scandal&quot;&gt;2018-03-17&lt;/a&gt;. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Via &lt;a href=&quot;https://www.law.cornell.edu/uscode/text/47/230&quot;&gt;Cornell Law School&lt;/a&gt;. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:4&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;There isn’t, by the way, &lt;a href=&quot;https://www.eff.org/deeplinks/2020/12/publisher-or-platform-it-doesnt-matter&quot;&gt;a platform-publisher distinction&lt;/a&gt; or any &lt;a href=&quot;https://www.eff.org/deeplinks/2018/04/no-section-230-does-not-require-platforms-be-neutral&quot;&gt;requirement of neutrality towards content&lt;/a&gt;, as is sometimes claimed. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:5&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;This is probably the only time I’ll say this in my entire life, but, to Mark Zuckerberg’s credit, he has &lt;a href=&quot;https://www.huffingtonpost.com/entry/mark-zuckerberg-facebook-regulation_n_5ab400dae4b054d118e0eac5&quot;&gt;asked for regulation&lt;/a&gt; in the past. &lt;a href=&quot;#fnref:5&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:6&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Advertisers are the &lt;em&gt;customers&lt;/em&gt;, but regular people are the &lt;em&gt;users&lt;/em&gt;. &lt;a href=&quot;#fnref:6&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name></name></author></entry><entry><title type="html">A Tale of Two Lights</title><link href="https://blog.sea.nkelley.me/2021/10/29/a-tale-of-two-lights/" rel="alternate" type="text/html" title="A Tale of Two Lights" /><published>2021-10-29T00:00:00+00:00</published><updated>2021-10-29T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2021/10/29/a-tale-of-two-lights</id><content type="html" xml:base="https://blog.sea.nkelley.me/2021/10/29/a-tale-of-two-lights/">&lt;p&gt;I’m at an Airbnb. There is a stairwell that has a light at the bottom and a light at the top (the latter of which is also the hallway light). One desires to control both these lights from both ends so that you can always turn the light off after you, or turn the light on before you, regardless of which direction you’re going. There are indeed four light switches, but they don’t work like that. If they did, I wouldn’t have had to write this.&lt;/p&gt;
+
+&lt;p&gt;One switch is by the front door where the upper hallway is. Two are at the top of the stairs, and one at the bottom. Hm… that doesn’t sound like the pair of independent three-way switches you might expect. There’s only one switch at the bottom?&lt;/p&gt;
+
+&lt;p&gt;I’ve been here for literally weeks and I haven’t been able to figure out the way that these lights are connected. Most days I just mash them at random until I get them into the state I want. Yesterday I got so annoyed that I actually tabulated (and triple-checked!) data for how the switches perform. In binary.&lt;/p&gt;
+
+&lt;div id=&quot;data-table&quot;&gt;
+
+  &lt;table&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;A&lt;/th&gt;
+        &lt;th&gt;B&lt;/th&gt;
+        &lt;th&gt;C&lt;/th&gt;
+        &lt;th&gt;D&lt;/th&gt;
+        &lt;th&gt;Top Light&lt;/th&gt;
+        &lt;th&gt;Bottom Light&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+
+&lt;/div&gt;
+
+&lt;p&gt;I stared at this for a while, and even drew out little truth tables for AND, OR, XOR and &lt;a href=&quot;https://en.wikipedia.org/wiki/IMPLY_gate&quot;&gt;IMPLY&lt;/a&gt; (just learned about that one) as well as their NOT’d equivalents in an attempt to pattern match. The hope was to eventually draw a logic gate diagram (which I am sort of familiar with) and then back out a wiring diagram from that.&lt;/p&gt;
+
+&lt;p&gt;Instead, I floundered a bit on the internet and discovered that all these years that people have been saying “boolean algebra”, they literally meant that you can do algebra with it. Like numbers. But not quite, because the laws are different. Then I discovered &lt;a href=&quot;https://www.electronics-tutorials.ws/boolean/product-of-sum.html&quot;&gt;products of sums and sums of products&lt;/a&gt;! I eagerly translated my data for the top light into the naive algebraic expression, and then attempted to copy-cat the simplificiations from that site:&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;p&gt;ĀB̄CD̄ + ĀBCD̄ + AB̄C̄D + ĀB̄CD + AB̄CD + ĀBCD&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+  &lt;p&gt;&lt;span class=&quot;small&quot;&gt;alright let’s get my hands dirty and factor some stuff out&lt;/span&gt;&lt;/p&gt;
+
+  &lt;p&gt;(B̄ + B)ĀCD̄ + AB̄C̄D + (Ā + A)B̄CD + ĀBCD&lt;/p&gt;
+
+  &lt;p&gt;&lt;span class=&quot;small&quot;&gt;cool, I just learned from The Internet that (A + Ā) is always true so we can drop that right out&lt;/span&gt;&lt;/p&gt;
+
+  &lt;p&gt;ĀCD̄ + AB̄C̄D + B̄CD + ĀBCD&lt;/p&gt;
+
+  &lt;p&gt;&lt;span class=&quot;small&quot;&gt;okay I’m out of ideas&lt;/span&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Even a light switch system this confusing can’t be that complicated. Also, there’s no way that people who design systems of logic gates for a living still do it this way. (Yes I know the computers are actually the ones doing it for the professionals.)&lt;/p&gt;
+
+&lt;p&gt;As it turns out, if I had taken a digital electronics course and/or paid attention in my Discrete Algebra course, I would have learned about &lt;a href=&quot;https://en.wikipedia.org/wiki/Karnaugh_map&quot;&gt;Karnaugh maps&lt;/a&gt;, which are a pretty clever trick. They encode truth tables in just such a way every move from a square to an adjacent square is a single bit flip (including falling off the edges – so it’s actually a torus!), which means that blocks of zeroes or ones that are in lines or squares are all closely related. Which is to say, they can be represented with relatively fewer terms. So I whipped up Karnaugh map for each light, because the Wikipedia page happened to have an example of how to do with 16 entries. What are the chances?&lt;/p&gt;
+
+&lt;div class=&quot;karnaugh-maps&quot;&gt;
+  &lt;div class=&quot;karnaugh&quot;&gt;
+    &lt;p class=&quot;karnaugh-label top&quot;&gt;AB&lt;/p&gt;
+    &lt;div class=&quot;left-label-wrapper&quot;&gt;
+      &lt;p class=&quot;karnaugh-label left&quot;&gt;CD&lt;/p&gt;
+
+      &lt;table&gt;
+        &lt;tbody&gt;
+          &lt;tr&gt;
+            &lt;td&gt; &lt;/td&gt;
+            &lt;td&gt;00&lt;/td&gt;
+            &lt;td&gt;01&lt;/td&gt;
+            &lt;td&gt;11&lt;/td&gt;
+            &lt;td&gt;10&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;00&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+            &lt;td&gt;1&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;01&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+            &lt;td&gt;1&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;11&lt;/td&gt;
+            &lt;td&gt;1&lt;/td&gt;
+            &lt;td&gt;1&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+            &lt;td&gt;1&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;10&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+            &lt;td&gt;1&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+            &lt;td&gt;1&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+
+    &lt;/div&gt;
+    &lt;p class=&quot;karnaugh-label bottom&quot;&gt;Top Light&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;karnaugh&quot;&gt;
+    &lt;p class=&quot;karnaugh-label top&quot;&gt;AB&lt;/p&gt;
+    &lt;div class=&quot;left-label-wrapper&quot;&gt;
+      &lt;p class=&quot;karnaugh-label left&quot;&gt;CD&lt;/p&gt;
+
+      &lt;table&gt;
+        &lt;tbody&gt;
+          &lt;tr&gt;
+            &lt;td&gt; &lt;/td&gt;
+            &lt;td&gt;00&lt;/td&gt;
+            &lt;td&gt;01&lt;/td&gt;
+            &lt;td&gt;11&lt;/td&gt;
+            &lt;td&gt;10&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;00&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;01&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+            &lt;td&gt;1&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;11&lt;/td&gt;
+            &lt;td&gt;1&lt;/td&gt;
+            &lt;td&gt;1&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+            &lt;td&gt;1&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;10&lt;/td&gt;
+            &lt;td&gt;1&lt;/td&gt;
+            &lt;td&gt;1&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+            &lt;td&gt;0&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+
+    &lt;/div&gt;
+    &lt;p class=&quot;karnaugh-label bottom&quot;&gt;Bottom Light&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Then you find rectangles like they describe on Wikipedia, and back out the boolean algebra expressions that describe them:&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;p&gt;ĀC + AB̄D&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p&gt;That’s the bottom light. I started with that one because it’s simpler.&lt;/p&gt;
+
+&lt;div class=&quot;center&quot;&gt;
+  &lt;p&gt;AB̄ + ĀBC + ĀCD&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p&gt;That’s the top light. Interesting to note: the rectangles represented by the last two terms overlap. They both include the case ĀBCD.&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;In fact, I was surprised by how much simpler an expression this process yielded. Scroll back up and look at my first attempts with boolean algebra expressions – it would have taken a lot of staring and comparing &lt;em&gt;this&lt;/em&gt; group of symbols, some of which are negated just so, with &lt;em&gt;that&lt;/em&gt; group of symbols, some of which are negated just so, in order to factor out commonalities which could be reduced.&lt;/p&gt;
+
+&lt;p&gt;That said, look at how ridiculous this is. Let’s attempt to interpret ĀC + AB̄D, which is the bottom light.&lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;First off, notice that all four symbols are present. This means that all four switches can control this light, but more importantly, it means I’m &lt;em&gt;not&lt;/em&gt; crazy and it really is weird and confusing. Maybe the electrician was the crazy one.&lt;/p&gt;
+
+&lt;p&gt;Secondly, notice there are two groups, one of which has A and the other of which has Ā. The plus sign can be read as an “or”, which is to say, either the switch combination ĀC or the combination AB̄D is necessary to turn the light on. An English interpretation: if A is off, C controls the switch. If A is on, both B and D are necessary to control the switch.&lt;/p&gt;
+
+&lt;p&gt;Since this is the downstairs light, and the only switch downstairs is D, you better hope that A and B are set correctly when you’re downstairs – otherwise flipping D isn’t going to do anything at all. This exact experience was my daily life. Thankfully, if you’re upstairs, you can turn off the downstairs light without going downstairs – you just have to make sure you don’t try to hit C when you’re in the AB̄D state, or B while you’re in the ĀC state, since they won’t do anything.&lt;/p&gt;
+
+&lt;p&gt;Or you can just mash the switches and hope for the best.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;section class=&quot;next-previous&quot;&gt;
+  
+  &lt;a href=&quot;/2021/05/17/literate-focaccia/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: Ligurian Focaccia (and Recipe Planner)&quot;&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;Ligurian Focaccia (and Recipe Planner)&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+  
+  
+  &lt;a href=&quot;/2021/11/01/moderation-broadcastability/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: Why Is Facebook So Awful?&quot;&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;Why Is Facebook So Awful?&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
+  &lt;/a&gt;
+  
+&lt;/section&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Excuse the tiny, tiny negation bars. I couldn’t figure out why the proper combining overline &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;amp;#773;&lt;/code&gt; wouldn’t work. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;One could come up with many different representations that don’t have overlapping rectangles, up to and including one that has a term for each 1. That would be equivalent to the original, lengthy boolean algebra expression I started with, which defeats the point of Karnaugh maps. This expression has fewer terms, and simpler terms, than any other representation that doesn’t have overlapping terms. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;The interpretation of the control scheme for the top light is left as an exercise to the reader. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">I’m at an Airbnb. There is a stairwell that has a light at the bottom and a light at the top (the latter of which is also the hallway light). One desires to control both these lights from both ends so that you can always turn the light off after you, or turn the light on before you, regardless of which direction you’re going. There are indeed four light switches, but they don’t work like that. If they did, I wouldn’t have had to write this.</summary></entry><entry><title type="html">Ligurian Focaccia (and Recipe Planner)</title><link href="https://blog.sea.nkelley.me/2021/05/17/literate-focaccia/" rel="alternate" type="text/html" title="Ligurian Focaccia (and Recipe Planner)" /><published>2021-05-17T00:00:00+00:00</published><updated>2021-05-28T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2021/05/17/literate-focaccia</id><content type="html" xml:base="https://blog.sea.nkelley.me/2021/05/17/literate-focaccia/">&lt;p&gt;This recipe is my adaptation of &lt;a href=&quot;https://www.saltfatacidheat.com/fat/ligurian-focaccia&quot;&gt;Samin Nosrat’s Ligurian Focaccia&lt;/a&gt;, rewritten in a style loosely inspired by &lt;a href=&quot;https://en.wikipedia.org/wiki/Literate_programming&quot;&gt;literate programming&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Why rearrange it so? I know how to make this recipe and I know I have all the ingredients, but I always forget the timings and orderings. Here, the timing is the most prominent organizing principle (as opposed to, say, the ingredients list) so that you can at-a-glance see how much work needs to be done when, thereby making it easier to both plan around it and jump back into it when your timer goes off.&lt;/p&gt;
+
+&lt;p&gt;In addition to organizing the whole recipe around the timings, I’ve also replaced an up-front ingredient list with prominent per-step lists (for a recipe that takes this long, it doesn’t always make sense to pull everything out at the beginning), streamlined some of the content (by removing some volume measurements and changing text related to timing) and added my own tweaks (like how to make it soft-bottomed).&lt;/p&gt;
+
+&lt;p&gt;As always with any recipe, you should read the entire thing before starting. While the steps as written are spaced precisely (5 minutes here, 15 minutes there), some gaps between steps are actually ranges and are noted as such in the step’s text. For organizing, I use the lower end of the range so that you don’t accidentally overshoot, but it also means that the time estimates provided are not exact.&lt;/p&gt;
+
+&lt;p&gt;Lastly, the times shown in each step are all linked to one another and you can adjust any of them to see how all the steps can fit around your meetings or chores. That is, assuming you aren’t reading this in an RSS reader or a browser from 1994, in which case you’ll see no times at all (sorry!).&lt;/p&gt;
+
+&lt;p&gt;Enjoy!&lt;/p&gt;
+
+&lt;section class=&quot;recipe-step&quot; data-step-index=&quot;0&quot; data-duration=&quot;10&quot; data-wait=&quot;0&quot;&gt;
+        &lt;h3&gt;
+          &lt;hr /&gt;
+          to begin
+          &lt;hr /&gt;
+        &lt;/h3&gt;
+        &lt;h4 class=&quot;metadata&quot;&gt;
+          &lt;span class=&quot;duration&quot;&gt;10 minutes of work&lt;/span&gt;
+        &lt;/h4&gt;
+        
+&lt;p&gt;In a medium bowl, stir together&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;600 grams lukewarm water&lt;/li&gt;
+  &lt;li&gt;½ teaspoon dry yeast&lt;/li&gt;
+  &lt;li&gt;15 grams honey&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;until dissolved.&lt;/p&gt;
+
+&lt;p&gt;In a very large bowl, whisk together&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;800 grams all-purpose flour&lt;/li&gt;
+  &lt;li&gt;18 grams salt&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Add yeast mixture and&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;50 grams olive oil&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;to flour mixture. Stir with a rubber spatula until just incorporated, then scrape the sides of the bowl clean and cover with plastic wrap. Leave out at room temperature to ferment for 12 to 14 hours until at least doubled in volume.&lt;/p&gt;
+
+
+      &lt;/section&gt;
+&lt;section class=&quot;recipe-step&quot; data-step-index=&quot;1&quot; data-duration=&quot;5&quot; data-wait=&quot;720&quot;&gt;
+        &lt;h3&gt;
+          &lt;hr /&gt;
+          12 hours later
+          &lt;hr /&gt;
+        &lt;/h3&gt;
+        &lt;h4 class=&quot;metadata&quot;&gt;
+          &lt;span class=&quot;duration&quot;&gt;5 minutes of work&lt;/span&gt;
+        &lt;/h4&gt;
+        
+&lt;p&gt;Spread&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;2 to 3 tablespoons olive oil&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;evenly onto a 18-by-13 inch (46-by-33 cm) rimmed baking sheet. Use a spatula or your hand to release it from the sides of the bowl and pour out onto pan. Pour an additional&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;2 tablespoons olive oil&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;over dough and gently spread across. Gently stretch the dough to the edge of the sheet by placing your hands underneath and pulling outward. The dough will shrink a bit, so rest it for 15 minutes, then repeat stretching.&lt;/p&gt;
+
+
+      &lt;/section&gt;
+&lt;section class=&quot;recipe-step&quot; data-step-index=&quot;2&quot; data-duration=&quot;1&quot; data-wait=&quot;15&quot;&gt;
+        &lt;h3&gt;
+          &lt;hr /&gt;
+          15 minutes later
+          &lt;hr /&gt;
+        &lt;/h3&gt;
+        &lt;h4 class=&quot;metadata&quot;&gt;
+          &lt;span class=&quot;duration&quot;&gt;1 minute of work&lt;/span&gt;
+        &lt;/h4&gt;
+        
+&lt;p&gt;Repeat gentle stretching of dough. Rest another 15 minutes.&lt;/p&gt;
+
+
+      &lt;/section&gt;
+&lt;section class=&quot;recipe-step&quot; data-step-index=&quot;3&quot; data-duration=&quot;5&quot; data-wait=&quot;15&quot;&gt;
+        &lt;h3&gt;
+          &lt;hr /&gt;
+          15 minutes later
+          &lt;hr /&gt;
+        &lt;/h3&gt;
+        &lt;h4 class=&quot;metadata&quot;&gt;
+          &lt;span class=&quot;duration&quot;&gt;5 minutes of work&lt;/span&gt;
+        &lt;/h4&gt;
+        
+&lt;p&gt;Dimple the dough by pressing the pads of your first three fingers in at an angle. Make the brine by stirring together&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;80 grams lukewarm water&lt;/li&gt;
+  &lt;li&gt;5 grams salt&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;until salt is dissolved. Pour the brine over the dough to fill dimples. Proof focaccia until light and bubbly, about 45 minutes.&lt;/p&gt;
+
+
+      &lt;/section&gt;
+&lt;section class=&quot;recipe-step&quot; data-step-index=&quot;4&quot; data-duration=&quot;1&quot; data-wait=&quot;30&quot;&gt;
+        &lt;h3&gt;
+          &lt;hr /&gt;
+          30 minutes later
+          &lt;hr /&gt;
+        &lt;/h3&gt;
+        &lt;h4 class=&quot;metadata&quot;&gt;
+          &lt;span class=&quot;duration&quot;&gt;1 minute of work&lt;/span&gt;
+        &lt;/h4&gt;
+        
+&lt;p&gt;Adjust oven rack to center position.&lt;/p&gt;
+
+&lt;p&gt;If you prefer a crispy bottom, place a baking stone or inverted, sturdy baking sheet on the rack and allow it to preheat with the oven until very hot. If you prefer a soft bottom, place another rack below the first and put an empty baking sheet on it to insulate the upper rack from the heat source below.&lt;/p&gt;
+
+&lt;p&gt;Preheat oven to 450°F (235°C).&lt;/p&gt;
+
+
+      &lt;/section&gt;
+&lt;section class=&quot;recipe-step&quot; data-step-index=&quot;5&quot; data-duration=&quot;1&quot; data-wait=&quot;15&quot;&gt;
+        &lt;h3&gt;
+          &lt;hr /&gt;
+          15 minutes later
+          &lt;hr /&gt;
+        &lt;/h3&gt;
+        &lt;h4 class=&quot;metadata&quot;&gt;
+          &lt;span class=&quot;duration&quot;&gt;1 minute of work&lt;/span&gt;
+        &lt;/h4&gt;
+        
+&lt;p&gt;Sprinkle focaccia with&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;flaky salt&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Bake for 25 to 30 minutes directly on top of stone or inverted pan (if using) until bottom crust is crisp and golden brown when checked with a metal spatula.&lt;/p&gt;
+
+
+      &lt;/section&gt;
+&lt;section class=&quot;recipe-step&quot; data-step-index=&quot;6&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
+        &lt;h3&gt;
+          &lt;hr /&gt;
+          25 minutes later
+          &lt;hr /&gt;
+        &lt;/h3&gt;
+        &lt;h4 class=&quot;metadata&quot;&gt;
+          &lt;span class=&quot;duration&quot;&gt;1 minute of work&lt;/span&gt;
+        &lt;/h4&gt;
+        
+&lt;p&gt;To finish browning top crust, place focaccia on upper rack and bake for 5 to 7 minutes more.&lt;/p&gt;
+
+
+      &lt;/section&gt;
+&lt;section class=&quot;recipe-step&quot; data-step-index=&quot;7&quot; data-duration=&quot;5&quot; data-wait=&quot;5&quot;&gt;
+        &lt;h3&gt;
+          &lt;hr /&gt;
+          5 minutes later
+          &lt;hr /&gt;
+        &lt;/h3&gt;
+        &lt;h4 class=&quot;metadata&quot;&gt;
+          &lt;span class=&quot;duration&quot;&gt;5 minutes of work&lt;/span&gt;
+        &lt;/h4&gt;
+        
+&lt;p&gt;Remove from oven and brush or douse with&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;2 to 3 tablespoons olive oil&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;over the whole surface (don’t worry if the olive pools in pockets, it will absorb as it sits). Let cool for 5 minutes.&lt;/p&gt;
+
+
+      &lt;/section&gt;
+&lt;section class=&quot;recipe-step&quot; data-step-index=&quot;8&quot; data-duration=&quot;1&quot; data-wait=&quot;5&quot;&gt;
+        &lt;h3&gt;
+          &lt;hr /&gt;
+          5 minutes later
+          &lt;hr /&gt;
+        &lt;/h3&gt;
+        &lt;h4 class=&quot;metadata&quot;&gt;
+          &lt;span class=&quot;duration&quot;&gt;1 minute of work&lt;/span&gt;
+        &lt;/h4&gt;
+        
+&lt;p&gt;Release focaccia from pan with metal spatula and transfer to a cooling rack to cool completely.&lt;/p&gt;
+
+&lt;p&gt;Store on the counter wrapped in wax paper.&lt;/p&gt;
+
+
+      &lt;/section&gt;
+
+&lt;hr /&gt;
+
+&lt;section class=&quot;next-previous&quot;&gt;
+  
+  &lt;a href=&quot;/2021/04/28/sourdough-starter/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: World&apos;s Easiest Pet: Caring for Sourdough Starter&quot;&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;World&apos;s Easiest Pet: Caring for Sourdough Starter&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+  
+  
+  &lt;a href=&quot;/2021/10/29/a-tale-of-two-lights/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: A Tale of Two Lights&quot;&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;A Tale of Two Lights&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
+  &lt;/a&gt;
+  
+&lt;/section&gt;</content><author><name></name></author><summary type="html">This recipe is my adaptation of Samin Nosrat’s Ligurian Focaccia, rewritten in a style loosely inspired by literate programming.</summary></entry><entry><title type="html">World’s Easiest Pet: Caring for Sourdough Starter</title><link href="https://blog.sea.nkelley.me/2021/04/28/sourdough-starter/" rel="alternate" type="text/html" title="World’s Easiest Pet: Caring for Sourdough Starter" /><published>2021-04-28T00:00:00+00:00</published><updated>2021-04-28T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2021/04/28/sourdough-starter</id><content type="html" xml:base="https://blog.sea.nkelley.me/2021/04/28/sourdough-starter/">&lt;p&gt;Sourdough starters are the easiest pet you can have. Easier than plants or cats. They have a feeding cycle, but once they’re alive and strong, they’re resilient to your inevitable negligence. If you got a starter from me, know that it’s almost old enough to vote at this point (the person I got it from said it was from 2005-ish). I’ve also definitely forgotten it in the fridge for longer than I’m willing to admit, and it’s doing just fine.&lt;/p&gt;
+
+&lt;p&gt;I like keeping starters at 100% hydration, which means it’s half water and half flour. That makes it a “liquid” starter (as opposed a “stiff” starter). You can tweak the balance all you want once you know what you’re doing; there is nothing magical about any numbers you’ll see here except for convenience.&lt;/p&gt;
+
+&lt;p&gt;A typical feeding for my starter:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Put 20g starter in a bowl. Discard or &lt;a href=&quot;https://cooking.nytimes.com/recipes/1016277-tartines-country-bread&quot;&gt;bake&lt;/a&gt; with the rest.&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+  &lt;li&gt;Add 100g water and 100g all-purpose flour.&lt;/li&gt;
+  &lt;li&gt;Mix thoroughly, cover with a plate, leave it on the counter, and come back tomorrow.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The (relative) 10:1 proportions of starter to flour/water mixture get pretty close to a 24-hour cycle and are easy to remember. The (absolute) amount of 220g works nicely with a lot of recipes, which generally call for about 200g of starter. The 100% hydration makes it easy to do math with when you’re converting a dry yeast recipe to one with starter.&lt;/p&gt;
+
+&lt;p&gt;If you feed your starter more often, it’ll become less sour. 12-hour cycles instead of 24-hour ones are enough to make a difference; any more frequent than that and you aren’t letting the starter eat all the food. The sourness comes from acetic acid produced by bacteria, not yeast, but the yeast generally outcompete the bacteria right after a feeding and mellow the starter out. Longer fermentation times while baking will also make your doughs more sour.&lt;/p&gt;
+
+&lt;p&gt;You can leave your starter unattended for about a week on the counter or 1-2 months in the fridge. It’s not great and try to avoid doing that regularly, but in a pinch or for long-term storage it’s fine. When you want to wake it back up, be sure to pour off any liquid on top (that’s “hooch”, i.e. ethanol, i.e. yeast poison, so don’t believe anybody who tells you it’s okay to mix it in) before doing your feeding. You’ll likely need to feed it a couple cycles before it looks normal again, so plan ahead if you need to.&lt;/p&gt;
+
+&lt;p&gt;When using your starter, you can use the float test to determine if it’s ready for baking: if a dollop of it floats in water, it’s good to go. After a while, you’ll be able to tell by eye and by smell (smell for “yogurt sour, not vinegar sour”, as a bagel lady told me once).&lt;/p&gt;
+
+&lt;p&gt;I find you can ignore anything on the internet you find about feeding your starter exactly this often, or not using stainless steel, or demanding fancy flour instead of regular all-purpose, or other such commandments. Those people are either referring to new starters (which are indeed fragile), but are usually just misinformed. It’s a colony of billions of highly successful organisms: they aren’t going to spontaneously die because you used the wrong utensil. That said, I just use my finger, because why dirty another utensil?&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;section class=&quot;next-previous&quot;&gt;
+  
+  &lt;a href=&quot;/2021/04/12/wiping-drives-with-dd/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: Wiping Corrupt Drives with dd: The Nuclear Option&quot;&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;Wiping Corrupt Drives with dd: The Nuclear Option&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+  
+  
+  &lt;a href=&quot;/2021/05/17/literate-focaccia/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: Ligurian Focaccia (and Recipe Planner)&quot;&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;Ligurian Focaccia (and Recipe Planner)&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
+  &lt;/a&gt;
+  
+&lt;/section&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;I’m still looking for a good sourdough-starter-discard cracker recipe… will hopefully remember to update this if/when I find one! &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">Sourdough starters are the easiest pet you can have. Easier than plants or cats. They have a feeding cycle, but once they’re alive and strong, they’re resilient to your inevitable negligence. If you got a starter from me, know that it’s almost old enough to vote at this point (the person I got it from said it was from 2005-ish). I’ve also definitely forgotten it in the fridge for longer than I’m willing to admit, and it’s doing just fine.</summary></entry><entry><title type="html">Wiping Corrupt Drives with dd: The Nuclear Option</title><link href="https://blog.sea.nkelley.me/2021/04/12/wiping-drives-with-dd/" rel="alternate" type="text/html" title="Wiping Corrupt Drives with dd: The Nuclear Option" /><published>2021-04-12T00:00:00+00:00</published><updated>2021-04-12T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2021/04/12/wiping-drives-with-dd</id><content type="html" xml:base="https://blog.sea.nkelley.me/2021/04/12/wiping-drives-with-dd/">&lt;p&gt;Until a couple months ago, I had never actually damaged a drive by unplugging it while it was busy. But boy, when you pull the plug at the wrong time, do things go wrong fast. I bricked a drive so completely that it would not appear in Disk Utility at all, and trying to poke at it with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;diskutil&lt;/code&gt; (including the full range of mount/unmount/repair/verify/partition/erase subcommands) would only ever respond with “resource busy”. It was also impossible to eject and would leave zombie copies of itself around in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;diskutil list&lt;/code&gt;. Fun!&lt;/p&gt;
+
+&lt;p&gt;After some sleuthing around the internet and asking people who know more than me, I landed on the following script.&lt;/p&gt;
+
+&lt;p class=&quot;alert alert-danger&quot;&gt;&lt;span class=&quot;alert-title&quot;&gt;Don&apos;t Try This at Home!&lt;/span&gt;
+    &lt;br /&gt;Don&apos;t run this script without knowing what you&apos;re doing. If you destroy your drive/data, it&apos;s not my fault.
+&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; 1 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do
+  &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo dd &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/zero &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/disk6 &lt;span class=&quot;nv&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1000000 &lt;span class=&quot;nv&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1000
+&lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This script loops forever, writing 1000000 * 1000 = 1000000000 bytes (a gigabyte, in the true sense) of zeroes to the beginning of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/dev/disk6&lt;/code&gt;. Since partition tables are located near the beginning of the disk, this will trash them and effectively “factory reset” the drive.&lt;/p&gt;
+
+&lt;p&gt;To run this script, first determine what disk identifier the corrupted disk will have when you plug it in. I did this by plugging and unplugging it a few times to verify it always got assigned the same identifier (well, when it wasn’t leaving zombie disks behind). Put that identifier into the script in place of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/dev/disk6&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Run the modified script before the disk is plugged in. That’ll prompt for the first &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo&lt;/code&gt;, then start looping (and failing) forever. Plug in the corrupted disk and wait. A successful run will be a lot quieter than the wall of errors you get while the disk isn’t plugged in, and when it finishes, you can kill the script.&lt;/p&gt;
+
+&lt;p&gt;After running this, then unplugging and replugging the drive, Disk Utility found an empty disk and was happy to partition it for me.&lt;/p&gt;
+
+&lt;p&gt;A couple notes on the implementation.&lt;/p&gt;
+
+&lt;p&gt;First, the infinite loop is used to grab the disk before the higher-level parts of the operating system can. The lower-level parts are demonstrably working (hence the presence of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/dev/disk6&lt;/code&gt;), but the higher-level parts get stuck forever trying to mount it (or something of the sort), failing, and trying again, thus preventing anything else from accessing the disk.&lt;/p&gt;
+
+&lt;p&gt;Second, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dd&lt;/code&gt; is being used because the disk is unmountable and we specifically want to wipe the entire thing, partition tables included. This is a different, much harsher version of wiping a disk than what one normally does.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;section class=&quot;next-previous&quot;&gt;
+  
+  &lt;a href=&quot;/2021/02/03/javascript-the-bad-parts/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: Javascript: The Bad Parts&quot;&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;Javascript: The Bad Parts&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+  
+  
+  &lt;a href=&quot;/2021/04/28/sourdough-starter/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: World&apos;s Easiest Pet: Caring for Sourdough Starter&quot;&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;World&apos;s Easiest Pet: Caring for Sourdough Starter&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
+  &lt;/a&gt;
+  
+&lt;/section&gt;</content><author><name></name></author><summary type="html">Until a couple months ago, I had never actually damaged a drive by unplugging it while it was busy. But boy, when you pull the plug at the wrong time, do things go wrong fast. I bricked a drive so completely that it would not appear in Disk Utility at all, and trying to poke at it with diskutil (including the full range of mount/unmount/repair/verify/partition/erase subcommands) would only ever respond with “resource busy”. It was also impossible to eject and would leave zombie copies of itself around in diskutil list. Fun!</summary></entry><entry><title type="html">Javascript: The Bad Parts</title><link href="https://blog.sea.nkelley.me/2021/02/03/javascript-the-bad-parts/" rel="alternate" type="text/html" title="Javascript: The Bad Parts" /><published>2021-02-03T00:00:00+00:00</published><updated>2021-02-03T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2021/02/03/javascript-the-bad-parts</id><content type="html" xml:base="https://blog.sea.nkelley.me/2021/02/03/javascript-the-bad-parts/">&lt;p&gt;Last week I stumbled upon TC39’s &lt;a href=&quot;https://github.com/tc39/proposal-record-tuple&quot;&gt;record and tuple proposal&lt;/a&gt; for the first time, and was really happy to see the language taking a long-overdue big step forward in safety and usability.&lt;/p&gt;
+
+&lt;p&gt;It also prompted me to write this post so that I don’t have to repeat myself to those unfortunate souls who have to hear me rail against the language.&lt;/p&gt;
+
+&lt;h2 class=&quot;no_toc&quot; id=&quot;table-of-complaints&quot;&gt;Table of Complaints&lt;/h2&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#automatic-type-coercion&quot; id=&quot;markdown-toc-automatic-type-coercion&quot;&gt;Automatic Type Coercion&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#two-null-types-null-and-undefined&quot; id=&quot;markdown-toc-two-null-types-null-and-undefined&quot;&gt;Two Null Types: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;null&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;undefined&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#dynamic-this&quot; id=&quot;markdown-toc-dynamic-this&quot;&gt;Dynamic &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#conflation-of-record-and-map-types&quot; id=&quot;markdown-toc-conflation-of-record-and-map-types&quot;&gt;Conflation of “Record” and “Map” Types&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#reference-semantics-and-the-failures-of-map-and-set&quot; id=&quot;markdown-toc-reference-semantics-and-the-failures-of-map-and-set&quot;&gt;Reference Semantics and the Failures of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Map&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Set&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#things-people-complain-about-that-i-dont-think-matter&quot; id=&quot;markdown-toc-things-people-complain-about-that-i-dont-think-matter&quot;&gt;Things People Complain About That I Don’t Think Matter&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#prototypal-inheritance&quot; id=&quot;markdown-toc-prototypal-inheritance&quot;&gt;Prototypal Inheritance&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#dynamic-nature-of-closure-references&quot; id=&quot;markdown-toc-dynamic-nature-of-closure-references&quot;&gt;Dynamic Nature of Closure References&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#only-floating-point-numbers&quot; id=&quot;markdown-toc-only-floating-point-numbers&quot;&gt;Only Floating-Point Numbers&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#optional-semicolons&quot; id=&quot;markdown-toc-optional-semicolons&quot;&gt;Optional Semicolons&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#for-of-versus-for-in&quot; id=&quot;markdown-toc-for-of-versus-for-in&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for-of&lt;/code&gt; versus &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for-in&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#lightning-round-things-that-dont-matter-anymore&quot; id=&quot;markdown-toc-lightning-round-things-that-dont-matter-anymore&quot;&gt;Lightning Round: Things That Don’t Matter Anymore&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#what-about-records-and-tuples&quot; id=&quot;markdown-toc-what-about-records-and-tuples&quot;&gt;What About Records and Tuples?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;automatic-type-coercion&quot;&gt;Automatic Type Coercion&lt;/h2&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;assert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;assert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;assert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;(FYI: This page has a basic &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;assert&lt;/code&gt; function defined if you want to pop open the browser console and copy-paste these examples in.)&lt;/p&gt;
+
+&lt;p&gt;Maybe in the early days of the web when everyone was flying by the seat of their pants it made sense to paper over newbie mistakes like comparing a stringified number to a number literal.&lt;/p&gt;
+
+&lt;p&gt;That said, automatic type coercion is a feature very rarely seen in other programming languages to this degree. Even Python, which lets you overload almost every conceivable hook, tends to avoid this type of behavior. The cases it does appear in are usually highly restricted, such as allowing comparison between a datetime and a string, or a datetime and a number.&lt;/p&gt;
+
+&lt;p&gt;I can’t think of a single case where it is desirable, from a correctness, readability and maintainability perspective, to allow comparing numbers to strings and come up with a “sane” result. &lt;a href=&quot;https://eslint.org/docs/rules/eqeqeq&quot;&gt;ESLint recommends against it as “good practice”&lt;/a&gt;. This type of behavior should be opt-in, or at least highly restricted by default.&lt;/p&gt;
+
+&lt;h2 id=&quot;two-null-types-null-and-undefined&quot;&gt;Two Null Types: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;null&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;undefined&lt;/code&gt;&lt;/h2&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;assert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(({}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;undefined&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;assert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/foo/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;assert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stringify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;undefined&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;{&quot;foo&quot;:null}&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;assert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;assert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;undefined&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;undefined&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;JavaScript kind of worked itself into a corner on this one, because it wanted to silently report a null value for fields that didn’t exist on objects. Unlike &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;==&lt;/code&gt;, I can kind of see the value in this feature both during the flying-by-the-seat-of-your-pants phase and after. Objective-C, for instance, has well-defined semantics for sending messages to nil (or “calling methods on null” in more-normal terminology).&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;When supporting silently returning null from a nonexistent field, how would one differentiate between “object does not have this field” and “object has this field, but it’s null”? Do you even need to? This is actually a very tricky question which most languages sidestep by not having this feature at all – it is an error to access an unknown field, even in languages where you can define fields dynamically through introspection.&lt;/p&gt;
+
+&lt;p&gt;JavaScript’s approach is to instead dump this tricky question onto the end user, again and again and again. Some standard library methods return &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;null&lt;/code&gt; in failure or no-op cases, some &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;undefined&lt;/code&gt;. Some accept only one of them as the “do nothing” input and throw errors on the other. JSON serialization treats them differently. You can assign an object field to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;undefined&lt;/code&gt;, which makes it truly weird to understand if the field in question exists (but is undefined) or doesn’t exist at all. They respond differently to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;typeof&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;===&lt;/code&gt;. Every corner of the language becomes a trap, even more so than the &lt;a href=&quot;https://en.wikipedia.org/wiki/Null_pointer#History&quot;&gt;billion-dollar mistake&lt;/a&gt; that it already was.&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;Thankfully, and with immense irony, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;==&lt;/code&gt; can be used to mostly ignore the differences when doing the most common operation with null values, checking if they are null, since coercion treats them both the same.&lt;/p&gt;
+
+&lt;h2 id=&quot;dynamic-this&quot;&gt;Dynamic &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this&lt;/code&gt;&lt;/h2&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getThis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}};&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getThis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;assert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;undefined&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Dynamic &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this&lt;/code&gt; is an interesting feature in theory, but in practice the implementation and usage is confusing if not outright developer-hostile. In every language with it, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this&lt;/code&gt; is just syntactic sugar to name an implicit argument to an instance method. Dynamic &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this&lt;/code&gt; is just giving you a mechanism to provide a value for that parameter, which sounds simple on paper.&lt;/p&gt;
+
+&lt;p&gt;The problem is that it’s half-baked: you have to step carefully when passing around a function reference from an object lest you end up with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this === window&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this === undefined&lt;/code&gt;, both of which are certainly undesirable when dealing with those function references. But the implicit-by-definition nature of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this&lt;/code&gt; keyword strongly evokes C-family-style non-dynamic (…static?) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this&lt;/code&gt;, which is incorrect.&lt;/p&gt;
+
+&lt;p&gt;The closest fully-baked comparison I can think of is Python. Python offers the same semantics in the end, but differs in two crucial ways:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;self&lt;/code&gt; is an explicitly declared parameter, avoiding the need for a keyword and serving as a reminder to the developer that it isn’t (that) special&lt;/li&gt;
+  &lt;li&gt;you can only provide the value for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;self&lt;/code&gt; by invoking the method statically,&lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; which takes a bit of extra typing&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It’s effectively impossible in Python to end up with the “wrong” &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;self&lt;/code&gt; in the course of normal development, even when you’re doing some light metaprogramming.&lt;/p&gt;
+
+&lt;p&gt;JavaScript’s dynamic &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this&lt;/code&gt; is nothing more than a trap that ends up netting zero keystrokes saved – think of all the usages of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bind&lt;/code&gt; or fat arrows one needs to sprinkle around to compensate – while adding cognitive overhead unique among common programming languages.&lt;/p&gt;
+
+&lt;h2 id=&quot;conflation-of-record-and-map-types&quot;&gt;Conflation of “Record” and “Map” Types&lt;/h2&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;assert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;[object Object]&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;First, some definitions. A “record” type is one which has a well-known set of field names that can be accessed to retreive values. A “map” is a data structure that pairs up arbitrary keys with arbitrary values. A record can be thought of as a special case of a map that only allows string keys.&lt;/p&gt;
+
+&lt;p&gt;Until the introduction of ES6 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Map&lt;/code&gt;, JavaScript had no real map type at all. I have personally written and witnessed some pretty absurd workarounds for this shortcoming, up to and including serializing objects as map keys into JSON, which is both tedious and of questionable correctness (what if your serialization changes key ordering?).&lt;/p&gt;
+
+&lt;p&gt;Before &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Map&lt;/code&gt;, JavaScript had no way to performantly &lt;em&gt;and&lt;/em&gt; correctly implement the basic map type that comes with all standard libraries. What one would expect to do when coming from other languages – that is, to provide the object directly as the key – would silently “succeed” with the utterly useless and dreaded &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[object Object]&lt;/code&gt; stringification.&lt;/p&gt;
+
+&lt;p&gt;Non-standard-library map implementations have to use expensive object serialization or tree structures in order to maintain correctness without sacrificing too much performance, and do not have the slick syntactic support that objects-as-maps did. Given that most usages of maps either use primitives (say, object IDs or string enumerations) or can be relatively easily rewritten as such with just a little extra field access, this is a problem less often than when you would think. But when it’s a problem – say, you want to use tuple keys – it’s a showstopper.&lt;/p&gt;
+
+&lt;h2 id=&quot;reference-semantics-and-the-failures-of-map-and-set&quot;&gt;Reference Semantics and the Failures of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Map&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Set&lt;/code&gt;&lt;/h2&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;assert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;assert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([{},&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}]).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Continuing from the previous section: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Map&lt;/code&gt; didn’t really fix many problems, practically speaking. Yes, JavaScript now had a dedicated map type, so objects-as-maps were theoretically obsolete. But  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Map&lt;/code&gt; (and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Set&lt;/code&gt;, which has all the same problems) operates using reference equality, not value equality.&lt;/p&gt;
+
+&lt;p&gt;The choice to use reference equality instead of value equality makes a lot of sense in context: JavaScript has a weak-to-nonexistent notion of value equality (or, more generally, comparisons by value). The only values for which value and reference equality are the same are primitives, so in the case where you were using objects as maps whose values were strings, numbers (coerced to strings) or booleans (coerced to strings), you may see an improvement in type sanity.&lt;/p&gt;
+
+&lt;p&gt;However, the use of reference equality mean that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Map&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Set&lt;/code&gt; wildly underdeliver on their promise to provide a sane alternative to JSON serializing objects to use them as map keys, because if you aren’t extremely careful about maintaining reference equality in the rest of your code, you will run into all manner of correctness issues: keys missing that you thought would be there, keys present that you thought you had deleted, duplicates with identical values…&lt;/p&gt;
+
+&lt;p&gt;As a kicker, many idiomatic usages of JavaScript encourage using spreading and destructuring (among other things) to ensure that objects are immutable over their lifetime. This has a lot of correctness and debuggability benefits, but means these objects are effectively impossible to use with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Map&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Set&lt;/code&gt;. A series of immutable updates to an object could yield any number of value-equals but reference-different immutable objects that won’t behave as intended if you use them with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Map&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Set&lt;/code&gt;. Correctness checks or performance optimizations that would be obvious and free in other languages – such as checking for cache hits with an object key – are difficult to implement.&lt;/p&gt;
+
+&lt;h2 id=&quot;things-people-complain-about-that-i-dont-think-matter&quot;&gt;Things People Complain About That I Don’t Think Matter&lt;/h2&gt;
+
+&lt;p&gt;While I’m complaining, let me complain about other peoples’ complaints too.&lt;/p&gt;
+
+&lt;h3 id=&quot;prototypal-inheritance&quot;&gt;Prototypal Inheritance&lt;/h3&gt;
+
+&lt;p&gt;I can’t recall ever seeing any significant usage of prototypal inheritance that isn’t exactly equivalent to a class hierarchy in other languages. Yes, you can reassign &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__proto__&lt;/code&gt;, and yes, non-class things can have prototypes that make them behave sort of like subclasses. I’ve seen the occasional usage of these patterns, but in every single case they have boiled down to an unusual and roundabout way of saying &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;extends&lt;/code&gt;. With the addition of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;class&lt;/code&gt; keyword (implemented with prototypal inheritance, of course), I think prototypal inheritance is basically irrelevant.&lt;/p&gt;
+
+&lt;h3 id=&quot;dynamic-nature-of-closure-references&quot;&gt;Dynamic Nature of Closure References&lt;/h3&gt;
+
+&lt;p&gt;A motivating code sample:&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fns&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;fns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;fns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;forEach&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// prints &quot;3&quot; three times&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;(Note: this works “as expected” if you declare &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;let i&lt;/code&gt; instead.)&lt;/p&gt;
+
+&lt;p&gt;I think this is fine. Some languages capture closed-over values by direct reference and some capture the whole environment and evaluate the reference later. They’re better for different things, and you can always express patterns that are easier in one in some fashion in the other. You just have to learn which way your language functions.&lt;/p&gt;
+
+&lt;h3 id=&quot;only-floating-point-numbers&quot;&gt;Only Floating-Point Numbers&lt;/h3&gt;
+
+&lt;p&gt;The vast majority of production code uses small integers and small floating-point numbers. It’s somewhat frustrating that JavaScript uses an unusual standard that allows neither full (32- or 64-bit) integers or floats, but a hybrid shorter form of both. But if these lower-than-normal limits or lack of integer/float separation matter to you, you should probably be using a different representation anyway, such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BigInt&lt;/code&gt; for currencies or strings for 64-bit database IDs.&lt;/p&gt;
+
+&lt;h3 id=&quot;optional-semicolons&quot;&gt;Optional Semicolons&lt;/h3&gt;
+
+&lt;p&gt;I cannot fathom why the language designers bothered with this feature. Either make the language require seimcolons or not. Why is this a choice that developers have to make? Unlike &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&apos;&lt;/code&gt; versus &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;&lt;/code&gt; (which allow nesting) or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;var&lt;/code&gt; versus &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;let&lt;/code&gt; (which have different semantics), there is literally zero value to optional semicolons. It’s pure flamebait, but &lt;a href=&quot;https://prettier.io/docs/en/options.html#semicolons&quot;&gt;Prettier picked a side&lt;/a&gt; so you don’t have to.&lt;/p&gt;
+
+&lt;h3 id=&quot;for-of-versus-for-in&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for-of&lt;/code&gt; versus &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for-in&lt;/code&gt;&lt;/h3&gt;
+
+&lt;p&gt;While I think that the semantics of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for-in&lt;/code&gt; are downright silly – an array’s indices are far less interesting than the value and probably don’t need their own syntactic sugar – the advice here seems pretty clear: always use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for-of&lt;/code&gt;. I would go even further and say: always use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;forEach&lt;/code&gt;, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;map&lt;/code&gt;, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;reduce&lt;/code&gt;, etc. Chances are you’re doing an operation that is better suited to one or more higher-order functions anyway. I think in the last three years of writing TypeScript I’ve only written a single &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for&lt;/code&gt; loop, and that was because it needed very particular early-abort semantics.&lt;/p&gt;
+
+&lt;h2 id=&quot;lightning-round-things-that-dont-matter-anymore&quot;&gt;Lightning Round: Things That Don’t Matter Anymore&lt;/h2&gt;
+
+&lt;p&gt;I am relieved that these have become effective non-issues.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;with&lt;/code&gt;: terrible idea, glad it was dead on arrival.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;eval&lt;/code&gt;: fun while it lasted, but always a bad idea.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;var&lt;/code&gt;: block-scoped declarations are the right choice.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;new Boolean()&lt;/code&gt; versus &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Boolean&lt;/code&gt; (etc.): technically still an issue, but new standard library types are taking a stance to avoid more confusion.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;what-about-records-and-tuples&quot;&gt;What About Records and Tuples?&lt;/h2&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://github.com/tc39/proposal-record-tuple&quot;&gt;record and tuple proposal&lt;/a&gt; that introduced this post is interesting to me because it solves, or contributes to a solution for, the worst of the above problems.&lt;/p&gt;
+
+&lt;p&gt;With language-level immutability, I can spend less mental energy on careful use of spread and destructuring, and can use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Map&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Set&lt;/code&gt; for what they’re meant for – basic collection types respecting value equality. I can also almost entirely stop using objects, since I generally either want a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Map&lt;/code&gt; or a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Record&lt;/code&gt;, and not some weird hybrid.&lt;/p&gt;
+
+&lt;p&gt;Arrays continue be useful, but they’ve always been less weird than objects, so it’s okay.&lt;/p&gt;
+
+&lt;p&gt;As for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;===&lt;/code&gt; and dynamic &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this&lt;/code&gt;, well, I have linters and more brainspace to dedicate now that I’m not thinking about the pitfalls of objects all the time.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;section class=&quot;next-previous&quot;&gt;
+  
+  &lt;a href=&quot;/2021/01/09/passprompt/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: passprompt: Nag Yourself to Remember Your Passwords&quot;&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;passprompt: Nag Yourself to Remember Your Passwords&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+  
+  
+  &lt;a href=&quot;/2021/04/12/wiping-drives-with-dd/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: Wiping Corrupt Drives with dd: The Nuclear Option&quot;&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;Wiping Corrupt Drives with dd: The Nuclear Option&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
+  &lt;/a&gt;
+  
+&lt;/section&gt;
+
+&lt;hr /&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+  function assert(c) {
+    if (!c) {
+      throw new Error(&quot;assertion failure&quot;);
+    }
+  }
+&lt;/script&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Objective-C is an extensively flawed and weird language in its own right, but let’s not get into that here. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Inflation and the pervasiveness of software mean that this cost is definitely &lt;em&gt;well&lt;/em&gt; above a billion at this point. But I don’t fault C.A.R. Hoare, the null reference was inevitable and entirely reasonable. Optional types are big in imperative languages now, anyway. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;It’s entirely possible there are other incantations that allow configuring &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;self&lt;/code&gt; that I don’t know about. But the point stands: Python does the sane thing by default when using method references, and requires extra effort to do weird stuff. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">Last week I stumbled upon TC39’s record and tuple proposal for the first time, and was really happy to see the language taking a long-overdue big step forward in safety and usability.</summary></entry><entry><title type="html">passprompt: Nag Yourself to Remember Your Passwords</title><link href="https://blog.sea.nkelley.me/2021/01/09/passprompt/" rel="alternate" type="text/html" title="passprompt: Nag Yourself to Remember Your Passwords" /><published>2021-01-09T00:00:00+00:00</published><updated>2021-01-09T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2021/01/09/passprompt</id><content type="html" xml:base="https://blog.sea.nkelley.me/2021/01/09/passprompt/">&lt;p&gt;Recently I’ve been working through some security debt in my personal accounts. Most notably, until recently I didn’t have a good strategy for recovering access in the case of a disaster where all my devices were lost or destroyed.&lt;/p&gt;
+
+&lt;p&gt;As part of my strategy/system, I decided it would be prudent to memorize more than just my master password for my password manager. However, I use long-lived login sessions for several of the most important accounts, meaning I don’t have a natural opportunity to memorize their passwords.&lt;/p&gt;
+
+&lt;p&gt;As a password memorization aid (and to brush up on my Rust), I wrote &lt;a href=&quot;https://github.com/seansfkelley/passprompt&quot;&gt;passprompt&lt;/a&gt;, which is a little terminal program to nag oneself to enter passwords periodically. I’ve configured it to run on new terminal prompts, but not more than once an hour. This way, as I naturally spend a couple hours here and a couple hours there working on my personal programming projects, I also pay down my security debt by keeping certain passwords fresh.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;section class=&quot;next-previous&quot;&gt;
+  
+  &lt;a href=&quot;/2021/01/07/resurrecting-the-imac/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: Resurrecting an Old iMac for $27&quot;&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;Resurrecting an Old iMac for $27&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+  
+  
+  &lt;a href=&quot;/2021/02/03/javascript-the-bad-parts/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: Javascript: The Bad Parts&quot;&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;Javascript: The Bad Parts&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
+  &lt;/a&gt;
+  
+&lt;/section&gt;</content><author><name></name></author><summary type="html">Recently I’ve been working through some security debt in my personal accounts. Most notably, until recently I didn’t have a good strategy for recovering access in the case of a disaster where all my devices were lost or destroyed.</summary></entry><entry><title type="html">Resurrecting an Old iMac for $27</title><link href="https://blog.sea.nkelley.me/2021/01/07/resurrecting-the-imac/" rel="alternate" type="text/html" title="Resurrecting an Old iMac for $27" /><published>2021-01-07T00:00:00+00:00</published><updated>2021-01-07T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2021/01/07/resurrecting-the-imac</id><content type="html" xml:base="https://blog.sea.nkelley.me/2021/01/07/resurrecting-the-imac/">&lt;p&gt;Years ago, my family’s iMac died a sudden and ignoble death, crashing the head of the hard drive and taking years of pictures with it. This was the beginning of the era of personal backups, and we didn’t yet have one. It’s still a sore spot, and the offending hard drive is still sitting around somewhere, waiting for someone to transfer the platters to another housing to recover the data. The cause was a blown capacitor, presumably part of the great &lt;a href=&quot;https://en.wikipedia.org/wiki/Capacitor_plague&quot;&gt;capacitor plague&lt;/a&gt; of the early 2000s.&lt;/p&gt;
+
+&lt;p&gt;This post is about a different iMac, the replacement iMac, which &lt;em&gt;did&lt;/em&gt; have backups when it suddenly and ignobly died several weeks ago. Indeed, it was working fine until we shut it down normally, unplugged it, moved it elsewhere, plugged it in and then… nothing. No signs of life. No response to the power button. No visible lights. Did the capacitor plague strike again? Is this hard drive ruined too?&lt;/p&gt;
+
+&lt;p&gt;After verifying that the outlet and power cable were good, we figured that we might as well open it. If nothing else, we could extract the hard drive and put it in an enclosure to recover files somewhat more conveniently than through a backup. This 2009 iMac was before the pentalobe era (phew, don’t have any of those lying around), and I found a &lt;a href=&quot;https://www.youtube.com/watch?v=U_Jjyt5XpJ4&quot;&gt;very clear and helpful video from OWC&lt;/a&gt; for how to open it up without any guesswork. Check out that magnetic faceplate.&lt;/p&gt;
+
+&lt;p&gt;We blew out approximately 17 pounds of accumulated dust, and after some furious and sloppy internet searching I learned that there were diagnostic LEDs on the motherboard, one of which is supposed to be on at all times while the computer is plugged in, which these were not. You can normally see them by looking up into the speaker grill on the right side.&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/assets/resurrecting-the-imac/0-leds.jpg&quot; alt=&quot;The 3 LEDs are in the 4 slots labeled 1, 2, 3, 4 just above and to the right of the coin cell battery. Slot 3 is empty.&quot; /&gt;
+  &lt;figcaption&gt;The 3 LEDs are in the 4 slots labeled 1, 2, 3, 4 just above and to the right of the coin cell battery. Slot 3 is empty.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;At this point we pulled out the multimeter and tested the AC in pins and DC out pins&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; of the power supply. AC was going in, but only a couple pins were producing DC voltage. Even while the computer is off that seemed fishy, and some more furious and sloppy internet searching revealed that there should probably be at least 4 of the 9 non-ground pins showing a current. That’s enough circumstantial evidence for me, so we pulled out the PSU, being careful not to shock ourselves on the capacitors.&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/resurrecting-the-imac/psu.jpg&quot; alt=&quot;psu&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;And then on a whim I took a look at the capacitors.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/resurrecting-the-imac/psu-closeup.jpg&quot; alt=&quot;psu-closeup&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;That capacitor on the left is &lt;em&gt;definitely&lt;/em&gt; bulging. The capacitor plague continues to haunt us.&lt;/p&gt;
+
+&lt;p&gt;We found and ordered the replacement PSU, which was a slightly confusing process since iFixit and a couple other sites seemed to list PSUs that looked different but whose model numbers matched. In any case, we bought it off eBay which had the best price of $27 – compare about $100 for iFixit – and appeared to be an authentic PSU pulled from another iMac.&lt;/p&gt;
+
+&lt;p&gt;While looking for a replacement, I turned up &lt;a href=&quot;https://tim.id.au/blog/tims-laptop-service-manuals/&quot;&gt;Tim’s laptop service manuals&lt;/a&gt;, which is an awesome resource of in-house repair manuals for all kinds of computers. The Apple ones are &lt;em&gt;really&lt;/em&gt; polished: not just clean layout, but the PDF table of contents works and all the in-document links actually work. They also have extremely clear disassembly instructions, symptom descriptions and diagnosis steps. I followed the steps for “No Power, Dead Unit” and it quickly led to the diagnosis: “Replace power supply”. Nice to have confirmation.&lt;/p&gt;
+
+&lt;p&gt;After waiting several weeks for the replacement PSU to arrive (2020 holiday season shipping times were… long), we slapped it in and were greeted with a single glorious LED.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/resurrecting-the-imac/1-led.jpg&quot; alt=&quot;1-led&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Hooray!&lt;/p&gt;
+
+&lt;p&gt;We assembled enough of the computer that we could boot it, just to check before going too far.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/resurrecting-the-imac/skinless.jpg&quot; alt=&quot;skinless&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Complete with all 3 LEDs.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/resurrecting-the-imac/3-leds.jpg&quot; alt=&quot;3-leds&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;It lives! It’s now happily chugging along in its new home, and I’m feeling satisfied I saved it with only a small expenditure and entirely used parts. Score for repairability!&lt;/p&gt;
+
+&lt;p&gt;As a little bonus discovery, something caught my eye while putting the case back on. Here’s a backlit picture of the case, upside down as it is during reassembly.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/resurrecting-the-imac/infrared-sensor.jpg&quot; alt=&quot;infrared-sensor&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;It’s a hidden window behind which sits the infrared sensor for those infrared remotes they used to sell. I’d always vaguely wondered how they made it so you could just point the remote in the general direction of the computer and it always worked. I was so used to seeing shiny little black dots ruining TV bezels that it had never occured to me that they could hide it behind the logo. Elegant!&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;section class=&quot;next-previous&quot;&gt;
+  
+  &lt;a href=&quot;/2020/12/03/tsa-rant/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: A Brief Rant About the TSA&quot;&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;A Brief Rant About the TSA&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+  
+  
+  &lt;a href=&quot;/2021/01/09/passprompt/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: passprompt: Nag Yourself to Remember Your Passwords&quot;&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;passprompt: Nag Yourself to Remember Your Passwords&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
+  &lt;/a&gt;
+  
+&lt;/section&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;I don’t know if this is standard in digital electronics, but here I learned that the ground pin is sometimes marked with a little dot. In this case, there was a small, circular solder speck by pin 1, and I confirmed with a diagram I later found that this was indeed the ground pin. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;How long do those big ones take to discharge? &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">Years ago, my family’s iMac died a sudden and ignoble death, crashing the head of the hard drive and taking years of pictures with it. This was the beginning of the era of personal backups, and we didn’t yet have one. It’s still a sore spot, and the offending hard drive is still sitting around somewhere, waiting for someone to transfer the platters to another housing to recover the data. The cause was a blown capacitor, presumably part of the great capacitor plague of the early 2000s.</summary></entry><entry><title type="html">A Brief Rant About the TSA</title><link href="https://blog.sea.nkelley.me/2020/12/03/tsa-rant/" rel="alternate" type="text/html" title="A Brief Rant About the TSA" /><published>2020-12-03T00:00:00+00:00</published><updated>2020-12-03T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2020/12/03/tsa-rant</id><content type="html" xml:base="https://blog.sea.nkelley.me/2020/12/03/tsa-rant/">&lt;p&gt;&lt;em&gt;&lt;strong&gt;tl;dr&lt;/strong&gt;: I took a flight, and my belongings ended up crushed, dented, opened, wrinkled and dirty in a bag that I was locked out of. Fuck the TSA. We can do better than this.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;I found out the hard way that the TSA mistook a number of my belongings for, I guess, explosives.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Wrist rests for a keyboard&lt;/strong&gt;: the wrists rests are solid rubber, so I guess almost by definition they look like blocks of plastic explosives. I had actually left these accessible, guessing that this might happen.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Textbook&lt;/strong&gt;: a TSA agent once pulled a thick deck of cards out from my carry-on, and when I asked why, explained that they have a similar density to plastic explosives (are you noticing a theme yet?). I guess I should have made the leap to textbooks, but also, can they seriously not tell the difference on their machines? Do they have to rip open every single bag that has a book in it?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Hard plastic case for glasses&lt;/strong&gt;: this one is more amusing and telling than it is annoying. They’d unscrewed the top of the case, but were too stupid or lazy to put it back on and just left it in the suitcase unattached. Here I’m imagining the TSA interview process: can you figure out if this peg goes into the round or square hole? That’s okay, you’re hired anyway.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Glass jar of delicious chocolate spread&lt;/strong&gt;: they took this jar out of its protective coccoon made of my socks and moved it halfway across the suitcase, unpadded and against the outside. Score one for the hard-sided suitcase, I guess, because the lid ended up with a serious dent but the glass didn’t break.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;iPad&lt;/strong&gt;: this had been packed with other flat things like the textbook, like any sane person would do, and ended up jammed in on the diagonal with its center resting on the corner of the aforementioned textbook. It’s fortunate the corner of the book didn’t end up punching a nice dent into the screen.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Chocolate bars&lt;/strong&gt;: they opened my bars of chocolate, I guess to judge my taste in candy. This reminds me of a time that they once asked me to take my brown-bagged sandwich off the X-ray conveyor and open it myself to prove it wasn’t, I don’t know, a ham-based explosive?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Empty wooden box&lt;/strong&gt;: I brought a neat little wooden box to put presents in, which had been wrapped in a sweater to prevent scratches and dents and to keep the corners from punching holes in other items. I guess it also looks like plastic explosives.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Leather boots&lt;/strong&gt;: I brought some boots whose dirty bottoms I had tucked against the edge of the suitcase to keep them away from my clothes. After taking the sweater off of the wooden box they wrapped the sweater around one, only one, of the dirty boots. Who the hell pads shoes? More importantly, who pads only &lt;em&gt;one&lt;/em&gt; shoe?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Other casualities&lt;/strong&gt;: there was miscellaneous other damage and inconvenience, like half my clothes ending up wrinkled and a board game box being crushed because they pack suitcases like impatient raccoons rather than human adults with normally-developed spatial reasoning skills.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The kicker&lt;/strong&gt;: the suitcase handle had an old, unused TSA-compatible lock dangling off the handle. It was unused because I don’t have the key because these locks are useless and offensive to my principles&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; and I had inherited the suitcase from someone else. They helpfully locked me out of my own suitcase so that on arrival after midnight I had to ask my hosts to go find a hacksaw somewhere so I could break into my own luggage.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;section class=&quot;next-previous&quot;&gt;
+  
+  &lt;a href=&quot;/2020/10/19/oculus-teardown/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: Oculus Rift CV1 Teardown&quot;&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;Oculus Rift CV1 Teardown&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+  
+  
+  &lt;a href=&quot;/2021/01/07/resurrecting-the-imac/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: Resurrecting an Old iMac for $27&quot;&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;Resurrecting an Old iMac for $27&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
+  &lt;/a&gt;
+  
+&lt;/section&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Seriously, what a stupid idea. These locks are &lt;em&gt;intended&lt;/em&gt; to be opened by the people you “voluntarily” give your luggage to. The rest of your luggage you shouldn’t leave unattended anyway, even if there weren’t terrorists hiding around every corner. So what are they preventing? &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">tl;dr: I took a flight, and my belongings ended up crushed, dented, opened, wrinkled and dirty in a bag that I was locked out of. Fuck the TSA. We can do better than this.</summary></entry><entry><title type="html">Oculus Rift CV1 Teardown</title><link href="https://blog.sea.nkelley.me/2020/10/19/oculus-teardown/" rel="alternate" type="text/html" title="Oculus Rift CV1 Teardown" /><published>2020-10-19T00:00:00+00:00</published><updated>2020-10-19T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2020/10/19/oculus-teardown</id><content type="html" xml:base="https://blog.sea.nkelley.me/2020/10/19/oculus-teardown/">&lt;p&gt;During quarantine, I came into possession of a used Oculus Rift CV1 setup (that’s the original one) that had an infuriating tendency to disconnect if you moved your head around too fast. After some basic debugging techniques (ahem, turning it off and on again), I determined that there was a hardware issue in the headset and, since the CV1 has been discontinued for some time, I would have to fix it myself.&lt;/p&gt;
+
+&lt;p&gt;I was disappointed to find that there were no good teardown guides for repairing the CV1. &lt;a href=&quot;https://www.ifixit.com/Teardown/Oculus+Rift+CV1+Teardown/60612&quot;&gt;iFixit’s guide&lt;/a&gt; was light on details you’d want for taking apart your own CV1. The best content I could find was a &lt;a href=&quot;https://www.youtube.com/watch?v=l1kTD5qQ5Vo&quot;&gt;series of unedited (and, therefore, lengthy) YouTube videos&lt;/a&gt; that ended up only being useful for the first couple steps.&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;Fast forward through two more pre-broken headsets from eBay and a handful of individually-purchased components, some of which I personally broke and some of which were sold as working but weren’t, and I’ve gotten pretty good at disassembling and reassembling CV1s. Unfortunately, I only ended up with the equivalent of my first headset (complete with hardware flaw) and one other frankensteined, but functioning, headset, so I wouldn’t say it was worth the money. But at least it was a fun quarantine project, and I hope someone finds this guide useful if they need to do their own CV1 surgery!&lt;/p&gt;
+
+&lt;h2 id=&quot;what-youll-need&quot;&gt;What You’ll Need&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;T4 Torx screwdriver&lt;/li&gt;
+  &lt;li&gt;#0 Phillips head screwdriver with a narrow shaft 3” or longer&lt;/li&gt;
+  &lt;li&gt;medium-large flathead screwdriver or spudger&lt;/li&gt;
+  &lt;li&gt;small flathead screwdriver, ~1/16” wide&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;The Phillips head will have to fit in a very narrow space&lt;/strong&gt;, so most replaceable-bit screwdrivers with a bulky socket for the bits won’t fit. Also, the screws are quite small, so a magnetic screwdriver and/or an organizing tray will help keep you from losing them.&lt;/p&gt;
+
+&lt;h2 id=&quot;parts-list&quot;&gt;Parts List&lt;/h2&gt;
+
+&lt;p&gt;Ignoring the parts that can be removed without any tools, these are the parts you will end up with at the end of this teardown.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;1x head strap/outer housing assembly&lt;/li&gt;
+  &lt;li&gt;1x fabric face shroud&lt;/li&gt;
+  &lt;li&gt;2x lens assemblies&lt;/li&gt;
+  &lt;li&gt;1x moveable lens mount/front housing&lt;/li&gt;
+  &lt;li&gt;3x PCB
+    &lt;ul&gt;
+      &lt;li&gt;1x main board&lt;/li&gt;
+      &lt;li&gt;1x breakout board&lt;/li&gt;
+      &lt;li&gt;1x proximity sensor board&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;1x main board support&lt;/li&gt;
+  &lt;li&gt;1x ribbon cable brace&lt;/li&gt;
+  &lt;li&gt;1x IPD slider assembly
+    &lt;ul&gt;
+      &lt;li&gt;1x outer ring&lt;/li&gt;
+      &lt;li&gt;1x slider thumb&lt;/li&gt;
+      &lt;li&gt;2x springs&lt;/li&gt;
+      &lt;li&gt;1x rack gear/thumb holder&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;19x T4 Torx screws&lt;/li&gt;
+  &lt;li&gt;9x small Phillips head screws&lt;/li&gt;
+  &lt;li&gt;4x large Phillips head screws&lt;/li&gt;
+  &lt;li&gt;1x Phillips shoulder screw&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;step-by-step-teardown&quot;&gt;Step-by-step Teardown&lt;/h2&gt;
+
+&lt;p&gt;The next several sections are separated somewhat arbitrarily into sets of steps that felt like useful checkpoints. I suggest you skim each section before following the steps, just to get a feel for what you’re about to do and to maybe help set up your light/tools/workspace for best effect.&lt;/p&gt;
+
+&lt;p&gt;I’ve torn down headsets half a dozen times following these instructions, but keep in mind that I am not an expert and if you aren’t careful you may damage your headset. Follow these instructions at your own risk; I am not responsible for any damage you may incur by following them. With that disclaimer out of the way, let’s get started!&lt;/p&gt;
+
+&lt;h3 id=&quot;1-preliminaries&quot;&gt;1. Preliminaries&lt;/h3&gt;
+
+&lt;p&gt;Before getting into the teardown proper, start by removing all the extranous parts: headphones, foam faceplate and cable. I also recommend you unvelcro the top strap and wrap it around the brace for the back of the head to keep it out of the way.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-face-shroud&quot;&gt;2. Face Shroud&lt;/h3&gt;
+
+&lt;p&gt;Removing the flexible &lt;strong&gt;fabric shroud&lt;/strong&gt; is, right out the gate, one of the more stressful parts of the process, because you’re doing it almost totally blind and it requires a good amount of prying that makes you feel like you’re about to break the headset. The fabric is held in shape by an outer plastic frame, which is screwed into the outer housing of the headset.&lt;/p&gt;
+
+&lt;p&gt;First, remove the &lt;strong&gt;6x T4 screws&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-1-3805-annotated.jpg&quot; alt=&quot;img-1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, you have to separate the tabs that keep the left and right sides of the plastic frame attached to the outer housing.&lt;/p&gt;
+
+&lt;p&gt;Insert your screwdriver between the plastic frame and the outer housing, without going too deep, and slide it along until it’s at the far left (or far right) side of the headset. If you can pull the plastic frame ~1/4” away from the outer housing, you know you’ve separated the tabs. You can let the now-separated frame rest back against the outer housing; it doesn’t tend to re-engage unless you push it.&lt;/p&gt;
+
+&lt;p class=&quot;alert alert-info&quot;&gt;&lt;span class=&quot;alert-title&quot;&gt;Watch Your Screwdriver&lt;/span&gt;
+    &lt;br /&gt;Keep your screwdriver head tilted away from the inside surface of the outer housing. Some infrared LEDs are adhered there and you don&apos;t want to disturb them.
+&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/assets/oculus-teardown/img-2-combined.jpg&quot; alt=&quot;There will be plenty of jabs at the insides of expensive electronics with pointy metal sticks.&quot; /&gt;
+  &lt;figcaption&gt;There will be plenty of jabs at the insides of expensive electronics with pointy metal sticks.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Next, you have to separate the fabric shroud from the lenses. Each eye hole in the shroud has a floating plastic ring attached to the fabric with three tabs that clip onto anchors on the lens housing. This picture is a view from the inside so you can see what you’ll be blindly working with.&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/assets/oculus-teardown/img-4-combined-annotated.jpg&quot; alt=&quot;This isn&apos;t the view you&apos;ll have; it&apos;s from the future.&quot; /&gt;
+  &lt;figcaption&gt;This isn&apos;t the view you&apos;ll have; it&apos;s from the future.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;This step is probably the one that most makes you feel like you’re going to break the headset. It’s also a pain to get a light into the right place to see what you’re doing. It’s the best technique I’ve found to do this, however.&lt;/p&gt;
+
+&lt;p&gt;The tab on the bottom side of the lens can be reached with the flathead screwdriver if you gently pull the shroud’s plastic frame away from the outer housing of the headset. Photographing the moment of release is difficult, so here’s what it looks like right after the tab has been separated. Note that the screwdriver is held at a shallow angle so it can get under the tab.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-6-3665-annotated.jpg&quot; alt=&quot;img-6&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Once you’ve separated the first tab, you’ll gain some flexibility to move the plastic ring up a little bit, which will help with the next two tabs. Here’s a reference for where all three of the left lens tabs can be found. (The tab locations are mirrored for the left and right lenses.)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-5-3805-annotated.jpg&quot; alt=&quot;img-5&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Lightly tug on the ring to pull it away from the lens, and slot the screwdriver in the gap. Slide the screwdriver around the ring, which should pop off the remaining two tabs with not much effort.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-7-3668.jpg&quot; alt=&quot;img-7&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After you’ve done one lens, you should be able to tug most of the shroud out at least 1/2”. That will make it easier to maneuver your hands and screwdriver in order to repeat these steps for the other lens.&lt;/p&gt;
+
+&lt;p&gt;When you’ve got them apart, your headset should look like this!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-7a-3835.jpg&quot; alt=&quot;img-7a&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;3-ipd-slider&quot;&gt;3. IPD Slider&lt;/h3&gt;
+
+&lt;p&gt;Before removing the outer housing, the &lt;strong&gt;IPD slider&lt;/strong&gt; on the bottom right has to be taken out. It’s held in by &lt;strong&gt;1x T4 screw&lt;/strong&gt;, so remove that first.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-8-3672-annotated.jpg&quot; alt=&quot;img-8&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, release the front two plastic snaps holding the &lt;strong&gt;outer ring&lt;/strong&gt; using the small flathead screwdriver by pressing them in and down.&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/assets/oculus-teardown/img-9-combined-annotated.jpg&quot; alt=&quot;On the left, the view you&apos;ll have. On the right, a close-up of the outer ring, so you can see the snaps.&quot; /&gt;
+  &lt;figcaption&gt;On the left, the view you&apos;ll have. On the right, a close-up of the outer ring, so you can see the snaps.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Once you’ve pushed the snaps in, the outer ring has probably mostly separated itself from the headset. If it hasn’t, use your screwdriver to lever the ring away from the housing. It’s held in by inaccessible snaps on the inside and back of the slider assembly, so you’re trying to tilt it until those snaps simply pull away from their anchors.&lt;/p&gt;
+
+&lt;p class=&quot;alert alert-info&quot;&gt;&lt;span class=&quot;alert-title&quot;&gt;Don&apos;t Lose the Springs&lt;/span&gt;
+    &lt;br /&gt;Underneath the switch&apos;s thumb there are two tiny springs. Make sure you work slowly and/or in an enclosed space to prevent them flying off into the distance.
+&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-10-3693.jpg&quot; alt=&quot;img-10&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;At this point, the &lt;strong&gt;slider thumb&lt;/strong&gt; and &lt;strong&gt;springs&lt;/strong&gt; have probably launched themselves at you, so put them aside.&lt;/p&gt;
+
+&lt;p&gt;A note on reassembly: the slider thumb is asymmmetrical and only goes in one way.&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/assets/oculus-teardown/img-11-3695.jpg&quot; alt=&quot;I made the picture tiny because these are tiny. It&apos;s amazing I never lost any of these.&quot; /&gt;
+  &lt;figcaption&gt;I made the picture tiny because these are tiny. It&apos;s amazing I never lost any of these.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Lastly, pop out the &lt;strong&gt;rack gear&lt;/strong&gt; with a flathead screwdriver or your fingers.&lt;/p&gt;
+
+&lt;p&gt;Another note on reassembly: make sure you place the rack gear so you get the full range of the slider.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-12-3698.jpg&quot; alt=&quot;img-12&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;4-outer-housing&quot;&gt;4. Outer Housing&lt;/h3&gt;
+
+&lt;p&gt;The &lt;strong&gt;outer housing&lt;/strong&gt; is attached to the front of the headset by a bunch of screws of all sizes.&lt;/p&gt;
+
+&lt;p&gt;The following image shows the location of &lt;strong&gt;2x T4 screws&lt;/strong&gt;, &lt;strong&gt;2x small Phillips head screws&lt;/strong&gt; and &lt;strong&gt;4x large Phillips head screws&lt;/strong&gt;. Note that there are two pairs of screws that are very close to each other. Remove all eight of these.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-13-3673-annotated.jpg&quot; alt=&quot;img-13&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;There are two more screws here that are not obvious to find. The easier of the two is another &lt;strong&gt;1x small Phillips head screw&lt;/strong&gt; hiding under the sliding lenses. Hold the lenses apart with your free hand if necessary&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; and take it out.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-14-3674-annotated.jpg&quot; alt=&quot;img-14&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;There is also &lt;strong&gt;1x Phillips head shoulder screw&lt;/strong&gt; tucked away such that it is only accessible using a narrow-shaft Phillips head crossing right over the main board support. This is why replaceable-bit screwdrivers don’t cut it!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-15-combined-annotated.jpg&quot; alt=&quot;img-15&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Once all the screws are out, it’s time to separate the outer housing from the front of the headset.&lt;/p&gt;
+
+&lt;p class=&quot;alert alert-warning&quot;&gt;&lt;span class=&quot;alert-title&quot;&gt;Take It Slow!&lt;/span&gt;
+    &lt;br /&gt;The outer housing is connected to the front of the headset by several small ribbon cables. Don&apos;t rush this part.
+&lt;/p&gt;
+
+&lt;p&gt;To initially separate the outer housing, bend the top middle of the housing up about 3/16” to allow the bracket that was holding the shoulder screw to clear the main board support. The following picture shows a later view from the inside (left) and what you’ll actually be looking at (right).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-16-combined-annotated.jpg&quot; alt=&quot;img-16&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;While still holding the bracket out of the way, pull the front of the headset straight out from the outer housing until you’ve got a 1/4-1/2” gap between the two. Don’t pull it all the way! There are ribbon cables connecting the outer housing to the rest of the headset.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-17-combined.jpg&quot; alt=&quot;img-17&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Lay the headset’s top flat on the work surface. Turn its right side towards you, where you will see a small metal &lt;strong&gt;ribbon cable brace&lt;/strong&gt;. Remove the &lt;strong&gt;2x T4 screws&lt;/strong&gt; holding the brace in place and take the brace off to expose the ribbon cable connectors.&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/assets/oculus-teardown/img-18-3705-annotated.jpg&quot; alt=&quot;This brace holds the ribbon cable connectors against a PCB while you accidentally punch yourself in the head trying to pull off those head crabs.&quot; /&gt;
+  &lt;figcaption&gt;This brace holds the ribbon cable connectors against a PCB while you accidentally punch yourself in the head trying to pull off those head crabs.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Lastly, pop the ribbon cable connectors off by sticking your fingernail under their edges and giving them a little tug. They should come off with very little force and a satisfying pop. I don’t suggest using a screwdriver for this step.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-19-3708.jpg&quot; alt=&quot;img-19&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now the outer housing should be free, so put it aside.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-19-and-a-half-3873.jpg&quot; alt=&quot;img-19-and-a-half&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;5-main-board&quot;&gt;5. Main Board&lt;/h3&gt;
+
+&lt;p&gt;Once the outer housing is separated, you have a lot more room to work.&lt;/p&gt;
+
+&lt;p&gt;First, release the &lt;strong&gt;breakout board&lt;/strong&gt; by taking out the &lt;strong&gt;2x T4 screws&lt;/strong&gt; and popping off the last ribbon cable connector (if you haven’t already).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-20-3715-annotated.jpg&quot; alt=&quot;img-20&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The breakout board will flop around a bit for the rest of this step, so be careful. I’ve found that removing it first is ultimately easier and less dangerous to the boards.&lt;/p&gt;
+
+&lt;p class=&quot;alert alert-warning&quot;&gt;&lt;span class=&quot;alert-title&quot;&gt;Don&apos;t Break Your Headset!&lt;/span&gt;
+    &lt;br /&gt;The next step is by far the riskiest when it comes to breaking your headset unintentionally.
+&lt;/p&gt;
+
+&lt;p&gt;Once the breakout board is free, you’ll want to separate the &lt;strong&gt;main board&lt;/strong&gt; and the &lt;strong&gt;main board support&lt;/strong&gt;. The board and its support have a tendency to flop around too once their screws are removed, so be very careful, because there is a &lt;em&gt;tiny&lt;/em&gt; plastic handle on the IPD sensor attached to the board that lodges into a slot on the right lens housing. It is &lt;em&gt;very&lt;/em&gt; easy to snap the handle off and permanently break your IPD sensor.&lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; Also, there are more ribbon cables tethering the main board to rest of the headset that you have to be careful not to break.&lt;/p&gt;
+
+&lt;p&gt;The following picture shows the IPD sensor handle and the slot on the right lens housing after the parts have been separated.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-21-3827-annotated.jpg&quot; alt=&quot;img-21&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;First, make sure the lenses are as close to each other as possible. This is the resting position for the lens mount, so moving the lenses first will prevent any abrupt sliding that could break the IPD sensor.&lt;/p&gt;
+
+&lt;p&gt;Note that there are two plastic pegs that help align the main board support with the front of the headset.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-22-3874-annotated.jpg&quot; alt=&quot;img-22&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Hold the main board and its support in place with one hand, relying on the pegs for stability. Don’t let it jostle around or you risk breaking the switch handle! Then, remove the &lt;strong&gt;2x small Phillips head screws&lt;/strong&gt; holding it in place.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-23-3874-annotated.jpg&quot; alt=&quot;img-23&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Once the screws are removed, carefully move the main board and its support straight up a little bit and then tilt it away from the headset. It’s attached by two large ribbon cables that you can’t yet remove.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-24-3718.jpg&quot; alt=&quot;img-24&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;6-main-board-again-and-other-pcbs&quot;&gt;6. Main Board (again) and Other PCBs&lt;/h3&gt;
+
+&lt;p&gt;The &lt;strong&gt;main board&lt;/strong&gt; is attached to the plastic &lt;strong&gt;main board support&lt;/strong&gt; by &lt;strong&gt;5x T4 screws&lt;/strong&gt; and some plastic clips and pegs. The &lt;strong&gt;proximity board&lt;/strong&gt; is attached to the main board by a ribbon cable and the main board support by &lt;strong&gt;1x T4 screw&lt;/strong&gt;. Remove all six screws. The proximity board will flop a bit, but it’s only twice the size of its own ribbon cable so it won’t move very far or fast.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-25-3718-annotated.jpg&quot; alt=&quot;img-25&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Once all the screws have been removed, carefully tilt and maneuver the main board out of its plastic clips and pegs. There is one of each on each end of the board, which you can see in the following picture. I suggest you release the right side of the board first.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-26-3718-annotated.jpg&quot; alt=&quot;img-26&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Once the main board is no longer attached to its support, pull it out slightly to expose the ribbon cable connectors.&lt;/p&gt;
+
+&lt;p&gt;Pop off all the connectors on the main board with your fingernails: two large ribbon cables connected to the display, one small ribbon cable going to the breakout board, and the gold-plated antenna connector on the right side.&lt;sup id=&quot;fnref:4&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-27-3723-annotated.jpg&quot; alt=&quot;img-27&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Put the PCBs aside, and unthread the ribbon cables from the main board support.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-28-3879.jpg&quot; alt=&quot;img-28&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;A note on reassembly: take note of the way that the ribbon cables pass through the support. If you don’t match it, you risk pinching/breaking the cables or even causing the displays to get caught when adjusting the IPD.&lt;sup id=&quot;fnref:5&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:5&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/assets/oculus-teardown/img-28-and-a-half-3877-annotated.jpg&quot; alt=&quot;Reference image for reassembly. Notice that the ribbon cable is underneath not just the thin bar spanning the gap, but also underneath two small pegs on the upper side. Those keep it from getting caught on the housing as they slide around.&quot; /&gt;
+  &lt;figcaption&gt;Reference image for reassembly. Notice that the ribbon cable is underneath not just the thin bar spanning the gap, but also underneath two small pegs on the upper side. Those keep it from getting caught on the housing as they slide around.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&quot;7-lens-assemblies&quot;&gt;7. Lens Assemblies&lt;/h2&gt;
+
+&lt;p&gt;The final step is to separate the lens assemblies from the front of the headset. There are &lt;strong&gt;4x small Phillips head screws&lt;/strong&gt; holding the displays in, two on each side. Remove all four screws.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-29-3727-annotated.jpg&quot; alt=&quot;img-29&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The lens assemblies are also held in by four metal clips each, one in each corner. Pry the clips away with your fingernails, starting with the ones in the middle, while lifting the assembly slightly away from the front of the headet. The lens assemblies should pop right out.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-30-3882.jpg&quot; alt=&quot;img-30&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;8-wrap-up&quot;&gt;8. Wrap-up&lt;/h2&gt;
+
+&lt;p&gt;…and here you have it, the fully-disassembled CV1!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-31-3733.jpg&quot; alt=&quot;img-31&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As usual for teardowns, reassembly is just following the instructions in reverse.&lt;/p&gt;
+
+&lt;p&gt;That’s all, folks! I hope you found this interesting and/or helpful. If you’re curious, I used &lt;a href=&quot;https://evernote.com/products/skitch&quot;&gt;Skitch&lt;/a&gt; to annotate some of the images.&lt;/p&gt;
+
+&lt;h2 id=&quot;some-thoughts-on-repairs&quot;&gt;Some Thoughts on Repairs&lt;/h2&gt;
+
+&lt;p&gt;While I was at first put off by the difficulty of removing the shroud, the CV1 is actually quite repairable. The real difficulty lies in finding replacement parts, since it’s discontinued.&lt;/p&gt;
+
+&lt;p&gt;I had surprisingly good luck buying headsets and parts off of eBay. There were a number of broken headsets that just had a single display that wasn’t working that you could get for a pretty low price. There were also a handful of sellers with individual parts – boards, mostly – that were more hit-and-miss. I once blindly bought a main board that turned out to have a broken HDMI connector and/or chip, but within minutes of finding that out I had ripped off the entire IPD sensor (not just the plastic handle – all of it) so I didn’t bother to try to return it. Oops. Still, three out of four sales were exactly as broken as advertised.&lt;/p&gt;
+
+&lt;p&gt;As for my own headset, the issue turned out to be a faulty main board. Twisting or bending the board slightly causes it to lose power, so I guess that when I swing my head around too fast the acceleration of the board against the headset body causes it to bend ever so slightly and drop out. Very, very annoying, and really destroys the immersion even in a relatively low-immersion game like Beat Saber.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;section class=&quot;next-previous&quot;&gt;
+  
+  &lt;a href=&quot;/2020/10/01/stock-options/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: What is the Point of ISOs?&quot;&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;What is the Point of ISOs?&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+  
+  
+  &lt;a href=&quot;/2020/12/03/tsa-rant/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: A Brief Rant About the TSA&quot;&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;A Brief Rant About the TSA&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
+  &lt;/a&gt;
+  
+&lt;/section&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Also, I don’t like guides in video form because they’re a pain in the ass to navigate. That’s why this one is pictures! &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;In earlier teardowns I tried to remove this screw before the IPD slider, which you can do, but I found it was easier to keep track of what I was doing if I didn’t split the outer housing screws across two chunks of work. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Trust me, I did it twice. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:4&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;As far as I can tell, the Touch controllers use Bluetooth to talk to the headset, and the headset forwards control inputs over USB to the computer. I found this out by accident: I was testing a mostly-disassembled headset by plugging just the displays into the board without any housing or anything else, and had a hell of a time getting the controllers to sync. As soon as I plugged the antenna back in, all my problems were solved. Some futher investigation revealed a Bluetooth chip on the main board, and my computer doesn’t have Bluetooth, so there you have it. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:5&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;These ribbon cables are covered in little obstructive components and are surprisingly tough. I once put one in improperly and it would cause the display to catch and then suddenly snap into position when adjusting the IPD. &lt;a href=&quot;#fnref:5&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">During quarantine, I came into possession of a used Oculus Rift CV1 setup (that’s the original one) that had an infuriating tendency to disconnect if you moved your head around too fast. After some basic debugging techniques (ahem, turning it off and on again), I determined that there was a hardware issue in the headset and, since the CV1 has been discontinued for some time, I would have to fix it myself.</summary></entry></feed>

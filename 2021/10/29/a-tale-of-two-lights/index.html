@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>A Tale of Two Lights | fiddlybits</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="A Tale of Two Lights" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I’m at an Airbnb. There is a stairwell that has a light at the bottom and a light at the top (the latter of which is also the hallway light). One desires to control both these lights from both ends so that you can always turn the light off after you, or turn the light on before you, regardless of which direction you’re going. There are indeed four light switches, but they don’t work like that. If they did, I wouldn’t have had to write this." />
+<meta property="og:description" content="I’m at an Airbnb. There is a stairwell that has a light at the bottom and a light at the top (the latter of which is also the hallway light). One desires to control both these lights from both ends so that you can always turn the light off after you, or turn the light on before you, regardless of which direction you’re going. There are indeed four light switches, but they don’t work like that. If they did, I wouldn’t have had to write this." />
+<link rel="canonical" href="https://blog.sea.nkelley.me/2021/10/29/a-tale-of-two-lights/" />
+<meta property="og:url" content="https://blog.sea.nkelley.me/2021/10/29/a-tale-of-two-lights/" />
+<meta property="og:site_name" content="fiddlybits" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-10-29T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="A Tale of Two Lights" />
+<script type="application/ld+json">
+{"datePublished":"2021-10-29T00:00:00+00:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.sea.nkelley.me/2021/10/29/a-tale-of-two-lights/"},"description":"I’m at an Airbnb. There is a stairwell that has a light at the bottom and a light at the top (the latter of which is also the hallway light). One desires to control both these lights from both ends so that you can always turn the light off after you, or turn the light on before you, regardless of which direction you’re going. There are indeed four light switches, but they don’t work like that. If they did, I wouldn’t have had to write this.","dateModified":"2021-10-29T00:00:00+00:00","url":"https://blog.sea.nkelley.me/2021/10/29/a-tale-of-two-lights/","headline":"A Tale of Two Lights","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/style.css">
+  
+  <link rel="stylesheet" href="/assets/a-tale-of-two-lights/a-tale-of-two-lights.css">
+  <link type="application/atom+xml" rel="alternate" href="https://blog.sea.nkelley.me/feed.xml" title="fiddlybits" /></head>
+<body data-theme="auto"><header class="site-header">
+  <div class="centering-wrapper">
+    <a class="site-title" href="/">fiddlybits</a>
+    <span>
+      <a href="https://github.com/seansfkelley">github</a>
+      &nbsp;•&nbsp;
+      <a href="/feed.xml">rss</a>
+      <!-- Only show theme switcher if js is enabled: hide by default. -->
+      <span id="theme-switcher-wrapper" style="display: none;">
+        &nbsp;•&nbsp;
+        <a href="#" id="theme-switcher"></a>
+      </span>
+    </span>
+  </div>
+</header>
+<main class="centering-wrapper">
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">A Tale of Two Lights</h1>
+    <h3 class="post-subtitle"></h3>
+    <p class="post-date">
+      <time  datetime="2021-10-29T00:00:00+00:00" itemprop="datePublished">
+        2021-10-29
+      </time></p>
+  </header>
+  <p>I’m at an Airbnb. There is a stairwell that has a light at the bottom and a light at the top (the latter of which is also the hallway light). One desires to control both these lights from both ends so that you can always turn the light off after you, or turn the light on before you, regardless of which direction you’re going. There are indeed four light switches, but they don’t work like that. If they did, I wouldn’t have had to write this.</p>
+
+<p>One switch is by the front door where the upper hallway is. Two are at the top of the stairs, and one at the bottom. Hm… that doesn’t sound like the pair of independent three-way switches you might expect. There’s only one switch at the bottom?</p>
+
+<p>I’ve been here for literally weeks and I haven’t been able to figure out the way that these lights are connected. Most days I just mash them at random until I get them into the state I want. Yesterday I got so annoyed that I actually tabulated (and triple-checked!) data for how the switches perform. In binary.</p>
+
+<div id="data-table">
+
+  <table>
+    <thead>
+      <tr>
+        <th>A</th>
+        <th>B</th>
+        <th>C</th>
+        <th>D</th>
+        <th>Top Light</th>
+        <th>Bottom Light</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<p>I stared at this for a while, and even drew out little truth tables for AND, OR, XOR and <a href="https://en.wikipedia.org/wiki/IMPLY_gate">IMPLY</a> (just learned about that one) as well as their NOT’d equivalents in an attempt to pattern match. The hope was to eventually draw a logic gate diagram (which I am sort of familiar with) and then back out a wiring diagram from that.</p>
+
+<p>Instead, I floundered a bit on the internet and discovered that all these years that people have been saying “boolean algebra”, they literally meant that you can do algebra with it. Like numbers. But not quite, because the laws are different. Then I discovered <a href="https://www.electronics-tutorials.ws/boolean/product-of-sum.html">products of sums and sums of products</a>! I eagerly translated my data for the top light into the naive algebraic expression, and then attempted to copy-cat the simplificiations from that site:</p>
+
+<div class="center">
+  <p>ĀB̄CD̄ + ĀBCD̄ + AB̄C̄D + ĀB̄CD + AB̄CD + ĀBCD<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
+
+  <p><span class="small">alright let’s get my hands dirty and factor some stuff out</span></p>
+
+  <p>(B̄ + B)ĀCD̄ + AB̄C̄D + (Ā + A)B̄CD + ĀBCD</p>
+
+  <p><span class="small">cool, I just learned from The Internet that (A + Ā) is always true so we can drop that right out</span></p>
+
+  <p>ĀCD̄ + AB̄C̄D + B̄CD + ĀBCD</p>
+
+  <p><span class="small">okay I’m out of ideas</span></p>
+</div>
+
+<p>Even a light switch system this confusing can’t be that complicated. Also, there’s no way that people who design systems of logic gates for a living still do it this way. (Yes I know the computers are actually the ones doing it for the professionals.)</p>
+
+<p>As it turns out, if I had taken a digital electronics course and/or paid attention in my Discrete Algebra course, I would have learned about <a href="https://en.wikipedia.org/wiki/Karnaugh_map">Karnaugh maps</a>, which are a pretty clever trick. They encode truth tables in just such a way every move from a square to an adjacent square is a single bit flip (including falling off the edges – so it’s actually a torus!), which means that blocks of zeroes or ones that are in lines or squares are all closely related. Which is to say, they can be represented with relatively fewer terms. So I whipped up Karnaugh map for each light, because the Wikipedia page happened to have an example of how to do with 16 entries. What are the chances?</p>
+
+<div class="karnaugh-maps">
+  <div class="karnaugh">
+    <p class="karnaugh-label top">AB</p>
+    <div class="left-label-wrapper">
+      <p class="karnaugh-label left">CD</p>
+
+      <table>
+        <tbody>
+          <tr>
+            <td> </td>
+            <td>00</td>
+            <td>01</td>
+            <td>11</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>00</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>01</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <p class="karnaugh-label bottom">Top Light</p>
+  </div>
+  <div class="karnaugh">
+    <p class="karnaugh-label top">AB</p>
+    <div class="left-label-wrapper">
+      <p class="karnaugh-label left">CD</p>
+
+      <table>
+        <tbody>
+          <tr>
+            <td> </td>
+            <td>00</td>
+            <td>01</td>
+            <td>11</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>00</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>01</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <p class="karnaugh-label bottom">Bottom Light</p>
+  </div>
+</div>
+
+<p>Then you find rectangles like they describe on Wikipedia, and back out the boolean algebra expressions that describe them:</p>
+
+<div class="center">
+  <p>ĀC + AB̄D</p>
+</div>
+
+<p>That’s the bottom light. I started with that one because it’s simpler.</p>
+
+<div class="center">
+  <p>AB̄ + ĀBC + ĀCD</p>
+</div>
+
+<p>That’s the top light. Interesting to note: the rectangles represented by the last two terms overlap. They both include the case ĀBCD.<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup></p>
+
+<p>In fact, I was surprised by how much simpler an expression this process yielded. Scroll back up and look at my first attempts with boolean algebra expressions – it would have taken a lot of staring and comparing <em>this</em> group of symbols, some of which are negated just so, with <em>that</em> group of symbols, some of which are negated just so, in order to factor out commonalities which could be reduced.</p>
+
+<p>That said, look at how ridiculous this is. Let’s attempt to interpret ĀC + AB̄D, which is the bottom light.<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup></p>
+
+<p>First off, notice that all four symbols are present. This means that all four switches can control this light, but more importantly, it means I’m <em>not</em> crazy and it really is weird and confusing. Maybe the electrician was the crazy one.</p>
+
+<p>Secondly, notice there are two groups, one of which has A and the other of which has Ā. The plus sign can be read as an “or”, which is to say, either the switch combination ĀC or the combination AB̄D is necessary to turn the light on. An English interpretation: if A is off, C controls the switch. If A is on, both B and D are necessary to control the switch.</p>
+
+<p>Since this is the downstairs light, and the only switch downstairs is D, you better hope that A and B are set correctly when you’re downstairs – otherwise flipping D isn’t going to do anything at all. This exact experience was my daily life. Thankfully, if you’re upstairs, you can turn off the downstairs light without going downstairs – you just have to make sure you don’t try to hit C when you’re in the AB̄D state, or B while you’re in the ĀC state, since they won’t do anything.</p>
+
+<p>Or you can just mash the switches and hope for the best.</p>
+
+<hr />
+
+<section class="next-previous">
+  
+  <a href="/2021/05/17/literate-focaccia/" class="next-previous-link next-previous-left" title="Previous Post: Ligurian Focaccia (and Recipe Planner)">
+    <span class="next-previous-icon">←</span>
+    <div class="next-previous-name">
+      <div class="next-previous-label">Previous Post</div>
+      <div class="next-previous-title">Ligurian Focaccia (and Recipe Planner)</div>
+    </div>
+  </a>
+  
+  
+  <a href="/2021/11/01/moderation-broadcastability/" class="next-previous-link next-previous-right" title="Next Post: Why Is Facebook So Awful?">
+    <div class="next-previous-name">
+      <div class="next-previous-label">Next Post</div>
+      <div class="next-previous-title">Why Is Facebook So Awful?</div>
+    </div>
+    <span class="next-previous-icon">→</span>
+  </a>
+  
+</section>
+
+<hr />
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>Excuse the tiny, tiny negation bars. I couldn’t figure out why the proper combining overline <code class="language-plaintext highlighter-rouge">&amp;#773;</code> wouldn’t work. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>One could come up with many different representations that don’t have overlapping rectangles, up to and including one that has a term for each 1. That would be equivalent to the original, lengthy boolean algebra expression I started with, which defeats the point of Karnaugh maps. This expression has fewer terms, and simpler terms, than any other representation that doesn’t have overlapping terms. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>The interpretation of the control scheme for the top light is left as an exercise to the reader. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</article>
+
+      <!--
+        This filthy trick makes sure that the content always weakly tries to expand to the full
+        width available, but allows for linebreaks if the viewport is too small. It produces a
+        better result than, say, width: 100%; or width: some-fixed-pixel-amount; and doesn't require
+        rewriting everything to flexbox (which would mess with the <html>-level scroll behavior and
+        sticky header) or adding extra DOM (which I'm trying to minimize to make myself feel good).
+      -->
+      <div class="horizontal-expander" aria-hidden="true">
+        Throughout human history, we have been dependent on machines to survive. Fate, it seems, is not without a sense of irony.
+      </div>
+    </main>
+  </body>
+  <script src="/assets/js/theme-switcher.js"></script>
+  
+</html>

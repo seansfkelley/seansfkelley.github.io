@@ -1,0 +1,41 @@
+:root { --sol-base03:   #002b36; --sol-base02:   #073642; --sol-base01:   #586e75; --sol-base00:   #657b83; --sol-base0:    #839496; --sol-base1:    #93a1a1; --sol-base2:    #eee8d5; --sol-base3:    #fdf6e3; --sol-yellow:   #b58900; --sol-orange:   #cb4b16; --sol-red:      #dc322f; --sol-magenta:  #d33682; --sol-violet:   #6c71c4; --sol-blue:     #268bd2; --sol-cyan:     #2aa198; --sol-green:    #859900; }
+
+body[data-theme="auto"], body[data-theme="light"] { --brand-color:                #828282; --brand-color-light:          #e8e8e8; --brand-color-dark:           #424242; --site-title-color:           var(--brand-color-dark); --text-color:                 #111111; --text-color-faded:           #5e5e5e; --background-color:           #fdfdfd; --code-background-color:      #eeeeee; --highlight-background-color: #fdffdd; --input-background-color:     #ffffff; --input-border-color:         #dddddd; --input-hover-color:          #eeeeee; --link-color-base:            #2a7ae2; --link-color-visited:         #1756a9; --link-color-hover:           var(--text-color); --text-color-blockquote:      var(--text-color-faded); --border-color-blockquote:    #aaaaaa; --intent-default-background-color:  rgba(19,124,189,.15); --intent-default-text-color:        #106ba3; --intent-success-background-color:  rgba(15, 153, 96, 0.15); --intent-success-text-color:        #0d8050; --intent-warning-background-color:  rgba(217, 130, 43, 0.15); --intent-warning-text-color:        #bf7326; --intent-danger-background-color:   rgba(219, 55, 55, 0.15); --intent-danger-text-color:         #c23030; --sol-mono3:  var(--sol-base3); --sol-mono2:  var(--sol-base2); --sol-mono1:  var(--sol-base1); --sol-mono00: var(--sol-base00); --sol-mono01: var(--sol-base01); }
+
+@media (prefers-color-scheme: dark) { body[data-theme="auto"] { --brand-color:                #a2a2a2; --brand-color-light:          #424242; --brand-color-dark:           #e8e8e8; --site-title-color:           var(--brand-color-dark); --text-color:                 #d0d0d0; --text-color-faded:           #909090; --background-color:           #202020; --code-background-color:      #404040; --input-background-color:     #404040; --input-border-color:         transparent; --input-hover-color:          #505050; --highlight-background-color: #434418; --link-color-base:            #689fe6; --link-color-visited:         #567bac; --link-color-hover:           var(--text-color); --text-color-blockquote:      var(--text-color-faded); --border-color-blockquote:    #808080; --intent-default-background-color: rgba(19,124,189,.25); --intent-default-text-color:       #48aff0; --intent-success-background-color: rgba(15,153,96,.25); --intent-success-text-color:       #3dcc91; --intent-warning-background-color: rgba(217, 130, 43, 0.25); --intent-warning-text-color:       #ffb366; --intent-danger-background-color:  rgba(219, 55, 55, 0.25); --intent-danger-text-color:        #ff7373; --sol-mono3:  var(--sol-base03); --sol-mono2:  var(--sol-base02); --sol-mono1:  var(--sol-base01); --sol-mono00: var(--sol-base0); --sol-mono01: var(--sol-base1); } }
+
+body[data-theme="dark"] { --brand-color:                #a2a2a2; --brand-color-light:          #424242; --brand-color-dark:           #e8e8e8; --site-title-color:           var(--brand-color-dark); --text-color:                 #d0d0d0; --text-color-faded:           #909090; --background-color:           #202020; --code-background-color:      #404040; --input-background-color:     #404040; --input-border-color:         transparent; --input-hover-color:          #505050; --highlight-background-color: #434418; --link-color-base:            #689fe6; --link-color-visited:         #567bac; --link-color-hover:           var(--text-color); --text-color-blockquote:      var(--text-color-faded); --border-color-blockquote:    #808080; --intent-default-background-color: rgba(19,124,189,.25); --intent-default-text-color:       #48aff0; --intent-success-background-color: rgba(15,153,96,.25); --intent-success-text-color:       #3dcc91; --intent-warning-background-color: rgba(217, 130, 43, 0.25); --intent-warning-text-color:       #ffb366; --intent-danger-background-color:  rgba(219, 55, 55, 0.25); --intent-danger-text-color:        #ff7373; --sol-mono3:  var(--sol-base03); --sol-mono2:  var(--sol-base02); --sol-mono1:  var(--sol-base01); --sol-mono00: var(--sol-base0); --sol-mono01: var(--sol-base1); }
+
+#data-table table { font-family: "Inconsolata", "Consolas", "Roboto Mono", "Ubuntu Mono", "Menlo", "Liberation Mono", "Courier New", monospace; margin: auto; margin-bottom: 12px; border-collapse: collapse; }
+
+#data-table table th, #data-table table td { padding-left: 12px; padding-right: 12px; }
+
+#data-table table th { border-bottom: 1px solid var(--text-color-faded); }
+
+#data-table table td:nth-child(5), #data-table table td:nth-child(6) { text-align: center; }
+
+#data-table table td:nth-child(5), #data-table table td:nth-child(6), #data-table table th:nth-child(5), #data-table table th:nth-child(6) { border-left: 1px solid var(--text-color-faded); }
+
+div.center { text-align: center; }
+
+div.center .small { font-size: 14px; color: var(--text-color-faded); }
+
+.karnaugh-maps { display: flex; justify-content: center; }
+
+.karnaugh-maps .karnaugh:not(:last-child) { margin-right: 24px; }
+
+.karnaugh-maps .karnaugh:first-child { margin-left: -24px; }
+
+.karnaugh { font-family: "Inconsolata", "Consolas", "Roboto Mono", "Ubuntu Mono", "Menlo", "Liberation Mono", "Courier New", monospace; }
+
+.karnaugh table td { padding: 0; height: 24px; width: 24px; text-align: center; vertical-align: center; }
+
+.karnaugh table tr:nth-child(1), .karnaugh table td:nth-child(1) { color: var(--text-color-faded); font-size: 14px; }
+
+.karnaugh .left-label-wrapper { display: flex; align-items: center; }
+
+.karnaugh .left-label-wrapper .karnaugh-label.left { transform: rotate(-90deg); margin: 0; margin-top: 24px; width: 24px; text-align: center; margin-right: 6px; }
+
+.karnaugh .karnaugh-label.top { margin-bottom: 0; margin-left: 102px; }
+
+.karnaugh .karnaugh-label.bottom { text-align: center; margin-top: 12px; margin-left: 36px; }

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Stripping iTunes Music Store Metadata from Purchased Music | fiddlybits</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Stripping iTunes Music Store Metadata from Purchased Music" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="When Apple announced years ago that the iTunes Store was going DRM-free, I was ecstatic. This was during the height of the DRM controversy years, and it was nice to see a company with clout taking a stand against it. It’s a little perversely American to be rooting for one abusive corporation to give it to another abusive corporation, but hey, I’ll take what I can get." />
+<meta property="og:description" content="When Apple announced years ago that the iTunes Store was going DRM-free, I was ecstatic. This was during the height of the DRM controversy years, and it was nice to see a company with clout taking a stand against it. It’s a little perversely American to be rooting for one abusive corporation to give it to another abusive corporation, but hey, I’ll take what I can get." />
+<link rel="canonical" href="https://blog.sea.nkelley.me/2020/09/22/stripping-itunes-metadata/" />
+<meta property="og:url" content="https://blog.sea.nkelley.me/2020/09/22/stripping-itunes-metadata/" />
+<meta property="og:site_name" content="fiddlybits" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-09-22T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Stripping iTunes Music Store Metadata from Purchased Music" />
+<script type="application/ld+json">
+{"datePublished":"2020-09-22T00:00:00+00:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.sea.nkelley.me/2020/09/22/stripping-itunes-metadata/"},"description":"When Apple announced years ago that the iTunes Store was going DRM-free, I was ecstatic. This was during the height of the DRM controversy years, and it was nice to see a company with clout taking a stand against it. It’s a little perversely American to be rooting for one abusive corporation to give it to another abusive corporation, but hey, I’ll take what I can get.","dateModified":"2020-09-22T00:00:00+00:00","url":"https://blog.sea.nkelley.me/2020/09/22/stripping-itunes-metadata/","headline":"Stripping iTunes Music Store Metadata from Purchased Music","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/style.css">
+  <link type="application/atom+xml" rel="alternate" href="https://blog.sea.nkelley.me/feed.xml" title="fiddlybits" /></head>
+<body data-theme="auto"><header class="site-header">
+  <div class="centering-wrapper">
+    <a class="site-title" href="/">fiddlybits</a>
+    <span>
+      <a href="https://github.com/seansfkelley">github</a>
+      &nbsp;•&nbsp;
+      <a href="/feed.xml">rss</a>
+      <!-- Only show theme switcher if js is enabled: hide by default. -->
+      <span id="theme-switcher-wrapper" style="display: none;">
+        &nbsp;•&nbsp;
+        <a href="#" id="theme-switcher"></a>
+      </span>
+    </span>
+  </div>
+</header>
+<main class="centering-wrapper">
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Stripping iTunes Music Store Metadata from Purchased Music</h1>
+    <h3 class="post-subtitle"></h3>
+    <p class="post-date">
+      <time  datetime="2020-09-22T00:00:00+00:00" itemprop="datePublished">
+        2020-09-22
+      </time></p>
+  </header>
+  <p>When Apple announced years ago that the iTunes Store was going DRM-free, I was ecstatic. This was during the height of the DRM controversy years, and it was nice to see a company with clout taking a stand against it. It’s a little perversely American to be rooting for one abusive corporation to give it to another abusive corporation, but hey, I’ll take what I can get.</p>
+
+<p>That said, iTunes still stuffs a bunch of metadata into the purchased files that it uses to, among other things, try to get you to buy other related music or hook you on Apple Music. I recently got fed up with those annoying grey stars that appear in the Music app on iOS that are, basically, telling me which songs are good and that I should be listening to them. I like listening to albums all the way through and have exactly zero playlists: telling me how to cherry-pick the songs off the album was not okay, in my book. Especially for concept albums! Come on!</p>
+
+<p>After some sleuthing on the internet, I found someone’s GitHub gist that uses a couple open-source tools to strip this metadata without having to recompress the file or fiddle around with the bytes myself. Success!</p>
+
+<h2 id="whos-this-for">Who’s This For</h2>
+
+<p>If you use the macOS Music app to organize your music and/or you sync your music to an iOS device for the Music app there, you’re going to want to follow most or all of the instructions.</p>
+
+<p>If you just have some iTunes music files that you want to strip the metadata from without the Apple Music app frills, you really only need <a href="https://gist.github.com/seansfkelley/69743345339520e75016e010a894ade7">the script</a> and can skip everything else.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>These instructions assume some familiarity with the terminal. Grab <a href="https://gist.github.com/seansfkelley/69743345339520e75016e010a894ade7">this gist I forked from someone on the internet</a> and install the dependencies noted there.<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> This script is where the magic actually happens; the rest of the instructions are just to make iOS and the Music app happy with your changes. Additionally, the script is just a wrapper around <a href="https://libav.org/">libav</a> and <a href="http://atomicparsley.sourceforge.net/">AtomicParsley</a>, which do the heavy lifting.</p>
+
+<h2 id="caveatswarnings">Caveats/Warnings</h2>
+
+<p>iOS seems to cache metadata and do some other optimiziations that make it kind of a pain to replace songs in your library without going through a syncing dance with your computer. The method I landed on, which might be a bit of overkill, is to remove the music from your library entirely and then re-add it. Get ready to spend some quality time shuffling files around manually.</p>
+
+<p>Also, I think, but haven’t verified, that when you “hide” the songs from your library, your stripped copies shouldn’t compete with or duplicate the original songs, even if you have the “sync purchases from iTunes store automatically” option checked in preferences.</p>
+
+<h2 id="instructions">Instructions</h2>
+
+<p>These instructions are not completely streamlined, but they get the job done.</p>
+
+<ol>
+  <li>Find your files. Right-click &gt; Show in Finder should suffice for any song in your library.</li>
+  <li>Copy the music files to a working directory anywhere else, such as your desktop.</li>
+  <li>Back in the Music app, delete the songs/albums. It might prompt you with a rather confusing dialog saying something to the effect of “you can still play these songs but they’ll be deleted” and asking if you want to “hide” the songs.<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> Yes, hide them. And yes, remove the files.</li>
+  <li>If you also want to make these changes on your iPhone: sync your phone now. It’ll ask if you want to sync your purchases off your phone and back to your computer, which you should of course not do. The goal here is to remove them from the phone entirely.</li>
+  <li>Run the Python script on your files. It should rewrite them in-place, but don’t worry, you can always redownload them from the iTunes store if you mangle them.</li>
+  <li>Re-add the copied files to the Music app. You probably want to make sure you have the “Copy files to Music Media folder when adding to library” option checked in preferences so you don’t have to leave them lying around your desktop or wherever you stashed them.</li>
+  <li>Your artwork is probably missing; this is because purchased music doesn’t store the artwork in-file but rather in some other folder/database… somewhere. If you’d like, go get some artwork and add it to your songs.</li>
+  <li>And again if you’re using your phone too: sync your phone now. It should have no idea that these songs were originally purchased, and consequently will not show all the stars and copyright and “more like this please sign up for Apple Music” sections.</li>
+</ol>
+
+<p>And you’re done! If you find any errors in these steps, please let me know or comment on the gist.</p>
+
+<p>If you’re curious to verify the files, you can use <code class="language-plaintext highlighter-rouge">atomicparsley &lt;file path&gt; -t</code> and it’ll dump a list of all the tags.</p>
+
+<hr />
+
+<section class="next-previous">
+  
+  <a href="/2020/09/19/intro/" class="next-previous-link next-previous-left" title="Previous Post: Hello, world.">
+    <span class="next-previous-icon">←</span>
+    <div class="next-previous-name">
+      <div class="next-previous-label">Previous Post</div>
+      <div class="next-previous-title">Hello, world.</div>
+    </div>
+  </a>
+  
+  
+  <a href="/2020/10/01/stock-options/" class="next-previous-link next-previous-right" title="Next Post: What is the Point of ISOs?">
+    <div class="next-previous-name">
+      <div class="next-previous-label">Next Post</div>
+      <div class="next-previous-title">What is the Point of ISOs?</div>
+    </div>
+    <span class="next-previous-icon">→</span>
+  </a>
+  
+</section>
+
+<hr />
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>I briefly considered updating this to be shell to remove the need for Python, since it’s a little silly that the script halfway implements globbing and basically just shells out repeatedly, but it works and I hate writing shell, so I left it as Python. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>I guess they’re trying to blur the line between what’s on your local machine versus what’s credited to your account. I suppose that makes sense for your average person, but I’m not a big believer in streaming services and have, on more than one occasion, been the only provider of music because there was no cell signal. Take that, Spotify! <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</article>
+
+      <!--
+        This filthy trick makes sure that the content always weakly tries to expand to the full
+        width available, but allows for linebreaks if the viewport is too small. It produces a
+        better result than, say, width: 100%; or width: some-fixed-pixel-amount; and doesn't require
+        rewriting everything to flexbox (which would mess with the <html>-level scroll behavior and
+        sticky header) or adding extra DOM (which I'm trying to minimize to make myself feel good).
+      -->
+      <div class="horizontal-expander" aria-hidden="true">
+        Throughout human history, we have been dependent on machines to survive. Fate, it seems, is not without a sense of irony.
+      </div>
+    </main>
+  </body>
+  <script src="/assets/js/theme-switcher.js"></script>
+  
+</html>
