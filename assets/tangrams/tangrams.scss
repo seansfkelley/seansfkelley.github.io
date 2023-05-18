@@ -1,0 +1,31 @@
+---
+# why do I have to put this nonsense header in and break my syntax highlighter
+---
+
+@import "variables";
+
+.svg-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+svg {
+  overflow: visible;
+
+  &.outline {
+    polygon {
+      fill: none;
+      stroke-width: 2px;
+      stroke-linejoin: round;
+      stroke: black;
+    }
+  }
+
+  &.silhouette {
+    polygon {
+      fill: black;
+      stroke: none;
+    }
+  }
+}
