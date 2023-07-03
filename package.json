@@ -2,10 +2,10 @@
   "name": "seansfkelley.github.io",
   "version": "0.0.0",
   "scripts": {
-    "generate-peg": "pegjs -o assets/blazon/grammar.js --format globals --export-var parser assets/blazon/grammar.peg",
-    "test-peg": "npm run generate-peg && git diff --exit-code"
+    "generate-grammar": "peggy -o assets/blazon/grammar.js --format globals --export-var parser assets/blazon/grammar.peg",
+    "test-grammar": "npm run generate-grammar && git diff --exit-code"
   },
   "dependencies": {
-    "pegjs": "^0.10.0"
+    "peggy": "^3.0.2"
   }
 }
