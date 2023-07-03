@@ -1,10 +1,10 @@
 version: 2.1
 orbs:
-  ruby: circleci/ruby@1.0
+  ruby: circleci/ruby@2.0.1
 jobs:
   build:
     docker:
-      - image: cimg/ruby:3.1.2
+      - image: cimg/ruby:3.1.2-node
     working_directory: ~/repo
     environment:
       - SOURCE_BRANCH: master
