@@ -1,13 +1,13 @@
-{
-  let background = "sable";
-}
-
-Start
-  = bg:Color "," Main "." { background = bg; }
-  / Main "."
+Field
+  = fill:Color _ "," _ main:Main _ "." { return ["field", fill, main] }
+  / main:Main _ "." { return ["field", "argent", main] }
 
 Main
-  = ( Shape " " Color ) +
+  = ( count:Count _ shape:Shape "s"? _ fill:Color { return [shape, fill] } ) +
+
+Count
+  = "a" " " { return 1 }
+  / "two" { return 2 }
 
 Color
   = "azure"i
@@ -18,4 +18,9 @@ Color
   / "sable"i
 
 Shape
-  = "a bend"i
+  = "bend"i
+  / "sword"i
+  / "ignore this because peggy breaks weirdly on the last rule here"
+
+_ "whitespace"
+  = [ \t\n\r]*

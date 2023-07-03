@@ -2,29 +2,50 @@
 # why do I have to put this nonsense header in and break my syntax highlighter
 ---
 
-.azure {
-  background-color: blue;
+.fill-azure {
+  fill: blue;
 }
 
-.or {
-  background-color: yellow;
+.fill-or {
+  fill: yellow;
 }
 
-.argent {
-  background-color: white;
+.fill-argent {
+  fill: white;
 }
 
-.gules {
-  background-color: red;
+.fill-gules {
+  fill: red;
 }
 
-.vert {
-  background-color: green;
+.fill-vert {
+  fill: green;
 }
 
-.sable {
-  background-color: black;
+.fill-sable {
+  fill: black;
 }
 
-#rendered {
+.stroke-azure {
+  stroke: blue;
+}
+
+.stroke-or {
+  stroke: yellow;
+}
+
+.stroke-argent {
+  stroke: white;
+}
+
+.stroke-gules {
+  stroke: red;
+}
+
+.stroke-vert {
+  stroke: green;
+}
+
+.stroke-sable {
+  stroke: black;
 }

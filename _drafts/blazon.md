@@ -9,13 +9,14 @@ custom-css-list:
 ---
 
 <textarea id="blazon-input">
-A bend Or.
+Azure, a bend Or.
 </textarea>
 
 <button id="refresh">
 Refresh
 </button>
 
+<pre id="error"></pre>
 
 <svg
   id="rendered"
@@ -26,6 +27,3 @@ Refresh
   xmlns="http://www.w3.org/2000/svg"
 >
 </svg>
-
-
-<pre id="error"></pre>
