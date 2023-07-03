@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   ruby: circleci/ruby@2.0.1
+  node: circleci/node@5.1.0
 jobs:
   build:
     docker:
@@ -16,6 +17,10 @@ jobs:
           fingerprints:
             - "55:39:f6:ef:0d:9d:64:81:4a:a5:88:20:d5:ed:a1:ff"
       - checkout
+      - node/install-packages
+      - run:
+          name: Ensure committed PEG.js grammar is up-to-date
+          command: npm run test-peg
       - ruby/install-deps
       - run:
           name: Jekyll build
