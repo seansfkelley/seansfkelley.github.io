@@ -95,28 +95,7 @@ function sword(parent, { tincture }) {
 }
 
 function fess(parent, { tincture }) {
-  parent.append(path("M -50 -20 L 50 -20 L 50 10 L -50 10 Z", tincture));
-}
-
-function rondel(parent, { tincture }) {
-  const circle = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "circle"
-  );
-  circle.setAttribute("r", "15");
-  circle.setAttribute("cx", "0");
-  circle.setAttribute("cy", "0");
-  circle.classList.add(`fill-${tincture}`);
-  parent.append(circle);
-}
-
-function mullet(parent, { tincture }) {
-  parent.append(
-    path(
-      "M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z",
-      tincture
-    )
-  );
+  parent.append(path("M -50 -25 L 50 -25 L 50 15 L -50 15 Z", tincture));
 }
 
 function cross(parent, { tincture }) {
@@ -149,6 +128,27 @@ function saltire(parent, { tincture }) {
 
 function chief(parent, { tincture }) {
   parent.append(path("M -50 -60 L -50 -20 L 50 -20 L 50 -60 Z", tincture));
+}
+
+function rondel(parent, { tincture }) {
+  const circle = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "circle"
+  );
+  circle.setAttribute("r", "15");
+  circle.setAttribute("cx", "0");
+  circle.setAttribute("cy", "0");
+  circle.classList.add(`fill-${tincture}`);
+  parent.append(circle);
+}
+
+function mullet(parent, { tincture }) {
+  parent.append(
+    path(
+      "M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z",
+      tincture
+    )
+  );
 }
 
 function on(parent, { bg, fg, surround }) {

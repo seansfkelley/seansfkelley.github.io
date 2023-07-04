@@ -21,8 +21,8 @@ Singular
   / "an"
 
 PluralCharge
-  // TODO: Repetition is only permitted when this is not part of an 'on'; how to express?
-  = count:Plural _ charge:ChargeName "s" _ repetition:Repetition? _ tincture:Tincture { return [charge, { tincture, repetition, count }] }
+  // TODO: Posture is only permitted when this is not part of an 'on'; how to express?
+  = count:Plural _ charge:ChargeName "s" _ posture:Posture? _ tincture:Tincture { return [charge, { tincture, posture, count }] }
 
 Plural
   = "two" { return 2 }
@@ -42,7 +42,7 @@ Direction
   = "pale"
   / "fess"
 
-Repetition
+Posture
   = "palewise"
   / "fesswise"
 
@@ -56,16 +56,18 @@ Tincture
   / "purpure"
 
 ChargeName
+  // The ordinaries...
   = "bend"
-  / "sword"
   / "fess"
-  / "rondel"
-  / "mullet"
   / "cross"
   / "chevron"
   / "pale"
   / "saltire"
   / "chief"
+  // The rest...
+  / "sword"
+  / "rondel"
+  / "mullet"
 
 _ "whitespace"
   // Note that comma is considered, effectively, whitespace. It is not used to delimit anything and is never required.
