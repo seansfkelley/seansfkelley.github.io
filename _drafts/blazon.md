@@ -8,8 +8,9 @@ custom-css-list:
   - /assets/blazon/blazon.css
 ---
 
+<!-- Azure, a bend Or. -->
 <textarea id="blazon-input">
-Azure, a bend Or.
+Or on a fess Gules between three rondels Azure a mullet Argent.
 </textarea>
 
 <button id="refresh">
