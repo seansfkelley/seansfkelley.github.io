@@ -1,11 +1,20 @@
 const input = document.querySelector("#blazon-input");
-const refresh = document.querySelector("#refresh");
+const form = document.querySelector("#form");
 const rendered = document.querySelector("#rendered");
 const error = document.querySelector("#error");
 
-refresh.addEventListener("click", () => {
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
   parseAndRenderBlazon(input.value);
 });
+
+for (const example of document.querySelectorAll("a.example")) {
+  example.addEventListener("click", (e) => {
+    e.preventDefault();
+    input.value = e.target.innerHTML;
+    parseAndRenderBlazon(input.value);
+  });
+}
 
 const FIELD_PATH =
   "M -50 -60 L 50 -60 L 50 -10 C 50 20 30 50 0 60 C -30 50 -50 20 -50 -10 Z";
@@ -27,7 +36,10 @@ function parseAndRenderBlazon(text) {
   console.log(result);
 
   rendered.innerHTML = "";
-  rendered.appendChild(path(FIELD_PATH, "none")); // To get the outline.
+  const outline = path(FIELD_PATH, "none");
+  // TODO: Container clipPath and this outline are interacting poorly.
+  outline.classList.add("outline");
+  rendered.appendChild(outline);
   render(rendered, result);
 }
 

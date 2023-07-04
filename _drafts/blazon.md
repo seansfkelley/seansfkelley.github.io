@@ -8,15 +8,18 @@ custom-css-list:
   - /assets/blazon/blazon.css
 ---
 
-<!-- Azure, a bend Or. -->
-<!-- Or on a fess Gules between three rondels Azure a mullet Argent. -->
-<textarea id="blazon-input">
-Party per pale gules and vert.
-</textarea>
+Try these:
 
-<button id="refresh">
-Refresh
-</button>
+- <a class="example" href="#">Or on a fess Gules between three rondels Azure a mullet Argent.</a>
+- <a class="example" href="#">Party per pale gules and vert.</a>
+
+<form id="form">
+  <input type="text" id="blazon-input" value="Azure, a bend Or.">
+
+  <button type="submit">
+  Preview
+  </button>
+</form>
 
 <pre id="error"></pre>
 
@@ -30,3 +33,9 @@ Refresh
   <!-- Embed a <g> because it isolates viewBox wierdness when doing clipPaths. -->
   <g id="rendered"></g>
 </svg>
+
+References:
+
+- https://en.wikipedia.org/wiki/Blazon
+- http://heraldry.sca.org/armory/bruce.html
+- https://penelope.uchicago.edu/~grout/encyclopaedia_romana/britannia/anglo-saxon/flowers/heraldry.html
