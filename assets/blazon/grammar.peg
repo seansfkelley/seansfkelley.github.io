@@ -1,13 +1,23 @@
 Field
-  = fill:Color _ "," _ main:Main _ "." { return ["field", { fill }, main] }
+  = fill:Color _ ","? _ main:Main _ "."? { return ["field", { fill }, main] }
 
 Main
-  = Singular _ shape:Shape _ fill:Color { return [shape, { fill }] }
-  / count:Plural _ shape:Shape "s" orientation:Orientation _ fill:Color { return [shape, { count, orientation, fill }] }
+  = ShapeGroup
+  / "on" _ bg:SingularShape _ "between" _ surround:PluralShape _ fg:ShapeGroup { return ["on", { bg, fg, surround }] }
+
+ShapeGroup
+  = shape:SingularShape
+  / shape:PluralShape
+
+SingularShape
+  = Singular _ type:Shape _ fill:Color { return [type, { fill, count: 1 }] }
 
 Singular
   = "a"
   / "an"
+
+PluralShape
+  = count:Plural _ type:Shape "s" _ orientation:Orientation? _ fill:Color { return [type, { fill, orientation, count }] }
 
 Plural
   = "two" { return 2 }
@@ -29,6 +39,8 @@ Shape
   = "bend"i
   / "sword"i
   / "fess"i
+  / "rondel"i
+  / "mullet"i
   / "ignore this because peggy breaks weirdly on the last rule here"
 
 _ "whitespace"
