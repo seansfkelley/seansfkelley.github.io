@@ -37,15 +37,18 @@ function parseAndRenderBlazon(text) {
 
   rendered.innerHTML = "";
   const outline = path(FIELD_PATH, "none");
-  // TODO: Container clipPath and this outline are interacting poorly.
   outline.classList.add("outline");
   rendered.appendChild(outline);
-  render(rendered, result);
+
+  // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
+  const container = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  rendered.appendChild(container);
+  render(container, result);
 }
 
-function render(parent, [type, attributes, child]) {
-  console.log(type, attributes);
-  SHAPES[type](parent, attributes);
+function render(parent, [charge, attributes, child]) {
+  console.log(charge, attributes);
+  CHARGES_ETC[charge](parent, attributes);
   if (child) {
     render(parent, child);
   }
@@ -79,7 +82,7 @@ function partyPerField(parent, { first, second, direction }) {
 }
 
 function bend(parent, { tincture }) {
-  parent.append(path("M -61 -60 L 51 72 L 63 60 L -49 -72 Z", tincture));
+  parent.append(path("M -56 -54 L 44 66 L 56 54 L -44 -66 Z", tincture));
 }
 
 function sword(parent, { tincture }) {
@@ -116,12 +119,44 @@ function mullet(parent, { tincture }) {
   );
 }
 
+function cross(parent, { tincture }) {
+  parent.append(
+    path(
+      "M -10 -60 L 10 -60 L 10 -24 L 50 -24 L 50 -4 L 10 -4 L 10 60 L -10 60 L -10 -4 L -50 -4 L -50 -24 L -10 -24 Z",
+      tincture
+    )
+  );
+}
+
+function chevron(parent, { tincture }) {
+  parent.append(
+    path("M 0 -22 L 55 33 L 43 45 L 0 2 L -43 45 L -55 33 Z", tincture)
+  );
+}
+
+function pale(parent, { tincture }) {
+  parent.append(path("M -15 -60 L 15 -60 L 15 60 L -15 60 Z", tincture));
+}
+
+function saltire(parent, { tincture }) {
+  parent.append(
+    path(
+      "M 44 -66 L 56 -54 L 12 -10 L 55 33 L 43 45 L 0 2 L -43 45 L -55 33 L -12 -10 L -56 -54 L -44 -66 L 0 -22 Z",
+      tincture
+    )
+  );
+}
+
+function chief(parent, { tincture }) {
+  parent.append(path("M -50 -60 L -50 -20 L 50 -20 L 50 -60 Z", tincture));
+}
+
 function on(parent, { bg, fg, surround }) {
   const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
   render(g, bg);
   render(g, fg);
   if (surround) {
-    // do something
+    // TODO: something
   }
   parent.appendChild(g);
 }
@@ -133,7 +168,7 @@ function path(d, tincture) {
   return path;
 }
 
-const SHAPES = {
+const CHARGES_ETC = {
   field,
   partyPerField,
   bend,
@@ -141,6 +176,11 @@ const SHAPES = {
   fess,
   rondel,
   mullet,
+  cross,
+  chevron,
+  pale,
+  saltire,
+  chief,
   on,
 };
 

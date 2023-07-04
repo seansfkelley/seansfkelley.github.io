@@ -2,7 +2,7 @@
 
 Field
   = tincture:Tincture _ main:Main? _ "."? { return ["field", { tincture }, main] }
-  / "party" _ "per" _ direction:Direction _ first:Tincture _ "and" _ second:Tincture _ main:Main? "."? { return ["partyPerField", { direction, first, second }, main] }
+  / "party"? _ "per" _ direction:Direction _ first:Tincture _ "and" _ second:Tincture _ main:Main? "."? { return ["partyPerField", { direction, first, second }, main] }
 
 Main
   = Charge
@@ -53,6 +53,7 @@ Tincture
   / "gules"
   / "vert"
   / "sable"
+  / "purpure"
 
 ChargeName
   = "bend"
@@ -60,7 +61,11 @@ ChargeName
   / "fess"
   / "rondel"
   / "mullet"
-  / "ignore this because peggy breaks weirdly on the last rule here"
+  / "cross"
+  / "chevron"
+  / "pale"
+  / "saltire"
+  / "chief"
 
 _ "whitespace"
   // Note that comma is considered, effectively, whitespace. It is not used to delimit anything and is never required.
