@@ -1,5 +1,8 @@
+// Note: nothing is case insensitive here because it is assumed to only parse lowercase input.
+
 Field
-  = fill:Color _ ","? _ main:Main _ "."? { return ["field", { fill }, main] }
+  = tincture:Tincture _ main:Main? _ "."? { return ["field", { tincture }, main] }
+  / "party" _ "per" _ direction:Direction _ dexter:Tincture _ "and" _ sinister:Tincture _ main:Main? "."? { return ["partyPerField", { direction, dexter, sinister }, main] }
 
 Main
   = ShapeGroup
@@ -11,38 +14,53 @@ ShapeGroup
   / shape:PluralShape
 
 SingularShape
-  = Singular _ type:Shape _ fill:Color { return [type, { fill, count: 1 }] }
+  = Singular _ type:Shape _ tincture:Tincture { return [type, { tincture, count: 1 }] }
 
 Singular
   = "a"
   / "an"
 
 PluralShape
-  = count:Plural _ type:Shape "s" _ orientation:Orientation? _ fill:Color { return [type, { fill, orientation, count }] }
+  // TODO: Repetition is only permitted when this is not part of an 'on'; how to express?
+  = count:Plural _ type:Shape "s" _ repetition:Repetition? _ tincture:Tincture { return [type, { tincture, repetition, count }] }
 
 Plural
   = "two" { return 2 }
   / "three" { return 3 }
+  / "four" { return 4 }
+  / "five" { return 5 }
+  / "six" { return 6 }
+  / "seven" { return 7 }
+  / "eight" { return 8 }
+  / "nine" { return 9 }
+  / "ten" { return 10 }
+  / "eleven" { return 11 }
+  / "twelve" { return 12 }
 
-Orientation
+Direction
+  = "pale"
+  / "fess"
+
+Repetition
   = "palewise"
   / "fesswise"
 
-Color
-  = "azure"i
-  / "or"i
-  / "argent"i
-  / "gules"i
-  / "vert"i
-  / "sable"i
+Tincture
+  = "azure"
+  / "or"
+  / "argent"
+  / "gules"
+  / "vert"
+  / "sable"
 
 Shape
-  = "bend"i
-  / "sword"i
-  / "fess"i
-  / "rondel"i
-  / "mullet"i
+  = "bend"
+  / "sword"
+  / "fess"
+  / "rondel"
+  / "mullet"
   / "ignore this because peggy breaks weirdly on the last rule here"
 
 _ "whitespace"
-  = [ \t\n\r]*
+  // Note that comma is considered, effectively, whitespace. It is not used to delimit anything and is never required.
+  = [, \t\n\r]*
