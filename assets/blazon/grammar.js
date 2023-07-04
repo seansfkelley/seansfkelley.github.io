@@ -256,8 +256,8 @@ function peg$parse(input, options) {
   var peg$f1 = function(direction, dexter, sinister, main) { return ["partyPerField", { direction, dexter, sinister }, main] };
   var peg$f2 = function(bg, fg) { return ["on", { bg, fg }] };
   var peg$f3 = function(bg, surround, fg) { return ["on", { bg, fg, surround }] };
-  var peg$f4 = function(type, tincture) { return [type, { tincture, count: 1 }] };
-  var peg$f5 = function(count, type, repetition, tincture) { return [type, { tincture, repetition, count }] };
+  var peg$f4 = function(charge, tincture) { return [charge, { tincture, count: 1 }] };
+  var peg$f5 = function(count, charge, repetition, tincture) { return [charge, { tincture, repetition, count }] };
   var peg$f6 = function() { return 2 };
   var peg$f7 = function() { return 3 };
   var peg$f8 = function() { return 4 };
@@ -543,7 +543,7 @@ function peg$parse(input, options) {
   function peg$parseMain() {
     var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9;
 
-    s0 = peg$parseShapeGroup();
+    s0 = peg$parseCharge();
     if (s0 === peg$FAILED) {
       s0 = peg$currPos;
       if (input.substr(peg$currPos, 2) === peg$c4) {
@@ -555,10 +555,10 @@ function peg$parse(input, options) {
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
-        s3 = peg$parseSingularShape();
+        s3 = peg$parseSingularCharge();
         if (s3 !== peg$FAILED) {
           s4 = peg$parse_();
-          s5 = peg$parseShapeGroup();
+          s5 = peg$parseCharge();
           if (s5 !== peg$FAILED) {
             peg$savedPos = s0;
             s0 = peg$f2(s3, s5);
@@ -585,7 +585,7 @@ function peg$parse(input, options) {
         }
         if (s1 !== peg$FAILED) {
           s2 = peg$parse_();
-          s3 = peg$parseSingularShape();
+          s3 = peg$parseSingularCharge();
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
             if (input.substr(peg$currPos, 7) === peg$c5) {
@@ -597,10 +597,10 @@ function peg$parse(input, options) {
             }
             if (s5 !== peg$FAILED) {
               s6 = peg$parse_();
-              s7 = peg$parsePluralShape();
+              s7 = peg$parsePluralCharge();
               if (s7 !== peg$FAILED) {
                 s8 = peg$parse_();
-                s9 = peg$parseShapeGroup();
+                s9 = peg$parseCharge();
                 if (s9 !== peg$FAILED) {
                   peg$savedPos = s0;
                   s0 = peg$f3(s3, s7, s9);
@@ -630,25 +630,25 @@ function peg$parse(input, options) {
     return s0;
   }
 
-  function peg$parseShapeGroup() {
+  function peg$parseCharge() {
     var s0;
 
-    s0 = peg$parseSingularShape();
+    s0 = peg$parseSingularCharge();
     if (s0 === peg$FAILED) {
-      s0 = peg$parsePluralShape();
+      s0 = peg$parsePluralCharge();
     }
 
     return s0;
   }
 
-  function peg$parseSingularShape() {
+  function peg$parseSingularCharge() {
     var s0, s1, s2, s3, s4, s5;
 
     s0 = peg$currPos;
     s1 = peg$parseSingular();
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
-      s3 = peg$parseShape();
+      s3 = peg$parseChargeName();
       if (s3 !== peg$FAILED) {
         s4 = peg$parse_();
         s5 = peg$parseTincture();
@@ -694,14 +694,14 @@ function peg$parse(input, options) {
     return s0;
   }
 
-  function peg$parsePluralShape() {
+  function peg$parsePluralCharge() {
     var s0, s1, s2, s3, s4, s5, s6, s7, s8;
 
     s0 = peg$currPos;
     s1 = peg$parsePlural();
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
-      s3 = peg$parseShape();
+      s3 = peg$parseChargeName();
       if (s3 !== peg$FAILED) {
         if (input.charCodeAt(peg$currPos) === 115) {
           s4 = peg$c8;
@@ -1016,7 +1016,7 @@ function peg$parse(input, options) {
     return s0;
   }
 
-  function peg$parseShape() {
+  function peg$parseChargeName() {
     var s0;
 
     if (input.substr(peg$currPos, 4) === peg$c30) {
