@@ -1,6 +1,5 @@
 Field
   = fill:Color _ "," _ main:Main _ "." { return ["field", { fill }, main] }
-  / main:Main _ "." { return ["field",{ fill: "argent" }, main] }
 
 Main
   = Singular _ shape:Shape _ fill:Color { return [shape, { fill }] }
@@ -29,6 +28,7 @@ Color
 Shape
   = "bend"i
   / "sword"i
+  / "fess"i
   / "ignore this because peggy breaks weirdly on the last rule here"
 
 _ "whitespace"

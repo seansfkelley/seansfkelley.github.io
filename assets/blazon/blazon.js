@@ -21,52 +21,60 @@ function parseAndRenderBlazon(text) {
     return;
   }
 
+  console.log(result);
+
   rendered.innerHTML = "";
   render(rendered, result);
 }
 
-function render(parent, [type, { count, orientation, fill }, children]) {
-  console.log(type, { count, orientation, fill, children });
+function render(parent, [type, { count, orientation, fill }, child]) {
+  console.log(type, { count, orientation, fill, child });
   SHAPES[type.toLowerCase()](parent, fill);
-  children ??= [];
-  for (const c of children) {
-    render(parent, c);
+  if (child) {
+    render(parent, child);
   }
 }
 
-function field(parent, color) {
-  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  path.setAttribute(
-    "d",
-    "M 0 0 L 100 0 L 100 50 C 100 80 80 110 50 120 C 20 110 0 80 0 50 Z"
+function field(parent, fill) {
+  const p = path(
+    "M -50 -60 L 50 -60 L 50 -10 C 50 20 30 50 0 60 C -30 50 -50 20 -50 -10 Z",
+    fill
   );
-  path.classList.add("stroke-sable");
-  path.classList.add(`fill-${color.toLowerCase()}`);
-  parent.appendChild(path);
+  p.classList.add("stroke-sable");
+  parent.style.clipPath =
+    'path("M -50 -60 L 50 -60 L 50 -10 C 50 20 30 50 0 60 C -30 50 -50 20 -50 -10 Z")';
+  parent.appendChild(p);
 }
 
-function bend(parent, color) {
-  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  path.setAttribute("d", "M -12 0 L 100 132 L 112 120 L 0 -12 Z");
-  path.classList.add(`fill-${color.toLowerCase()}`);
-  parent.append(path);
+function bend(parent, fill) {
+  parent.append(path("M -61 -60 L 51 72 L 63 60 L -49 -72 Z", fill));
 }
 
-// TODO: This is pretty approximate; make it nicer.
-function sword(parent, color) {
-  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  path.setAttribute(
-    "d",
-    "M 59 -2 L 48 -2 L 48 -9 L 44 -9 L 44 -2 L 3 -2 L 0 0 L 3 2 L 44 2 L 44 9 L 48 9 L 48 2 L 59 2 Z"
+function sword(parent, fill) {
+  parent.append(
+    path(
+      "M 35 -2 L 22 -2 L 22 -10 L 18 -10 L 18 -2 L -31 -2 L -35 0 L -31 2 L 18 2 L 18 11 L 22 11 L 22 2 L 35 2 Z",
+      fill
+    )
   );
-  path.classList.add(`fill-${color.toLowerCase()}`);
-  parent.append(path);
+}
+
+function fess(parent, fill) {
+  parent.append(path("M -50 -20 L 50 -20 L 50 10 L -50 10 Z", fill));
+}
+
+function path(d, fill) {
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path.setAttribute("d", d);
+  path.classList.add(`fill-${fill.toLowerCase()}`);
+  return path;
 }
 
 const SHAPES = {
   field,
   bend,
   sword,
+  fess,
 };
 
 parseAndRenderBlazon(input.value);
