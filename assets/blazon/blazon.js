@@ -37,10 +37,13 @@ function parseAndRenderBlazon(text) {
 
   rendered.innerHTML = "";
   const outline = path(FIELD_PATH, "none");
-  // TODO: Container clipPath and this outline are interacting poorly.
   outline.classList.add("outline");
   rendered.appendChild(outline);
-  render(rendered, result);
+
+  // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
+  const container = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  rendered.appendChild(container);
+  render(container, result);
 }
 
 function render(parent, [type, attributes, child]) {
