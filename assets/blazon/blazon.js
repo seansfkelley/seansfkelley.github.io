@@ -151,10 +151,10 @@ function mullet(parent, { tincture }) {
   );
 }
 
-function on(parent, { bg, fg, surround }) {
+function on(parent, { ordinary, surround, charge }) {
   const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-  render(g, bg);
-  render(g, fg);
+  render(g, ordinary);
+  render(g, charge);
   if (surround) {
     // TODO: something
   }
