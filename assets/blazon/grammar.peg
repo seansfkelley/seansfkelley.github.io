@@ -1,13 +1,22 @@
 Field
-  = fill:Color _ "," _ main:Main _ "." { return ["field", fill, main] }
-  / main:Main _ "." { return ["field", "argent", main] }
+  = fill:Color _ "," _ main:Main _ "." { return ["field", { fill }, main] }
+  / main:Main _ "." { return ["field",{ fill: "argent" }, main] }
 
 Main
-  = ( count:Count _ shape:Shape "s"? _ fill:Color { return [shape, fill] } ) +
+  = Singular _ shape:Shape _ fill:Color { return [shape, { fill }] }
+  / count:Plural _ shape:Shape "s" orientation:Orientation _ fill:Color { return [shape, { count, orientation, fill }] }
 
-Count
-  = "a" " " { return 1 }
-  / "two" { return 2 }
+Singular
+  = "a"
+  / "an"
+
+Plural
+  = "two" { return 2 }
+  / "three" { return 3 }
+
+Orientation
+  = "palewise"
+  / "fesswise"
 
 Color
   = "azure"i
