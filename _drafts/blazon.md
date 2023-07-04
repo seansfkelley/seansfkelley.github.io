@@ -19,11 +19,12 @@ Refresh
 <pre id="error"></pre>
 
 <svg
-  id="rendered"
   width="200"
   height="240"
-  viewBox="-10 -10 140 120"
+  viewBox="-60 -70 140 120"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
+  <!-- Embed a <g> because it isolates viewBox wierdness when doing clipPaths. -->
+  <g id="rendered"></g>
 </svg>
