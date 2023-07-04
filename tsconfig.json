@@ -3,5 +3,5 @@
     "strict": true,
     "target": "ES2021"
   },
-  "include": ["assets/blazon/blazon.ts"]
+  "include": ["assets/blazonry/blazonry.ts"]
 }

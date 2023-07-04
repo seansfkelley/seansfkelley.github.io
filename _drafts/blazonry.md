@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Blazon Parser and Renderer
+title: Blazonry
 custom-js-list:
-  - /assets/blazon/grammar.js
-  - /assets/blazon/blazon.js
+  - /assets/blazonry/grammar.js
+  - /assets/blazonry/blazonry.js
 custom-css-list:
-  - /assets/blazon/blazon.css
+  - /assets/blazonry/blazonry.css
 ---
 
 [Wikipedia](https://en.wikipedia.org/wiki/Blazon):
@@ -16,7 +16,7 @@ Blazons (and the coats of arms they represent) can get enormously complicated.
 
 [provide example]
 
-Blazoning (?) jargon is highly structured, which makes it a good match for the same sorts of parsers used to implement programming languages. So I took one of those and taught it to parse and render blazons. Check out [the formal grammar](/assets/blazon/grammar.txt).
+Blazonry jargon is highly structured, which makes it a good match for the same sorts of parsers used to implement programming languages. So I took one of those and taught it to parse and render blazons. Check out [the formal grammar](/assets/blazonry/grammar.txt).
 
 Try these:
 
