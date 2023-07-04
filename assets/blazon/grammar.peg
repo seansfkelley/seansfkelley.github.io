@@ -1,6 +1,6 @@
-Start
-  = fill:Color _ "," _ main:Main _ "." { return ["shield", fill, main] }
-  / main:Main _ "." { return ["shield", "argent", main] }
+Field
+  = fill:Color _ "," _ main:Main _ "." { return ["field", fill, main] }
+  / main:Main _ "." { return ["field", "argent", main] }
 
 Main
   = ( count:Count _ shape:Shape "s"? _ fill:Color { return [shape, fill] } ) +

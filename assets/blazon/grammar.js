@@ -173,8 +173,8 @@ function peg$parse(input, options) {
   var peg$FAILED = {};
   var peg$source = options.grammarSource;
 
-  var peg$startRuleFunctions = { Start: peg$parseStart };
-  var peg$startRuleFunction = peg$parseStart;
+  var peg$startRuleFunctions = { Field: peg$parseField };
+  var peg$startRuleFunction = peg$parseField;
 
   var peg$c0 = ",";
   var peg$c1 = ".";
@@ -212,8 +212,8 @@ function peg$parse(input, options) {
   var peg$e15 = peg$otherExpectation("whitespace");
   var peg$e16 = peg$classExpectation([" ", "\t", "\n", "\r"], false, false);
 
-  var peg$f0 = function(fill, main) { return ["shield", fill, main] };
-  var peg$f1 = function(main) { return ["shield", "argent", main] };
+  var peg$f0 = function(fill, main) { return ["field", fill, main] };
+  var peg$f1 = function(main) { return ["field", "argent", main] };
   var peg$f2 = function(count, shape, fill) { return [shape, fill] };
   var peg$f3 = function() { return 1 };
   var peg$f4 = function() { return 2 };
@@ -377,7 +377,7 @@ function peg$parse(input, options) {
     );
   }
 
-  function peg$parseStart() {
+  function peg$parseField() {
     var s0, s1, s2, s3, s4, s5, s6, s7;
 
     s0 = peg$currPos;

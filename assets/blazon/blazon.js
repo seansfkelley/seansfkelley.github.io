@@ -33,8 +33,7 @@ function render(parent, [type, fill, children]) {
   }
 }
 
-// TODO: What's the proper blazoning name for this?
-function shield(parent, color) {
+function field(parent, color) {
   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
   path.setAttribute(
     "d",
@@ -64,7 +63,7 @@ function sword(parent, color) {
 }
 
 const SHAPES = {
-  shield,
+  field,
   bend,
   sword,
 };
