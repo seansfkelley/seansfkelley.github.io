@@ -81,21 +81,22 @@ function partyPerField(parent, { first, second, direction }) {
   parent.appendChild(g2);
 }
 
+// ----------------------------------------------------------------------------
+// ORDINARIES
+// ----------------------------------------------------------------------------
+
 function bend(parent, { tincture }) {
   parent.append(path("M -56 -54 L 44 66 L 56 54 L -44 -66 Z", tincture));
 }
 
-function sword(parent, { tincture }) {
-  parent.append(
-    path(
-      "M 35 -2 L 22 -2 L 22 -10 L 18 -10 L 18 -2 L -31 -2 L -35 0 L -31 2 L 18 2 L 18 11 L 22 11 L 22 2 L 35 2 Z",
-      tincture
-    )
-  );
+function chief(parent, { tincture }) {
+  parent.append(path("M -50 -60 L -50 -20 L 50 -20 L 50 -60 Z", tincture));
 }
 
-function fess(parent, { tincture }) {
-  parent.append(path("M -50 -25 L 50 -25 L 50 15 L -50 15 Z", tincture));
+function chevron(parent, { tincture }) {
+  parent.append(
+    path("M 0 -22 L 55 33 L 43 45 L 0 2 L -43 45 L -55 33 Z", tincture)
+  );
 }
 
 function cross(parent, { tincture }) {
@@ -107,10 +108,8 @@ function cross(parent, { tincture }) {
   );
 }
 
-function chevron(parent, { tincture }) {
-  parent.append(
-    path("M 0 -22 L 55 33 L 43 45 L 0 2 L -43 45 L -55 33 Z", tincture)
-  );
+function fess(parent, { tincture }) {
+  parent.append(path("M -50 -25 L 50 -25 L 50 15 L -50 15 Z", tincture));
 }
 
 function pale(parent, { tincture }) {
@@ -126,8 +125,17 @@ function saltire(parent, { tincture }) {
   );
 }
 
-function chief(parent, { tincture }) {
-  parent.append(path("M -50 -60 L -50 -20 L 50 -20 L 50 -60 Z", tincture));
+// ----------------------------------------------------------------------------
+// CHARGES
+// ----------------------------------------------------------------------------
+
+function sword(parent, { tincture }) {
+  parent.append(
+    path(
+      "M 35 -2 L 22 -2 L 22 -10 L 18 -10 L 18 -2 L -31 -2 L -35 0 L -31 2 L 18 2 L 18 11 L 22 11 L 22 2 L 35 2 Z",
+      tincture
+    )
+  );
 }
 
 function rondel(parent, { tincture }) {
@@ -151,6 +159,10 @@ function mullet(parent, { tincture }) {
   );
 }
 
+// ----------------------------------------------------------------------------
+// HIGHER-ORDER/UTILITY
+// ----------------------------------------------------------------------------
+
 function on(parent, { ordinary, surround, charge }) {
   const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
   render(g, ordinary);
@@ -168,20 +180,24 @@ function path(d, tincture) {
   return path;
 }
 
+const ORDINARIES = {
+  bend,
+  chevron,
+  chief,
+  cross,
+  fess,
+  pale,
+  saltire,
+};
+
 const CHARGES_ETC = {
   field,
   partyPerField,
-  bend,
   sword,
-  fess,
   rondel,
   mullet,
-  cross,
-  chevron,
-  pale,
-  saltire,
-  chief,
   on,
+  ...ORDINARIES,
 };
 
 parseAndRenderBlazon(input.value);
