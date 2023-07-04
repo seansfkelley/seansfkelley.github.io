@@ -27,7 +27,7 @@ Try these:
   id="rendered"
   width="200"
   height="240"
-  viewBox="-60 -70 140 120"
+  viewBox="-60 -70 120 140"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
