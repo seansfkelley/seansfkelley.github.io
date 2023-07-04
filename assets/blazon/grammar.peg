@@ -1,5 +1,6 @@
 Field
-  = fill:Color _ ","? _ main:Main _ "."? { return ["field", { fill }, main] }
+  = tincture:Tincture _ ","? _ main:Main? _ "."? { return ["field", { tincture }, main] }
+  / "party per"i _ direction:Direction _ dexter:Tincture _ "and" _ sinister:Tincture _ main:Main? { return ["partyPerField", { direction, dexter, sinister }, main] }
 
 Main
   = ShapeGroup
@@ -11,24 +12,28 @@ ShapeGroup
   / shape:PluralShape
 
 SingularShape
-  = Singular _ type:Shape _ fill:Color { return [type, { fill, count: 1 }] }
+  = Singular _ type:Shape _ tincture:Tincture { return [type, { tincture, count: 1 }] }
 
 Singular
   = "a"
   / "an"
 
 PluralShape
-  = count:Plural _ type:Shape "s" _ orientation:Orientation? _ fill:Color { return [type, { fill, orientation, count }] }
+  = count:Plural _ type:Shape "s" _ repetition:Repetition? _ tincture:Tincture { return [type, { tincture, repetition, count }] }
 
 Plural
   = "two" { return 2 }
   / "three" { return 3 }
 
-Orientation
+Direction
+  = "pale"
+  / "fess"
+
+Repetition
   = "palewise"
   / "fesswise"
 
-Color
+Tincture
   = "azure"i
   / "or"i
   / "argent"i
