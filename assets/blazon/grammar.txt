@@ -1,0 +1,72 @@
+// Note: nothing is case insensitive here because it is assumed to only parse lowercase input.
+
+Field
+  = tincture:Tincture _ elements:Main? _ "."? { return { tincture, elements } }
+  / "party"? _ "per" _ direction:Direction _ first:Tincture _ "and" _ second:Tincture _ elements:Main? "."? { return { direction, first, second, elements } }
+
+Main
+  = Ordinary
+  / Charge
+  / "on" _ ordinary:Ordinary _ charge:Charge { return { on: true, ordinary, charge } }
+  / "on" _ ordinary:Ordinary _ "between" _ surround:PluralCharge _ charge:Charge { return { on: true, ordinary, surround, charge } }
+
+Ordinary
+  = Singular _ ordinary:OrdinaryName _ tincture:Tincture { return { ordinary, tincture } }
+
+Charge
+  = SingularCharge
+  / PluralCharge
+
+SingularCharge
+  = Singular _ charge:ChargeName _ tincture:Tincture { return { charge, tincture, count: 1 } }
+
+PluralCharge
+  // TODO: Posture is only permitted when this is not part of an 'on'; how to express?
+  = count:Plural _ charge:ChargeName "s" _ posture:Posture? _ tincture:Tincture { return { charge, tincture, posture, count } }
+
+Singular "a/an"
+  = "a"
+  / "an"
+
+Plural "plural quantity"
+  = "two" { return 2 }
+  / "three" { return 3 }
+  / "four" { return 4 }
+  / "five" { return 5 }
+  / "six" { return 6 }
+
+// TODO: bend, etc.
+Direction
+  = "pale"
+  / "fess"
+
+Posture
+  = "palewise"
+  / "fesswise"
+
+Tincture "tincture"
+  = "azure"
+  / "or"
+  / "argent"
+  / "gules"
+  / "vert"
+  / "sable"
+  / "purpure"
+
+OrdinaryName "ordinary name"
+  = "bend"
+  / "fess"
+  / "cross"
+  / "chevron"
+  / "pale"
+  / "saltire"
+  / "chief"
+
+ChargeName "charge name"
+  = "sword"
+  / "rondel"
+  / "mullet"
+
+_ "whitespace"
+  // Note that comma is considered, effectively, whitespace. It is not used to delimit anything and is never required.
+  = [, \t\n\r]*

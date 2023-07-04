@@ -4,7 +4,7 @@
   "scripts": {
     "transpile": "tsc && generate-grammar",
     "check-transpile": "npm run transpile && git diff --exit-code",
-    "generate-grammar": "peggy -o assets/blazon/grammar.js --format globals --export-var parser assets/blazon/grammar.peg"
+    "generate-grammar": "peggy -o assets/blazon/grammar.js --format globals --export-var parser assets/blazon/grammar.peg && cp assets/blazon/grammar.peg assets/blazon/grammar.txt"
   },
   "dependencies": {
     "peggy": "^3.0.2",
