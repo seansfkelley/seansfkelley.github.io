@@ -25,7 +25,8 @@ function parseAndRenderBlazon(text) {
   render(rendered, result);
 }
 
-function render(parent, [type, fill, children]) {
+function render(parent, [type, { count, orientation, fill }, children]) {
+  console.log(type, { count, orientation, fill, children });
   SHAPES[type.toLowerCase()](parent, fill);
   children ??= [];
   for (const c of children) {
