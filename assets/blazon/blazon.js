@@ -1,4 +1,10 @@
 "use strict";
+// TODO
+// - on/surround offsets and rules
+// - repetition for charges
+// - actually render the halves of party per
+// - quarterly
+// - canton
 const input = document.querySelector("#blazon-input");
 const form = document.querySelector("#form");
 const rendered = document.querySelector("#rendered");

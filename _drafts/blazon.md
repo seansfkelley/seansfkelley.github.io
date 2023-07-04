@@ -8,35 +8,53 @@ custom-css-list:
   - /assets/blazon/blazon.css
 ---
 
+[Wikipedia](https://en.wikipedia.org/wiki/Blazon):
+
+> In heraldry and heraldic vexillology, a blazon is a formal description of a coat of arms, flag or similar emblem, from which the reader can reconstruct the appropriate image.
+
+Blazons (and the coats of arms they represent) can get enormously complicated.
+
+[provide example]
+
+Blazoning (?) jargon is highly structured, which makes it a good match for the same sorts of parsers used to implement programming languages. So I took one of those and taught it to parse and render blazons.
+
 Try these:
+
+<!-- TODO: Use more famous ones! -->
 
 - <a class="example" href="#">Azure, a bend Or.</a>
 - <a class="example" href="#">Party per pale gules and vert.</a>
 - <a class="example" href="#">Or on a fess Gules between three rondels Azure three mullets Argent.</a>
+- <a class="example" href="#">Argent on a chevron Gules between three leopard's faces Sable three castles Or.</a>
 
-<form id="form">
-  <input type="text" id="blazon-input" value="Argent, a cross Gules.">
+<div class="center">
+  <form id="form">
+    <input type="text" id="blazon-input" value="Argent, a cross Gules.">
+    <br>
+    <button type="submit">
+    Preview
+    </button>
+  </form>
 
-  <button type="submit">
-  Preview
-  </button>
-</form>
+  <pre id="error"></pre>
 
-<pre id="error"></pre>
-
-<svg
-  id="rendered"
-  width="200"
-  height="240"
-  viewBox="-60 -70 120 140"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-</svg>
+  <svg
+    id="rendered"
+    width="200"
+    height="240"
+    viewBox="-52 -62 104 124"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  ></svg>
+</div>
 
 References:
 
-- https://en.wikipedia.org/wiki/Blazon
-- http://heraldry.sca.org/armory/bruce.html
-- https://penelope.uchicago.edu/~grout/encyclopaedia_romana/britannia/anglo-saxon/flowers/heraldry.html
-- https://drawshield.net/index.html
+- [Armorials – Twenty Trees](https://www.twentytrees.co.uk/Guest/General/Thing/Heraldry.html?Armorials) (an enourmous list of blazons and their renderings; requires clicking through pages)
+- [A Grammar of Balzonry – Society for Creative Anachronism](http://heraldry.sca.org/armory/bruce.html)
+- [Heraldry and Blazon – U. Chicago](https://penelope.uchicago.edu/~grout/encyclopaedia_romana/britannia/anglo-saxon/flowers/heraldry.html)
+- [DrawShield](https://drawshield.net/index.html) (yeah, turns out someone already did this, but it was fun anyway)
+
+-------------------------------------------------------------------------------
+
+{% include next-previous.html %}

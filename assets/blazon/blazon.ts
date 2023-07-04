@@ -1,3 +1,10 @@
+// TODO
+// - on/surround offsets and rules
+// - repetition for charges
+// - actually render the halves of party per
+// - quarterly
+// - canton
+
 const input: HTMLTextAreaElement = document.querySelector("#blazon-input")!;
 const form: HTMLFormElement = document.querySelector("#form")!;
 const rendered: SVGSVGElement = document.querySelector("#rendered")!;
