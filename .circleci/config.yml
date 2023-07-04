@@ -19,8 +19,8 @@ jobs:
       - checkout
       - node/install-packages
       - run:
-          name: Ensure committed Blazon grammar is up-to-date
-          command: npm run test-grammar
+          name: Ensure committed transpiled files are up-to-date
+          command: npm run check-transpile
       - ruby/install-deps
       - run:
           name: Jekyll build

@@ -12,7 +12,7 @@ Try these:
 
 - <a class="example" href="#">Azure, a bend Or.</a>
 - <a class="example" href="#">Party per pale gules and vert.</a>
-- <a class="example" href="#">Or on a fess Gules between three rondels Azure a mullet Argent.</a>
+- <a class="example" href="#">Or on a fess Gules between three rondels Azure three mullets Argent.</a>
 
 <form id="form">
   <input type="text" id="blazon-input" value="Argent, a cross Gules.">
