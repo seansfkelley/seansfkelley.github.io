@@ -2,7 +2,7 @@
 
 Field
   = tincture:Tincture _ main:Main? _ "."? { return ["field", { tincture }, main] }
-  / "party" _ "per" _ direction:Direction _ first:Tincture _ "and" _ second:Tincture _ main:Main? "."? { return ["partyPerField", { direction, first, second }, main] }
+  / "party"? _ "per" _ direction:Direction _ first:Tincture _ "and" _ second:Tincture _ main:Main? "."? { return ["partyPerField", { direction, first, second }, main] }
 
 Main
   = Charge
@@ -21,8 +21,8 @@ Singular
   / "an"
 
 PluralCharge
-  // TODO: Repetition is only permitted when this is not part of an 'on'; how to express?
-  = count:Plural _ charge:ChargeName "s" _ repetition:Repetition? _ tincture:Tincture { return [charge, { tincture, repetition, count }] }
+  // TODO: Posture is only permitted when this is not part of an 'on'; how to express?
+  = count:Plural _ charge:ChargeName "s" _ posture:Posture? _ tincture:Tincture { return [charge, { tincture, posture, count }] }
 
 Plural
   = "two" { return 2 }
@@ -42,7 +42,7 @@ Direction
   = "pale"
   / "fess"
 
-Repetition
+Posture
   = "palewise"
   / "fesswise"
 
@@ -53,14 +53,21 @@ Tincture
   / "gules"
   / "vert"
   / "sable"
+  / "purpure"
 
 ChargeName
+  // The ordinaries...
   = "bend"
-  / "sword"
   / "fess"
+  / "cross"
+  / "chevron"
+  / "pale"
+  / "saltire"
+  / "chief"
+  // The rest...
+  / "sword"
   / "rondel"
   / "mullet"
-  / "ignore this because peggy breaks weirdly on the last rule here"
 
 _ "whitespace"
   // Note that comma is considered, effectively, whitespace. It is not used to delimit anything and is never required.

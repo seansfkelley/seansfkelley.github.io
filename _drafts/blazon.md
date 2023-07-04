@@ -10,11 +10,12 @@ custom-css-list:
 
 Try these:
 
-- <a class="example" href="#">Or on a fess Gules between three rondels Azure a mullet Argent.</a>
+- <a class="example" href="#">Azure, a bend Or.</a>
 - <a class="example" href="#">Party per pale gules and vert.</a>
+- <a class="example" href="#">Or on a fess Gules between three rondels Azure a mullet Argent.</a>
 
 <form id="form">
-  <input type="text" id="blazon-input" value="Azure, a bend Or.">
+  <input type="text" id="blazon-input" value="Argent, a cross Gules.">
 
   <button type="submit">
   Preview
@@ -38,3 +39,4 @@ References:
 - https://en.wikipedia.org/wiki/Blazon
 - http://heraldry.sca.org/armory/bruce.html
 - https://penelope.uchicago.edu/~grout/encyclopaedia_romana/britannia/anglo-saxon/flowers/heraldry.html
+- https://drawshield.net/index.html
