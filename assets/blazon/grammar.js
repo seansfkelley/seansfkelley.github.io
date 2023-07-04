@@ -253,7 +253,7 @@ function peg$parse(input, options) {
   var peg$e36 = peg$classExpectation([",", " ", "\t", "\n", "\r"], false, false);
 
   var peg$f0 = function(tincture, main) { return ["field", { tincture }, main] };
-  var peg$f1 = function(direction, dexter, sinister, main) { return ["partyPerField", { direction, dexter, sinister }, main] };
+  var peg$f1 = function(direction, first, second, main) { return ["partyPerField", { direction, first, second }, main] };
   var peg$f2 = function(bg, fg) { return ["on", { bg, fg }] };
   var peg$f3 = function(bg, surround, fg) { return ["on", { bg, fg, surround }] };
   var peg$f4 = function(charge, tincture) { return [charge, { tincture, count: 1 }] };

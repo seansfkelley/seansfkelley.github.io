@@ -7,6 +7,9 @@ refresh.addEventListener("click", () => {
   parseAndRenderBlazon(input.value);
 });
 
+const FIELD_PATH =
+  "M -50 -60 L 50 -60 L 50 -10 C 50 20 30 50 0 60 C -30 50 -50 20 -50 -10 Z";
+
 function parseAndRenderBlazon(text) {
   let result;
   try {
@@ -24,6 +27,7 @@ function parseAndRenderBlazon(text) {
   console.log(result);
 
   rendered.innerHTML = "";
+  rendered.appendChild(path(FIELD_PATH, "none")); // To get the outline.
   render(rendered, result);
 }
 
@@ -36,18 +40,30 @@ function render(parent, [type, attributes, child]) {
 }
 
 function field(parent, { tincture }) {
-  const p = path(
-    "M -50 -60 L 50 -60 L 50 -10 C 50 20 30 50 0 60 C -30 50 -50 20 -50 -10 Z",
-    tincture
-  );
-  p.classList.add("stroke-sable");
-  parent.style.clipPath =
-    'path("M -50 -60 L 50 -60 L 50 -10 C 50 20 30 50 0 60 C -30 50 -50 20 -50 -10 Z")';
+  const p = path(FIELD_PATH, tincture);
+  parent.style.clipPath = `path("${FIELD_PATH}")`;
   parent.appendChild(p);
 }
 
-function partyPerField(parent, { dexter, sinister, direction }) {
-  // TODO
+function partyPerField(parent, { first, second, direction }) {
+  const g1 = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  g1.appendChild(path(FIELD_PATH, first));
+
+  const g2 = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  g2.appendChild(path(FIELD_PATH, second));
+
+  if (direction === "pale") {
+    g1.style.clipPath = 'path("M -50 -60 L 0 -60 L 0 60 L -50 60 Z")';
+    g2.style.clipPath = 'path("M 0 -60 L 0 60 L 50 60 L 50 -60 Z")';
+  } else if (direction === "fess") {
+    g1.style.clipPath = 'path("M -50 -60 L -50 0 L 50 0 L 50 -60 Z")';
+    g2.style.clipPath = 'path("M -50 60 L -50 0 L 50 0 L 50 60 Z")';
+  } else {
+    throw new Error(`unsupported direction ${direction}`);
+  }
+
+  parent.appendChild(g1);
+  parent.appendChild(g2);
 }
 
 function bend(parent, { tincture }) {

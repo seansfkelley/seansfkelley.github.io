@@ -9,8 +9,9 @@ custom-css-list:
 ---
 
 <!-- Azure, a bend Or. -->
+<!-- Or on a fess Gules between three rondels Azure a mullet Argent. -->
 <textarea id="blazon-input">
-Or on a fess Gules between three rondels Azure a mullet Argent.
+Party per pale gules and vert.
 </textarea>
 
 <button id="refresh">

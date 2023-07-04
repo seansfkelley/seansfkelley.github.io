@@ -2,7 +2,7 @@
 
 Field
   = tincture:Tincture _ main:Main? _ "."? { return ["field", { tincture }, main] }
-  / "party" _ "per" _ direction:Direction _ dexter:Tincture _ "and" _ sinister:Tincture _ main:Main? "."? { return ["partyPerField", { direction, dexter, sinister }, main] }
+  / "party" _ "per" _ direction:Direction _ first:Tincture _ "and" _ second:Tincture _ main:Main? "."? { return ["partyPerField", { direction, first, second }, main] }
 
 Main
   = Charge
@@ -37,6 +37,7 @@ Plural
   / "eleven" { return 11 }
   / "twelve" { return 12 }
 
+// TODO: bend, etc.
 Direction
   = "pale"
   / "fess"
