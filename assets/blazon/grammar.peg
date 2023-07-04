@@ -2,27 +2,27 @@
 
 Field
   = tincture:Tincture _ main:Main? _ "."? { return ["field", { tincture }, main] }
-  / "party" _ "per" _ direction:Direction _ dexter:Tincture _ "and" _ sinister:Tincture _ main:Main? "."? { return ["partyPerField", { direction, dexter, sinister }, main] }
+  / "party" _ "per" _ direction:Direction _ first:Tincture _ "and" _ second:Tincture _ main:Main? "."? { return ["partyPerField", { direction, first, second }, main] }
 
 Main
-  = ShapeGroup
-  / "on" _ bg:SingularShape _ fg:ShapeGroup { return ["on", { bg, fg }] }
-  / "on" _ bg:SingularShape _ "between" _ surround:PluralShape _ fg:ShapeGroup { return ["on", { bg, fg, surround }] }
+  = Charge
+  / "on" _ bg:SingularCharge _ fg:Charge { return ["on", { bg, fg }] }
+  / "on" _ bg:SingularCharge _ "between" _ surround:PluralCharge _ fg:Charge { return ["on", { bg, fg, surround }] }
 
-ShapeGroup
-  = shape:SingularShape
-  / shape:PluralShape
+Charge
+  = SingularCharge
+  / PluralCharge
 
-SingularShape
-  = Singular _ type:Shape _ tincture:Tincture { return [type, { tincture, count: 1 }] }
+SingularCharge
+  = Singular _ charge:ChargeName _ tincture:Tincture { return [charge, { tincture, count: 1 }] }
 
 Singular
   = "a"
   / "an"
 
-PluralShape
+PluralCharge
   // TODO: Repetition is only permitted when this is not part of an 'on'; how to express?
-  = count:Plural _ type:Shape "s" _ repetition:Repetition? _ tincture:Tincture { return [type, { tincture, repetition, count }] }
+  = count:Plural _ charge:ChargeName "s" _ repetition:Repetition? _ tincture:Tincture { return [charge, { tincture, repetition, count }] }
 
 Plural
   = "two" { return 2 }
@@ -37,6 +37,7 @@ Plural
   / "eleven" { return 11 }
   / "twelve" { return 12 }
 
+// TODO: bend, etc.
 Direction
   = "pale"
   / "fess"
@@ -53,7 +54,7 @@ Tincture
   / "vert"
   / "sable"
 
-Shape
+ChargeName
   = "bend"
   / "sword"
   / "fess"

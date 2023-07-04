@@ -10,14 +10,6 @@
 
 .fill-sable { fill: black; }
 
-.stroke-azure { stroke: blue; }
+.fill-none { fill: none; }
 
-.stroke-or { stroke: yellow; }
-
-.stroke-argent { stroke: white; }
-
-.stroke-gules { stroke: red; }
-
-.stroke-vert { stroke: green; }
-
-.stroke-sable { stroke: black; }
+.outline { stroke: black; stroke-width: 2; }
