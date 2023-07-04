@@ -3,6 +3,7 @@ Field
 
 Main
   = ShapeGroup
+  / "on" _ bg:SingularShape _ fg:ShapeGroup { return ["on", { bg, fg }] }
   / "on" _ bg:SingularShape _ "between" _ surround:PluralShape _ fg:ShapeGroup { return ["on", { bg, fg, surround }] }
 
 ShapeGroup

@@ -88,6 +88,9 @@ function on(parent, { bg, fg, surround }) {
   const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
   render(g, bg);
   render(g, fg);
+  if (surround) {
+    // do something
+  }
   parent.appendChild(g);
 }
 
