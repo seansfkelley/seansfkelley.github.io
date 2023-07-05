@@ -29,7 +29,7 @@ Try these:
 
 <div class="center">
   <form id="form">
-    <input type="text" id="blazon-input" value="vert four mullets argent in fess">
+    <input type="text" id="blazon-input" value="party per pale argent and vert three mullets counterchanged in fess">
     <br>
     <button type="submit">
     Preview

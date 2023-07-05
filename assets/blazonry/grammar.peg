@@ -21,7 +21,7 @@ SingularCharge
   = Singular _ charge:ChargeName _ posture:Posture? _ tincture:Tincture { return { charge, tincture, posture, count: 1 } }
 
 PluralCharge
-  = count:Plural _ charge:ChargeName "s" _ posture:Posture? _ tincture:Tincture _ direction:Direction? { return { charge, tincture, posture, count, direction } }
+  = count:Plural _ charge:ChargeName "s" _ posture:Posture? _ tincture:Tincture _ direction:InDirection? { return { charge, tincture, posture, count, direction } }
 
 Singular "a/an"
   = "a"
@@ -36,8 +36,11 @@ Plural "plural quantity"
 
 // TODO: bend, etc.
 Direction
-  = "in pale" { return "pale" }
-  / "in fess" { return "fess" }
+  = "pale"
+  / "fess"
+
+InDirection
+  = "in" _ direction:Direction { return direction }
 
 Posture
   = "palewise"

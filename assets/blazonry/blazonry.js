@@ -31,6 +31,7 @@ const FIELD_PATH =
 // This one is pointier, but looks weirder with some bends:
 // "M -50 -60 L 50 -60 L 50 -10 C 50 20 30 50 0 60 C -30 50 -50 20 -50 -10 Z";
 "M -50 -60 L 50 -60 L 50 20 C 50 40 30 50 0 60 C -30 50 -50 40 -50 20 Z";
+const COUNTERCHANGED = "counterchanged";
 function parseAndRenderBlazon(text) {
     let result;
     try {
@@ -52,23 +53,42 @@ function parseAndRenderBlazon(text) {
     rendered.appendChild(outline);
     // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
     const container = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    container.style.clipPath = `path("${FIELD_PATH}")`;
     rendered.appendChild(container);
+    function getClippedPartyPer(parent, direction) {
+        const g1 = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        const g2 = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        [g1.style.clipPath, g2.style.clipPath] = PARTY_PER_CLIP_PATHS[direction];
+        parent.appendChild(g1);
+        parent.appendChild(g2);
+        return [g1, g2];
+    }
     if ("direction" in result) {
-        partyPerField(container, result);
+        const [g1, g2] = getClippedPartyPer(container, result.direction);
+        g1.appendChild(field({ tincture: result.first }));
+        g2.appendChild(field({ tincture: result.second }));
     }
     else {
-        field(container, result);
+        container.appendChild(field(result));
     }
     if (result.elements) {
         if ("on" in result.elements) {
             on(container, result.elements);
         }
         else if ("ordinary" in result.elements) {
-            container.appendChild(ORDINARIES[result.elements.ordinary](result.elements));
+            if (result.elements.tincture === COUNTERCHANGED) {
+                assert("direction" in result, "can only specify counterchanged tincture when using 'party per'");
+                const [g1, g2] = getClippedPartyPer(container, result.direction);
+                g1.appendChild(ORDINARIES[result.elements.ordinary](result.second));
+                g2.appendChild(ORDINARIES[result.elements.ordinary](result.first));
+            }
+            else {
+                container.appendChild(ORDINARIES[result.elements.ordinary](result.elements.tincture));
+            }
         }
         else if ("charge" in result.elements) {
             for (const transform of CHARGE_DIRECTIONS[result.elements.direction ?? "none"][result.elements.count]) {
-                const rendered = CHARGES[result.elements.charge](result.elements);
+                const rendered = CHARGES[result.elements.charge](result.elements.tincture);
                 Transform.apply(transform, rendered, result.elements);
                 container.appendChild(rendered);
             }
@@ -78,30 +98,19 @@ function parseAndRenderBlazon(text) {
         }
     }
 }
-function field(parent, { tincture }) {
-    const p = path(FIELD_PATH, tincture);
-    parent.style.clipPath = `path("${FIELD_PATH}")`;
-    parent.appendChild(p);
+function field({ tincture }) {
+    return path(FIELD_PATH, tincture);
 }
-function partyPerField(parent, { first, second, direction }) {
-    const g1 = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    g1.appendChild(path(FIELD_PATH, first));
-    const g2 = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    g2.appendChild(path(FIELD_PATH, second));
-    if (direction === "pale") {
-        g1.style.clipPath = 'path("M -50 -60 L 0 -60 L 0 60 L -50 60 Z")';
-        g2.style.clipPath = 'path("M 0 -60 L 0 60 L 50 60 L 50 -60 Z")';
-    }
-    else if (direction === "fess") {
-        g1.style.clipPath = 'path("M -50 -60 L -50 0 L 50 0 L 50 -60 Z")';
-        g2.style.clipPath = 'path("M -50 60 L -50 0 L 50 0 L 50 60 Z")';
-    }
-    else {
-        assertNever(direction);
-    }
-    parent.appendChild(g1);
-    parent.appendChild(g2);
-}
+const PARTY_PER_CLIP_PATHS = {
+    pale: [
+        'path("M -50 -60 L 0 -60 L 0 60 L -50 60 Z")',
+        'path("M 0 -60 L 0 60 L 50 60 L 50 -60 Z")',
+    ],
+    fess: [
+        'path("M -50 -60 L -50 0 L 50 0 L 50 -60 Z")',
+        'path("M -50 60 L -50 0 L 50 0 L 50 60 Z")',
+    ],
+};
 // ----------------------------------------------------------------------------
 // UTIL
 // ----------------------------------------------------------------------------
@@ -114,7 +123,7 @@ function path(d, tincture) {
 // ----------------------------------------------------------------------------
 // ORDINARIES
 // ----------------------------------------------------------------------------
-function bend({ tincture }) {
+function bend(tincture) {
     return path("M -59 -51 L 41 63 L 59 45 L -41 -69 Z", tincture);
 }
 bend.on = {
@@ -137,16 +146,16 @@ bend.on = {
         Transform.of(31, 31, 0.4),
     ],
 };
-function chief({ tincture }) {
+function chief(tincture) {
     return path("M -50 -60 L -50 -20 L 50 -20 L 50 -60 Z", tincture);
 }
-function chevron({ tincture }) {
+function chevron(tincture) {
     return path("M 0 -22 L 55 33 L 43 45 L 0 2 L -43 45 L -55 33 Z", tincture);
 }
-function cross({ tincture }) {
+function cross(tincture) {
     return path("M -10 -60 L 10 -60 L 10 -24 L 50 -24 L 50 -4 L 10 -4 L 10 60 L -10 60 L -10 -4 L -50 -4 L -50 -24 L -10 -24 Z", tincture);
 }
-function fess({ tincture }) {
+function fess(tincture) {
     return path("M -50 -25 L 50 -25 L 50 15 L -50 15 Z", tincture);
 }
 fess.on = {
@@ -186,10 +195,10 @@ fess.surround = {
         Transform.of(15, 35, 0.5),
     ],
 };
-function pale({ tincture }) {
+function pale(tincture) {
     return path("M -15 -60 L 15 -60 L 15 60 L -15 60 Z", tincture);
 }
-function saltire({ tincture }) {
+function saltire(tincture) {
     return path("M 44 -66 L 56 -54 L 12 -10 L 55 33 L 43 45 L 0 2 L -43 45 L -55 33 L -12 -10 L -56 -54 L -44 -66 L 0 -22 Z", tincture);
 }
 const ORDINARIES = {
@@ -204,10 +213,10 @@ const ORDINARIES = {
 // ----------------------------------------------------------------------------
 // CHARGES
 // ----------------------------------------------------------------------------
-function sword({ tincture }) {
+function sword(tincture) {
     return path("M 35 -2 L 22 -2 L 22 -10 L 18 -10 L 18 -2 L -31 -2 L -35 0 L -31 2 L 18 2 L 18 11 L 22 11 L 22 2 L 35 2 Z", tincture);
 }
-function rondel({ tincture }) {
+function rondel(tincture) {
     const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     circle.setAttribute("r", "20");
     circle.setAttribute("cx", "0");
@@ -215,7 +224,7 @@ function rondel({ tincture }) {
     circle.classList.add(`fill-${tincture}`);
     return circle;
 }
-function mullet({ tincture }) {
+function mullet(tincture) {
     return path("M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z", tincture);
 }
 const CHARGE_DIRECTIONS = {
@@ -264,11 +273,11 @@ const CHARGES = {
 // ----------------------------------------------------------------------------
 function on(parent, { ordinary, surround, charge }) {
     const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    g.appendChild(ORDINARIES[ordinary.ordinary](ordinary));
+    g.appendChild(ORDINARIES[ordinary.ordinary](ordinary.tincture));
     parent.appendChild(g);
     assert(charge.direction == null, 'cannot specify a direction for charges in "on"');
     for (const transform of ORDINARIES[ordinary.ordinary].on[charge.count]) {
-        const c = CHARGES[charge.charge](charge);
+        const c = CHARGES[charge.charge](charge.tincture);
         Transform.apply(transform, c, charge);
         parent.appendChild(c);
     }
@@ -276,7 +285,7 @@ function on(parent, { ordinary, surround, charge }) {
         assert(surround.direction == null, 'cannot specify a direction for charges in "between"');
         assert(surround.count != null && surround.count !== 1, "surround charge must have plural count");
         for (const transform of ORDINARIES[ordinary.ordinary].surround[surround.count]) {
-            const c = CHARGES[surround.charge](surround);
+            const c = CHARGES[surround.charge](surround.tincture);
             Transform.apply(transform, c, surround);
             parent.appendChild(c);
         }
