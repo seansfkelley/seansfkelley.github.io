@@ -21,7 +21,6 @@ SingularCharge
   = Singular _ charge:ChargeName _ posture:Posture? _ tincture:Tincture { return { charge, tincture, posture, count: 1 } }
 
 PluralCharge
-  // TODO: Posture is only permitted when this is not part of an 'on'; how to express?
   = count:Plural _ charge:ChargeName "s" _ posture:Posture? _ tincture:Tincture _ direction:Direction? { return { charge, tincture, posture, count, direction } }
 
 Singular "a/an"

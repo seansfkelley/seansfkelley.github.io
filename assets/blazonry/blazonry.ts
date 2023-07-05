@@ -4,6 +4,7 @@
 // - actually render the halves of party per
 // - quarterly
 // - canton
+// - posture -- for things like swords, requires resizing
 
 declare namespace PeggyParser {
   interface SyntaxError extends Error {
@@ -30,15 +31,19 @@ interface Transform {
 
 const Transform = {
   of: (x: number, y: number, scale?: number): Transform => ({ x, y, scale }),
-  apply: ({ x, y, scale }: Transform, element: SVGElement): void => {
-    if (scale != null && scale !== 1) {
-      element.setAttribute(
-        "transform",
-        `translate(${x}, ${y}) scale(${scale})`
-      );
-    } else {
-      element.setAttribute("transform", `translate(${x}, ${y})`);
-    }
+  apply: (
+    { x, y, scale }: Transform,
+    element: SVGElement,
+    { posture }: { posture?: Posture } = {}
+  ): void => {
+    const transform = [
+      `translate(${x}, ${y})`,
+      scale != null && scale !== 1 ? `scale(${scale})` : undefined,
+      posture === "fesswise" ? "rotate(90)" : undefined,
+    ]
+      .filter(Boolean)
+      .join(" ");
+    element.setAttribute("transform", transform);
   },
 };
 
@@ -86,7 +91,7 @@ interface ChargeRenderer {
 
 function assert(condition: boolean, message: string): asserts condition {
   if (!condition) {
-    throw new Error("assertion error");
+    throw new Error(`assertion failure: ${message}`);
   }
 }
 
@@ -322,13 +327,22 @@ function on(parent: SVGElement, { ordinary, surround, charge }: On) {
   g.appendChild(ORDINARIES[ordinary.ordinary](ordinary));
   parent.appendChild(g);
 
+  assert(
+    charge.direction == null,
+    'cannot specify a direction for charges in "on"'
+  );
+
   for (const transform of ORDINARIES[ordinary.ordinary].on[charge.count]) {
     const c = CHARGES[charge.charge](charge);
-    Transform.apply(transform, c);
+    Transform.apply(transform, c, charge);
     parent.appendChild(c);
   }
 
   if (surround) {
+    assert(
+      surround.direction == null,
+      'cannot specify a direction for charges in "between"'
+    );
     assert(
       surround.count != null && surround.count !== 1,
       "surround charge must have plural count"
@@ -337,7 +351,7 @@ function on(parent: SVGElement, { ordinary, surround, charge }: On) {
       surround.count
     ]) {
       const c = CHARGES[surround.charge](surround);
-      Transform.apply(transform, c);
+      Transform.apply(transform, c, surround);
       parent.appendChild(c);
     }
   }

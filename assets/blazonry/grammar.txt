@@ -18,11 +18,10 @@ Charge
   / PluralCharge
 
 SingularCharge
-  = Singular _ charge:ChargeName _ tincture:Tincture { return { charge, tincture, count: 1 } }
+  = Singular _ charge:ChargeName _ posture:Posture? _ tincture:Tincture { return { charge, tincture, posture, count: 1 } }
 
 PluralCharge
-  // TODO: Posture is only permitted when this is not part of an 'on'; how to express?
-  = count:Plural _ charge:ChargeName "s" _ posture:Posture? _ tincture:Tincture { return { charge, tincture, posture, count } }
+  = count:Plural _ charge:ChargeName "s" _ posture:Posture? _ tincture:Tincture _ direction:Direction? { return { charge, tincture, posture, count, direction } }
 
 Singular "a/an"
   = "a"
@@ -32,13 +31,13 @@ Plural "plural quantity"
   = "two" { return 2 }
   / "three" { return 3 }
   / "four" { return 4 }
-  / "five" { return 5 }
-  / "six" { return 6 }
+  // / "five" { return 5 }
+  // / "six" { return 6 }
 
 // TODO: bend, etc.
 Direction
-  = "pale"
-  / "fess"
+  = "in pale" { return "pale" }
+  / "in fess" { return "fess" }
 
 Posture
   = "palewise"

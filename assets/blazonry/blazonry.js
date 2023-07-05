@@ -5,20 +5,23 @@
 // - actually render the halves of party per
 // - quarterly
 // - canton
+// - posture -- for things like swords, requires resizing
 const Transform = {
     of: (x, y, scale) => ({ x, y, scale }),
-    apply: ({ x, y, scale }, element) => {
-        if (scale != null && scale !== 1) {
-            element.setAttribute("transform", `translate(${x}, ${y}) scale(${scale})`);
-        }
-        else {
-            element.setAttribute("transform", `translate(${x}, ${y})`);
-        }
+    apply: ({ x, y, scale }, element, { posture } = {}) => {
+        const transform = [
+            `translate(${x}, ${y})`,
+            scale != null && scale !== 1 ? `scale(${scale})` : undefined,
+            posture === "fesswise" ? "rotate(90)" : undefined,
+        ]
+            .filter(Boolean)
+            .join(" ");
+        element.setAttribute("transform", transform);
     },
 };
 function assert(condition, message) {
     if (!condition) {
-        throw new Error("assertion error");
+        throw new Error(`assertion failure: ${message}`);
     }
 }
 function assertNever(nope) {
@@ -205,16 +208,18 @@ function on(parent, { ordinary, surround, charge }) {
     const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
     g.appendChild(ORDINARIES[ordinary.ordinary](ordinary));
     parent.appendChild(g);
+    assert(charge.direction == null, 'cannot specify a direction for charges in "on"');
     for (const transform of ORDINARIES[ordinary.ordinary].on[charge.count]) {
         const c = CHARGES[charge.charge](charge);
-        Transform.apply(transform, c);
+        Transform.apply(transform, c, charge);
         parent.appendChild(c);
     }
     if (surround) {
+        assert(surround.direction == null, 'cannot specify a direction for charges in "between"');
         assert(surround.count != null && surround.count !== 1, "surround charge must have plural count");
         for (const transform of ORDINARIES[ordinary.ordinary].surround[surround.count]) {
             const c = CHARGES[surround.charge](surround);
-            Transform.apply(transform, c);
+            Transform.apply(transform, c, surround);
             parent.appendChild(c);
         }
     }
