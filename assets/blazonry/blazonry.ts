@@ -1,5 +1,5 @@
 // TODO
-// - on/surround offsets and rules
+// - do actual math instead of eyeballing for on/surround offsets
 // - repetition for charges
 // - actually render the halves of party per
 // - quarterly
@@ -100,7 +100,9 @@ function assertNever(nope: never): never {
 }
 
 const FIELD_PATH =
-  "M -50 -60 L 50 -60 L 50 -10 C 50 20 30 50 0 60 C -30 50 -50 20 -50 -10 Z";
+  // This one is pointier, but looks weirder with some bends:
+  // "M -50 -60 L 50 -60 L 50 -10 C 50 20 30 50 0 60 C -30 50 -50 20 -50 -10 Z";
+  "M -50 -60 L 50 -60 L 50 20 C 50 40 30 50 0 60 C -30 50 -50 40 -50 20 Z";
 
 function parseAndRenderBlazon(text: string) {
   let result;
@@ -194,13 +196,28 @@ function path(d: string, tincture: Tincture | "none") {
 // ----------------------------------------------------------------------------
 
 function bend({ tincture }: Ordinary) {
-  return path("M -56 -54 L 44 66 L 56 54 L -44 -66 Z", tincture);
+  return path("M -59 -51 L 41 63 L 59 45 L -41 -69 Z", tincture);
 }
 
 bend.on = {
-  1: [Transform.of(0, 0)],
-  2: [Transform.of(-15, -15), Transform.of(15, 15)],
-  3: [Transform.of(-30, -30), Transform.of(0, 0), Transform.of(30, 30)],
+  1: [
+    Transform.of(0, -4, 0.4), //
+  ],
+  2: [
+    Transform.of(-15, -20, 0.4), //
+    Transform.of(15, 14, 0.4),
+  ],
+  3: [
+    Transform.of(-25, -31, 0.4), //
+    Transform.of(0, -4, 0.4),
+    Transform.of(25, 23, 0.4),
+  ],
+  4: [
+    Transform.of(-31, -38, 0.4), //
+    Transform.of(-10, -14, 0.4),
+    Transform.of(10, 9, 0.4),
+    Transform.of(31, 31, 0.4),
+  ],
 } satisfies OrdinaryRenderer["on"];
 
 function chief({ tincture }: Ordinary) {
