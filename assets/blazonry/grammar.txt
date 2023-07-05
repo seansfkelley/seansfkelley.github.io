@@ -51,6 +51,7 @@ Tincture "tincture"
   / "vert"
   / "sable"
   / "purpure"
+  / "counterchanged"
 
 OrdinaryName "ordinary name"
   = "bend"

@@ -29,7 +29,7 @@ Try these:
 
 <div class="center">
   <form id="form">
-    <input type="text" id="blazon-input" value="Or on a bend Gules between three rondels Azure four mullets Argent.">
+    <input type="text" id="blazon-input" value="vert four mullets argent in fess">
     <br>
     <button type="submit">
     Preview

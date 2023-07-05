@@ -1,6 +1,6 @@
 "use strict";
 // TODO
-// - do actual math instead of eyeballing for on/surround offsets
+// - do actual math instead of eyeballing for direction/on/surround offsets
 // - repetition for charges
 // - actually render the halves of party per
 // - quarterly
@@ -67,7 +67,11 @@ function parseAndRenderBlazon(text) {
             container.appendChild(ORDINARIES[result.elements.ordinary](result.elements));
         }
         else if ("charge" in result.elements) {
-            container.appendChild(CHARGES[result.elements.charge](result.elements));
+            for (const transform of CHARGE_DIRECTIONS[result.elements.direction ?? "none"][result.elements.count]) {
+                const rendered = CHARGES[result.elements.charge](result.elements);
+                Transform.apply(transform, rendered, result.elements);
+                container.appendChild(rendered);
+            }
         }
         else {
             assertNever(result.elements);
@@ -214,6 +218,42 @@ function rondel({ tincture }) {
 function mullet({ tincture }) {
     return path("M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z", tincture);
 }
+const CHARGE_DIRECTIONS = {
+    none: {
+        1: [
+            Transform.of(0, -5), //
+        ],
+        2: [
+            Transform.of(-20, -5, 0.75),
+            Transform.of(20, -5, 0.75),
+        ],
+        3: [
+            Transform.of(0, -23, 0.75),
+            Transform.of(-20, 7, 0.75),
+            Transform.of(20, 7, 0.75),
+        ],
+    },
+    fess: {
+        1: [
+            Transform.of(0, -5), //
+        ],
+        2: [
+            Transform.of(-20, -5, 0.75),
+            Transform.of(20, -5, 0.75),
+        ],
+        3: [
+            Transform.of(-30, -5, 0.5),
+            Transform.of(0, -5, 0.5),
+            Transform.of(30, -5, 0.5),
+        ],
+        4: [
+            Transform.of(-33, -5, 0.4),
+            Transform.of(-11, -5, 0.4),
+            Transform.of(11, -5, 0.4),
+            Transform.of(33, -5, 0.4),
+        ],
+    },
+};
 const CHARGES = {
     sword,
     rondel,
