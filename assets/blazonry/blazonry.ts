@@ -1,7 +1,6 @@
 // TODO
 // - do actual math instead of eyeballing for direction/on/surround offsets
 // - repetition for charges
-// - actually render the halves of party per
 // - quarterly
 // - canton
 // - posture -- for things like swords, requires resizing
@@ -132,52 +131,74 @@ function parseAndRenderBlazon(text: string) {
   container.style.clipPath = `path("${FIELD_PATH}")`;
   rendered.appendChild(container);
 
-  function getClippedPartyPer(parent: SVGElement, direction: Direction) {
-    const g1 = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    const g2 = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    [g1.style.clipPath, g2.style.clipPath] = PARTY_PER_CLIP_PATHS[direction];
-    parent.appendChild(g1);
-    parent.appendChild(g2);
-    return [g1, g2] as const;
+  function renderIntoParent(
+    parent: SVGElement,
+    element: Ordinary | Charge | On
+  ) {
+    if ("on" in element) {
+      on(parent, element);
+    } else if ("ordinary" in element) {
+      parent.appendChild(ORDINARIES[element.ordinary](element.tincture));
+    } else if ("charge" in element) {
+      for (const transform of CHARGE_DIRECTIONS[element.direction ?? "none"][
+        element.count
+      ]) {
+        const rendered = CHARGES[element.charge](element.tincture);
+        Transform.apply(transform, rendered, element);
+        parent.appendChild(rendered);
+      }
+    } else {
+      assertNever(element);
+    }
+  }
+
+  function overwriteCounterchangedTincture(
+    element: Ordinary | Charge | On,
+    tincture: Tincture
+  ) {
+    if ("on" in element) {
+      return {
+        ...element,
+        // Note that we do NOT overwrite the `charge` tincture. That's a function of the `on`, not the field.
+        surround: element.surround
+          ? {
+              ...element.surround,
+              tincture,
+            }
+          : undefined,
+      };
+    } else if ("ordinary" in element) {
+      return { ...element, tincture };
+    } else if ("charge" in element) {
+      return { ...element, tincture };
+    } else {
+      assertNever(element);
+    }
   }
 
   if ("direction" in result) {
-    const [g1, g2] = getClippedPartyPer(container, result.direction);
+    const g1 = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    const g2 = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    [g1.style.clipPath, g2.style.clipPath] =
+      PARTY_PER_CLIP_PATHS[result.direction];
     g1.appendChild(field({ tincture: result.first }));
     g2.appendChild(field({ tincture: result.second }));
+    if (result.elements) {
+      renderIntoParent(
+        g1,
+        overwriteCounterchangedTincture(result.elements, result.second)
+      );
+      renderIntoParent(
+        g2,
+        overwriteCounterchangedTincture(result.elements, result.first)
+      );
+    }
+    container.appendChild(g1);
+    container.appendChild(g2);
   } else {
     container.appendChild(field(result));
-  }
-
-  if (result.elements) {
-    if ("on" in result.elements) {
-      on(container, result.elements);
-    } else if ("ordinary" in result.elements) {
-      if (result.elements.tincture === COUNTERCHANGED) {
-        assert(
-          "direction" in result,
-          "can only specify counterchanged tincture when using 'party per'"
-        );
-        const [g1, g2] = getClippedPartyPer(container, result.direction);
-        g1.appendChild(ORDINARIES[result.elements.ordinary](result.second));
-        g2.appendChild(ORDINARIES[result.elements.ordinary](result.first));
-      } else {
-        container.appendChild(
-          ORDINARIES[result.elements.ordinary](result.elements.tincture)
-        );
-      }
-    } else if ("charge" in result.elements) {
-      for (const transform of CHARGE_DIRECTIONS[
-        result.elements.direction ?? "none"
-      ][result.elements.count]) {
-        const rendered = CHARGES[result.elements.charge](
-          result.elements.tincture
-        );
-        Transform.apply(transform, rendered, result.elements);
-        container.appendChild(rendered);
-      }
-    } else {
-      assertNever(result.elements);
+    if (result.elements) {
+      renderIntoParent(container, result.elements);
     }
   }
 }
