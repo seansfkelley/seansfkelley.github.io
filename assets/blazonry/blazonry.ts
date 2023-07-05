@@ -1,10 +1,10 @@
 // TODO
 // - finish eyeballing direction/on/surround
 // - do actual math instead of eyeballing for direction/on/surround offsets
-// - quarterly
 // - canton
 // - posture -- for things like swords, requires resizing
 // - fancy paths for leopard's heads and such
+// - push elements around when quartering
 
 declare namespace PeggyParser {
   interface SyntaxError extends Error {
@@ -64,6 +64,10 @@ interface PartyPerField {
 }
 
 interface Quarterly {
+  quarters: Quartering[];
+}
+
+interface Quartering {
   quarters: Quarter[];
   content: ComplexContent;
 }
@@ -140,12 +144,20 @@ function parseAndRenderBlazon(text: string) {
   const container = document.createElementNS("http://www.w3.org/2000/svg", "g");
   container.style.clipPath = `path("${FIELD_PATH}")`;
   rendered.appendChild(container);
+  // Make sure there's always a default background.
+  container.appendChild(field("argent" as Tincture));
 
   complexContent(container, result);
 }
 
 function field(tincture: Tincture) {
-  return path(FIELD_PATH, tincture);
+  const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+  rect.setAttribute("x", "-50");
+  rect.setAttribute("y", "-60");
+  rect.setAttribute("width", "100");
+  rect.setAttribute("height", "120");
+  rect.classList.add(`fill-${tincture}`);
+  return rect;
 }
 
 const PARTY_PER_CLIP_PATHS: Record<Direction, string[]> = {
@@ -424,7 +436,24 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     container.appendChild(g1);
     container.appendChild(g2);
   } else if ("quarters" in content) {
-    // TODO
+    const quartered: Record<Quarter, SVGElement> = {
+      1: document.createElementNS("http://www.w3.org/2000/svg", "g"),
+      2: document.createElementNS("http://www.w3.org/2000/svg", "g"),
+      3: document.createElementNS("http://www.w3.org/2000/svg", "g"),
+      4: document.createElementNS("http://www.w3.org/2000/svg", "g"),
+    };
+    Transform.apply(Transform.of(-25, -30, 0.5), quartered[1]);
+    Transform.apply(Transform.of(25, -30, 0.5), quartered[2]);
+    Transform.apply(Transform.of(-25, 30, 0.5), quartered[3]);
+    Transform.apply(Transform.of(25, 30, 0.5), quartered[4]);
+    for (const quartering of content.quarters) {
+      for (const quarter of quartering.quarters) {
+        complexContent(quartered[quarter], quartering.content);
+      }
+    }
+    for (const e of Object.values(quartered)) {
+      container.appendChild(e);
+    }
   } else {
     container.appendChild(field(content.tincture));
     if (content.content) {
