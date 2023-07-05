@@ -1,10 +1,11 @@
 "use strict";
 // TODO
+// - finish eyeballing direction/on/surround
 // - do actual math instead of eyeballing for direction/on/surround offsets
-// - repetition for charges
 // - quarterly
 // - canton
 // - posture -- for things like swords, requires resizing
+// - fancy paths for leopard's heads and such
 const Transform = {
     of: (x, y, scale) => ({ x, y, scale }),
     apply: ({ x, y, scale }, element, { posture } = {}) => {
@@ -54,69 +55,9 @@ function parseAndRenderBlazon(text) {
     const container = document.createElementNS("http://www.w3.org/2000/svg", "g");
     container.style.clipPath = `path("${FIELD_PATH}")`;
     rendered.appendChild(container);
-    function renderIntoParent(parent, element) {
-        if ("on" in element) {
-            on(parent, element);
-        }
-        else if ("ordinary" in element) {
-            parent.appendChild(ORDINARIES[element.ordinary](element.tincture));
-        }
-        else if ("charge" in element) {
-            for (const transform of CHARGE_DIRECTIONS[element.direction ?? "none"][element.count]) {
-                const rendered = CHARGES[element.charge](element.tincture);
-                Transform.apply(transform, rendered, element);
-                parent.appendChild(rendered);
-            }
-        }
-        else {
-            assertNever(element);
-        }
-    }
-    function overwriteCounterchangedTincture(element, tincture) {
-        if ("on" in element) {
-            return {
-                ...element,
-                // Note that we do NOT overwrite the `charge` tincture. That's a function of the `on`, not the field.
-                surround: element.surround
-                    ? {
-                        ...element.surround,
-                        tincture,
-                    }
-                    : undefined,
-            };
-        }
-        else if ("ordinary" in element) {
-            return { ...element, tincture };
-        }
-        else if ("charge" in element) {
-            return { ...element, tincture };
-        }
-        else {
-            assertNever(element);
-        }
-    }
-    if ("direction" in result) {
-        const g1 = document.createElementNS("http://www.w3.org/2000/svg", "g");
-        const g2 = document.createElementNS("http://www.w3.org/2000/svg", "g");
-        [g1.style.clipPath, g2.style.clipPath] =
-            PARTY_PER_CLIP_PATHS[result.direction];
-        g1.appendChild(field({ tincture: result.first }));
-        g2.appendChild(field({ tincture: result.second }));
-        if (result.elements) {
-            renderIntoParent(g1, overwriteCounterchangedTincture(result.elements, result.second));
-            renderIntoParent(g2, overwriteCounterchangedTincture(result.elements, result.first));
-        }
-        container.appendChild(g1);
-        container.appendChild(g2);
-    }
-    else {
-        container.appendChild(field(result));
-        if (result.elements) {
-            renderIntoParent(container, result.elements);
-        }
-    }
+    complexContent(container, result);
 }
-function field({ tincture }) {
+function field(tincture) {
     return path(FIELD_PATH, tincture);
 }
 const PARTY_PER_CLIP_PATHS = {
@@ -289,6 +230,72 @@ const CHARGES = {
 // ----------------------------------------------------------------------------
 // HIGHER-ORDER
 // ----------------------------------------------------------------------------
+function complexContent(container, content) {
+    function renderIntoParent(parent, element) {
+        if ("on" in element) {
+            on(parent, element);
+        }
+        else if ("ordinary" in element) {
+            parent.appendChild(ORDINARIES[element.ordinary](element.tincture));
+        }
+        else if ("charge" in element) {
+            for (const transform of CHARGE_DIRECTIONS[element.direction ?? "none"][element.count]) {
+                const rendered = CHARGES[element.charge](element.tincture);
+                Transform.apply(transform, rendered, element);
+                parent.appendChild(rendered);
+            }
+        }
+        else {
+            assertNever(element);
+        }
+    }
+    function overwriteCounterchangedTincture(element, tincture) {
+        if ("on" in element) {
+            return {
+                ...element,
+                // Note that we do NOT overwrite the `charge` tincture. That's a function of the `on`, not the field.
+                surround: element.surround
+                    ? {
+                        ...element.surround,
+                        tincture,
+                    }
+                    : undefined,
+            };
+        }
+        else if ("ordinary" in element) {
+            return { ...element, tincture };
+        }
+        else if ("charge" in element) {
+            return { ...element, tincture };
+        }
+        else {
+            assertNever(element);
+        }
+    }
+    if ("direction" in content) {
+        const g1 = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        const g2 = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        [g1.style.clipPath, g2.style.clipPath] =
+            PARTY_PER_CLIP_PATHS[content.direction];
+        g1.appendChild(field(content.first));
+        g2.appendChild(field(content.second));
+        if (content.content) {
+            renderIntoParent(g1, overwriteCounterchangedTincture(content.content, content.second));
+            renderIntoParent(g2, overwriteCounterchangedTincture(content.content, content.first));
+        }
+        container.appendChild(g1);
+        container.appendChild(g2);
+    }
+    else if ("quarters" in content) {
+        // TODO
+    }
+    else {
+        container.appendChild(field(content.tincture));
+        if (content.content) {
+            renderIntoParent(container, content.content);
+        }
+    }
+}
 function on(parent, { ordinary, surround, charge }) {
     const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
     g.appendChild(ORDINARIES[ordinary.ordinary](ordinary.tincture));
