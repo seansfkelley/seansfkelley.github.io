@@ -5,12 +5,16 @@
 // - actually render the halves of party per
 // - quarterly
 // - canton
-const input = document.querySelector("#blazon-input");
-const form = document.querySelector("#form");
-const rendered = document.querySelector("#rendered");
-const error = document.querySelector("#error");
 const Transform = {
     of: (x, y, scale) => ({ x, y, scale }),
+    apply: ({ x, y, scale }, element) => {
+        if (scale != null && scale !== 1) {
+            element.setAttribute("transform", `translate(${x}, ${y}) scale(${scale})`);
+        }
+        else {
+            element.setAttribute("transform", `translate(${x}, ${y})`);
+        }
+    },
 };
 function assert(condition, message) {
     if (!condition) {
@@ -19,17 +23,6 @@ function assert(condition, message) {
 }
 function assertNever(nope) {
     throw new Error("was not never");
-}
-form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    parseAndRenderBlazon(input.value);
-});
-for (const example of document.querySelectorAll("a.example")) {
-    example.addEventListener("click", (e) => {
-        e.preventDefault();
-        input.value = e.target.innerHTML;
-        parseAndRenderBlazon(input.value);
-    });
 }
 const FIELD_PATH = "M -50 -60 L 50 -60 L 50 -10 C 50 20 30 50 0 60 C -30 50 -50 20 -50 -10 Z";
 function parseAndRenderBlazon(text) {
@@ -65,10 +58,10 @@ function parseAndRenderBlazon(text) {
             on(container, result.elements);
         }
         else if ("ordinary" in result.elements) {
-            ORDINARIES[result.elements.ordinary](container, result.elements);
+            container.appendChild(ORDINARIES[result.elements.ordinary](result.elements));
         }
         else if ("charge" in result.elements) {
-            CHARGES[result.elements.charge](container, result.elements);
+            container.appendChild(CHARGES[result.elements.charge](result.elements));
         }
         else {
             assertNever(result.elements);
@@ -111,40 +104,68 @@ function path(d, tincture) {
 // ----------------------------------------------------------------------------
 // ORDINARIES
 // ----------------------------------------------------------------------------
-function bend(parent, { tincture }) {
-    parent.append(path("M -56 -54 L 44 66 L 56 54 L -44 -66 Z", tincture));
+function bend({ tincture }) {
+    return path("M -56 -54 L 44 66 L 56 54 L -44 -66 Z", tincture);
 }
 bend.on = {
     1: [Transform.of(0, 0)],
     2: [Transform.of(-15, -15), Transform.of(15, 15)],
     3: [Transform.of(-30, -30), Transform.of(0, 0), Transform.of(30, 30)],
 };
-function chief(parent, { tincture }) {
-    parent.append(path("M -50 -60 L -50 -20 L 50 -20 L 50 -60 Z", tincture));
+function chief({ tincture }) {
+    return path("M -50 -60 L -50 -20 L 50 -20 L 50 -60 Z", tincture);
 }
-function chevron(parent, { tincture }) {
-    parent.append(path("M 0 -22 L 55 33 L 43 45 L 0 2 L -43 45 L -55 33 Z", tincture));
+function chevron({ tincture }) {
+    return path("M 0 -22 L 55 33 L 43 45 L 0 2 L -43 45 L -55 33 Z", tincture);
 }
-function cross(parent, { tincture }) {
-    parent.append(path("M -10 -60 L 10 -60 L 10 -24 L 50 -24 L 50 -4 L 10 -4 L 10 60 L -10 60 L -10 -4 L -50 -4 L -50 -24 L -10 -24 Z", tincture));
+function cross({ tincture }) {
+    return path("M -10 -60 L 10 -60 L 10 -24 L 50 -24 L 50 -4 L 10 -4 L 10 60 L -10 60 L -10 -4 L -50 -4 L -50 -24 L -10 -24 Z", tincture);
 }
-function fess(parent, { tincture }) {
-    parent.append(path("M -50 -25 L 50 -25 L 50 15 L -50 15 Z", tincture));
+function fess({ tincture }) {
+    return path("M -50 -25 L 50 -25 L 50 15 L -50 15 Z", tincture);
 }
 fess.on = {
-    1: [Transform.of(0, 0)],
-    2: [Transform.of(-15, 0), Transform.of(15, 0)],
-    3: [Transform.of(-30, 0), Transform.of(0, 0), Transform.of(30, 0)],
+    1: [
+        Transform.of(0, -5, 0.6), //
+    ],
+    2: [
+        Transform.of(-20, -5, 0.6),
+        Transform.of(20, -5, 0.6),
+    ],
+    3: [
+        Transform.of(-30, -5, 0.5),
+        Transform.of(0, -5, 0.5),
+        Transform.of(30, -5, 0.5),
+    ],
+    4: [
+        Transform.of(-33, -5, 0.4),
+        Transform.of(-11, -5, 0.4),
+        Transform.of(11, -5, 0.4),
+        Transform.of(33, -5, 0.4),
+    ],
 };
 fess.surround = {
-    2: [Transform.of(0, -30), Transform.of(0, 30)],
-    3: [Transform.of(-15, -30), Transform.of(15, -30), Transform.of(0, 30)],
+    2: [
+        Transform.of(0, -42, 0.6),
+        Transform.of(0, 35, 0.6),
+    ],
+    3: [
+        Transform.of(-25, -42, 0.6),
+        Transform.of(25, -42, 0.6),
+        Transform.of(0, 35, 0.6),
+    ],
+    4: [
+        Transform.of(-25, -42, 0.6),
+        Transform.of(25, -42, 0.6),
+        Transform.of(-15, 35, 0.5),
+        Transform.of(15, 35, 0.5),
+    ],
 };
-function pale(parent, { tincture }) {
-    parent.append(path("M -15 -60 L 15 -60 L 15 60 L -15 60 Z", tincture));
+function pale({ tincture }) {
+    return path("M -15 -60 L 15 -60 L 15 60 L -15 60 Z", tincture);
 }
-function saltire(parent, { tincture }) {
-    parent.append(path("M 44 -66 L 56 -54 L 12 -10 L 55 33 L 43 45 L 0 2 L -43 45 L -55 33 L -12 -10 L -56 -54 L -44 -66 L 0 -22 Z", tincture));
+function saltire({ tincture }) {
+    return path("M 44 -66 L 56 -54 L 12 -10 L 55 33 L 43 45 L 0 2 L -43 45 L -55 33 L -12 -10 L -56 -54 L -44 -66 L 0 -22 Z", tincture);
 }
 const ORDINARIES = {
     bend,
@@ -158,19 +179,19 @@ const ORDINARIES = {
 // ----------------------------------------------------------------------------
 // CHARGES
 // ----------------------------------------------------------------------------
-function sword(parent, { tincture }) {
-    parent.append(path("M 35 -2 L 22 -2 L 22 -10 L 18 -10 L 18 -2 L -31 -2 L -35 0 L -31 2 L 18 2 L 18 11 L 22 11 L 22 2 L 35 2 Z", tincture));
+function sword({ tincture }) {
+    return path("M 35 -2 L 22 -2 L 22 -10 L 18 -10 L 18 -2 L -31 -2 L -35 0 L -31 2 L 18 2 L 18 11 L 22 11 L 22 2 L 35 2 Z", tincture);
 }
-function rondel(parent, { tincture }) {
+function rondel({ tincture }) {
     const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    circle.setAttribute("r", "15");
+    circle.setAttribute("r", "20");
     circle.setAttribute("cx", "0");
     circle.setAttribute("cy", "0");
     circle.classList.add(`fill-${tincture}`);
-    parent.append(circle);
+    return circle;
 }
-function mullet(parent, { tincture }) {
-    parent.append(path("M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z", tincture));
+function mullet({ tincture }) {
+    return path("M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z", tincture);
 }
 const CHARGES = {
     sword,
@@ -178,30 +199,42 @@ const CHARGES = {
     mullet,
 };
 // ----------------------------------------------------------------------------
-// HIGHER-ORDER/UTILITY
+// HIGHER-ORDER
 // ----------------------------------------------------------------------------
 function on(parent, { ordinary, surround, charge }) {
     const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    ORDINARIES[ordinary.ordinary](g, ordinary);
+    g.appendChild(ORDINARIES[ordinary.ordinary](ordinary));
     parent.appendChild(g);
-    const { on } = ORDINARIES[ordinary.ordinary];
-    for (const { x, y, scale } of on[charge.count]) {
-        const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-        g.setAttribute("transform", `translate(${x}, ${y})`);
-        // TODO: Scaling.
-        CHARGES[charge.charge](g, charge);
-        parent.appendChild(g);
+    for (const transform of ORDINARIES[ordinary.ordinary].on[charge.count]) {
+        const c = CHARGES[charge.charge](charge);
+        Transform.apply(transform, c);
+        parent.appendChild(c);
     }
     if (surround) {
-        const { surround } = ORDINARIES[ordinary.ordinary];
-        assert(charge.count != null && charge.count !== 1, "surround charge must have plural count");
-        for (const { x, y, scale } of surround[charge.count]) {
-            const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-            g.setAttribute("transform", `translate(${x}, ${y})`);
-            // TODO: Scaling.
-            CHARGES[charge.charge](g, charge);
-            parent.appendChild(g);
+        assert(surround.count != null && surround.count !== 1, "surround charge must have plural count");
+        for (const transform of ORDINARIES[ordinary.ordinary].surround[surround.count]) {
+            const c = CHARGES[surround.charge](surround);
+            Transform.apply(transform, c);
+            parent.appendChild(c);
         }
     }
+}
+// ----------------------------------------------------------------------------
+// INITIALIZATION
+// ----------------------------------------------------------------------------
+const input = document.querySelector("#blazon-input");
+const form = document.querySelector("#form");
+const rendered = document.querySelector("#rendered");
+const error = document.querySelector("#error");
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    parseAndRenderBlazon(input.value);
+});
+for (const example of document.querySelectorAll("a.example")) {
+    example.addEventListener("click", (e) => {
+        e.preventDefault();
+        input.value = e.target.innerHTML;
+        parseAndRenderBlazon(input.value);
+    });
 }
 parseAndRenderBlazon(input.value);

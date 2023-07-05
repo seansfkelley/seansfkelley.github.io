@@ -5,11 +5,6 @@
 // - quarterly
 // - canton
 
-const input: HTMLTextAreaElement = document.querySelector("#blazon-input")!;
-const form: HTMLFormElement = document.querySelector("#form")!;
-const rendered: SVGSVGElement = document.querySelector("#rendered")!;
-const error: HTMLPreElement = document.querySelector("#error")!;
-
 declare namespace PeggyParser {
   interface SyntaxError extends Error {
     expected: any;
@@ -22,7 +17,7 @@ declare const parser: {
   parse: (text: string) => Field | PartyPerField;
 };
 
-type Count = 1 | 2 | 3 | 4 | 5 | 6;
+type Count = 1 | 2 | 3 | 4; // TODO: Bump to 6.
 type Tincture = string & { __tincture: unknown };
 type Posture = "palewise" | "fesswise";
 type Direction = "pale" | "fess";
@@ -35,6 +30,16 @@ interface Transform {
 
 const Transform = {
   of: (x: number, y: number, scale?: number): Transform => ({ x, y, scale }),
+  apply: ({ x, y, scale }: Transform, element: SVGElement): void => {
+    if (scale != null && scale !== 1) {
+      element.setAttribute(
+        "transform",
+        `translate(${x}, ${y}) scale(${scale})`
+      );
+    } else {
+      element.setAttribute("transform", `translate(${x}, ${y})`);
+    }
+  },
 };
 
 interface Field {
@@ -57,8 +62,9 @@ interface Ordinary {
 interface Charge {
   charge: string;
   tincture: Tincture;
-  posture?: Posture;
   count: Count;
+  posture?: Posture;
+  direction?: Direction;
 }
 
 interface On {
@@ -69,13 +75,13 @@ interface On {
 }
 
 interface OrdinaryRenderer {
-  (parent: SVGElement, ordinary: Ordinary): void;
+  (ordinary: Ordinary): SVGElement;
   on: Record<Count, Transform[]>;
   surround: Record<Exclude<Count, 1>, Transform[]>;
 }
 
 interface ChargeRenderer {
-  (parent: SVGElement, charge: Charge): void;
+  (charge: Charge): SVGElement;
 }
 
 function assert(condition: boolean, message: string): asserts condition {
@@ -86,21 +92,6 @@ function assert(condition: boolean, message: string): asserts condition {
 
 function assertNever(nope: never): never {
   throw new Error("was not never");
-}
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  parseAndRenderBlazon(input.value);
-});
-
-for (const example of document.querySelectorAll<HTMLAnchorElement>(
-  "a.example"
-)) {
-  example.addEventListener("click", (e) => {
-    e.preventDefault();
-    input.value = (e!.target as HTMLAnchorElement).innerHTML;
-    parseAndRenderBlazon(input.value);
-  });
 }
 
 const FIELD_PATH =
@@ -141,9 +132,11 @@ function parseAndRenderBlazon(text: string) {
     if ("on" in result.elements) {
       on(container, result.elements);
     } else if ("ordinary" in result.elements) {
-      ORDINARIES[result.elements.ordinary](container, result.elements);
+      container.appendChild(
+        ORDINARIES[result.elements.ordinary](result.elements)
+      );
     } else if ("charge" in result.elements) {
-      CHARGES[result.elements.charge](container, result.elements);
+      container.appendChild(CHARGES[result.elements.charge](result.elements));
     } else {
       assertNever(result.elements);
     }
@@ -195,8 +188,8 @@ function path(d: string, tincture: Tincture | "none") {
 // ORDINARIES
 // ----------------------------------------------------------------------------
 
-function bend(parent: SVGElement, { tincture }: Ordinary) {
-  parent.append(path("M -56 -54 L 44 66 L 56 54 L -44 -66 Z", tincture));
+function bend({ tincture }: Ordinary) {
+  return path("M -56 -54 L 44 66 L 56 54 L -44 -66 Z", tincture);
 }
 
 bend.on = {
@@ -205,50 +198,72 @@ bend.on = {
   3: [Transform.of(-30, -30), Transform.of(0, 0), Transform.of(30, 30)],
 } satisfies OrdinaryRenderer["on"];
 
-function chief(parent: SVGElement, { tincture }: Ordinary) {
-  parent.append(path("M -50 -60 L -50 -20 L 50 -20 L 50 -60 Z", tincture));
+function chief({ tincture }: Ordinary) {
+  return path("M -50 -60 L -50 -20 L 50 -20 L 50 -60 Z", tincture);
 }
 
-function chevron(parent: SVGElement, { tincture }: Ordinary) {
-  parent.append(
-    path("M 0 -22 L 55 33 L 43 45 L 0 2 L -43 45 L -55 33 Z", tincture)
+function chevron({ tincture }: Ordinary) {
+  return path("M 0 -22 L 55 33 L 43 45 L 0 2 L -43 45 L -55 33 Z", tincture);
+}
+
+function cross({ tincture }: Ordinary) {
+  return path(
+    "M -10 -60 L 10 -60 L 10 -24 L 50 -24 L 50 -4 L 10 -4 L 10 60 L -10 60 L -10 -4 L -50 -4 L -50 -24 L -10 -24 Z",
+    tincture
   );
 }
 
-function cross(parent: SVGElement, { tincture }: Ordinary) {
-  parent.append(
-    path(
-      "M -10 -60 L 10 -60 L 10 -24 L 50 -24 L 50 -4 L 10 -4 L 10 60 L -10 60 L -10 -4 L -50 -4 L -50 -24 L -10 -24 Z",
-      tincture
-    )
-  );
-}
-
-function fess(parent: SVGElement, { tincture }: Ordinary) {
-  parent.append(path("M -50 -25 L 50 -25 L 50 15 L -50 15 Z", tincture));
+function fess({ tincture }: Ordinary) {
+  return path("M -50 -25 L 50 -25 L 50 15 L -50 15 Z", tincture);
 }
 
 fess.on = {
-  1: [Transform.of(0, 0)],
-  2: [Transform.of(-15, 0), Transform.of(15, 0)],
-  3: [Transform.of(-30, 0), Transform.of(0, 0), Transform.of(30, 0)],
+  1: [
+    Transform.of(0, -5, 0.6), //
+  ],
+  2: [
+    Transform.of(-20, -5, 0.6), //
+    Transform.of(20, -5, 0.6),
+  ],
+  3: [
+    Transform.of(-30, -5, 0.5),
+    Transform.of(0, -5, 0.5),
+    Transform.of(30, -5, 0.5),
+  ],
+  4: [
+    Transform.of(-33, -5, 0.4),
+    Transform.of(-11, -5, 0.4),
+    Transform.of(11, -5, 0.4),
+    Transform.of(33, -5, 0.4),
+  ],
 } satisfies OrdinaryRenderer["on"];
 
 fess.surround = {
-  2: [Transform.of(0, -30), Transform.of(0, 30)],
-  3: [Transform.of(-15, -30), Transform.of(15, -30), Transform.of(0, 30)],
+  2: [
+    Transform.of(0, -42, 0.6), //
+    Transform.of(0, 35, 0.6),
+  ],
+  3: [
+    Transform.of(-25, -42, 0.6), //
+    Transform.of(25, -42, 0.6),
+    Transform.of(0, 35, 0.6),
+  ],
+  4: [
+    Transform.of(-25, -42, 0.6), //
+    Transform.of(25, -42, 0.6),
+    Transform.of(-15, 35, 0.5),
+    Transform.of(15, 35, 0.5),
+  ],
 } satisfies OrdinaryRenderer["surround"];
 
-function pale(parent: SVGElement, { tincture }: Ordinary) {
-  parent.append(path("M -15 -60 L 15 -60 L 15 60 L -15 60 Z", tincture));
+function pale({ tincture }: Ordinary) {
+  return path("M -15 -60 L 15 -60 L 15 60 L -15 60 Z", tincture);
 }
 
-function saltire(parent: SVGElement, { tincture }: Ordinary) {
-  parent.append(
-    path(
-      "M 44 -66 L 56 -54 L 12 -10 L 55 33 L 43 45 L 0 2 L -43 45 L -55 33 L -12 -10 L -56 -54 L -44 -66 L 0 -22 Z",
-      tincture
-    )
+function saltire({ tincture }: Ordinary) {
+  return path(
+    "M 44 -66 L 56 -54 L 12 -10 L 55 33 L 43 45 L 0 2 L -43 45 L -55 33 L -12 -10 L -56 -54 L -44 -66 L 0 -22 Z",
+    tincture
   );
 }
 
@@ -266,33 +281,29 @@ const ORDINARIES: Record<string, OrdinaryRenderer> = {
 // CHARGES
 // ----------------------------------------------------------------------------
 
-function sword(parent: SVGElement, { tincture }: Charge) {
-  parent.append(
-    path(
-      "M 35 -2 L 22 -2 L 22 -10 L 18 -10 L 18 -2 L -31 -2 L -35 0 L -31 2 L 18 2 L 18 11 L 22 11 L 22 2 L 35 2 Z",
-      tincture
-    )
+function sword({ tincture }: Charge) {
+  return path(
+    "M 35 -2 L 22 -2 L 22 -10 L 18 -10 L 18 -2 L -31 -2 L -35 0 L -31 2 L 18 2 L 18 11 L 22 11 L 22 2 L 35 2 Z",
+    tincture
   );
 }
 
-function rondel(parent: SVGElement, { tincture }: Charge) {
+function rondel({ tincture }: Charge) {
   const circle = document.createElementNS(
     "http://www.w3.org/2000/svg",
     "circle"
   );
-  circle.setAttribute("r", "15");
+  circle.setAttribute("r", "20");
   circle.setAttribute("cx", "0");
   circle.setAttribute("cy", "0");
   circle.classList.add(`fill-${tincture}`);
-  parent.append(circle);
+  return circle;
 }
 
-function mullet(parent: SVGElement, { tincture }: Charge) {
-  parent.append(
-    path(
-      "M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z",
-      tincture
-    )
+function mullet({ tincture }: Charge) {
+  return path(
+    "M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z",
+    tincture
   );
 }
 
@@ -303,37 +314,57 @@ const CHARGES: Record<string, ChargeRenderer> = {
 };
 
 // ----------------------------------------------------------------------------
-// HIGHER-ORDER/UTILITY
+// HIGHER-ORDER
 // ----------------------------------------------------------------------------
 
 function on(parent: SVGElement, { ordinary, surround, charge }: On) {
   const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-  ORDINARIES[ordinary.ordinary](g, ordinary);
+  g.appendChild(ORDINARIES[ordinary.ordinary](ordinary));
   parent.appendChild(g);
 
-  const { on } = ORDINARIES[ordinary.ordinary];
-  for (const { x, y, scale } of on[charge.count]) {
-    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    g.setAttribute("transform", `translate(${x}, ${y})`);
-    // TODO: Scaling.
-    CHARGES[charge.charge](g, charge);
-    parent.appendChild(g);
+  for (const transform of ORDINARIES[ordinary.ordinary].on[charge.count]) {
+    const c = CHARGES[charge.charge](charge);
+    Transform.apply(transform, c);
+    parent.appendChild(c);
   }
 
   if (surround) {
-    const { surround } = ORDINARIES[ordinary.ordinary];
     assert(
-      charge.count != null && charge.count !== 1,
+      surround.count != null && surround.count !== 1,
       "surround charge must have plural count"
     );
-    for (const { x, y, scale } of surround[charge.count]) {
-      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-      g.setAttribute("transform", `translate(${x}, ${y})`);
-      // TODO: Scaling.
-      CHARGES[charge.charge](g, charge);
-      parent.appendChild(g);
+    for (const transform of ORDINARIES[ordinary.ordinary].surround[
+      surround.count
+    ]) {
+      const c = CHARGES[surround.charge](surround);
+      Transform.apply(transform, c);
+      parent.appendChild(c);
     }
   }
+}
+
+// ----------------------------------------------------------------------------
+// INITIALIZATION
+// ----------------------------------------------------------------------------
+
+const input: HTMLTextAreaElement = document.querySelector("#blazon-input")!;
+const form: HTMLFormElement = document.querySelector("#form")!;
+const rendered: SVGSVGElement = document.querySelector("#rendered")!;
+const error: HTMLPreElement = document.querySelector("#error")!;
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  parseAndRenderBlazon(input.value);
+});
+
+for (const example of document.querySelectorAll<HTMLAnchorElement>(
+  "a.example"
+)) {
+  example.addEventListener("click", (e) => {
+    e.preventDefault();
+    input.value = (e!.target as HTMLAnchorElement).innerHTML;
+    parseAndRenderBlazon(input.value);
+  });
 }
 
 parseAndRenderBlazon(input.value);

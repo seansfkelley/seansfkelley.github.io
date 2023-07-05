@@ -24,12 +24,12 @@ Try these:
 
 - <a class="example" href="#">Azure, a bend Or.</a>
 - <a class="example" href="#">Party per pale gules and vert.</a>
-- <a class="example" href="#">Or on a fess Gules between three rondels Azure three mullets Argent.</a>
+- <a class="example" href="#">Argent, a cross Gules.</a>
 - <a class="example" href="#">Argent on a chevron Gules between three leopard's faces Sable three castles Or.</a>
 
 <div class="center">
   <form id="form">
-    <input type="text" id="blazon-input" value="Argent, a cross Gules.">
+    <input type="text" id="blazon-input" value="Or on a fess Gules between three rondels Azure three mullets Argent.">
     <br>
     <button type="submit">
     Preview
