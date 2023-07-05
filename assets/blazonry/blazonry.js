@@ -236,6 +236,27 @@ const CHARGES = {
     mullet,
 };
 // ----------------------------------------------------------------------------
+// VARIED
+// ----------------------------------------------------------------------------
+// TODO: Factor this out to the top so _everything_ is a function of it.
+const HEIGHT = 120;
+function barry(count) {
+    const step = HEIGHT / count;
+    let path = "";
+    for (let offset = step; offset < HEIGHT; offset += 2 * step) {
+        path += `
+      M -50 ${-HEIGHT / 2 + offset}
+      L  50 ${-HEIGHT / 2 + offset}
+      L  50 ${-HEIGHT / 2 + offset + step}
+      L -50 ${-HEIGHT / 2 + offset + step}
+      Z`;
+    }
+    return path;
+}
+const VARIED = {
+    barry,
+};
+// ----------------------------------------------------------------------------
 // HIGHER-ORDER
 // ----------------------------------------------------------------------------
 function complexContent(container, content) {
@@ -247,7 +268,7 @@ function complexContent(container, content) {
             parent.appendChild(ORDINARIES[element.ordinary](element.tincture));
         }
         else if ("charge" in element) {
-            for (const transform of CHARGE_DIRECTIONS[element.direction ?? "none"][element.count]) {
+            for (const transform of CHARGE_DIRECTIONS[element.direction ?? "none"][element.count] ?? []) {
                 const rendered = CHARGES[element.charge](element.tincture);
                 Transform.apply(transform, rendered, element);
                 parent.appendChild(rendered);
@@ -314,6 +335,15 @@ function complexContent(container, content) {
             container.appendChild(e);
         }
     }
+    else if ("varied" in content) {
+        container.appendChild(field(content.first));
+        const second = field(content.second);
+        second.style.clipPath = `path("${VARIED[content.varied.type](content.varied.count ?? 6).replaceAll("\n", " ")}")`;
+        container.appendChild(second);
+        if (content.content) {
+            renderIntoParent(container, content.content);
+        }
+    }
     else {
         container.appendChild(field(content.tincture));
         if (content.content) {
@@ -326,7 +356,8 @@ function on(parent, { ordinary, surround, charge }) {
     g.appendChild(ORDINARIES[ordinary.ordinary](ordinary.tincture));
     parent.appendChild(g);
     assert(charge.direction == null, 'cannot specify a direction for charges in "on"');
-    for (const transform of ORDINARIES[ordinary.ordinary].on[charge.count]) {
+    for (const transform of ORDINARIES[ordinary.ordinary].on[charge.count] ??
+        []) {
         const c = CHARGES[charge.charge](charge.tincture);
         Transform.apply(transform, c, charge);
         parent.appendChild(c);
@@ -334,7 +365,7 @@ function on(parent, { ordinary, surround, charge }) {
     if (surround) {
         assert(surround.direction == null, 'cannot specify a direction for charges in "between"');
         assert(surround.count != null && surround.count !== 1, "surround charge must have plural count");
-        for (const transform of ORDINARIES[ordinary.ordinary].surround[surround.count]) {
+        for (const transform of ORDINARIES[ordinary.ordinary].surround[surround.count] ?? []) {
             const c = CHARGES[surround.charge](surround.tincture);
             Transform.apply(transform, c, surround);
             parent.appendChild(c);

@@ -1,7 +1,7 @@
 // Note: nothing is case insensitive here because it is assumed to only parse lowercase input.
 
 Enter
-  = content:ComplexContent "."? { return content }
+  = content:ComplexContent _ "."? { return content }
 
 ComplexContent
   = SimpleField
@@ -9,7 +9,8 @@ ComplexContent
   / Quarterly
 
 SimpleField
-  = tincture:Tincture _ content:SimpleContent? _ { return { tincture, content } }
+  = tincture:Tincture _ content:SimpleContent? { return { tincture, content } }
+  / varied:Varied _ first:Tincture _ "and" _ second:Tincture _ content:SimpleContent? { return { varied, first, second, content } }
 
 PartyPerField
   = "party"? _ "per" _ direction:Direction _ first:Tincture _ "and" _ second:Tincture _ content:SimpleContent? { return { direction, first, second, content } }
@@ -51,8 +52,14 @@ Plural "plural quantity"
   = "two" { return 2 }
   / "three" { return 3 }
   / "four" { return 4 }
-  // / "five" { return 5 }
-  // / "six" { return 6 }
+  / "five" { return 5 }
+  / "six" { return 6 }
+  / "seven" { return 7 }
+  / "eight" { return 8 }
+  / "nine" { return 9 }
+  / "ten" { return 10 }
+  / "eleven" { return 11 }
+  / "twelve" { return 12 }
 
 // TODO: bend, etc.
 Direction
@@ -99,6 +106,19 @@ ChargeName "charge name"
   = "sword"
   / "rondel"
   / "mullet"
+
+Varied
+  = type:VariedName _ "of" _ count:Plural { return { type, count } }
+  / type:VariedName { return { type } }
+
+VariedName "varied name"
+  = "paly"
+  / "bendy"
+  / "barry"
+  / "chevronny"
+  / "checky"
+  / "barry bendy"
+  / "lozengy"
 
 _ "whitespace"
   // Note that comma and semicolon are considered, effectively, whitespace. It is not used to delimit anything that is not already delimited by whitespace.

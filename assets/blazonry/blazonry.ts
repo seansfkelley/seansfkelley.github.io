@@ -18,8 +18,9 @@ declare const parser: {
   parse: (text: string) => ComplexContent;
 };
 
-type Count = 1 | 2 | 3 | 4; // TODO: Bump to 6.
+type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 type Tincture = string & { __tincture: unknown };
+type VariedName = string & { __varied: unknown };
 type Posture = "palewise" | "fesswise";
 type Direction = "pale" | "fess";
 type Quarter = 1 | 2 | 3 | 4;
@@ -51,9 +52,21 @@ const Transform = {
 type ComplexContent = SimpleField | PartyPerField | Quarterly;
 type SimpleContent = Ordinary | Charge | On;
 
-interface SimpleField {
-  tincture: Tincture;
-  content?: SimpleContent;
+type SimpleField =
+  | {
+      tincture: Tincture;
+      content?: SimpleContent;
+    }
+  | {
+      varied: Varied;
+      first: Tincture;
+      second: Tincture;
+      content?: SimpleContent;
+    };
+
+interface Varied {
+  type: VariedName;
+  count?: number;
 }
 
 interface PartyPerField {
@@ -94,12 +107,16 @@ interface On {
 
 interface OrdinaryRenderer {
   (tincture: Tincture): SVGElement;
-  on: Record<Count, Transform[]>;
-  surround: Record<Exclude<Count, 1>, Transform[]>;
+  on: Partial<Record<Count, Transform[]>>;
+  surround: Partial<Record<Exclude<Count, 1>, Transform[]>>;
 }
 
 interface ChargeRenderer {
   (tincture: Tincture): SVGElement;
+}
+
+interface VariedClipPathGenerator {
+  (count: number): string;
 }
 
 function assert(condition: boolean, message: string): asserts condition {
@@ -322,7 +339,7 @@ function mullet(tincture: Tincture) {
 
 const CHARGE_DIRECTIONS: Record<
   Direction | "none",
-  Record<Count, Transform[]>
+  Partial<Record<Count, Transform[]>>
 > = {
   none: {
     1: [
@@ -367,6 +384,31 @@ const CHARGES: Record<string, ChargeRenderer> = {
 };
 
 // ----------------------------------------------------------------------------
+// VARIED
+// ----------------------------------------------------------------------------
+
+// TODO: Factor this out to the top so _everything_ is a function of it.
+const HEIGHT = 120;
+
+function barry(count: number) {
+  const step = HEIGHT / count;
+  let path = "";
+  for (let offset = step; offset < HEIGHT; offset += 2 * step) {
+    path += `
+      M -50 ${-HEIGHT / 2 + offset}
+      L  50 ${-HEIGHT / 2 + offset}
+      L  50 ${-HEIGHT / 2 + offset + step}
+      L -50 ${-HEIGHT / 2 + offset + step}
+      Z`;
+  }
+  return path;
+}
+
+const VARIED: Record<string, VariedClipPathGenerator> = {
+  barry,
+};
+
+// ----------------------------------------------------------------------------
 // HIGHER-ORDER
 // ----------------------------------------------------------------------------
 
@@ -382,7 +424,7 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     } else if ("charge" in element) {
       for (const transform of CHARGE_DIRECTIONS[element.direction ?? "none"][
         element.count
-      ]) {
+      ] ?? []) {
         const rendered = CHARGES[element.charge](element.tincture);
         Transform.apply(transform, rendered, element);
         parent.appendChild(rendered);
@@ -454,6 +496,16 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     for (const e of Object.values(quartered)) {
       container.appendChild(e);
     }
+  } else if ("varied" in content) {
+    container.appendChild(field(content.first));
+    const second = field(content.second);
+    second.style.clipPath = `path("${VARIED[content.varied.type](
+      content.varied.count ?? 6
+    ).replaceAll("\n", " ")}")`;
+    container.appendChild(second);
+    if (content.content) {
+      renderIntoParent(container, content.content);
+    }
   } else {
     container.appendChild(field(content.tincture));
     if (content.content) {
@@ -472,7 +524,8 @@ function on(parent: SVGElement, { ordinary, surround, charge }: On) {
     'cannot specify a direction for charges in "on"'
   );
 
-  for (const transform of ORDINARIES[ordinary.ordinary].on[charge.count]) {
+  for (const transform of ORDINARIES[ordinary.ordinary].on[charge.count] ??
+    []) {
     const c = CHARGES[charge.charge](charge.tincture);
     Transform.apply(transform, c, charge);
     parent.appendChild(c);
@@ -489,7 +542,7 @@ function on(parent: SVGElement, { ordinary, surround, charge }: On) {
     );
     for (const transform of ORDINARIES[ordinary.ordinary].surround[
       surround.count
-    ]) {
+    ] ?? []) {
       const c = CHARGES[surround.charge](surround.tincture);
       Transform.apply(transform, c, surround);
       parent.appendChild(c);
