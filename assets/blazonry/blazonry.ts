@@ -1,12 +1,14 @@
 // TODO
-// - finish eyeballing direction/on/surround
-// - do actual math instead of eyeballing for direction/on/surround offsets
+// - finish ParametricPolylines for `on`
+//   - then figure out a method that works better for the varying sizes
+// - do something like ParametricPolyline but for `surround`
 // - canton
 // - posture -- for things like swords, requires resizing
-// - fancy paths for leopard's heads and such
 // - push elements around when quartering
 // - party per field can also have complex content in it
 // - minor visual effects to make it a little less flat
+// - fancy paths for fancy charges: lion, leopard's head, castle, and all their variants
+// - decorations for lines (e.g. embattled, engrailed, etc.)
 
 declare namespace PeggyParser {
   interface SyntaxError extends Error {
@@ -72,6 +74,81 @@ const Transform = {
   },
 };
 
+function applyTransforms(
+  element: SVGElement,
+  {
+    translate,
+    scale,
+    rotate,
+  }: { translate?: Coordinate; scale?: number; rotate?: Posture } = {}
+): void {
+  function getRotation(posture: Posture) {
+    switch (posture) {
+      case null:
+      case undefined:
+      case "palewise":
+        return undefined;
+      case "fesswise":
+        return "rotate(90)";
+      case "bendwise":
+        return "rotate(45)";
+      case "saltirewise":
+        return "rotate(45)"; // TODO
+      default:
+        assertNever(posture);
+    }
+  }
+
+  const transform = [
+    translate != null
+      ? `translate(${translate[0]}, ${translate[1]})`
+      : undefined,
+    scale != null && scale !== 1 ? `scale(${scale})` : undefined,
+    rotate != null ? getRotation(rotate) : undefined,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  element.setAttribute("transform", transform);
+}
+
+type Coordinate = [x: number, y: number];
+
+interface Segment {
+  src: Coordinate;
+  dst: Coordinate;
+  highLimit: number;
+}
+
+class ParametricPolyline {
+  private segments: Segment[];
+
+  public constructor(...segments: Segment[]) {
+    assert(segments.length > 0, "must have at least one segment");
+    assert(segments.at(-1)!.highLimit === 1, "last segment must end at 1");
+    this.segments = segments;
+  }
+
+  public evaluate(t: number): Coordinate {
+    assert(t >= 0 && t <= 1, "t must be on [0, 1]");
+
+    let lowLimit = 0;
+    for (const s of this.segments) {
+      if (t < s.highLimit) {
+        const fraction = (t - lowLimit) / (s.highLimit - lowLimit);
+        return [
+          (s.dst[0] - s.src[0]) * fraction + s.src[0],
+          (s.dst[1] - s.src[1]) * fraction + s.src[1],
+        ];
+      } else {
+        lowLimit = s.highLimit;
+      }
+    }
+
+    throw new Error("should be unreachable");
+  }
+}
+
 type ComplexContent = SimpleField | PartyPerField | Quarterly;
 type SimpleContent = Ordinary | Charge | On;
 
@@ -130,7 +207,11 @@ interface On {
 
 interface OrdinaryRenderer {
   (tincture: Tincture): SVGElement;
-  on: Record<number, Transform[]>;
+  on: {
+    polyline: ParametricPolyline;
+    // If undefined, render nothing for the scale. It's too silly.
+    scales: Record<Count, number | undefined>;
+  };
   surround: Record<number, Transform[]>;
 }
 
@@ -353,24 +434,43 @@ function fess(tincture: Tincture) {
 }
 
 fess.on = {
-  1: [
-    Transform.of(0, -5, 0.6), //
-  ],
-  2: [
-    Transform.of(-20, -5, 0.6), //
-    Transform.of(20, -5, 0.6),
-  ],
-  3: [
-    Transform.of(-30, -5, 0.5),
-    Transform.of(0, -5, 0.5),
-    Transform.of(30, -5, 0.5),
-  ],
-  4: [
-    Transform.of(-33, -5, 0.4),
-    Transform.of(-11, -5, 0.4),
-    Transform.of(11, -5, 0.4),
-    Transform.of(33, -5, 0.4),
-  ],
+  polyline: new ParametricPolyline({
+    src: [-W_2 * 1.1, -4],
+    dst: [W_2 * 1.1, -4],
+    highLimit: 1,
+  }),
+  scales: {
+    1: 0.6,
+    2: 0.6,
+    3: 0.5,
+    4: 0.4,
+    5: 0.3,
+    6: 0.3,
+    7: 0.25,
+    8: 0.2,
+    9: undefined,
+    10: undefined,
+    11: undefined,
+    12: undefined,
+  },
+  // 1: [
+  //   Transform.of(0, -5, 0.6), //
+  // ],
+  // 2: [
+  //   Transform.of(-20, -5, 0.6), //
+  //   Transform.of(20, -5, 0.6),
+  // ],
+  // 3: [
+  //   Transform.of(-30, -5, 0.5),
+  //   Transform.of(0, -5, 0.5),
+  //   Transform.of(30, -5, 0.5),
+  // ],
+  // 4: [
+  //   Transform.of(-33, -5, 0.4),
+  //   Transform.of(-11, -5, 0.4),
+  //   Transform.of(11, -5, 0.4),
+  //   Transform.of(33, -5, 0.4),
+  // ],
 } satisfies OrdinaryRenderer["on"];
 
 fess.surround = {
@@ -467,7 +567,7 @@ function mullet(tincture: Tincture) {
 
 const CHARGE_DIRECTIONS: Record<
   Direction | "none",
-  Partial<Record<Count, Transform[]>>
+  Record<number, Transform[]>
 > = {
   none: {
     1: [
@@ -731,11 +831,21 @@ function on(parent: SVGElement, { ordinary, surround, charge }: On) {
     'cannot specify a direction for charges in "on"'
   );
 
-  for (const transform of ORDINARIES[ordinary.ordinary].on[charge.count] ??
-    []) {
-    const c = CHARGES[charge.charge](charge.tincture);
-    Transform.apply(transform, c, charge);
-    parent.appendChild(c);
+  const { polyline, scales } = ORDINARIES[ordinary.ordinary].on;
+
+  if (scales[charge.count] != null) {
+    const step = 1 / (charge.count + 1);
+
+    for (let i = 0; i < charge.count; ++i) {
+      const c = CHARGES[charge.charge](charge.tincture);
+      const translate = polyline.evaluate((i + 1) * step);
+      applyTransforms(c, {
+        translate,
+        scale: scales[charge.count],
+        rotate: charge.posture ?? undefined,
+      });
+      parent.appendChild(c);
+    }
   }
 
   if (surround) {
