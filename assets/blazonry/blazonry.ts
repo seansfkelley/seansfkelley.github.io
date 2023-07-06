@@ -114,24 +114,37 @@ function applyTransforms(
 type Coordinate = [x: number, y: number];
 
 interface ParametricLocator {
-  evaluate(t: number): Coordinate;
+  evaluate(index: number, total: number): Coordinate;
 }
 
 class ParametricPoint implements ParametricLocator {
   public constructor(private point: Coordinate) {}
 
-  public evaluate(t: number): Coordinate {
-    assert(t >= 0 && t <= 1, "t must be on [0, 1]");
-
+  public evaluate(index: number, total: number): Coordinate {
+    assert(index <= total, "index must be less than total");
     return this.point;
+  }
+}
+
+class ParametricMultiPoint implements ParametricLocator {
+  public constructor(private points: Coordinate[]) {}
+
+  public evaluate(index: number, total: number): Coordinate {
+    assert(index <= total, "index must be less than total");
+    assert(
+      index <= this.points.length,
+      "index must be less than the number of points"
+    );
+    return this.points[index];
   }
 }
 
 class ParametricLine implements ParametricLocator {
   public constructor(private src: Coordinate, private dst: Coordinate) {}
 
-  public evaluate(t: number): Coordinate {
-    assert(t >= 0 && t <= 1, "t must be on [0, 1]");
+  public evaluate(index: number, total: number): Coordinate {
+    assert(index <= total, "index must be less than total");
+    const t = index / total;
 
     return [
       (this.dst[0] - this.src[0]) * t + this.src[0],
@@ -155,8 +168,9 @@ class ParametricPolyline implements ParametricLocator {
     this.segments = segments;
   }
 
-  public evaluate(t: number): Coordinate {
-    assert(t >= 0 && t <= 1, "t must be on [0, 1]");
+  public evaluate(index: number, total: number): Coordinate {
+    assert(index <= total, "index must be less than total");
+    const t = index / total;
 
     let lowLimit = 0;
     for (const s of this.segments) {
@@ -449,6 +463,44 @@ function cross(tincture: Tincture) {
     tincture
   );
 }
+
+const CROSS_LOCATOR = new ParametricMultiPoint([
+  [-30, -14],
+  [30, -14],
+  [0, -44],
+  [0, 16],
+  [0, -14],
+]);
+
+cross.on = {
+  1: {
+    locator: new ParametricPoint([0, -14]),
+    scale: 0.4,
+  },
+  2: {
+    locator: CROSS_LOCATOR,
+    scale: 0.4,
+  },
+  3: {
+    locator: CROSS_LOCATOR,
+    scale: 0.4,
+  },
+  4: {
+    locator: CROSS_LOCATOR,
+    scale: 0.4,
+  },
+  5: {
+    locator: CROSS_LOCATOR,
+    scale: 0.4,
+  },
+  6: undefined,
+  7: undefined,
+  8: undefined,
+  9: undefined,
+  10: undefined,
+  11: undefined,
+  12: undefined,
+} satisfies OrdinaryRenderer["on"];
 
 function fess(tincture: Tincture) {
   return svg.path(
@@ -867,9 +919,7 @@ function on(parent: SVGElement, { ordinary, surround, charge }: On) {
 
     for (let i = 0; i < charge.count; ++i) {
       const c = CHARGES[charge.charge](charge.tincture);
-      const translate = locator.evaluate(
-        charge.count === 1 ? 0.5 : i / (charge.count - 1)
-      );
+      const translate = locator.evaluate(i, charge.count);
       applyTransforms(c, {
         translate,
         scale,

@@ -71,9 +71,20 @@ class ParametricPoint {
     constructor(point) {
         this.point = point;
     }
-    evaluate(t) {
-        assert(t >= 0 && t <= 1, "t must be on [0, 1]");
+    evaluate(index, total) {
+        assert(index <= total, "index must be less than total");
         return this.point;
+    }
+}
+class ParametricMultiPoint {
+    points;
+    constructor(points) {
+        this.points = points;
+    }
+    evaluate(index, total) {
+        assert(index <= total, "index must be less than total");
+        assert(index <= this.points.length, "index must be less than the number of points");
+        return this.points[index];
     }
 }
 class ParametricLine {
@@ -83,8 +94,9 @@ class ParametricLine {
         this.src = src;
         this.dst = dst;
     }
-    evaluate(t) {
-        assert(t >= 0 && t <= 1, "t must be on [0, 1]");
+    evaluate(index, total) {
+        assert(index <= total, "index must be less than total");
+        const t = index / total;
         return [
             (this.dst[0] - this.src[0]) * t + this.src[0],
             (this.dst[1] - this.src[1]) * t + this.src[1],
@@ -98,8 +110,9 @@ class ParametricPolyline {
         assert(segments.at(-1).highLimit === 1, "last segment must end at 1");
         this.segments = segments;
     }
-    evaluate(t) {
-        assert(t >= 0 && t <= 1, "t must be on [0, 1]");
+    evaluate(index, total) {
+        assert(index <= total, "index must be less than total");
+        const t = index / total;
         let lowLimit = 0;
         for (const s of this.segments) {
             if (t < s.highLimit) {
@@ -281,6 +294,42 @@ function cross(tincture) {
       Z
     `, tincture);
 }
+const CROSS_LOCATOR = new ParametricMultiPoint([
+    [-30, -14],
+    [30, -14],
+    [0, -44],
+    [0, 16],
+    [0, -14],
+]);
+cross.on = {
+    1: {
+        locator: new ParametricPoint([0, -14]),
+        scale: 0.4,
+    },
+    2: {
+        locator: CROSS_LOCATOR,
+        scale: 0.4,
+    },
+    3: {
+        locator: CROSS_LOCATOR,
+        scale: 0.4,
+    },
+    4: {
+        locator: CROSS_LOCATOR,
+        scale: 0.4,
+    },
+    5: {
+        locator: CROSS_LOCATOR,
+        scale: 0.4,
+    },
+    6: undefined,
+    7: undefined,
+    8: undefined,
+    9: undefined,
+    10: undefined,
+    11: undefined,
+    12: undefined,
+};
 function fess(tincture) {
     return svg.path(path `
       M -50 -25
@@ -638,7 +687,7 @@ function on(parent, { ordinary, surround, charge }) {
         const { locator, scale } = parameters;
         for (let i = 0; i < charge.count; ++i) {
             const c = CHARGES[charge.charge](charge.tincture);
-            const translate = locator.evaluate(charge.count === 1 ? 0.5 : i / (charge.count - 1));
+            const translate = locator.evaluate(i, charge.count);
             applyTransforms(c, {
                 translate,
                 scale,
