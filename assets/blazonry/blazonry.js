@@ -362,7 +362,19 @@ function barryBendy(count) {
     throw new Error("unimplemented");
 }
 function bendy(count) {
-    throw new Error("unimplemented");
+    const step = (W / count) * 2;
+    let d = "";
+    // This is a bit wasteful, as it generates a clipping path considerably larger than the w * h area...
+    for (let i = 1; i < count * 2; i += 2) {
+        d += path `
+      M  ${W_2 - i * step}       ${-H_2}
+      L  ${W_2 - (i + 1) * step} ${-H_2}
+      L  ${W_2}                  ${-H_2 + (i + 1) * step}
+      L  ${W_2}                  ${-H_2 + i * step}
+      Z
+    `;
+    }
+    return d;
 }
 function checky(count) {
     // w < h, so we use that to determine step (also it's more intuitive)
