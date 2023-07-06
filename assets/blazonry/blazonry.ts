@@ -139,7 +139,7 @@ interface ChargeRenderer {
 }
 
 interface VariedClipPathGenerator {
-  (count: number): string;
+  (count?: number): string;
 }
 
 function assert(condition: boolean, message: string): asserts condition {
@@ -515,7 +515,7 @@ const CHARGES: Record<string, ChargeRenderer> = {
 // VARIED
 // ----------------------------------------------------------------------------
 
-function barry(count: number) {
+function barry(count: number = 6) {
   const step = H / count;
   let d = "";
   for (let y = 1; y < count; y += 2) {
@@ -530,11 +530,26 @@ function barry(count: number) {
   return d;
 }
 
-function barryBendy(count: number) {
-  throw new Error("unimplemented");
+function barryBendy(count: number = 8) {
+  count *= 2; // Looks better, and feels easier to specify the desired value, with higher counts.
+  const step = (W / count) * 2;
+  let d = "";
+  for (let y = 0; y < (H / W) * count; y++) {
+    for (let x = y % 2; x < count; x += 2) {
+      const offset = (1 / 2) * y;
+      d += path`
+        M  ${W_2 - (x - offset) * step}         ${-H_2 + y * step}
+        L  ${W_2 - (x + 1 - offset) * step}     ${-H_2 + y * step}
+        L  ${W_2 - (x + 1 / 2 - offset) * step} ${-H_2 + (y + 1) * step}
+        L  ${W_2 - (x - 1 / 2 - offset) * step} ${-H_2 + (y + 1) * step}
+        Z
+      `;
+    }
+  }
+  return d;
 }
 
-function bendy(count: number) {
+function bendy(count: number = 8) {
   const step = (W / count) * 2;
   let d = "";
   // This is a bit wasteful, as it generates a clipping path considerably larger than the w * h area...
@@ -550,7 +565,7 @@ function bendy(count: number) {
   return d;
 }
 
-function checky(count: number) {
+function checky(count: number = 8) {
   // w < h, so we use that to determine step (also it's more intuitive)
   const step = W / count;
   let d = "";
@@ -576,7 +591,7 @@ function lozengy(count: number) {
   throw new Error("unimplemented");
 }
 
-function paly(count: number) {
+function paly(count: number = 6) {
   const step = W / count;
   let d = "";
   for (let x = 1; x < count; x += 2) {
@@ -692,7 +707,7 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     container.appendChild(field(content.first));
     const second = field(content.second);
     second.style.clipPath = `path("${VARIED[content.varied.type](
-      content.varied.count ?? 6
+      content.varied.count ?? undefined
     )}")`;
     container.appendChild(second);
     if (content.content) {

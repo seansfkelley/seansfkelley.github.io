@@ -344,7 +344,7 @@ const CHARGES = {
 // ----------------------------------------------------------------------------
 // VARIED
 // ----------------------------------------------------------------------------
-function barry(count) {
+function barry(count = 6) {
     const step = H / count;
     let d = "";
     for (let y = 1; y < count; y += 2) {
@@ -358,10 +358,25 @@ function barry(count) {
     }
     return d;
 }
-function barryBendy(count) {
-    throw new Error("unimplemented");
+function barryBendy(count = 8) {
+    count *= 2; // Looks better, and feels easier to specify the desired value, with higher counts.
+    const step = (W / count) * 2;
+    let d = "";
+    for (let y = 0; y < (H / W) * count; y++) {
+        for (let x = y % 2; x < count; x += 2) {
+            const offset = (1 / 2) * y;
+            d += path `
+        M  ${W_2 - (x - offset) * step}         ${-H_2 + y * step}
+        L  ${W_2 - (x + 1 - offset) * step}     ${-H_2 + y * step}
+        L  ${W_2 - (x + 1 / 2 - offset) * step} ${-H_2 + (y + 1) * step}
+        L  ${W_2 - (x - 1 / 2 - offset) * step} ${-H_2 + (y + 1) * step}
+        Z
+      `;
+        }
+    }
+    return d;
 }
-function bendy(count) {
+function bendy(count = 8) {
     const step = (W / count) * 2;
     let d = "";
     // This is a bit wasteful, as it generates a clipping path considerably larger than the w * h area...
@@ -376,7 +391,7 @@ function bendy(count) {
     }
     return d;
 }
-function checky(count) {
+function checky(count = 8) {
     // w < h, so we use that to determine step (also it's more intuitive)
     const step = W / count;
     let d = "";
@@ -399,7 +414,7 @@ function chevronny(count) {
 function lozengy(count) {
     throw new Error("unimplemented");
 }
-function paly(count) {
+function paly(count = 6) {
     const step = W / count;
     let d = "";
     for (let x = 1; x < count; x += 2) {
@@ -503,7 +518,7 @@ function complexContent(container, content) {
     else if ("varied" in content) {
         container.appendChild(field(content.first));
         const second = field(content.second);
-        second.style.clipPath = `path("${VARIED[content.varied.type](content.varied.count ?? 6)}")`;
+        second.style.clipPath = `path("${VARIED[content.varied.type](content.varied.count ?? undefined)}")`;
         container.appendChild(second);
         if (content.content) {
             renderIntoParent(container, content.content);
