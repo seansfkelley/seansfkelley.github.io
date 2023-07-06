@@ -1,8 +1,7 @@
 "use strict";
 // TODO
-// - finish ParametricPolylines for `on`
-//   - then figure out a method that works better for the varying sizes
-// - do something like ParametricPolyline but for `surround`
+// - finish ParametricLocators for `on`
+// - do something like ParametricLocators but for `surround`
 // - canton
 // - posture -- for things like swords, requires resizing
 // - push elements around when quartering
@@ -66,6 +65,31 @@ function applyTransforms(element, { translate, scale, rotate, } = {}) {
         .filter(Boolean)
         .join(" ");
     element.setAttribute("transform", transform);
+}
+class ParametricPoint {
+    point;
+    constructor(point) {
+        this.point = point;
+    }
+    evaluate(t) {
+        assert(t >= 0 && t <= 1, "t must be on [0, 1]");
+        return this.point;
+    }
+}
+class ParametricLine {
+    src;
+    dst;
+    constructor(src, dst) {
+        this.src = src;
+        this.dst = dst;
+    }
+    evaluate(t) {
+        assert(t >= 0 && t <= 1, "t must be on [0, 1]");
+        return [
+            (this.dst[0] - this.src[0]) * t + this.src[0],
+            (this.dst[1] - this.src[1]) * t + this.src[1],
+        ];
+    }
 }
 class ParametricPolyline {
     segments;
@@ -267,43 +291,42 @@ function fess(tincture) {
     `, tincture);
 }
 fess.on = {
-    polyline: new ParametricPolyline({
-        src: [-W_2 * 1.1, -4],
-        dst: [W_2 * 1.1, -4],
-        highLimit: 1,
-    }),
-    scales: {
-        1: 0.6,
-        2: 0.6,
-        3: 0.5,
-        4: 0.4,
-        5: 0.3,
-        6: 0.3,
-        7: 0.25,
-        8: 0.2,
-        9: undefined,
-        10: undefined,
-        11: undefined,
-        12: undefined,
+    1: {
+        locator: new ParametricPoint([0, -4]),
+        scale: 0.6,
     },
-    // 1: [
-    //   Transform.of(0, -5, 0.6), //
-    // ],
-    // 2: [
-    //   Transform.of(-20, -5, 0.6), //
-    //   Transform.of(20, -5, 0.6),
-    // ],
-    // 3: [
-    //   Transform.of(-30, -5, 0.5),
-    //   Transform.of(0, -5, 0.5),
-    //   Transform.of(30, -5, 0.5),
-    // ],
-    // 4: [
-    //   Transform.of(-33, -5, 0.4),
-    //   Transform.of(-11, -5, 0.4),
-    //   Transform.of(11, -5, 0.4),
-    //   Transform.of(33, -5, 0.4),
-    // ],
+    2: {
+        locator: new ParametricLine([-W_2 * 0.4, -4], [W_2 * 0.4, -4]),
+        scale: 0.6,
+    },
+    3: {
+        locator: new ParametricLine([-W_2 * 0.6, -4], [W_2 * 0.6, -4]),
+        scale: 0.5,
+    },
+    4: {
+        locator: new ParametricLine([-W_2 * 0.7, -4], [W_2 * 0.7, -4]),
+        scale: 0.4,
+    },
+    5: {
+        locator: new ParametricLine([-W_2 * 0.7, -4], [W_2 * 0.7, -4]),
+        scale: 0.3,
+    },
+    6: {
+        locator: new ParametricLine([-W_2 * 0.7, -4], [W_2 * 0.7, -4]),
+        scale: 0.25,
+    },
+    7: {
+        locator: new ParametricLine([-W_2 * 0.7, -4], [W_2 * 0.7, -4]),
+        scale: 0.2,
+    },
+    8: {
+        locator: new ParametricLine([-W_2 * 0.7, -4], [W_2 * 0.7, -4]),
+        scale: 0.18,
+    },
+    9: undefined,
+    10: undefined,
+    11: undefined,
+    12: undefined,
 };
 fess.surround = {
     2: [
@@ -610,15 +633,15 @@ function on(parent, { ordinary, surround, charge }) {
     g.appendChild(ORDINARIES[ordinary.ordinary](ordinary.tincture));
     parent.appendChild(g);
     assert(charge.direction == null, 'cannot specify a direction for charges in "on"');
-    const { polyline, scales } = ORDINARIES[ordinary.ordinary].on;
-    if (scales[charge.count] != null) {
-        const step = 1 / (charge.count + 1);
+    const parameters = ORDINARIES[ordinary.ordinary].on[charge.count];
+    if (parameters != null) {
+        const { locator, scale } = parameters;
         for (let i = 0; i < charge.count; ++i) {
             const c = CHARGES[charge.charge](charge.tincture);
-            const translate = polyline.evaluate((i + 1) * step);
+            const translate = locator.evaluate(charge.count === 1 ? 0.5 : i / (charge.count - 1));
             applyTransforms(c, {
                 translate,
-                scale: scales[charge.count],
+                scale,
                 rotate: charge.posture ?? undefined,
             });
             parent.appendChild(c);
