@@ -6,13 +6,31 @@
 // - posture -- for things like swords, requires resizing
 // - fancy paths for leopard's heads and such
 // - push elements around when quartering
+// - party per field can also have complex content in it
+// - minor visual effects to make it a little less flat
 const Transform = {
     of: (x, y, scale) => ({ x, y, scale }),
     apply: ({ x, y, scale }, element, { posture } = {}) => {
+        const rotate = (() => {
+            switch (posture) {
+                case null:
+                case undefined:
+                case "palewise":
+                    return undefined;
+                case "fesswise":
+                    return "rotate(90)";
+                case "bendwise":
+                    return "rotate(45)";
+                case "saltirewise":
+                    return "rotate(45)"; // TODO
+                default:
+                    assertNever(posture);
+            }
+        })();
         const transform = [
             `translate(${x}, ${y})`,
             scale != null && scale !== 1 ? `scale(${scale})` : undefined,
-            posture === "fesswise" ? "rotate(90)" : undefined,
+            rotate,
         ]
             .filter(Boolean)
             .join(" ");
@@ -240,21 +258,69 @@ const CHARGES = {
 // ----------------------------------------------------------------------------
 // TODO: Factor this out to the top so _everything_ is a function of it.
 const HEIGHT = 120;
+const WIDTH = 100;
 function barry(count) {
     const step = HEIGHT / count;
     let path = "";
-    for (let offset = step; offset < HEIGHT; offset += 2 * step) {
+    for (let y = 1; y < count; y += 2) {
         path += `
-      M -50 ${-HEIGHT / 2 + offset}
-      L  50 ${-HEIGHT / 2 + offset}
-      L  50 ${-HEIGHT / 2 + offset + step}
-      L -50 ${-HEIGHT / 2 + offset + step}
+    M -50 ${-HEIGHT / 2 + y * step}
+    L  50 ${-HEIGHT / 2 + y * step}
+    L  50 ${-HEIGHT / 2 + y * step + step}
+    L -50 ${-HEIGHT / 2 + y * step + step}
+    Z`;
+    }
+    return path;
+}
+function barryBendy(count) {
+    throw new Error("unimplemented");
+}
+function bendy(count) {
+    throw new Error("unimplemented");
+}
+function checky(count) {
+    // w < h, so we use that to determine step (also it's more intuitive)
+    const step = WIDTH / count;
+    let path = "";
+    for (let x = 0; x < count; ++x) {
+        for (let y = x % 2; y < (HEIGHT / WIDTH) * count; y += 2) {
+            path += `
+        M ${-WIDTH / 2 + x * step}        ${-HEIGHT / 2 + y * step}
+        L ${-WIDTH / 2 + x * step}        ${-HEIGHT / 2 + y * step + step}
+        L ${-WIDTH / 2 + x * step + step} ${-HEIGHT / 2 + y * step + step}
+        L ${-WIDTH / 2 + x * step + step} ${-HEIGHT / 2 + y * step}
+        Z`;
+        }
+    }
+    return path;
+}
+function chevronny(count) {
+    throw new Error("unimplemented");
+}
+function lozengy(count) {
+    throw new Error("unimplemented");
+}
+function paly(count) {
+    const step = WIDTH / count;
+    let path = "";
+    for (let x = 1; x < count; x += 2) {
+        path += `
+      M ${-WIDTH / 2 + x * step}        -60
+      L ${-WIDTH / 2 + x * step}         60
+      L ${-WIDTH / 2 + x * step + step}  60
+      L ${-WIDTH / 2 + x * step + step} -60
       Z`;
     }
     return path;
 }
 const VARIED = {
     barry,
+    "barry bendy": barryBendy,
+    bendy,
+    checky,
+    chevronny,
+    lozengy,
+    paly,
 };
 // ----------------------------------------------------------------------------
 // HIGHER-ORDER

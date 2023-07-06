@@ -29,7 +29,7 @@ Try these:
 
 <div class="center">
   <form id="form">
-    <input type="text" id="blazon-input" value=" Barry of ten argent and azure six escutcheons sable, 3, 2, 1 each charged with a lion rampant argent langued gules.">
+    <input type="text" id="blazon-input" value="barry of ten argent and azure">
     <br>
     <button type="submit">
     Preview

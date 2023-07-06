@@ -13,7 +13,11 @@ SimpleField
   / varied:Varied _ first:Tincture _ "and" _ second:Tincture _ content:SimpleContent? { return { varied, first, second, content } }
 
 PartyPerField
-  = "party"? _ "per" _ direction:Direction _ first:Tincture _ "and" _ second:Tincture _ content:SimpleContent? { return { direction, first, second, content } }
+  = Party? _ "per" _ direction:Direction _ first:Tincture _ "and" _ second:Tincture _ content:SimpleContent? { return { direction, first, second, content } }
+
+Party
+  = "party"
+  / "parted"
 
 Quarterly
   = "quarterly" _ quarters:Quarter+ { return { quarters } }
@@ -61,12 +65,14 @@ Plural "plural quantity"
   / "eleven" { return 11 }
   / "twelve" { return 12 }
 
-// TODO: bend, etc.
-Direction
+Direction "direction"
   = "pale"
   / "fess"
+  / "bend"
+  / "chevron"
+  / "saltire"
 
-InDirection
+InDirection "direction"
   = "in" _ direction:Direction { return direction }
 
 QuarterName "quarter name"
@@ -79,9 +85,11 @@ QuarterName "quarter name"
   / "fourth" { return 4 }
   / "4th" { return 4 }
 
-Posture
+Posture "posture"
   = "palewise"
   / "fesswise"
+  / "bendwise"
+  / "saltirewise"
 
 Tincture "tincture"
   = "azure"
@@ -107,18 +115,19 @@ ChargeName "charge name"
   / "rondel"
   / "mullet"
 
-Varied
+Varied "varied"
   = type:VariedName _ "of" _ count:Plural { return { type, count } }
   / type:VariedName { return { type } }
 
 VariedName "varied name"
-  = "paly"
-  / "bendy"
+  = "barry bendy"
   / "barry"
-  / "chevronny"
+  / "bendy"
   / "checky"
-  / "barry bendy"
+  / "chequey" { return "checky" }
+  / "chevronny"
   / "lozengy"
+  / "paly"
 
 _ "whitespace"
   // Note that comma and semicolon are considered, effectively, whitespace. It is not used to delimit anything that is not already delimited by whitespace.

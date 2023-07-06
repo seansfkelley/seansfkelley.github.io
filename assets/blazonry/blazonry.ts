@@ -5,6 +5,8 @@
 // - posture -- for things like swords, requires resizing
 // - fancy paths for leopard's heads and such
 // - push elements around when quartering
+// - party per field can also have complex content in it
+// - minor visual effects to make it a little less flat
 
 declare namespace PeggyParser {
   interface SyntaxError extends Error {
@@ -21,8 +23,8 @@ declare const parser: {
 type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 type Tincture = string & { __tincture: unknown };
 type VariedName = string & { __varied: unknown };
-type Posture = "palewise" | "fesswise";
-type Direction = "pale" | "fess";
+type Posture = "palewise" | "fesswise" | "bendwise" | "saltirewise";
+type Direction = "pale" | "fess" | "bend" | "chevron" | "saltire";
 type Quarter = 1 | 2 | 3 | 4;
 
 interface Transform {
@@ -36,12 +38,29 @@ const Transform = {
   apply: (
     { x, y, scale }: Transform,
     element: SVGElement,
-    { posture }: { posture?: Posture } = {}
+    { posture }: { posture?: Posture | null | undefined } = {}
   ): void => {
+    const rotate = (() => {
+      switch (posture) {
+        case null:
+        case undefined:
+        case "palewise":
+          return undefined;
+        case "fesswise":
+          return "rotate(90)";
+        case "bendwise":
+          return "rotate(45)";
+        case "saltirewise":
+          return "rotate(45)"; // TODO
+        default:
+          assertNever(posture);
+      }
+    })();
+
     const transform = [
       `translate(${x}, ${y})`,
       scale != null && scale !== 1 ? `scale(${scale})` : undefined,
-      posture === "fesswise" ? "rotate(90)" : undefined,
+      rotate,
     ]
       .filter(Boolean)
       .join(" ");
@@ -55,25 +74,25 @@ type SimpleContent = Ordinary | Charge | On;
 type SimpleField =
   | {
       tincture: Tincture;
-      content?: SimpleContent;
+      content?: SimpleContent | null;
     }
   | {
       varied: Varied;
       first: Tincture;
       second: Tincture;
-      content?: SimpleContent;
+      content?: SimpleContent | null;
     };
 
 interface Varied {
   type: VariedName;
-  count?: number;
+  count?: number | null;
 }
 
 interface PartyPerField {
   direction: Direction;
   first: Tincture;
   second: Tincture;
-  content?: SimpleContent;
+  content?: SimpleContent | null;
 }
 
 interface Quarterly {
@@ -94,14 +113,14 @@ interface Charge {
   charge: string;
   tincture: Tincture;
   count: Count;
-  posture?: Posture;
-  direction?: Direction;
+  posture?: Posture | null;
+  direction?: Direction | null;
 }
 
 interface On {
   on: true;
   ordinary: Ordinary;
-  surround?: Charge;
+  surround?: Charge | null;
   charge: Charge;
 }
 
@@ -389,16 +408,64 @@ const CHARGES: Record<string, ChargeRenderer> = {
 
 // TODO: Factor this out to the top so _everything_ is a function of it.
 const HEIGHT = 120;
+const WIDTH = 100;
 
 function barry(count: number) {
   const step = HEIGHT / count;
   let path = "";
-  for (let offset = step; offset < HEIGHT; offset += 2 * step) {
+  for (let y = 1; y < count; y += 2) {
     path += `
-      M -50 ${-HEIGHT / 2 + offset}
-      L  50 ${-HEIGHT / 2 + offset}
-      L  50 ${-HEIGHT / 2 + offset + step}
-      L -50 ${-HEIGHT / 2 + offset + step}
+    M -50 ${-HEIGHT / 2 + y * step}
+    L  50 ${-HEIGHT / 2 + y * step}
+    L  50 ${-HEIGHT / 2 + y * step + step}
+    L -50 ${-HEIGHT / 2 + y * step + step}
+    Z`;
+  }
+  return path;
+}
+
+function barryBendy(count: number) {
+  throw new Error("unimplemented");
+}
+
+function bendy(count: number) {
+  throw new Error("unimplemented");
+}
+
+function checky(count: number) {
+  // w < h, so we use that to determine step (also it's more intuitive)
+  const step = WIDTH / count;
+  let path = "";
+  for (let x = 0; x < count; ++x) {
+    for (let y = x % 2; y < (HEIGHT / WIDTH) * count; y += 2) {
+      path += `
+        M ${-WIDTH / 2 + x * step}        ${-HEIGHT / 2 + y * step}
+        L ${-WIDTH / 2 + x * step}        ${-HEIGHT / 2 + y * step + step}
+        L ${-WIDTH / 2 + x * step + step} ${-HEIGHT / 2 + y * step + step}
+        L ${-WIDTH / 2 + x * step + step} ${-HEIGHT / 2 + y * step}
+        Z`;
+    }
+  }
+  return path;
+}
+
+function chevronny(count: number) {
+  throw new Error("unimplemented");
+}
+
+function lozengy(count: number) {
+  throw new Error("unimplemented");
+}
+
+function paly(count: number) {
+  const step = WIDTH / count;
+  let path = "";
+  for (let x = 1; x < count; x += 2) {
+    path += `
+      M ${-WIDTH / 2 + x * step}        -60
+      L ${-WIDTH / 2 + x * step}         60
+      L ${-WIDTH / 2 + x * step + step}  60
+      L ${-WIDTH / 2 + x * step + step} -60
       Z`;
   }
   return path;
@@ -406,6 +473,12 @@ function barry(count: number) {
 
 const VARIED: Record<string, VariedClipPathGenerator> = {
   barry,
+  "barry bendy": barryBendy,
+  bendy,
+  checky,
+  chevronny,
+  lozengy,
+  paly,
 };
 
 // ----------------------------------------------------------------------------
