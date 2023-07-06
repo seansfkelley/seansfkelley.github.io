@@ -121,7 +121,7 @@ class ParametricPoint implements ParametricLocator {
   public constructor(private point: Coordinate) {}
 
   public evaluate(index: number, total: number): Coordinate {
-    assert(index <= total, "index must be less than total");
+    assert(index < total, "index must be less than total");
     return this.point;
   }
 }
@@ -130,7 +130,7 @@ class ParametricMultiPoint implements ParametricLocator {
   public constructor(private points: Coordinate[]) {}
 
   public evaluate(index: number, total: number): Coordinate {
-    assert(index <= total, "index must be less than total");
+    assert(index < total, "index must be less than total");
     assert(
       index <= this.points.length,
       "index must be less than the number of points"
@@ -143,8 +143,8 @@ class ParametricLine implements ParametricLocator {
   public constructor(private src: Coordinate, private dst: Coordinate) {}
 
   public evaluate(index: number, total: number): Coordinate {
-    assert(index <= total, "index must be less than total");
-    const t = index / total;
+    assert(index < total, "index must be less than total");
+    const t = index / (total - 1);
 
     return [
       (this.dst[0] - this.src[0]) * t + this.src[0],
@@ -169,8 +169,8 @@ class ParametricPolyline implements ParametricLocator {
   }
 
   public evaluate(index: number, total: number): Coordinate {
-    assert(index <= total, "index must be less than total");
-    const t = index / total;
+    assert(index < total, "index must be less than total");
+    const t = index / (total - 1);
 
     let lowLimit = 0;
     for (const s of this.segments) {
@@ -248,15 +248,17 @@ interface On {
 interface OrdinaryRenderer {
   (tincture: Tincture): SVGElement;
   // If undefined, render nothing for the scale. It's too silly.
-  on: Record<
-    Count,
-    | {
-        locator: ParametricLocator;
-        scale: number;
-      }
-    | undefined
+  on: Partial<
+    Record<
+      Count,
+      | {
+          locator: ParametricLocator;
+          scale: number;
+        }
+      | undefined
+    >
   >;
-  surround: Record<number, Transform[]>;
+  surround: Partial<Record<Count, Transform[] | undefined>>;
 }
 
 interface ChargeRenderer {
@@ -428,6 +430,41 @@ function chief(tincture: Tincture) {
   );
 }
 
+chief.on = {
+  1: {
+    locator: new ParametricPoint([0, -40]),
+    scale: 0.6,
+  },
+  2: {
+    locator: new ParametricLine([-W_2 * 0.5, -40], [W_2 * 0.5, -40]),
+    scale: 0.6,
+  },
+  3: {
+    locator: new ParametricLine([-W_2 * 0.6, -40], [W_2 * 0.6, -40]),
+    scale: 0.5,
+  },
+  4: {
+    locator: new ParametricLine([-W_2 * 0.7, -40], [W_2 * 0.7, -40]),
+    scale: 0.4,
+  },
+  5: {
+    locator: new ParametricLine([-W_2 * 0.7, -40], [W_2 * 0.7, -40]),
+    scale: 0.3,
+  },
+  6: {
+    locator: new ParametricLine([-W_2 * 0.7, -40], [W_2 * 0.7, -40]),
+    scale: 0.25,
+  },
+  7: {
+    locator: new ParametricLine([-W_2 * 0.7, -40], [W_2 * 0.7, -40]),
+    scale: 0.2,
+  },
+  8: {
+    locator: new ParametricLine([-W_2 * 0.7, -40], [W_2 * 0.7, -40]),
+    scale: 0.18,
+  },
+} satisfies OrdinaryRenderer["on"];
+
 function chevron(tincture: Tincture) {
   return svg.path(
     path`
@@ -493,13 +530,6 @@ cross.on = {
     locator: CROSS_LOCATOR,
     scale: 0.4,
   },
-  6: undefined,
-  7: undefined,
-  8: undefined,
-  9: undefined,
-  10: undefined,
-  11: undefined,
-  12: undefined,
 } satisfies OrdinaryRenderer["on"];
 
 function fess(tincture: Tincture) {
@@ -521,7 +551,7 @@ fess.on = {
     scale: 0.6,
   },
   2: {
-    locator: new ParametricLine([-W_2 * 0.4, -4], [W_2 * 0.4, -4]),
+    locator: new ParametricLine([-W_2 * 0.5, -4], [W_2 * 0.5, -4]),
     scale: 0.6,
   },
   3: {
@@ -548,10 +578,6 @@ fess.on = {
     locator: new ParametricLine([-W_2 * 0.7, -4], [W_2 * 0.7, -4]),
     scale: 0.18,
   },
-  9: undefined,
-  10: undefined,
-  11: undefined,
-  12: undefined,
 } satisfies OrdinaryRenderer["on"];
 
 fess.surround = {

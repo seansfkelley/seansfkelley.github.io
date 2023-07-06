@@ -72,7 +72,7 @@ class ParametricPoint {
         this.point = point;
     }
     evaluate(index, total) {
-        assert(index <= total, "index must be less than total");
+        assert(index < total, "index must be less than total");
         return this.point;
     }
 }
@@ -82,7 +82,7 @@ class ParametricMultiPoint {
         this.points = points;
     }
     evaluate(index, total) {
-        assert(index <= total, "index must be less than total");
+        assert(index < total, "index must be less than total");
         assert(index <= this.points.length, "index must be less than the number of points");
         return this.points[index];
     }
@@ -95,8 +95,8 @@ class ParametricLine {
         this.dst = dst;
     }
     evaluate(index, total) {
-        assert(index <= total, "index must be less than total");
-        const t = index / total;
+        assert(index < total, "index must be less than total");
+        const t = index / (total - 1);
         return [
             (this.dst[0] - this.src[0]) * t + this.src[0],
             (this.dst[1] - this.src[1]) * t + this.src[1],
@@ -111,8 +111,8 @@ class ParametricPolyline {
         this.segments = segments;
     }
     evaluate(index, total) {
-        assert(index <= total, "index must be less than total");
-        const t = index / total;
+        assert(index < total, "index must be less than total");
+        const t = index / (total - 1);
         let lowLimit = 0;
         for (const s of this.segments) {
             if (t < s.highLimit) {
@@ -266,6 +266,40 @@ function chief(tincture) {
       Z
     `, tincture);
 }
+chief.on = {
+    1: {
+        locator: new ParametricPoint([0, -40]),
+        scale: 0.6,
+    },
+    2: {
+        locator: new ParametricLine([-W_2 * 0.5, -40], [W_2 * 0.5, -40]),
+        scale: 0.6,
+    },
+    3: {
+        locator: new ParametricLine([-W_2 * 0.6, -40], [W_2 * 0.6, -40]),
+        scale: 0.5,
+    },
+    4: {
+        locator: new ParametricLine([-W_2 * 0.7, -40], [W_2 * 0.7, -40]),
+        scale: 0.4,
+    },
+    5: {
+        locator: new ParametricLine([-W_2 * 0.7, -40], [W_2 * 0.7, -40]),
+        scale: 0.3,
+    },
+    6: {
+        locator: new ParametricLine([-W_2 * 0.7, -40], [W_2 * 0.7, -40]),
+        scale: 0.25,
+    },
+    7: {
+        locator: new ParametricLine([-W_2 * 0.7, -40], [W_2 * 0.7, -40]),
+        scale: 0.2,
+    },
+    8: {
+        locator: new ParametricLine([-W_2 * 0.7, -40], [W_2 * 0.7, -40]),
+        scale: 0.18,
+    },
+};
 function chevron(tincture) {
     return svg.path(path `
       M  0 -22
@@ -322,13 +356,6 @@ cross.on = {
         locator: CROSS_LOCATOR,
         scale: 0.4,
     },
-    6: undefined,
-    7: undefined,
-    8: undefined,
-    9: undefined,
-    10: undefined,
-    11: undefined,
-    12: undefined,
 };
 function fess(tincture) {
     return svg.path(path `
@@ -345,7 +372,7 @@ fess.on = {
         scale: 0.6,
     },
     2: {
-        locator: new ParametricLine([-W_2 * 0.4, -4], [W_2 * 0.4, -4]),
+        locator: new ParametricLine([-W_2 * 0.5, -4], [W_2 * 0.5, -4]),
         scale: 0.6,
     },
     3: {
@@ -372,10 +399,6 @@ fess.on = {
         locator: new ParametricLine([-W_2 * 0.7, -4], [W_2 * 0.7, -4]),
         scale: 0.18,
     },
-    9: undefined,
-    10: undefined,
-    11: undefined,
-    12: undefined,
 };
 fess.surround = {
     2: [
