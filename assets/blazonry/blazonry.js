@@ -45,10 +45,33 @@ function assert(condition, message) {
 function assertNever(nope) {
     throw new Error("was not never");
 }
-const FIELD_PATH = 
+// TODO: Factor this out to the top so _everything_ is a function of it.
+const H = 120;
+const H_2 = H / 2;
+const W = 100;
+const W_2 = W / 2;
 // This one is pointier, but looks weirder with some bends:
 // "M -50 -60 L 50 -60 L 50 -10 C 50 20 30 50 0 60 C -30 50 -50 20 -50 -10 Z";
-"M -50 -60 L 50 -60 L 50 20 C 50 40 30 50 0 60 C -30 50 -50 40 -50 20 Z";
+const FIELD_PATH = path `
+  M -${W_2} -${H_2}
+  L  ${W_2} -${H_2}
+  L  ${W_2}  ${H_2 / 3}
+  C  ${W_2}           ${H_2 * (2 / 3)}
+     ${W_2 * (3 / 5)} ${H_2 * (5 / 6)}
+     0                ${H_2}
+  C -${W_2 * (3 / 5)} ${H_2 * (5 / 6)}
+     ${-W_2}          ${H_2 * (2 / 3)}
+     ${-W_2}          ${H_2 / 3}
+  Z
+`;
+function path(strings, ...values) {
+    const parts = [];
+    for (let i = 0; i < values.length; ++i) {
+        parts.push(strings[i], values[i]);
+    }
+    parts.push(strings.at(-1));
+    return parts.join("").trim().replaceAll("\n", "").replaceAll(/ +/g, " ");
+}
 const COUNTERCHANGED = "counterchanged";
 function parseAndRenderBlazon(text) {
     let result;
@@ -66,11 +89,11 @@ function parseAndRenderBlazon(text) {
     }
     console.log(result);
     rendered.innerHTML = "";
-    const outline = path(FIELD_PATH, "none");
+    const outline = svg.path(FIELD_PATH, "none");
     outline.classList.add("outline");
     rendered.appendChild(outline);
     // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
-    const container = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    const container = svg.g();
     container.style.clipPath = `path("${FIELD_PATH}")`;
     rendered.appendChild(container);
     // Make sure there's always a default background.
@@ -79,10 +102,10 @@ function parseAndRenderBlazon(text) {
 }
 function field(tincture) {
     const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    rect.setAttribute("x", "-50");
-    rect.setAttribute("y", "-60");
-    rect.setAttribute("width", "100");
-    rect.setAttribute("height", "120");
+    rect.setAttribute("x", `-${W_2}`);
+    rect.setAttribute("y", `-${H_2}`);
+    rect.setAttribute("width", `${W}`);
+    rect.setAttribute("height", `${H}`);
     rect.classList.add(`fill-${tincture}`);
     return rect;
 }
@@ -99,49 +122,94 @@ const PARTY_PER_CLIP_PATHS = {
 // ----------------------------------------------------------------------------
 // UTIL
 // ----------------------------------------------------------------------------
-function path(d, tincture) {
-    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    path.setAttribute("d", d);
-    path.classList.add(`fill-${tincture}`);
-    return path;
-}
+const svg = {
+    path: (d, fill) => {
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", d);
+        path.classList.add(`fill-${fill}`);
+        return path;
+    },
+    g: () => {
+        return document.createElementNS("http://www.w3.org/2000/svg", "g");
+    },
+};
 // ----------------------------------------------------------------------------
 // ORDINARIES
 // ----------------------------------------------------------------------------
 function bend(tincture) {
-    return path("M -59 -51 L 41 63 L 59 45 L -41 -69 Z", tincture);
+    return svg.path(path `
+      M -59 -51
+      L  41  63
+      L  59  45
+      L -41 -69
+      Z
+    `, tincture);
 }
 bend.on = {
     1: [
-        Transform.of(0, -4, 0.4), //
+        Transform.of(0, -3, 0.4), //
     ],
     2: [
         Transform.of(-15, -20, 0.4),
         Transform.of(15, 14, 0.4),
     ],
     3: [
-        Transform.of(-25, -31, 0.4),
-        Transform.of(0, -4, 0.4),
-        Transform.of(25, 23, 0.4),
+        Transform.of(-25, -32, 0.4),
+        Transform.of(0, -3, 0.4),
+        Transform.of(24, 24, 0.4),
     ],
     4: [
         Transform.of(-31, -38, 0.4),
         Transform.of(-10, -14, 0.4),
-        Transform.of(10, 9, 0.4),
-        Transform.of(31, 31, 0.4),
+        Transform.of(10, 8, 0.4),
+        Transform.of(29, 29, 0.4),
     ],
 };
 function chief(tincture) {
-    return path("M -50 -60 L -50 -20 L 50 -20 L 50 -60 Z", tincture);
+    return svg.path(path `
+      M -50 -60
+      L -50 -20
+      L  50 -20
+      L  50 -60
+      Z
+    `, tincture);
 }
 function chevron(tincture) {
-    return path("M 0 -22 L 55 33 L 43 45 L 0 2 L -43 45 L -55 33 Z", tincture);
+    return svg.path(path `
+      M  0 -22
+      L 55  33
+      L 43  45
+      L  0   2
+      L -43 45
+      L -55 33
+      Z
+    `, tincture);
 }
 function cross(tincture) {
-    return path("M -10 -60 L 10 -60 L 10 -24 L 50 -24 L 50 -4 L 10 -4 L 10 60 L -10 60 L -10 -4 L -50 -4 L -50 -24 L -10 -24 Z", tincture);
+    return svg.path(path `
+      M -10 -60
+      L  10 -60
+      L  10 -24
+      L  50 -24
+      L  50  -4
+      L  10  -4
+      L  10  60
+      L -10  60
+      L -10  -4
+      L -50  -4
+      L -50 -24
+      L -10 -24
+      Z
+    `, tincture);
 }
 function fess(tincture) {
-    return path("M -50 -25 L 50 -25 L 50 15 L -50 15 Z", tincture);
+    return svg.path(path `
+      M -50 -25
+      L  50 -25
+      L  50  15
+      L -50  15
+      Z
+    `, tincture);
 }
 fess.on = {
     1: [
@@ -181,10 +249,30 @@ fess.surround = {
     ],
 };
 function pale(tincture) {
-    return path("M -15 -60 L 15 -60 L 15 60 L -15 60 Z", tincture);
+    return svg.path(path `
+      M -15 -60
+      L  15 -60
+      L  15  60
+      L -15  60
+      Z
+    `, tincture);
 }
 function saltire(tincture) {
-    return path("M 44 -66 L 56 -54 L 12 -10 L 55 33 L 43 45 L 0 2 L -43 45 L -55 33 L -12 -10 L -56 -54 L -44 -66 L 0 -22 Z", tincture);
+    return svg.path(path `
+      M  44 -66
+      L  56 -54
+      L  12 -10
+      L  55  33
+      L  43  45
+      L   0   2
+      L -43  45
+      L -55  33
+      L -12 -10
+      L -56 -54
+      L -44 -66
+      L  0  -22
+      Z
+    `, tincture);
 }
 const ORDINARIES = {
     bend,
@@ -199,7 +287,7 @@ const ORDINARIES = {
 // CHARGES
 // ----------------------------------------------------------------------------
 function sword(tincture) {
-    return path("M 35 -2 L 22 -2 L 22 -10 L 18 -10 L 18 -2 L -31 -2 L -35 0 L -31 2 L 18 2 L 18 11 L 22 11 L 22 2 L 35 2 Z", tincture);
+    return svg.path("M 35 -2 L 22 -2 L 22 -10 L 18 -10 L 18 -2 L -31 -2 L -35 0 L -31 2 L 18 2 L 18 11 L 22 11 L 22 2 L 35 2 Z", tincture);
 }
 function rondel(tincture) {
     const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
@@ -210,7 +298,7 @@ function rondel(tincture) {
     return circle;
 }
 function mullet(tincture) {
-    return path("M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z", tincture);
+    return svg.path("M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z", tincture);
 }
 const CHARGE_DIRECTIONS = {
     none: {
@@ -256,21 +344,19 @@ const CHARGES = {
 // ----------------------------------------------------------------------------
 // VARIED
 // ----------------------------------------------------------------------------
-// TODO: Factor this out to the top so _everything_ is a function of it.
-const HEIGHT = 120;
-const WIDTH = 100;
 function barry(count) {
-    const step = HEIGHT / count;
-    let path = "";
+    const step = H / count;
+    let d = "";
     for (let y = 1; y < count; y += 2) {
-        path += `
-    M -50 ${-HEIGHT / 2 + y * step}
-    L  50 ${-HEIGHT / 2 + y * step}
-    L  50 ${-HEIGHT / 2 + y * step + step}
-    L -50 ${-HEIGHT / 2 + y * step + step}
-    Z`;
+        d += path `
+      M -${W_2} ${-H_2 + y * step}
+      L  ${W_2} ${-H_2 + y * step}
+      L  ${W_2} ${-H_2 + y * step + step}
+      L -${W_2} ${-H_2 + y * step + step}
+      Z
+    `;
     }
-    return path;
+    return d;
 }
 function barryBendy(count) {
     throw new Error("unimplemented");
@@ -280,19 +366,20 @@ function bendy(count) {
 }
 function checky(count) {
     // w < h, so we use that to determine step (also it's more intuitive)
-    const step = WIDTH / count;
-    let path = "";
+    const step = W / count;
+    let d = "";
     for (let x = 0; x < count; ++x) {
-        for (let y = x % 2; y < (HEIGHT / WIDTH) * count; y += 2) {
-            path += `
-        M ${-WIDTH / 2 + x * step}        ${-HEIGHT / 2 + y * step}
-        L ${-WIDTH / 2 + x * step}        ${-HEIGHT / 2 + y * step + step}
-        L ${-WIDTH / 2 + x * step + step} ${-HEIGHT / 2 + y * step + step}
-        L ${-WIDTH / 2 + x * step + step} ${-HEIGHT / 2 + y * step}
-        Z`;
+        for (let y = x % 2; y < (H / W) * count; y += 2) {
+            d += path `
+        M ${-W_2 + x * step}        ${-H_2 + y * step}
+        L ${-W_2 + x * step}        ${-H_2 + y * step + step}
+        L ${-W_2 + x * step + step} ${-H_2 + y * step + step}
+        L ${-W_2 + x * step + step} ${-H_2 + y * step}
+        Z
+      `;
         }
     }
-    return path;
+    return d;
 }
 function chevronny(count) {
     throw new Error("unimplemented");
@@ -301,17 +388,17 @@ function lozengy(count) {
     throw new Error("unimplemented");
 }
 function paly(count) {
-    const step = WIDTH / count;
-    let path = "";
+    const step = W / count;
+    let d = "";
     for (let x = 1; x < count; x += 2) {
-        path += `
-      M ${-WIDTH / 2 + x * step}        -60
-      L ${-WIDTH / 2 + x * step}         60
-      L ${-WIDTH / 2 + x * step + step}  60
-      L ${-WIDTH / 2 + x * step + step} -60
+        d += path `
+      M ${-W_2 + x * step}        -${H_2}
+      L ${-W_2 + x * step}         ${H_2}
+      L ${-W_2 + x * step + step}  ${H_2}
+      L ${-W_2 + x * step + step} -${H_2}
       Z`;
     }
-    return path;
+    return d;
 }
 const VARIED = {
     barry,
@@ -368,8 +455,8 @@ function complexContent(container, content) {
         }
     }
     if ("direction" in content) {
-        const g1 = document.createElementNS("http://www.w3.org/2000/svg", "g");
-        const g2 = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        const g1 = svg.g();
+        const g2 = svg.g();
         [g1.style.clipPath, g2.style.clipPath] =
             PARTY_PER_CLIP_PATHS[content.direction];
         g1.appendChild(field(content.first));
@@ -383,10 +470,10 @@ function complexContent(container, content) {
     }
     else if ("quarters" in content) {
         const quartered = {
-            1: document.createElementNS("http://www.w3.org/2000/svg", "g"),
-            2: document.createElementNS("http://www.w3.org/2000/svg", "g"),
-            3: document.createElementNS("http://www.w3.org/2000/svg", "g"),
-            4: document.createElementNS("http://www.w3.org/2000/svg", "g"),
+            1: svg.g(),
+            2: svg.g(),
+            3: svg.g(),
+            4: svg.g(),
         };
         Transform.apply(Transform.of(-25, -30, 0.5), quartered[1]);
         Transform.apply(Transform.of(25, -30, 0.5), quartered[2]);
@@ -404,7 +491,7 @@ function complexContent(container, content) {
     else if ("varied" in content) {
         container.appendChild(field(content.first));
         const second = field(content.second);
-        second.style.clipPath = `path("${VARIED[content.varied.type](content.varied.count ?? 6).replaceAll("\n", " ")}")`;
+        second.style.clipPath = `path("${VARIED[content.varied.type](content.varied.count ?? 6)}")`;
         container.appendChild(second);
         if (content.content) {
             renderIntoParent(container, content.content);
@@ -418,7 +505,7 @@ function complexContent(container, content) {
     }
 }
 function on(parent, { ordinary, surround, charge }) {
-    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    const g = svg.g();
     g.appendChild(ORDINARIES[ordinary.ordinary](ordinary.tincture));
     parent.appendChild(g);
     assert(charge.direction == null, 'cannot specify a direction for charges in "on"');
