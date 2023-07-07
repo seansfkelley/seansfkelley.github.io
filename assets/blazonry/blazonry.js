@@ -1,6 +1,5 @@
 "use strict";
 // TODO
-// - finish ParametricLocators for `on`
 // - do something like ParametricLocators but for `surround`
 // - canton
 // - posture -- for things like swords, requires resizing
@@ -9,6 +8,7 @@
 // - minor visual effects to make it a little less flat
 // - fancy paths for fancy charges: lion, leopard's head, castle, and all their variants
 // - decorations for lines (e.g. embattled, engrailed, etc.)
+const DEBUG = false;
 const Transform = {
     of: (x, y, scale) => ({ x, y, scale }),
     apply: ({ x, y, scale }, element, { posture } = {}) => {
@@ -73,7 +73,12 @@ class ParametricPoint {
     }
     evaluate(index, total) {
         assert(index < total, "index must be less than total");
+        assert(index >= 0, "index must be nonnegative");
         return this.point;
+    }
+    toSvgPath() {
+        // TODO
+        return "";
     }
 }
 class ParametricMultiPoint {
@@ -84,7 +89,12 @@ class ParametricMultiPoint {
     evaluate(index, total) {
         assert(index < total, "index must be less than total");
         assert(index < this.points.length, "index must be less than the number of points");
+        assert(index >= 0, "index must be nonnegative");
         return this.points[index];
+    }
+    toSvgPath() {
+        // TODO
+        return "";
     }
 }
 class ParametricLine {
@@ -96,11 +106,18 @@ class ParametricLine {
     }
     evaluate(index, total) {
         assert(index < total, "index must be less than total");
-        const t = index / (total - 1);
+        assert(index >= 0, "index must be nonnegative");
+        const t = total === 1 ? 0.5 : index / (total - 1);
         return [
             (this.dst[0] - this.src[0]) * t + this.src[0],
             (this.dst[1] - this.src[1]) * t + this.src[1],
         ];
+    }
+    toSvgPath() {
+        return path `
+      M ${this.src[0]} ${this.src[1]}
+      L ${this.dst[0]} ${this.dst[1]}
+    `;
     }
 }
 class ParametricPolyline {
@@ -112,7 +129,8 @@ class ParametricPolyline {
     }
     evaluate(index, total) {
         assert(index < total, "index must be less than total");
-        const t = index / (total - 1);
+        assert(index >= 0, "index must be nonnegative");
+        const t = total === 1 ? 0.5 : index / (total - 1);
         let lowLimit = 0;
         for (const s of this.segments) {
             if (t <= s.highLimit) {
@@ -127,6 +145,13 @@ class ParametricPolyline {
             }
         }
         throw new Error("should be unreachable");
+    }
+    toSvgPath() {
+        const segments = this.segments.map((s) => path `
+      M ${s.src[0]} ${s.src[1]}
+      L ${s.dst[0]} ${s.dst[1]}
+    `);
+        return segments.join(" ");
     }
 }
 function assert(condition, message) {
@@ -238,8 +263,8 @@ function bend(tincture) {
       Z
     `, tincture);
 }
-function bendOnLocator(widthFraction) {
-    return new ParametricLine([-W_2 * widthFraction, -W_2 * widthFraction - 10], [W_2 * widthFraction, W_2 * widthFraction - 10]);
+function bendOnLocator(fraction) {
+    return new ParametricLine([-W_2 * fraction, -W_2 * fraction - 10], [W_2 * fraction, W_2 * fraction - 10]);
 }
 bend.on = {
     1: { locator: bendOnLocator(0), scale: 0.5 },
@@ -260,8 +285,8 @@ function chief(tincture) {
       Z
     `, tincture);
 }
-function chiefOnLocator(widthFraction) {
-    return new ParametricLine([-W_2 * widthFraction, -40], [W_2 * widthFraction, -40]);
+function chiefOnLocator(fraction) {
+    return new ParametricLine([-W_2 * fraction, -40], [W_2 * fraction, -40]);
 }
 chief.on = {
     1: { locator: chiefOnLocator(0), scale: 0.6 },
@@ -275,37 +300,48 @@ chief.on = {
 };
 function chevron(tincture) {
     return svg.path(path `
-      M  0 -22
-      L 55  33
-      L 43  45
-      L  0   2
-      L -43 45
-      L -55 33
+      M   0 -26
+      L  59  33
+      L  43  49
+      L   0   6
+      L -43  49
+      L -59  33
       Z
     `, tincture);
 }
-function chevronOnLocator(widthFraction) {
-    return new ParametricPolyline({
-        src: [-W_2 * widthFraction, W_2 * widthFraction - 10],
-        dst: [10, -10],
-        highLimit: 0.5,
-    }, {
-        src: [10, -10],
-        dst: [W_2 * widthFraction, W_2 * widthFraction - 10],
-        highLimit: 1,
-    });
+function chevronOnLocator(fraction, isEven) {
+    if (isEven) {
+        return new ParametricPolyline({
+            src: [-W_2 * fraction, W_2 * fraction - 10],
+            dst: [-W_2 * 0.1, -10 + W_2 * 0.1],
+            highLimit: 0.5,
+        }, {
+            src: [W_2 * 0.1, -10 + W_2 * 0.1],
+            dst: [W_2 * fraction, W_2 * fraction - 10],
+            highLimit: 1,
+        });
+    }
+    else {
+        return new ParametricPolyline({
+            src: [-W_2 * fraction, W_2 * fraction - 10],
+            dst: [0, -8],
+            highLimit: 0.5,
+        }, {
+            src: [0, -8],
+            dst: [W_2 * fraction, W_2 * fraction - 10],
+            highLimit: 1,
+        });
+    }
 }
-// TODO: Make the chevron and saltire a tiiiiny bit wider.
-// TODO: Finish picking numbers for these.
 chevron.on = {
-    1: { locator: new ParametricPoint([0, -8]), scale: 0.4 },
-    2: { locator: chevronOnLocator(0.4), scale: 0.4 },
-    3: { locator: chevronOnLocator(0.5), scale: 0.4 },
-    4: { locator: chevronOnLocator(0.6), scale: 0.4 },
-    5: { locator: chevronOnLocator(0.7), scale: 0.4 },
-    6: { locator: chevronOnLocator(0.7), scale: 0.35 },
-    7: { locator: chevronOnLocator(0.7), scale: 0.35 },
-    8: { locator: chevronOnLocator(0.7), scale: 0.35 },
+    1: { locator: chevronOnLocator(0, false), scale: 0.4 },
+    2: { locator: chevronOnLocator(0.3, true), scale: 0.4 },
+    3: { locator: chevronOnLocator(0.4, false), scale: 0.4 },
+    4: { locator: chevronOnLocator(0.6, true), scale: 0.4 },
+    5: { locator: chevronOnLocator(0.6, false), scale: 0.35 },
+    6: { locator: chevronOnLocator(0.7, true), scale: 0.35 },
+    7: { locator: chevronOnLocator(0.7, false), scale: 0.3 },
+    8: { locator: chevronOnLocator(0.7, true), scale: 0.25 },
 };
 function cross(tincture) {
     return svg.path(path `
@@ -347,8 +383,8 @@ function fess(tincture) {
       Z
     `, tincture);
 }
-function fessOnLocator(widthFraction) {
-    return new ParametricLine([-W_2 * widthFraction, -4], [W_2 * widthFraction, -4]);
+function fessOnLocator(fraction) {
+    return new ParametricLine([-W_2 * fraction, -4], [W_2 * fraction, -4]);
 }
 fess.on = {
     1: { locator: fessOnLocator(0), scale: 0.6 },
@@ -386,23 +422,50 @@ function pale(tincture) {
       Z
     `, tincture);
 }
+function paleOnLocator(fraction) {
+    return new ParametricLine([0, -H_2 * fraction], [0, H_2 * fraction]);
+}
+pale.on = {
+    1: { locator: paleOnLocator(0), scale: 0.6 },
+    2: { locator: paleOnLocator(0.4), scale: 0.6 },
+    3: { locator: paleOnLocator(0.6), scale: 0.5 },
+    4: { locator: paleOnLocator(0.6), scale: 0.4 },
+    5: { locator: paleOnLocator(0.7), scale: 0.4 },
+    6: { locator: paleOnLocator(0.7), scale: 0.3 },
+    7: { locator: paleOnLocator(0.7), scale: 0.3 },
+    8: { locator: paleOnLocator(0.7), scale: 0.2 },
+};
 function saltire(tincture) {
     return svg.path(path `
-      M  44 -66
-      L  56 -54
-      L  12 -10
-      L  55  33
-      L  43  45
-      L   0   2
-      L -43  45
-      L -55  33
-      L -12 -10
-      L -56 -54
-      L -44 -66
-      L  0  -22
+      M  44 -70
+      L  60 -54
+      L  16 -10
+      L  59  33
+      L  43  49
+      L   0   6
+      L -43  49
+      L -59  33
+      L -16 -10
+      L -60 -54
+      L -44 -70
+      L   0 -26
       Z
     `, tincture);
 }
+const SALTIRE_LOCATOR = new ParametricMultiPoint([
+    [-25, -35],
+    [25, -35],
+    [25, 15],
+    [-25, 15],
+    [0, -10],
+]);
+saltire.on = {
+    1: { locator: new ParametricPoint([0, -10]), scale: 0.5 },
+    2: { locator: SALTIRE_LOCATOR, scale: 0.5 },
+    3: { locator: SALTIRE_LOCATOR, scale: 0.5 },
+    4: { locator: SALTIRE_LOCATOR, scale: 0.5 },
+    5: { locator: SALTIRE_LOCATOR, scale: 0.5 },
+};
 const ORDINARIES = {
     bend,
     chevron,
@@ -677,6 +740,12 @@ function on(parent, { ordinary, surround, charge }) {
                 rotate: charge.posture ?? undefined,
             });
             parent.appendChild(c);
+        }
+        if (DEBUG) {
+            const debugPath = svg.path(locator.toSvgPath(), "none");
+            debugPath.setAttribute("stroke-width", "2");
+            debugPath.setAttribute("stroke", "magenta");
+            parent.appendChild(debugPath);
         }
     }
     if (surround) {
