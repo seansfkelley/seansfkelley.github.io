@@ -174,7 +174,7 @@ class ParametricPolyline implements ParametricLocator {
 
     let lowLimit = 0;
     for (const s of this.segments) {
-      if (t < s.highLimit) {
+      if (t <= s.highLimit) {
         const fraction = (t - lowLimit) / (s.highLimit - lowLimit);
         return [
           (s.dst[0] - s.src[0]) * fraction + s.src[0],
@@ -453,6 +453,34 @@ function chevron(tincture: Tincture) {
     tincture
   );
 }
+
+function chevronOnLocator(widthFraction: number) {
+  return new ParametricPolyline(
+    {
+      src: [-W_2 * widthFraction, W_2 * widthFraction - 10],
+      dst: [10, -10],
+      highLimit: 0.5,
+    },
+    {
+      src: [10, -10],
+      dst: [W_2 * widthFraction, W_2 * widthFraction - 10],
+      highLimit: 1,
+    }
+  );
+}
+
+// TODO: Make the chevron and saltire a tiiiiny bit wider.
+// TODO: Finish picking numbers for these.
+chevron.on = {
+  1: { locator: new ParametricPoint([0, -8]), scale: 0.4 },
+  2: { locator: chevronOnLocator(0.4), scale: 0.4 },
+  3: { locator: chevronOnLocator(0.5), scale: 0.4 },
+  4: { locator: chevronOnLocator(0.6), scale: 0.4 },
+  5: { locator: chevronOnLocator(0.7), scale: 0.4 },
+  6: { locator: chevronOnLocator(0.7), scale: 0.35 },
+  7: { locator: chevronOnLocator(0.7), scale: 0.35 },
+  8: { locator: chevronOnLocator(0.7), scale: 0.35 },
+} satisfies OrdinaryRenderer["on"];
 
 function cross(tincture: Tincture) {
   return svg.path(
