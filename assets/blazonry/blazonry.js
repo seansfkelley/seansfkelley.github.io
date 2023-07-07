@@ -238,39 +238,18 @@ function bend(tincture) {
       Z
     `, tincture);
 }
+function bendOnLocator(widthFraction) {
+    return new ParametricLine([-W_2 * widthFraction, -W_2 * widthFraction - 10], [W_2 * widthFraction, W_2 * widthFraction - 10]);
+}
 bend.on = {
-    1: {
-        locator: new ParametricPoint([0, -10]),
-        scale: 0.5,
-    },
-    2: {
-        locator: new ParametricLine([-W_2 * 0.4, -W_2 * 0.4 - 10], [W_2 * 0.4, W_2 * 0.4 - 10]),
-        scale: 0.5,
-    },
-    3: {
-        locator: new ParametricLine([-W_2 * 0.5, -W_2 * 0.5 - 10], [W_2 * 0.5, W_2 * 0.5 - 10]),
-        scale: 0.5,
-    },
-    4: {
-        locator: new ParametricLine([-W_2 * 0.6, -W_2 * 0.6 - 10], [W_2 * 0.6, W_2 * 0.6 - 10]),
-        scale: 0.5,
-    },
-    5: {
-        locator: new ParametricLine([-W_2 * 0.7, -W_2 * 0.7 - 10], [W_2 * 0.7, W_2 * 0.7 - 10]),
-        scale: 0.4,
-    },
-    6: {
-        locator: new ParametricLine([-W_2 * 0.7, -W_2 * 0.7 - 10], [W_2 * 0.7, W_2 * 0.7 - 10]),
-        scale: 0.35,
-    },
-    7: {
-        locator: new ParametricLine([-W_2 * 0.7, -W_2 * 0.7 - 10], [W_2 * 0.7, W_2 * 0.7 - 10]),
-        scale: 0.3,
-    },
-    8: {
-        locator: new ParametricLine([-W_2 * 0.7, -W_2 * 0.7 - 10], [W_2 * 0.7, W_2 * 0.7 - 10]),
-        scale: 0.25,
-    },
+    1: { locator: bendOnLocator(0), scale: 0.5 },
+    2: { locator: bendOnLocator(0.4), scale: 0.5 },
+    3: { locator: bendOnLocator(0.5), scale: 0.5 },
+    4: { locator: bendOnLocator(0.6), scale: 0.5 },
+    5: { locator: bendOnLocator(0.7), scale: 0.4 },
+    6: { locator: bendOnLocator(0.7), scale: 0.35 },
+    7: { locator: bendOnLocator(0.7), scale: 0.3 },
+    8: { locator: bendOnLocator(0.7), scale: 0.25 },
 };
 function chief(tincture) {
     return svg.path(path `
@@ -281,39 +260,18 @@ function chief(tincture) {
       Z
     `, tincture);
 }
+function chiefOnLocator(widthFraction) {
+    return new ParametricLine([-W_2 * widthFraction, -40], [W_2 * widthFraction, -40]);
+}
 chief.on = {
-    1: {
-        locator: new ParametricPoint([0, -40]),
-        scale: 0.6,
-    },
-    2: {
-        locator: new ParametricLine([-W_2 * 0.5, -40], [W_2 * 0.5, -40]),
-        scale: 0.6,
-    },
-    3: {
-        locator: new ParametricLine([-W_2 * 0.6, -40], [W_2 * 0.6, -40]),
-        scale: 0.5,
-    },
-    4: {
-        locator: new ParametricLine([-W_2 * 0.7, -40], [W_2 * 0.7, -40]),
-        scale: 0.4,
-    },
-    5: {
-        locator: new ParametricLine([-W_2 * 0.7, -40], [W_2 * 0.7, -40]),
-        scale: 0.3,
-    },
-    6: {
-        locator: new ParametricLine([-W_2 * 0.7, -40], [W_2 * 0.7, -40]),
-        scale: 0.25,
-    },
-    7: {
-        locator: new ParametricLine([-W_2 * 0.7, -40], [W_2 * 0.7, -40]),
-        scale: 0.2,
-    },
-    8: {
-        locator: new ParametricLine([-W_2 * 0.7, -40], [W_2 * 0.7, -40]),
-        scale: 0.18,
-    },
+    1: { locator: chiefOnLocator(0), scale: 0.6 },
+    2: { locator: chiefOnLocator(0.5), scale: 0.6 },
+    3: { locator: chiefOnLocator(0.6), scale: 0.5 },
+    4: { locator: chiefOnLocator(0.7), scale: 0.4 },
+    5: { locator: chiefOnLocator(0.7), scale: 0.3 },
+    6: { locator: chiefOnLocator(0.7), scale: 0.25 },
+    7: { locator: chiefOnLocator(0.7), scale: 0.2 },
+    8: { locator: chiefOnLocator(0.7), scale: 0.18 },
 };
 function chevron(tincture) {
     return svg.path(path `
@@ -351,26 +309,11 @@ const CROSS_LOCATOR = new ParametricMultiPoint([
     [0, -14],
 ]);
 cross.on = {
-    1: {
-        locator: new ParametricPoint([0, -14]),
-        scale: 0.4,
-    },
-    2: {
-        locator: CROSS_LOCATOR,
-        scale: 0.4,
-    },
-    3: {
-        locator: CROSS_LOCATOR,
-        scale: 0.4,
-    },
-    4: {
-        locator: CROSS_LOCATOR,
-        scale: 0.4,
-    },
-    5: {
-        locator: CROSS_LOCATOR,
-        scale: 0.4,
-    },
+    1: { locator: new ParametricPoint([0, -14]), scale: 0.4 },
+    2: { locator: CROSS_LOCATOR, scale: 0.4 },
+    3: { locator: CROSS_LOCATOR, scale: 0.4 },
+    4: { locator: CROSS_LOCATOR, scale: 0.4 },
+    5: { locator: CROSS_LOCATOR, scale: 0.4 },
 };
 function fess(tincture) {
     return svg.path(path `
@@ -381,39 +324,18 @@ function fess(tincture) {
       Z
     `, tincture);
 }
+function fessOnLocator(widthFraction) {
+    return new ParametricLine([-W_2 * widthFraction, -4], [W_2 * widthFraction, -4]);
+}
 fess.on = {
-    1: {
-        locator: new ParametricPoint([0, -4]),
-        scale: 0.6,
-    },
-    2: {
-        locator: new ParametricLine([-W_2 * 0.5, -4], [W_2 * 0.5, -4]),
-        scale: 0.6,
-    },
-    3: {
-        locator: new ParametricLine([-W_2 * 0.6, -4], [W_2 * 0.6, -4]),
-        scale: 0.5,
-    },
-    4: {
-        locator: new ParametricLine([-W_2 * 0.7, -4], [W_2 * 0.7, -4]),
-        scale: 0.4,
-    },
-    5: {
-        locator: new ParametricLine([-W_2 * 0.7, -4], [W_2 * 0.7, -4]),
-        scale: 0.3,
-    },
-    6: {
-        locator: new ParametricLine([-W_2 * 0.7, -4], [W_2 * 0.7, -4]),
-        scale: 0.25,
-    },
-    7: {
-        locator: new ParametricLine([-W_2 * 0.7, -4], [W_2 * 0.7, -4]),
-        scale: 0.2,
-    },
-    8: {
-        locator: new ParametricLine([-W_2 * 0.7, -4], [W_2 * 0.7, -4]),
-        scale: 0.18,
-    },
+    1: { locator: fessOnLocator(0), scale: 0.6 },
+    2: { locator: fessOnLocator(0.5), scale: 0.6 },
+    3: { locator: fessOnLocator(0.6), scale: 0.5 },
+    4: { locator: fessOnLocator(0.7), scale: 0.4 },
+    5: { locator: fessOnLocator(0.7), scale: 0.3 },
+    6: { locator: fessOnLocator(0.7), scale: 0.25 },
+    7: { locator: fessOnLocator(0.7), scale: 0.2 },
+    8: { locator: fessOnLocator(0.7), scale: 0.18 },
 };
 fess.surround = {
     2: [
