@@ -132,7 +132,7 @@ class ParametricMultiPoint implements ParametricLocator {
   public evaluate(index: number, total: number): Coordinate {
     assert(index < total, "index must be less than total");
     assert(
-      index <= this.points.length,
+      index < this.points.length,
       "index must be less than the number of points"
     );
     return this.points[index];
@@ -384,12 +384,13 @@ const svg = {
 // ----------------------------------------------------------------------------
 
 function bend(tincture: Tincture) {
+  const bendWidth = W_2 / 3;
   return svg.path(
     path`
-      M -59 -51
-      L  41  63
-      L  59  45
-      L -41 -69
+      M -${W_2 + bendWidth} -${H_2}
+      L -${W_2}             -${H_2 + bendWidth}
+      L  ${W_2 + bendWidth}  ${-H_2 + W}
+      L  ${W_2}              ${-H_2 + W + bendWidth}
       Z
     `,
     tincture
@@ -397,24 +398,59 @@ function bend(tincture: Tincture) {
 }
 
 bend.on = {
-  1: [
-    Transform.of(0, -3, 0.4), //
-  ],
-  2: [
-    Transform.of(-15, -20, 0.4), //
-    Transform.of(15, 14, 0.4),
-  ],
-  3: [
-    Transform.of(-25, -32, 0.4), //
-    Transform.of(0, -3, 0.4),
-    Transform.of(24, 24, 0.4),
-  ],
-  4: [
-    Transform.of(-31, -38, 0.4), //
-    Transform.of(-10, -14, 0.4),
-    Transform.of(10, 8, 0.4),
-    Transform.of(29, 29, 0.4),
-  ],
+  1: {
+    locator: new ParametricPoint([0, -10]),
+    scale: 0.5,
+  },
+  2: {
+    locator: new ParametricLine(
+      [-W_2 * 0.4, -W_2 * 0.4 - 10],
+      [W_2 * 0.4, W_2 * 0.4 - 10]
+    ),
+    scale: 0.5,
+  },
+  3: {
+    locator: new ParametricLine(
+      [-W_2 * 0.5, -W_2 * 0.5 - 10],
+      [W_2 * 0.5, W_2 * 0.5 - 10]
+    ),
+    scale: 0.5,
+  },
+  4: {
+    locator: new ParametricLine(
+      [-W_2 * 0.6, -W_2 * 0.6 - 10],
+      [W_2 * 0.6, W_2 * 0.6 - 10]
+    ),
+    scale: 0.5,
+  },
+  5: {
+    locator: new ParametricLine(
+      [-W_2 * 0.7, -W_2 * 0.7 - 10],
+      [W_2 * 0.7, W_2 * 0.7 - 10]
+    ),
+    scale: 0.4,
+  },
+  6: {
+    locator: new ParametricLine(
+      [-W_2 * 0.7, -W_2 * 0.7 - 10],
+      [W_2 * 0.7, W_2 * 0.7 - 10]
+    ),
+    scale: 0.35,
+  },
+  7: {
+    locator: new ParametricLine(
+      [-W_2 * 0.7, -W_2 * 0.7 - 10],
+      [W_2 * 0.7, W_2 * 0.7 - 10]
+    ),
+    scale: 0.3,
+  },
+  8: {
+    locator: new ParametricLine(
+      [-W_2 * 0.7, -W_2 * 0.7 - 10],
+      [W_2 * 0.7, W_2 * 0.7 - 10]
+    ),
+    scale: 0.25,
+  },
 } satisfies OrdinaryRenderer["on"];
 
 function chief(tincture: Tincture) {
