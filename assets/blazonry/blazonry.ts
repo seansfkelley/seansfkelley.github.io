@@ -77,6 +77,15 @@ function applyTransforms(
   element.setAttribute("transform", transform);
 }
 
+function evaluateLineSegment(
+  src: Coordinate,
+  dst: Coordinate,
+  t: number
+): Coordinate {
+  assert(t >= 0 && t <= 1, "parameter must be on [0, 1]");
+  return [(dst[0] - src[0]) * t + src[0], (dst[1] - src[1]) * t + src[1]];
+}
+
 const QUARTERINGS: Record<Quarter, { translate: Coordinate }> = {
   1: {
     translate: [-25, -30],
@@ -110,12 +119,8 @@ class LineSegmentLocator implements ParametricLocator {
     }
 
     for (let i = 0; i < total; ++i) {
-      const t = (i + 1) / (total + 1);
       yield [
-        [
-          (this.b[0] - this.a[0]) * t + this.a[0],
-          (this.b[1] - this.a[1]) * t + this.a[1],
-        ],
+        evaluateLineSegment(this.a, this.b, (i + 1) / (total + 1)),
         this.scales[total - 1],
       ];
     }
@@ -157,6 +162,51 @@ class MultiPointLocator implements ParametricLocator {
   public toSvgPath(): string {
     // TODO
     return "";
+  }
+}
+
+class ChevronLocator implements ParametricLocator {
+  constructor(
+    private left: Coordinate,
+    private midpoint: Coordinate,
+    private right: Coordinate,
+    private scales: number[]
+  ) {}
+
+  public *forCount(total: number): Generator<[Coordinate, number]> {
+    if (total > this.scales.length) {
+      return;
+    }
+
+    const scale = this.scales[total - 1];
+
+    const halfish = (total % 2 === 1 ? total - 1 : total) / 2;
+
+    for (let i = 0; i < halfish; ++i) {
+      yield [
+        evaluateLineSegment(this.left, this.midpoint, (i + 1) / (halfish + 1)),
+        scale,
+      ];
+    }
+
+    if (total % 2 === 1) {
+      yield [this.midpoint, scale];
+    }
+
+    for (let i = 0; i < halfish; ++i) {
+      yield [
+        evaluateLineSegment(this.midpoint, this.right, (i + 1) / (halfish + 1)),
+        scale,
+      ];
+    }
+  }
+
+  public toSvgPath(): string {
+    return path`
+      M ${this.left[0]} ${this.left[1]}
+      L ${this.midpoint[0]} ${this.midpoint[1]}
+      L ${this.right[0]} ${this.right[1]}
+    `;
   }
 }
 
@@ -475,47 +525,12 @@ function chevron(tincture: Tincture) {
   );
 }
 
-function chevronOnLocator(fraction: number, isEven: boolean) {
-  if (isEven) {
-    return new ParametricPolyline(
-      {
-        src: [-W_2 * fraction, W_2 * fraction - 10],
-        dst: [-W_2 * 0.1, -10 + W_2 * 0.1],
-        highLimit: 0.5,
-      },
-      {
-        src: [W_2 * 0.1, -10 + W_2 * 0.1],
-        dst: [W_2 * fraction, W_2 * fraction - 10],
-        highLimit: 1,
-      }
-    );
-  } else {
-    return new ParametricPolyline(
-      {
-        src: [-W_2 * fraction, W_2 * fraction - 10],
-        dst: [0, -8],
-        highLimit: 0.5,
-      },
-      {
-        src: [0, -8],
-        dst: [W_2 * fraction, W_2 * fraction - 10],
-        highLimit: 1,
-      }
-    );
-  }
-}
-
-// TODO
-chevron.on = {
-  // 1: { locator: chevronOnLocator(0, false), scale: 0.4 },
-  // 2: { locator: chevronOnLocator(0.3, true), scale: 0.4 },
-  // 3: { locator: chevronOnLocator(0.4, false), scale: 0.4 },
-  // 4: { locator: chevronOnLocator(0.6, true), scale: 0.4 },
-  // 5: { locator: chevronOnLocator(0.6, false), scale: 0.35 },
-  // 6: { locator: chevronOnLocator(0.7, true), scale: 0.35 },
-  // 7: { locator: chevronOnLocator(0.7, false), scale: 0.3 },
-  // 8: { locator: chevronOnLocator(0.7, true), scale: 0.25 },
-} satisfies OrdinaryRenderer["on"];
+chevron.on = new ChevronLocator(
+  [-W_2, W_2 - 10],
+  [0, -10],
+  [W_2, W_2 - 10],
+  [0.4, 0.4, 0.4, 0.4, 0.35, 0.35, 0.3, 0.25]
+) satisfies OrdinaryRenderer["on"];
 
 function cross(tincture: Tincture) {
   return svg.path(
