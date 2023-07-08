@@ -273,10 +273,10 @@ function path(strings: TemplateStringsArray, ...values: number[]): string {
 
 const COUNTERCHANGED = "counterchanged";
 
-function parseAndRenderBlazon(text: string) {
+function parseAndRenderBlazon() {
   let result;
   try {
-    result = parser.parse(text.trim().toLowerCase());
+    result = parser.parse(input.value.trim().toLowerCase());
     error.style.display = "none";
   } catch (e) {
     error.innerHTML = (e as PeggyParser.SyntaxError).toString();
@@ -978,17 +978,18 @@ const error: HTMLPreElement = document.querySelector("#error")!;
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  parseAndRenderBlazon(input.value);
+  parseAndRenderBlazon();
 });
 
 for (const example of document.querySelectorAll<HTMLAnchorElement>(
-  "a.example"
+  "[data-example]"
 )) {
   example.addEventListener("click", (e) => {
     e.preventDefault();
-    input.value = (e!.target as HTMLAnchorElement).innerHTML;
-    parseAndRenderBlazon(input.value);
+    const a = e.target as HTMLAnchorElement;
+    input.value = a.dataset.example || a.innerHTML;
+    parseAndRenderBlazon();
   });
 }
 
-parseAndRenderBlazon(input.value);
+parseAndRenderBlazon();

@@ -22,10 +22,10 @@ Try these:
 
 <!-- TODO: Use more famous ones! -->
 
-- <a class="example" href="#">Azure, a bend Or.</a>
-- <a class="example" href="#">Party per pale gules and vert.</a>
-- <a class="example" href="#">Argent, a cross Gules.</a>
-- <a class="example" href="#">Argent on a chevron Gules between three leopard's faces Sable three castles Or.</a>
+- <a href="#" data-example>Azure, a bend Or.</a>
+- <a href="#" data-example>Party per pale gules and vert.</a>
+- <a href="#" data-example>Argent, a cross Gules.</a>
+- <a href="#" data-example>Argent on a chevron Gules between three leopard's faces Sable three castles Or.</a>
 
 <div class="center">
   <form id="form">

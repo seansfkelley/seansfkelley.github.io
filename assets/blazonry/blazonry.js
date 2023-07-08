@@ -148,10 +148,10 @@ function path(strings, ...values) {
     return parts.join("").trim().replaceAll("\n", "").replaceAll(/ +/g, " ");
 }
 const COUNTERCHANGED = "counterchanged";
-function parseAndRenderBlazon(text) {
+function parseAndRenderBlazon() {
     let result;
     try {
-        result = parser.parse(text.trim().toLowerCase());
+        result = parser.parse(input.value.trim().toLowerCase());
         error.style.display = "none";
     }
     catch (e) {
@@ -726,13 +726,14 @@ const rendered = document.querySelector("#rendered");
 const error = document.querySelector("#error");
 form.addEventListener("submit", (e) => {
     e.preventDefault();
-    parseAndRenderBlazon(input.value);
+    parseAndRenderBlazon();
 });
-for (const example of document.querySelectorAll("a.example")) {
+for (const example of document.querySelectorAll("[data-example]")) {
     example.addEventListener("click", (e) => {
         e.preventDefault();
-        input.value = e.target.innerHTML;
-        parseAndRenderBlazon(input.value);
+        const a = e.target;
+        input.value = a.dataset.example || a.innerHTML;
+        parseAndRenderBlazon();
     });
 }
-parseAndRenderBlazon(input.value);
+parseAndRenderBlazon();
