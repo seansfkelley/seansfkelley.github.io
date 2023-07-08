@@ -11,6 +11,8 @@
 // - decorations for lines (e.g. embattled, engrailed, etc.)
 // - parser can't figure out the correct assignment of the quarterly rules to parse this:
 //     quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
+// - should be able to parse non-redundant usage of colors
+//     argent on a bend between six mullets vert
 
 const DEBUG = false;
 
@@ -263,7 +265,7 @@ interface On {
   on: true;
   ordinary: Ordinary;
   surround?: Charge | null;
-  charge: Charge;
+  charge?: Charge | null;
 }
 
 interface OrdinaryRenderer {
@@ -946,30 +948,32 @@ function on(parent: SVGElement, { ordinary, surround, charge }: On) {
   g.appendChild(ORDINARIES[ordinary.ordinary](ordinary.tincture));
   parent.appendChild(g);
 
-  assert(
-    charge.direction == null,
-    'cannot specify a direction for charges in "on"'
-  );
+  if (charge != null) {
+    assert(
+      charge.direction == null,
+      'cannot specify a direction for charges in "on"'
+    );
 
-  const locator = ORDINARIES[ordinary.ordinary].on;
-  for (const [translate, scale] of locator.forCount(charge.count)) {
-    const c = CHARGES[charge.charge](charge.tincture);
-    applyTransforms(c, {
-      translate,
-      scale,
-      rotate: charge.posture ?? undefined,
-    });
-    parent.appendChild(c);
+    const locator = ORDINARIES[ordinary.ordinary].on;
+    for (const [translate, scale] of locator.forCount(charge.count)) {
+      const c = CHARGES[charge.charge](charge.tincture);
+      applyTransforms(c, {
+        translate,
+        scale,
+        rotate: charge.posture ?? undefined,
+      });
+      parent.appendChild(c);
+    }
+
+    if (DEBUG) {
+      const debugPath = svg.path(locator.toSvgPath(), "none");
+      debugPath.setAttribute("stroke-width", "2");
+      debugPath.setAttribute("stroke", "magenta");
+      parent.appendChild(debugPath);
+    }
   }
 
-  if (DEBUG) {
-    const debugPath = svg.path(locator.toSvgPath(), "none");
-    debugPath.setAttribute("stroke-width", "2");
-    debugPath.setAttribute("stroke", "magenta");
-    parent.appendChild(debugPath);
-  }
-
-  if (surround) {
+  if (surround != null) {
     assert(
       surround.direction == null,
       'cannot specify a direction for charges in "between"'

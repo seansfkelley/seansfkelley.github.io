@@ -23,7 +23,9 @@ Quarterly
   = "quarterly" _ quarters:Quarter+ { return { quarters } }
 
 SimpleContent
-  = Ordinary
+  // Order matters here since both start with an Ordinary.
+  = ordinary:Ordinary _ "between" _ surround:PluralCharge { return { on: true, ordinary, surround } }
+  / Ordinary
   / Charge
   / "on" _ ordinary:Ordinary _ charge:Charge { return { on: true, ordinary, charge } }
   / "on" _ ordinary:Ordinary _ "between" _ surround:PluralCharge _ charge:Charge { return { on: true, ordinary, surround, charge } }
@@ -31,9 +33,9 @@ SimpleContent
 Quarter
   // TODO: Make this an actual list rule?
   = quarter:QuarterName _ content:ComplexContent { return { quarters: [quarter], content } }
-  / quarter1:QuarterName _ "and"? _ quarter2:QuarterName _ content:ComplexContent { return { quarters: [quarter1, quarter2], content  } }
-  / quarter1:QuarterName _ quarter2:QuarterName _ "and"? _ quarter3:QuarterName _ content:ComplexContent { return { quarters: [quarter1, quarter2, quarter3], content  } }
-  / quarter1:QuarterName _ quarter2:QuarterName _ quarter3:QuarterName _ "and"? _ quarter4:QuarterName _ content:ComplexContent { return { quarters: [quarter1, quarter2, quarter3, quarter4], content  } }
+  / quarter1:QuarterName _ "and" _ quarter2:QuarterName _ content:ComplexContent { return { quarters: [quarter1, quarter2], content  } }
+  / quarter1:QuarterName _ quarter2:QuarterName _ "and" _ quarter3:QuarterName _ content:ComplexContent { return { quarters: [quarter1, quarter2, quarter3], content  } }
+  / quarter1:QuarterName _ quarter2:QuarterName _ quarter3:QuarterName _ "and" _ quarter4:QuarterName _ content:ComplexContent { return { quarters: [quarter1, quarter2, quarter3, quarter4], content  } }
 
 Ordinary
   = Singular _ ordinary:OrdinaryName _ tincture:Tincture { return { ordinary, tincture } }
