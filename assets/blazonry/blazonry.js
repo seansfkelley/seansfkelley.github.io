@@ -587,24 +587,53 @@ function checky(count = 8) {
     // w < h, so we use that to determine step (also it's more intuitive)
     const step = W / count;
     let d = "";
-    for (let x = 0; x < count; ++x) {
-        for (let y = x % 2; y < (H / W) * count; y += 2) {
+    for (let y = 0; y < (H / W) * count; y++) {
+        for (let x = y % 2; x < count; x += 2) {
             d += path `
-        M ${-W_2 + x * step}        ${-H_2 + y * step}
-        L ${-W_2 + x * step}        ${-H_2 + y * step + step}
-        L ${-W_2 + x * step + step} ${-H_2 + y * step + step}
-        L ${-W_2 + x * step + step} ${-H_2 + y * step}
+        M ${-W_2 + x * step}       ${-H_2 + y * step}
+        L ${-W_2 + x * step}       ${-H_2 + (y + 1) * step}
+        L ${-W_2 + (x + 1) * step} ${-H_2 + (y + 1) * step}
+        L ${-W_2 + (x + 1) * step} ${-H_2 + y * step}
         Z
       `;
         }
     }
     return d;
 }
-function chevronny(count) {
-    throw new Error("unimplemented");
+function chevronny(count = 6) {
+    const step = H / (count - 2);
+    let d = "";
+    // start from the bottom -- we always want to have one nice pointy chevron there
+    for (let i = count - 1; i >= 0; i -= 2) {
+        d += path `
+      M       0 ${H_2 - i * step}
+      l  ${W_2} ${W_2}
+      l       0 ${step}
+      L       0 ${H_2 - (i - 1) * step}
+      l ${-W_2} ${W_2}
+      l       0 ${-step}
+      Z
+    `;
+    }
+    return d;
 }
-function lozengy(count) {
-    throw new Error("unimplemented");
+function lozengy(count = 8) {
+    // -1 because we have half of one on the left and half on the right, so we want a _slightly_
+    // larger step to make sure we end up spanning the whole width
+    const step = W / (count - 1);
+    let d = "";
+    for (let y = 0; y < (H / W) * count; y += 2) {
+        for (let x = 0; x < count; x++) {
+            d += path `
+        M ${-W_2 + x * step}         ${-H_2 + y * step}
+        L ${-W_2 + (x + 0.5) * step} ${-H_2 + (y + 1) * step}
+        L ${-W_2 + x * step}         ${-H_2 + (y + 2) * step}
+        L ${-W_2 + (x - 0.5) * step} ${-H_2 + (y + 1) * step}
+        Z
+      `;
+        }
+    }
+    return d;
 }
 function paly(count = 6) {
     const step = W / count;
