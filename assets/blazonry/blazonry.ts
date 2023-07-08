@@ -1,6 +1,6 @@
 // TODO
 // - do ParametricLocators for `surround`
-//   - instead of a bunch for different sizes, maybe have a single class that accepts an arbitrary `total`
+// - adjust positioning for `on` -- often the 2s and 3s are too close to each other, like for chief
 // - canton
 // - posture -- for things like swords, requires resizing
 // - direction... does it work?
@@ -91,23 +91,75 @@ const QUARTERINGS: Record<Quarter, { translate: Coordinate }> = {
 };
 
 interface ParametricLocator2 {
-  evaluate(index: number, total: number): [Coordinate, number];
+  evaluate(index: number, total: number): [Coordinate, number] | undefined;
+  toSvgPath(): string;
 }
 
 class LineSegmentLocator implements ParametricLocator2 {
-  constructor(private a: Coordinate, private b: Coordinate) {}
+  constructor(
+    private a: Coordinate,
+    private b: Coordinate,
+    private scales: number[]
+  ) {}
 
-  evaluate(index: number, total: number): [Coordinate, number] {
+  evaluate(index: number, total: number): [Coordinate, number] | undefined {
     assert(index < total, "index must be less than total");
     assert(index >= 0, "index must be nonnegative");
-    const t = index / (total + 1);
+
+    if (total > this.scales.length) {
+      return undefined;
+    }
+
+    const t = (index + 1) / (total + 1);
     return [
       [
         (this.b[0] - this.a[0]) * t + this.a[0],
         (this.b[1] - this.a[1]) * t + this.a[1],
       ],
-      1,
+      this.scales[total - 1],
     ];
+  }
+
+  public toSvgPath(): string {
+    return path`
+      M ${this.a[0]} ${this.a[1]}
+      L ${this.b[0]} ${this.b[1]}
+    `;
+  }
+}
+
+class MultiPointLocator implements ParametricLocator2 {
+  constructor(
+    private sequence: Coordinate[],
+    private scales: number[],
+    private exceptions: Record<number, Coordinate[]> = {}
+  ) {
+    assert(
+      sequence.length === scales.length,
+      "must have the same number of coordinates in sequence as scales"
+    );
+  }
+
+  public evaluate(
+    index: number,
+    total: number
+  ): [Coordinate, number] | undefined {
+    assert(index < total, "index must be less than total");
+    assert(index >= 0, "index must be nonnegative");
+
+    if (total > this.sequence.length) {
+      return undefined;
+    }
+
+    return [
+      this.exceptions[total]?.[index] ?? this.sequence[index],
+      this.scales[total - 1],
+    ];
+  }
+
+  public toSvgPath(): string {
+    // TODO
+    return "";
   }
 }
 
@@ -281,13 +333,9 @@ interface On {
 
 interface OrdinaryRenderer {
   (tincture: Tincture): SVGElement;
-  // If undefined, render nothing for the scale. It's too silly.
-  on: Partial<
-    Record<Count, { locator: ParametricLocator; scale: number } | undefined>
-  >;
-  surround: Partial<
-    Record<Count, { locator: ParametricLocator; scale: number }>
-  >;
+  // If undefined, render nothing.
+  on: ParametricLocator2;
+  surround: ParametricLocator2;
 }
 
 interface ChargeRenderer {
@@ -502,25 +550,11 @@ function bend(tincture: Tincture) {
   );
 }
 
-function bendOnLocator(fraction: number) {
-  return new ParametricLine(
-    [-W_2 * fraction, -W_2 * fraction - 10],
-    [W_2 * fraction, W_2 * fraction - 10]
-  );
-}
-
-// TODO: Don't enumerate every. Single. Option.
-// bend.on = new LineSegmentLocator([-W_2, -H_2], [W_2, -H_2 + W]);
-bend.on = {
-  1: { locator: bendOnLocator(0), scale: 0.5 },
-  2: { locator: bendOnLocator(0.4), scale: 0.5 },
-  3: { locator: bendOnLocator(0.5), scale: 0.5 },
-  4: { locator: bendOnLocator(0.6), scale: 0.5 },
-  5: { locator: bendOnLocator(0.7), scale: 0.4 },
-  6: { locator: bendOnLocator(0.7), scale: 0.35 },
-  7: { locator: bendOnLocator(0.7), scale: 0.3 },
-  8: { locator: bendOnLocator(0.7), scale: 0.25 },
-} satisfies OrdinaryRenderer["on"];
+bend.on = new LineSegmentLocator(
+  [-W_2, -H_2],
+  [W_2, -H_2 + W],
+  [0.5, 0.5, 0.5, 0.5, 0.4, 0.35, 0.3, 0.25]
+) satisfies OrdinaryRenderer["on"];
 
 function chief(tincture: Tincture) {
   return svg.path(
@@ -535,20 +569,11 @@ function chief(tincture: Tincture) {
   );
 }
 
-function chiefOnLocator(fraction: number) {
-  return new ParametricLine([-W_2 * fraction, -40], [W_2 * fraction, -40]);
-}
-
-chief.on = {
-  1: { locator: chiefOnLocator(0), scale: 0.6 },
-  2: { locator: chiefOnLocator(0.5), scale: 0.6 },
-  3: { locator: chiefOnLocator(0.6), scale: 0.5 },
-  4: { locator: chiefOnLocator(0.7), scale: 0.4 },
-  5: { locator: chiefOnLocator(0.7), scale: 0.3 },
-  6: { locator: chiefOnLocator(0.7), scale: 0.25 },
-  7: { locator: chiefOnLocator(0.7), scale: 0.2 },
-  8: { locator: chiefOnLocator(0.7), scale: 0.18 },
-} satisfies OrdinaryRenderer["on"];
+chief.on = new LineSegmentLocator(
+  [-W_2, -40],
+  [W_2, -40],
+  [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]
+) satisfies OrdinaryRenderer["on"];
 
 function chevron(tincture: Tincture) {
   return svg.path(
@@ -627,21 +652,21 @@ function cross(tincture: Tincture) {
   );
 }
 
-const CROSS_LOCATOR = new ParametricMultiPoint(
-  [-30, -14],
-  [30, -14],
-  [0, -44],
-  [0, 16],
-  [0, -14]
-);
+const CROSS_LOCATOR = new ParametricMultiPoint();
 
-cross.on = {
-  1: { locator: new ParametricPoint([0, -14]), scale: 0.4 },
-  2: { locator: CROSS_LOCATOR, scale: 0.4 },
-  3: { locator: CROSS_LOCATOR, scale: 0.4 },
-  4: { locator: CROSS_LOCATOR, scale: 0.4 },
-  5: { locator: CROSS_LOCATOR, scale: 0.4 },
-} satisfies OrdinaryRenderer["on"];
+cross.on = new MultiPointLocator(
+  [
+    [-30, -14],
+    [30, -14],
+    [0, -44],
+    [0, 16],
+    [0, -14],
+  ],
+  [0.4, 0.4, 0.4, 0.4, 0.4],
+  {
+    1: [[0, -14]],
+  }
+) satisfies OrdinaryRenderer["on"];
 
 function fess(tincture: Tincture) {
   return svg.path(
@@ -656,20 +681,11 @@ function fess(tincture: Tincture) {
   );
 }
 
-function fessOnLocator(fraction: number) {
-  return new ParametricLine([-W_2 * fraction, -4], [W_2 * fraction, -4]);
-}
-
-fess.on = {
-  1: { locator: fessOnLocator(0), scale: 0.6 },
-  2: { locator: fessOnLocator(0.5), scale: 0.6 },
-  3: { locator: fessOnLocator(0.6), scale: 0.5 },
-  4: { locator: fessOnLocator(0.7), scale: 0.4 },
-  5: { locator: fessOnLocator(0.7), scale: 0.3 },
-  6: { locator: fessOnLocator(0.7), scale: 0.25 },
-  7: { locator: fessOnLocator(0.7), scale: 0.2 },
-  8: { locator: fessOnLocator(0.7), scale: 0.18 },
-} satisfies OrdinaryRenderer["on"];
+fess.on = new LineSegmentLocator(
+  [-W_2, -4],
+  [W_2, 4],
+  [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]
+) satisfies OrdinaryRenderer["on"];
 
 function pale(tincture: Tincture) {
   return svg.path(
@@ -684,20 +700,11 @@ function pale(tincture: Tincture) {
   );
 }
 
-function paleOnLocator(fraction: number) {
-  return new ParametricLine([0, -H_2 * fraction], [0, H_2 * fraction]);
-}
-
-pale.on = {
-  1: { locator: paleOnLocator(0), scale: 0.6 },
-  2: { locator: paleOnLocator(0.4), scale: 0.6 },
-  3: { locator: paleOnLocator(0.6), scale: 0.5 },
-  4: { locator: paleOnLocator(0.6), scale: 0.4 },
-  5: { locator: paleOnLocator(0.7), scale: 0.4 },
-  6: { locator: paleOnLocator(0.7), scale: 0.3 },
-  7: { locator: paleOnLocator(0.7), scale: 0.3 },
-  8: { locator: paleOnLocator(0.7), scale: 0.2 },
-} satisfies OrdinaryRenderer["on"];
+pale.on = new LineSegmentLocator(
+  [0, -H_2],
+  [0, H_2],
+  [0.6, 0.6, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2]
+) satisfies OrdinaryRenderer["on"];
 
 function saltire(tincture: Tincture) {
   return svg.path(
@@ -720,21 +727,19 @@ function saltire(tincture: Tincture) {
   );
 }
 
-const SALTIRE_LOCATOR = new ParametricMultiPoint(
-  [-25, -35],
-  [25, -35],
-  [25, 15],
-  [-25, 15],
-  [0, -10]
-);
-
-saltire.on = {
-  1: { locator: new ParametricPoint([0, -10]), scale: 0.5 },
-  2: { locator: SALTIRE_LOCATOR, scale: 0.5 },
-  3: { locator: SALTIRE_LOCATOR, scale: 0.5 },
-  4: { locator: SALTIRE_LOCATOR, scale: 0.5 },
-  5: { locator: SALTIRE_LOCATOR, scale: 0.5 },
-} satisfies OrdinaryRenderer["on"];
+saltire.on = new MultiPointLocator(
+  [
+    [-25, -35],
+    [25, -35],
+    [25, 15],
+    [-25, 15],
+    [0, -10],
+  ],
+  [0.5, 0.5, 0.5, 0.5, 0.5],
+  {
+    1: [[0, -10]],
+  }
+) satisfies OrdinaryRenderer["on"];
 
 const ORDINARIES: Record<string, OrdinaryRenderer> = {
   bend,
@@ -776,24 +781,7 @@ function mullet(tincture: Tincture) {
   );
 }
 
-const CHARGE_DIRECTIONS: Record<
-  Direction | "none",
-  Partial<Record<Count, { locator: ParametricLocator; scale: number }>>
-> = {
-  none: {
-    1: {
-      locator: new ParametricPoint([0, 0]),
-      scale: 1,
-    },
-    2: {
-      locator: new ParametricMultiPoint([-20, 0], [20, 0]),
-      scale: 0.75,
-    },
-    3: {
-      locator: new ParametricMultiPoint([0, -30], [-25, 15], [25, 15]),
-      scale: 0.7,
-    },
-  },
+const CHARGE_DIRECTIONS: Record<Direction | "none", ParametricLocator2> = {
   fess: fess.on,
   pale: pale.on,
 };
@@ -951,18 +939,15 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     } else if ("ordinary" in element) {
       parent.appendChild(ORDINARIES[element.ordinary](element.tincture));
     } else if ("charge" in element) {
-      const parameters =
-        CHARGE_DIRECTIONS[element.direction ?? "none"][element.count];
-      if (parameters != null) {
-        const { locator, scale } = parameters;
-        for (let i = 0; i < element.count; ++i) {
-          const rendered = CHARGES[element.charge](element.tincture);
-          applyTransforms(rendered, {
-            translate: locator.evaluate(i, element.count),
-            scale,
-          });
-          parent.appendChild(rendered);
+      const locator = CHARGE_DIRECTIONS[element.direction ?? "none"];
+      for (let i = 0; i < element.count; ++i) {
+        const rendered = CHARGES[element.charge](element.tincture);
+        const location = locator.evaluate(i, element.count);
+        if (location != null) {
+          const [translate, scale] = location;
+          applyTransforms(rendered, { translate, scale });
         }
+        parent.appendChild(rendered);
       }
     } else {
       assertNever(element);
@@ -1071,14 +1056,12 @@ function on(parent: SVGElement, { ordinary, surround, charge }: On) {
     'cannot specify a direction for charges in "on"'
   );
 
-  const parameters = ORDINARIES[ordinary.ordinary].on[charge.count];
-
-  if (parameters != null) {
-    const { locator, scale } = parameters;
-
-    for (let i = 0; i < charge.count; ++i) {
-      const c = CHARGES[charge.charge](charge.tincture);
-      const translate = locator.evaluate(i, charge.count);
+  const locator = ORDINARIES[ordinary.ordinary].on;
+  for (let i = 0; i < charge.count; ++i) {
+    const c = CHARGES[charge.charge](charge.tincture);
+    const location = locator.evaluate(i, charge.count);
+    if (location != null) {
+      const [translate, scale] = location;
       applyTransforms(c, {
         translate,
         scale,
