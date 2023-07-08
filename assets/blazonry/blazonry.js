@@ -66,6 +66,20 @@ function applyTransforms(element, { translate, scale, rotate, } = {}) {
         .join(" ");
     element.setAttribute("transform", transform);
 }
+const QUARTERINGS = {
+    1: {
+        translate: [-25, -30],
+    },
+    2: {
+        translate: [25, -30],
+    },
+    3: {
+        translate: [-25, 30],
+    },
+    4: {
+        translate: [25, 30],
+    },
+};
 class ParametricPoint {
     point;
     constructor(point) {
@@ -723,10 +737,17 @@ function complexContent(container, content) {
             3: svg.g(),
             4: svg.g(),
         };
-        Transform.apply(Transform.of(-25, -30, 0.5), quartered[1]);
-        Transform.apply(Transform.of(25, -30, 0.5), quartered[2]);
-        Transform.apply(Transform.of(-25, 30, 0.5), quartered[3]);
-        Transform.apply(Transform.of(25, 30, 0.5), quartered[4]);
+        for (const [i_, { translate }] of Object.entries(QUARTERINGS)) {
+            const i = +i_;
+            applyTransforms(quartered[i], { translate, scale: 0.5 });
+            quartered[i].style.clipPath = path `path("
+        M -${W_2} -${H_2}
+        L  ${W_2} -${H_2}
+        L  ${W_2}  ${H_2}
+        L -${W_2}  ${H_2}
+        Z
+      ")`;
+        }
         for (const quartering of content.quarters) {
             for (const quarter of quartering.quarters) {
                 complexContent(quartered[quarter], quartering.content);
