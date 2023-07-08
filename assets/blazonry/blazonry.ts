@@ -447,10 +447,10 @@ bend.on = new LineSegmentLocator(
 function chief(tincture: Tincture) {
   return svg.path(
     path`
-      M -50 -60
-      L -50 -20
-      L  50 -20
-      L  50 -60
+      M -${W_2} ${-H_2}
+      L -${W_2} ${-H_2 + H / 3}
+      L  ${W_2} ${-H_2 + H / 3}
+      L  ${W_2} ${-H_2}
       Z
     `,
     tincture
@@ -458,8 +458,8 @@ function chief(tincture: Tincture) {
 }
 
 chief.on = new LineSegmentLocator(
-  [-W_2, -40],
-  [W_2, -40],
+  [-W_2, -H_2 + H_2 / 3],
+  [W_2, -H_2 + H_2 / 3],
   [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]
 ) satisfies OrdinaryRenderer["on"];
 
@@ -570,7 +570,7 @@ function fess(tincture: Tincture) {
 
 fess.on = new LineSegmentLocator(
   [-W_2, -4],
-  [W_2, 4],
+  [W_2, -4],
   [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]
 ) satisfies OrdinaryRenderer["on"];
 

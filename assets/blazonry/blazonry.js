@@ -298,14 +298,14 @@ function bend(tincture) {
 bend.on = new LineSegmentLocator([-W_2, -H_2], [W_2, -H_2 + W], [0.5, 0.5, 0.5, 0.5, 0.4, 0.35, 0.3, 0.25]);
 function chief(tincture) {
     return svg.path(path `
-      M -50 -60
-      L -50 -20
-      L  50 -20
-      L  50 -60
+      M -${W_2} ${-H_2}
+      L -${W_2} ${-H_2 + H / 3}
+      L  ${W_2} ${-H_2 + H / 3}
+      L  ${W_2} ${-H_2}
       Z
     `, tincture);
 }
-chief.on = new LineSegmentLocator([-W_2, -40], [W_2, -40], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
+chief.on = new LineSegmentLocator([-W_2, -H_2 + H_2 / 3], [W_2, -H_2 + H_2 / 3], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
 function chevron(tincture) {
     return svg.path(path `
       M   0 -26
@@ -387,7 +387,7 @@ function fess(tincture) {
       Z
     `, tincture);
 }
-fess.on = new LineSegmentLocator([-W_2, -4], [W_2, 4], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
+fess.on = new LineSegmentLocator([-W_2, -4], [W_2, -4], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
 function pale(tincture) {
     return svg.path(path `
       M -15 -60
