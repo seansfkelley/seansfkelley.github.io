@@ -151,7 +151,11 @@ class ParametricPoint implements ParametricLocator {
 }
 
 class ParametricMultiPoint implements ParametricLocator {
-  public constructor(private points: Coordinate[]) {}
+  private points: Coordinate[];
+
+  public constructor(...points: Coordinate[]) {
+    this.points = points;
+  }
 
   public evaluate(index: number, total: number): Coordinate {
     assert(index < total, "index must be less than total");
@@ -638,13 +642,13 @@ function cross(tincture: Tincture) {
   );
 }
 
-const CROSS_LOCATOR = new ParametricMultiPoint([
+const CROSS_LOCATOR = new ParametricMultiPoint(
   [-30, -14],
   [30, -14],
   [0, -44],
   [0, 16],
-  [0, -14],
-]);
+  [0, -14]
+);
 
 cross.on = {
   1: { locator: new ParametricPoint([0, -14]), scale: 0.4 },
@@ -749,13 +753,13 @@ function saltire(tincture: Tincture) {
   );
 }
 
-const SALTIRE_LOCATOR = new ParametricMultiPoint([
+const SALTIRE_LOCATOR = new ParametricMultiPoint(
   [-25, -35],
   [25, -35],
   [25, 15],
   [-25, 15],
-  [0, -10],
-]);
+  [0, -10]
+);
 
 saltire.on = {
   1: { locator: new ParametricPoint([0, -10]), scale: 0.5 },
@@ -807,42 +811,24 @@ function mullet(tincture: Tincture) {
 
 const CHARGE_DIRECTIONS: Record<
   Direction | "none",
-  Record<number, Transform[]>
+  Partial<Record<Count, { locator: ParametricLocator; scale: number }>>
 > = {
   none: {
-    1: [
-      Transform.of(0, -5), //
-    ],
-    2: [
-      Transform.of(-20, -5, 0.75), //
-      Transform.of(20, -5, 0.75),
-    ],
-    3: [
-      Transform.of(0, -23, 0.75), //
-      Transform.of(-20, 7, 0.75),
-      Transform.of(20, 7, 0.75),
-    ],
+    1: {
+      locator: new ParametricPoint([0, 0]),
+      scale: 1,
+    },
+    2: {
+      locator: new ParametricMultiPoint([-20, 0], [20, 0]),
+      scale: 0.75,
+    },
+    3: {
+      locator: new ParametricMultiPoint([0, -30], [-25, 15], [25, 15]),
+      scale: 0.7,
+    },
   },
-  fess: {
-    1: [
-      Transform.of(0, -5), //
-    ],
-    2: [
-      Transform.of(-20, -5, 0.75), //
-      Transform.of(20, -5, 0.75),
-    ],
-    3: [
-      Transform.of(-30, -5, 0.5), //
-      Transform.of(0, -5, 0.5),
-      Transform.of(30, -5, 0.5),
-    ],
-    4: [
-      Transform.of(-33, -5, 0.4), //
-      Transform.of(-11, -5, 0.4),
-      Transform.of(11, -5, 0.4),
-      Transform.of(33, -5, 0.4),
-    ],
-  },
+  fess: fess.on,
+  pale: pale.on,
 };
 
 const CHARGES: Record<string, ChargeRenderer> = {
@@ -998,12 +984,18 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     } else if ("ordinary" in element) {
       parent.appendChild(ORDINARIES[element.ordinary](element.tincture));
     } else if ("charge" in element) {
-      for (const transform of CHARGE_DIRECTIONS[element.direction ?? "none"][
-        element.count
-      ] ?? []) {
-        const rendered = CHARGES[element.charge](element.tincture);
-        Transform.apply(transform, rendered, element);
-        parent.appendChild(rendered);
+      const parameters =
+        CHARGE_DIRECTIONS[element.direction ?? "none"][element.count];
+      if (parameters != null) {
+        const { locator, scale } = parameters;
+        for (let i = 0; i < element.count; ++i) {
+          const rendered = CHARGES[element.charge](element.tincture);
+          applyTransforms(rendered, {
+            translate: locator.evaluate(i, element.count),
+            scale,
+          });
+          parent.appendChild(rendered);
+        }
       }
     } else {
       assertNever(element);
