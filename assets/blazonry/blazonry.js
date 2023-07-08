@@ -3,8 +3,9 @@
 // - do something like ParametricLocators but for `surround`
 // - canton
 // - posture -- for things like swords, requires resizing
+// - direction... does it work?
 // - push elements around when quartering
-// - party per field can also have complex content in it
+// - can party per field have complex content in it?
 // - minor visual effects to make it a little less flat
 // - fancy paths for fancy charges: lion, leopard's head, castle, and all their variants
 // - decorations for lines (e.g. embattled, engrailed, etc.)
@@ -242,12 +243,88 @@ function field(tincture) {
 }
 const PARTY_PER_CLIP_PATHS = {
     pale: [
-        'path("M -50 -60 L 0 -60 L 0 60 L -50 60 Z")',
-        'path("M 0 -60 L 0 60 L 50 60 L 50 -60 Z")',
+        path `
+      M -${W_2} -${H_2}
+      L       0 -${H_2}
+      L       0  ${H_2}
+      L -${W_2}  ${H_2}
+    `,
+        path `
+      M       0 -${H_2}
+      L       0  ${H_2}
+      L  ${W_2}  ${H_2}
+      L  ${W_2} -${H_2}
+    `,
     ],
     fess: [
-        'path("M -50 -60 L -50 0 L 50 0 L 50 -60 Z")',
-        'path("M -50 60 L -50 0 L 50 0 L 50 60 Z")',
+        path `
+      M -${W_2} -${H_2}
+      L -${W_2}       0
+      L  ${W_2}       0
+      L  ${W_2} -${H_2}
+      Z
+    `,
+        path `
+      M -${W_2} ${H_2}
+      L -${W_2}      0
+      L  ${W_2}      0
+      L  ${W_2} ${H_2}
+      Z
+    `,
+    ],
+    bend: [
+        path `
+      M -${W_2} ${-H_2}
+      L  ${W_2} ${-H_2}
+      L  ${W_2} ${-H_2 + W}
+      Z
+    `,
+        path `
+      M -${W_2} ${-H_2}
+      L  ${W_2} ${-H_2 + W}
+      L  ${W_2} ${H_2}
+      L -${W_2} ${H_2}
+      Z
+    `,
+    ],
+    chevron: [
+        // TODO: Done empirically, and to run the midline of the chevron ordinary. Both these and the
+        // ordinary should be rewritten to be based on W/H.
+        path `
+      M -51  41
+      L   0 -10
+      L  51  41
+      L  51  60
+      L -51  60
+      Z
+    `,
+        path `
+      M -51  41
+      L   0 -10
+      L  51  41
+      L  51 -60
+      L -51 -60
+      Z
+    `,
+    ],
+    saltire: [
+        // TODO: Same here as above for chevron.
+        path `
+      M -51  41
+      L  52 -62
+      L -52 -62
+      L  51  41
+      L  51  60
+      L -51  60
+      Z
+    `,
+        path `
+      M -52 -62
+      L  51  41
+      L  52 -62
+      L -51  41
+      Z
+    `,
     ],
 };
 // ----------------------------------------------------------------------------
@@ -695,32 +772,34 @@ function complexContent(container, content) {
     }
     function overwriteCounterchangedTincture(element, tincture) {
         if ("on" in element) {
-            return {
-                ...element,
-                // Note that we do NOT overwrite the `charge` tincture. That's a function of the `on`, not the field.
-                surround: element.surround
-                    ? {
-                        ...element.surround,
-                        tincture,
-                    }
-                    : undefined,
-            };
+            if (element.surround?.tincture === COUNTERCHANGED) {
+                return {
+                    ...element,
+                    // Note that we do NOT overwrite the `charge` tincture. That's a function of the `on`, not the field.
+                    surround: { ...element.surround, tincture },
+                };
+            }
         }
         else if ("ordinary" in element) {
-            return { ...element, tincture };
+            if (element.tincture === COUNTERCHANGED) {
+                return { ...element, tincture };
+            }
         }
         else if ("charge" in element) {
-            return { ...element, tincture };
+            if (element.tincture === COUNTERCHANGED) {
+                return { ...element, tincture };
+            }
         }
         else {
             assertNever(element);
         }
+        return element;
     }
     if ("direction" in content) {
         const g1 = svg.g();
+        g1.style.clipPath = `path("${PARTY_PER_CLIP_PATHS[content.direction][0]}")`;
         const g2 = svg.g();
-        [g1.style.clipPath, g2.style.clipPath] =
-            PARTY_PER_CLIP_PATHS[content.direction];
+        g2.style.clipPath = `path("${PARTY_PER_CLIP_PATHS[content.direction][1]}")`;
         g1.appendChild(field(content.first));
         g2.appendChild(field(content.second));
         if (content.content) {
