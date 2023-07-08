@@ -92,6 +92,7 @@ class MultiPointLocator {
     sequence;
     scales;
     exceptions;
+    static EMPTY = Symbol("empty");
     constructor(sequence, scales, exceptions = {}) {
         this.sequence = sequence;
         this.scales = scales;
@@ -102,11 +103,12 @@ class MultiPointLocator {
         if (total > this.sequence.length) {
             return;
         }
+        const sequence = this.exceptions[total] ?? this.sequence;
+        if (sequence === MultiPointLocator.EMPTY) {
+            return;
+        }
         for (let i = 0; i < total; ++i) {
-            yield [
-                this.exceptions[total]?.[i] ?? this.sequence[i],
-                this.scales[total - 1],
-            ];
+            yield [sequence[i], this.scales[total - 1]];
         }
     }
     toSvgPath() {
@@ -435,6 +437,14 @@ saltire.on = new MultiPointLocator([
 ], [0.5, 0.5, 0.5, 0.5, 0.5], {
     1: [[0, -10]],
 });
+saltire.surround = new MultiPointLocator([
+    [0, -H_2 + 12],
+    [-W_2 + 12, -10],
+    [W_2 - 12, -10],
+    [0, -H_2 + W - 12],
+], [0.5, 0.5, 0.5, 0.5], {
+    1: MultiPointLocator.EMPTY,
+});
 const ORDINARIES = {
     bend,
     chevron,
@@ -724,8 +734,16 @@ function on(parent, { ordinary, surround, charge }) {
     }
     if (surround != null) {
         assert(surround.direction == null, 'cannot specify a direction for charges in "between"');
-        assert(surround.count != null && surround.count !== 1, "surround charge must have plural count");
-        // TODO
+        const locator = ORDINARIES[ordinary.ordinary].surround;
+        for (const [translate, scale] of locator.forCount(surround.count)) {
+            const c = CHARGES[surround.charge](surround.tincture);
+            applyTransforms(c, {
+                translate,
+                scale,
+                rotate: surround.posture ?? undefined,
+            });
+            parent.appendChild(c);
+        }
     }
 }
 // ----------------------------------------------------------------------------

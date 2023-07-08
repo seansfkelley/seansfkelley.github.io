@@ -137,10 +137,15 @@ class LineSegmentLocator implements ParametricLocator {
 }
 
 class MultiPointLocator implements ParametricLocator {
+  static readonly EMPTY: unique symbol = Symbol("empty");
+
   constructor(
     private sequence: Coordinate[],
     private scales: number[],
-    private exceptions: Record<number, Coordinate[]> = {}
+    private exceptions: Record<
+      number,
+      Coordinate[] | typeof MultiPointLocator.EMPTY
+    > = {}
   ) {
     assert(
       sequence.length === scales.length,
@@ -153,11 +158,14 @@ class MultiPointLocator implements ParametricLocator {
       return;
     }
 
+    const sequence = this.exceptions[total] ?? this.sequence;
+
+    if (sequence === MultiPointLocator.EMPTY) {
+      return;
+    }
+
     for (let i = 0; i < total; ++i) {
-      yield [
-        this.exceptions[total]?.[i] ?? this.sequence[i],
-        this.scales[total - 1],
-      ];
+      yield [sequence[i], this.scales[total - 1]];
     }
   }
 
@@ -270,7 +278,6 @@ interface On {
 
 interface OrdinaryRenderer {
   (tincture: Tincture): SVGElement;
-  // If undefined, render nothing.
   on: ParametricLocator;
   surround: ParametricLocator;
 }
@@ -642,6 +649,19 @@ saltire.on = new MultiPointLocator(
   }
 ) satisfies OrdinaryRenderer["on"];
 
+saltire.surround = new MultiPointLocator(
+  [
+    [0, -H_2 + 12],
+    [-W_2 + 12, -10],
+    [W_2 - 12, -10],
+    [0, -H_2 + W - 12],
+  ],
+  [0.5, 0.5, 0.5, 0.5],
+  {
+    1: MultiPointLocator.EMPTY,
+  }
+) satisfies OrdinaryRenderer["surround"];
+
 const ORDINARIES: Record<string, OrdinaryRenderer> = {
   bend,
   chevron,
@@ -978,11 +998,17 @@ function on(parent: SVGElement, { ordinary, surround, charge }: On) {
       surround.direction == null,
       'cannot specify a direction for charges in "between"'
     );
-    assert(
-      surround.count != null && surround.count !== 1,
-      "surround charge must have plural count"
-    );
-    // TODO
+
+    const locator = ORDINARIES[ordinary.ordinary].surround;
+    for (const [translate, scale] of locator.forCount(surround.count)) {
+      const c = CHARGES[surround.charge](surround.tincture);
+      applyTransforms(c, {
+        translate,
+        scale,
+        rotate: surround.posture ?? undefined,
+      });
+      parent.appendChild(c);
+    }
   }
 }
 
