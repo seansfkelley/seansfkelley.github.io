@@ -1,6 +1,7 @@
 "use strict";
 // TODO
-// - do something like ParametricLocators but for `surround`
+// - do ParametricLocators for `surround`
+//   - instead of a bunch for different sizes, maybe have a single class that accepts an arbitrary `total`
 // - canton
 // - posture -- for things like swords, requires resizing
 // - direction... does it work?
@@ -10,35 +11,6 @@
 // - fancy paths for fancy charges: lion, leopard's head, castle, and all their variants
 // - decorations for lines (e.g. embattled, engrailed, etc.)
 const DEBUG = false;
-const Transform = {
-    of: (x, y, scale) => ({ x, y, scale }),
-    apply: ({ x, y, scale }, element, { posture } = {}) => {
-        const rotate = (() => {
-            switch (posture) {
-                case null:
-                case undefined:
-                case "palewise":
-                    return undefined;
-                case "fesswise":
-                    return "rotate(90)";
-                case "bendwise":
-                    return "rotate(45)";
-                case "saltirewise":
-                    return "rotate(45)"; // TODO
-                default:
-                    assertNever(posture);
-            }
-        })();
-        const transform = [
-            `translate(${x}, ${y})`,
-            scale != null && scale !== 1 ? `scale(${scale})` : undefined,
-            rotate,
-        ]
-            .filter(Boolean)
-            .join(" ");
-        element.setAttribute("transform", transform);
-    },
-};
 function applyTransforms(element, { translate, scale, rotate, } = {}) {
     function getRotation(posture) {
         switch (posture) {
@@ -81,6 +53,26 @@ const QUARTERINGS = {
         translate: [25, 30],
     },
 };
+class LineSegmentLocator {
+    a;
+    b;
+    constructor(a, b) {
+        this.a = a;
+        this.b = b;
+    }
+    evaluate(index, total) {
+        assert(index < total, "index must be less than total");
+        assert(index >= 0, "index must be nonnegative");
+        const t = index / (total + 1);
+        return [
+            [
+                (this.b[0] - this.a[0]) * t + this.a[0],
+                (this.b[1] - this.a[1]) * t + this.a[1],
+            ],
+            1,
+        ];
+    }
+}
 class ParametricPoint {
     point;
     constructor(point) {
@@ -357,6 +349,8 @@ function bend(tincture) {
 function bendOnLocator(fraction) {
     return new ParametricLine([-W_2 * fraction, -W_2 * fraction - 10], [W_2 * fraction, W_2 * fraction - 10]);
 }
+// TODO: Don't enumerate every. Single. Option.
+// bend.on = new LineSegmentLocator([-W_2, -H_2], [W_2, -H_2 + W]);
 bend.on = {
     1: { locator: bendOnLocator(0), scale: 0.5 },
     2: { locator: bendOnLocator(0.4), scale: 0.5 },
@@ -480,23 +474,6 @@ fess.on = {
     6: { locator: fessOnLocator(0.7), scale: 0.25 },
     7: { locator: fessOnLocator(0.7), scale: 0.2 },
     8: { locator: fessOnLocator(0.7), scale: 0.18 },
-};
-fess.surround = {
-    2: [
-        Transform.of(0, -42, 0.6),
-        Transform.of(0, 35, 0.6),
-    ],
-    3: [
-        Transform.of(-25, -42, 0.6),
-        Transform.of(25, -42, 0.6),
-        Transform.of(0, 35, 0.6),
-    ],
-    4: [
-        Transform.of(-25, -42, 0.6),
-        Transform.of(25, -42, 0.6),
-        Transform.of(-15, 35, 0.5),
-        Transform.of(15, 35, 0.5),
-    ],
 };
 function pale(tincture) {
     return svg.path(path `
@@ -857,11 +834,7 @@ function on(parent, { ordinary, surround, charge }) {
     if (surround) {
         assert(surround.direction == null, 'cannot specify a direction for charges in "between"');
         assert(surround.count != null && surround.count !== 1, "surround charge must have plural count");
-        for (const transform of ORDINARIES[ordinary.ordinary].surround[surround.count] ?? []) {
-            const c = CHARGES[surround.charge](surround.tincture);
-            Transform.apply(transform, c, surround);
-            parent.appendChild(c);
-        }
+        // TODO
     }
 }
 // ----------------------------------------------------------------------------

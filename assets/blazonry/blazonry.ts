@@ -1,5 +1,6 @@
 // TODO
-// - do something like ParametricLocators but for `surround`
+// - do ParametricLocators for `surround`
+//   - instead of a bunch for different sizes, maybe have a single class that accepts an arbitrary `total`
 // - canton
 // - posture -- for things like swords, requires resizing
 // - direction... does it work?
@@ -34,46 +35,7 @@ type Posture = "palewise" | "fesswise" | "bendwise" | "saltirewise";
 type Direction = "pale" | "fess" | "bend" | "chevron" | "saltire";
 type Quarter = 1 | 2 | 3 | 4;
 
-interface Transform {
-  x: number;
-  y: number;
-  scale?: number;
-}
-
-const Transform = {
-  of: (x: number, y: number, scale?: number): Transform => ({ x, y, scale }),
-  apply: (
-    { x, y, scale }: Transform,
-    element: SVGElement,
-    { posture }: { posture?: Posture | null | undefined } = {}
-  ): void => {
-    const rotate = (() => {
-      switch (posture) {
-        case null:
-        case undefined:
-        case "palewise":
-          return undefined;
-        case "fesswise":
-          return "rotate(90)";
-        case "bendwise":
-          return "rotate(45)";
-        case "saltirewise":
-          return "rotate(45)"; // TODO
-        default:
-          assertNever(posture);
-      }
-    })();
-
-    const transform = [
-      `translate(${x}, ${y})`,
-      scale != null && scale !== 1 ? `scale(${scale})` : undefined,
-      rotate,
-    ]
-      .filter(Boolean)
-      .join(" ");
-    element.setAttribute("transform", transform);
-  },
-};
+type Coordinate = [x: number, y: number];
 
 function applyTransforms(
   element: SVGElement,
@@ -128,7 +90,26 @@ const QUARTERINGS: Record<Quarter, { translate: Coordinate }> = {
   },
 };
 
-type Coordinate = [x: number, y: number];
+interface ParametricLocator2 {
+  evaluate(index: number, total: number): [Coordinate, number];
+}
+
+class LineSegmentLocator implements ParametricLocator2 {
+  constructor(private a: Coordinate, private b: Coordinate) {}
+
+  evaluate(index: number, total: number): [Coordinate, number] {
+    assert(index < total, "index must be less than total");
+    assert(index >= 0, "index must be nonnegative");
+    const t = index / (total + 1);
+    return [
+      [
+        (this.b[0] - this.a[0]) * t + this.a[0],
+        (this.b[1] - this.a[1]) * t + this.a[1],
+      ],
+      1,
+    ];
+  }
+}
 
 interface ParametricLocator {
   evaluate(index: number, total: number): Coordinate;
@@ -304,7 +285,9 @@ interface OrdinaryRenderer {
   on: Partial<
     Record<Count, { locator: ParametricLocator; scale: number } | undefined>
   >;
-  surround: Partial<Record<Count, Transform[] | undefined>>;
+  surround: Partial<
+    Record<Count, { locator: ParametricLocator; scale: number }>
+  >;
 }
 
 interface ChargeRenderer {
@@ -526,6 +509,8 @@ function bendOnLocator(fraction: number) {
   );
 }
 
+// TODO: Don't enumerate every. Single. Option.
+// bend.on = new LineSegmentLocator([-W_2, -H_2], [W_2, -H_2 + W]);
 bend.on = {
   1: { locator: bendOnLocator(0), scale: 0.5 },
   2: { locator: bendOnLocator(0.4), scale: 0.5 },
@@ -685,24 +670,6 @@ fess.on = {
   7: { locator: fessOnLocator(0.7), scale: 0.2 },
   8: { locator: fessOnLocator(0.7), scale: 0.18 },
 } satisfies OrdinaryRenderer["on"];
-
-fess.surround = {
-  2: [
-    Transform.of(0, -42, 0.6), //
-    Transform.of(0, 35, 0.6),
-  ],
-  3: [
-    Transform.of(-25, -42, 0.6), //
-    Transform.of(25, -42, 0.6),
-    Transform.of(0, 35, 0.6),
-  ],
-  4: [
-    Transform.of(-25, -42, 0.6), //
-    Transform.of(25, -42, 0.6),
-    Transform.of(-15, 35, 0.5),
-    Transform.of(15, 35, 0.5),
-  ],
-} satisfies OrdinaryRenderer["surround"];
 
 function pale(tincture: Tincture) {
   return svg.path(
@@ -1137,13 +1104,7 @@ function on(parent: SVGElement, { ordinary, surround, charge }: On) {
       surround.count != null && surround.count !== 1,
       "surround charge must have plural count"
     );
-    for (const transform of ORDINARIES[ordinary.ordinary].surround[
-      surround.count
-    ] ?? []) {
-      const c = CHARGES[surround.charge](surround.tincture);
-      Transform.apply(transform, c, surround);
-      parent.appendChild(c);
-    }
+    // TODO
   }
 }
 
