@@ -108,6 +108,16 @@ interface ParametricLocator {
   toSvgPath(): string;
 }
 
+class NullLocator implements ParametricLocator {
+  public *forCount() {
+    // nop
+  }
+
+  public toSvgPath(): string {
+    return "";
+  }
+}
+
 class LineSegmentLocator implements ParametricLocator {
   constructor(
     private a: Coordinate,
@@ -136,7 +146,7 @@ class LineSegmentLocator implements ParametricLocator {
   }
 }
 
-class MultiPointLocator implements ParametricLocator {
+class SequenceLocator implements ParametricLocator {
   static readonly EMPTY: unique symbol = Symbol("empty");
 
   constructor(
@@ -144,7 +154,7 @@ class MultiPointLocator implements ParametricLocator {
     private scales: number[],
     private exceptions: Record<
       number,
-      Coordinate[] | typeof MultiPointLocator.EMPTY
+      Coordinate[] | typeof SequenceLocator.EMPTY
     > = {}
   ) {
     assert(
@@ -160,13 +170,83 @@ class MultiPointLocator implements ParametricLocator {
 
     const sequence = this.exceptions[total] ?? this.sequence;
 
-    if (sequence === MultiPointLocator.EMPTY) {
+    if (sequence === SequenceLocator.EMPTY) {
       return;
     }
 
     for (let i = 0; i < total; ++i) {
       yield [sequence[i], this.scales[total - 1]];
     }
+  }
+
+  public toSvgPath(): string {
+    // TODO
+    return "";
+  }
+}
+
+class ExhaustiveLocator implements ParametricLocator {
+  constructor(private sequences: Coordinate[][], private scales: number[]) {
+    assert(
+      sequences.length === scales.length,
+      "must have the same number of sequences as scales"
+    );
+    for (let i = 0; i < sequences.length; ++i) {
+      assert(
+        sequences[i].length === i + 1,
+        `sequence at index ${i} must have ${i + 1} elements`
+      );
+    }
+  }
+
+  public *forCount(total: number): Generator<[Coordinate, number]> {
+    if (total > this.sequences.length) {
+      return;
+    }
+
+    for (const coordinates of this.sequences[total - 1]) {
+      yield [coordinates, this.scales[total - 1]];
+    }
+  }
+
+  public toSvgPath(): string {
+    // TODO
+    return "";
+  }
+}
+
+class ReflectiveLocator implements ParametricLocator {
+  constructor(
+    private delegate: ParametricLocator,
+    private a: Coordinate,
+    private b: Coordinate
+  ) {}
+
+  public *forCount(total: number): Generator<[Coordinate, number]> {
+    if (total % 2 === 1) {
+      yield* this.delegate.forCount((total - 1) / 2);
+      for (const [coordinate, scale] of this.delegate.forCount(
+        (total + 1) / 2
+      )) {
+        yield [this.reflect(coordinate), scale];
+      }
+    } else {
+      yield* this.delegate.forCount(total / 2);
+      for (const [coordinate, scale] of this.delegate.forCount(total / 2)) {
+        yield [this.reflect(coordinate), scale];
+      }
+    }
+  }
+
+  private reflect(coordinate: Coordinate): Coordinate {
+    // Too lazy to figure this out on my own, adapted from https://stackoverflow.com/a/3307181.
+    const [x, y] = coordinate;
+    const [x1, y1] = this.a;
+    const [x2, y2] = this.b;
+    const m = (y2 - y1) / (x2 - x1);
+    const c = (x2 * y1 - x1 * y2) / (x2 - x1);
+    const d = (x + (y - c) * m) / (1 + m * m);
+    return [2 * d - x, 2 * d * m - y + 2 * c];
   }
 
   public toSvgPath(): string {
@@ -498,7 +578,29 @@ bend.on = new LineSegmentLocator(
   [-W_2, -H_2],
   [W_2, -H_2 + W],
   [0.5, 0.5, 0.5, 0.5, 0.4, 0.35, 0.3, 0.25]
-) satisfies OrdinaryRenderer["on"];
+);
+
+bend.surround = new ReflectiveLocator(
+  new ExhaustiveLocator(
+    [
+      [
+        [W_2 - 22, -H_2 + 22], //
+      ],
+      [
+        [W_2 - 35, -H_2 + 15], //
+        [W_2 - 15, -H_2 + 35],
+      ],
+      [
+        [W_2 - 15, -H_2 + 15], //
+        [W_2 - 40, -H_2 + 15],
+        [W_2 - 15, -H_2 + 40],
+      ],
+    ],
+    [0.7, 0.5, 0.4]
+  ),
+  [-W_2, -H_2],
+  [W_2, -H_2 + W]
+);
 
 function chief(tincture: Tincture) {
   return svg.path(
@@ -517,7 +619,9 @@ chief.on = new LineSegmentLocator(
   [-W_2, -H_2 + H_2 / 3],
   [W_2, -H_2 + H_2 / 3],
   [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]
-) satisfies OrdinaryRenderer["on"];
+);
+
+chief.surround = new NullLocator();
 
 function chevron(tincture: Tincture) {
   return svg.path(
@@ -539,7 +643,7 @@ chevron.on = new ChevronLocator(
   [0, -10],
   [W_2, W_2 - 10],
   [0.4, 0.4, 0.4, 0.4, 0.35, 0.35, 0.3, 0.25]
-) satisfies OrdinaryRenderer["on"];
+);
 
 function cross(tincture: Tincture) {
   return svg.path(
@@ -562,7 +666,7 @@ function cross(tincture: Tincture) {
   );
 }
 
-cross.on = new MultiPointLocator(
+cross.on = new SequenceLocator(
   [
     [-30, -14],
     [30, -14],
@@ -574,7 +678,7 @@ cross.on = new MultiPointLocator(
   {
     1: [[0, -14]],
   }
-) satisfies OrdinaryRenderer["on"];
+);
 
 function fess(tincture: Tincture) {
   return svg.path(
@@ -593,7 +697,7 @@ fess.on = new LineSegmentLocator(
   [-W_2, -4],
   [W_2, -4],
   [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]
-) satisfies OrdinaryRenderer["on"];
+);
 
 function pale(tincture: Tincture) {
   return svg.path(
@@ -612,7 +716,7 @@ pale.on = new LineSegmentLocator(
   [0, -H_2],
   [0, H_2],
   [0.6, 0.6, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2]
-) satisfies OrdinaryRenderer["on"];
+);
 
 function saltire(tincture: Tincture) {
   return svg.path(
@@ -635,7 +739,7 @@ function saltire(tincture: Tincture) {
   );
 }
 
-saltire.on = new MultiPointLocator(
+saltire.on = new SequenceLocator(
   [
     [-25, -35],
     [25, -35],
@@ -647,9 +751,9 @@ saltire.on = new MultiPointLocator(
   {
     1: [[0, -10]],
   }
-) satisfies OrdinaryRenderer["on"];
+);
 
-saltire.surround = new MultiPointLocator(
+saltire.surround = new SequenceLocator(
   [
     [0, -H_2 + 12],
     [-W_2 + 12, -10],
@@ -658,9 +762,9 @@ saltire.surround = new MultiPointLocator(
   ],
   [0.5, 0.5, 0.5, 0.5],
   {
-    1: MultiPointLocator.EMPTY,
+    1: SequenceLocator.EMPTY,
   }
-) satisfies OrdinaryRenderer["surround"];
+);
 
 const ORDINARIES: Record<string, OrdinaryRenderer> = {
   bend,

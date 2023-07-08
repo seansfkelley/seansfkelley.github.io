@@ -61,6 +61,14 @@ const QUARTERINGS = {
         translate: [25, 30],
     },
 };
+class NullLocator {
+    *forCount() {
+        // nop
+    }
+    toSvgPath() {
+        return "";
+    }
+}
 class LineSegmentLocator {
     a;
     b;
@@ -88,7 +96,7 @@ class LineSegmentLocator {
     `;
     }
 }
-class MultiPointLocator {
+class SequenceLocator {
     sequence;
     scales;
     exceptions;
@@ -104,12 +112,74 @@ class MultiPointLocator {
             return;
         }
         const sequence = this.exceptions[total] ?? this.sequence;
-        if (sequence === MultiPointLocator.EMPTY) {
+        if (sequence === SequenceLocator.EMPTY) {
             return;
         }
         for (let i = 0; i < total; ++i) {
             yield [sequence[i], this.scales[total - 1]];
         }
+    }
+    toSvgPath() {
+        // TODO
+        return "";
+    }
+}
+class ExhaustiveLocator {
+    sequences;
+    scales;
+    constructor(sequences, scales) {
+        this.sequences = sequences;
+        this.scales = scales;
+        assert(sequences.length === scales.length, "must have the same number of sequences as scales");
+        for (let i = 0; i < sequences.length; ++i) {
+            assert(sequences[i].length === i + 1, `sequence at index ${i} must have ${i + 1} elements`);
+        }
+    }
+    *forCount(total) {
+        if (total > this.sequences.length) {
+            return;
+        }
+        for (const coordinates of this.sequences[total - 1]) {
+            yield [coordinates, this.scales[total - 1]];
+        }
+    }
+    toSvgPath() {
+        // TODO
+        return "";
+    }
+}
+class ReflectiveLocator {
+    delegate;
+    a;
+    b;
+    constructor(delegate, a, b) {
+        this.delegate = delegate;
+        this.a = a;
+        this.b = b;
+    }
+    *forCount(total) {
+        if (total % 2 === 1) {
+            yield* this.delegate.forCount((total - 1) / 2);
+            for (const [coordinate, scale] of this.delegate.forCount((total + 1) / 2)) {
+                yield [this.reflect(coordinate), scale];
+            }
+        }
+        else {
+            yield* this.delegate.forCount(total / 2);
+            for (const [coordinate, scale] of this.delegate.forCount(total / 2)) {
+                yield [this.reflect(coordinate), scale];
+            }
+        }
+    }
+    reflect(coordinate) {
+        // Too lazy to figure this out on my own, adapted from https://stackoverflow.com/a/3307181.
+        const [x, y] = coordinate;
+        const [x1, y1] = this.a;
+        const [x2, y2] = this.b;
+        const m = (y2 - y1) / (x2 - x1);
+        const c = (x2 * y1 - x1 * y2) / (x2 - x1);
+        const d = (x + (y - c) * m) / (1 + m * m);
+        return [2 * d - x, 2 * d * m - y + 2 * c];
     }
     toSvgPath() {
         // TODO
@@ -343,6 +413,20 @@ function bend(tincture) {
     `, tincture);
 }
 bend.on = new LineSegmentLocator([-W_2, -H_2], [W_2, -H_2 + W], [0.5, 0.5, 0.5, 0.5, 0.4, 0.35, 0.3, 0.25]);
+bend.surround = new ReflectiveLocator(new ExhaustiveLocator([
+    [
+        [W_2 - 22, -H_2 + 22], //
+    ],
+    [
+        [W_2 - 35, -H_2 + 15],
+        [W_2 - 15, -H_2 + 35],
+    ],
+    [
+        [W_2 - 15, -H_2 + 15],
+        [W_2 - 40, -H_2 + 15],
+        [W_2 - 15, -H_2 + 40],
+    ],
+], [0.7, 0.5, 0.4]), [-W_2, -H_2], [W_2, -H_2 + W]);
 function chief(tincture) {
     return svg.path(path `
       M -${W_2} ${-H_2}
@@ -353,6 +437,7 @@ function chief(tincture) {
     `, tincture);
 }
 chief.on = new LineSegmentLocator([-W_2, -H_2 + H_2 / 3], [W_2, -H_2 + H_2 / 3], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
+chief.surround = new NullLocator();
 function chevron(tincture) {
     return svg.path(path `
       M   0 -26
@@ -382,7 +467,7 @@ function cross(tincture) {
       Z
     `, tincture);
 }
-cross.on = new MultiPointLocator([
+cross.on = new SequenceLocator([
     [-30, -14],
     [30, -14],
     [0, -44],
@@ -428,7 +513,7 @@ function saltire(tincture) {
       Z
     `, tincture);
 }
-saltire.on = new MultiPointLocator([
+saltire.on = new SequenceLocator([
     [-25, -35],
     [25, -35],
     [25, 15],
@@ -437,13 +522,13 @@ saltire.on = new MultiPointLocator([
 ], [0.5, 0.5, 0.5, 0.5, 0.5], {
     1: [[0, -10]],
 });
-saltire.surround = new MultiPointLocator([
+saltire.surround = new SequenceLocator([
     [0, -H_2 + 12],
     [-W_2 + 12, -10],
     [W_2 - 12, -10],
     [0, -H_2 + W - 12],
 ], [0.5, 0.5, 0.5, 0.5], {
-    1: MultiPointLocator.EMPTY,
+    1: SequenceLocator.EMPTY,
 });
 const ORDINARIES = {
     bend,
