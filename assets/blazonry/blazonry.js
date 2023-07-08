@@ -158,17 +158,25 @@ class ReflectiveLocator {
         this.b = b;
     }
     *forCount(total) {
-        if (total % 2 === 1) {
-            yield* this.delegate.forCount((total - 1) / 2);
-            for (const [coordinate, scale] of this.delegate.forCount((total + 1) / 2)) {
-                yield [this.reflect(coordinate), scale];
-            }
+        const locations = total % 2 === 1
+            ? [
+                ...this.delegate.forCount((total - 1) / 2),
+                ...this.reflectSequence(this.delegate.forCount((total + 1) / 2)),
+            ]
+            : [
+                ...this.delegate.forCount(total / 2),
+                ...this.reflectSequence(this.delegate.forCount(total / 2)),
+            ];
+        if (locations.length < total) {
+            return;
         }
-        else {
-            yield* this.delegate.forCount(total / 2);
-            for (const [coordinate, scale] of this.delegate.forCount(total / 2)) {
-                yield [this.reflect(coordinate), scale];
-            }
+        for (const l of locations) {
+            yield l;
+        }
+    }
+    *reflectSequence(generator) {
+        for (const [translate, scale] of generator) {
+            yield [this.reflect(translate), scale];
         }
     }
     reflect(coordinate) {
@@ -176,6 +184,9 @@ class ReflectiveLocator {
         const [x, y] = coordinate;
         const [x1, y1] = this.a;
         const [x2, y2] = this.b;
+        if (x1 === x2) {
+            return [x1 - x, y];
+        }
         const m = (y2 - y1) / (x2 - x1);
         const c = (x2 * y1 - x1 * y2) / (x2 - x1);
         const d = (x + (y - c) * m) / (1 + m * m);
@@ -494,6 +505,7 @@ function fess(tincture) {
     `, tincture);
 }
 fess.on = new LineSegmentLocator([-W_2, -4], [W_2, -4], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
+fess.surround = new ReflectiveLocator(new LineSegmentLocator([-W_2, -H_2 + 18], [W_2, -H_2 + 18], [0.6, 0.5, 0.4, 0.4]), [-W_2, -4], [W_2, -4]);
 function pale(tincture) {
     return svg.path(path `
       M -15 -60
@@ -504,6 +516,7 @@ function pale(tincture) {
     `, tincture);
 }
 pale.on = new LineSegmentLocator([0, -H_2], [0, H_2], [0.6, 0.6, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2]);
+pale.surround = new ReflectiveLocator(new LineSegmentLocator([-W_2 + 18, -H_2], [-W_2 + 18, W_2 - 10], [0.6, 0.5, 0.4, 0.4]), [0, -H_2], [0, H_2]);
 function saltire(tincture) {
     return svg.path(path `
       M  44 -70
