@@ -9,6 +9,8 @@
 // - minor visual effects to make it a little less flat
 // - fancy paths for fancy charges: lion, leopard's head, castle, and all their variants
 // - decorations for lines (e.g. embattled, engrailed, etc.)
+// - parser can't figure out the correct assignment of the quarterly rules to parse this:
+//     quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
 
 const DEBUG = false;
 
@@ -91,7 +93,7 @@ const QUARTERINGS: Record<Quarter, { translate: Coordinate }> = {
 };
 
 interface ParametricLocator {
-  evaluate(index: number, total: number): [Coordinate, number] | undefined;
+  forCount(total: number): Generator<[Coordinate, number]>;
   toSvgPath(): string;
 }
 
@@ -102,22 +104,21 @@ class LineSegmentLocator implements ParametricLocator {
     private scales: number[]
   ) {}
 
-  evaluate(index: number, total: number): [Coordinate, number] | undefined {
-    assert(index < total, "index must be less than total");
-    assert(index >= 0, "index must be nonnegative");
-
+  public *forCount(total: number): Generator<[Coordinate, number]> {
     if (total > this.scales.length) {
-      return undefined;
+      return;
     }
 
-    const t = (index + 1) / (total + 1);
-    return [
-      [
-        (this.b[0] - this.a[0]) * t + this.a[0],
-        (this.b[1] - this.a[1]) * t + this.a[1],
-      ],
-      this.scales[total - 1],
-    ];
+    for (let i = 0; i < total; ++i) {
+      const t = (i + 1) / (total + 1);
+      yield [
+        [
+          (this.b[0] - this.a[0]) * t + this.a[0],
+          (this.b[1] - this.a[1]) * t + this.a[1],
+        ],
+        this.scales[total - 1],
+      ];
+    }
   }
 
   public toSvgPath(): string {
@@ -140,21 +141,17 @@ class MultiPointLocator implements ParametricLocator {
     );
   }
 
-  public evaluate(
-    index: number,
-    total: number
-  ): [Coordinate, number] | undefined {
-    assert(index < total, "index must be less than total");
-    assert(index >= 0, "index must be nonnegative");
-
+  public *forCount(total: number): Generator<[Coordinate, number]> {
     if (total > this.sequence.length) {
-      return undefined;
+      return;
     }
 
-    return [
-      this.exceptions[total]?.[index] ?? this.sequence[index],
-      this.scales[total - 1],
-    ];
+    for (let i = 0; i < total; ++i) {
+      yield [
+        this.exceptions[total]?.[i] ?? this.sequence[i],
+        this.scales[total - 1],
+      ];
+    }
   }
 
   public toSvgPath(): string {
@@ -827,13 +824,9 @@ function complexContent(container: SVGElement, content: ComplexContent) {
       parent.appendChild(ORDINARIES[element.ordinary](element.tincture));
     } else if ("charge" in element) {
       const locator = CHARGE_DIRECTIONS[element.direction ?? "none"];
-      for (let i = 0; i < element.count; ++i) {
+      for (const [translate, scale] of locator.forCount(element.count)) {
         const rendered = CHARGES[element.charge](element.tincture);
-        const location = locator.evaluate(i, element.count);
-        if (location != null) {
-          const [translate, scale] = location;
-          applyTransforms(rendered, { translate, scale });
-        }
+        applyTransforms(rendered, { translate, scale });
         parent.appendChild(rendered);
       }
     } else {
@@ -944,25 +937,21 @@ function on(parent: SVGElement, { ordinary, surround, charge }: On) {
   );
 
   const locator = ORDINARIES[ordinary.ordinary].on;
-  for (let i = 0; i < charge.count; ++i) {
+  for (const [translate, scale] of locator.forCount(charge.count)) {
     const c = CHARGES[charge.charge](charge.tincture);
-    const location = locator.evaluate(i, charge.count);
-    if (location != null) {
-      const [translate, scale] = location;
-      applyTransforms(c, {
-        translate,
-        scale,
-        rotate: charge.posture ?? undefined,
-      });
-      parent.appendChild(c);
-    }
+    applyTransforms(c, {
+      translate,
+      scale,
+      rotate: charge.posture ?? undefined,
+    });
+    parent.appendChild(c);
+  }
 
-    if (DEBUG) {
-      const debugPath = svg.path(locator.toSvgPath(), "none");
-      debugPath.setAttribute("stroke-width", "2");
-      debugPath.setAttribute("stroke", "magenta");
-      parent.appendChild(debugPath);
-    }
+  if (DEBUG) {
+    const debugPath = svg.path(locator.toSvgPath(), "none");
+    debugPath.setAttribute("stroke-width", "2");
+    debugPath.setAttribute("stroke", "magenta");
+    parent.appendChild(debugPath);
   }
 
   if (surround) {

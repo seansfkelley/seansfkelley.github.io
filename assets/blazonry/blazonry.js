@@ -10,6 +10,8 @@
 // - minor visual effects to make it a little less flat
 // - fancy paths for fancy charges: lion, leopard's head, castle, and all their variants
 // - decorations for lines (e.g. embattled, engrailed, etc.)
+// - parser can't figure out the correct assignment of the quarterly rules to parse this:
+//     quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
 const DEBUG = false;
 function applyTransforms(element, { translate, scale, rotate, } = {}) {
     function getRotation(posture) {
@@ -62,20 +64,20 @@ class LineSegmentLocator {
         this.b = b;
         this.scales = scales;
     }
-    evaluate(index, total) {
-        assert(index < total, "index must be less than total");
-        assert(index >= 0, "index must be nonnegative");
+    *forCount(total) {
         if (total > this.scales.length) {
-            return undefined;
+            return;
         }
-        const t = (index + 1) / (total + 1);
-        return [
-            [
-                (this.b[0] - this.a[0]) * t + this.a[0],
-                (this.b[1] - this.a[1]) * t + this.a[1],
-            ],
-            this.scales[total - 1],
-        ];
+        for (let i = 0; i < total; ++i) {
+            const t = (i + 1) / (total + 1);
+            yield [
+                [
+                    (this.b[0] - this.a[0]) * t + this.a[0],
+                    (this.b[1] - this.a[1]) * t + this.a[1],
+                ],
+                this.scales[total - 1],
+            ];
+        }
     }
     toSvgPath() {
         return path `
@@ -94,16 +96,16 @@ class MultiPointLocator {
         this.exceptions = exceptions;
         assert(sequence.length === scales.length, "must have the same number of coordinates in sequence as scales");
     }
-    evaluate(index, total) {
-        assert(index < total, "index must be less than total");
-        assert(index >= 0, "index must be nonnegative");
+    *forCount(total) {
         if (total > this.sequence.length) {
-            return undefined;
+            return;
         }
-        return [
-            this.exceptions[total]?.[index] ?? this.sequence[index],
-            this.scales[total - 1],
-        ];
+        for (let i = 0; i < total; ++i) {
+            yield [
+                this.exceptions[total]?.[i] ?? this.sequence[i],
+                this.scales[total - 1],
+            ];
+        }
     }
     toSvgPath() {
         // TODO
@@ -596,13 +598,9 @@ function complexContent(container, content) {
         }
         else if ("charge" in element) {
             const locator = CHARGE_DIRECTIONS[element.direction ?? "none"];
-            for (let i = 0; i < element.count; ++i) {
+            for (const [translate, scale] of locator.forCount(element.count)) {
                 const rendered = CHARGES[element.charge](element.tincture);
-                const location = locator.evaluate(i, element.count);
-                if (location != null) {
-                    const [translate, scale] = location;
-                    applyTransforms(rendered, { translate, scale });
-                }
+                applyTransforms(rendered, { translate, scale });
                 parent.appendChild(rendered);
             }
         }
@@ -698,24 +696,20 @@ function on(parent, { ordinary, surround, charge }) {
     parent.appendChild(g);
     assert(charge.direction == null, 'cannot specify a direction for charges in "on"');
     const locator = ORDINARIES[ordinary.ordinary].on;
-    for (let i = 0; i < charge.count; ++i) {
+    for (const [translate, scale] of locator.forCount(charge.count)) {
         const c = CHARGES[charge.charge](charge.tincture);
-        const location = locator.evaluate(i, charge.count);
-        if (location != null) {
-            const [translate, scale] = location;
-            applyTransforms(c, {
-                translate,
-                scale,
-                rotate: charge.posture ?? undefined,
-            });
-            parent.appendChild(c);
-        }
-        if (DEBUG) {
-            const debugPath = svg.path(locator.toSvgPath(), "none");
-            debugPath.setAttribute("stroke-width", "2");
-            debugPath.setAttribute("stroke", "magenta");
-            parent.appendChild(debugPath);
-        }
+        applyTransforms(c, {
+            translate,
+            scale,
+            rotate: charge.posture ?? undefined,
+        });
+        parent.appendChild(c);
+    }
+    if (DEBUG) {
+        const debugPath = svg.path(locator.toSvgPath(), "none");
+        debugPath.setAttribute("stroke-width", "2");
+        debugPath.setAttribute("stroke", "magenta");
+        parent.appendChild(debugPath);
     }
     if (surround) {
         assert(surround.direction == null, 'cannot specify a direction for charges in "between"');
