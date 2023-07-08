@@ -476,6 +476,14 @@ cross.on = new SequenceLocator([
 ], [0.4, 0.4, 0.4, 0.4, 0.4], {
     1: [[0, -14]],
 });
+cross.surround = new SequenceLocator([
+    [-30, -42],
+    [30, -42],
+    [30, 12],
+    [-30, 12],
+], [0.5, 0.5, 0.5, 0.5], {
+    1: SequenceLocator.EMPTY,
+});
 function fess(tincture) {
     return svg.path(path `
       M -50 -25

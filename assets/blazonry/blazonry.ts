@@ -680,6 +680,19 @@ cross.on = new SequenceLocator(
   }
 );
 
+cross.surround = new SequenceLocator(
+  [
+    [-30, -42],
+    [30, -42],
+    [30, 12],
+    [-30, 12],
+  ],
+  [0.5, 0.5, 0.5, 0.5],
+  {
+    1: SequenceLocator.EMPTY,
+  }
+);
+
 function fess(tincture: Tincture) {
   return svg.path(
     path`
