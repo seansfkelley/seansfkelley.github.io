@@ -110,94 +110,6 @@ class MultiPointLocator {
         return "";
     }
 }
-class ParametricPoint {
-    point;
-    constructor(point) {
-        this.point = point;
-    }
-    evaluate(index, total) {
-        assert(index < total, "index must be less than total");
-        assert(index >= 0, "index must be nonnegative");
-        return this.point;
-    }
-    toSvgPath() {
-        // TODO
-        return "";
-    }
-}
-class ParametricMultiPoint {
-    points;
-    constructor(...points) {
-        this.points = points;
-    }
-    evaluate(index, total) {
-        assert(index < total, "index must be less than total");
-        assert(index < this.points.length, "index must be less than the number of points");
-        assert(index >= 0, "index must be nonnegative");
-        return this.points[index];
-    }
-    toSvgPath() {
-        // TODO
-        return "";
-    }
-}
-class ParametricLine {
-    src;
-    dst;
-    constructor(src, dst) {
-        this.src = src;
-        this.dst = dst;
-    }
-    evaluate(index, total) {
-        assert(index < total, "index must be less than total");
-        assert(index >= 0, "index must be nonnegative");
-        const t = total === 1 ? 0.5 : index / (total - 1);
-        return [
-            (this.dst[0] - this.src[0]) * t + this.src[0],
-            (this.dst[1] - this.src[1]) * t + this.src[1],
-        ];
-    }
-    toSvgPath() {
-        return path `
-      M ${this.src[0]} ${this.src[1]}
-      L ${this.dst[0]} ${this.dst[1]}
-    `;
-    }
-}
-class ParametricPolyline {
-    segments;
-    constructor(...segments) {
-        assert(segments.length > 0, "must have at least one segment");
-        assert(segments.at(-1).highLimit === 1, "last segment must end at 1");
-        this.segments = segments;
-    }
-    evaluate(index, total) {
-        assert(index < total, "index must be less than total");
-        assert(index >= 0, "index must be nonnegative");
-        const t = total === 1 ? 0.5 : index / (total - 1);
-        let lowLimit = 0;
-        for (const s of this.segments) {
-            if (t <= s.highLimit) {
-                const fraction = (t - lowLimit) / (s.highLimit - lowLimit);
-                return [
-                    (s.dst[0] - s.src[0]) * fraction + s.src[0],
-                    (s.dst[1] - s.src[1]) * fraction + s.src[1],
-                ];
-            }
-            else {
-                lowLimit = s.highLimit;
-            }
-        }
-        throw new Error("should be unreachable");
-    }
-    toSvgPath() {
-        const segments = this.segments.map((s) => path `
-      M ${s.src[0]} ${s.src[1]}
-      L ${s.dst[0]} ${s.dst[1]}
-    `);
-        return segments.join(" ");
-    }
-}
 function assert(condition, message) {
     if (!condition) {
         throw new Error(`assertion failure: ${message}`);
@@ -429,15 +341,16 @@ function chevronOnLocator(fraction, isEven) {
         });
     }
 }
+// TODO
 chevron.on = {
-    1: { locator: chevronOnLocator(0, false), scale: 0.4 },
-    2: { locator: chevronOnLocator(0.3, true), scale: 0.4 },
-    3: { locator: chevronOnLocator(0.4, false), scale: 0.4 },
-    4: { locator: chevronOnLocator(0.6, true), scale: 0.4 },
-    5: { locator: chevronOnLocator(0.6, false), scale: 0.35 },
-    6: { locator: chevronOnLocator(0.7, true), scale: 0.35 },
-    7: { locator: chevronOnLocator(0.7, false), scale: 0.3 },
-    8: { locator: chevronOnLocator(0.7, true), scale: 0.25 },
+// 1: { locator: chevronOnLocator(0, false), scale: 0.4 },
+// 2: { locator: chevronOnLocator(0.3, true), scale: 0.4 },
+// 3: { locator: chevronOnLocator(0.4, false), scale: 0.4 },
+// 4: { locator: chevronOnLocator(0.6, true), scale: 0.4 },
+// 5: { locator: chevronOnLocator(0.6, false), scale: 0.35 },
+// 6: { locator: chevronOnLocator(0.7, true), scale: 0.35 },
+// 7: { locator: chevronOnLocator(0.7, false), scale: 0.3 },
+// 8: { locator: chevronOnLocator(0.7, true), scale: 0.25 },
 };
 function cross(tincture) {
     return svg.path(path `
@@ -456,7 +369,6 @@ function cross(tincture) {
       Z
     `, tincture);
 }
-const CROSS_LOCATOR = new ParametricMultiPoint();
 cross.on = new MultiPointLocator([
     [-30, -14],
     [30, -14],

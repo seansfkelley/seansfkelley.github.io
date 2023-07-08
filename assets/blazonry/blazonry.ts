@@ -90,12 +90,12 @@ const QUARTERINGS: Record<Quarter, { translate: Coordinate }> = {
   },
 };
 
-interface ParametricLocator2 {
+interface ParametricLocator {
   evaluate(index: number, total: number): [Coordinate, number] | undefined;
   toSvgPath(): string;
 }
 
-class LineSegmentLocator implements ParametricLocator2 {
+class LineSegmentLocator implements ParametricLocator {
   constructor(
     private a: Coordinate,
     private b: Coordinate,
@@ -128,7 +128,7 @@ class LineSegmentLocator implements ParametricLocator2 {
   }
 }
 
-class MultiPointLocator implements ParametricLocator2 {
+class MultiPointLocator implements ParametricLocator {
   constructor(
     private sequence: Coordinate[],
     private scales: number[],
@@ -160,118 +160,6 @@ class MultiPointLocator implements ParametricLocator2 {
   public toSvgPath(): string {
     // TODO
     return "";
-  }
-}
-
-interface ParametricLocator {
-  evaluate(index: number, total: number): Coordinate;
-  toSvgPath(): string;
-}
-
-class ParametricPoint implements ParametricLocator {
-  public constructor(private point: Coordinate) {}
-
-  public evaluate(index: number, total: number): Coordinate {
-    assert(index < total, "index must be less than total");
-    assert(index >= 0, "index must be nonnegative");
-    return this.point;
-  }
-
-  public toSvgPath(): string {
-    // TODO
-    return "";
-  }
-}
-
-class ParametricMultiPoint implements ParametricLocator {
-  private points: Coordinate[];
-
-  public constructor(...points: Coordinate[]) {
-    this.points = points;
-  }
-
-  public evaluate(index: number, total: number): Coordinate {
-    assert(index < total, "index must be less than total");
-    assert(
-      index < this.points.length,
-      "index must be less than the number of points"
-    );
-    assert(index >= 0, "index must be nonnegative");
-    return this.points[index];
-  }
-
-  public toSvgPath(): string {
-    // TODO
-    return "";
-  }
-}
-
-class ParametricLine implements ParametricLocator {
-  public constructor(private src: Coordinate, private dst: Coordinate) {}
-
-  public evaluate(index: number, total: number): Coordinate {
-    assert(index < total, "index must be less than total");
-    assert(index >= 0, "index must be nonnegative");
-    const t = total === 1 ? 0.5 : index / (total - 1);
-
-    return [
-      (this.dst[0] - this.src[0]) * t + this.src[0],
-      (this.dst[1] - this.src[1]) * t + this.src[1],
-    ];
-  }
-
-  public toSvgPath(): string {
-    return path`
-      M ${this.src[0]} ${this.src[1]}
-      L ${this.dst[0]} ${this.dst[1]}
-    `;
-  }
-}
-
-interface Segment {
-  src: Coordinate;
-  dst: Coordinate;
-  highLimit: number;
-}
-
-class ParametricPolyline implements ParametricLocator {
-  private segments: Segment[];
-
-  public constructor(...segments: Segment[]) {
-    assert(segments.length > 0, "must have at least one segment");
-    assert(segments.at(-1)!.highLimit === 1, "last segment must end at 1");
-    this.segments = segments;
-  }
-
-  public evaluate(index: number, total: number): Coordinate {
-    assert(index < total, "index must be less than total");
-    assert(index >= 0, "index must be nonnegative");
-    const t = total === 1 ? 0.5 : index / (total - 1);
-
-    let lowLimit = 0;
-    for (const s of this.segments) {
-      if (t <= s.highLimit) {
-        const fraction = (t - lowLimit) / (s.highLimit - lowLimit);
-        return [
-          (s.dst[0] - s.src[0]) * fraction + s.src[0],
-          (s.dst[1] - s.src[1]) * fraction + s.src[1],
-        ];
-      } else {
-        lowLimit = s.highLimit;
-      }
-    }
-
-    throw new Error("should be unreachable");
-  }
-
-  public toSvgPath(): string {
-    const segments = this.segments.map(
-      (s) => path`
-      M ${s.src[0]} ${s.src[1]}
-      L ${s.dst[0]} ${s.dst[1]}
-    `
-    );
-    return segments.join(" ");
   }
 }
 
@@ -334,8 +222,8 @@ interface On {
 interface OrdinaryRenderer {
   (tincture: Tincture): SVGElement;
   // If undefined, render nothing.
-  on: ParametricLocator2;
-  surround: ParametricLocator2;
+  on: ParametricLocator;
+  surround: ParametricLocator;
 }
 
 interface ChargeRenderer {
@@ -620,15 +508,16 @@ function chevronOnLocator(fraction: number, isEven: boolean) {
   }
 }
 
+// TODO
 chevron.on = {
-  1: { locator: chevronOnLocator(0, false), scale: 0.4 },
-  2: { locator: chevronOnLocator(0.3, true), scale: 0.4 },
-  3: { locator: chevronOnLocator(0.4, false), scale: 0.4 },
-  4: { locator: chevronOnLocator(0.6, true), scale: 0.4 },
-  5: { locator: chevronOnLocator(0.6, false), scale: 0.35 },
-  6: { locator: chevronOnLocator(0.7, true), scale: 0.35 },
-  7: { locator: chevronOnLocator(0.7, false), scale: 0.3 },
-  8: { locator: chevronOnLocator(0.7, true), scale: 0.25 },
+  // 1: { locator: chevronOnLocator(0, false), scale: 0.4 },
+  // 2: { locator: chevronOnLocator(0.3, true), scale: 0.4 },
+  // 3: { locator: chevronOnLocator(0.4, false), scale: 0.4 },
+  // 4: { locator: chevronOnLocator(0.6, true), scale: 0.4 },
+  // 5: { locator: chevronOnLocator(0.6, false), scale: 0.35 },
+  // 6: { locator: chevronOnLocator(0.7, true), scale: 0.35 },
+  // 7: { locator: chevronOnLocator(0.7, false), scale: 0.3 },
+  // 8: { locator: chevronOnLocator(0.7, true), scale: 0.25 },
 } satisfies OrdinaryRenderer["on"];
 
 function cross(tincture: Tincture) {
@@ -651,8 +540,6 @@ function cross(tincture: Tincture) {
     tincture
   );
 }
-
-const CROSS_LOCATOR = new ParametricMultiPoint();
 
 cross.on = new MultiPointLocator(
   [
@@ -781,7 +668,7 @@ function mullet(tincture: Tincture) {
   );
 }
 
-const CHARGE_DIRECTIONS: Record<Direction | "none", ParametricLocator2> = {
+const CHARGE_DIRECTIONS: Record<Direction | "none", ParametricLocator> = {
   fess: fess.on,
   pale: pale.on,
 };
