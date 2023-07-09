@@ -3,6 +3,7 @@
 // - some introductory text for shapes and colors and keywords with clickable links to demonstrate them
 // - canton
 // - posture -- for things like swords, requires resizing
+// - posture -- incorrect for swords; we should probably rotate the SVG 90 degress and use that as the base
 // - InDirection -- at least in the case of chevron and saltire, they are rotated to match -- matters for swords, at least
 // - can party per field have complex content in it?
 // - minor visual effects to make it a little less flat
@@ -775,7 +776,11 @@ function complexContent(container, content) {
             const locator = CHARGE_DIRECTIONS[element.direction ?? "none"];
             for (const [translate, scale] of locator.forCount(element.count)) {
                 const rendered = CHARGES[element.charge](element.tincture);
-                applyTransforms(rendered, { translate, scale });
+                applyTransforms(rendered, {
+                    translate,
+                    scale,
+                    rotate: element.posture ?? undefined,
+                });
                 parent.appendChild(rendered);
             }
         }
