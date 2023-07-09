@@ -354,7 +354,7 @@ class DefaultChargeLocator implements ParametricLocator {
 }
 
 type ComplexContent = SimpleField | PartyPerField | Quarterly;
-type SimpleContent = Ordinary | Charge | Canton | On;
+type SimpleContent = Ordinary | Charge | On;
 
 type SimpleField =
   | {
@@ -401,12 +401,6 @@ interface Charge {
   count: Count;
   posture?: Posture | null;
   direction?: InDirection | null;
-}
-
-interface Canton {
-  canton: Tincture;
-  charge?: Charge | null;
-  ordinary?: Ordinary | null;
 }
 
 interface On {
@@ -723,18 +717,17 @@ bend.surround = new ReflectiveLocator(
   [W_2, -H_2 + W]
 );
 
+const CANTON_SCALE_FACTOR = 1 / 3;
+const CANTON_PATH = path`
+  M                     -${W_2}                    -${H_2}
+  l  ${W * CANTON_SCALE_FACTOR}                          0
+  l                           0 ${W * CANTON_SCALE_FACTOR}
+  l -${W * CANTON_SCALE_FACTOR}                          0
+  Z
+`;
+
 function canton({ tincture }: Ordinary) {
-  const cantonWidth = W / 3;
-  return svg.path(
-    path`
-      M         -${W_2}        -${H_2}
-      l  ${cantonWidth}              0
-      l               0 ${cantonWidth}
-      l -${cantonWidth}              0
-      Z
-    `,
-    tincture
-  );
+  return svg.path(CANTON_PATH, tincture);
 }
 
 canton.on = new NullLocator();
@@ -1286,9 +1279,23 @@ function complexContent(container: SVGElement, content: ComplexContent) {
 }
 
 function on(parent: SVGElement, { ordinary, surround, charge }: On) {
-  const g = svg.g();
-  g.appendChild(ORDINARIES[ordinary.ordinary](ordinary));
-  parent.appendChild(g);
+  parent.appendChild(ORDINARIES[ordinary.ordinary](ordinary));
+
+  // This is a bit of a hack, but a canton is kind of awkwardly between an ordinary and a quarterly.
+  // It's an ordinary because it can be alone and have charges on it, but unlike other ordinaries
+  // it can _also_ have other ordinaries on it, with charges on those. This makes it more like
+  // quarterly, but not enough to get its own grammar rule.
+  //
+  // TODO: This isn't enough. We DO permit directions for charges on a canton. Maybe a canton is
+  // more like quarterly/party per than I first thought?
+  if (ordinary.ordinary === "canton") {
+    const canton = svg.g();
+    canton.setAttribute("transform-origin", `-${W_2} -${H_2}`);
+    canton.setAttribute("transform", `scale(${CANTON_SCALE_FACTOR})`);
+    canton.style.clipPath = CANTON_PATH;
+    parent.appendChild(canton);
+    parent = canton;
+  }
 
   if (charge != null) {
     assert(

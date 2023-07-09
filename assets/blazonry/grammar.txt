@@ -23,17 +23,8 @@ Quarterly
   = "quarterly" _ quarters:Quarter+ { return { quarters } }
 
 SimpleContent
-  // Canton is a special case -- it's an ordinary so it can be placed by itself or with something on
-  // it, but unlike other ordinaries it is allowed to have ordinaries on it. This makes it like a
-  // party-per, but those can't be ordinaries. This explicit case was the least invasive change.
-  // Maybe in the future I'll find more things and like this and call them MetaOrdinaries.
-  //
-  // TODO: Cantons can have ordinaries with "on". So maybe recursion is in order.
-  = "a" _ "canton" tincture:Tincture { return { canton: tincture } }
-  / "on" _ "a" _ "canton" _ tincture:Tincture _ charge:SingularCharge { return { canton: tincture, charge } }
-  / "on" _ "a" _ "canton" _ tincture:Tincture _ ordinary:Ordinary { return { canton: tincture, ordinary } }
   // Order matters here since both the next rules start with an Ordinary.
-  / ordinary:Ordinary _ "between" _ surround:PluralCharge { return { on: true, ordinary, surround } }
+  = ordinary:Ordinary _ "between" _ surround:PluralCharge { return { on: true, ordinary, surround } }
   / Ordinary
   / Charge
   / "on" _ ordinary:Ordinary _ charge:Charge { return { on: true, ordinary, charge } }
@@ -123,6 +114,7 @@ OrdinaryName "ordinary name"
   / "pale"
   / "saltire"
   / "chief"
+  / "canton"
 
 ChargeName "charge name"
   = "sword"
