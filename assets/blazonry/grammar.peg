@@ -27,6 +27,7 @@ SimpleContent
   = ordinary:Ordinary _ "between" _ surround:PluralCharge { return { on: true, ordinary, surround } }
   / Ordinary
   / Charge
+  / Canton
   / "on" _ ordinary:Ordinary _ charge:Charge { return { on: true, ordinary, charge } }
   / "on" _ ordinary:Ordinary _ "between" _ surround:PluralCharge _ charge:Charge { return { on: true, ordinary, surround, charge } }
 
@@ -36,6 +37,10 @@ Quarter
   / quarter1:QuarterName _ "and" _ quarter2:QuarterName _ content:ComplexContent { return { quarters: [quarter1, quarter2], content  } }
   / quarter1:QuarterName _ quarter2:QuarterName _ "and" _ quarter3:QuarterName _ content:ComplexContent { return { quarters: [quarter1, quarter2, quarter3], content  } }
   / quarter1:QuarterName _ quarter2:QuarterName _ quarter3:QuarterName _ "and" _ quarter4:QuarterName _ content:ComplexContent { return { quarters: [quarter1, quarter2, quarter3, quarter4], content  } }
+
+Canton
+  = "a" _ "canton" _ tincture:Tincture { return { canton: tincture } }
+  / "on" _ "a" _ "canton" _ tincture:Tincture _ content:SimpleContent { return { canton: tincture, content } }
 
 Ordinary
   = Singular _ ordinary:OrdinaryName _ tincture1:Tincture? _ "cotised" _ tincture2:Tincture { return { ordinary, tincture: tincture1 ?? tincture2, cotised: tincture2 } }
@@ -114,7 +119,6 @@ OrdinaryName "ordinary name"
   / "pale"
   / "saltire"
   / "chief"
-  / "canton"
 
 ChargeName "charge name"
   = "sword"

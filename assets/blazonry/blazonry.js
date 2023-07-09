@@ -1,7 +1,6 @@
 "use strict";
 // TODO
 // - some introductory text for shapes and colors and keywords with clickable links to demonstrate them
-// - canton
 // - posture -- for things like swords, requires resizing
 // - posture -- incorrect for swords; we should probably rotate the SVG 90 degress and use that as the base
 // - InDirection -- at least in the case of chevron and saltire, they are rotated to match -- matters for swords, at least
@@ -521,19 +520,6 @@ bend.surround = new ReflectiveLocator(new ExhaustiveLocator([
         [W_2 - 15, -H_2 + 40],
     ],
 ], [0.7, 0.5, 0.4]), [-W_2, -H_2], [W_2, -H_2 + W]);
-const CANTON_SCALE_FACTOR = 1 / 3;
-const CANTON_PATH = path `
-  M                     -${W_2}                    -${H_2}
-  l  ${W * CANTON_SCALE_FACTOR}                          0
-  l                           0 ${W * CANTON_SCALE_FACTOR}
-  l -${W * CANTON_SCALE_FACTOR}                          0
-  Z
-`;
-function canton({ tincture }) {
-    return svg.path(CANTON_PATH, tincture);
-}
-canton.on = new NullLocator();
-canton.surround = new NullLocator();
 function chief({ tincture }) {
     return svg.path(path `
       M -${W_2} ${-H_2}
@@ -669,7 +655,6 @@ saltire.surround = new SequenceLocator([
 });
 const ORDINARIES = {
     bend,
-    canton,
     chevron,
     chief,
     cross,
@@ -835,9 +820,39 @@ const VARIED = {
 // ----------------------------------------------------------------------------
 // HIGHER-ORDER
 // ----------------------------------------------------------------------------
+const CANTON_SCALE_FACTOR = 1 / 3;
+const CANTON_PATH = path `
+  M                     -${W_2}                    -${H_2}
+  l  ${W * CANTON_SCALE_FACTOR}                          0
+  l                           0 ${W * CANTON_SCALE_FACTOR}
+  l -${W * CANTON_SCALE_FACTOR}                          0
+  Z
+`;
 function complexContent(container, content) {
     function renderIntoParent(parent, element) {
-        if ("on" in element) {
+        if ("canton" in element) {
+            const g = svg.g();
+            g.setAttribute("transform-origin", `-${W_2} -${H_2}`);
+            g.setAttribute("transform", 
+            // The non-proportional scaling is a bit weird, but we want to have a square canton. A truly
+            // "standards-compliant" implementation would have alternate forms of the ordinaries and
+            // charges designed for a square canton, like a square cross. But this is a shortcut we take.
+            `scale(${CANTON_SCALE_FACTOR}, ${(CANTON_SCALE_FACTOR * W) / H})`);
+            g.style.clipPath = CANTON_PATH;
+            g.appendChild(svg.path(path `
+            M -${W_2} -${H_2}
+            L  ${W_2} -${H_2}
+            L  ${W_2}  ${H_2}
+            L -${W_2}  ${H_2}
+            Z
+          `, element.canton));
+            g.classList.add(`fill-${element.canton}`);
+            parent.appendChild(g);
+            if (element.content) {
+                renderIntoParent(g, element.content);
+            }
+        }
+        else if ("on" in element) {
             on(parent, element);
         }
         else if ("ordinary" in element) {
@@ -863,7 +878,11 @@ function complexContent(container, content) {
         function maybeToCounterchanged(t) {
             return (t === COUNTERCHANGED ? tincture : t);
         }
-        if ("on" in element) {
+        if ("canton" in element) {
+            // Cantons cannot be counterchanged; they always have a background and everything on them is
+            // relative to their background. Thus, nop.
+        }
+        else if ("on" in element) {
             if (element.surround?.tincture === COUNTERCHANGED) {
                 return {
                     ...element,
@@ -949,21 +968,6 @@ function complexContent(container, content) {
 }
 function on(parent, { ordinary, surround, charge }) {
     parent.appendChild(ORDINARIES[ordinary.ordinary](ordinary));
-    // This is a bit of a hack, but a canton is kind of awkwardly between an ordinary and a quarterly.
-    // It's an ordinary because it can be alone and have charges on it, but unlike other ordinaries
-    // it can _also_ have other ordinaries on it, with charges on those. This makes it more like
-    // quarterly, but not enough to get its own grammar rule.
-    //
-    // TODO: This isn't enough. We DO permit directions for charges on a canton. Maybe a canton is
-    // more like quarterly/party per than I first thought?
-    if (ordinary.ordinary === "canton") {
-        const canton = svg.g();
-        canton.setAttribute("transform-origin", `-${W_2} -${H_2}`);
-        canton.setAttribute("transform", `scale(${CANTON_SCALE_FACTOR})`);
-        canton.style.clipPath = CANTON_PATH;
-        parent.appendChild(canton);
-        parent = canton;
-    }
     if (charge != null) {
         assert(charge.direction == null, 'cannot specify a direction for charges in "on"');
         const locator = ORDINARIES[ordinary.ordinary].on;
