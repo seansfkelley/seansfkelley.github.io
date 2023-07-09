@@ -2,7 +2,7 @@
 // - some introductory text for shapes and colors and keywords with clickable links to demonstrate them
 // - canton
 // - posture -- for things like swords, requires resizing
-// - direction... does it work?
+// - InDirection -- at least in the case of chevron and saltire, they are rotated to match -- matters for swords, at least
 // - can party per field have complex content in it?
 // - minor visual effects to make it a little less flat
 // - fancy paths for fancy charges: lion, leopard's head, castle, and all their variants
@@ -11,6 +11,7 @@
 //     quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
 // - should be able to parse non-redundant usage of colors
 //     argent on a bend between six mullets vert
+// - make whitespace non-optional to force breaks
 
 // TODO OPTIONAL
 // - adjust positioning for `on` -- often the 2s and 3s are too close to each other, like for chief
@@ -21,22 +22,20 @@ declare namespace PeggyParser {
     expected: any;
     found: any;
     location: any;
+    format: (opts: { source: string; text: string }[]) => string;
   }
 }
 
 declare const parser: {
-  parse: (text: string) => ComplexContent;
+  parse: (text: string, opts?: { grammarSource: string }) => ComplexContent;
 };
-
-declare interface Node {
-  cloneNode<T extends Node>(this: T, deep?: boolean): T;
-}
 
 type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 type Tincture = string & { __tincture: unknown };
 type VariedName = string & { __varied: unknown };
 type Posture = "palewise" | "fesswise" | "bendwise" | "saltirewise";
 type Direction = "pale" | "fess" | "bend" | "chevron" | "saltire";
+type InDirection = Direction | "cross";
 type Quarter = 1 | 2 | 3 | 4;
 
 type Coordinate = [x: number, y: number];
@@ -283,6 +282,67 @@ class OnChevronLocator implements ParametricLocator {
   }
 }
 
+class DefaultChargeLocator implements ParametricLocator {
+  private static ROWS = [
+    [1],
+    [2],
+    [2, 1],
+    [3, 1],
+    [3, 2],
+    [3, 2, 1],
+    [3, 3, 1],
+    [3, 3, 2],
+    [3, 3, 3],
+    [4, 3, 2, 1],
+  ];
+
+  private static SCALES = [
+    1.1, //
+    0.7,
+    0.6,
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.4,
+  ];
+
+  constructor(
+    private horizontal: [number, number],
+    private vertical: [number, number]
+  ) {}
+
+  public *forCount(total: number): Generator<[Coordinate, number]> {
+    if (total > DefaultChargeLocator.ROWS.length) {
+      return;
+    }
+
+    const rows = DefaultChargeLocator.ROWS[total - 1];
+    const step = (this.horizontal[1] - this.horizontal[0]) / (rows[0] + 1);
+
+    for (let i = 0; i < rows.length; ++i) {
+      const y =
+        ((i + 1) / (rows.length + 1)) * (this.vertical[1] - this.vertical[0]) +
+        this.vertical[0];
+
+      // This is a bit weird, and it's different from the LineSegmentLocator. Instead of spacing out
+      // each row evenly and individually, we want to make a nice upside-down isoceles triangle:
+      // this means that each row must be spaced out equally, in absolute terms. We calculate the
+      // spacing (`step`) based on the most crowded row (assumed to be the first one), then here we
+      // calculate where each row needs to start in order for this spacing to produce a horizontally-
+      // centered row. That is a function of the number of items in this row relative to the number
+      // of items in the first row, that is, the row that set the spacing in the first place.
+      const offset =
+        this.horizontal[0] + step + (step * (rows[0] - rows[i])) / 2;
+      for (let j = 0; j < rows[i]; ++j) {
+        yield [[offset + step * j, y], DefaultChargeLocator.SCALES[total - 1]];
+      }
+    }
+  }
+}
+
 type ComplexContent = SimpleField | PartyPerField | Quarterly;
 type SimpleContent = Ordinary | Charge | On;
 
@@ -329,7 +389,7 @@ interface Charge {
   tincture: Tincture;
   count: Count;
   posture?: Posture | null;
-  direction?: Direction | null;
+  direction?: InDirection | null;
 }
 
 interface On {
@@ -398,14 +458,15 @@ const COUNTERCHANGED = "counterchanged";
 function parseAndRenderBlazon() {
   let result;
   try {
-    result = parser.parse(input.value.trim().toLowerCase());
+    result = parser.parse(input.value.trim().toLowerCase(), {
+      grammarSource: "input",
+    });
     error.style.display = "none";
   } catch (e) {
-    error.innerHTML = (e as PeggyParser.SyntaxError).toString();
+    error.innerHTML = (e as PeggyParser.SyntaxError).format([
+      { source: "input", text: input.value },
+    ]);
     error.style.display = "block";
-    console.error("start", (e as PeggyParser.SyntaxError).location?.start);
-    console.error("end", (e as PeggyParser.SyntaxError).location?.end);
-    console.error("expected", (e as PeggyParser.SyntaxError).expected);
     return;
   }
 
@@ -846,9 +907,17 @@ function mullet(tincture: Tincture) {
   );
 }
 
-const CHARGE_DIRECTIONS: Record<Direction | "none", ParametricLocator> = {
+const CHARGE_DIRECTIONS: Record<
+  Exclude<Charge["direction"], null | undefined> | "none",
+  ParametricLocator
+> = {
   fess: fess.on,
   pale: pale.on,
+  bend: bend.on,
+  chevron: chevron.on,
+  saltire: saltire.on,
+  cross: cross.on,
+  none: new DefaultChargeLocator([-W_2, W_2], [-H_2, H_2 - 10]),
 };
 
 const CHARGES: Record<string, ChargeRenderer> = {

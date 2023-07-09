@@ -76,6 +76,8 @@ Direction "direction"
 
 InDirection "direction"
   = "in" _ direction:Direction { return direction }
+  // Special case: things can be "in cross" but they can't be "party per cross".
+  / "in" _ "cross" { return "cross" }
 
 QuarterName "quarter name"
   = "first" { return 1 }

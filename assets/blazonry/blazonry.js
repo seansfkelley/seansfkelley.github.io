@@ -3,7 +3,7 @@
 // - some introductory text for shapes and colors and keywords with clickable links to demonstrate them
 // - canton
 // - posture -- for things like swords, requires resizing
-// - direction... does it work?
+// - InDirection -- at least in the case of chevron and saltire, they are rotated to match -- matters for swords, at least
 // - can party per field have complex content in it?
 // - minor visual effects to make it a little less flat
 // - fancy paths for fancy charges: lion, leopard's head, castle, and all their variants
@@ -12,6 +12,7 @@
 //     quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
 // - should be able to parse non-redundant usage of colors
 //     argent on a bend between six mullets vert
+// - make whitespace non-optional to force breaks
 function applyTransforms(element, { translate, scale, rotate, } = {}) {
     function getRotation(posture) {
         switch (posture) {
@@ -207,6 +208,60 @@ class OnChevronLocator {
         }
     }
 }
+class DefaultChargeLocator {
+    horizontal;
+    vertical;
+    static ROWS = [
+        [1],
+        [2],
+        [2, 1],
+        [3, 1],
+        [3, 2],
+        [3, 2, 1],
+        [3, 3, 1],
+        [3, 3, 2],
+        [3, 3, 3],
+        [4, 3, 2, 1],
+    ];
+    static SCALES = [
+        1.1,
+        0.7,
+        0.6,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.4,
+    ];
+    constructor(horizontal, vertical) {
+        this.horizontal = horizontal;
+        this.vertical = vertical;
+    }
+    *forCount(total) {
+        if (total > DefaultChargeLocator.ROWS.length) {
+            return;
+        }
+        const rows = DefaultChargeLocator.ROWS[total - 1];
+        const step = (this.horizontal[1] - this.horizontal[0]) / (rows[0] + 1);
+        for (let i = 0; i < rows.length; ++i) {
+            const y = ((i + 1) / (rows.length + 1)) * (this.vertical[1] - this.vertical[0]) +
+                this.vertical[0];
+            // This is a bit weird, and it's different from the LineSegmentLocator. Instead of spacing out
+            // each row evenly and individually, we want to make a nice upside-down isoceles triangle:
+            // this means that each row must be spaced out equally, in absolute terms. We calculate the
+            // spacing (`step`) based on the most crowded row (assumed to be the first one), then here we
+            // calculate where each row needs to start in order for this spacing to produce a horizontally-
+            // centered row. That is a function of the number of items in this row relative to the number
+            // of items in the first row, that is, the row that set the spacing in the first place.
+            const offset = this.horizontal[0] + step + (step * (rows[0] - rows[i])) / 2;
+            for (let j = 0; j < rows[i]; ++j) {
+                yield [[offset + step * j, y], DefaultChargeLocator.SCALES[total - 1]];
+            }
+        }
+    }
+}
 function assert(condition, message) {
     if (!condition) {
         throw new Error(`assertion failure: ${message}`);
@@ -246,15 +301,16 @@ const COUNTERCHANGED = "counterchanged";
 function parseAndRenderBlazon() {
     let result;
     try {
-        result = parser.parse(input.value.trim().toLowerCase());
+        result = parser.parse(input.value.trim().toLowerCase(), {
+            grammarSource: "input",
+        });
         error.style.display = "none";
     }
     catch (e) {
-        error.innerHTML = e.toString();
+        error.innerHTML = e.format([
+            { source: "input", text: input.value },
+        ]);
         error.style.display = "block";
-        console.error("start", e.location?.start);
-        console.error("end", e.location?.end);
-        console.error("expected", e.expected);
         return;
     }
     console.log(result);
@@ -569,6 +625,11 @@ function mullet(tincture) {
 const CHARGE_DIRECTIONS = {
     fess: fess.on,
     pale: pale.on,
+    bend: bend.on,
+    chevron: chevron.on,
+    saltire: saltire.on,
+    cross: cross.on,
+    none: new DefaultChargeLocator([-W_2, W_2], [-H_2, H_2 - 10]),
 };
 const CHARGES = {
     sword,
