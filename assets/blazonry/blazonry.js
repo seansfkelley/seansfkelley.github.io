@@ -9,6 +9,7 @@
 // - minor visual effects to make it a little less flat
 // - fancy paths for fancy charges: lion, leopard's head, castle, and all their variants
 // - decorations for lines (e.g. embattled, engrailed, etc.)
+// - "overall"
 // - parser can't figure out the correct assignment of the quarterly rules to parse this:
 //     quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
 // - should be able to parse non-redundant usage of colors
