@@ -503,13 +503,7 @@ function parseAndRenderBlazon() {
 }
 
 function field(tincture: Tincture) {
-  const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-  rect.setAttribute("x", `-${W_2}`);
-  rect.setAttribute("y", `-${H_2}`);
-  rect.setAttribute("width", `${W}`);
-  rect.setAttribute("height", `${H}`);
-  rect.classList.add(`fill-${tincture}`);
-  return rect;
+  return svg.rect([-W_2, -H_2], [W_2, H_2], tincture);
 }
 
 const PARTY_PER_CLIP_PATHS: Record<Direction, [string, string]> = {
@@ -626,6 +620,19 @@ const svg = {
     line.setAttribute("stroke-width", `${width}`);
     line.setAttribute("stroke-linecap", linecap);
     return line;
+  },
+  rect: (
+    [x1, y1]: Coordinate,
+    [x2, y2]: Coordinate,
+    tincture: Tincture
+  ): SVGRectElement => {
+    const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rect.setAttribute("x", `${x1}`);
+    rect.setAttribute("y", `${y1}`);
+    rect.setAttribute("width", `${x2 - x1}`);
+    rect.setAttribute("height", `${y2 - y1}`);
+    rect.classList.add(`fill-${tincture}`);
+    return rect;
   },
   g: (): SVGGElement => {
     return document.createElementNS("http://www.w3.org/2000/svg", "g");
@@ -1142,10 +1149,10 @@ const VARIED: Record<string, VariedClipPathGenerator> = {
 
 const CANTON_SCALE_FACTOR = 1 / 3;
 const CANTON_PATH = path`
-  M                     -${W_2}                    -${H_2}
-  l  ${W * CANTON_SCALE_FACTOR}                          0
-  l                           0 ${W * CANTON_SCALE_FACTOR}
-  l -${W * CANTON_SCALE_FACTOR}                          0
+  M -${W_2} -${H_2}
+  L  ${W_2} -${H_2}
+  L  ${W_2}  ${H_2}
+  L -${W_2}  ${H_2}
   Z
 `;
 
@@ -1161,19 +1168,9 @@ function complexContent(container: SVGElement, content: ComplexContent) {
         // charges designed for a square canton, like a square cross. But this is a shortcut we take.
         `scale(${CANTON_SCALE_FACTOR}, ${(CANTON_SCALE_FACTOR * W) / H})`
       );
-      g.style.clipPath = CANTON_PATH;
-      g.appendChild(
-        svg.path(
-          path`
-            M -${W_2} -${H_2}
-            L  ${W_2} -${H_2}
-            L  ${W_2}  ${H_2}
-            L -${W_2}  ${H_2}
-            Z
-          `,
-          element.canton
-        )
-      );
+
+      g.style.clipPath = `path("${CANTON_PATH}")`;
+      g.appendChild(svg.path(CANTON_PATH, element.canton));
       g.classList.add(`fill-${element.canton}`);
       parent.appendChild(g);
       if (element.content) {
