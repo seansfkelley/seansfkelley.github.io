@@ -38,7 +38,8 @@ Quarter
   / quarter1:QuarterName _ quarter2:QuarterName _ quarter3:QuarterName _ "and" _ quarter4:QuarterName _ content:ComplexContent { return { quarters: [quarter1, quarter2, quarter3, quarter4], content  } }
 
 Ordinary
-  = Singular _ ordinary:OrdinaryName _ tincture:Tincture { return { ordinary, tincture } }
+  = Singular _ ordinary:OrdinaryName _ tincture1:Tincture? _ "cotised" _ tincture2:Tincture { return { ordinary, tincture: tincture1 ?? tincture2, cotised: tincture2 } }
+  / Singular _ ordinary:OrdinaryName _ tincture:Tincture { return { ordinary, tincture } }
 
 Charge
   = SingularCharge

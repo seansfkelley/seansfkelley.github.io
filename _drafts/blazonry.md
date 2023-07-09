@@ -29,7 +29,9 @@ Try these:
 
 <div class="center">
   <form id="form">
-    <input type="text" id="blazon-input" value="argent four mullets sable">
+  <!-- argent a bend gules cotised azure -->
+  <!-- party per pale argent and gules a bend azure cotised counterchanged -->
+    <input type="text" id="blazon-input" value="party per pale argent and gules a bend azure cotised counterchanged">
     <br>
     <button type="submit">
     Preview
