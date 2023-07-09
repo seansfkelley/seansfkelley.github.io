@@ -197,7 +197,7 @@ class ReflectiveLocator {
         return "";
     }
 }
-class ChevronLocator {
+class OnChevronLocator {
     left;
     midpoint;
     right;
@@ -460,7 +460,27 @@ function chevron(tincture) {
       Z
     `, tincture);
 }
-chevron.on = new ChevronLocator([-W_2, W_2 - 10], [0, -10], [W_2, W_2 - 10], [0.4, 0.4, 0.4, 0.4, 0.35, 0.35, 0.3, 0.25]);
+chevron.on = new OnChevronLocator([-W_2, W_2 - 10], [0, -10], [W_2, W_2 - 10], [0.4, 0.4, 0.4, 0.4, 0.35, 0.35, 0.3, 0.25]);
+chevron.surround = new ExhaustiveLocator([
+    [
+        [0, H_2 - 25], //
+    ],
+    [
+        [0, H_2 - 25],
+        [0, -H_2 + 18],
+    ],
+    [
+        [0, H_2 - 25],
+        [-20, -H_2 + 18],
+        [20, -H_2 + 18],
+    ],
+    [
+        [0, H_2 - 25],
+        [0, -H_2 + 18],
+        [-30, -H_2 + 30],
+        [30, -H_2 + 30],
+    ],
+], [0.5, 0.5, 0.5, 0.5]);
 function cross(tincture) {
     return svg.path(path `
       M -10 -60

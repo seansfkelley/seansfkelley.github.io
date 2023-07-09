@@ -273,7 +273,7 @@ class ReflectiveLocator implements ParametricLocator {
   }
 }
 
-class ChevronLocator implements ParametricLocator {
+class OnChevronLocator implements ParametricLocator {
   constructor(
     private left: Coordinate,
     private midpoint: Coordinate,
@@ -656,11 +656,35 @@ function chevron(tincture: Tincture) {
   );
 }
 
-chevron.on = new ChevronLocator(
+chevron.on = new OnChevronLocator(
   [-W_2, W_2 - 10],
   [0, -10],
   [W_2, W_2 - 10],
   [0.4, 0.4, 0.4, 0.4, 0.35, 0.35, 0.3, 0.25]
+);
+
+chevron.surround = new ExhaustiveLocator(
+  [
+    [
+      [0, H_2 - 25], //
+    ],
+    [
+      [0, H_2 - 25], //
+      [0, -H_2 + 18],
+    ],
+    [
+      [0, H_2 - 25], //
+      [-20, -H_2 + 18],
+      [20, -H_2 + 18],
+    ],
+    [
+      [0, H_2 - 25], //
+      [0, -H_2 + 18],
+      [-30, -H_2 + 30],
+      [30, -H_2 + 30],
+    ],
+  ],
+  [0.5, 0.5, 0.5, 0.5]
 );
 
 function cross(tincture: Tincture) {
