@@ -371,25 +371,21 @@ class DefaultChargeLocator implements ParametricLocator {
  */
 function widen(src: Coordinate, dst: Coordinate, width: number): Quadrilateral {
   const halfWidth = width / 2;
-  if (src[0] === dst[0]) {
-    return [
-      Coordinate.add(src, [-halfWidth, 0]),
-      Coordinate.add(src, [halfWidth, 0]),
-      Coordinate.add(dst, [halfWidth, 0]),
-      Coordinate.add(dst, [-halfWidth, 0]),
-    ];
-  } else {
-    const radians = Math.atan((dst[1] - src[1]) / (dst[0] - src[0]));
-    const x = Math.cos(radians) * halfWidth;
-    const y = Math.sin(radians) * halfWidth;
-    console.log(src, dst, Math.PI / radians, x, y);
-    return [
-      Coordinate.add(src, [-x, y]),
-      Coordinate.add(src, [x, -y]),
-      Coordinate.add(dst, [x, -y]),
-      Coordinate.add(dst, [-x, y]),
-    ];
-  }
+  const radians =
+    src[0] === dst[0]
+      ? Math.PI / 2
+      : Math.atan((dst[1] - src[1]) / (dst[0] - src[0]));
+  // Note! These x/y ~ sin/cos relationships are flipped from the usual, because to widen we need
+  // to draw lines perpendicular -- thereby reversing the normal roles of x and y!
+  const x = Math.sin(radians) * halfWidth;
+  const y = Math.cos(radians) * halfWidth;
+  console.log(src, dst, Math.PI / radians, x, y);
+  return [
+    Coordinate.add(src, [-x, y]),
+    Coordinate.add(src, [x, -y]),
+    Coordinate.add(dst, [x, -y]),
+    Coordinate.add(dst, [-x, y]),
+  ];
 }
 
 type ComplexContent = SimpleField | PartyPerField | Quarterly;
@@ -795,22 +791,23 @@ chevron.surround = new ExhaustiveLocator(
 );
 
 function cross({ tincture }: Ordinary) {
+  const crossWidth = W / 4;
+
+  const top: Coordinate = [0, -H_2];
+  const bottom: Coordinate = [0, H_2];
+  // 14 is too hardcoded -- should be defined based on W/H ratios instead.
+  const left: Coordinate = [-W_2, -14];
+  const right: Coordinate = [W_2, -14];
+
   return svg.path(
-    path`
-      M -10 -60
-      L  10 -60
-      L  10 -24
-      L  50 -24
-      L  50  -4
-      L  10  -4
-      L  10  60
-      L -10  60
-      L -10  -4
-      L -50  -4
-      L -50 -24
-      L -10 -24
-      Z
-    `,
+    (
+      [
+        [top, bottom],
+        [left, right],
+      ] satisfies [Coordinate, Coordinate][]
+    )
+      .map(([src, dst]) => Quadrilateral.toSvgPath(widen(src, dst, crossWidth)))
+      .join(" "),
     tincture
   );
 }
