@@ -56,13 +56,23 @@ const Coordinate = {
 type Quadrilateral = [Coordinate, Coordinate, Coordinate, Coordinate];
 
 const Quadrilateral = {
-  toSvgPath: ([p1, p2, p3, p4]: Quadrilateral) => path`
-    M ${p1[0]} ${p1[1]}
-    L ${p2[0]} ${p2[1]}
-    L ${p3[0]} ${p3[1]}
-    L ${p4[0]} ${p4[1]}
-    Z
-  `,
+  toSvgPath: (
+    quad: Quadrilateral,
+    { winding = "forward" }: { winding?: "forward" | "reverse" } = {}
+  ) => {
+    // Flipping the ordering in this way can cause paths segments to interact with other path
+    // segments in the same path differently, changing whether some areas are considered inside or
+    // outside of the path.
+    const [p1, p2, p3, p4] =
+      winding === "forward" ? quad : [quad[1], quad[0], quad[3], quad[2]];
+    return path`
+      M ${p1[0]} ${p1[1]}
+      L ${p2[0]} ${p2[1]}
+      L ${p3[0]} ${p3[1]}
+      L ${p4[0]} ${p4[1]}
+      Z
+    `;
+  },
 };
 
 function applyTransforms(
@@ -825,11 +835,11 @@ function cross({ tincture, cotised }: Ordinary) {
 
     const mid: Coordinate = [0, horizontalOffset];
 
-    for (const [p, [x1sign, y1sign], [x2sign, y2sign]] of [
+    for (const [p, [x1sign, y1sign], [x2sign, y2sign, reverse]] of [
       [top, [-1, -1], [1, -1]],
       [bottom, [-1, 1], [1, 1]],
-      [left, [-1, -1], [-1, 1]],
-      [right, [1, 1], [1, -1]],
+      [left, [-1, -1], [-1, 1, true]],
+      [right, [1, 1], [1, -1, true]],
     ] as const) {
       pathSegments.push(
         Quadrilateral.toSvgPath(
@@ -844,7 +854,8 @@ function cross({ tincture, cotised }: Ordinary) {
             Coordinate.add(p, [offset * x2sign, offset * y2sign]),
             Coordinate.add(mid, [offset * x2sign, offset * y2sign]),
             COTISED_WIDTH
-          )
+          ),
+          reverse ? { winding: "reverse" } : undefined
         )
       );
     }
