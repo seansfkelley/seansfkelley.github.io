@@ -1,0 +1,29 @@
+#form, #error, #rendered { margin-top: 12px; }
+
+#error { margin-bottom: 0; width: 100%; box-sizing: border-box; }
+
+#form { width: 100%; }
+
+#form #blazon-input { width: 100%; box-sizing: border-box; }
+
+#form button[type="submit"] { margin: 0; margin-top: 6px; float: right; }
+
+.center { display: flex; flex-direction: column; align-items: center; }
+
+.fill-azure { fill: blue; }
+
+.fill-or { fill: yellow; }
+
+.fill-argent { fill: white; }
+
+.fill-gules { fill: red; }
+
+.fill-vert { fill: green; }
+
+.fill-sable { fill: black; }
+
+.fill-purpure { fill: purple; }
+
+.fill-none { fill: none; }
+
+.outline { stroke: black; stroke-width: 2; }
