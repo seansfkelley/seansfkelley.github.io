@@ -521,6 +521,18 @@ bend.surround = new ReflectiveLocator(new ExhaustiveLocator([
         [W_2 - 15, -H_2 + 40],
     ],
 ], [0.7, 0.5, 0.4]), [-W_2, -H_2], [W_2, -H_2 + W]);
+function canton({ tincture }) {
+    const cantonWidth = W / 3;
+    return svg.path(path `
+      M         -${W_2}        -${H_2}
+      l  ${cantonWidth}              0
+      l               0 ${cantonWidth}
+      l -${cantonWidth}              0
+      Z
+    `, tincture);
+}
+canton.on = new NullLocator();
+canton.surround = new NullLocator();
 function chief({ tincture }) {
     return svg.path(path `
       M -${W_2} ${-H_2}
@@ -656,6 +668,7 @@ saltire.surround = new SequenceLocator([
 });
 const ORDINARIES = {
     bend,
+    canton,
     chevron,
     chief,
     cross,

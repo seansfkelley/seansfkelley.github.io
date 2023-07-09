@@ -354,7 +354,7 @@ class DefaultChargeLocator implements ParametricLocator {
 }
 
 type ComplexContent = SimpleField | PartyPerField | Quarterly;
-type SimpleContent = Ordinary | Charge | On;
+type SimpleContent = Ordinary | Charge | Canton | On;
 
 type SimpleField =
   | {
@@ -401,6 +401,12 @@ interface Charge {
   count: Count;
   posture?: Posture | null;
   direction?: InDirection | null;
+}
+
+interface Canton {
+  canton: Tincture;
+  charge?: Charge | null;
+  ordinary?: Ordinary | null;
 }
 
 interface On {
@@ -717,6 +723,24 @@ bend.surround = new ReflectiveLocator(
   [W_2, -H_2 + W]
 );
 
+function canton({ tincture }: Ordinary) {
+  const cantonWidth = W / 3;
+  return svg.path(
+    path`
+      M         -${W_2}        -${H_2}
+      l  ${cantonWidth}              0
+      l               0 ${cantonWidth}
+      l -${cantonWidth}              0
+      Z
+    `,
+    tincture
+  );
+}
+
+canton.on = new NullLocator();
+
+canton.surround = new NullLocator();
+
 function chief({ tincture }: Ordinary) {
   return svg.path(
     path`
@@ -940,6 +964,7 @@ saltire.surround = new SequenceLocator(
 
 const ORDINARIES: Record<string, OrdinaryRenderer> = {
   bend,
+  canton,
   chevron,
   chief,
   cross,
