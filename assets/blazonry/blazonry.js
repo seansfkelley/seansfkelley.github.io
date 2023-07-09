@@ -21,6 +21,15 @@ const Coordinate = {
         y1 + y2,
     ],
 };
+const Quadrilateral = {
+    toSvgPath: ([p1, p2, p3, p4]) => path `
+    M ${p1[0]} ${p1[1]}
+    L ${p2[0]} ${p2[1]}
+    L ${p3[0]} ${p3[1]}
+    L ${p4[0]} ${p4[1]}
+    Z
+  `,
+};
 function applyTransforms(element, { translate, scale, rotate, } = {}) {
     function getRotation(posture) {
         switch (posture) {
@@ -270,6 +279,34 @@ class DefaultChargeLocator {
         }
     }
 }
+/**
+ * Given the line segment defined by src-dst, widen it along the perpendicular into a rotated
+ * rectangle. Points are guaranteed to be returned in an order that, if mapped directly to an SVG
+ * path in the same order, will correctly fill to a rectangle.
+ */
+function widen(src, dst, width) {
+    const halfWidth = width / 2;
+    if (src[0] === dst[0]) {
+        return [
+            Coordinate.add(src, [-halfWidth, 0]),
+            Coordinate.add(src, [halfWidth, 0]),
+            Coordinate.add(dst, [halfWidth, 0]),
+            Coordinate.add(dst, [-halfWidth, 0]),
+        ];
+    }
+    else {
+        const radians = Math.atan((dst[1] - src[1]) / (dst[0] - src[0]));
+        const x = Math.cos(radians) * halfWidth;
+        const y = Math.sin(radians) * halfWidth;
+        console.log(src, dst, Math.PI / radians, x, y);
+        return [
+            Coordinate.add(src, [-x, y]),
+            Coordinate.add(src, [x, -y]),
+            Coordinate.add(dst, [x, -y]),
+            Coordinate.add(dst, [-x, y]),
+        ];
+    }
+}
 function assert(condition, message) {
     if (!condition) {
         throw new Error(`assertion failure: ${message}`);
@@ -448,60 +485,26 @@ const svg = {
 // ----------------------------------------------------------------------------
 function bend({ tincture, cotised }) {
     const bendWidth = W / 3;
-    // Pythagoras. Find the horizontal/vertical length of a 45-45-90 given the hypotenuse. Then half it.
-    const halfManhattanDistance = Math.sqrt((bendWidth * bendWidth) / 2) / 2;
     const src = [-W_2, -H_2];
     const dst = [W_2, -H_2 + W];
-    const tr = Coordinate.add(src, [
-        halfManhattanDistance,
-        -halfManhattanDistance,
-    ]);
-    const br = Coordinate.add(dst, [
-        halfManhattanDistance,
-        -halfManhattanDistance,
-    ]);
-    const bl = Coordinate.add(dst, [
-        -halfManhattanDistance,
-        halfManhattanDistance,
-    ]);
-    const tl = Coordinate.add(src, [
-        -halfManhattanDistance,
-        halfManhattanDistance,
-    ]);
-    const bend = svg.path(path `
-      M ${tr[0]} ${tr[1]}
-      L ${br[0]} ${br[1]}
-      L ${bl[0]} ${bl[1]}
-      L ${tl[0]} ${tl[1]}
-      Z
-    `, tincture);
+    const bend = svg.path(Quadrilateral.toSvgPath(widen(src, dst, bendWidth)), tincture);
     if (cotised == null) {
         return bend;
     }
     else {
         const cotisedWidth = W_2 / 10;
-        // Pythagoras, as before.
-        const manhattanDistance = Math.sqrt((cotisedWidth * cotisedWidth) / 2);
+        const deltaX = 
+        // 3/2 = 1/2 because the widening is relative to the middle of the cotise + 1 to space it out from the bend.
+        Math.cos(Math.PI / 4) * (bendWidth / 2 + (cotisedWidth * 3) / 2);
+        const deltaY = Math.sin(Math.PI / 4) * (bendWidth / 2 + (cotisedWidth * 3) / 2);
+        const top = svg.path(Quadrilateral.toSvgPath(widen(src, dst, cotisedWidth)), cotised);
+        top.setAttribute("transform", `translate(${deltaX} -${deltaY})`);
+        const bottom = svg.path(Quadrilateral.toSvgPath(widen(src, dst, cotisedWidth)), cotised);
+        bottom.setAttribute("transform", `translate(-${deltaX} ${deltaY})`);
         const g = svg.g();
-        g.appendChild(svg.path(
-        // * 2 to provide spacing equivalent to the width of the cotise.
-        path `
-          M ${tr[0] + manhattanDistance * 2} ${tr[1] - manhattanDistance * 2}
-          L ${br[0] + manhattanDistance * 2} ${br[1] - manhattanDistance * 2}
-          L ${br[0] + manhattanDistance}     ${br[1] - manhattanDistance}
-          L ${tr[0] + manhattanDistance}     ${tr[1] - manhattanDistance}
-          Z
-        `, cotised));
+        g.appendChild(top);
         g.appendChild(bend);
-        g.appendChild(svg.path(
-        // * 2 to provide spacing equivalent to the width of the cotise.
-        path `
-          M ${tl[0] - manhattanDistance * 2} ${tl[1] + manhattanDistance * 2}
-          L ${bl[0] - manhattanDistance * 2} ${bl[1] + manhattanDistance * 2}
-          L ${bl[0] - manhattanDistance}     ${bl[1] + manhattanDistance}
-          L ${tl[0] - manhattanDistance}     ${tl[1] + manhattanDistance}
-          Z
-        `, cotised));
+        g.appendChild(bottom);
         return g;
     }
 }
