@@ -20,25 +20,6 @@ const Coordinate = {
         x1 + x2,
         y1 + y2,
     ],
-    sub: ([x1, y1], [x2, y2]) => [
-        x1 - x2,
-        y1 - y2,
-    ],
-};
-const Quadrilateral = {
-    toSvgPath: (quad, { winding = "forward" } = {}) => {
-        // Flipping the ordering in this way can cause paths segments to interact with other path
-        // segments in the same path differently, changing whether some areas are considered inside or
-        // outside of the path.
-        const [p1, p2, p3, p4] = winding === "forward" ? quad : [quad[1], quad[0], quad[3], quad[2]];
-        return path `
-      M ${p1[0]} ${p1[1]}
-      L ${p2[0]} ${p2[1]}
-      L ${p3[0]} ${p3[1]}
-      L ${p4[0]} ${p4[1]}
-      Z
-    `;
-    },
 };
 function applyTransforms(element, { translate, scale, rotate, } = {}) {
     function getRotation(posture) {
@@ -289,28 +270,6 @@ class DefaultChargeLocator {
         }
     }
 }
-/**
- * Given the line segment defined by src-dst, widen it along the perpendicular into a rotated
- * rectangle. Points are guaranteed to be returned in an order that, if mapped directly to an SVG
- * path in the same order, will correctly fill to a rectangle.
- */
-function widen(src, dst, width) {
-    const halfWidth = width / 2;
-    const radians = src[0] === dst[0]
-        ? Math.PI / 2
-        : Math.atan((dst[1] - src[1]) / (dst[0] - src[0]));
-    // Note! These x/y ~ sin/cos relationships are flipped from the usual, because to widen we need
-    // to draw lines perpendicular -- thereby reversing the normal roles of x and y!
-    const x = Math.sin(radians) * halfWidth;
-    const y = Math.cos(radians) * halfWidth;
-    console.log(src, dst, Math.PI / radians, x, y);
-    return [
-        Coordinate.add(src, [-x, y]),
-        Coordinate.add(src, [x, -y]),
-        Coordinate.add(dst, [x, -y]),
-        Coordinate.add(dst, [-x, y]),
-    ];
-}
 function assert(condition, message) {
     if (!condition) {
         throw new Error(`assertion failure: ${message}`);
@@ -474,11 +433,22 @@ const PARTY_PER_CLIP_PATHS = {
 // UTIL
 // ----------------------------------------------------------------------------
 const svg = {
-    path: (d, fill) => {
+    path: (d, tincture) => {
         const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
         path.setAttribute("d", d);
-        path.classList.add(`fill-${fill}`);
+        path.classList.add(`fill-${tincture}`);
         return path;
+    },
+    line: ([x1, y1], [x2, y2], tincture, width = 1, linecap = "butt") => {
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", `${x1}`);
+        line.setAttribute("y1", `${y1}`);
+        line.setAttribute("x2", `${x2}`);
+        line.setAttribute("y2", `${y2}`);
+        line.classList.add(`stroke-${tincture}`);
+        line.setAttribute("stroke-width", `${width}`);
+        line.setAttribute("stroke-linecap", linecap);
+        return line;
     },
     g: () => {
         return document.createElementNS("http://www.w3.org/2000/svg", "g");
@@ -492,7 +462,7 @@ function bend({ tincture, cotised }) {
     const bendWidth = W / 3;
     const src = [-W_2, -H_2];
     const dst = [W_2, -H_2 + W];
-    const bend = svg.path(Quadrilateral.toSvgPath(widen(src, dst, bendWidth)), tincture);
+    const bend = svg.line(src, dst, tincture, bendWidth);
     if (cotised == null) {
         return bend;
     }
@@ -501,9 +471,9 @@ function bend({ tincture, cotised }) {
         // 3/2 = 1/2 because the widening is relative to the middle of the cotise + 1 to space it out from the bend.
         Math.cos(Math.PI / 4) * (bendWidth / 2 + (COTISED_WIDTH * 3) / 2);
         const deltaY = Math.sin(Math.PI / 4) * (bendWidth / 2 + (COTISED_WIDTH * 3) / 2);
-        const top = svg.path(Quadrilateral.toSvgPath(widen(src, dst, COTISED_WIDTH)), cotised);
+        const top = svg.line(src, dst, cotised, COTISED_WIDTH);
         top.setAttribute("transform", `translate(${deltaX} -${deltaY})`);
-        const bottom = svg.path(Quadrilateral.toSvgPath(widen(src, dst, COTISED_WIDTH)), cotised);
+        const bottom = svg.line(src, dst, cotised, COTISED_WIDTH);
         bottom.setAttribute("transform", `translate(-${deltaX} ${deltaY})`);
         const g = svg.g();
         g.appendChild(top);
@@ -578,32 +548,23 @@ function cross({ tincture, cotised }) {
     const bottom = [0, H_2];
     const left = [-W_2, horizontalOffset];
     const right = [W_2, horizontalOffset];
-    const cross = svg.path(([
-        [top, bottom],
-        [left, right],
-    ])
-        .map(([src, dst]) => Quadrilateral.toSvgPath(widen(src, dst, crossWidth)))
-        .join(" "), tincture);
-    if (cotised == null) {
-        return cross;
-    }
-    else {
-        const pathSegments = [];
+    const cross = svg.g();
+    cross.appendChild(svg.line(top, bottom, tincture, crossWidth));
+    cross.appendChild(svg.line(left, right, tincture, crossWidth));
+    if (cotised != null) {
         const offset = crossWidth / 2 + (COTISED_WIDTH * 3) / 2;
         const mid = [0, horizontalOffset];
-        for (const [p, [x1sign, y1sign], [x2sign, y2sign, reverse]] of [
+        for (const [p, [x1sign, y1sign], [x2sign, y2sign]] of [
             [top, [-1, -1], [1, -1]],
             [bottom, [-1, 1], [1, 1]],
-            [left, [-1, -1], [-1, 1, true]],
-            [right, [1, 1], [1, -1, true]],
+            [left, [-1, -1], [-1, 1]],
+            [right, [1, 1], [1, -1]],
         ]) {
-            pathSegments.push(Quadrilateral.toSvgPath(widen(Coordinate.add(p, [offset * x1sign, offset * y1sign]), Coordinate.add(mid, [offset * x1sign, offset * y1sign]), COTISED_WIDTH)), Quadrilateral.toSvgPath(widen(Coordinate.add(p, [offset * x2sign, offset * y2sign]), Coordinate.add(mid, [offset * x2sign, offset * y2sign]), COTISED_WIDTH), reverse ? { winding: "reverse" } : undefined));
+            cross.appendChild(svg.line(Coordinate.add(p, [offset * x1sign, offset * y1sign]), Coordinate.add(mid, [offset * x1sign, offset * y1sign]), cotised, COTISED_WIDTH, "square"));
+            cross.appendChild(svg.line(Coordinate.add(p, [offset * x2sign, offset * y2sign]), Coordinate.add(mid, [offset * x2sign, offset * y2sign]), cotised, COTISED_WIDTH, "square"));
         }
-        const g = svg.g();
-        g.appendChild(svg.path(pathSegments.join(" "), cotised));
-        g.appendChild(cross);
-        return g;
     }
+    return cross;
 }
 cross.on = new SequenceLocator([
     [-30, -14],
