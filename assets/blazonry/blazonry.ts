@@ -47,6 +47,10 @@ const Coordinate = {
     x1 + x2,
     y1 + y2,
   ],
+  sub: ([x1, y1]: Coordinate, [x2, y2]: Coordinate): Coordinate => [
+    x1 - x2,
+    y1 - y2,
+  ],
 };
 
 type Quadrilateral = [Coordinate, Coordinate, Coordinate, Coordinate];
@@ -655,6 +659,8 @@ const svg = {
 // ORDINARIES
 // ----------------------------------------------------------------------------
 
+const COTISED_WIDTH = W_2 / 10;
+
 function bend({ tincture, cotised }: Ordinary) {
   const bendWidth = W / 3;
 
@@ -668,21 +674,20 @@ function bend({ tincture, cotised }: Ordinary) {
   if (cotised == null) {
     return bend;
   } else {
-    const cotisedWidth = W_2 / 10;
     const deltaX =
       // 3/2 = 1/2 because the widening is relative to the middle of the cotise + 1 to space it out from the bend.
-      Math.cos(Math.PI / 4) * (bendWidth / 2 + (cotisedWidth * 3) / 2);
+      Math.cos(Math.PI / 4) * (bendWidth / 2 + (COTISED_WIDTH * 3) / 2);
     const deltaY =
-      Math.sin(Math.PI / 4) * (bendWidth / 2 + (cotisedWidth * 3) / 2);
+      Math.sin(Math.PI / 4) * (bendWidth / 2 + (COTISED_WIDTH * 3) / 2);
 
     const top = svg.path(
-      Quadrilateral.toSvgPath(widen(src, dst, cotisedWidth)),
+      Quadrilateral.toSvgPath(widen(src, dst, COTISED_WIDTH)),
       cotised
     );
     top.setAttribute("transform", `translate(${deltaX} -${deltaY})`);
 
     const bottom = svg.path(
-      Quadrilateral.toSvgPath(widen(src, dst, cotisedWidth)),
+      Quadrilateral.toSvgPath(widen(src, dst, COTISED_WIDTH)),
       cotised
     );
     bottom.setAttribute("transform", `translate(-${deltaX} ${deltaY})`);
@@ -790,16 +795,17 @@ chevron.surround = new ExhaustiveLocator(
   [0.5, 0.5, 0.5, 0.5]
 );
 
-function cross({ tincture }: Ordinary) {
+function cross({ tincture, cotised }: Ordinary) {
   const crossWidth = W / 4;
+  // 14 is too hardcoded -- should be defined based on W/H ratios instead.
+  const horizontalOffset = -14;
 
   const top: Coordinate = [0, -H_2];
   const bottom: Coordinate = [0, H_2];
-  // 14 is too hardcoded -- should be defined based on W/H ratios instead.
-  const left: Coordinate = [-W_2, -14];
-  const right: Coordinate = [W_2, -14];
+  const left: Coordinate = [-W_2, horizontalOffset];
+  const right: Coordinate = [W_2, horizontalOffset];
 
-  return svg.path(
+  const cross = svg.path(
     (
       [
         [top, bottom],
@@ -810,6 +816,44 @@ function cross({ tincture }: Ordinary) {
       .join(" "),
     tincture
   );
+
+  if (cotised == null) {
+    return cross;
+  } else {
+    const pathSegments: string[] = [];
+    const offset = crossWidth / 2 + (COTISED_WIDTH * 3) / 2;
+
+    const mid: Coordinate = [0, horizontalOffset];
+
+    for (const [p, [x1sign, y1sign], [x2sign, y2sign]] of [
+      [top, [-1, -1], [1, -1]],
+      [bottom, [-1, 1], [1, 1]],
+      [left, [-1, -1], [-1, 1]],
+      [right, [1, 1], [1, -1]],
+    ] as const) {
+      pathSegments.push(
+        Quadrilateral.toSvgPath(
+          widen(
+            Coordinate.add(p, [offset * x1sign, offset * y1sign]),
+            Coordinate.add(mid, [offset * x1sign, offset * y1sign]),
+            COTISED_WIDTH
+          )
+        ),
+        Quadrilateral.toSvgPath(
+          widen(
+            Coordinate.add(p, [offset * x2sign, offset * y2sign]),
+            Coordinate.add(mid, [offset * x2sign, offset * y2sign]),
+            COTISED_WIDTH
+          )
+        )
+      );
+    }
+
+    const g = svg.g();
+    g.appendChild(svg.path(pathSegments.join(" "), cotised));
+    g.appendChild(cross);
+    return g;
+  }
 }
 
 cross.on = new SequenceLocator(
