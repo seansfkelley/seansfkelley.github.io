@@ -24,12 +24,12 @@ Quarterly
 
 SimpleContent
   // Order matters here since both the next rules start with an Ordinary.
-  = ordinary:Ordinary _ "between" _ surround:PluralCharge { return { on: true, ordinary, surround } }
+  = ordinary:Ordinary _ "between" _ surround:Charge { return { on: true, ordinary, surround } }
   / Ordinary
   / Charge
   / Canton
   / "on" _ ordinary:Ordinary _ charge:Charge { return { on: true, ordinary, charge } }
-  / "on" _ ordinary:Ordinary _ "between" _ surround:PluralCharge _ charge:Charge { return { on: true, ordinary, surround, charge } }
+  / "on" _ ordinary:Ordinary _ "between" _ surround:Charge _ charge:Charge { return { on: true, ordinary, surround, charge } }
 
 Quarter
   // TODO: Make this an actual list rule?
@@ -47,14 +47,8 @@ Ordinary
   / Singular _ ordinary:OrdinaryName _ tincture:Tincture { return { ordinary, tincture } }
 
 Charge
-  = SingularCharge
-  / PluralCharge
-
-SingularCharge
   = Singular _ charge:ChargeName _ posture:Posture? _ tincture:Tincture { return { charge, tincture, posture, count: 1 } }
-
-PluralCharge
-  = count:Plural _ charge:ChargeName "s" _ posture:Posture? _ tincture:Tincture _ direction:InDirection? { return { charge, tincture, posture, count, direction } }
+  / count:Plural _ charge:ChargeName "s" _ posture:Posture? _ tincture:Tincture _ direction:InDirection? { return { charge, tincture, posture, count, direction } }
 
 Singular "a/an"
   = "a"
