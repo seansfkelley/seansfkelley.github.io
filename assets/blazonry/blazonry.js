@@ -1,11 +1,9 @@
 "use strict";
 // TODO
-// - do ParametricLocators for `surround`
-// - adjust positioning for `on` -- often the 2s and 3s are too close to each other, like for chief
+// - some introductory text for shapes and colors and keywords with clickable links to demonstrate them
 // - canton
 // - posture -- for things like swords, requires resizing
 // - direction... does it work?
-// - push elements around when quartering
 // - can party per field have complex content in it?
 // - minor visual effects to make it a little less flat
 // - fancy paths for fancy charges: lion, leopard's head, castle, and all their variants
@@ -14,7 +12,6 @@
 //     quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
 // - should be able to parse non-redundant usage of colors
 //     argent on a bend between six mullets vert
-const DEBUG = false;
 function applyTransforms(element, { translate, scale, rotate, } = {}) {
     function getRotation(posture) {
         switch (posture) {
@@ -65,9 +62,6 @@ class NullLocator {
     *forCount() {
         // nop
     }
-    toSvgPath() {
-        return "";
-    }
 }
 class LineSegmentLocator {
     a;
@@ -88,12 +82,6 @@ class LineSegmentLocator {
                 this.scales[total - 1],
             ];
         }
-    }
-    toSvgPath() {
-        return path `
-      M ${this.a[0]} ${this.a[1]}
-      L ${this.b[0]} ${this.b[1]}
-    `;
     }
 }
 class SequenceLocator {
@@ -119,10 +107,6 @@ class SequenceLocator {
             yield [sequence[i], this.scales[total - 1]];
         }
     }
-    toSvgPath() {
-        // TODO
-        return "";
-    }
 }
 class ExhaustiveLocator {
     sequences;
@@ -142,10 +126,6 @@ class ExhaustiveLocator {
         for (const coordinates of this.sequences[total - 1]) {
             yield [coordinates, this.scales[total - 1]];
         }
-    }
-    toSvgPath() {
-        // TODO
-        return "";
     }
 }
 class ReflectiveLocator {
@@ -192,10 +172,6 @@ class ReflectiveLocator {
         const d = (x + (y - c) * m) / (1 + m * m);
         return [2 * d - x, 2 * d * m - y + 2 * c];
     }
-    toSvgPath() {
-        // TODO
-        return "";
-    }
 }
 class OnChevronLocator {
     left;
@@ -229,13 +205,6 @@ class OnChevronLocator {
                 scale,
             ];
         }
-    }
-    toSvgPath() {
-        return path `
-      M ${this.left[0]} ${this.left[1]}
-      L ${this.midpoint[0]} ${this.midpoint[1]}
-      L ${this.right[0]} ${this.right[1]}
-    `;
     }
 }
 function assert(condition, message) {
@@ -850,12 +819,6 @@ function on(parent, { ordinary, surround, charge }) {
                 rotate: charge.posture ?? undefined,
             });
             parent.appendChild(c);
-        }
-        if (DEBUG) {
-            const debugPath = svg.path(locator.toSvgPath(), "none");
-            debugPath.setAttribute("stroke-width", "2");
-            debugPath.setAttribute("stroke", "magenta");
-            parent.appendChild(debugPath);
         }
     }
     if (surround != null) {

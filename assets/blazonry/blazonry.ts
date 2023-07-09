@@ -1,10 +1,8 @@
 // TODO
-// - do ParametricLocators for `surround`
-// - adjust positioning for `on` -- often the 2s and 3s are too close to each other, like for chief
+// - some introductory text for shapes and colors and keywords with clickable links to demonstrate them
 // - canton
 // - posture -- for things like swords, requires resizing
 // - direction... does it work?
-// - push elements around when quartering
 // - can party per field have complex content in it?
 // - minor visual effects to make it a little less flat
 // - fancy paths for fancy charges: lion, leopard's head, castle, and all their variants
@@ -14,7 +12,9 @@
 // - should be able to parse non-redundant usage of colors
 //     argent on a bend between six mullets vert
 
-const DEBUG = false;
+// TODO OPTIONAL
+// - adjust positioning for `on` -- often the 2s and 3s are too close to each other, like for chief
+// - push elements around when quartering
 
 declare namespace PeggyParser {
   interface SyntaxError extends Error {
@@ -105,16 +105,11 @@ const QUARTERINGS: Record<Quarter, { translate: Coordinate }> = {
 
 interface ParametricLocator {
   forCount(total: number): Generator<[Coordinate, number]>;
-  toSvgPath(): string;
 }
 
 class NullLocator implements ParametricLocator {
   public *forCount() {
     // nop
-  }
-
-  public toSvgPath(): string {
-    return "";
   }
 }
 
@@ -136,13 +131,6 @@ class LineSegmentLocator implements ParametricLocator {
         this.scales[total - 1],
       ];
     }
-  }
-
-  public toSvgPath(): string {
-    return path`
-      M ${this.a[0]} ${this.a[1]}
-      L ${this.b[0]} ${this.b[1]}
-    `;
   }
 }
 
@@ -178,11 +166,6 @@ class SequenceLocator implements ParametricLocator {
       yield [sequence[i], this.scales[total - 1]];
     }
   }
-
-  public toSvgPath(): string {
-    // TODO
-    return "";
-  }
 }
 
 class ExhaustiveLocator implements ParametricLocator {
@@ -207,11 +190,6 @@ class ExhaustiveLocator implements ParametricLocator {
     for (const coordinates of this.sequences[total - 1]) {
       yield [coordinates, this.scales[total - 1]];
     }
-  }
-
-  public toSvgPath(): string {
-    // TODO
-    return "";
   }
 }
 
@@ -266,11 +244,6 @@ class ReflectiveLocator implements ParametricLocator {
     const d = (x + (y - c) * m) / (1 + m * m);
     return [2 * d - x, 2 * d * m - y + 2 * c];
   }
-
-  public toSvgPath(): string {
-    // TODO
-    return "";
-  }
 }
 
 class OnChevronLocator implements ParametricLocator {
@@ -307,14 +280,6 @@ class OnChevronLocator implements ParametricLocator {
         scale,
       ];
     }
-  }
-
-  public toSvgPath(): string {
-    return path`
-      M ${this.left[0]} ${this.left[1]}
-      L ${this.midpoint[0]} ${this.midpoint[1]}
-      L ${this.right[0]} ${this.right[1]}
-    `;
   }
 }
 
@@ -1162,13 +1127,6 @@ function on(parent: SVGElement, { ordinary, surround, charge }: On) {
         rotate: charge.posture ?? undefined,
       });
       parent.appendChild(c);
-    }
-
-    if (DEBUG) {
-      const debugPath = svg.path(locator.toSvgPath(), "none");
-      debugPath.setAttribute("stroke-width", "2");
-      debugPath.setAttribute("stroke", "magenta");
-      parent.appendChild(debugPath);
     }
   }
 
