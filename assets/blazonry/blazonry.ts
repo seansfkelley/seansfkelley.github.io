@@ -9,6 +9,7 @@
 // - fancy paths for fancy charges: lion, leopard's head, castle, and all their variants
 // - decorations for lines (e.g. embattled, engrailed, etc.)
 // - "overall"
+// - cotised, but for the other ordinaries too
 // - parser can't figure out the correct assignment of the quarterly rules to parse this:
 //     quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
 // - should be able to parse non-redundant usage of colors
@@ -41,6 +42,13 @@ type InDirection = Direction | "cross";
 type Quarter = 1 | 2 | 3 | 4;
 
 type Coordinate = [x: number, y: number];
+
+const Coordinate = {
+  add: ([x1, y1]: Coordinate, [x2, y2]: Coordinate): Coordinate => [
+    x1 + x2,
+    y1 + y2,
+  ],
+};
 
 function applyTransforms(
   element: SVGElement,
@@ -384,6 +392,7 @@ interface Quartering {
 interface Ordinary {
   ordinary: string;
   tincture: Tincture;
+  cotised?: Tincture | null;
 }
 
 interface Charge {
@@ -402,7 +411,7 @@ interface On {
 }
 
 interface OrdinaryRenderer {
-  (tincture: Tincture): SVGElement;
+  (ordinary: Ordinary): SVGElement;
   on: ParametricLocator;
   surround: ParametricLocator;
 }
@@ -606,18 +615,78 @@ const svg = {
 // ORDINARIES
 // ----------------------------------------------------------------------------
 
-function bend(tincture: Tincture) {
-  const bendWidth = W_2 / 3;
-  return svg.path(
+function bend({ tincture, cotised }: Ordinary) {
+  const bendWidth = W / 3;
+  // Pythagoras. Find the horizontal/vertical length of a 45-45-90 given the hypotenuse. Then half it.
+  const halfManhattanDistance = Math.sqrt((bendWidth * bendWidth) / 2) / 2;
+
+  const src: Coordinate = [-W_2, -H_2];
+  const dst: Coordinate = [W_2, -H_2 + W];
+  const tr = Coordinate.add(src, [
+    halfManhattanDistance,
+    -halfManhattanDistance,
+  ]);
+  const br = Coordinate.add(dst, [
+    halfManhattanDistance,
+    -halfManhattanDistance,
+  ]);
+  const bl = Coordinate.add(dst, [
+    -halfManhattanDistance,
+    halfManhattanDistance,
+  ]);
+  const tl = Coordinate.add(src, [
+    -halfManhattanDistance,
+    halfManhattanDistance,
+  ]);
+
+  const bend = svg.path(
     path`
-      M -${W_2 + bendWidth} -${H_2}
-      L -${W_2}             -${H_2 + bendWidth}
-      L  ${W_2 + bendWidth}  ${-H_2 + W}
-      L  ${W_2}              ${-H_2 + W + bendWidth}
+      M ${tr[0]} ${tr[1]}
+      L ${br[0]} ${br[1]}
+      L ${bl[0]} ${bl[1]}
+      L ${tl[0]} ${tl[1]}
       Z
     `,
     tincture
   );
+
+  if (cotised == null) {
+    return bend;
+  } else {
+    const cotisedWidth = W_2 / 10;
+    // Pythagoras, as before.
+    const manhattanDistance = Math.sqrt((cotisedWidth * cotisedWidth) / 2);
+
+    const g = svg.g();
+    g.appendChild(
+      svg.path(
+        // * 2 to provide spacing equivalent to the width of the cotise.
+        path`
+          M ${tr[0] + manhattanDistance * 2} ${tr[1] - manhattanDistance * 2}
+          L ${br[0] + manhattanDistance * 2} ${br[1] - manhattanDistance * 2}
+          L ${br[0] + manhattanDistance}     ${br[1] - manhattanDistance}
+          L ${tr[0] + manhattanDistance}     ${tr[1] - manhattanDistance}
+          Z
+        `,
+        cotised
+      )
+    );
+    g.appendChild(bend);
+    g.appendChild(
+      svg.path(
+        // * 2 to provide spacing equivalent to the width of the cotise.
+        path`
+          M ${tl[0] - manhattanDistance * 2} ${tl[1] + manhattanDistance * 2}
+          L ${bl[0] - manhattanDistance * 2} ${bl[1] + manhattanDistance * 2}
+          L ${bl[0] - manhattanDistance}     ${bl[1] + manhattanDistance}
+          L ${tl[0] - manhattanDistance}     ${tl[1] + manhattanDistance}
+          Z
+        `,
+        cotised
+      )
+    );
+    return g;
+  }
 }
 
 bend.on = new LineSegmentLocator(
@@ -648,7 +717,7 @@ bend.surround = new ReflectiveLocator(
   [W_2, -H_2 + W]
 );
 
-function chief(tincture: Tincture) {
+function chief({ tincture }: Ordinary) {
   return svg.path(
     path`
       M -${W_2} ${-H_2}
@@ -669,7 +738,7 @@ chief.on = new LineSegmentLocator(
 
 chief.surround = new NullLocator();
 
-function chevron(tincture: Tincture) {
+function chevron({ tincture }: Ordinary) {
   return svg.path(
     path`
       M   0 -26
@@ -715,7 +784,7 @@ chevron.surround = new ExhaustiveLocator(
   [0.5, 0.5, 0.5, 0.5]
 );
 
-function cross(tincture: Tincture) {
+function cross({ tincture }: Ordinary) {
   return svg.path(
     path`
       M -10 -60
@@ -763,7 +832,7 @@ cross.surround = new SequenceLocator(
   }
 );
 
-function fess(tincture: Tincture) {
+function fess({ tincture }: Ordinary) {
   return svg.path(
     path`
       M -50 -25
@@ -792,7 +861,7 @@ fess.surround = new ReflectiveLocator(
   [W_2, -4]
 );
 
-function pale(tincture: Tincture) {
+function pale({ tincture }: Ordinary) {
   return svg.path(
     path`
       M -15 -60
@@ -821,7 +890,7 @@ pale.surround = new ReflectiveLocator(
   [0, H_2]
 );
 
-function saltire(tincture: Tincture) {
+function saltire({ tincture }: Ordinary) {
   return svg.path(
     path`
       M  44 -70
@@ -1073,7 +1142,7 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     if ("on" in element) {
       on(parent, element);
     } else if ("ordinary" in element) {
-      parent.appendChild(ORDINARIES[element.ordinary](element.tincture));
+      parent.appendChild(ORDINARIES[element.ordinary](element));
     } else if ("charge" in element) {
       const locator = CHARGE_DIRECTIONS[element.direction ?? "none"];
       for (const [translate, scale] of locator.forCount(element.count)) {
@@ -1094,6 +1163,12 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     element: Ordinary | Charge | On,
     tincture: Tincture
   ): Ordinary | Charge | On {
+    function maybeToCounterchanged<T extends Tincture | null | undefined>(
+      t: T
+    ): T {
+      return (t === COUNTERCHANGED ? tincture : t) as T;
+    }
+
     if ("on" in element) {
       if (element.surround?.tincture === COUNTERCHANGED) {
         return {
@@ -1103,13 +1178,16 @@ function complexContent(container: SVGElement, content: ComplexContent) {
         };
       }
     } else if ("ordinary" in element) {
-      if (element.tincture === COUNTERCHANGED) {
-        return { ...element, tincture };
-      }
+      return {
+        ...element,
+        tincture: maybeToCounterchanged(element.tincture),
+        cotised: maybeToCounterchanged(element.cotised),
+      };
     } else if ("charge" in element) {
-      if (element.tincture === COUNTERCHANGED) {
-        return { ...element, tincture };
-      }
+      return {
+        ...element,
+        tincture: maybeToCounterchanged(element.tincture),
+      };
     } else {
       assertNever(element);
     }
@@ -1184,7 +1262,7 @@ function complexContent(container: SVGElement, content: ComplexContent) {
 
 function on(parent: SVGElement, { ordinary, surround, charge }: On) {
   const g = svg.g();
-  g.appendChild(ORDINARIES[ordinary.ordinary](ordinary.tincture));
+  g.appendChild(ORDINARIES[ordinary.ordinary](ordinary));
   parent.appendChild(g);
 
   if (charge != null) {
