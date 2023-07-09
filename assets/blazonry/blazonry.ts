@@ -1,6 +1,5 @@
 // TODO
 // - some introductory text for shapes and colors and keywords with clickable links to demonstrate them
-// - canton
 // - posture -- for things like swords, requires resizing
 // - posture -- incorrect for swords; we should probably rotate the SVG 90 degress and use that as the base
 // - InDirection -- at least in the case of chevron and saltire, they are rotated to match -- matters for swords, at least
@@ -354,7 +353,7 @@ class DefaultChargeLocator implements ParametricLocator {
 }
 
 type ComplexContent = SimpleField | PartyPerField | Quarterly;
-type SimpleContent = Ordinary | Charge | On;
+type SimpleContent = Ordinary | Charge | Canton | On;
 
 type SimpleField =
   | {
@@ -401,6 +400,11 @@ interface Charge {
   count: Count;
   posture?: Posture | null;
   direction?: InDirection | null;
+}
+
+interface Canton {
+  canton: Tincture;
+  content?: SimpleContent | null;
 }
 
 interface On {
@@ -600,11 +604,28 @@ const PARTY_PER_CLIP_PATHS: Record<Direction, [string, string]> = {
 // ----------------------------------------------------------------------------
 
 const svg = {
-  path: (d: string, fill: Tincture | "none"): SVGPathElement => {
+  path: (d: string, tincture: Tincture | "none"): SVGPathElement => {
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     path.setAttribute("d", d);
-    path.classList.add(`fill-${fill}`);
+    path.classList.add(`fill-${tincture}`);
     return path;
+  },
+  line: (
+    [x1, y1]: Coordinate,
+    [x2, y2]: Coordinate,
+    tincture: Tincture,
+    width: number = 1,
+    linecap: "butt" | "round" | "square" = "butt"
+  ): SVGLineElement => {
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", `${x1}`);
+    line.setAttribute("y1", `${y1}`);
+    line.setAttribute("x2", `${x2}`);
+    line.setAttribute("y2", `${y2}`);
+    line.classList.add(`stroke-${tincture}`);
+    line.setAttribute("stroke-width", `${width}`);
+    line.setAttribute("stroke-linecap", linecap);
+    return line;
   },
   g: (): SVGGElement => {
     return document.createElementNS("http://www.w3.org/2000/svg", "g");
@@ -615,76 +636,34 @@ const svg = {
 // ORDINARIES
 // ----------------------------------------------------------------------------
 
+const COTISED_WIDTH = W_2 / 10;
+
 function bend({ tincture, cotised }: Ordinary) {
   const bendWidth = W / 3;
-  // Pythagoras. Find the horizontal/vertical length of a 45-45-90 given the hypotenuse. Then half it.
-  const halfManhattanDistance = Math.sqrt((bendWidth * bendWidth) / 2) / 2;
 
   const src: Coordinate = [-W_2, -H_2];
   const dst: Coordinate = [W_2, -H_2 + W];
-  const tr = Coordinate.add(src, [
-    halfManhattanDistance,
-    -halfManhattanDistance,
-  ]);
-  const br = Coordinate.add(dst, [
-    halfManhattanDistance,
-    -halfManhattanDistance,
-  ]);
-  const bl = Coordinate.add(dst, [
-    -halfManhattanDistance,
-    halfManhattanDistance,
-  ]);
-  const tl = Coordinate.add(src, [
-    -halfManhattanDistance,
-    halfManhattanDistance,
-  ]);
-
-  const bend = svg.path(
-    path`
-      M ${tr[0]} ${tr[1]}
-      L ${br[0]} ${br[1]}
-      L ${bl[0]} ${bl[1]}
-      L ${tl[0]} ${tl[1]}
-      Z
-    `,
-    tincture
-  );
+  const bend = svg.line(src, dst, tincture, bendWidth);
 
   if (cotised == null) {
     return bend;
   } else {
-    const cotisedWidth = W_2 / 10;
-    // Pythagoras, as before.
-    const manhattanDistance = Math.sqrt((cotisedWidth * cotisedWidth) / 2);
+    const deltaX =
+      // 3/2 = 1/2 because the widening is relative to the middle of the cotise + 1 to space it out from the bend.
+      Math.cos(Math.PI / 4) * (bendWidth / 2 + (COTISED_WIDTH * 3) / 2);
+    const deltaY =
+      Math.sin(Math.PI / 4) * (bendWidth / 2 + (COTISED_WIDTH * 3) / 2);
+
+    const top = svg.line(src, dst, cotised, COTISED_WIDTH);
+    top.setAttribute("transform", `translate(${deltaX} -${deltaY})`);
+
+    const bottom = svg.line(src, dst, cotised, COTISED_WIDTH);
+    bottom.setAttribute("transform", `translate(-${deltaX} ${deltaY})`);
 
     const g = svg.g();
-    g.appendChild(
-      svg.path(
-        // * 2 to provide spacing equivalent to the width of the cotise.
-        path`
-          M ${tr[0] + manhattanDistance * 2} ${tr[1] - manhattanDistance * 2}
-          L ${br[0] + manhattanDistance * 2} ${br[1] - manhattanDistance * 2}
-          L ${br[0] + manhattanDistance}     ${br[1] - manhattanDistance}
-          L ${tr[0] + manhattanDistance}     ${tr[1] - manhattanDistance}
-          Z
-        `,
-        cotised
-      )
-    );
+    g.appendChild(top);
     g.appendChild(bend);
-    g.appendChild(
-      svg.path(
-        // * 2 to provide spacing equivalent to the width of the cotise.
-        path`
-          M ${tl[0] - manhattanDistance * 2} ${tl[1] + manhattanDistance * 2}
-          L ${bl[0] - manhattanDistance * 2} ${bl[1] + manhattanDistance * 2}
-          L ${bl[0] - manhattanDistance}     ${bl[1] + manhattanDistance}
-          L ${tl[0] - manhattanDistance}     ${tl[1] + manhattanDistance}
-          Z
-        `,
-        cotised
-      )
-    );
+    g.appendChild(bottom);
     return g;
   }
 }
@@ -784,25 +763,52 @@ chevron.surround = new ExhaustiveLocator(
   [0.5, 0.5, 0.5, 0.5]
 );
 
-function cross({ tincture }: Ordinary) {
-  return svg.path(
-    path`
-      M -10 -60
-      L  10 -60
-      L  10 -24
-      L  50 -24
-      L  50  -4
-      L  10  -4
-      L  10  60
-      L -10  60
-      L -10  -4
-      L -50  -4
-      L -50 -24
-      L -10 -24
-      Z
-    `,
-    tincture
-  );
+function cross({ tincture, cotised }: Ordinary) {
+  const crossWidth = W / 4;
+  // 14 is too hardcoded -- should be defined based on W/H ratios instead.
+  const horizontalOffset = -14;
+
+  const top: Coordinate = [0, -H_2];
+  const bottom: Coordinate = [0, H_2];
+  const left: Coordinate = [-W_2, horizontalOffset];
+  const right: Coordinate = [W_2, horizontalOffset];
+
+  const cross = svg.g();
+  cross.appendChild(svg.line(top, bottom, tincture, crossWidth));
+  cross.appendChild(svg.line(left, right, tincture, crossWidth));
+
+  if (cotised != null) {
+    const offset = crossWidth / 2 + (COTISED_WIDTH * 3) / 2;
+    const mid: Coordinate = [0, horizontalOffset];
+
+    for (const [p, [x1sign, y1sign], [x2sign, y2sign]] of [
+      [top, [-1, -1], [1, -1]],
+      [bottom, [-1, 1], [1, 1]],
+      [left, [-1, -1], [-1, 1]],
+      [right, [1, 1], [1, -1]],
+    ] as const) {
+      cross.appendChild(
+        svg.line(
+          Coordinate.add(p, [offset * x1sign, offset * y1sign]),
+          Coordinate.add(mid, [offset * x1sign, offset * y1sign]),
+          cotised,
+          COTISED_WIDTH,
+          "square"
+        )
+      );
+      cross.appendChild(
+        svg.line(
+          Coordinate.add(p, [offset * x2sign, offset * y2sign]),
+          Coordinate.add(mid, [offset * x2sign, offset * y2sign]),
+          cotised,
+          COTISED_WIDTH,
+          "square"
+        )
+      );
+    }
+  }
+
+  return cross;
 }
 
 cross.on = new SequenceLocator(
@@ -1134,12 +1140,46 @@ const VARIED: Record<string, VariedClipPathGenerator> = {
 // HIGHER-ORDER
 // ----------------------------------------------------------------------------
 
+const CANTON_SCALE_FACTOR = 1 / 3;
+const CANTON_PATH = path`
+  M                     -${W_2}                    -${H_2}
+  l  ${W * CANTON_SCALE_FACTOR}                          0
+  l                           0 ${W * CANTON_SCALE_FACTOR}
+  l -${W * CANTON_SCALE_FACTOR}                          0
+  Z
+`;
+
 function complexContent(container: SVGElement, content: ComplexContent) {
-  function renderIntoParent(
-    parent: SVGElement,
-    element: Ordinary | Charge | On
-  ) {
-    if ("on" in element) {
+  function renderIntoParent(parent: SVGElement, element: SimpleContent) {
+    if ("canton" in element) {
+      const g = svg.g();
+      g.setAttribute("transform-origin", `-${W_2} -${H_2}`);
+      g.setAttribute(
+        "transform",
+        // The non-proportional scaling is a bit weird, but we want to have a square canton. A truly
+        // "standards-compliant" implementation would have alternate forms of the ordinaries and
+        // charges designed for a square canton, like a square cross. But this is a shortcut we take.
+        `scale(${CANTON_SCALE_FACTOR}, ${(CANTON_SCALE_FACTOR * W) / H})`
+      );
+      g.style.clipPath = CANTON_PATH;
+      g.appendChild(
+        svg.path(
+          path`
+            M -${W_2} -${H_2}
+            L  ${W_2} -${H_2}
+            L  ${W_2}  ${H_2}
+            L -${W_2}  ${H_2}
+            Z
+          `,
+          element.canton
+        )
+      );
+      g.classList.add(`fill-${element.canton}`);
+      parent.appendChild(g);
+      if (element.content) {
+        renderIntoParent(g, element.content);
+      }
+    } else if ("on" in element) {
       on(parent, element);
     } else if ("ordinary" in element) {
       parent.appendChild(ORDINARIES[element.ordinary](element));
@@ -1160,16 +1200,19 @@ function complexContent(container: SVGElement, content: ComplexContent) {
   }
 
   function overwriteCounterchangedTincture(
-    element: Ordinary | Charge | On,
+    element: SimpleContent,
     tincture: Tincture
-  ): Ordinary | Charge | On {
+  ): SimpleContent {
     function maybeToCounterchanged<T extends Tincture | null | undefined>(
       t: T
     ): T {
       return (t === COUNTERCHANGED ? tincture : t) as T;
     }
 
-    if ("on" in element) {
+    if ("canton" in element) {
+      // Cantons cannot be counterchanged; they always have a background and everything on them is
+      // relative to their background. Thus, nop.
+    } else if ("on" in element) {
       if (element.surround?.tincture === COUNTERCHANGED) {
         return {
           ...element,
@@ -1261,9 +1304,7 @@ function complexContent(container: SVGElement, content: ComplexContent) {
 }
 
 function on(parent: SVGElement, { ordinary, surround, charge }: On) {
-  const g = svg.g();
-  g.appendChild(ORDINARIES[ordinary.ordinary](ordinary));
-  parent.appendChild(g);
+  parent.appendChild(ORDINARIES[ordinary.ordinary](ordinary));
 
   if (charge != null) {
     assert(
