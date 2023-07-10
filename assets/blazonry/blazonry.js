@@ -655,10 +655,10 @@ const ORDINARIES = {
 // ----------------------------------------------------------------------------
 // CHARGES
 // ----------------------------------------------------------------------------
-function sword(tincture) {
+function sword({ tincture }) {
     return svg.path("M 35 -2 L 22 -2 L 22 -10 L 18 -10 L 18 -2 L -31 -2 L -35 0 L -31 2 L 18 2 L 18 11 L 22 11 L 22 2 L 35 2 Z", tincture);
 }
-function rondel(tincture) {
+function rondel({ tincture }) {
     const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     circle.setAttribute("r", "20");
     circle.setAttribute("cx", "0");
@@ -666,22 +666,31 @@ function rondel(tincture) {
     circle.classList.add(`fill-${tincture}`);
     return circle;
 }
-function mullet(tincture) {
+function mullet({ tincture }) {
     return svg.path("M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z", tincture);
 }
+function lion({ tincture }) {
+    // TODO!
+    return svg.path("", tincture);
+}
 const CHARGE_DIRECTIONS = {
+    none: new DefaultChargeLocator([-W_2, W_2], [-H_2, H_2 - 10]),
     fess: fess.on,
     pale: pale.on,
     bend: bend.on,
     chevron: chevron.on,
     saltire: saltire.on,
     cross: cross.on,
-    none: new DefaultChargeLocator([-W_2, W_2], [-H_2, H_2 - 10]),
 };
+// This is weakly-typed. I wasn't able to figure out how define a type that matched the discriminant
+// property to a function type that takes that union member. It should be an easy trick with
+// `DiscriminateUnion`, but it appears the presence of the string literal union disrciminant on
+// `SimpleCharge`
 const CHARGES = {
-    sword,
-    rondel,
-    mullet,
+    sword: sword,
+    rondel: rondel,
+    mullet: mullet,
+    lion: lion,
 };
 // ----------------------------------------------------------------------------
 // VARIED
@@ -845,7 +854,7 @@ function complexContent(container, content) {
         else if ("charge" in element) {
             const locator = CHARGE_DIRECTIONS[element.direction ?? "none"];
             for (const [translate, scale] of locator.forCount(element.count)) {
-                const rendered = CHARGES[element.charge](element.tincture);
+                const rendered = CHARGES[element.charge](element);
                 applyTransforms(rendered, {
                     translate,
                     scale,
@@ -956,7 +965,7 @@ function on(parent, { ordinary, surround, charge }) {
         assert(charge.direction == null, 'cannot specify a direction for charges in "on"');
         const locator = ORDINARIES[ordinary.ordinary].on;
         for (const [translate, scale] of locator.forCount(charge.count)) {
-            const c = CHARGES[charge.charge](charge.tincture);
+            const c = CHARGES[charge.charge](charge);
             applyTransforms(c, {
                 translate,
                 scale,
@@ -969,7 +978,7 @@ function on(parent, { ordinary, surround, charge }) {
         assert(surround.direction == null, 'cannot specify a direction for charges in "between"');
         const locator = ORDINARIES[ordinary.ordinary].surround;
         for (const [translate, scale] of locator.forCount(surround.count)) {
-            const c = CHARGES[surround.charge](surround.tincture);
+            const c = CHARGES[surround.charge](surround);
             applyTransforms(c, {
                 translate,
                 scale,

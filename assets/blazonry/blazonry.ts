@@ -33,14 +33,6 @@ declare const parser: {
   parse: (text: string, opts?: { grammarSource: string }) => ComplexContent;
 };
 
-type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
-type Tincture = string & { __tincture: unknown };
-type VariedName = string & { __varied: unknown };
-type Posture = "palewise" | "fesswise" | "bendwise" | "saltirewise";
-type Direction = "pale" | "fess" | "bend" | "chevron" | "saltire";
-type InDirection = Direction | "cross";
-type Quarter = 1 | 2 | 3 | 4;
-
 type Coordinate = [x: number, y: number];
 
 const Coordinate = {
@@ -353,6 +345,14 @@ class DefaultChargeLocator implements ParametricLocator {
   }
 }
 
+type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+type Tincture = string & { __tincture: unknown };
+type VariedName = string & { __varied: unknown };
+type Posture = "palewise" | "fesswise" | "bendwise" | "saltirewise";
+type Direction = "pale" | "fess" | "bend" | "chevron" | "saltire";
+type InDirection = Direction | "cross";
+type Quarter = 1 | 2 | 3 | 4;
+
 type ComplexContent = SimpleField | PartyPerField | Quarterly;
 type SimpleContent = Ordinary | Charge | Canton | On;
 
@@ -395,13 +395,25 @@ interface Ordinary {
   cotised?: Tincture | null;
 }
 
-interface Charge {
-  charge: string;
+interface BaseCharge {
   tincture: Tincture;
   count: Count;
   posture?: Posture | null;
   direction?: InDirection | null;
 }
+
+interface SimpleCharge extends BaseCharge {
+  charge: "mullet" | "rondel" | "sword";
+}
+
+interface LionCharge extends BaseCharge {
+  charge: "lion";
+  armed?: Tincture | null;
+  langued?: Tincture | null;
+  pose: "passant" | "rampant" | "reguardant";
+}
+
+type Charge = SimpleCharge | LionCharge;
 
 interface Canton {
   canton: Tincture;
@@ -422,7 +434,7 @@ interface OrdinaryRenderer {
 }
 
 interface ChargeRenderer {
-  (tincture: Tincture): SVGElement;
+  (charge: Charge): SVGElement;
 }
 
 interface VariedClipPathGenerator {
@@ -966,14 +978,14 @@ const ORDINARIES: Record<string, OrdinaryRenderer> = {
 // CHARGES
 // ----------------------------------------------------------------------------
 
-function sword(tincture: Tincture) {
+function sword({ tincture }: SimpleCharge) {
   return svg.path(
     "M 35 -2 L 22 -2 L 22 -10 L 18 -10 L 18 -2 L -31 -2 L -35 0 L -31 2 L 18 2 L 18 11 L 22 11 L 22 2 L 35 2 Z",
     tincture
   );
 }
 
-function rondel(tincture: Tincture) {
+function rondel({ tincture }: SimpleCharge) {
   const circle = document.createElementNS(
     "http://www.w3.org/2000/svg",
     "circle"
@@ -985,30 +997,37 @@ function rondel(tincture: Tincture) {
   return circle;
 }
 
-function mullet(tincture: Tincture) {
+function mullet({ tincture }: SimpleCharge) {
   return svg.path(
     "M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z",
     tincture
   );
 }
 
-const CHARGE_DIRECTIONS: Record<
-  Exclude<Charge["direction"], null | undefined> | "none",
-  ParametricLocator
-> = {
+function lion({ tincture }: LionCharge) {
+  // TODO!
+  return svg.path("", tincture);
+}
+
+const CHARGE_DIRECTIONS: Record<InDirection | "none", ParametricLocator> = {
+  none: new DefaultChargeLocator([-W_2, W_2], [-H_2, H_2 - 10]),
   fess: fess.on,
   pale: pale.on,
   bend: bend.on,
   chevron: chevron.on,
   saltire: saltire.on,
   cross: cross.on,
-  none: new DefaultChargeLocator([-W_2, W_2], [-H_2, H_2 - 10]),
 };
 
-const CHARGES: Record<string, ChargeRenderer> = {
-  sword,
-  rondel,
-  mullet,
+// This is weakly-typed. I wasn't able to figure out how define a type that matched the discriminant
+// property to a function type that takes that union member. It should be an easy trick with
+// `DiscriminateUnion`, but it appears the presence of the string literal union disrciminant on
+// `SimpleCharge`
+const CHARGES: Record<Charge["charge"], ChargeRenderer> = {
+  sword: sword as any,
+  rondel: rondel as any,
+  mullet: mullet as any,
+  lion: lion as any,
 };
 
 // ----------------------------------------------------------------------------
@@ -1184,7 +1203,7 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     } else if ("charge" in element) {
       const locator = CHARGE_DIRECTIONS[element.direction ?? "none"];
       for (const [translate, scale] of locator.forCount(element.count)) {
-        const rendered = CHARGES[element.charge](element.tincture);
+        const rendered = CHARGES[element.charge](element);
         applyTransforms(rendered, {
           translate,
           scale,
@@ -1312,7 +1331,7 @@ function on(parent: SVGElement, { ordinary, surround, charge }: On) {
 
     const locator = ORDINARIES[ordinary.ordinary].on;
     for (const [translate, scale] of locator.forCount(charge.count)) {
-      const c = CHARGES[charge.charge](charge.tincture);
+      const c = CHARGES[charge.charge](charge);
       applyTransforms(c, {
         translate,
         scale,
@@ -1330,7 +1349,7 @@ function on(parent: SVGElement, { ordinary, surround, charge }: On) {
 
     const locator = ORDINARIES[ordinary.ordinary].surround;
     for (const [translate, scale] of locator.forCount(surround.count)) {
-      const c = CHARGES[surround.charge](surround.tincture);
+      const c = CHARGES[surround.charge](surround);
       applyTransforms(c, {
         translate,
         scale,
