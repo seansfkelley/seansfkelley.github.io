@@ -2,6 +2,34 @@
 # why do I have to put this nonsense header in and break my syntax highlighter
 ---
 
+$colors: (
+  argent: white,
+  sable: black,
+  gules: red,
+  vert: green,
+  azure: blue,
+  or: yellow,
+  purpure: purple,
+);
+
+@each $key, $val in $colors {
+  .fill-#{$key} {
+    fill: $val;
+  }
+
+  .stroke-#{$key} {
+    stroke: $val;
+  }
+}
+
+.fill-none {
+  fill: none;
+}
+
+.stroke-none {
+  stroke: none;
+}
+
 #form,
 #error,
 #rendered,
@@ -44,74 +72,22 @@
   align-items: center;
 }
 
-.fill-azure {
-  fill: blue;
-}
-
-.fill-or {
-  fill: yellow;
-}
-
-.fill-argent {
-  fill: white;
-}
-
-.fill-gules {
-  fill: red;
-}
-
-.fill-vert {
-  fill: green;
-}
-
-.fill-sable {
-  fill: black;
-}
-
-.fill-purpure {
-  fill: purple;
-}
-
-.fill-none {
-  fill: none;
-}
-
-.stroke-azure {
-  stroke: blue;
-}
-
-.stroke-or {
-  stroke: yellow;
-}
-
-.stroke-argent {
-  stroke: white;
-}
-
-.stroke-gules {
-  stroke: red;
-}
-
-.stroke-vert {
-  stroke: green;
-}
-
-.stroke-sable {
-  stroke: black;
-}
-
-.stroke-purpure {
-  stroke: purple;
-}
-
-.stroke-none {
-  stroke: none;
-}
-
 .lion {
-  &.gules {
-    .body {
-      fill: red;
+  @each $key, $val in $colors {
+    &.#{$key} {
+      .body,
+      .claws,
+      .langue {
+        fill: $val;
+      }
+
+      .highlight.low {
+        fill: lighten($val, 10%);
+      }
+
+      .highlight.high {
+        fill: lighten($val, 15%);
+      }
     }
   }
 }
