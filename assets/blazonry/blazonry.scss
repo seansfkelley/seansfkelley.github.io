@@ -73,6 +73,32 @@ $colors: (
 }
 
 .lion {
+  stroke-width: 1 !important;
+
+  .outline {
+    stroke: black;
+    opacity: 0.3;
+  }
+
+  .teeth {
+    fill: white;
+  }
+
+  .eye {
+    .white {
+      fill: white;
+    }
+
+    .pupil,
+    .edge {
+      fill: black;
+    }
+  }
+
+  .ear {
+    fill: #444;
+  }
+
   @each $key, $val in $colors {
     &.#{$key} {
       .body,
@@ -91,11 +117,13 @@ $colors: (
     }
 
     &.armed-#{$key} .claw {
-      fill: $val;
+      // Fucking CSS specificity rules. I DON'T HAVE ANY MORE CLASSES TO INCREASE SPECIFICITY WITH.
+      // JUST LET ME MAKE THIS RULE TAKE PRECEDENCE.
+      fill: $val !important;
     }
 
     &.langued-#{$key} .langue {
-      fill: $val;
+      fill: $val !important;
     }
   }
 }
