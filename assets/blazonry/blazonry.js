@@ -15,6 +15,7 @@
 // - should be able to parse non-redundant usage of colors
 //     argent on a bend between six mullets vert
 // - make whitespace non-optional to force breaks
+// - multiple ordiaries?
 const Coordinate = {
     add: ([x1, y1], [x2, y2]) => [
         x1 + x2,

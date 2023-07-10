@@ -14,6 +14,7 @@
 // - should be able to parse non-redundant usage of colors
 //     argent on a bend between six mullets vert
 // - make whitespace non-optional to force breaks
+// - multiple ordiaries?
 
 // TODO OPTIONAL
 // - adjust positioning for `on` -- often the 2s and 3s are too close to each other, like for chief
