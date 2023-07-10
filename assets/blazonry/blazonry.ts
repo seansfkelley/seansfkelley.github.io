@@ -349,6 +349,9 @@ class DefaultChargeLocator implements ParametricLocator {
 
 type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 type Tincture = string & { __tincture: unknown };
+const Tincture = {
+  NONE: "none" as Tincture,
+};
 type VariedName = string & { __varied: unknown };
 type Posture = "palewise" | "fesswise" | "bendwise" | "saltirewise";
 type Direction = "pale" | "fess" | "bend" | "chevron" | "saltire";
@@ -504,8 +507,9 @@ function parseAndRenderBlazon() {
   ast.innerHTML = JSON.stringify(result, null, 2);
 
   rendered.innerHTML = "";
-  const outline = svg.path(FIELD_PATH, "none");
-  outline.classList.add("outline");
+  const outline = svg.path(FIELD_PATH, Tincture.NONE);
+  outline.classList.add("stroke-sable");
+  outline.setAttribute("stroke-width", "2");
   rendered.appendChild(outline);
 
   // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
@@ -614,7 +618,7 @@ const PARTY_PER_CLIP_PATHS: Record<Direction, [string, string]> = {
 // ----------------------------------------------------------------------------
 
 const svg = {
-  path: (d: string, tincture: Tincture | "none"): SVGPathElement => {
+  path: (d: string, tincture: Tincture): SVGPathElement => {
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     path.setAttribute("d", d);
     path.classList.add(`fill-${tincture}`);

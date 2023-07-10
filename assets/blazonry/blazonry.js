@@ -271,6 +271,9 @@ class DefaultChargeLocator {
         }
     }
 }
+const Tincture = {
+    NONE: "none",
+};
 function assert(condition, message) {
     if (!condition) {
         throw new Error(`assertion failure: ${message}`);
@@ -325,8 +328,9 @@ function parseAndRenderBlazon() {
     result = recursivelyOmitNullish(result);
     ast.innerHTML = JSON.stringify(result, null, 2);
     rendered.innerHTML = "";
-    const outline = svg.path(FIELD_PATH, "none");
-    outline.classList.add("outline");
+    const outline = svg.path(FIELD_PATH, Tincture.NONE);
+    outline.classList.add("stroke-sable");
+    outline.setAttribute("stroke-width", "2");
     rendered.appendChild(outline);
     // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
     const container = svg.g();
