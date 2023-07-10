@@ -76,7 +76,7 @@ $colors: (
   @each $key, $val in $colors {
     &.#{$key} {
       .body,
-      .claws,
+      .claw,
       .langue {
         fill: $val;
       }
@@ -88,6 +88,14 @@ $colors: (
       .highlight.high {
         fill: lighten($val, 15%);
       }
+    }
+
+    &.armed-#{$key} .claw {
+      fill: $val;
+    }
+
+    &.langued-#{$key} .langue {
+      fill: $val;
     }
   }
 }

@@ -615,9 +615,16 @@ function rondel({ tincture }) {
 function mullet({ tincture }) {
     return svg.path("M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z", tincture);
 }
-function lion({ tincture }) {
+function lion({ tincture, armed, langued }) {
+    // TODO: eye, ear, outline, other unaddressed classes.
     const lion = getComplexSvgSync("lion").cloneNode(true);
     lion.classList.add(tincture);
+    if (armed != null) {
+        lion.classList.add(`armed-${armed}`);
+    }
+    if (langued != null) {
+        lion.classList.add(`langued-${langued}`);
+    }
     return lion;
 }
 const CHARGE_DIRECTIONS = {

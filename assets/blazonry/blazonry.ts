@@ -1042,9 +1042,16 @@ function mullet({ tincture }: SimpleCharge) {
   );
 }
 
-function lion({ tincture }: LionCharge) {
+function lion({ tincture, armed, langued }: LionCharge) {
+  // TODO: eye, ear, outline, other unaddressed classes.
   const lion = getComplexSvgSync("lion").cloneNode(true);
   lion.classList.add(tincture);
+  if (armed != null) {
+    lion.classList.add(`armed-${armed}`);
+  }
+  if (langued != null) {
+    lion.classList.add(`langued-${langued}`);
+  }
   return lion;
 }
 
