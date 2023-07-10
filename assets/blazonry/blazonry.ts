@@ -19,6 +19,35 @@
 // TODO OPTIONAL
 // - adjust positioning for `on` -- often the 2s and 3s are too close to each other, like for chief
 // - push elements around when quartering
+// - canton-specific overrides for ordinaries and charge placements so they don't look squished by the scale
+
+// #region LAYOUT
+
+// TODO: Make _everything_ a function of these proportions.
+const H = 120;
+const H_2 = H / 2;
+const W = 100;
+const W_2 = W / 2;
+
+// This one is pointier, but looks weirder with some bends:
+// "M -50 -60 L 50 -60 L 50 -10 C 50 20 30 50 0 60 C -30 50 -50 20 -50 -10 Z";
+const FIELD_PATH = path`
+  M -${W_2} -${H_2}
+  L  ${W_2} -${H_2}
+  L  ${W_2}  ${H_2 / 3}
+  C  ${W_2}           ${H_2 * (2 / 3)}
+     ${W_2 * (3 / 5)} ${H_2 * (5 / 6)}
+     0                ${H_2}
+  C -${W_2 * (3 / 5)} ${H_2 * (5 / 6)}
+     ${-W_2}          ${H_2 * (2 / 3)}
+     ${-W_2}          ${H_2 / 3}
+  Z
+`;
+
+// #endregion
+
+// #region TYPES
+// ----------------------------------------------------------------------------
 
 declare namespace PeggyParser {
   interface SyntaxError extends Error {
@@ -35,6 +64,110 @@ declare const parser: {
   parse: (text: string, opts?: { grammarSource: string }) => ComplexContent;
 };
 
+type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+type Tincture = string & { __tincture: unknown };
+const Tincture = {
+  NONE: "none" as Tincture,
+  COUNTERCHANGED: "counterchanged" as Tincture,
+};
+type VariedName = string & { __varied: unknown };
+type Posture = "palewise" | "fesswise" | "bendwise" | "saltirewise";
+type Direction = "pale" | "fess" | "bend" | "chevron" | "saltire";
+type InDirection = Direction | "cross";
+type Quarter = 1 | 2 | 3 | 4;
+
+type ComplexContent = SimpleField | PartyPerField | Quarterly;
+type SimpleContent = Ordinary | Charge | Canton | On;
+
+type SimpleField =
+  | {
+      tincture: Tincture;
+      content?: SimpleContent;
+    }
+  | {
+      varied: Varied;
+      first: Tincture;
+      second: Tincture;
+      content?: SimpleContent;
+    };
+
+interface Varied {
+  type: VariedName;
+  count?: number;
+}
+
+interface PartyPerField {
+  direction: Direction;
+  first: Tincture;
+  second: Tincture;
+  content?: SimpleContent;
+}
+
+interface Quarterly {
+  quarters: Quartering[];
+}
+
+interface Quartering {
+  quarters: Quarter[];
+  content: ComplexContent;
+}
+
+interface Ordinary {
+  ordinary: string;
+  tincture: Tincture;
+  cotised?: Tincture;
+}
+
+interface BaseCharge {
+  tincture: Tincture;
+  count: Count;
+  posture?: Posture;
+  direction?: InDirection;
+}
+
+interface SimpleCharge extends BaseCharge {
+  charge: "mullet" | "rondel" | "sword";
+}
+
+interface LionCharge extends BaseCharge {
+  charge: "lion";
+  armed?: Tincture;
+  langued?: Tincture;
+  pose: "passant" | "rampant" | "reguardant";
+}
+
+type Charge = SimpleCharge | LionCharge;
+
+interface Canton {
+  canton: Tincture;
+  content?: SimpleContent;
+}
+
+interface On {
+  on: Ordinary;
+  surround?: Charge;
+  charge?: Charge;
+}
+
+interface OrdinaryRenderer {
+  (ordinary: Ordinary): SVGElement;
+  on: ParametricLocator;
+  surround: ParametricLocator;
+}
+
+interface ChargeRenderer {
+  (charge: Charge): SVGElement;
+}
+
+interface VariedClipPathGenerator {
+  (count?: number): string;
+}
+
+// #endregion
+
+// #region LOCATORS
+// ----------------------------------------------------------------------------
+
 type Coordinate = [x: number, y: number];
 
 const Coordinate = {
@@ -44,44 +177,6 @@ const Coordinate = {
   ],
 };
 
-function applyTransforms(
-  element: SVGElement,
-  {
-    translate,
-    scale,
-    rotate,
-  }: { translate?: Coordinate; scale?: number; rotate?: Posture } = {}
-): void {
-  function getRotation(posture: Posture) {
-    switch (posture) {
-      case null:
-      case undefined:
-      case "palewise":
-        return undefined;
-      case "fesswise":
-        return "rotate(90)";
-      case "bendwise":
-        return "rotate(45)";
-      case "saltirewise":
-        return "rotate(45)"; // TODO
-      default:
-        assertNever(posture);
-    }
-  }
-
-  const transform = [
-    translate != null
-      ? `translate(${translate[0]}, ${translate[1]})`
-      : undefined,
-    scale != null && scale !== 1 ? `scale(${scale})` : undefined,
-    rotate != null ? getRotation(rotate) : undefined,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  element.setAttribute("transform", transform);
-}
-
 function evaluateLineSegment(
   src: Coordinate,
   dst: Coordinate,
@@ -90,21 +185,6 @@ function evaluateLineSegment(
   assert(t >= 0 && t <= 1, "parameter must be on [0, 1]");
   return [(dst[0] - src[0]) * t + src[0], (dst[1] - src[1]) * t + src[1]];
 }
-
-const QUARTERINGS: Record<Quarter, { translate: Coordinate }> = {
-  1: {
-    translate: [-25, -30],
-  },
-  2: {
-    translate: [25, -30],
-  },
-  3: {
-    translate: [-25, 30],
-  },
-  4: {
-    translate: [25, 30],
-  },
-};
 
 interface ParametricLocator {
   forCount(total: number): Generator<[Coordinate, number]>;
@@ -347,103 +427,10 @@ class DefaultChargeLocator implements ParametricLocator {
   }
 }
 
-type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
-type Tincture = string & { __tincture: unknown };
-const Tincture = {
-  NONE: "none" as Tincture,
-};
-type VariedName = string & { __varied: unknown };
-type Posture = "palewise" | "fesswise" | "bendwise" | "saltirewise";
-type Direction = "pale" | "fess" | "bend" | "chevron" | "saltire";
-type InDirection = Direction | "cross";
-type Quarter = 1 | 2 | 3 | 4;
+// #endregion
 
-type ComplexContent = SimpleField | PartyPerField | Quarterly;
-type SimpleContent = Ordinary | Charge | Canton | On;
-
-type SimpleField =
-  | {
-      tincture: Tincture;
-      content?: SimpleContent;
-    }
-  | {
-      varied: Varied;
-      first: Tincture;
-      second: Tincture;
-      content?: SimpleContent;
-    };
-
-interface Varied {
-  type: VariedName;
-  count?: number;
-}
-
-interface PartyPerField {
-  direction: Direction;
-  first: Tincture;
-  second: Tincture;
-  content?: SimpleContent;
-}
-
-interface Quarterly {
-  quarters: Quartering[];
-}
-
-interface Quartering {
-  quarters: Quarter[];
-  content: ComplexContent;
-}
-
-interface Ordinary {
-  ordinary: string;
-  tincture: Tincture;
-  cotised?: Tincture;
-}
-
-interface BaseCharge {
-  tincture: Tincture;
-  count: Count;
-  posture?: Posture;
-  direction?: InDirection;
-}
-
-interface SimpleCharge extends BaseCharge {
-  charge: "mullet" | "rondel" | "sword";
-}
-
-interface LionCharge extends BaseCharge {
-  charge: "lion";
-  armed?: Tincture;
-  langued?: Tincture;
-  pose: "passant" | "rampant" | "reguardant";
-}
-
-type Charge = SimpleCharge | LionCharge;
-
-interface Canton {
-  canton: Tincture;
-  content?: SimpleContent;
-}
-
-interface On {
-  on: Ordinary;
-  surround?: Charge;
-  charge?: Charge;
-}
-
-interface OrdinaryRenderer {
-  (ordinary: Ordinary): SVGElement;
-  on: ParametricLocator;
-  surround: ParametricLocator;
-}
-
-interface ChargeRenderer {
-  (charge: Charge): SVGElement;
-}
-
-interface VariedClipPathGenerator {
-  (count?: number): string;
-}
+// #region UTILITIES
+// ----------------------------------------------------------------------------
 
 function assert(condition: boolean, message: string): asserts condition {
   if (!condition) {
@@ -455,167 +442,43 @@ function assertNever(nope: never): never {
   throw new Error("was not never");
 }
 
-// TODO: Factor this out to the top so _everything_ is a function of it.
-const H = 120;
-const H_2 = H / 2;
-const W = 100;
-const W_2 = W / 2;
-
-// This one is pointier, but looks weirder with some bends:
-// "M -50 -60 L 50 -60 L 50 -10 C 50 20 30 50 0 60 C -30 50 -50 20 -50 -10 Z";
-const FIELD_PATH = path`
-  M -${W_2} -${H_2}
-  L  ${W_2} -${H_2}
-  L  ${W_2}  ${H_2 / 3}
-  C  ${W_2}           ${H_2 * (2 / 3)}
-     ${W_2 * (3 / 5)} ${H_2 * (5 / 6)}
-     0                ${H_2}
-  C -${W_2 * (3 / 5)} ${H_2 * (5 / 6)}
-     ${-W_2}          ${H_2 * (2 / 3)}
-     ${-W_2}          ${H_2 / 3}
-  Z
-`;
-
-function path(strings: TemplateStringsArray, ...values: number[]): string {
-  const parts = [];
-  for (let i = 0; i < values.length; ++i) {
-    parts.push(strings[i], values[i]);
-  }
-  parts.push(strings.at(-1));
-  return parts.join("").trim().replaceAll("\n", "").replaceAll(/ +/g, " ");
-}
-
-const COUNTERCHANGED = "counterchanged";
-
-function parseAndRenderBlazon() {
-  let result;
-  try {
-    result = parser.parse(input.value.trim().toLowerCase(), {
-      grammarSource: "input",
-    });
-    error.style.display = "none";
-  } catch (e) {
-    error.innerHTML = (e as PeggyParser.SyntaxError).format([
-      { source: "input", text: input.value },
-    ]);
-    error.style.display = "block";
-    return;
+function applyTransforms(
+  element: SVGElement,
+  {
+    translate,
+    scale,
+    rotate,
+  }: { translate?: Coordinate; scale?: number; rotate?: Posture } = {}
+): void {
+  function getRotation(posture: Posture) {
+    switch (posture) {
+      case null:
+      case undefined:
+      case "palewise":
+        return undefined;
+      case "fesswise":
+        return "rotate(90)";
+      case "bendwise":
+        return "rotate(45)";
+      case "saltirewise":
+        return "rotate(45)"; // TODO
+      default:
+        assertNever(posture);
+    }
   }
 
-  result = recursivelyOmitNullish(result);
+  const transform = [
+    translate != null
+      ? `translate(${translate[0]}, ${translate[1]})`
+      : undefined,
+    scale != null && scale !== 1 ? `scale(${scale})` : undefined,
+    rotate != null ? getRotation(rotate) : undefined,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
-  ast.innerHTML = JSON.stringify(result, null, 2);
-
-  rendered.innerHTML = "";
-  const outline = svg.path(FIELD_PATH, Tincture.NONE);
-  outline.classList.add("stroke-sable");
-  outline.setAttribute("stroke-width", "2");
-  rendered.appendChild(outline);
-
-  // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
-  const container = svg.g();
-  container.style.clipPath = `path("${FIELD_PATH}")`;
-  rendered.appendChild(container);
-  // Make sure there's always a default background.
-  container.appendChild(field("argent" as Tincture));
-
-  complexContent(container, result);
+  element.setAttribute("transform", transform);
 }
-
-function field(tincture: Tincture) {
-  return svg.rect([-W_2, -H_2], [W_2, H_2], tincture);
-}
-
-const PARTY_PER_CLIP_PATHS: Record<Direction, [string, string]> = {
-  pale: [
-    path`
-      M -${W_2} -${H_2}
-      L       0 -${H_2}
-      L       0  ${H_2}
-      L -${W_2}  ${H_2}
-    `,
-    path`
-      M       0 -${H_2}
-      L       0  ${H_2}
-      L  ${W_2}  ${H_2}
-      L  ${W_2} -${H_2}
-    `,
-  ],
-  fess: [
-    path`
-      M -${W_2} -${H_2}
-      L -${W_2}       0
-      L  ${W_2}       0
-      L  ${W_2} -${H_2}
-      Z
-    `,
-    path`
-      M -${W_2} ${H_2}
-      L -${W_2}      0
-      L  ${W_2}      0
-      L  ${W_2} ${H_2}
-      Z
-    `,
-  ],
-  bend: [
-    path`
-      M -${W_2} ${-H_2}
-      L  ${W_2} ${-H_2}
-      L  ${W_2} ${-H_2 + W}
-      Z
-    `,
-    path`
-      M -${W_2} ${-H_2}
-      L  ${W_2} ${-H_2 + W}
-      L  ${W_2} ${H_2}
-      L -${W_2} ${H_2}
-      Z
-    `,
-  ],
-  chevron: [
-    // TODO: Done empirically, and to run the midline of the chevron ordinary. Both these and the
-    // ordinary should be rewritten to be based on W/H.
-    path`
-      M -51  41
-      L   0 -10
-      L  51  41
-      L  51  60
-      L -51  60
-      Z
-    `,
-    path`
-      M -51  41
-      L   0 -10
-      L  51  41
-      L  51 -60
-      L -51 -60
-      Z
-    `,
-  ],
-  saltire: [
-    // TODO: Same here as above for chevron.
-    path`
-      M -51  41
-      L  52 -62
-      L -52 -62
-      L  51  41
-      L  51  60
-      L -51  60
-      Z
-    `,
-    path`
-      M -52 -62
-      L  51  41
-      L  52 -62
-      L -51  41
-      Z
-    `,
-  ],
-};
-
-// ----------------------------------------------------------------------------
-// UTIL
-// ----------------------------------------------------------------------------
 
 const svg = {
   path: (d: string, tincture: Tincture): SVGPathElement => {
@@ -659,6 +522,15 @@ const svg = {
   },
 };
 
+function path(strings: TemplateStringsArray, ...values: number[]): string {
+  const parts = [];
+  for (let i = 0; i < values.length; ++i) {
+    parts.push(strings[i], values[i]);
+  }
+  parts.push(strings.at(-1));
+  return parts.join("").trim().replaceAll("\n", "").replaceAll(/ +/g, " ");
+}
+
 function recursivelyOmitNullish<T>(value: T): T {
   assert(value != null, "cannot omit nullish root values");
   if (Array.isArray(value)) {
@@ -676,8 +548,9 @@ function recursivelyOmitNullish<T>(value: T): T {
   }
 }
 
-// ----------------------------------------------------------------------------
-// ORDINARIES
+// #endregion
+
+// #region ORDINARIES
 // ----------------------------------------------------------------------------
 
 const COTISED_WIDTH = W_2 / 10;
@@ -1001,8 +874,9 @@ const ORDINARIES: Record<string, OrdinaryRenderer> = {
   saltire,
 };
 
-// ----------------------------------------------------------------------------
-// CHARGES
+// #endregion
+
+// #region CHARGES
 // ----------------------------------------------------------------------------
 
 function sword({ tincture }: SimpleCharge) {
@@ -1057,8 +931,9 @@ const CHARGES: Record<Charge["charge"], ChargeRenderer> = {
   lion: lion as any,
 };
 
-// ----------------------------------------------------------------------------
-// VARIED
+// #endregion
+
+// #region VARIED
 // ----------------------------------------------------------------------------
 
 function barry(count: number = 6) {
@@ -1190,9 +1065,112 @@ const VARIED: Record<string, VariedClipPathGenerator> = {
   paly,
 };
 
+// #endregion
+
+// #region HIGHER-ORDER ELEMENTS
 // ----------------------------------------------------------------------------
-// HIGHER-ORDER
-// ----------------------------------------------------------------------------
+
+const PARTY_PER_CLIP_PATHS: Record<Direction, [string, string]> = {
+  pale: [
+    path`
+      M -${W_2} -${H_2}
+      L       0 -${H_2}
+      L       0  ${H_2}
+      L -${W_2}  ${H_2}
+    `,
+    path`
+      M       0 -${H_2}
+      L       0  ${H_2}
+      L  ${W_2}  ${H_2}
+      L  ${W_2} -${H_2}
+    `,
+  ],
+  fess: [
+    path`
+      M -${W_2} -${H_2}
+      L -${W_2}       0
+      L  ${W_2}       0
+      L  ${W_2} -${H_2}
+      Z
+    `,
+    path`
+      M -${W_2} ${H_2}
+      L -${W_2}      0
+      L  ${W_2}      0
+      L  ${W_2} ${H_2}
+      Z
+    `,
+  ],
+  bend: [
+    path`
+      M -${W_2} ${-H_2}
+      L  ${W_2} ${-H_2}
+      L  ${W_2} ${-H_2 + W}
+      Z
+    `,
+    path`
+      M -${W_2} ${-H_2}
+      L  ${W_2} ${-H_2 + W}
+      L  ${W_2} ${H_2}
+      L -${W_2} ${H_2}
+      Z
+    `,
+  ],
+  chevron: [
+    // TODO: Done empirically, and to run the midline of the chevron ordinary. Both these and the
+    // ordinary should be rewritten to be based on W/H.
+    path`
+      M -51  41
+      L   0 -10
+      L  51  41
+      L  51  60
+      L -51  60
+      Z
+    `,
+    path`
+      M -51  41
+      L   0 -10
+      L  51  41
+      L  51 -60
+      L -51 -60
+      Z
+    `,
+  ],
+  saltire: [
+    // TODO: Same here as above for chevron.
+    path`
+      M -51  41
+      L  52 -62
+      L -52 -62
+      L  51  41
+      L  51  60
+      L -51  60
+      Z
+    `,
+    path`
+      M -52 -62
+      L  51  41
+      L  52 -62
+      L -51  41
+      Z
+    `,
+  ],
+};
+
+const QUARTERINGS: Record<Quarter, { translate: Coordinate }> = {
+  1: {
+    translate: [-25, -30],
+  },
+  2: {
+    translate: [25, -30],
+  },
+  3: {
+    translate: [-25, 30],
+  },
+  4: {
+    translate: [25, 30],
+  },
+};
 
 const CANTON_SCALE_FACTOR = 1 / 3;
 const CANTON_PATH = path`
@@ -1202,6 +1180,10 @@ const CANTON_PATH = path`
   L -${W_2}  ${H_2}
   Z
 `;
+
+function field(tincture: Tincture) {
+  return svg.rect([-W_2, -H_2], [W_2, H_2], tincture);
+}
 
 function complexContent(container: SVGElement, content: ComplexContent) {
   function renderIntoParent(parent: SVGElement, element: SimpleContent) {
@@ -1248,14 +1230,14 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     tincture: Tincture
   ): SimpleContent {
     function maybeToCounterchanged<T extends Tincture | undefined>(t: T): T {
-      return (t === COUNTERCHANGED ? tincture : t) as T;
+      return (t === Tincture.COUNTERCHANGED ? tincture : t) as T;
     }
 
     if ("canton" in element) {
       // Cantons cannot be counterchanged; they always have a background and everything on them is
       // relative to their background. Thus, nop.
     } else if ("on" in element) {
-      if (element.surround?.tincture === COUNTERCHANGED) {
+      if (element.surround?.tincture === Tincture.COUNTERCHANGED) {
         return {
           ...element,
           // Note that we do NOT overwrite the `charge` tincture. That's a function of the `on`, not the field.
@@ -1385,9 +1367,45 @@ function on(parent: SVGElement, { on, surround, charge }: On) {
   }
 }
 
+// #endregion
+
+// #region INITIALIZATION
 // ----------------------------------------------------------------------------
-// INITIALIZATION
-// ----------------------------------------------------------------------------
+
+function parseAndRenderBlazon() {
+  let result;
+  try {
+    result = parser.parse(input.value.trim().toLowerCase(), {
+      grammarSource: "input",
+    });
+    error.style.display = "none";
+  } catch (e) {
+    error.innerHTML = (e as PeggyParser.SyntaxError).format([
+      { source: "input", text: input.value },
+    ]);
+    error.style.display = "block";
+    return;
+  }
+
+  result = recursivelyOmitNullish(result);
+
+  ast.innerHTML = JSON.stringify(result, null, 2);
+
+  rendered.innerHTML = "";
+  const outline = svg.path(FIELD_PATH, Tincture.NONE);
+  outline.classList.add("stroke-sable");
+  outline.setAttribute("stroke-width", "2");
+  rendered.appendChild(outline);
+
+  // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
+  const container = svg.g();
+  container.style.clipPath = `path("${FIELD_PATH}")`;
+  rendered.appendChild(container);
+  // Make sure there's always a default background.
+  container.appendChild(field("argent" as Tincture));
+
+  complexContent(container, result);
+}
 
 const input: HTMLTextAreaElement = document.querySelector("#blazon-input")!;
 const form: HTMLFormElement = document.querySelector("#form")!;
@@ -1412,3 +1430,5 @@ for (const example of document.querySelectorAll<HTMLAnchorElement>(
 }
 
 parseAndRenderBlazon();
+
+// #endregion
