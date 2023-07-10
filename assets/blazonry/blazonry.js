@@ -399,14 +399,18 @@ bend.surround = new ReflectiveLocator(new ExhaustiveLocator([
         [W_2 - 15, -H_2 + 40],
     ],
 ], [0.7, 0.5, 0.4]), [-W_2, -H_2], [W_2, -H_2 + W]);
-function chief({ tincture }) {
-    return svg.path(path `
-      M -${W_2} ${-H_2}
-      L -${W_2} ${-H_2 + H / 3}
-      L  ${W_2} ${-H_2 + H / 3}
-      L  ${W_2} ${-H_2}
-      Z
-    `, tincture);
+function chief({ tincture, cotised }) {
+    const chiefWidth = H / 3;
+    const chief = svg.line([-W_2, -H_2 + chiefWidth / 2], [W_2, -H_2 + chiefWidth / 2], tincture, chiefWidth);
+    if (cotised == null) {
+        return chief;
+    }
+    else {
+        const g = svg.g();
+        g.appendChild(chief);
+        g.append(svg.line([-W_2, -H_2 + chiefWidth + (COTISED_WIDTH * 3) / 2], [W_2, -H_2 + chiefWidth + (COTISED_WIDTH * 3) / 2], cotised, COTISED_WIDTH));
+        return g;
+    }
 }
 chief.on = new LineSegmentLocator([-W_2, -H_2 + H_2 / 3], [W_2, -H_2 + H_2 / 3], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
 chief.surround = new NullLocator();

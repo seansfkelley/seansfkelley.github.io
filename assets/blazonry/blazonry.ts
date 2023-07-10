@@ -616,17 +616,31 @@ bend.surround = new ReflectiveLocator(
   [W_2, -H_2 + W]
 );
 
-function chief({ tincture }: Ordinary) {
-  return svg.path(
-    path`
-      M -${W_2} ${-H_2}
-      L -${W_2} ${-H_2 + H / 3}
-      L  ${W_2} ${-H_2 + H / 3}
-      L  ${W_2} ${-H_2}
-      Z
-    `,
-    tincture
+function chief({ tincture, cotised }: Ordinary) {
+  const chiefWidth = H / 3;
+
+  const chief = svg.line(
+    [-W_2, -H_2 + chiefWidth / 2],
+    [W_2, -H_2 + chiefWidth / 2],
+    tincture,
+    chiefWidth
   );
+
+  if (cotised == null) {
+    return chief;
+  } else {
+    const g = svg.g();
+    g.appendChild(chief);
+    g.append(
+      svg.line(
+        [-W_2, -H_2 + chiefWidth + (COTISED_WIDTH * 3) / 2],
+        [W_2, -H_2 + chiefWidth + (COTISED_WIDTH * 3) / 2],
+        cotised,
+        COTISED_WIDTH
+      )
+    );
+    return g;
+  }
 }
 
 chief.on = new LineSegmentLocator(
