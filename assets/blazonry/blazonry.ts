@@ -686,7 +686,10 @@ function bend({ tincture, cotised }: Ordinary) {
   const bendWidth = W / 3;
 
   const src: Coordinate = [-W_2, -H_2];
-  const dst: Coordinate = [W_2, -H_2 + W];
+  // Note that this sets width using height; this is because (1) we assume height is larger than
+  // width; (2) we want a 45 degree angle; and (3) we want to make sure that in all contexts (like
+  // transform-scaled cantons) the bend will definitely reach the edges of the container.
+  const dst: Coordinate = [H_2, H_2];
   const bend = svg.line(src, dst, tincture, bendWidth);
 
   if (cotised == null) {
