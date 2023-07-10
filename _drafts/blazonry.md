@@ -48,6 +48,11 @@ Try these:
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   ></svg>
+
+  <details id="ast-wrapper">
+  <summary>View parsed syntax tree</summary>
+  <pre id="ast"></pre>
+  </details>
 </div>
 
 References:

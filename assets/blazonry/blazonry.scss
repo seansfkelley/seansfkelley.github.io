@@ -4,7 +4,8 @@
 
 #form,
 #error,
-#rendered {
+#rendered,
+#ast {
   margin-top: 12px;
 }
 
@@ -12,6 +13,14 @@
   margin-bottom: 0;
   width: 100%;
   box-sizing: border-box;
+  background-color: var(--intent-danger-background-color);
+  color: var(--intent-danger-text-color);
+}
+
+#ast-wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 12px;
 }
 
 #form {

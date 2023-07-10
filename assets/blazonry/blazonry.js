@@ -322,7 +322,8 @@ function parseAndRenderBlazon() {
         error.style.display = "block";
         return;
     }
-    console.log(result);
+    result = recursivelyOmitNullish(result);
+    ast.innerHTML = JSON.stringify(result, null, 2);
     rendered.innerHTML = "";
     const outline = svg.path(FIELD_PATH, "none");
     outline.classList.add("outline");
@@ -458,6 +459,24 @@ const svg = {
         return document.createElementNS("http://www.w3.org/2000/svg", "g");
     },
 };
+function recursivelyOmitNullish(value) {
+    assert(value != null, "cannot omit nullish root values");
+    if (Array.isArray(value)) {
+        return value.filter((e) => e != null).map(recursivelyOmitNullish);
+    }
+    else if (typeof value === "object") {
+        const o = {};
+        for (const [k, v] of Object.entries(value)) {
+            if (v != null) {
+                o[k] = recursivelyOmitNullish(v);
+            }
+        }
+        return o;
+    }
+    else {
+        return value;
+    }
+}
 // ----------------------------------------------------------------------------
 // ORDINARIES
 // ----------------------------------------------------------------------------
@@ -959,11 +978,11 @@ function complexContent(container, content) {
         }
     }
 }
-function on(parent, { ordinary, surround, charge }) {
-    parent.appendChild(ORDINARIES[ordinary.ordinary](ordinary));
+function on(parent, { on, surround, charge }) {
+    parent.appendChild(ORDINARIES[on.ordinary](on));
     if (charge != null) {
         assert(charge.direction == null, 'cannot specify a direction for charges in "on"');
-        const locator = ORDINARIES[ordinary.ordinary].on;
+        const locator = ORDINARIES[on.ordinary].on;
         for (const [translate, scale] of locator.forCount(charge.count)) {
             const c = CHARGES[charge.charge](charge);
             applyTransforms(c, {
@@ -976,7 +995,7 @@ function on(parent, { ordinary, surround, charge }) {
     }
     if (surround != null) {
         assert(surround.direction == null, 'cannot specify a direction for charges in "between"');
-        const locator = ORDINARIES[ordinary.ordinary].surround;
+        const locator = ORDINARIES[on.ordinary].surround;
         for (const [translate, scale] of locator.forCount(surround.count)) {
             const c = CHARGES[surround.charge](surround);
             applyTransforms(c, {
@@ -995,6 +1014,7 @@ const input = document.querySelector("#blazon-input");
 const form = document.querySelector("#form");
 const rendered = document.querySelector("#rendered");
 const error = document.querySelector("#error");
+const ast = document.querySelector("#ast");
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     parseAndRenderBlazon();

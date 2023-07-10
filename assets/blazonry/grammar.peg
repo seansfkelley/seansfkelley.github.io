@@ -23,13 +23,13 @@ Quarterly
   = "quarterly" _ quarters:Quarter+ { return { quarters } }
 
 SimpleContent
-  // Order matters here since both the next rules start with an Ordinary.
-  = ordinary:Ordinary _ "between" _ surround:Charge { return { on: true, ordinary, surround } }
+  // Order matters here since multiple rules in this block start with an Ordinary.
+  = on:Ordinary _ "between" _ surround:Charge { return { on, surround } }
+  / "on" _ on:Ordinary _ charge:Charge { return { on, charge } }
+  / "on" _ on:Ordinary _ "between" _ surround:Charge _ charge:Charge { return { on, surround, charge } }
   / Ordinary
   / Charge
   / Canton
-  / "on" _ ordinary:Ordinary _ charge:Charge { return { on: true, ordinary, charge } }
-  / "on" _ ordinary:Ordinary _ "between" _ surround:Charge _ charge:Charge { return { on: true, ordinary, surround, charge } }
 
 Quarter "quartering"
   // TODO: Make this an actual list rule?

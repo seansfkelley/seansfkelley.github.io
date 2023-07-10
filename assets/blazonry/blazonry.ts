@@ -30,6 +30,8 @@ declare namespace PeggyParser {
 }
 
 declare const parser: {
+  // Note: this output type is a _slight_ lie, in that the runtime value contains `null`s for some
+  // optional fields, but the type only uses `?`. Call `recursivelyOmitNullish`.
   parse: (text: string, opts?: { grammarSource: string }) => ComplexContent;
 };
 
@@ -359,25 +361,25 @@ type SimpleContent = Ordinary | Charge | Canton | On;
 type SimpleField =
   | {
       tincture: Tincture;
-      content?: SimpleContent | null;
+      content?: SimpleContent;
     }
   | {
       varied: Varied;
       first: Tincture;
       second: Tincture;
-      content?: SimpleContent | null;
+      content?: SimpleContent;
     };
 
 interface Varied {
   type: VariedName;
-  count?: number | null;
+  count?: number;
 }
 
 interface PartyPerField {
   direction: Direction;
   first: Tincture;
   second: Tincture;
-  content?: SimpleContent | null;
+  content?: SimpleContent;
 }
 
 interface Quarterly {
@@ -392,14 +394,14 @@ interface Quartering {
 interface Ordinary {
   ordinary: string;
   tincture: Tincture;
-  cotised?: Tincture | null;
+  cotised?: Tincture;
 }
 
 interface BaseCharge {
   tincture: Tincture;
   count: Count;
-  posture?: Posture | null;
-  direction?: InDirection | null;
+  posture?: Posture;
+  direction?: InDirection;
 }
 
 interface SimpleCharge extends BaseCharge {
@@ -408,8 +410,8 @@ interface SimpleCharge extends BaseCharge {
 
 interface LionCharge extends BaseCharge {
   charge: "lion";
-  armed?: Tincture | null;
-  langued?: Tincture | null;
+  armed?: Tincture;
+  langued?: Tincture;
   pose: "passant" | "rampant" | "reguardant";
 }
 
@@ -417,14 +419,13 @@ type Charge = SimpleCharge | LionCharge;
 
 interface Canton {
   canton: Tincture;
-  content?: SimpleContent | null;
+  content?: SimpleContent;
 }
 
 interface On {
-  on: true;
-  ordinary: Ordinary;
-  surround?: Charge | null;
-  charge?: Charge | null;
+  on: Ordinary;
+  surround?: Charge;
+  charge?: Charge;
 }
 
 interface OrdinaryRenderer {
@@ -498,7 +499,9 @@ function parseAndRenderBlazon() {
     return;
   }
 
-  console.log(result);
+  result = recursivelyOmitNullish(result);
+
+  ast.innerHTML = JSON.stringify(result, null, 2);
 
   rendered.innerHTML = "";
   const outline = svg.path(FIELD_PATH, "none");
@@ -651,6 +654,23 @@ const svg = {
     return document.createElementNS("http://www.w3.org/2000/svg", "g");
   },
 };
+
+function recursivelyOmitNullish<T>(value: T): T {
+  assert(value != null, "cannot omit nullish root values");
+  if (Array.isArray(value)) {
+    return value.filter((e) => e != null).map(recursivelyOmitNullish) as T;
+  } else if (typeof value === "object") {
+    const o: Record<string, any> = {};
+    for (const [k, v] of Object.entries(value)) {
+      if (v != null) {
+        o[k] = recursivelyOmitNullish(v);
+      }
+    }
+    return o as T;
+  } else {
+    return value;
+  }
+}
 
 // ----------------------------------------------------------------------------
 // ORDINARIES
@@ -1220,9 +1240,7 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     element: SimpleContent,
     tincture: Tincture
   ): SimpleContent {
-    function maybeToCounterchanged<T extends Tincture | null | undefined>(
-      t: T
-    ): T {
+    function maybeToCounterchanged<T extends Tincture | undefined>(t: T): T {
       return (t === COUNTERCHANGED ? tincture : t) as T;
     }
 
@@ -1320,8 +1338,8 @@ function complexContent(container: SVGElement, content: ComplexContent) {
   }
 }
 
-function on(parent: SVGElement, { ordinary, surround, charge }: On) {
-  parent.appendChild(ORDINARIES[ordinary.ordinary](ordinary));
+function on(parent: SVGElement, { on, surround, charge }: On) {
+  parent.appendChild(ORDINARIES[on.ordinary](on));
 
   if (charge != null) {
     assert(
@@ -1329,7 +1347,7 @@ function on(parent: SVGElement, { ordinary, surround, charge }: On) {
       'cannot specify a direction for charges in "on"'
     );
 
-    const locator = ORDINARIES[ordinary.ordinary].on;
+    const locator = ORDINARIES[on.ordinary].on;
     for (const [translate, scale] of locator.forCount(charge.count)) {
       const c = CHARGES[charge.charge](charge);
       applyTransforms(c, {
@@ -1347,7 +1365,7 @@ function on(parent: SVGElement, { ordinary, surround, charge }: On) {
       'cannot specify a direction for charges in "between"'
     );
 
-    const locator = ORDINARIES[ordinary.ordinary].surround;
+    const locator = ORDINARIES[on.ordinary].surround;
     for (const [translate, scale] of locator.forCount(surround.count)) {
       const c = CHARGES[surround.charge](surround);
       applyTransforms(c, {
@@ -1368,6 +1386,7 @@ const input: HTMLTextAreaElement = document.querySelector("#blazon-input")!;
 const form: HTMLFormElement = document.querySelector("#form")!;
 const rendered: SVGSVGElement = document.querySelector("#rendered")!;
 const error: HTMLPreElement = document.querySelector("#error")!;
+const ast: HTMLPreElement = document.querySelector("#ast")!;
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
