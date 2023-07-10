@@ -23,38 +23,60 @@ Quarterly
   = "quarterly" _ quarters:Quarter+ { return { quarters } }
 
 SimpleContent
-  // Order matters here since both the next rules start with an Ordinary.
-  = ordinary:Ordinary _ "between" _ surround:PluralCharge { return { on: true, ordinary, surround } }
+  // Order matters here since multiple rules in this block start with an Ordinary.
+  = on:Ordinary _ "between" _ surround:Charge { return { on, surround } }
+  / "on" _ on:Ordinary _ charge:Charge { return { on, charge } }
+  / "on" _ on:Ordinary _ "between" _ surround:Charge _ charge:Charge { return { on, surround, charge } }
   / Ordinary
   / Charge
   / Canton
-  / "on" _ ordinary:Ordinary _ charge:Charge { return { on: true, ordinary, charge } }
-  / "on" _ ordinary:Ordinary _ "between" _ surround:PluralCharge _ charge:Charge { return { on: true, ordinary, surround, charge } }
 
-Quarter
+Quarter "quartering"
   // TODO: Make this an actual list rule?
   = quarter:QuarterName _ content:ComplexContent { return { quarters: [quarter], content } }
   / quarter1:QuarterName _ "and" _ quarter2:QuarterName _ content:ComplexContent { return { quarters: [quarter1, quarter2], content  } }
   / quarter1:QuarterName _ quarter2:QuarterName _ "and" _ quarter3:QuarterName _ content:ComplexContent { return { quarters: [quarter1, quarter2, quarter3], content  } }
   / quarter1:QuarterName _ quarter2:QuarterName _ quarter3:QuarterName _ "and" _ quarter4:QuarterName _ content:ComplexContent { return { quarters: [quarter1, quarter2, quarter3, quarter4], content  } }
 
-Canton
+Canton "canton"
   = "a" _ "canton" _ tincture:Tincture { return { canton: tincture } }
   / "on" _ "a" _ "canton" _ tincture:Tincture _ content:SimpleContent { return { canton: tincture, content } }
 
-Ordinary
+Ordinary "ordinary"
+  // Note that we do not support multiple ordinaries. Yet?
   = Singular _ ordinary:OrdinaryName _ tincture1:Tincture? _ "cotised" _ tincture2:Tincture { return { ordinary, tincture: tincture1 ?? tincture2, cotised: tincture2 } }
   / Singular _ ordinary:OrdinaryName _ tincture:Tincture { return { ordinary, tincture } }
 
-Charge
-  = SingularCharge
-  / PluralCharge
+Charge "charge"
+  = Singular _ charge:SimpleChargeName _ posture:Posture? _ tincture:Tincture { return { charge, tincture, posture, count: 1 } }
+  / count:Plural _ charge:SimpleChargeName "s" _ posture:Posture? _ tincture:Tincture _ direction:InDirection? { return { charge, tincture, posture, count, direction } }
+  / Lion
 
-SingularCharge
-  = Singular _ charge:ChargeName _ posture:Posture? _ tincture:Tincture { return { charge, tincture, posture, count: 1 } }
+Lion
+  = "a" _ "lion" _ description:LionDescription { return { ...description, count: 1 } }
+  / count:Plural _ "lions" _ description:LionDescription { return { ...description, count } }
 
-PluralCharge
-  = count:Plural _ charge:ChargeName "s" _ posture:Posture? _ tincture:Tincture _ direction:InDirection? { return { charge, tincture, posture, count, direction } }
+// This extra layer of indirection is pretty meh. It's here because we want to couple this verbiage
+// to the presence of the "lion" charge "keyword", above, combined with the requirement that the
+// pluralization is in the middle of the spec, rather than at the end ("s") like a simple charge.
+LionDescription
+  = pose:LionPose? _ posture:Posture? _ tincture:Tincture _ modifiers:LionModifiers? _ direction:InDirection? { return { charge: "lion", tincture, posture, pose: pose ?? "passant",  ...modifiers, direction } }
+
+LionPose
+  = "rampant"
+  / "passant"
+  / "reguardant"
+
+LionModifier
+  = "armed"
+  / "langued"
+
+LionModifiers
+  // This is unfortunately rather repetitive, due to the optional nature of the tincture
+  // specification when using both "armed" and "langued". Not sure how to tighten it up.
+  = modifier1:LionModifier _ tincture1:Tincture _ "and" _ modifier2:LionModifier _ tincture2:Tincture { return { [modifier1]: tincture1, [modifier2]: tincture2 } }
+  / modifier:LionModifier _ tincture:Tincture { return { [modifier]: tincture } }
+  / modifier1:LionModifier _ "and" _ modifier2:LionModifier _ tincture:Tincture { return { [modifier1]: tincture, [modifier2]: tincture } }
 
 Singular "a/an"
   = "a"
@@ -120,7 +142,7 @@ OrdinaryName "ordinary name"
   / "saltire"
   / "chief"
 
-ChargeName "charge name"
+SimpleChargeName "charge name"
   = "sword"
   / "rondel"
   / "mullet"

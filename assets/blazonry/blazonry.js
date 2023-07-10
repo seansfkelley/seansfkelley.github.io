@@ -6,67 +6,54 @@
 // - InDirection -- at least in the case of chevron and saltire, they are rotated to match -- matters for swords, at least
 // - can party per field have complex content in it?
 // - minor visual effects to make it a little less flat
-// - fancy paths for fancy charges: lion, leopard's head, castle, and all their variants
+// - fancy paths for fancy charges: lion, leopard's head, eagle, castle, boar, swan, tree, and all their variants
 // - decorations for lines (e.g. embattled, engrailed, etc.)
 // - "overall"
-// - cotised, but for the other ordinaries too
 // - parser can't figure out the correct assignment of the quarterly rules to parse this:
 //     quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
 // - should be able to parse non-redundant usage of colors
 //     argent on a bend between six mullets vert
 // - make whitespace non-optional to force breaks
+// - multiple ordiaries?
+// - standardize size of charges (40x40?) so that scaling works as expected for all of them
+// TODO OPTIONAL
+// - adjust positioning for `on` -- often the 2s and 3s are too close to each other, like for chief
+// - push elements around when quartering
+// - canton-specific overrides for ordinaries and charge placements so they don't look squished by the scale
+// #region LAYOUT
+// TODO: Make _everything_ a function of these proportions.
+const H = 120;
+const H_2 = H / 2;
+const W = 100;
+const W_2 = W / 2;
+// This one is pointier, but looks weirder with some bends:
+// "M -50 -60 L 50 -60 L 50 -10 C 50 20 30 50 0 60 C -30 50 -50 20 -50 -10 Z";
+const FIELD_PATH = path `
+  M -${W_2} -${H_2}
+  L  ${W_2} -${H_2}
+  L  ${W_2}  ${H_2 / 3}
+  C  ${W_2}           ${H_2 * (2 / 3)}
+     ${W_2 * (3 / 5)} ${H_2 * (5 / 6)}
+     0                ${H_2}
+  C -${W_2 * (3 / 5)} ${H_2 * (5 / 6)}
+     ${-W_2}          ${H_2 * (2 / 3)}
+     ${-W_2}          ${H_2 / 3}
+  Z
+`;
+const Tincture = {
+    NONE: "none",
+    COUNTERCHANGED: "counterchanged",
+};
 const Coordinate = {
     add: ([x1, y1], [x2, y2]) => [
         x1 + x2,
         y1 + y2,
     ],
 };
-function applyTransforms(element, { translate, scale, rotate, } = {}) {
-    function getRotation(posture) {
-        switch (posture) {
-            case null:
-            case undefined:
-            case "palewise":
-                return undefined;
-            case "fesswise":
-                return "rotate(90)";
-            case "bendwise":
-                return "rotate(45)";
-            case "saltirewise":
-                return "rotate(45)"; // TODO
-            default:
-                assertNever(posture);
-        }
-    }
-    const transform = [
-        translate != null
-            ? `translate(${translate[0]}, ${translate[1]})`
-            : undefined,
-        scale != null && scale !== 1 ? `scale(${scale})` : undefined,
-        rotate != null ? getRotation(rotate) : undefined,
-    ]
-        .filter(Boolean)
-        .join(" ");
-    element.setAttribute("transform", transform);
-}
 function evaluateLineSegment(src, dst, t) {
     assert(t >= 0 && t <= 1, "parameter must be on [0, 1]");
     return [(dst[0] - src[0]) * t + src[0], (dst[1] - src[1]) * t + src[1]];
 }
-const QUARTERINGS = {
-    1: {
-        translate: [-25, -30],
-    },
-    2: {
-        translate: [25, -30],
-    },
-    3: {
-        translate: [-25, 30],
-    },
-    4: {
-        translate: [25, 30],
-    },
-};
 class NullLocator {
     *forCount() {
         // nop
@@ -270,6 +257,9 @@ class DefaultChargeLocator {
         }
     }
 }
+// #endregion
+// #region UTILITIES
+// ----------------------------------------------------------------------------
 function assert(condition, message) {
     if (!condition) {
         throw new Error(`assertion failure: ${message}`);
@@ -278,154 +268,34 @@ function assert(condition, message) {
 function assertNever(nope) {
     throw new Error("was not never");
 }
-// TODO: Factor this out to the top so _everything_ is a function of it.
-const H = 120;
-const H_2 = H / 2;
-const W = 100;
-const W_2 = W / 2;
-// This one is pointier, but looks weirder with some bends:
-// "M -50 -60 L 50 -60 L 50 -10 C 50 20 30 50 0 60 C -30 50 -50 20 -50 -10 Z";
-const FIELD_PATH = path `
-  M -${W_2} -${H_2}
-  L  ${W_2} -${H_2}
-  L  ${W_2}  ${H_2 / 3}
-  C  ${W_2}           ${H_2 * (2 / 3)}
-     ${W_2 * (3 / 5)} ${H_2 * (5 / 6)}
-     0                ${H_2}
-  C -${W_2 * (3 / 5)} ${H_2 * (5 / 6)}
-     ${-W_2}          ${H_2 * (2 / 3)}
-     ${-W_2}          ${H_2 / 3}
-  Z
-`;
-function path(strings, ...values) {
-    const parts = [];
-    for (let i = 0; i < values.length; ++i) {
-        parts.push(strings[i], values[i]);
+function applyTransforms(element, { translate, scale, rotate, } = {}) {
+    function getRotation(posture) {
+        switch (posture) {
+            case null:
+            case undefined:
+            case "palewise":
+                return undefined;
+            case "fesswise":
+                return "rotate(90)";
+            case "bendwise":
+                return "rotate(45)";
+            case "saltirewise":
+                return "rotate(45)"; // TODO
+            default:
+                assertNever(posture);
+        }
     }
-    parts.push(strings.at(-1));
-    return parts.join("").trim().replaceAll("\n", "").replaceAll(/ +/g, " ");
+    const transform = [
+        translate != null
+            ? `translate(${translate[0]}, ${translate[1]})`
+            : undefined,
+        scale != null && scale !== 1 ? `scale(${scale})` : undefined,
+        rotate != null ? getRotation(rotate) : undefined,
+    ]
+        .filter(Boolean)
+        .join(" ");
+    element.setAttribute("transform", transform);
 }
-const COUNTERCHANGED = "counterchanged";
-function parseAndRenderBlazon() {
-    let result;
-    try {
-        result = parser.parse(input.value.trim().toLowerCase(), {
-            grammarSource: "input",
-        });
-        error.style.display = "none";
-    }
-    catch (e) {
-        error.innerHTML = e.format([
-            { source: "input", text: input.value },
-        ]);
-        error.style.display = "block";
-        return;
-    }
-    console.log(result);
-    rendered.innerHTML = "";
-    const outline = svg.path(FIELD_PATH, "none");
-    outline.classList.add("outline");
-    rendered.appendChild(outline);
-    // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
-    const container = svg.g();
-    container.style.clipPath = `path("${FIELD_PATH}")`;
-    rendered.appendChild(container);
-    // Make sure there's always a default background.
-    container.appendChild(field("argent"));
-    complexContent(container, result);
-}
-function field(tincture) {
-    return svg.rect([-W_2, -H_2], [W_2, H_2], tincture);
-}
-const PARTY_PER_CLIP_PATHS = {
-    pale: [
-        path `
-      M -${W_2} -${H_2}
-      L       0 -${H_2}
-      L       0  ${H_2}
-      L -${W_2}  ${H_2}
-    `,
-        path `
-      M       0 -${H_2}
-      L       0  ${H_2}
-      L  ${W_2}  ${H_2}
-      L  ${W_2} -${H_2}
-    `,
-    ],
-    fess: [
-        path `
-      M -${W_2} -${H_2}
-      L -${W_2}       0
-      L  ${W_2}       0
-      L  ${W_2} -${H_2}
-      Z
-    `,
-        path `
-      M -${W_2} ${H_2}
-      L -${W_2}      0
-      L  ${W_2}      0
-      L  ${W_2} ${H_2}
-      Z
-    `,
-    ],
-    bend: [
-        path `
-      M -${W_2} ${-H_2}
-      L  ${W_2} ${-H_2}
-      L  ${W_2} ${-H_2 + W}
-      Z
-    `,
-        path `
-      M -${W_2} ${-H_2}
-      L  ${W_2} ${-H_2 + W}
-      L  ${W_2} ${H_2}
-      L -${W_2} ${H_2}
-      Z
-    `,
-    ],
-    chevron: [
-        // TODO: Done empirically, and to run the midline of the chevron ordinary. Both these and the
-        // ordinary should be rewritten to be based on W/H.
-        path `
-      M -51  41
-      L   0 -10
-      L  51  41
-      L  51  60
-      L -51  60
-      Z
-    `,
-        path `
-      M -51  41
-      L   0 -10
-      L  51  41
-      L  51 -60
-      L -51 -60
-      Z
-    `,
-    ],
-    saltire: [
-        // TODO: Same here as above for chevron.
-        path `
-      M -51  41
-      L  52 -62
-      L -52 -62
-      L  51  41
-      L  51  60
-      L -51  60
-      Z
-    `,
-        path `
-      M -52 -62
-      L  51  41
-      L  52 -62
-      L -51  41
-      Z
-    `,
-    ],
-};
-// ----------------------------------------------------------------------------
-// UTIL
-// ----------------------------------------------------------------------------
 const svg = {
     path: (d, tincture) => {
         const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -457,31 +327,73 @@ const svg = {
         return document.createElementNS("http://www.w3.org/2000/svg", "g");
     },
 };
-// ----------------------------------------------------------------------------
-// ORDINARIES
+function path(strings, ...values) {
+    const parts = [];
+    for (let i = 0; i < values.length; ++i) {
+        parts.push(strings[i], values[i]);
+    }
+    parts.push(strings.at(-1));
+    return parts.join("").trim().replaceAll("\n", "").replaceAll(/ +/g, " ");
+}
+function recursivelyOmitNullish(value) {
+    assert(value != null, "cannot omit nullish root values");
+    if (Array.isArray(value)) {
+        return value.filter((e) => e != null).map(recursivelyOmitNullish);
+    }
+    else if (typeof value === "object") {
+        const o = {};
+        for (const [k, v] of Object.entries(value)) {
+            if (v != null) {
+                o[k] = recursivelyOmitNullish(v);
+            }
+        }
+        return o;
+    }
+    else {
+        return value;
+    }
+}
+const complexSvgCache = {};
+function getComplexSvgSync(name) {
+    if (name in complexSvgCache) {
+        return complexSvgCache[name];
+    }
+    else {
+        throw new Error(`still waiting for ${name}.svg to load!`);
+    }
+}
+async function fetchComplexSvg(name) {
+    const response = await fetch(`/assets/blazonry/svg/${name}.svg`);
+    const root = new DOMParser().parseFromString(await response.text(), "image/svg+xml").documentElement;
+    const wrapper = svg.g();
+    wrapper.classList.add(name);
+    for (const c of root.children) {
+        wrapper.appendChild(c);
+    }
+    complexSvgCache[name] = wrapper;
+}
+// #endregion
+// #region ORDINARIES
 // ----------------------------------------------------------------------------
 const COTISED_WIDTH = W_2 / 10;
 function bend({ tincture, cotised }) {
     const bendWidth = W / 3;
     const src = [-W_2, -H_2];
-    const dst = [W_2, -H_2 + W];
+    // Note that this sets width using height; this is because (1) we assume height is larger than
+    // width; (2) we want a 45 degree angle; and (3) we want to make sure that in all contexts (like
+    // transform-scaled cantons) the bend will definitely reach the edges of the container.
+    const dst = [-W_2 + H, H_2];
     const bend = svg.line(src, dst, tincture, bendWidth);
     if (cotised == null) {
         return bend;
     }
     else {
-        const deltaX = 
-        // 3/2 = 1/2 because the widening is relative to the middle of the cotise + 1 to space it out from the bend.
-        Math.cos(Math.PI / 4) * (bendWidth / 2 + (COTISED_WIDTH * 3) / 2);
-        const deltaY = Math.sin(Math.PI / 4) * (bendWidth / 2 + (COTISED_WIDTH * 3) / 2);
-        const top = svg.line(src, dst, cotised, COTISED_WIDTH);
-        top.setAttribute("transform", `translate(${deltaX} -${deltaY})`);
-        const bottom = svg.line(src, dst, cotised, COTISED_WIDTH);
-        bottom.setAttribute("transform", `translate(-${deltaX} ${deltaY})`);
+        // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
+        const offset = Math.sin(Math.PI / 4) * (bendWidth / 2 + (COTISED_WIDTH * 3) / 2);
         const g = svg.g();
-        g.appendChild(top);
         g.appendChild(bend);
-        g.appendChild(bottom);
+        g.appendChild(svg.line(Coordinate.add(src, [offset, -offset]), Coordinate.add(dst, [offset, -offset]), cotised, COTISED_WIDTH));
+        g.appendChild(svg.line(Coordinate.add(src, [-offset, offset]), Coordinate.add(dst, [-offset, offset]), cotised, COTISED_WIDTH));
         return g;
     }
 }
@@ -500,27 +412,40 @@ bend.surround = new ReflectiveLocator(new ExhaustiveLocator([
         [W_2 - 15, -H_2 + 40],
     ],
 ], [0.7, 0.5, 0.4]), [-W_2, -H_2], [W_2, -H_2 + W]);
-function chief({ tincture }) {
-    return svg.path(path `
-      M -${W_2} ${-H_2}
-      L -${W_2} ${-H_2 + H / 3}
-      L  ${W_2} ${-H_2 + H / 3}
-      L  ${W_2} ${-H_2}
-      Z
-    `, tincture);
+function chief({ tincture, cotised }) {
+    const chiefWidth = H / 3;
+    const chief = svg.line([-W_2, -H_2 + chiefWidth / 2], [W_2, -H_2 + chiefWidth / 2], tincture, chiefWidth);
+    if (cotised == null) {
+        return chief;
+    }
+    else {
+        const g = svg.g();
+        g.appendChild(chief);
+        g.append(svg.line([-W_2, -H_2 + chiefWidth + (COTISED_WIDTH * 3) / 2], [W_2, -H_2 + chiefWidth + (COTISED_WIDTH * 3) / 2], cotised, COTISED_WIDTH));
+        return g;
+    }
 }
 chief.on = new LineSegmentLocator([-W_2, -H_2 + H_2 / 3], [W_2, -H_2 + H_2 / 3], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
 chief.surround = new NullLocator();
-function chevron({ tincture }) {
-    return svg.path(path `
-      M   0 -26
-      L  59  33
-      L  43  49
-      L   0   6
-      L -43  49
-      L -59  33
-      Z
-    `, tincture);
+function chevron({ tincture, cotised }) {
+    const chevronWidth = W / 4;
+    const left = [-W_2, -H_2 + W];
+    const right = [-W_2 + H, H_2];
+    // Cross at 45 degrees starting from the top edge, so we bias upwards from the center.
+    const mid = [0, -(H_2 - W_2)];
+    const chevron = svg.g();
+    chevron.appendChild(svg.line(left, mid, tincture, chevronWidth, "square"));
+    chevron.appendChild(svg.line(mid, right, tincture, chevronWidth, "square"));
+    if (cotised != null) {
+        // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
+        const offset = Math.sin(Math.PI / 4) * chevronWidth + COTISED_WIDTH * 2;
+        for (const end of [left, right]) {
+            for (const sign of [-1, 1]) {
+                chevron.appendChild(svg.line(Coordinate.add(end, [0, sign * offset]), Coordinate.add(mid, [0, sign * offset]), tincture, COTISED_WIDTH, "square"));
+            }
+        }
+    }
+    return chevron;
 }
 chevron.on = new OnChevronLocator([-W_2, W_2 - 10], [0, -10], [W_2, W_2 - 10], [0.4, 0.4, 0.4, 0.4, 0.35, 0.35, 0.3, 0.25]);
 chevron.surround = new ExhaustiveLocator([
@@ -586,44 +511,66 @@ cross.surround = new SequenceLocator([
 ], [0.5, 0.5, 0.5, 0.5], {
     1: SequenceLocator.EMPTY,
 });
-function fess({ tincture }) {
-    return svg.path(path `
-      M -50 -25
-      L  50 -25
-      L  50  15
-      L -50  15
-      Z
-    `, tincture);
+function fess({ tincture, cotised }) {
+    const verticalOffset = -H_2 + ((W / 3) * 3) / 2;
+    const fessWidth = W / 3;
+    const fess = svg.line([-W_2, verticalOffset], [W_2, verticalOffset], tincture, fessWidth);
+    if (cotised == null) {
+        return fess;
+    }
+    else {
+        const offset = fessWidth / 2 + (COTISED_WIDTH * 3) / 2;
+        const g = svg.g();
+        g.appendChild(fess);
+        g.appendChild(svg.line([-W_2, verticalOffset - offset], [W_2, verticalOffset - offset], cotised, COTISED_WIDTH));
+        g.appendChild(svg.line([-W_2, verticalOffset + offset], [W_2, verticalOffset + offset], cotised, COTISED_WIDTH));
+        return g;
+    }
 }
 fess.on = new LineSegmentLocator([-W_2, -4], [W_2, -4], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
 fess.surround = new ReflectiveLocator(new LineSegmentLocator([-W_2, -H_2 + 18], [W_2, -H_2 + 18], [0.6, 0.5, 0.4, 0.4]), [-W_2, -4], [W_2, -4]);
-function pale({ tincture }) {
-    return svg.path(path `
-      M -15 -60
-      L  15 -60
-      L  15  60
-      L -15  60
-      Z
-    `, tincture);
+function pale({ tincture, cotised }) {
+    const paleWidth = W / 3;
+    const pale = svg.line([0, -H_2], [0, H_2], tincture, paleWidth);
+    if (cotised == null) {
+        return pale;
+    }
+    else {
+        const horizontalOffset = paleWidth / 2 + (COTISED_WIDTH * 3) / 2;
+        const g = svg.g();
+        g.appendChild(pale);
+        g.appendChild(svg.line([-horizontalOffset, -H_2], [-horizontalOffset, H_2], cotised, COTISED_WIDTH));
+        g.appendChild(svg.line([horizontalOffset, -H_2], [horizontalOffset, H_2], cotised, COTISED_WIDTH));
+        return g;
+    }
 }
 pale.on = new LineSegmentLocator([0, -H_2], [0, H_2], [0.6, 0.6, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2]);
 pale.surround = new ReflectiveLocator(new LineSegmentLocator([-W_2 + 18, -H_2], [-W_2 + 18, W_2 - 10], [0.6, 0.5, 0.4, 0.4]), [0, -H_2], [0, H_2]);
-function saltire({ tincture }) {
-    return svg.path(path `
-      M  44 -70
-      L  60 -54
-      L  16 -10
-      L  59  33
-      L  43  49
-      L   0   6
-      L -43  49
-      L -59  33
-      L -16 -10
-      L -60 -54
-      L -44 -70
-      L   0 -26
-      Z
-    `, tincture);
+function saltire({ tincture, cotised }) {
+    const saltireWidth = W / 4;
+    const tl = [-W_2, -H_2];
+    const tr = [W_2, -H_2];
+    const bl = [-W_2, -H_2 + W];
+    const br = [-W_2 + H, H_2];
+    const saltire = svg.g();
+    saltire.appendChild(svg.line(tl, br, tincture, saltireWidth));
+    saltire.appendChild(svg.line(bl, tr, tincture, saltireWidth));
+    if (cotised != null) {
+        // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
+        const offset = Math.sin(Math.PI / 4) * saltireWidth + COTISED_WIDTH * 2;
+        // Cross at 45 degrees starting from the top edge, so we bias upwards from the center.
+        const mid = [0, -(H_2 - W_2)];
+        for (const [p, [x1sign, y1sign], [x2sign, y2sign]] of [
+            [tl, [-1, 0], [0, -1]],
+            [tr, [0, -1], [1, 0]],
+            [bl, [-1, 0], [0, 1]],
+            [br, [0, 1], [1, 0]],
+        ]) {
+            saltire.appendChild(svg.line(Coordinate.add(p, [offset * x1sign, offset * y1sign]), Coordinate.add(mid, [offset * x1sign, offset * y1sign]), cotised, COTISED_WIDTH, "square"));
+            saltire.appendChild(svg.line(Coordinate.add(p, [offset * x2sign, offset * y2sign]), Coordinate.add(mid, [offset * x2sign, offset * y2sign]), cotised, COTISED_WIDTH, "square"));
+        }
+    }
+    return saltire;
 }
 saltire.on = new SequenceLocator([
     [-25, -35],
@@ -651,13 +598,13 @@ const ORDINARIES = {
     pale,
     saltire,
 };
+// #endregion
+// #region CHARGES
 // ----------------------------------------------------------------------------
-// CHARGES
-// ----------------------------------------------------------------------------
-function sword(tincture) {
+function sword({ tincture }) {
     return svg.path("M 35 -2 L 22 -2 L 22 -10 L 18 -10 L 18 -2 L -31 -2 L -35 0 L -31 2 L 18 2 L 18 11 L 22 11 L 22 2 L 35 2 Z", tincture);
 }
-function rondel(tincture) {
+function rondel({ tincture }) {
     const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     circle.setAttribute("r", "20");
     circle.setAttribute("cx", "0");
@@ -665,25 +612,35 @@ function rondel(tincture) {
     circle.classList.add(`fill-${tincture}`);
     return circle;
 }
-function mullet(tincture) {
+function mullet({ tincture }) {
     return svg.path("M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z", tincture);
 }
+function lion({ tincture }) {
+    const lion = getComplexSvgSync("lion").cloneNode(true);
+    lion.classList.add(tincture);
+    return lion;
+}
 const CHARGE_DIRECTIONS = {
+    none: new DefaultChargeLocator([-W_2, W_2], [-H_2, H_2 - 10]),
     fess: fess.on,
     pale: pale.on,
     bend: bend.on,
     chevron: chevron.on,
     saltire: saltire.on,
     cross: cross.on,
-    none: new DefaultChargeLocator([-W_2, W_2], [-H_2, H_2 - 10]),
 };
+// This is weakly-typed. I wasn't able to figure out how define a type that matched the discriminant
+// property to a function type that takes that union member. It should be an easy trick with
+// `DiscriminateUnion`, but it appears the presence of the string literal union disrciminant on
+// `SimpleCharge`
 const CHARGES = {
-    sword,
-    rondel,
-    mullet,
+    sword: sword,
+    rondel: rondel,
+    mullet: mullet,
+    lion: lion,
 };
-// ----------------------------------------------------------------------------
-// VARIED
+// #endregion
+// #region VARIED
 // ----------------------------------------------------------------------------
 function barry(count = 6) {
     const step = H / count;
@@ -806,9 +763,109 @@ const VARIED = {
     lozengy,
     paly,
 };
+// #endregion
+// #region HIGHER-ORDER ELEMENTS
 // ----------------------------------------------------------------------------
-// HIGHER-ORDER
-// ----------------------------------------------------------------------------
+const PARTY_PER_CLIP_PATHS = {
+    pale: [
+        path `
+      M -${W_2} -${H_2}
+      L       0 -${H_2}
+      L       0  ${H_2}
+      L -${W_2}  ${H_2}
+    `,
+        path `
+      M       0 -${H_2}
+      L       0  ${H_2}
+      L  ${W_2}  ${H_2}
+      L  ${W_2} -${H_2}
+    `,
+    ],
+    fess: [
+        path `
+      M -${W_2} -${H_2}
+      L -${W_2}       0
+      L  ${W_2}       0
+      L  ${W_2} -${H_2}
+      Z
+    `,
+        path `
+      M -${W_2} ${H_2}
+      L -${W_2}      0
+      L  ${W_2}      0
+      L  ${W_2} ${H_2}
+      Z
+    `,
+    ],
+    bend: [
+        path `
+      M -${W_2} ${-H_2}
+      L  ${W_2} ${-H_2}
+      L  ${W_2} ${-H_2 + W}
+      Z
+    `,
+        path `
+      M -${W_2} ${-H_2}
+      L  ${W_2} ${-H_2 + W}
+      L  ${W_2} ${H_2}
+      L -${W_2} ${H_2}
+      Z
+    `,
+    ],
+    chevron: [
+        // TODO: Done empirically, and to run the midline of the chevron ordinary. Both these and the
+        // ordinary should be rewritten to be based on W/H.
+        path `
+      M -51  41
+      L   0 -10
+      L  51  41
+      L  51  60
+      L -51  60
+      Z
+    `,
+        path `
+      M -51  41
+      L   0 -10
+      L  51  41
+      L  51 -60
+      L -51 -60
+      Z
+    `,
+    ],
+    saltire: [
+        // TODO: Same here as above for chevron.
+        path `
+      M -51  41
+      L  52 -62
+      L -52 -62
+      L  51  41
+      L  51  60
+      L -51  60
+      Z
+    `,
+        path `
+      M -52 -62
+      L  51  41
+      L  52 -62
+      L -51  41
+      Z
+    `,
+    ],
+};
+const QUARTERINGS = {
+    1: {
+        translate: [-25, -30],
+    },
+    2: {
+        translate: [25, -30],
+    },
+    3: {
+        translate: [-25, 30],
+    },
+    4: {
+        translate: [25, 30],
+    },
+};
 const CANTON_SCALE_FACTOR = 1 / 3;
 const CANTON_PATH = path `
   M -${W_2} -${H_2}
@@ -817,6 +874,9 @@ const CANTON_PATH = path `
   L -${W_2}  ${H_2}
   Z
 `;
+function field(tincture) {
+    return svg.rect([-W_2, -H_2], [W_2, H_2], tincture);
+}
 function complexContent(container, content) {
     function renderIntoParent(parent, element) {
         if ("canton" in element) {
@@ -844,7 +904,7 @@ function complexContent(container, content) {
         else if ("charge" in element) {
             const locator = CHARGE_DIRECTIONS[element.direction ?? "none"];
             for (const [translate, scale] of locator.forCount(element.count)) {
-                const rendered = CHARGES[element.charge](element.tincture);
+                const rendered = CHARGES[element.charge](element);
                 applyTransforms(rendered, {
                     translate,
                     scale,
@@ -859,14 +919,14 @@ function complexContent(container, content) {
     }
     function overwriteCounterchangedTincture(element, tincture) {
         function maybeToCounterchanged(t) {
-            return (t === COUNTERCHANGED ? tincture : t);
+            return (t === Tincture.COUNTERCHANGED ? tincture : t);
         }
         if ("canton" in element) {
             // Cantons cannot be counterchanged; they always have a background and everything on them is
             // relative to their background. Thus, nop.
         }
         else if ("on" in element) {
-            if (element.surround?.tincture === COUNTERCHANGED) {
+            if (element.surround?.tincture === Tincture.COUNTERCHANGED) {
                 return {
                     ...element,
                     // Note that we do NOT overwrite the `charge` tincture. That's a function of the `on`, not the field.
@@ -949,13 +1009,13 @@ function complexContent(container, content) {
         }
     }
 }
-function on(parent, { ordinary, surround, charge }) {
-    parent.appendChild(ORDINARIES[ordinary.ordinary](ordinary));
+function on(parent, { on, surround, charge }) {
+    parent.appendChild(ORDINARIES[on.ordinary](on));
     if (charge != null) {
         assert(charge.direction == null, 'cannot specify a direction for charges in "on"');
-        const locator = ORDINARIES[ordinary.ordinary].on;
+        const locator = ORDINARIES[on.ordinary].on;
         for (const [translate, scale] of locator.forCount(charge.count)) {
-            const c = CHARGES[charge.charge](charge.tincture);
+            const c = CHARGES[charge.charge](charge);
             applyTransforms(c, {
                 translate,
                 scale,
@@ -966,9 +1026,9 @@ function on(parent, { ordinary, surround, charge }) {
     }
     if (surround != null) {
         assert(surround.direction == null, 'cannot specify a direction for charges in "between"');
-        const locator = ORDINARIES[ordinary.ordinary].surround;
+        const locator = ORDINARIES[on.ordinary].surround;
         for (const [translate, scale] of locator.forCount(surround.count)) {
-            const c = CHARGES[surround.charge](surround.tincture);
+            const c = CHARGES[surround.charge](surround);
             applyTransforms(c, {
                 translate,
                 scale,
@@ -978,13 +1038,44 @@ function on(parent, { ordinary, surround, charge }) {
         }
     }
 }
+// #endregion
+// #region INITIALIZATION
 // ----------------------------------------------------------------------------
-// INITIALIZATION
-// ----------------------------------------------------------------------------
+function parseAndRenderBlazon() {
+    let result;
+    try {
+        result = parser.parse(input.value.trim().toLowerCase(), {
+            grammarSource: "input",
+        });
+        error.style.display = "none";
+    }
+    catch (e) {
+        error.innerHTML = e.format([
+            { source: "input", text: input.value },
+        ]);
+        error.style.display = "block";
+        return;
+    }
+    result = recursivelyOmitNullish(result);
+    ast.innerHTML = JSON.stringify(result, null, 2);
+    rendered.innerHTML = "";
+    const outline = svg.path(FIELD_PATH, Tincture.NONE);
+    outline.classList.add("stroke-sable");
+    outline.setAttribute("stroke-width", "2");
+    rendered.appendChild(outline);
+    // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
+    const container = svg.g();
+    container.style.clipPath = `path("${FIELD_PATH}")`;
+    rendered.appendChild(container);
+    // Make sure there's always a default background.
+    container.appendChild(field("argent"));
+    complexContent(container, result);
+}
 const input = document.querySelector("#blazon-input");
 const form = document.querySelector("#form");
 const rendered = document.querySelector("#rendered");
 const error = document.querySelector("#error");
+const ast = document.querySelector("#ast");
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     parseAndRenderBlazon();
@@ -998,3 +1089,8 @@ for (const example of document.querySelectorAll("[data-example]")) {
     });
 }
 parseAndRenderBlazon();
+// These files are small and there's not that many of them, so it's easier if we just eagerly
+// load of these and then try to access them sync later and hope for the best. Making the ENTIRE
+// implementation sync just for this is a passive PITA.
+fetchComplexSvg("lion");
+// #endregion

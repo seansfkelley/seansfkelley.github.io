@@ -1,6 +1,40 @@
-#form, #error, #rendered { margin-top: 12px; }
+.fill-argent { fill: white; }
 
-#error { margin-bottom: 0; width: 100%; box-sizing: border-box; }
+.stroke-argent { stroke: white; }
+
+.fill-sable { fill: black; }
+
+.stroke-sable { stroke: black; }
+
+.fill-gules { fill: red; }
+
+.stroke-gules { stroke: red; }
+
+.fill-vert { fill: green; }
+
+.stroke-vert { stroke: green; }
+
+.fill-azure { fill: blue; }
+
+.stroke-azure { stroke: blue; }
+
+.fill-or { fill: yellow; }
+
+.stroke-or { stroke: yellow; }
+
+.fill-purpure { fill: purple; }
+
+.stroke-purpure { stroke: purple; }
+
+.fill-none { fill: none; }
+
+.stroke-none { stroke: none; }
+
+#form, #error, #rendered, #ast { margin-top: 12px; }
+
+#error { margin-bottom: 0; width: 100%; box-sizing: border-box; background-color: var(--intent-danger-background-color); color: var(--intent-danger-text-color); }
+
+#ast-wrapper { width: 100%; box-sizing: border-box; margin-bottom: 12px; }
 
 #form { width: 100%; }
 
@@ -10,36 +44,44 @@
 
 .center { display: flex; flex-direction: column; align-items: center; }
 
-.fill-azure { fill: blue; }
+.lion.argent .body, .lion.argent .claws, .lion.argent .langue { fill: white; }
 
-.fill-or { fill: yellow; }
+.lion.argent .highlight.low { fill: white; }
 
-.fill-argent { fill: white; }
+.lion.argent .highlight.high { fill: white; }
 
-.fill-gules { fill: red; }
+.lion.sable .body, .lion.sable .claws, .lion.sable .langue { fill: black; }
 
-.fill-vert { fill: green; }
+.lion.sable .highlight.low { fill: #1a1a1a; }
 
-.fill-sable { fill: black; }
+.lion.sable .highlight.high { fill: #262626; }
 
-.fill-purpure { fill: purple; }
+.lion.gules .body, .lion.gules .claws, .lion.gules .langue { fill: red; }
 
-.fill-none { fill: none; }
+.lion.gules .highlight.low { fill: #ff3333; }
 
-.stroke-azure { stroke: blue; }
+.lion.gules .highlight.high { fill: #ff4d4d; }
 
-.stroke-or { stroke: yellow; }
+.lion.vert .body, .lion.vert .claws, .lion.vert .langue { fill: green; }
 
-.stroke-argent { stroke: white; }
+.lion.vert .highlight.low { fill: #00b300; }
 
-.stroke-gules { stroke: red; }
+.lion.vert .highlight.high { fill: #00cd00; }
 
-.stroke-vert { stroke: green; }
+.lion.azure .body, .lion.azure .claws, .lion.azure .langue { fill: blue; }
 
-.stroke-sable { stroke: black; }
+.lion.azure .highlight.low { fill: #3333ff; }
 
-.stroke-purpure { stroke: purple; }
+.lion.azure .highlight.high { fill: #4d4dff; }
 
-.stroke-none { stroke: none; }
+.lion.or .body, .lion.or .claws, .lion.or .langue { fill: yellow; }
 
-.outline { stroke: black; stroke-width: 2; }
+.lion.or .highlight.low { fill: #ffff33; }
+
+.lion.or .highlight.high { fill: #ffff4d; }
+
+.lion.purpure .body, .lion.purpure .claws, .lion.purpure .langue { fill: purple; }
+
+.lion.purpure .highlight.low { fill: #b300b3; }
+
+.lion.purpure .highlight.high { fill: #cd00cd; }
