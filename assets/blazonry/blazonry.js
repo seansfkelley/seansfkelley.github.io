@@ -9,7 +9,6 @@
 // - fancy paths for fancy charges: lion, leopard's head, castle, and all their variants
 // - decorations for lines (e.g. embattled, engrailed, etc.)
 // - "overall"
-// - cotised, but for the other ordinaries too
 // - parser can't figure out the correct assignment of the quarterly rules to parse this:
 //     quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
 // - should be able to parse non-redundant usage of colors
@@ -369,18 +368,12 @@ function bend({ tincture, cotised }) {
         return bend;
     }
     else {
-        const deltaX = 
-        // 3/2 = 1/2 because the widening is relative to the middle of the cotise + 1 to space it out from the bend.
-        Math.cos(Math.PI / 4) * (bendWidth / 2 + (COTISED_WIDTH * 3) / 2);
-        const deltaY = Math.sin(Math.PI / 4) * (bendWidth / 2 + (COTISED_WIDTH * 3) / 2);
-        const top = svg.line(src, dst, cotised, COTISED_WIDTH);
-        top.setAttribute("transform", `translate(${deltaX} -${deltaY})`);
-        const bottom = svg.line(src, dst, cotised, COTISED_WIDTH);
-        bottom.setAttribute("transform", `translate(-${deltaX} ${deltaY})`);
+        // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
+        const offset = Math.sin(Math.PI / 4) * (bendWidth / 2 + (COTISED_WIDTH * 3) / 2);
         const g = svg.g();
-        g.appendChild(top);
         g.appendChild(bend);
-        g.appendChild(bottom);
+        g.appendChild(svg.line(Coordinate.add(src, [offset, -offset]), Coordinate.add(dst, [offset, -offset]), cotised, COTISED_WIDTH));
+        g.appendChild(svg.line(Coordinate.add(src, [-offset, offset]), Coordinate.add(dst, [-offset, offset]), cotised, COTISED_WIDTH));
         return g;
     }
 }
@@ -414,16 +407,25 @@ function chief({ tincture, cotised }) {
 }
 chief.on = new LineSegmentLocator([-W_2, -H_2 + H_2 / 3], [W_2, -H_2 + H_2 / 3], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
 chief.surround = new NullLocator();
-function chevron({ tincture }) {
-    return svg.path(path `
-      M   0 -26
-      L  59  33
-      L  43  49
-      L   0   6
-      L -43  49
-      L -59  33
-      Z
-    `, tincture);
+function chevron({ tincture, cotised }) {
+    const chevronWidth = W / 4;
+    const left = [-W_2, -H_2 + W];
+    const right = [-W_2 + H, H_2];
+    // Cross at 45 degrees starting from the top edge, so we bias upwards from the center.
+    const mid = [0, -(H_2 - W_2)];
+    const chevron = svg.g();
+    chevron.appendChild(svg.line(left, mid, tincture, chevronWidth, "square"));
+    chevron.appendChild(svg.line(mid, right, tincture, chevronWidth, "square"));
+    if (cotised != null) {
+        // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
+        const offset = Math.sin(Math.PI / 4) * chevronWidth + COTISED_WIDTH * 2;
+        for (const end of [left, right]) {
+            for (const sign of [-1, 1]) {
+                chevron.appendChild(svg.line(Coordinate.add(end, [0, sign * offset]), Coordinate.add(mid, [0, sign * offset]), tincture, COTISED_WIDTH, "square"));
+            }
+        }
+    }
+    return chevron;
 }
 chevron.on = new OnChevronLocator([-W_2, W_2 - 10], [0, -10], [W_2, W_2 - 10], [0.4, 0.4, 0.4, 0.4, 0.35, 0.35, 0.3, 0.25]);
 chevron.surround = new ExhaustiveLocator([
