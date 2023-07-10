@@ -107,3 +107,11 @@
 .stroke-none {
   stroke: none;
 }
+
+.lion {
+  &.gules {
+    .body {
+      fill: red;
+    }
+  }
+}

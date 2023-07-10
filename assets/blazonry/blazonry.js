@@ -6,7 +6,7 @@
 // - InDirection -- at least in the case of chevron and saltire, they are rotated to match -- matters for swords, at least
 // - can party per field have complex content in it?
 // - minor visual effects to make it a little less flat
-// - fancy paths for fancy charges: lion, leopard's head, castle, and all their variants
+// - fancy paths for fancy charges: lion, leopard's head, eagle, castle, boar, swan, tree, and all their variants
 // - decorations for lines (e.g. embattled, engrailed, etc.)
 // - "overall"
 // - parser can't figure out the correct assignment of the quarterly rules to parse this:
@@ -15,6 +15,7 @@
 //     argent on a bend between six mullets vert
 // - make whitespace non-optional to force breaks
 // - multiple ordiaries?
+// - standardize size of charges (40x40?) so that scaling works as expected for all of them
 // TODO OPTIONAL
 // - adjust positioning for `on` -- often the 2s and 3s are too close to each other, like for chief
 // - push elements around when quartering
@@ -352,6 +353,25 @@ function recursivelyOmitNullish(value) {
         return value;
     }
 }
+const complexSvgCache = {};
+function getComplexSvgSync(name) {
+    if (name in complexSvgCache) {
+        return complexSvgCache[name];
+    }
+    else {
+        throw new Error(`still waiting for ${name}.svg to load!`);
+    }
+}
+async function fetchComplexSvg(name) {
+    const response = await fetch(`/assets/blazonry/svg/${name}.svg`);
+    const root = new DOMParser().parseFromString(await response.text(), "image/svg+xml").documentElement;
+    const wrapper = svg.g();
+    wrapper.classList.add(name);
+    for (const c of root.children) {
+        wrapper.appendChild(c);
+    }
+    complexSvgCache[name] = wrapper;
+}
 // #endregion
 // #region ORDINARIES
 // ----------------------------------------------------------------------------
@@ -596,8 +616,9 @@ function mullet({ tincture }) {
     return svg.path("M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z", tincture);
 }
 function lion({ tincture }) {
-    // TODO!
-    return svg.path("", tincture);
+    const lion = getComplexSvgSync("lion").cloneNode(true);
+    lion.classList.add(tincture);
+    return lion;
 }
 const CHARGE_DIRECTIONS = {
     none: new DefaultChargeLocator([-W_2, W_2], [-H_2, H_2 - 10]),
@@ -1068,4 +1089,8 @@ for (const example of document.querySelectorAll("[data-example]")) {
     });
 }
 parseAndRenderBlazon();
+// These files are small and there's not that many of them, so it's easier if we just eagerly
+// load of these and then try to access them sync later and hope for the best. Making the ENTIRE
+// implementation sync just for this is a passive PITA.
+fetchComplexSvg("lion");
 // #endregion

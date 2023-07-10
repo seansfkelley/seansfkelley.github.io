@@ -5,7 +5,7 @@
 // - InDirection -- at least in the case of chevron and saltire, they are rotated to match -- matters for swords, at least
 // - can party per field have complex content in it?
 // - minor visual effects to make it a little less flat
-// - fancy paths for fancy charges: lion, leopard's head, castle, and all their variants
+// - fancy paths for fancy charges: lion, leopard's head, eagle, castle, boar, swan, tree, and all their variants
 // - decorations for lines (e.g. embattled, engrailed, etc.)
 // - "overall"
 // - parser can't figure out the correct assignment of the quarterly rules to parse this:
@@ -14,6 +14,7 @@
 //     argent on a bend between six mullets vert
 // - make whitespace non-optional to force breaks
 // - multiple ordiaries?
+// - standardize size of charges (40x40?) so that scaling works as expected for all of them
 
 // TODO OPTIONAL
 // - adjust positioning for `on` -- often the 2s and 3s are too close to each other, like for chief
@@ -47,6 +48,10 @@ const FIELD_PATH = path`
 
 // #region TYPES
 // ----------------------------------------------------------------------------
+
+interface Node {
+  cloneNode<T>(this: T, deep?: boolean): T;
+}
 
 declare namespace PeggyParser {
   interface SyntaxError extends Error {
@@ -547,6 +552,30 @@ function recursivelyOmitNullish<T>(value: T): T {
   }
 }
 
+const complexSvgCache: Record<string, SVGElement> = {};
+
+function getComplexSvgSync(name: string): SVGElement {
+  if (name in complexSvgCache) {
+    return complexSvgCache[name];
+  } else {
+    throw new Error(`still waiting for ${name}.svg to load!`);
+  }
+}
+
+async function fetchComplexSvg(name: string): Promise<void> {
+  const response = await fetch(`/assets/blazonry/svg/${name}.svg`);
+  const root = new DOMParser().parseFromString(
+    await response.text(),
+    "image/svg+xml"
+  ).documentElement as any as SVGElement;
+  const wrapper = svg.g();
+  wrapper.classList.add(name);
+  for (const c of root.children) {
+    wrapper.appendChild(c);
+  }
+  complexSvgCache[name] = wrapper;
+}
+
 // #endregion
 
 // #region ORDINARIES
@@ -1014,8 +1043,9 @@ function mullet({ tincture }: SimpleCharge) {
 }
 
 function lion({ tincture }: LionCharge) {
-  // TODO!
-  return svg.path("", tincture);
+  const lion = getComplexSvgSync("lion").cloneNode(true);
+  lion.classList.add(tincture);
+  return lion;
 }
 
 const CHARGE_DIRECTIONS: Record<InDirection | "none", ParametricLocator> = {
@@ -1538,5 +1568,10 @@ for (const example of document.querySelectorAll<HTMLAnchorElement>(
 }
 
 parseAndRenderBlazon();
+
+// These files are small and there's not that many of them, so it's easier if we just eagerly
+// load of these and then try to access them sync later and hope for the best. Making the ENTIRE
+// implementation sync just for this is a passive PITA.
+fetchComplexSvg("lion");
 
 // #endregion
