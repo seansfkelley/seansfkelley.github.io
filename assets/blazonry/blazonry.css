@@ -44,44 +44,72 @@
 
 .center { display: flex; flex-direction: column; align-items: center; }
 
-.lion.argent .body, .lion.argent .claws, .lion.argent .langue { fill: white; }
+.lion.argent .body, .lion.argent .claw, .lion.argent .langue { fill: white; }
 
 .lion.argent .highlight.low { fill: white; }
 
 .lion.argent .highlight.high { fill: white; }
 
-.lion.sable .body, .lion.sable .claws, .lion.sable .langue { fill: black; }
+.lion.armed-argent .claw { fill: white; }
+
+.lion.langued-argent .langue { fill: white; }
+
+.lion.sable .body, .lion.sable .claw, .lion.sable .langue { fill: black; }
 
 .lion.sable .highlight.low { fill: #1a1a1a; }
 
 .lion.sable .highlight.high { fill: #262626; }
 
-.lion.gules .body, .lion.gules .claws, .lion.gules .langue { fill: red; }
+.lion.armed-sable .claw { fill: black; }
+
+.lion.langued-sable .langue { fill: black; }
+
+.lion.gules .body, .lion.gules .claw, .lion.gules .langue { fill: red; }
 
 .lion.gules .highlight.low { fill: #ff3333; }
 
 .lion.gules .highlight.high { fill: #ff4d4d; }
 
-.lion.vert .body, .lion.vert .claws, .lion.vert .langue { fill: green; }
+.lion.armed-gules .claw { fill: red; }
+
+.lion.langued-gules .langue { fill: red; }
+
+.lion.vert .body, .lion.vert .claw, .lion.vert .langue { fill: green; }
 
 .lion.vert .highlight.low { fill: #00b300; }
 
 .lion.vert .highlight.high { fill: #00cd00; }
 
-.lion.azure .body, .lion.azure .claws, .lion.azure .langue { fill: blue; }
+.lion.armed-vert .claw { fill: green; }
+
+.lion.langued-vert .langue { fill: green; }
+
+.lion.azure .body, .lion.azure .claw, .lion.azure .langue { fill: blue; }
 
 .lion.azure .highlight.low { fill: #3333ff; }
 
 .lion.azure .highlight.high { fill: #4d4dff; }
 
-.lion.or .body, .lion.or .claws, .lion.or .langue { fill: yellow; }
+.lion.armed-azure .claw { fill: blue; }
+
+.lion.langued-azure .langue { fill: blue; }
+
+.lion.or .body, .lion.or .claw, .lion.or .langue { fill: yellow; }
 
 .lion.or .highlight.low { fill: #ffff33; }
 
 .lion.or .highlight.high { fill: #ffff4d; }
 
-.lion.purpure .body, .lion.purpure .claws, .lion.purpure .langue { fill: purple; }
+.lion.armed-or .claw { fill: yellow; }
+
+.lion.langued-or .langue { fill: yellow; }
+
+.lion.purpure .body, .lion.purpure .claw, .lion.purpure .langue { fill: purple; }
 
 .lion.purpure .highlight.low { fill: #b300b3; }
 
 .lion.purpure .highlight.high { fill: #cd00cd; }
+
+.lion.armed-purpure .claw { fill: purple; }
+
+.lion.langued-purpure .langue { fill: purple; }
