@@ -562,7 +562,7 @@ function bend({ tincture, cotised }: Ordinary) {
   // Note that this sets width using height; this is because (1) we assume height is larger than
   // width; (2) we want a 45 degree angle; and (3) we want to make sure that in all contexts (like
   // transform-scaled cantons) the bend will definitely reach the edges of the container.
-  const dst: Coordinate = [H_2, H_2];
+  const dst: Coordinate = [-W_2 + H, H_2];
   const bend = svg.line(src, dst, tincture, bendWidth);
 
   if (cotised == null) {
@@ -772,17 +772,42 @@ cross.surround = new SequenceLocator(
   }
 );
 
-function fess({ tincture }: Ordinary) {
-  return svg.path(
-    path`
-      M -50 -25
-      L  50 -25
-      L  50  15
-      L -50  15
-      Z
-    `,
-    tincture
+function fess({ tincture, cotised }: Ordinary) {
+  const verticalOffset = -H_2 + ((W / 3) * 3) / 2;
+
+  const fessWidth = W / 3;
+  const fess = svg.line(
+    [-W_2, verticalOffset],
+    [W_2, verticalOffset],
+    tincture,
+    fessWidth
   );
+
+  if (cotised == null) {
+    return fess;
+  } else {
+    const offset = fessWidth / 2 + (COTISED_WIDTH * 3) / 2;
+
+    const g = svg.g();
+    g.appendChild(fess);
+    g.appendChild(
+      svg.line(
+        [-W_2, verticalOffset - offset],
+        [W_2, verticalOffset - offset],
+        cotised,
+        COTISED_WIDTH
+      )
+    );
+    g.appendChild(
+      svg.line(
+        [-W_2, verticalOffset + offset],
+        [W_2, verticalOffset + offset],
+        cotised,
+        COTISED_WIDTH
+      )
+    );
+    return g;
+  }
 }
 
 fess.on = new LineSegmentLocator(
@@ -801,17 +826,35 @@ fess.surround = new ReflectiveLocator(
   [W_2, -4]
 );
 
-function pale({ tincture }: Ordinary) {
-  return svg.path(
-    path`
-      M -15 -60
-      L  15 -60
-      L  15  60
-      L -15  60
-      Z
-    `,
-    tincture
-  );
+function pale({ tincture, cotised }: Ordinary) {
+  const paleWidth = W / 3;
+  const pale = svg.line([0, -H_2], [0, H_2], tincture, paleWidth);
+
+  if (cotised == null) {
+    return pale;
+  } else {
+    const horizontalOffset = paleWidth / 2 + (COTISED_WIDTH * 3) / 2;
+
+    const g = svg.g();
+    g.appendChild(pale);
+    g.appendChild(
+      svg.line(
+        [-horizontalOffset, -H_2],
+        [-horizontalOffset, H_2],
+        cotised,
+        COTISED_WIDTH
+      )
+    );
+    g.appendChild(
+      svg.line(
+        [horizontalOffset, -H_2],
+        [horizontalOffset, H_2],
+        cotised,
+        COTISED_WIDTH
+      )
+    );
+    return g;
+  }
 }
 
 pale.on = new LineSegmentLocator(
@@ -830,25 +873,52 @@ pale.surround = new ReflectiveLocator(
   [0, H_2]
 );
 
-function saltire({ tincture }: Ordinary) {
-  return svg.path(
-    path`
-      M  44 -70
-      L  60 -54
-      L  16 -10
-      L  59  33
-      L  43  49
-      L   0   6
-      L -43  49
-      L -59  33
-      L -16 -10
-      L -60 -54
-      L -44 -70
-      L   0 -26
-      Z
-    `,
-    tincture
-  );
+function saltire({ tincture, cotised }: Ordinary) {
+  const saltireWidth = W / 4;
+
+  const tl: Coordinate = [-W_2, -H_2];
+  const tr: Coordinate = [W_2, -H_2];
+  const bl: Coordinate = [-W_2, -H_2 + W];
+  const br: Coordinate = [-W_2 + H, H_2];
+
+  const saltire = svg.g();
+  saltire.appendChild(svg.line(tl, br, tincture, saltireWidth));
+  saltire.appendChild(svg.line(bl, tr, tincture, saltireWidth));
+
+  if (cotised != null) {
+    // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
+    const offset = Math.sin(Math.PI / 4) * saltireWidth + COTISED_WIDTH * 2;
+    // Cross at 45 degrees starting from the top edge, so we bias upwards from the center.
+    const mid: Coordinate = [0, -(H_2 - W_2)];
+
+    for (const [p, [x1sign, y1sign], [x2sign, y2sign]] of [
+      [tl, [-1, 0], [0, -1]],
+      [tr, [0, -1], [1, 0]],
+      [bl, [-1, 0], [0, 1]],
+      [br, [0, 1], [1, 0]],
+    ] as const) {
+      saltire.appendChild(
+        svg.line(
+          Coordinate.add(p, [offset * x1sign, offset * y1sign]),
+          Coordinate.add(mid, [offset * x1sign, offset * y1sign]),
+          cotised,
+          COTISED_WIDTH,
+          "square"
+        )
+      );
+      saltire.appendChild(
+        svg.line(
+          Coordinate.add(p, [offset * x2sign, offset * y2sign]),
+          Coordinate.add(mid, [offset * x2sign, offset * y2sign]),
+          cotised,
+          COTISED_WIDTH,
+          "square"
+        )
+      );
+    }
+  }
+
+  return saltire;
 }
 
 saltire.on = new SequenceLocator(
