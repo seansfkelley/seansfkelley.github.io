@@ -44,15 +44,27 @@
 
 .center { display: flex; flex-direction: column; align-items: center; }
 
+.lion { stroke-width: 1 !important; }
+
+.lion .outline { stroke: black; opacity: 0.3; }
+
+.lion .teeth { fill: white; }
+
+.lion .eye .white { fill: white; }
+
+.lion .eye .pupil, .lion .eye .edge { fill: black; }
+
+.lion .ear { fill: #444; }
+
 .lion.argent .body, .lion.argent .claw, .lion.argent .langue { fill: white; }
 
 .lion.argent .highlight.low { fill: white; }
 
 .lion.argent .highlight.high { fill: white; }
 
-.lion.armed-argent .claw { fill: white; }
+.lion.armed-argent .claw { fill: white !important; }
 
-.lion.langued-argent .langue { fill: white; }
+.lion.langued-argent .langue { fill: white !important; }
 
 .lion.sable .body, .lion.sable .claw, .lion.sable .langue { fill: black; }
 
@@ -60,9 +72,9 @@
 
 .lion.sable .highlight.high { fill: #262626; }
 
-.lion.armed-sable .claw { fill: black; }
+.lion.armed-sable .claw { fill: black !important; }
 
-.lion.langued-sable .langue { fill: black; }
+.lion.langued-sable .langue { fill: black !important; }
 
 .lion.gules .body, .lion.gules .claw, .lion.gules .langue { fill: red; }
 
@@ -70,9 +82,9 @@
 
 .lion.gules .highlight.high { fill: #ff4d4d; }
 
-.lion.armed-gules .claw { fill: red; }
+.lion.armed-gules .claw { fill: red !important; }
 
-.lion.langued-gules .langue { fill: red; }
+.lion.langued-gules .langue { fill: red !important; }
 
 .lion.vert .body, .lion.vert .claw, .lion.vert .langue { fill: green; }
 
@@ -80,9 +92,9 @@
 
 .lion.vert .highlight.high { fill: #00cd00; }
 
-.lion.armed-vert .claw { fill: green; }
+.lion.armed-vert .claw { fill: green !important; }
 
-.lion.langued-vert .langue { fill: green; }
+.lion.langued-vert .langue { fill: green !important; }
 
 .lion.azure .body, .lion.azure .claw, .lion.azure .langue { fill: blue; }
 
@@ -90,9 +102,9 @@
 
 .lion.azure .highlight.high { fill: #4d4dff; }
 
-.lion.armed-azure .claw { fill: blue; }
+.lion.armed-azure .claw { fill: blue !important; }
 
-.lion.langued-azure .langue { fill: blue; }
+.lion.langued-azure .langue { fill: blue !important; }
 
 .lion.or .body, .lion.or .claw, .lion.or .langue { fill: yellow; }
 
@@ -100,9 +112,9 @@
 
 .lion.or .highlight.high { fill: #ffff4d; }
 
-.lion.armed-or .claw { fill: yellow; }
+.lion.armed-or .claw { fill: yellow !important; }
 
-.lion.langued-or .langue { fill: yellow; }
+.lion.langued-or .langue { fill: yellow !important; }
 
 .lion.purpure .body, .lion.purpure .claw, .lion.purpure .langue { fill: purple; }
 
@@ -110,6 +122,6 @@
 
 .lion.purpure .highlight.high { fill: #cd00cd; }
 
-.lion.armed-purpure .claw { fill: purple; }
+.lion.armed-purpure .claw { fill: purple !important; }
 
-.lion.langued-purpure .langue { fill: purple; }
+.lion.langued-purpure .langue { fill: purple !important; }

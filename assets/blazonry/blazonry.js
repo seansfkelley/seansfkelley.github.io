@@ -616,7 +616,9 @@ function mullet({ tincture }) {
     return svg.path("M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z", tincture);
 }
 function lion({ tincture, armed, langued }) {
-    // TODO: eye, ear, outline, other unaddressed classes.
+    // TODO: tail is missing highlights
+    // TODO: sizing and positioning still seems wrong
+    // TODO: coloration should be optional, I guess?
     const lion = getComplexSvgSync("lion").cloneNode(true);
     lion.classList.add(tincture);
     if (armed != null) {

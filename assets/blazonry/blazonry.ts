@@ -1043,7 +1043,9 @@ function mullet({ tincture }: SimpleCharge) {
 }
 
 function lion({ tincture, armed, langued }: LionCharge) {
-  // TODO: eye, ear, outline, other unaddressed classes.
+  // TODO: tail is missing highlights
+  // TODO: sizing and positioning still seems wrong
+  // TODO: coloration should be optional, I guess?
   const lion = getComplexSvgSync("lion").cloneNode(true);
   lion.classList.add(tincture);
   if (armed != null) {
