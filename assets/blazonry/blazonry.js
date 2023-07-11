@@ -50,6 +50,43 @@ const Coordinate = {
         y1 + y2,
     ],
 };
+const Quadrilateral = {
+    toSvgPath: ([p1, p2, p3, p4]) => {
+        return path `
+      M ${p1[0]} ${p1[1]}
+      L ${p2[0]} ${p2[1]}
+      L ${p3[0]} ${p3[1]}
+      L ${p4[0]} ${p4[1]}
+      Z
+    `;
+    },
+};
+/**
+ * Given the line segment defined by src-dst, widen it along the perpendicular into a rotated
+ * rectangle. Points are returned in clockwise order from src to dst.
+ */
+function widen(src, dst, width, linecap = "butt") {
+    const halfWidth = width / 2;
+    const angle = src[0] === dst[0]
+        ? Math.PI / 2
+        : Math.atan((dst[1] - src[1]) / (dst[0] - src[0]));
+    if (linecap === "square") {
+        const x = Math.cos(angle) * halfWidth;
+        const y = Math.sin(angle) * halfWidth;
+        src = Coordinate.add(src, [-x, -y]);
+        dst = Coordinate.add(dst, [x, y]);
+    }
+    // Note! These x/y ~ sin/cos relationships are flipped from the usual, because to widen we need
+    // to draw lines perpendicular -- thereby reversing the normal roles of x and y!
+    const x = Math.sin(angle) * halfWidth;
+    const y = Math.cos(angle) * halfWidth;
+    return [
+        Coordinate.add(src, [x, -y]),
+        Coordinate.add(dst, [x, -y]),
+        Coordinate.add(dst, [-x, y]),
+        Coordinate.add(src, [-x, y]),
+    ];
+}
 function evaluateLineSegment(src, dst, t) {
     assert(t >= 0 && t <= 1, "parameter must be on [0, 1]");
     return [(dst[0] - src[0]) * t + src[0], (dst[1] - src[1]) * t + src[1]];
@@ -335,6 +372,9 @@ function path(strings, ...values) {
     parts.push(strings.at(-1));
     return parts.join("").trim().replaceAll("\n", "").replaceAll(/ +/g, " ");
 }
+path.fromPoints = (points) => {
+    return "M " + points.map(([x, y]) => `${x} ${y}`).join(" L ");
+};
 function recursivelyOmitNullish(value) {
     assert(value != null, "cannot omit nullish root values");
     if (Array.isArray(value)) {
@@ -378,14 +418,29 @@ async function fetchComplexSvg(kind, variant) {
 // #region ORDINARIES
 // ----------------------------------------------------------------------------
 const COTISED_WIDTH = W_2 / 10;
-function bend({ tincture, cotised }) {
+function bend({ tincture, cotised, ornament }) {
     const bendWidth = W / 3;
     const src = [-W_2, -H_2];
     // Note that this sets width using height; this is because (1) we assume height is larger than
     // width; (2) we want a 45 degree angle; and (3) we want to make sure that in all contexts (like
     // transform-scaled cantons) the bend will definitely reach the edges of the container.
     const dst = [-W_2 + H, H_2];
-    const bend = svg.line(src, dst, tincture, bendWidth);
+    let bend;
+    if (ornament != null) {
+        // These names are a _little_ misleading. Tilt your head 45 degrees to the right and they'll make sense.
+        const [tl, tr, br, bl] = widen(src, dst, bendWidth);
+        bend = svg.path(path.fromPoints([
+            tl,
+            ...embattled(tl, tr),
+            tr,
+            br,
+            ...embattled(br, bl),
+            bl,
+        ]), tincture);
+    }
+    else {
+        bend = svg.line(src, dst, tincture, bendWidth);
+    }
     if (cotised == null) {
         return bend;
     }
@@ -660,32 +715,27 @@ function renderCharge(charge) {
 // #region ORNAMENT
 // ----------------------------------------------------------------------------
 function embattled([x1, y1], [x2, y2]) {
-    // Intended visuals: the ornament is in line with, rather than on top of, the given line segment.
-    // That is, half of the height of the ornament is additive, and the other half is subtractive.
-    // To implement this in a composable way, I think these functions will be called twice, or have
-    // their output duplicated: once to append the positive fill, and once to clip the negative.
-    //
-    // This might be easier if I revert the ordinary renders to producing paths. Then the paths can
-    // be modified along particular line segments to become embattled, etc.
-    const width = W / 8;
+    const width = W / 10;
     const height = width / 2;
-    const angle = Math.atan((y2 - y1) / (x2 - x1));
+    const angle = Math.atan((y2 - y1) / (x2 - x1)) + (x2 < x1 ? Math.PI : 0);
     const wStepX = Math.cos(angle) * width;
     const wStepY = Math.sin(angle) * width;
-    const hStepX = Math.cos(angle + Math.PI / 2) * height;
-    const hStepY = Math.sin(angle + Math.PI / 2) * height;
-    const points = [[x1 - hStepX / 2, y1 + hStepY / 2]];
+    const hStepX = Math.cos(angle) * height;
+    const hStepY = Math.sin(angle) * height;
+    let x = x1 + hStepX / 2;
+    let y = y1 - hStepY / 2;
+    const points = [[x, y]];
+    // TODO: This is WAY too many points.
+    // TODO: Add parameter for where to start: src, dst, or center.
+    // TODO: Maybe start halfway through a trough instead of with a drop/rise?
     for (let i = Math.ceil(Math.hypot(x2 - x1, y2 - y1) / width); i > 0; --i) {
-        points.push([hStepX, -hStepY], [wStepX, -wStepY], [-hStepX, hStepY], [wStepX, -wStepY]);
+        points.push([(x -= hStepX), (y += hStepY)], [(x += wStepX), (y += wStepY)], [(x += hStepX), (y -= hStepY)], [(x += wStepX), (y += wStepY)]);
     }
-    let p = "";
-    for (const [x, y] of points) {
-        p += ` l ${x} ${y}`;
-    }
-    // This is a bit weird; would be nice to generate the right thing from the start.
-    return p.replace(/^ l /, "M ");
+    return points;
 }
-const ORNAMENTS = {};
+const ORNAMENTS = {
+    embattled,
+};
 // #region VARIED
 // ----------------------------------------------------------------------------
 function barry(count = 6) {
