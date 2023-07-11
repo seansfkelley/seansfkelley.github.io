@@ -6,7 +6,7 @@
 // - InDirection -- at least in the case of chevron and saltire, they are rotated to match -- matters for swords, at least
 // - can party per field have complex content in it?
 // - minor visual effects to make it a little less flat
-// - fancy paths for fancy charges: lion, leopard's head, eagle, castle, boar, swan, tree, and all their variants
+// - fancy paths for fancy charges: lion, leopard's head, eagle, castle, boar, swan, tree, rose, escallop, and all their variants
 // - decorations for lines (e.g. embattled, engrailed, etc.)
 // - "overall"
 // - parser can't figure out the correct assignment of the quarterly rules to parse this:
@@ -651,6 +651,18 @@ const CHARGES = {
     lion: lion,
 };
 // #endregion
+// #region ORNAMENT
+// ----------------------------------------------------------------------------
+function embattled(src, dst) {
+    // Intended visuals: the ornament is in line with, rather than on top of, the given line segment.
+    // That is, half of the height of the ornament is additive, and the other half is subtractive.
+    // To implement this in a composable way, I think these functions will be called twice, or have
+    // their output duplicated: once to append the positive fill, and once to clip the negative.
+    //
+    // This might be easier if I revert the ordinary renders to producing paths. Then the paths can
+    // be modified along particular line segments to become embattled, etc.
+}
+const ORNAMENTS = {};
 // #region VARIED
 // ----------------------------------------------------------------------------
 function barry(count = 6) {
