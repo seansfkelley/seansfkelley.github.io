@@ -1046,7 +1046,7 @@ function lion({ tincture, armed, langued }: LionCharge) {
   // TODO: tail is missing highlights
   // TODO: sizing and positioning still seems wrong
   // TODO: coloration should be optional, I guess?
-  const lion = getComplexSvgSync("lion").cloneNode(true);
+  const lion = getComplexSvgSync("lion-rampant").cloneNode(true);
   lion.classList.add(tincture);
   if (armed != null) {
     lion.classList.add(`armed-${armed}`);
@@ -1581,6 +1581,6 @@ parseAndRenderBlazon();
 // These files are small and there's not that many of them, so it's easier if we just eagerly
 // load of these and then try to access them sync later and hope for the best. Making the ENTIRE
 // implementation sync just for this is a passive PITA.
-fetchComplexSvg("lion");
+fetchComplexSvg("lion-rampant");
 
 // #endregion
