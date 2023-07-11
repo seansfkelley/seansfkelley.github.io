@@ -640,16 +640,22 @@ const CHARGE_DIRECTIONS = {
     saltire: saltire.on,
     cross: cross.on,
 };
-// This is weakly-typed. I wasn't able to figure out how define a type that matched the discriminant
-// property to a function type that takes that union member. It should be an easy trick with
-// `DiscriminateUnion`, but it appears the presence of the string literal union disrciminant on
-// `SimpleCharge`
-const CHARGES = {
-    sword: sword,
-    rondel: rondel,
-    mullet: mullet,
-    lion: lion,
-};
+const SIMPLE_CHARGES = { sword, rondel, mullet };
+// A little unfortunate this dispatching wrapper is necessary, but it's the only way to type-safety
+// render based on the string. Throwing all charges, simple and otherwise, into a constant mapping
+// together means the inferred type of the function has `never` as the first argument. :(
+function renderCharge(charge) {
+    switch (charge.charge) {
+        case "sword":
+        case "rondel":
+        case "mullet":
+            return SIMPLE_CHARGES[charge.charge](charge);
+        case "lion":
+            return lion(charge);
+        default:
+            assertNever(charge);
+    }
+}
 // #endregion
 // #region ORNAMENT
 // ----------------------------------------------------------------------------
@@ -944,7 +950,7 @@ function complexContent(container, content) {
         else if ("charge" in element) {
             const locator = CHARGE_DIRECTIONS[element.direction ?? "none"];
             for (const [translate, scale] of locator.forCount(element.count)) {
-                const rendered = CHARGES[element.charge](element);
+                const rendered = renderCharge(element);
                 applyTransforms(rendered, {
                     translate,
                     scale,
@@ -1055,7 +1061,7 @@ function on(parent, { on, surround, charge }) {
         assert(charge.direction == null, 'cannot specify a direction for charges in "on"');
         const locator = ORDINARIES[on.ordinary].on;
         for (const [translate, scale] of locator.forCount(charge.count)) {
-            const c = CHARGES[charge.charge](charge);
+            const c = renderCharge(charge);
             applyTransforms(c, {
                 translate,
                 scale,
@@ -1068,7 +1074,7 @@ function on(parent, { on, surround, charge }) {
         assert(surround.direction == null, 'cannot specify a direction for charges in "between"');
         const locator = ORDINARIES[on.ordinary].surround;
         for (const [translate, scale] of locator.forCount(surround.count)) {
-            const c = CHARGES[surround.charge](surround);
+            const c = renderCharge(surround);
             applyTransforms(c, {
                 translate,
                 scale,

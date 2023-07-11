@@ -68,6 +68,12 @@ declare const parser: {
   parse: (text: string, opts?: { grammarSource: string }) => ComplexContent;
 };
 
+type DiscriminateUnion<T, K extends keyof T, V extends T[K]> = T extends T
+  ? V extends T[K]
+    ? T
+    : never
+  : never;
+
 type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 type Tincture = string & { __tincture: unknown };
 const Tincture = {
@@ -162,8 +168,8 @@ interface OrdinaryRenderer {
   surround: ParametricLocator;
 }
 
-interface ChargeRenderer {
-  (charge: Charge): SVGElement;
+interface ChargeRenderer<T extends Charge> {
+  (charge: T): SVGElement;
 }
 
 interface VariedClipPathGenerator {
@@ -1076,16 +1082,27 @@ const CHARGE_DIRECTIONS: Record<InDirection | "none", ParametricLocator> = {
   cross: cross.on,
 };
 
-// This is weakly-typed. I wasn't able to figure out how define a type that matched the discriminant
-// property to a function type that takes that union member. It should be an easy trick with
-// `DiscriminateUnion`, but it appears the presence of the string literal union disrciminant on
-// `SimpleCharge`
-const CHARGES: Record<Charge["charge"], ChargeRenderer> = {
-  sword: sword as any,
-  rondel: rondel as any,
-  mullet: mullet as any,
-  lion: lion as any,
-};
+const SIMPLE_CHARGES: {
+  [K in SimpleCharge["charge"]]: ChargeRenderer<
+    DiscriminateUnion<Charge, "charge", K>
+  >;
+} = { sword, rondel, mullet };
+
+// A little unfortunate this dispatching wrapper is necessary, but it's the only way to type-safety
+// render based on the string. Throwing all charges, simple and otherwise, into a constant mapping
+// together means the inferred type of the function has `never` as the first argument. :(
+function renderCharge(charge: Charge): SVGElement {
+  switch (charge.charge) {
+    case "sword":
+    case "rondel":
+    case "mullet":
+      return SIMPLE_CHARGES[charge.charge](charge);
+    case "lion":
+      return lion(charge);
+    default:
+      assertNever(charge);
+  }
+}
 
 // #endregion
 
@@ -1410,7 +1427,7 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     } else if ("charge" in element) {
       const locator = CHARGE_DIRECTIONS[element.direction ?? "none"];
       for (const [translate, scale] of locator.forCount(element.count)) {
-        const rendered = CHARGES[element.charge](element);
+        const rendered = renderCharge(element);
         applyTransforms(rendered, {
           translate,
           scale,
@@ -1536,7 +1553,7 @@ function on(parent: SVGElement, { on, surround, charge }: On) {
 
     const locator = ORDINARIES[on.ordinary].on;
     for (const [translate, scale] of locator.forCount(charge.count)) {
-      const c = CHARGES[charge.charge](charge);
+      const c = renderCharge(charge);
       applyTransforms(c, {
         translate,
         scale,
@@ -1554,7 +1571,7 @@ function on(parent: SVGElement, { on, surround, charge }: On) {
 
     const locator = ORDINARIES[on.ordinary].surround;
     for (const [translate, scale] of locator.forCount(surround.count)) {
-      const c = CHARGES[surround.charge](surround);
+      const c = renderCharge(surround);
       applyTransforms(c, {
         translate,
         scale,
