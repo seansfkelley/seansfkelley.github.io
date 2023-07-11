@@ -177,12 +177,12 @@ interface VariedClipPathGenerator {
 }
 
 interface OrnamentPathGenerator {
-  (src: Coordinate, dst: Coordinate): string;
+  (src: Coordinate, dst: Coordinate): Coordinate[];
 }
 
 // #endregion
 
-// #region LOCATORS
+// #region LOCATORS AND SHAPES
 // ----------------------------------------------------------------------------
 
 type Coordinate = [x: number, y: number];
@@ -193,6 +193,53 @@ const Coordinate = {
     y1 + y2,
   ],
 };
+
+type Quadrilateral = [Coordinate, Coordinate, Coordinate, Coordinate];
+
+const Quadrilateral = {
+  toSvgPath: ([p1, p2, p3, p4]: Quadrilateral) => {
+    return path`
+      M ${p1[0]} ${p1[1]}
+      L ${p2[0]} ${p2[1]}
+      L ${p3[0]} ${p3[1]}
+      L ${p4[0]} ${p4[1]}
+      Z
+    `;
+  },
+};
+
+/**
+ * Given the line segment defined by src-dst, widen it along the perpendicular into a rotated
+ * rectangle. Points are returned in clockwise order from src to dst.
+ */
+function widen(
+  src: Coordinate,
+  dst: Coordinate,
+  width: number,
+  linecap: "butt" | "square" = "butt"
+): Quadrilateral {
+  const halfWidth = width / 2;
+  const angle =
+    src[0] === dst[0]
+      ? Math.PI / 2
+      : Math.atan((dst[1] - src[1]) / (dst[0] - src[0]));
+  if (linecap === "square") {
+    const x = Math.cos(angle) * halfWidth;
+    const y = Math.sin(angle) * halfWidth;
+    src = Coordinate.add(src, [-x, -y]);
+    dst = Coordinate.add(dst, [x, y]);
+  }
+  // Note! These x/y ~ sin/cos relationships are flipped from the usual, because to widen we need
+  // to draw lines perpendicular -- thereby reversing the normal roles of x and y!
+  const x = Math.sin(angle) * halfWidth;
+  const y = Math.cos(angle) * halfWidth;
+  return [
+    Coordinate.add(src, [x, -y]),
+    Coordinate.add(dst, [x, -y]),
+    Coordinate.add(dst, [-x, y]),
+    Coordinate.add(src, [-x, y]),
+  ];
+}
 
 function evaluateLineSegment(
   src: Coordinate,
@@ -548,6 +595,10 @@ function path(strings: TemplateStringsArray, ...values: number[]): string {
   return parts.join("").trim().replaceAll("\n", "").replaceAll(/ +/g, " ");
 }
 
+path.fromPoints = (points: Coordinate[]): string => {
+  return "M " + points.map(([x, y]) => `${x} ${y}`).join(" L ");
+};
+
 function recursivelyOmitNullish<T>(value: T): T {
   assert(value != null, "cannot omit nullish root values");
   if (Array.isArray(value)) {
@@ -598,7 +649,7 @@ async function fetchComplexSvg(kind: string, variant?: string): Promise<void> {
 
 const COTISED_WIDTH = W_2 / 10;
 
-function bend({ tincture, cotised }: Ordinary) {
+function bend({ tincture, cotised, ornament }: Ordinary) {
   const bendWidth = W / 3;
 
   const src: Coordinate = [-W_2, -H_2];
@@ -606,7 +657,25 @@ function bend({ tincture, cotised }: Ordinary) {
   // width; (2) we want a 45 degree angle; and (3) we want to make sure that in all contexts (like
   // transform-scaled cantons) the bend will definitely reach the edges of the container.
   const dst: Coordinate = [-W_2 + H, H_2];
-  const bend = svg.line(src, dst, tincture, bendWidth);
+
+  let bend;
+  if (ornament != null) {
+    // These names are a _little_ misleading. Tilt your head 45 degrees to the right and they'll make sense.
+    const [tl, tr, br, bl] = widen(src, dst, bendWidth);
+    bend = svg.path(
+      path.fromPoints([
+        tl,
+        ...embattled(tl, tr),
+        tr,
+        br,
+        ...embattled(br, bl),
+        bl,
+      ]),
+      tincture
+    );
+  } else {
+    bend = svg.line(src, dst, tincture, bendWidth);
+  }
 
   if (cotised == null) {
     return bend;
@@ -1109,7 +1178,7 @@ function renderCharge(charge: Charge): SVGElement {
 // #region ORNAMENT
 // ----------------------------------------------------------------------------
 
-function embattled([x1, y1]: Coordinate, [x2, y2]: Coordinate): string {
+function embattled([x1, y1]: Coordinate, [x2, y2]: Coordinate): Coordinate[] {
   // Intended visuals: the ornament is in line with, rather than on top of, the given line segment.
   // That is, half of the height of the ornament is additive, and the other half is subtractive.
   // To implement this in a composable way, I think these functions will be called twice, or have
@@ -1120,33 +1189,33 @@ function embattled([x1, y1]: Coordinate, [x2, y2]: Coordinate): string {
   const width = W / 8;
   const height = width / 2;
 
-  const angle = Math.atan((y2 - y1) / (x2 - x1));
+  const angle = Math.atan((y2 - y1) / (x2 - x1)) + (x2 < x1 ? Math.PI : 0);
 
   const wStepX = Math.cos(angle) * width;
   const wStepY = Math.sin(angle) * width;
-  const hStepX = Math.cos(angle + Math.PI / 2) * height;
-  const hStepY = Math.sin(angle + Math.PI / 2) * height;
+  const hStepX = Math.cos(angle) * height;
+  const hStepY = Math.sin(angle) * height;
 
-  const points: Coordinate[] = [[x1 - hStepX / 2, y1 + hStepY / 2]];
+  let x = x1 + hStepX / 2;
+  let y = y1 - hStepY / 2;
+
+  const points: Coordinate[] = [[x, y]];
 
   for (let i = Math.ceil(Math.hypot(x2 - x1, y2 - y1) / width); i > 0; --i) {
     points.push(
-      [hStepX, -hStepY],
-      [wStepX, -wStepY],
-      [-hStepX, hStepY],
-      [wStepX, -wStepY]
+      [(x -= hStepX), (y += hStepY)],
+      [(x += wStepX), (y += wStepY)],
+      [(x += hStepX), (y -= hStepY)],
+      [(x += wStepX), (y += wStepY)]
     );
   }
 
-  let p = "";
-  for (const [x, y] of points) {
-    p += ` l ${x} ${y}`;
-  }
-  // This is a bit weird; would be nice to generate the right thing from the start.
-  return p.replace(/^ l /, "M ");
+  return points;
 }
 
-const ORNAMENTS: Record<string, OrnamentPathGenerator> = {};
+const ORNAMENTS: Record<string, OrnamentPathGenerator> = {
+  embattled,
+};
 
 // #region VARIED
 // ----------------------------------------------------------------------------
