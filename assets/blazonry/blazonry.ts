@@ -1092,7 +1092,7 @@ const CHARGES: Record<Charge["charge"], ChargeRenderer> = {
 // #region ORNAMENT
 // ----------------------------------------------------------------------------
 
-function embattled(src: Coordinate, dst: Coordinate): string {
+function embattled([x1, y1]: Coordinate, [x2, y2]: Coordinate): string {
   // Intended visuals: the ornament is in line with, rather than on top of, the given line segment.
   // That is, half of the height of the ornament is additive, and the other half is subtractive.
   // To implement this in a composable way, I think these functions will be called twice, or have
@@ -1100,6 +1100,51 @@ function embattled(src: Coordinate, dst: Coordinate): string {
   //
   // This might be easier if I revert the ordinary renders to producing paths. Then the paths can
   // be modified along particular line segments to become embattled, etc.
+  const width = W / 8;
+  const height = width / 2;
+
+  const angle = Math.atan((y2 - y1) / (x2 - x1));
+
+  const wStepX = Math.cos(angle) * width;
+  const wStepY = Math.sin(angle) * width;
+  const hStepX = Math.cos(angle + Math.PI / 2) * height;
+  const hStepY = Math.sin(angle + Math.PI / 2) * height;
+
+  const points: Coordinate[] = [[x1 + hStepX / 2, y1 + hStepY / 2]];
+
+  let z = 0;
+
+  let xAcc = x1;
+  let yAcc = y1;
+  const xSign = Math.sign(x2 - x1);
+  const ySign = Math.sign(y2 - y1);
+  // Signs are probably wrong here.
+  while (Math.sign(x2 - xAcc) === xSign || Math.sign(y2 - yAcc) === ySign) {
+    console.log(xAcc, yAcc);
+    points.push(
+      [-hStepX, -hStepY],
+      [wStepX, -wStepY],
+      [hStepX, hStepX],
+      [wStepX, wStepY]
+    );
+
+    for (let i = -4; i < 0; ++i) {
+      xAcc += points.at(i)![0];
+      yAcc += points.at(i)![1];
+    }
+
+    if (++z > 50) {
+      console.log("breaking");
+      break;
+    }
+  }
+
+  let p = "";
+  for (const [x, y] of points) {
+    p += ` l ${x} ${y}`;
+  }
+  // This is a bit weird; would be nice to generate the right thing from the start.
+  return p.replace(/^ l /, "M ");
 }
 
 const ORNAMENTS: Record<string, OrnamentPathGenerator> = {};
