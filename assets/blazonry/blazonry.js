@@ -354,23 +354,25 @@ function recursivelyOmitNullish(value) {
     }
 }
 const complexSvgCache = {};
-function getComplexSvgSync(name) {
-    if (name in complexSvgCache) {
-        return complexSvgCache[name];
+function getComplexSvgSync(kind, variant) {
+    const key = variant ? `${kind}-${variant}` : kind;
+    if (key in complexSvgCache) {
+        return complexSvgCache[key];
     }
     else {
-        throw new Error(`still waiting for ${name}.svg to load!`);
+        throw new Error(`still waiting for ${key}.svg to load!`);
     }
 }
-async function fetchComplexSvg(name) {
-    const response = await fetch(`/assets/blazonry/svg/${name}.svg`);
+async function fetchComplexSvg(kind, variant) {
+    const key = variant ? `${kind}-${variant}` : kind;
+    const response = await fetch(`/assets/blazonry/svg/${key}.svg`);
     const root = new DOMParser().parseFromString(await response.text(), "image/svg+xml").documentElement;
     const wrapper = svg.g();
-    wrapper.classList.add(name);
+    wrapper.classList.add(kind);
     for (const c of root.children) {
         wrapper.appendChild(c);
     }
-    complexSvgCache[name] = wrapper;
+    complexSvgCache[key] = wrapper;
 }
 // #endregion
 // #region ORDINARIES
@@ -615,11 +617,11 @@ function rondel({ tincture }) {
 function mullet({ tincture }) {
     return svg.path("M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z", tincture);
 }
-function lion({ tincture, armed, langued }) {
+function lion({ tincture, armed, langued, pose }) {
     // TODO: tail is missing highlights
     // TODO: sizing and positioning still seems wrong
     // TODO: coloration should be optional, I guess?
-    const lion = getComplexSvgSync("lion-rampant").cloneNode(true);
+    const lion = getComplexSvgSync("lion", pose).cloneNode(true);
     lion.classList.add(tincture);
     if (armed != null) {
         lion.classList.add(`armed-${armed}`);
@@ -1101,5 +1103,5 @@ parseAndRenderBlazon();
 // These files are small and there's not that many of them, so it's easier if we just eagerly
 // load of these and then try to access them sync later and hope for the best. Making the ENTIRE
 // implementation sync just for this is a passive PITA.
-fetchComplexSvg("lion-rampant");
+fetchComplexSvg("lion", "rampant");
 // #endregion

@@ -358,7 +358,7 @@ function peg$parse(input, options) {
   var peg$f17 = function(count, charge, posture, tincture, direction) { return { charge, tincture, posture, count, direction } };
   var peg$f18 = function(description) { return { ...description, count: 1 } };
   var peg$f19 = function(count, description) { return { ...description, count } };
-  var peg$f20 = function(pose, posture, tincture, modifiers, direction) { return { charge: "lion", tincture, posture, pose: pose ?? "passant",  ...modifiers, direction } };
+  var peg$f20 = function(pose, posture, tincture, modifiers, direction) { return { charge: "lion", tincture, posture, pose: pose ?? "rampant",  ...modifiers, direction } };
   var peg$f21 = function(modifier1, tincture1, modifier2, tincture2) { return { [modifier1]: tincture1, [modifier2]: tincture2 } };
   var peg$f22 = function(modifier, tincture) { return { [modifier]: tincture } };
   var peg$f23 = function(modifier1, modifier2, tincture) { return { [modifier1]: tincture, [modifier2]: tincture } };
