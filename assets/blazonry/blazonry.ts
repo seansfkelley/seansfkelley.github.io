@@ -5,7 +5,7 @@
 // - InDirection -- at least in the case of chevron and saltire, they are rotated to match -- matters for swords, at least
 // - can party per field have complex content in it?
 // - minor visual effects to make it a little less flat
-// - fancy paths for fancy charges: lion, leopard's head, eagle, castle, boar, swan, tree, and all their variants
+// - fancy paths for fancy charges: lion, leopard's head, eagle, castle, boar, swan, tree, rose, escallop, and all their variants
 // - decorations for lines (e.g. embattled, engrailed, etc.)
 // - "overall"
 // - parser can't figure out the correct assignment of the quarterly rules to parse this:
@@ -75,6 +75,7 @@ const Tincture = {
   COUNTERCHANGED: "counterchanged" as Tincture,
 };
 type VariedName = string & { __varied: unknown };
+type Ornament = string & { __ornament: unknown };
 type Posture = "palewise" | "fesswise" | "bendwise" | "saltirewise";
 type Direction = "pale" | "fess" | "bend" | "chevron" | "saltire";
 type InDirection = Direction | "cross";
@@ -105,6 +106,7 @@ interface PartyPerField {
   first: Tincture;
   second: Tincture;
   content?: SimpleContent;
+  ornament?: Ornament;
 }
 
 interface Quarterly {
@@ -120,6 +122,7 @@ interface Ordinary {
   ordinary: string;
   tincture: Tincture;
   cotised?: Tincture;
+  ornament?: Ornament;
 }
 
 interface BaseCharge {
@@ -165,6 +168,10 @@ interface ChargeRenderer {
 
 interface VariedClipPathGenerator {
   (count?: number): string;
+}
+
+interface OrnamentPathGenerator {
+  (src: Coordinate, dst: Coordinate): string;
 }
 
 // #endregion
@@ -554,26 +561,28 @@ function recursivelyOmitNullish<T>(value: T): T {
 
 const complexSvgCache: Record<string, SVGElement> = {};
 
-function getComplexSvgSync(name: string): SVGElement {
-  if (name in complexSvgCache) {
-    return complexSvgCache[name];
+function getComplexSvgSync(kind: string, variant?: string): SVGElement {
+  const key = variant ? `${kind}-${variant}` : kind;
+  if (key in complexSvgCache) {
+    return complexSvgCache[key];
   } else {
-    throw new Error(`still waiting for ${name}.svg to load!`);
+    throw new Error(`still waiting for ${key}.svg to load!`);
   }
 }
 
-async function fetchComplexSvg(name: string): Promise<void> {
-  const response = await fetch(`/assets/blazonry/svg/${name}.svg`);
+async function fetchComplexSvg(kind: string, variant?: string): Promise<void> {
+  const key = variant ? `${kind}-${variant}` : kind;
+  const response = await fetch(`/assets/blazonry/svg/${key}.svg`);
   const root = new DOMParser().parseFromString(
     await response.text(),
     "image/svg+xml"
   ).documentElement as any as SVGElement;
   const wrapper = svg.g();
-  wrapper.classList.add(name);
+  wrapper.classList.add(kind);
   for (const c of root.children) {
     wrapper.appendChild(c);
   }
-  complexSvgCache[name] = wrapper;
+  complexSvgCache[key] = wrapper;
 }
 
 // #endregion
@@ -1042,11 +1051,11 @@ function mullet({ tincture }: SimpleCharge) {
   );
 }
 
-function lion({ tincture, armed, langued }: LionCharge) {
+function lion({ tincture, armed, langued, pose }: LionCharge) {
   // TODO: tail is missing highlights
   // TODO: sizing and positioning still seems wrong
   // TODO: coloration should be optional, I guess?
-  const lion = getComplexSvgSync("lion").cloneNode(true);
+  const lion = getComplexSvgSync("lion", pose).cloneNode(true);
   lion.classList.add(tincture);
   if (armed != null) {
     lion.classList.add(`armed-${armed}`);
@@ -1079,6 +1088,48 @@ const CHARGES: Record<Charge["charge"], ChargeRenderer> = {
 };
 
 // #endregion
+
+// #region ORNAMENT
+// ----------------------------------------------------------------------------
+
+function embattled([x1, y1]: Coordinate, [x2, y2]: Coordinate): string {
+  // Intended visuals: the ornament is in line with, rather than on top of, the given line segment.
+  // That is, half of the height of the ornament is additive, and the other half is subtractive.
+  // To implement this in a composable way, I think these functions will be called twice, or have
+  // their output duplicated: once to append the positive fill, and once to clip the negative.
+  //
+  // This might be easier if I revert the ordinary renders to producing paths. Then the paths can
+  // be modified along particular line segments to become embattled, etc.
+  const width = W / 8;
+  const height = width / 2;
+
+  const angle = Math.atan((y2 - y1) / (x2 - x1));
+
+  const wStepX = Math.cos(angle) * width;
+  const wStepY = Math.sin(angle) * width;
+  const hStepX = Math.cos(angle + Math.PI / 2) * height;
+  const hStepY = Math.sin(angle + Math.PI / 2) * height;
+
+  const points: Coordinate[] = [[x1 - hStepX / 2, y1 + hStepY / 2]];
+
+  for (let i = Math.ceil(Math.hypot(x2 - x1, y2 - y1) / width); i > 0; --i) {
+    points.push(
+      [hStepX, -hStepY],
+      [wStepX, -wStepY],
+      [-hStepX, hStepY],
+      [wStepX, -wStepY]
+    );
+  }
+
+  let p = "";
+  for (const [x, y] of points) {
+    p += ` l ${x} ${y}`;
+  }
+  // This is a bit weird; would be nice to generate the right thing from the start.
+  return p.replace(/^ l /, "M ");
+}
+
+const ORNAMENTS: Record<string, OrnamentPathGenerator> = {};
 
 // #region VARIED
 // ----------------------------------------------------------------------------
@@ -1581,6 +1632,6 @@ parseAndRenderBlazon();
 // These files are small and there's not that many of them, so it's easier if we just eagerly
 // load of these and then try to access them sync later and hope for the best. Making the ENTIRE
 // implementation sync just for this is a passive PITA.
-fetchComplexSvg("lion");
+fetchComplexSvg("lion", "rampant");
 
 // #endregion

@@ -13,7 +13,7 @@ SimpleField
   / varied:Varied _ first:Tincture _ "and" _ second:Tincture _ content:SimpleContent? { return { varied, first, second, content } }
 
 PartyPerField
-  = Party? _ "per" _ direction:Direction _ first:Tincture _ "and" _ second:Tincture _ content:SimpleContent? { return { direction, first, second, content } }
+  = Party? _ "per" _ direction:Direction _ ornament:Ornament? _ first:Tincture _ "and" _ second:Tincture _ content:SimpleContent? { return { direction, first, second, content, ornament } }
 
 Party
   = "party"
@@ -44,8 +44,8 @@ Canton "canton"
 
 Ordinary "ordinary"
   // Note that we do not support multiple ordinaries. Yet?
-  = Singular _ ordinary:OrdinaryName _ tincture1:Tincture? _ "cotised" _ tincture2:Tincture { return { ordinary, tincture: tincture1 ?? tincture2, cotised: tincture2 } }
-  / Singular _ ordinary:OrdinaryName _ tincture:Tincture { return { ordinary, tincture } }
+  = Singular _ ordinary:OrdinaryName _ ornament:Ornament? _ tincture1:Tincture? _ "cotised" _ tincture2:Tincture { return { ordinary, tincture: tincture1 ?? tincture2, cotised: tincture2, ornament } }
+  / Singular _ ordinary:OrdinaryName _ ornament:Ornament? _ tincture:Tincture { return { ordinary, tincture, ornament } }
 
 Charge "charge"
   = Singular _ charge:SimpleChargeName _ posture:Posture? _ tincture:Tincture { return { charge, tincture, posture, count: 1 } }
@@ -60,7 +60,7 @@ Lion
 // to the presence of the "lion" charge "keyword", above, combined with the requirement that the
 // pluralization is in the middle of the spec, rather than at the end ("s") like a simple charge.
 LionDescription
-  = pose:LionPose? _ posture:Posture? _ tincture:Tincture _ modifiers:LionModifiers? _ direction:InDirection? { return { charge: "lion", tincture, posture, pose: pose ?? "passant",  ...modifiers, direction } }
+  = pose:LionPose? _ posture:Posture? _ tincture:Tincture _ modifiers:LionModifiers? _ direction:InDirection? { return { charge: "lion", tincture, posture, pose: pose ?? "rampant",  ...modifiers, direction } }
 
 LionPose
   = "rampant"
@@ -160,6 +160,12 @@ VariedName "varied name"
   / "chevronny"
   / "lozengy"
   / "paly"
+
+Ornament "ornament"
+  = "embattled"
+  / "engrailed"
+  / "indented"
+  // TODO: More.
 
 _ "whitespace"
   // Note that comma and semicolon are considered, effectively, whitespace. It is not used to delimit anything that is not already delimited by whitespace.
