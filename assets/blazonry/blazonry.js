@@ -715,14 +715,7 @@ function renderCharge(charge) {
 // #region ORNAMENT
 // ----------------------------------------------------------------------------
 function embattled([x1, y1], [x2, y2]) {
-    // Intended visuals: the ornament is in line with, rather than on top of, the given line segment.
-    // That is, half of the height of the ornament is additive, and the other half is subtractive.
-    // To implement this in a composable way, I think these functions will be called twice, or have
-    // their output duplicated: once to append the positive fill, and once to clip the negative.
-    //
-    // This might be easier if I revert the ordinary renders to producing paths. Then the paths can
-    // be modified along particular line segments to become embattled, etc.
-    const width = W / 8;
+    const width = W / 10;
     const height = width / 2;
     const angle = Math.atan((y2 - y1) / (x2 - x1)) + (x2 < x1 ? Math.PI : 0);
     const wStepX = Math.cos(angle) * width;
@@ -732,6 +725,9 @@ function embattled([x1, y1], [x2, y2]) {
     let x = x1 + hStepX / 2;
     let y = y1 - hStepY / 2;
     const points = [[x, y]];
+    // TODO: This is WAY too many points.
+    // TODO: Add parameter for where to start: src, dst, or center.
+    // TODO: Maybe start halfway through a trough instead of with a drop/rise?
     for (let i = Math.ceil(Math.hypot(x2 - x1, y2 - y1) / width); i > 0; --i) {
         points.push([(x -= hStepX), (y += hStepY)], [(x += wStepX), (y += wStepY)], [(x += hStepX), (y -= hStepY)], [(x += wStepX), (y += wStepY)]);
     }
