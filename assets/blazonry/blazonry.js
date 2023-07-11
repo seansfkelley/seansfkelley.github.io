@@ -668,24 +668,9 @@ function embattled([x1, y1], [x2, y2]) {
     const wStepY = Math.sin(angle) * width;
     const hStepX = Math.cos(angle + Math.PI / 2) * height;
     const hStepY = Math.sin(angle + Math.PI / 2) * height;
-    const points = [[x1 + hStepX / 2, y1 + hStepY / 2]];
-    let z = 0;
-    let xAcc = x1;
-    let yAcc = y1;
-    const xSign = Math.sign(x2 - x1);
-    const ySign = Math.sign(y2 - y1);
-    // Signs are probably wrong here.
-    while (Math.sign(x2 - xAcc) === xSign || Math.sign(y2 - yAcc) === ySign) {
-        console.log(xAcc, yAcc);
-        points.push([-hStepX, -hStepY], [wStepX, -wStepY], [hStepX, hStepX], [wStepX, wStepY]);
-        for (let i = -4; i < 0; ++i) {
-            xAcc += points.at(i)[0];
-            yAcc += points.at(i)[1];
-        }
-        if (++z > 50) {
-            console.log("breaking");
-            break;
-        }
+    const points = [[x1 - hStepX / 2, y1 + hStepY / 2]];
+    for (let i = Math.ceil(Math.hypot(x2 - x1, y2 - y1) / width); i > 0; --i) {
+        points.push([hStepX, -hStepY], [wStepX, -wStepY], [-hStepX, hStepY], [wStepX, -wStepY]);
     }
     let p = "";
     for (const [x, y] of points) {
