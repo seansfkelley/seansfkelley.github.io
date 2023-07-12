@@ -616,6 +616,19 @@ function recursivelyOmitNullish<T>(value: T): T {
   }
 }
 
+/**
+ * Return the angle of the given line segment, in radians. Returns a value on [-pi, pi], according
+ * to the relative direction from the first to second point.
+ */
+function radians([x1, y1]: Coordinate, [x2, y2]: Coordinate): number {
+  if (x1 === x2) {
+    // TODO: Confirm this is correct.
+    return ((y1 < y2 ? 1 : -1) * Math.PI) / 2;
+  } else {
+    return Math.atan((y2 - y1) / (x2 - x1)) + (x2 < x1 ? Math.PI : 0);
+  }
+}
+
 const complexSvgCache: Record<string, SVGElement> = {};
 
 function getComplexSvgSync(kind: string, variant?: string): SVGElement {
@@ -1182,7 +1195,7 @@ function embattled([x1, y1]: Coordinate, [x2, y2]: Coordinate): Coordinate[] {
   const width = W / 10;
   const height = width / 2;
 
-  const angle = Math.atan((y2 - y1) / (x2 - x1)) + (x2 < x1 ? Math.PI : 0);
+  const angle = radians([x1, y1], [x2, y2]);
 
   const wStepX = Math.cos(angle) * width;
   const wStepY = Math.sin(angle) * width;
