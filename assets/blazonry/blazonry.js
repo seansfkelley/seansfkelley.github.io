@@ -452,9 +452,9 @@ function bend({ tincture, cotised, ornament }) {
     if (ornament != null) {
         bend.appendChild(svg.path(path.fromPoints([
             ...ORNAMENTS[ornament](tl[0], tr[0], tl[1], false),
-            // This is reversed because both of these go left -> right in order to line up the ornaments,
-            // but the shape on the whole is draw clockwise, so this edge has to go backwards.
-            ...ORNAMENTS[ornament](bl[0], br[0], br[1], true).reverse(),
+            // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
+            // we traverse around the bend clockwise.
+            ...ORNAMENTS[ornament](br[0], bl[0], br[1], true, "end"),
         ]), tincture));
     }
     else {
@@ -486,18 +486,29 @@ bend.surround = new ReflectiveLocator(new ExhaustiveLocator([
         [W_2 - 15, -H_2 + 40],
     ],
 ], [0.7, 0.5, 0.4]), [-W_2, -H_2], [W_2, -H_2 + W]);
-function chief({ tincture, cotised }) {
+function chief({ tincture, cotised, ornament }) {
+    const chief = svg.g();
     const chiefWidth = H / 3;
-    const chief = svg.line([-W_2, -H_2 + chiefWidth / 2], [W_2, -H_2 + chiefWidth / 2], tincture, chiefWidth);
-    if (cotised == null) {
-        return chief;
+    const [tl, tr, br, bl] = [
+        [-W_2, -H_2],
+        [W_2, -H_2],
+        [W_2, -H_2 + chiefWidth],
+        [-W_2, -H_2 + chiefWidth],
+    ];
+    if (ornament != null) {
+        chief.appendChild(svg.path(path.fromPoints([
+            tl,
+            tr,
+            ...ORNAMENTS[ornament](-W_2, -H_2, -H_2 + chiefWidth, false, "center"),
+        ]), tincture));
     }
     else {
-        const g = svg.g();
-        g.appendChild(chief);
-        g.append(svg.line([-W_2, -H_2 + chiefWidth + (COTISED_WIDTH * 3) / 2], [W_2, -H_2 + chiefWidth + (COTISED_WIDTH * 3) / 2], cotised, COTISED_WIDTH));
-        return g;
+        chief.appendChild(svg.path(Quadrilateral.toSvgPath([tl, tr, br, bl]), tincture));
     }
+    if (cotised != null) {
+        chief.append(svg.line([-W_2, -H_2 + chiefWidth + (COTISED_WIDTH * 3) / 2], [W_2, -H_2 + chiefWidth + (COTISED_WIDTH * 3) / 2], cotised, COTISED_WIDTH));
+    }
+    return chief;
 }
 chief.on = new LineSegmentLocator([-W_2, -H_2 + H_2 / 3], [W_2, -H_2 + H_2 / 3], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
 chief.surround = new NullLocator();
@@ -731,7 +742,18 @@ function renderCharge(charge) {
 // #endregion
 // #region ORNAMENT
 // ----------------------------------------------------------------------------
-function embattled(x1, x2, yOffset, invert) {
+function embattled(x1, x2, yOffset, invert, alignment = "start") {
+    if (alignment === "end") {
+        return embattled(x2, x1, yOffset, invert, "start").reverse();
+    }
+    else if (alignment === "center") {
+        const midpoint = (x2 - x1) / 2;
+        return [
+            // Slice out the repeated midpoints.
+            ...embattled(x1, midpoint, yOffset, invert, "end").slice(0, -1),
+            ...embattled(midpoint, x2, yOffset, invert, "start").slice(1),
+        ];
+    }
     const step = W / 12;
     let xStep = step;
     let yStep = step / 2;
@@ -751,7 +773,12 @@ function embattled(x1, x2, yOffset, invert) {
     for (let i = 0; i < distance; i += step * 2) {
         points.push([x, (y += yStep)], [(x += xStep), y], [x, (y -= yStep)], [(x += xStep), y]);
     }
-    return points;
+    const index = x1 < x2
+        ? points.findLastIndex(([x]) => x < x2)
+        : points.findLastIndex(([x]) => x > x2);
+    // +2: the one we found is the first one _inside_ the bounds, so +1 to include it, then +1 to
+    // include next one, i.e., the first one outside of the bounds.
+    return points.slice(0, index + 2);
 }
 const ORNAMENTS = {
     embattled,

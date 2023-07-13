@@ -197,7 +197,13 @@ interface VariedClipPathGenerator {
 }
 
 interface OrnamentPointGenerator {
-  (x1: number, x2: number, yOffset: number, inverse: boolean): Coordinate[];
+  (
+    x1: number,
+    x2: number,
+    yOffset: number,
+    inverse: boolean,
+    alignment?: "start" | "end" | "center"
+  ): Coordinate[];
 }
 
 // #endregion
@@ -688,9 +694,9 @@ function bend({ tincture, cotised, ornament }: Ordinary) {
       svg.path(
         path.fromPoints([
           ...ORNAMENTS[ornament](tl[0], tr[0], tl[1], false),
-          // This is reversed because both of these go left -> right in order to line up the ornaments,
-          // but the shape on the whole is draw clockwise, so this edge has to go backwards.
-          ...ORNAMENTS[ornament](bl[0], br[0], br[1], true).reverse(),
+          // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
+          // we traverse around the bend clockwise.
+          ...ORNAMENTS[ornament](br[0], bl[0], br[1], true, "end"),
         ]),
         tincture
       )
@@ -747,22 +753,43 @@ bend.surround = new ReflectiveLocator(
   [W_2, -H_2 + W]
 );
 
-function chief({ tincture, cotised }: Ordinary) {
+function chief({ tincture, cotised, ornament }: Ordinary) {
+  const chief = svg.g();
+
   const chiefWidth = H / 3;
 
-  const chief = svg.line(
-    [-W_2, -H_2 + chiefWidth / 2],
-    [W_2, -H_2 + chiefWidth / 2],
-    tincture,
-    chiefWidth
-  );
+  const [tl, tr, br, bl] = [
+    [-W_2, -H_2],
+    [W_2, -H_2],
+    [W_2, -H_2 + chiefWidth],
+    [-W_2, -H_2 + chiefWidth],
+  ] satisfies Coordinate[];
 
-  if (cotised == null) {
-    return chief;
+  if (ornament != null) {
+    chief.appendChild(
+      svg.path(
+        path.fromPoints([
+          tl,
+          tr,
+          ...ORNAMENTS[ornament](
+            -W_2,
+            -H_2,
+            -H_2 + chiefWidth,
+            false,
+            "center"
+          ),
+        ]),
+        tincture
+      )
+    );
   } else {
-    const g = svg.g();
-    g.appendChild(chief);
-    g.append(
+    chief.appendChild(
+      svg.path(Quadrilateral.toSvgPath([tl, tr, br, bl]), tincture)
+    );
+  }
+
+  if (cotised != null) {
+    chief.append(
       svg.line(
         [-W_2, -H_2 + chiefWidth + (COTISED_WIDTH * 3) / 2],
         [W_2, -H_2 + chiefWidth + (COTISED_WIDTH * 3) / 2],
@@ -770,8 +797,9 @@ function chief({ tincture, cotised }: Ordinary) {
         COTISED_WIDTH
       )
     );
-    return g;
   }
+
+  return chief;
 }
 
 chief.on = new LineSegmentLocator(
@@ -1195,8 +1223,20 @@ function embattled(
   x1: number,
   x2: number,
   yOffset: number,
-  invert: boolean
+  invert: boolean,
+  alignment: "start" | "end" | "center" = "start"
 ): Coordinate[] {
+  if (alignment === "end") {
+    return embattled(x2, x1, yOffset, invert, "start").reverse();
+  } else if (alignment === "center") {
+    const midpoint = (x2 - x1) / 2;
+    return [
+      // Slice out the repeated midpoints.
+      ...embattled(x1, midpoint, yOffset, invert, "end").slice(0, -1),
+      ...embattled(midpoint, x2, yOffset, invert, "start").slice(1),
+    ];
+  }
+
   const step = W / 12;
 
   let xStep = step;
@@ -1228,7 +1268,13 @@ function embattled(
     );
   }
 
-  return points;
+  const index =
+    x1 < x2
+      ? points.findLastIndex(([x]) => x < x2)
+      : points.findLastIndex(([x]) => x > x2);
+  // +2: the one we found is the first one _inside_ the bounds, so +1 to include it, then +1 to
+  // include next one, i.e., the first one outside of the bounds.
+  return points.slice(0, index + 2);
 }
 
 const ORNAMENTS: Record<string, OrnamentPointGenerator> = {
