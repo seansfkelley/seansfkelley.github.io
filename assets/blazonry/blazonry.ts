@@ -197,7 +197,13 @@ interface VariedClipPathGenerator {
 }
 
 interface OrnamentPointGenerator {
-  (x1: number, x2: number, yOffset: number, inverse: boolean): Coordinate[];
+  (
+    x1: number,
+    x2: number,
+    yOffset: number,
+    inverse: boolean,
+    alignment?: "start" | "end" | "center"
+  ): Coordinate[];
 }
 
 // #endregion
@@ -669,45 +675,35 @@ async function fetchComplexSvg(kind: string, variant?: string): Promise<void> {
 
 const COTISED_WIDTH = W_2 / 10;
 
+const BEND_WIDTH = W / 3;
+// Make sure it's long enough to reach diagonally!
+const BEND_LENGTH = Math.hypot(W, H);
 function bend({ tincture, cotised, ornament }: Ordinary) {
   const bend = svg.g();
-
-  const bendWidth = W / 3;
-  // Make sure it's long enough to reach diagonally!
-  const bendLength = Math.hypot(W, H);
-
-  const [tl, tr, br, bl] = [
-    [0, -bendWidth / 2],
-    [bendLength, -bendWidth / 2],
-    [bendLength, bendWidth / 2],
-    [0, bendWidth / 2],
-  ] satisfies Coordinate[];
 
   if (ornament != null) {
     bend.appendChild(
       svg.path(
         path.fromPoints([
-          ...ORNAMENTS[ornament](tl[0], tr[0], tl[1], false),
-          // This is reversed because both of these go left -> right in order to line up the ornaments,
-          // but the shape on the whole is draw clockwise, so this edge has to go backwards.
-          ...ORNAMENTS[ornament](bl[0], br[0], br[1], true).reverse(),
+          ...ORNAMENTS[ornament](0, BEND_LENGTH, -BEND_WIDTH / 2, false),
+          // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
+          // we traverse around the bend clockwise.
+          ...ORNAMENTS[ornament](BEND_LENGTH, 0, BEND_WIDTH / 2, true, "end"),
         ]),
         tincture
       )
     );
   } else {
-    bend.appendChild(
-      svg.path(Quadrilateral.toSvgPath([tl, tr, br, bl]), tincture)
-    );
+    bend.appendChild(svg.line([0, 0], [BEND_LENGTH, 0], tincture, BEND_WIDTH));
   }
 
   if (cotised != null) {
-    const offset = bendWidth / 2 + (COTISED_WIDTH * 3) / 2;
+    const offset = BEND_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
     bend.appendChild(
-      svg.line([0, -offset], [bendLength, -offset], cotised, COTISED_WIDTH)
+      svg.line([0, -offset], [BEND_LENGTH, -offset], cotised, COTISED_WIDTH)
     );
     bend.appendChild(
-      svg.line([0, offset], [bendLength, offset], cotised, COTISED_WIDTH)
+      svg.line([0, offset], [BEND_LENGTH, offset], cotised, COTISED_WIDTH)
     );
   }
 
@@ -747,31 +743,50 @@ bend.surround = new ReflectiveLocator(
   [W_2, -H_2 + W]
 );
 
-function chief({ tincture, cotised }: Ordinary) {
-  const chiefWidth = H / 3;
+const CHIEF_WIDTH = H / 3;
+function chief({ tincture, cotised, ornament }: Ordinary) {
+  const chief = svg.g();
 
-  const chief = svg.line(
-    [-W_2, -H_2 + chiefWidth / 2],
-    [W_2, -H_2 + chiefWidth / 2],
-    tincture,
-    chiefWidth
-  );
-
-  if (cotised == null) {
-    return chief;
+  if (ornament != null) {
+    chief.appendChild(
+      svg.path(
+        path.fromPoints([
+          [-W_2, -H_2],
+          [W_2, -H_2],
+          ...ORNAMENTS[ornament](
+            W_2,
+            -W_2,
+            -H_2 + CHIEF_WIDTH,
+            false,
+            "center"
+          ),
+        ]),
+        tincture
+      )
+    );
   } else {
-    const g = svg.g();
-    g.appendChild(chief);
-    g.append(
+    chief.appendChild(
       svg.line(
-        [-W_2, -H_2 + chiefWidth + (COTISED_WIDTH * 3) / 2],
-        [W_2, -H_2 + chiefWidth + (COTISED_WIDTH * 3) / 2],
+        [-W_2, -H_2 + CHIEF_WIDTH / 2],
+        [W_2, -H_2 + CHIEF_WIDTH / 2],
+        tincture,
+        CHIEF_WIDTH
+      )
+    );
+  }
+
+  if (cotised != null) {
+    chief.append(
+      svg.line(
+        [-W_2, -H_2 + CHIEF_WIDTH + (COTISED_WIDTH * 3) / 2],
+        [W_2, -H_2 + CHIEF_WIDTH + (COTISED_WIDTH * 3) / 2],
         cotised,
         COTISED_WIDTH
       )
     );
-    return g;
   }
+
+  return chief;
 }
 
 chief.on = new LineSegmentLocator(
@@ -922,42 +937,66 @@ cross.surround = new SequenceLocator(
   }
 );
 
-function fess({ tincture, cotised }: Ordinary) {
-  const verticalOffset = -H_2 + ((W / 3) * 3) / 2;
+const FESS_WIDTH = W / 3;
+const FESS_VERTICAL_OFFSET = -H_2 + (W / 3) * (3 / 2);
+function fess({ tincture, cotised, ornament }: Ordinary) {
+  const fess = svg.g();
 
-  const fessWidth = W / 3;
-  const fess = svg.line(
-    [-W_2, verticalOffset],
-    [W_2, verticalOffset],
-    tincture,
-    fessWidth
-  );
-
-  if (cotised == null) {
-    return fess;
+  if (ornament != null) {
+    fess.appendChild(
+      svg.path(
+        path.fromPoints([
+          ...ORNAMENTS[ornament](
+            -W_2,
+            W_2,
+            FESS_VERTICAL_OFFSET - FESS_WIDTH / 2,
+            false,
+            "center"
+          ),
+          ...ORNAMENTS[ornament](
+            -W_2,
+            W_2,
+            FESS_VERTICAL_OFFSET + FESS_WIDTH / 2,
+            true,
+            "center"
+          ).reverse(),
+        ]),
+        tincture
+      )
+    );
   } else {
-    const offset = fessWidth / 2 + (COTISED_WIDTH * 3) / 2;
-
-    const g = svg.g();
-    g.appendChild(fess);
-    g.appendChild(
+    fess.appendChild(
       svg.line(
-        [-W_2, verticalOffset - offset],
-        [W_2, verticalOffset - offset],
-        cotised,
-        COTISED_WIDTH
+        [-W_2, FESS_VERTICAL_OFFSET],
+        [W_2, FESS_VERTICAL_OFFSET],
+        tincture,
+        FESS_WIDTH
       )
     );
-    g.appendChild(
-      svg.line(
-        [-W_2, verticalOffset + offset],
-        [W_2, verticalOffset + offset],
-        cotised,
-        COTISED_WIDTH
-      )
-    );
-    return g;
   }
+
+  if (cotised != null) {
+    const offset = FESS_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
+
+    fess.appendChild(
+      svg.line(
+        [-W_2, FESS_VERTICAL_OFFSET - offset],
+        [W_2, FESS_VERTICAL_OFFSET - offset],
+        cotised,
+        COTISED_WIDTH
+      )
+    );
+    fess.appendChild(
+      svg.line(
+        [-W_2, FESS_VERTICAL_OFFSET + offset],
+        [W_2, FESS_VERTICAL_OFFSET + offset],
+        cotised,
+        COTISED_WIDTH
+      )
+    );
+  }
+
+  return fess;
 }
 
 fess.on = new LineSegmentLocator(
@@ -976,35 +1015,43 @@ fess.surround = new ReflectiveLocator(
   [W_2, -4]
 );
 
-function pale({ tincture, cotised }: Ordinary) {
-  const paleWidth = W / 3;
-  const pale = svg.line([0, -H_2], [0, H_2], tincture, paleWidth);
+const PALE_WIDTH = W / 3;
+function pale({ tincture, cotised, ornament }: Ordinary) {
+  const pale = svg.g();
 
-  if (cotised == null) {
-    return pale;
+  if (ornament != null) {
+    pale.appendChild(
+      svg.path(
+        path.fromPoints([
+          ...ORNAMENTS[ornament](0, H, -PALE_WIDTH / 2, false),
+          // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
+          // we traverse around the bend clockwise.
+          ...ORNAMENTS[ornament](H, 0, PALE_WIDTH / 2, true, "end"),
+        ]),
+        tincture
+      )
+    );
   } else {
-    const horizontalOffset = paleWidth / 2 + (COTISED_WIDTH * 3) / 2;
-
-    const g = svg.g();
-    g.appendChild(pale);
-    g.appendChild(
-      svg.line(
-        [-horizontalOffset, -H_2],
-        [-horizontalOffset, H_2],
-        cotised,
-        COTISED_WIDTH
-      )
-    );
-    g.appendChild(
-      svg.line(
-        [horizontalOffset, -H_2],
-        [horizontalOffset, H_2],
-        cotised,
-        COTISED_WIDTH
-      )
-    );
-    return g;
+    pale.appendChild(svg.line([0, 0], [H, 0], tincture, PALE_WIDTH));
   }
+
+  if (cotised != null) {
+    const offset = PALE_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
+
+    pale.appendChild(
+      svg.line([0, -offset], [0, offset], cotised, COTISED_WIDTH)
+    );
+    pale.appendChild(
+      svg.line([0, -offset], [0, offset], cotised, COTISED_WIDTH)
+    );
+  }
+
+  applyTransforms(pale, {
+    translate: [0, -H_2],
+    rotate: Math.PI / 2,
+  });
+
+  return svg.g(pale);
 }
 
 pale.on = new LineSegmentLocator(
@@ -1195,8 +1242,20 @@ function embattled(
   x1: number,
   x2: number,
   yOffset: number,
-  invert: boolean
+  invert: boolean,
+  alignment: "start" | "end" | "center" = "start"
 ): Coordinate[] {
+  if (alignment === "end") {
+    return embattled(x2, x1, yOffset, invert, "start").reverse();
+  } else if (alignment === "center") {
+    const midpoint = (x1 + x2) / 2;
+    return [
+      // Slice out the repeated midpoints.
+      ...embattled(x1, midpoint, yOffset, invert, "end").slice(0, -1),
+      ...embattled(midpoint, x2, yOffset, invert, "start").slice(1),
+    ];
+  }
+
   const step = W / 12;
 
   let xStep = step;
@@ -1228,7 +1287,13 @@ function embattled(
     );
   }
 
-  return points;
+  const index =
+    x1 < x2
+      ? points.findLastIndex(([x]) => x < x2)
+      : points.findLastIndex(([x]) => x > x2);
+  // +2: the one we found is the first one _inside_ the bounds, so +1 to include it, then +1 to
+  // include next one, i.e., the first one outside of the bounds.
+  return points.slice(0, index + 2);
 }
 
 const ORNAMENTS: Record<string, OrnamentPointGenerator> = {
