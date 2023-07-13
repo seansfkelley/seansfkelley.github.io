@@ -771,13 +771,7 @@ function chief({ tincture, cotised, ornament }: Ordinary) {
         path.fromPoints([
           tl,
           tr,
-          ...ORNAMENTS[ornament](
-            -W_2,
-            -H_2,
-            -H_2 + chiefWidth,
-            false,
-            "center"
-          ),
+          ...ORNAMENTS[ornament](W_2, -W_2, -H_2 + chiefWidth, false, "center"),
         ]),
         tincture
       )
@@ -1229,7 +1223,7 @@ function embattled(
   if (alignment === "end") {
     return embattled(x2, x1, yOffset, invert, "start").reverse();
   } else if (alignment === "center") {
-    const midpoint = (x2 - x1) / 2;
+    const midpoint = (x1 + x2) / 2;
     return [
       // Slice out the repeated midpoints.
       ...embattled(x1, midpoint, yOffset, invert, "end").slice(0, -1),
