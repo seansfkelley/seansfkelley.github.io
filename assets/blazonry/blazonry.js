@@ -44,6 +44,25 @@ const Tincture = {
     NONE: "none",
     COUNTERCHANGED: "counterchanged",
 };
+const Posture = {
+    toRadians: (posture) => {
+        switch (posture) {
+            case null:
+            case undefined:
+                return undefined;
+            case "palewise":
+                return 0;
+            case "fesswise":
+                return Math.PI / 2;
+            case "bendwise":
+                return Math.PI / 4;
+            case "saltirewise":
+                return Math.PI / 4; // TODO
+            default:
+                assertNever(posture);
+        }
+    },
+};
 const Coordinate = {
     add: ([x1, y1], [x2, y2]) => [
         x1 + x2,
@@ -306,28 +325,12 @@ function assertNever(nope) {
     throw new Error("was not never");
 }
 function applyTransforms(element, { translate, scale, rotate, } = {}) {
-    function getRotation(posture) {
-        switch (posture) {
-            case null:
-            case undefined:
-            case "palewise":
-                return undefined;
-            case "fesswise":
-                return "rotate(90)";
-            case "bendwise":
-                return "rotate(45)";
-            case "saltirewise":
-                return "rotate(45)"; // TODO
-            default:
-                assertNever(posture);
-        }
-    }
     const transform = [
         translate != null
             ? `translate(${translate[0]}, ${translate[1]})`
             : undefined,
         scale != null && scale !== 1 ? `scale(${scale})` : undefined,
-        rotate != null ? getRotation(rotate) : undefined,
+        rotate != null ? `rotate(${(rotate / (2 * Math.PI)) * 360})` : undefined,
     ]
         .filter(Boolean)
         .join(" ");
@@ -360,8 +363,12 @@ const svg = {
         rect.classList.add(`fill-${tincture}`);
         return rect;
     },
-    g: () => {
-        return document.createElementNS("http://www.w3.org/2000/svg", "g");
+    g: (...children) => {
+        const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        for (const c of children) {
+            g.appendChild(c);
+        }
+        return g;
     },
 };
 function path(strings, ...values) {
@@ -373,7 +380,7 @@ function path(strings, ...values) {
     return parts.join("").trim().replaceAll("\n", "").replaceAll(/ +/g, " ");
 }
 path.fromPoints = (points) => {
-    return "M " + points.map(([x, y]) => `${x} ${y}`).join(" L ");
+    return "M " + points.map(([x, y]) => `${x} ${y}`).join(" L ") + " Z";
 };
 function recursivelyOmitNullish(value) {
     assert(value != null, "cannot omit nullish root values");
@@ -391,6 +398,19 @@ function recursivelyOmitNullish(value) {
     }
     else {
         return value;
+    }
+}
+/**
+ * Return the angle of the given line segment, in radians. Returns a value on [-pi, pi], according
+ * to the relative direction from the first to second point.
+ */
+function radians([x1, y1], [x2, y2]) {
+    if (x1 === x2) {
+        // TODO: Confirm this is correct.
+        return ((y1 < y2 ? 1 : -1) * Math.PI) / 2;
+    }
+    else {
+        return Math.atan((y2 - y1) / (x2 - x1)) + (x2 < x1 ? Math.PI : 0);
     }
 }
 const complexSvgCache = {};
@@ -419,40 +439,37 @@ async function fetchComplexSvg(kind, variant) {
 // ----------------------------------------------------------------------------
 const COTISED_WIDTH = W_2 / 10;
 function bend({ tincture, cotised, ornament }) {
+    const bend = svg.g();
     const bendWidth = W / 3;
-    const src = [-W_2, -H_2];
-    // Note that this sets width using height; this is because (1) we assume height is larger than
-    // width; (2) we want a 45 degree angle; and (3) we want to make sure that in all contexts (like
-    // transform-scaled cantons) the bend will definitely reach the edges of the container.
-    const dst = [-W_2 + H, H_2];
-    let bend;
+    // Make sure it's long enough to reach diagonally!
+    const bendLength = Math.hypot(W, H);
+    const [tl, tr, br, bl] = [
+        [0, -bendWidth / 2],
+        [bendLength, -bendWidth / 2],
+        [bendLength, bendWidth / 2],
+        [0, bendWidth / 2],
+    ];
     if (ornament != null) {
-        // These names are a _little_ misleading. Tilt your head 45 degrees to the right and they'll make sense.
-        const [tl, tr, br, bl] = widen(src, dst, bendWidth);
-        bend = svg.path(path.fromPoints([
-            tl,
-            ...embattled(tl, tr),
-            tr,
-            br,
-            ...embattled(br, bl),
-            bl,
-        ]), tincture);
+        bend.appendChild(svg.path(path.fromPoints([
+            ...ORNAMENTS[ornament](tl[0], tr[0], tl[1], false),
+            // This is reversed because both of these go left -> right in order to line up the ornaments,
+            // but the shape on the whole is draw clockwise, so this edge has to go backwards.
+            ...ORNAMENTS[ornament](bl[0], br[0], br[1], true).reverse(),
+        ]), tincture));
     }
     else {
-        bend = svg.line(src, dst, tincture, bendWidth);
+        bend.appendChild(svg.path(Quadrilateral.toSvgPath([tl, tr, br, bl]), tincture));
     }
-    if (cotised == null) {
-        return bend;
+    if (cotised != null) {
+        const offset = bendWidth / 2 + (COTISED_WIDTH * 3) / 2;
+        bend.appendChild(svg.line([0, -offset], [bendLength, -offset], cotised, COTISED_WIDTH));
+        bend.appendChild(svg.line([0, offset], [bendLength, offset], cotised, COTISED_WIDTH));
     }
-    else {
-        // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
-        const offset = Math.sin(Math.PI / 4) * (bendWidth / 2 + (COTISED_WIDTH * 3) / 2);
-        const g = svg.g();
-        g.appendChild(bend);
-        g.appendChild(svg.line(Coordinate.add(src, [offset, -offset]), Coordinate.add(dst, [offset, -offset]), cotised, COTISED_WIDTH));
-        g.appendChild(svg.line(Coordinate.add(src, [-offset, offset]), Coordinate.add(dst, [-offset, offset]), cotised, COTISED_WIDTH));
-        return g;
-    }
+    applyTransforms(bend, {
+        translate: [-W_2, -H_2],
+        rotate: Math.PI / 4,
+    });
+    return svg.g(bend);
 }
 bend.on = new LineSegmentLocator([-W_2, -H_2], [W_2, -H_2 + W], [0.5, 0.5, 0.5, 0.5, 0.4, 0.35, 0.3, 0.25]);
 bend.surround = new ReflectiveLocator(new ExhaustiveLocator([
@@ -714,22 +731,25 @@ function renderCharge(charge) {
 // #endregion
 // #region ORNAMENT
 // ----------------------------------------------------------------------------
-function embattled([x1, y1], [x2, y2]) {
-    const width = W / 10;
-    const height = width / 2;
-    const angle = Math.atan((y2 - y1) / (x2 - x1)) + (x2 < x1 ? Math.PI : 0);
-    const wStepX = Math.cos(angle) * width;
-    const wStepY = Math.sin(angle) * width;
-    const hStepX = Math.cos(angle) * height;
-    const hStepY = Math.sin(angle) * height;
-    let x = x1 + hStepX / 2;
-    let y = y1 - hStepY / 2;
-    const points = [[x, y]];
-    // TODO: This is WAY too many points.
-    // TODO: Add parameter for where to start: src, dst, or center.
-    // TODO: Maybe start halfway through a trough instead of with a drop/rise?
-    for (let i = Math.ceil(Math.hypot(x2 - x1, y2 - y1) / width); i > 0; --i) {
-        points.push([(x -= hStepX), (y += hStepY)], [(x += wStepX), (y += wStepY)], [(x += hStepX), (y -= hStepY)], [(x += wStepX), (y += wStepY)]);
+function embattled(x1, x2, yOffset, invert) {
+    const step = W / 12;
+    let xStep = step;
+    let yStep = step / 2;
+    if (x2 < x1) {
+        xStep = -xStep;
+    }
+    if (invert) {
+        yStep = -yStep;
+    }
+    let x = x1;
+    let y = yOffset - yStep / 2;
+    const points = [
+        [x, y],
+        [(x += xStep / 2), y],
+    ];
+    const distance = Math.abs(x2 - x1) - step / 2;
+    for (let i = 0; i < distance; i += step * 2) {
+        points.push([x, (y += yStep)], [(x += xStep), y], [x, (y -= yStep)], [(x += xStep), y]);
     }
     return points;
 }
@@ -1004,7 +1024,7 @@ function complexContent(container, content) {
                 applyTransforms(rendered, {
                     translate,
                     scale,
-                    rotate: element.posture ?? undefined,
+                    rotate: Posture.toRadians(element.posture),
                 });
                 parent.appendChild(rendered);
             }
@@ -1092,7 +1112,7 @@ function complexContent(container, content) {
     else if ("varied" in content) {
         container.appendChild(field(content.first));
         const second = field(content.second);
-        second.style.clipPath = `path("${VARIED[content.varied.type](content.varied.count ?? undefined)}")`;
+        second.style.clipPath = `path("${VARIED[content.varied.type](content.varied.count)}")`;
         container.appendChild(second);
         if (content.content) {
             renderIntoParent(container, content.content);
@@ -1115,7 +1135,7 @@ function on(parent, { on, surround, charge }) {
             applyTransforms(c, {
                 translate,
                 scale,
-                rotate: charge.posture ?? undefined,
+                rotate: Posture.toRadians(charge.posture),
             });
             parent.appendChild(c);
         }
@@ -1128,7 +1148,7 @@ function on(parent, { on, surround, charge }) {
             applyTransforms(c, {
                 translate,
                 scale,
-                rotate: surround.posture ?? undefined,
+                rotate: Posture.toRadians(surround.posture),
             });
             parent.appendChild(c);
         }
