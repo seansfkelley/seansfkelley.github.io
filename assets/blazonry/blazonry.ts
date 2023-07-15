@@ -74,6 +74,29 @@ type DiscriminateUnion<T, K extends keyof T, V extends T[K]> = T extends T
     : never
   : never;
 
+namespace SvgPath {
+  type SimpleElement<T extends string> = {
+    type: T;
+    loc: Coordinate;
+  };
+
+  export type L = SimpleElement<"L">;
+  export type l = SimpleElement<"l">;
+  export type M = SimpleElement<"M">;
+  export type m = SimpleElement<"m">;
+
+  export interface c {
+    type: "c";
+    c1: Coordinate;
+    c2: Coordinate;
+    end: Coordinate;
+  }
+
+  export type Relative = m | l | c;
+  export type Absolute = M | L;
+  export type Element = Relative | Absolute;
+}
+
 type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 type Tincture = string & { __tincture: unknown };
 const Tincture = {
@@ -196,14 +219,16 @@ interface VariedClipPathGenerator {
   (count?: number): string;
 }
 
+type RelativeOrnamentPath = [SvgPath.m, SvgPath.Relative[], SvgPath.m];
+
 interface OrnamentPointGenerator {
   (
     x1: number,
     x2: number,
     yOffset: number,
-    inverse: boolean,
+    invert: boolean,
     alignment?: "start" | "end" | "center"
-  ): Coordinate[];
+  ): RelativeOrnamentPath;
 }
 
 // #endregion
@@ -610,6 +635,29 @@ function path(strings: TemplateStringsArray, ...values: number[]): string {
 
 path.fromPoints = (points: Coordinate[]): string => {
   return "M " + points.map(([x, y]) => `${x} ${y}`).join(" L ") + " Z";
+};
+
+const SVG_ELEMENT_TO_COORDINATES: {
+  [K in SvgPath.Element["type"]]: (
+    e: DiscriminateUnion<SvgPath.Element, "type", K>
+  ) => Coordinate[];
+} = {
+  l: (e) => [e.loc],
+  L: (e) => [e.loc],
+  m: (e) => [e.loc],
+  M: (e) => [e.loc],
+  c: (e) => [e.c1, e.c2, e.end],
+};
+
+path.from = (elements: SvgPath.Element[]): string => {
+  return elements
+    .map(
+      (e) =>
+        `${e.type} ${SVG_ELEMENT_TO_COORDINATES[e.type](e as never)
+          .map(([x, y]) => `${x} ${y}`)
+          .join(" ")}`
+    )
+    .join(" ");
 };
 
 function recursivelyOmitNullish<T>(value: T): T {
@@ -1238,62 +1286,58 @@ function renderCharge(charge: Charge): SVGElement {
 // #region ORNAMENT
 // ----------------------------------------------------------------------------
 
-function embattled(
-  x1: number,
-  x2: number,
-  yOffset: number,
-  invert: boolean,
-  alignment: "start" | "end" | "center" = "start"
-): Coordinate[] {
-  if (alignment === "end") {
-    return embattled(x2, x1, yOffset, invert, "start").reverse();
-  } else if (alignment === "center") {
-    const midpoint = (x1 + x2) / 2;
-    return [
-      // Slice out the repeated midpoints.
-      ...embattled(x1, midpoint, yOffset, invert, "end").slice(0, -1),
-      ...embattled(midpoint, x2, yOffset, invert, "start").slice(1),
-    ];
-  }
+function wrapSimpleOrnamenter(
+  ornamenter: (length: number) => RelativeOrnamentPath
+): OrnamentPointGenerator {
+  return (x1, x2, yOffset, invertY, alignment = "start") => {
+    function applyTransforms([
+      start,
+      main,
+      end,
+    ]: RelativeOrnamentPath): RelativeOrnamentPath {
+      // TODO
+    }
 
+    const length = Math.abs(x2 - x1);
+    if (alignment === "start") {
+      return applyTransforms(ornamenter(length));
+    } else if (alignment === "end") {
+      // TODO: something about reversing
+    } else if (alignment === "center") {
+      // TODO: middle-out
+      const midpoint = (x1 + x2) / 2;
+      // ...embattled(x1, midpoint, yOffset, invert, "end").slice(0, -1),
+      // ...embattled(midpoint, x2, yOffset, invert, "start").slice(1),
+    } else {
+      assertNever(alignment);
+    }
+  };
+}
+
+function embattled(length: number): RelativeOrnamentPath {
   const step = W / 12;
 
   let xStep = step;
   let yStep = step / 2;
 
-  if (x2 < x1) {
-    xStep = -xStep;
+  const points: Coordinate[] = [[xStep / 2, 0]];
+
+  let i = length - xStep / 2;
+  while (i > 0) {
+    points.push([0, yStep], [xStep, 0]);
+    i -= xStep;
+    if (i > 0) {
+      points.push([0, -yStep], [xStep, 0]);
+      i -= xStep;
+    }
   }
 
-  if (invert) {
-    yStep = -yStep;
-  }
-
-  let x = x1;
-  let y = yOffset - yStep / 2;
-
-  const points: Coordinate[] = [
-    [x, y],
-    [(x += xStep / 2), y],
+  return [
+    { type: "m", loc: [0, -yStep / 2] },
+    points.map((loc) => ({ type: "l", loc })),
+    // TODO: Find the correct y offset, too.
+    { type: "m", loc: [i, 0] },
   ];
-
-  const distance = Math.abs(x2 - x1) - step / 2;
-  for (let i = 0; i < distance; i += step * 2) {
-    points.push(
-      [x, (y += yStep)],
-      [(x += xStep), y],
-      [x, (y -= yStep)],
-      [(x += xStep), y]
-    );
-  }
-
-  const index =
-    x1 < x2
-      ? points.findLastIndex(([x]) => x < x2)
-      : points.findLastIndex(([x]) => x > x2);
-  // +2: the one we found is the first one _inside_ the bounds, so +1 to include it, then +1 to
-  // include next one, i.e., the first one outside of the bounds.
-  return points.slice(0, index + 2);
 }
 
 const ORNAMENTS: Record<string, OrnamentPointGenerator> = {

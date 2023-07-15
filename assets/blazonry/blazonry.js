@@ -382,6 +382,20 @@ function path(strings, ...values) {
 path.fromPoints = (points) => {
     return "M " + points.map(([x, y]) => `${x} ${y}`).join(" L ") + " Z";
 };
+const SVG_ELEMENT_TO_COORDINATES = {
+    l: (e) => [e.loc],
+    L: (e) => [e.loc],
+    m: (e) => [e.loc],
+    M: (e) => [e.loc],
+    c: (e) => [e.c1, e.c2, e.end],
+};
+path.from = (elements) => {
+    return elements
+        .map((e) => `${e.type} ${SVG_ELEMENT_TO_COORDINATES[e.type](e)
+        .map(([x, y]) => `${x} ${y}`)
+        .join(" ")}`)
+        .join(" ");
+};
 function recursivelyOmitNullish(value) {
     assert(value != null, "cannot omit nullish root values");
     if (Array.isArray(value)) {
@@ -744,43 +758,49 @@ function renderCharge(charge) {
 // #endregion
 // #region ORNAMENT
 // ----------------------------------------------------------------------------
-function embattled(x1, x2, yOffset, invert, alignment = "start") {
-    if (alignment === "end") {
-        return embattled(x2, x1, yOffset, invert, "start").reverse();
-    }
-    else if (alignment === "center") {
-        const midpoint = (x1 + x2) / 2;
-        return [
-            // Slice out the repeated midpoints.
-            ...embattled(x1, midpoint, yOffset, invert, "end").slice(0, -1),
-            ...embattled(midpoint, x2, yOffset, invert, "start").slice(1),
-        ];
-    }
+function wrapSimpleOrnamenter(ornamenter) {
+    return (x1, x2, yOffset, invertY, alignment = "start") => {
+        function applyTransforms([start, main, end,]) {
+            // TODO
+        }
+        const length = Math.abs(x2 - x1);
+        if (alignment === "start") {
+            return applyTransforms(ornamenter(length));
+        }
+        else if (alignment === "end") {
+            // TODO: something about reversing
+        }
+        else if (alignment === "center") {
+            // TODO: middle-out
+            const midpoint = (x1 + x2) / 2;
+            // ...embattled(x1, midpoint, yOffset, invert, "end").slice(0, -1),
+            // ...embattled(midpoint, x2, yOffset, invert, "start").slice(1),
+        }
+        else {
+            assertNever(alignment);
+        }
+    };
+}
+function embattled(length) {
     const step = W / 12;
     let xStep = step;
     let yStep = step / 2;
-    if (x2 < x1) {
-        xStep = -xStep;
+    const points = [[xStep / 2, 0]];
+    let i = length - xStep / 2;
+    while (i > 0) {
+        points.push([0, yStep], [xStep, 0]);
+        i -= xStep;
+        if (i > 0) {
+            points.push([0, -yStep], [xStep, 0]);
+            i -= xStep;
+        }
     }
-    if (invert) {
-        yStep = -yStep;
-    }
-    let x = x1;
-    let y = yOffset - yStep / 2;
-    const points = [
-        [x, y],
-        [(x += xStep / 2), y],
+    return [
+        { type: "m", loc: [0, -yStep / 2] },
+        points.map((loc) => ({ type: "l", loc })),
+        // TODO: Find the correct y offset, too.
+        { type: "m", loc: [i, 0] },
     ];
-    const distance = Math.abs(x2 - x1) - step / 2;
-    for (let i = 0; i < distance; i += step * 2) {
-        points.push([x, (y += yStep)], [(x += xStep), y], [x, (y -= yStep)], [(x += xStep), y]);
-    }
-    const index = x1 < x2
-        ? points.findLastIndex(([x]) => x < x2)
-        : points.findLastIndex(([x]) => x > x2);
-    // +2: the one we found is the first one _inside_ the bounds, so +1 to include it, then +1 to
-    // include next one, i.e., the first one outside of the bounds.
-    return points.slice(0, index + 2);
 }
 const ORNAMENTS = {
     embattled,
