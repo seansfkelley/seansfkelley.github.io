@@ -772,13 +772,13 @@ function renderCharge(charge) {
 // #endregion
 // #region ORNAMENT
 // ----------------------------------------------------------------------------
-function wrapSimpleOrnamenter(ornamenter) {
+function wrapSimpleOrnamenter(ornamenter, isPatternComposite = false) {
     function mutatinglyApplyTransforms([start, main, end], { invertY = false, invertX = false, yOffset = 0, alignToEnd = false, }) {
         if (alignToEnd) {
-            start.loc[0] += end.loc[0];
-            end.loc[0] = 0;
             [start, end] = [end, start];
             main.reverse();
+            start.loc[0] += end.loc[0];
+            end.loc[0] = 0;
         }
         if (invertX) {
             SvgPath.negateX(start);
@@ -817,13 +817,9 @@ function wrapSimpleOrnamenter(ornamenter) {
             });
         }
         else if (alignment === "center") {
-            const [start, firstMain] = mutatinglyApplyTransforms(ornamenter(length / 2), { alignToEnd: true });
+            const [start, firstMain] = mutatinglyApplyTransforms(ornamenter(length / 2), { invertY: isPatternComposite, alignToEnd: true });
             const [, secondMain, end] = ornamenter(length / 2);
-            return mutatinglyApplyTransforms([start, [...firstMain, ...secondMain], end], {
-                invertX,
-                invertY,
-                yOffset,
-            });
+            return mutatinglyApplyTransforms([start, [...firstMain, ...secondMain], end], { invertX, invertY, yOffset });
         }
         else {
             assertNever(alignment);
@@ -854,7 +850,7 @@ function embattled(length) {
     ];
 }
 const ORNAMENTS = {
-    embattled: wrapSimpleOrnamenter(embattled),
+    embattled: wrapSimpleOrnamenter(embattled, true),
 };
 // #region VARIED
 // ----------------------------------------------------------------------------

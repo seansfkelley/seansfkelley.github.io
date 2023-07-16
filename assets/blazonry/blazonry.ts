@@ -1327,7 +1327,8 @@ function renderCharge(charge: Charge): SVGElement {
 // ----------------------------------------------------------------------------
 
 function wrapSimpleOrnamenter(
-  ornamenter: (length: number) => RelativeOrnamentPath
+  ornamenter: (length: number) => RelativeOrnamentPath,
+  isPatternComposite: boolean = false
 ): OrnamentPointGenerator {
   function mutatinglyApplyTransforms(
     [start, main, end]: RelativeOrnamentPath,
@@ -1344,10 +1345,10 @@ function wrapSimpleOrnamenter(
     }
   ): RelativeOrnamentPath {
     if (alignToEnd) {
-      start.loc[0] += end.loc[0];
-      end.loc[0] = 0;
       [start, end] = [end, start];
       main.reverse();
+      start.loc[0] += end.loc[0];
+      end.loc[0] = 0;
     }
 
     if (invertX) {
@@ -1391,17 +1392,13 @@ function wrapSimpleOrnamenter(
     } else if (alignment === "center") {
       const [start, firstMain] = mutatinglyApplyTransforms(
         ornamenter(length / 2),
-        { alignToEnd: true }
+        { invertY: isPatternComposite, alignToEnd: true }
       );
 
       const [, secondMain, end] = ornamenter(length / 2);
       return mutatinglyApplyTransforms(
         [start, [...firstMain, ...secondMain], end],
-        {
-          invertX,
-          invertY,
-          yOffset,
-        }
+        { invertX, invertY, yOffset }
       );
     } else {
       assertNever(alignment);
@@ -1438,7 +1435,7 @@ function embattled(length: number): RelativeOrnamentPath {
 }
 
 const ORNAMENTS: Record<string, OrnamentPointGenerator> = {
-  embattled: wrapSimpleOrnamenter(embattled),
+  embattled: wrapSimpleOrnamenter(embattled, true),
 };
 
 // #region VARIED
