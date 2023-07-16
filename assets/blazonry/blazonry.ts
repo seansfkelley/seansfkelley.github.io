@@ -712,6 +712,12 @@ function radians([x1, y1]: Coordinate, [x2, y2]: Coordinate): number {
   }
 }
 
+function rotate([x, y]: Coordinate, radians: number): Coordinate {
+  const cos = Math.cos(radians);
+  const sin = Math.sin(radians);
+  return [x * cos - y * sin, x * sin + y * cos];
+}
+
 const complexSvgCache: Record<string, SVGElement> = {};
 
 function getComplexSvgSync(kind: string, variant?: string): SVGElement {
@@ -1622,7 +1628,11 @@ const PARTY_PER_CLIP_PATHS: Record<Direction, PartyPerClipPath> = {
   //     L  ${W_2} -${H_2}
   //   `,
   // ],
-  fess: [[-W_2, -H / 10], "center", [W_2, -H / 10]],
+  fess: [
+    [-W_2, -H / 10], //
+    "center",
+    [W_2, -H / 10],
+  ],
   // bend: [
   //   path`
   //     M -${W_2} ${-H_2}
@@ -1638,9 +1648,15 @@ const PARTY_PER_CLIP_PATHS: Record<Direction, PartyPerClipPath> = {
   //     Z
   //   `,
   // ],
+  chevron: [
+    [-W_2, -H_2 + W],
+    "end",
+    [0, -(H_2 - W_2)],
+    "start",
+    [-W_2 + H, H_2],
+  ],
   // chevron: [
-  //   // TODO: Done empirically, and to run the midline of the chevron ordinary. Both these and the
-  //   // ordinary should be rewritten to be based on W/H.
+
   //   path`
   //     M -51  41
   //     L   0 -10
@@ -1684,14 +1700,17 @@ function getPartyPerClipPath(
   ornament: Ornament | undefined
 ): string {
   // TODO: Special-case pale, which doesn't start from the top. Saltire?
-  const startCommands: PathCommand.Any[] = [
+  const commands: PathCommand.Any[] = [
     { type: "M", loc: [W_2, -H_2] },
     { type: "L", loc: [-W_2, -H_2] },
   ];
 
-  const spec = PARTY_PER_CLIP_PATHS[direction];
-  if (spec.length === 3) {
-    const [[x1, y1], alignment, [x2, y2]] = spec;
+  const segments = PARTY_PER_CLIP_PATHS[direction];
+  for (let i = 0; i < segments.length - 2; i += 2) {
+    const [[x1, y1], alignment, [x2, y2]] = segments.slice(
+      i,
+      i + 3
+    ) as PartyPerClipPath;
     if (ornament != null) {
       const length = Math.hypot(x2 - x1, y2 - y1);
       const [start, main, end] = ORNAMENTS[ornament](
@@ -1700,26 +1719,23 @@ function getPartyPerClipPath(
         false,
         alignment
       );
-      return path.from(
-        startCommands,
-        { type: "l", loc: start.loc },
-        main,
-        { type: "l", loc: end.loc },
-        { type: "z" }
+      const angle = radians([x1, y1], [x2, y2]);
+      commands.push(
+        { type: "l" as const, loc: start.loc },
+        ...main.map((e) => {
+          for (const p of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
+            [p[0], p[1]] = rotate(p, angle);
+          }
+          return e;
+        }),
+        { type: "l" as const, loc: end.loc }
       );
     } else {
-      return path.from(
-        startCommands,
-        { type: "L", loc: [x1, y1] },
-        { type: "L", loc: [x2, y2] },
-        { type: "Z" }
-      );
+      commands.push({ type: "L", loc: [x1, y1] }, { type: "L", loc: [x2, y2] });
     }
-  } else if (spec.length === 5) {
-    return "";
-  } else {
-    assertNever(spec);
   }
+
+  return path.from(commands, { type: "Z" });
 }
 
 const QUARTERINGS: Record<Quarter, { translate: Coordinate }> = {
