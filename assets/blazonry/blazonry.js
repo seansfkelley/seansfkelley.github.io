@@ -16,6 +16,7 @@
 // - make whitespace non-optional to force breaks
 // - multiple ordiaries?
 // - standardize size of charges (40x40?) so that scaling works as expected for all of them
+// - thin lines between quarters?
 // TODO OPTIONAL
 // - adjust positioning for `on` -- often the 2s and 3s are too close to each other, like for chief
 // - push elements around when quartering
@@ -479,7 +480,7 @@ function bend({ tincture, cotised, ornament }) {
         bend.appendChild(svg.path(path.from(relativePathsToClosedLoop(ORNAMENTS[ornament](0, BEND_LENGTH, -BEND_WIDTH / 2, false), 
         // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
         // we traverse around the bend clockwise.
-        ORNAMENTS[ornament](BEND_LENGTH, 0, BEND_WIDTH / 2, false, "end"))), tincture));
+        ORNAMENTS[ornament](0, -BEND_LENGTH, BEND_WIDTH / 2, false, "end"))), tincture));
     }
     else {
         bend.appendChild(svg.line([0, 0], [BEND_LENGTH, 0], tincture, BEND_WIDTH));
@@ -514,7 +515,7 @@ const CHIEF_WIDTH = H / 3;
 function chief({ tincture, cotised, ornament }) {
     const chief = svg.g();
     if (ornament != null) {
-        const [start, main, end] = ORNAMENTS[ornament](W_2, -W_2, CHIEF_WIDTH, false, "center");
+        const [start, main, end] = ORNAMENTS[ornament](0, -W, CHIEF_WIDTH, false, "center");
         chief.appendChild(svg.path(path.from({ type: "M", loc: [-W_2, -H_2] }, { type: "L", loc: [W_2, -H_2] }, { type: "l", loc: start.loc }, main, { type: "l", loc: end.loc }), tincture));
     }
     else {
@@ -616,7 +617,7 @@ const FESS_VERTICAL_OFFSET = -H_2 + (W / 3) * (3 / 2);
 function fess({ tincture, cotised, ornament }) {
     const fess = svg.g();
     if (ornament != null) {
-        fess.appendChild(svg.path(path.from(relativePathsToClosedLoop(ORNAMENTS[ornament](-W_2, W_2, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2, false, "center"), ORNAMENTS[ornament](W_2, -W_2, FESS_VERTICAL_OFFSET + FESS_WIDTH / 2, true, "center"))), tincture));
+        fess.appendChild(svg.path(path.from(relativePathsToClosedLoop(ORNAMENTS[ornament](-W_2, W_2, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2, false, "center"), ORNAMENTS[ornament](0, -W, FESS_VERTICAL_OFFSET + FESS_WIDTH / 2, true, "center"))), tincture));
     }
     else {
         fess.appendChild(svg.line([-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET], tincture, FESS_WIDTH));
@@ -637,7 +638,7 @@ function pale({ tincture, cotised, ornament }) {
         pale.appendChild(svg.path(path.from(relativePathsToClosedLoop(ORNAMENTS[ornament](0, H, -PALE_WIDTH / 2, false), 
         // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
         // we traverse around the pale clockwise.
-        ORNAMENTS[ornament](H, 0, PALE_WIDTH / 2, false, "end"))), tincture));
+        ORNAMENTS[ornament](0, -H, PALE_WIDTH / 2, false, "end"))), tincture));
     }
     else {
         pale.appendChild(svg.line([0, 0], [H, 0], tincture, PALE_WIDTH));
@@ -767,9 +768,7 @@ function renderCharge(charge) {
 // #region ORNAMENT
 // ----------------------------------------------------------------------------
 function wrapSimpleOrnamenter(ornamenter, isPatternComposite = false) {
-    function mutatinglyApplyTransforms([start, main, end], { invertY = false, invertX = false, yOffset = 0, 
-    // TODO: This is not correct!
-    xOffset = 0, alignToEnd = false, }) {
+    function mutatinglyApplyTransforms([start, main, end], { invertX = false, invertY = false, xOffset = 0, yOffset = 0, alignToEnd = false, }) {
         if (alignToEnd) {
             [start, end] = [end, start];
             main.reverse();
@@ -1314,3 +1313,4 @@ parseAndRenderBlazon();
 // implementation sync just for this is a passive PITA.
 fetchComplexSvg("lion", "rampant");
 // #endregion
+//# sourceMappingURL=blazonry.js.map
