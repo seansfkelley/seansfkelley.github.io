@@ -477,10 +477,10 @@ const BEND_LENGTH = Math.hypot(W, H);
 function bend({ tincture, cotised, ornament }) {
     const bend = svg.g();
     if (ornament != null) {
-        bend.appendChild(svg.path(path.from(relativePathsToClosedLoop(ORNAMENTS[ornament](0, BEND_LENGTH, -BEND_WIDTH / 2, false), 
+        bend.appendChild(svg.path(path.from(relativePathsToClosedLoop(ORNAMENTS[ornament](BEND_LENGTH, -BEND_WIDTH / 2, false), 
         // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
         // we traverse around the bend clockwise.
-        ORNAMENTS[ornament](0, -BEND_LENGTH, BEND_WIDTH / 2, false, "end"))), tincture));
+        ORNAMENTS[ornament](-BEND_LENGTH, BEND_WIDTH / 2, false, "end"))), tincture));
     }
     else {
         bend.appendChild(svg.line([0, 0], [BEND_LENGTH, 0], tincture, BEND_WIDTH));
@@ -515,7 +515,7 @@ const CHIEF_WIDTH = H / 3;
 function chief({ tincture, cotised, ornament }) {
     const chief = svg.g();
     if (ornament != null) {
-        const [start, main, end] = ORNAMENTS[ornament](0, -W, CHIEF_WIDTH, false, "center");
+        const [start, main, end] = ORNAMENTS[ornament](-W, CHIEF_WIDTH, false, "center");
         chief.appendChild(svg.path(path.from({ type: "M", loc: [-W_2, -H_2] }, { type: "L", loc: [W_2, -H_2] }, { type: "l", loc: start.loc }, main, { type: "l", loc: end.loc }), tincture));
     }
     else {
@@ -617,7 +617,7 @@ const FESS_VERTICAL_OFFSET = -H_2 + (W / 3) * (3 / 2);
 function fess({ tincture, cotised, ornament }) {
     const fess = svg.g();
     if (ornament != null) {
-        fess.appendChild(svg.path(path.from(relativePathsToClosedLoop(ORNAMENTS[ornament](-W_2, W_2, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2, false, "center"), ORNAMENTS[ornament](0, -W, FESS_VERTICAL_OFFSET + FESS_WIDTH / 2, true, "center"))), tincture));
+        fess.appendChild(svg.path(path.from({ type: "m", loc: [-W_2, 0] }, relativePathsToClosedLoop(ORNAMENTS[ornament](W, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2, false, "center"), ORNAMENTS[ornament](-W, FESS_VERTICAL_OFFSET + FESS_WIDTH / 2, true, "center"))), tincture));
     }
     else {
         fess.appendChild(svg.line([-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET], tincture, FESS_WIDTH));
@@ -635,10 +635,10 @@ const PALE_WIDTH = W / 3;
 function pale({ tincture, cotised, ornament }) {
     const pale = svg.g();
     if (ornament != null) {
-        pale.appendChild(svg.path(path.from(relativePathsToClosedLoop(ORNAMENTS[ornament](0, H, -PALE_WIDTH / 2, false), 
+        pale.appendChild(svg.path(path.from(relativePathsToClosedLoop(ORNAMENTS[ornament](H, -PALE_WIDTH / 2, false), 
         // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
         // we traverse around the pale clockwise.
-        ORNAMENTS[ornament](0, -H, PALE_WIDTH / 2, false, "end"))), tincture));
+        ORNAMENTS[ornament](-H, PALE_WIDTH / 2, false, "end"))), tincture));
     }
     else {
         pale.appendChild(svg.line([0, 0], [H, 0], tincture, PALE_WIDTH));
@@ -768,7 +768,7 @@ function renderCharge(charge) {
 // #region ORNAMENT
 // ----------------------------------------------------------------------------
 function wrapSimpleOrnamenter(ornamenter, isPatternComposite = false) {
-    function mutatinglyApplyTransforms([start, main, end], { invertX = false, invertY = false, xOffset = 0, yOffset = 0, alignToEnd = false, }) {
+    function mutatinglyApplyTransforms([start, main, end], { invertX = false, invertY = false, yOffset = 0, alignToEnd = false, }) {
         if (alignToEnd) {
             [start, end] = [end, start];
             main.reverse();
@@ -789,19 +789,17 @@ function wrapSimpleOrnamenter(ornamenter, isPatternComposite = false) {
             }
             PathCommand.negateY(end);
         }
-        start.loc = Coordinate.add(start.loc, [xOffset, yOffset]);
-        end.loc = Coordinate.add(end.loc, [-xOffset, -yOffset]);
+        start.loc[1] += yOffset;
+        end.loc[1] -= yOffset;
         return [start, main, end];
     }
-    return (x1, x2, yOffset, invertY, alignment = "start") => {
-        const invertX = x2 < x1;
-        const length = Math.abs(x2 - x1);
-        const xOffset = x1;
+    return (xLength, yOffset, invertY, alignment = "start") => {
+        const invertX = xLength < 0;
+        const length = Math.abs(xLength);
         if (alignment === "start") {
             return mutatinglyApplyTransforms(ornamenter(length), {
                 invertX,
                 invertY,
-                xOffset,
                 yOffset,
             });
         }
@@ -809,7 +807,6 @@ function wrapSimpleOrnamenter(ornamenter, isPatternComposite = false) {
             return mutatinglyApplyTransforms(ornamenter(length), {
                 invertX,
                 invertY,
-                xOffset,
                 yOffset,
                 alignToEnd: true,
             });
@@ -817,14 +814,13 @@ function wrapSimpleOrnamenter(ornamenter, isPatternComposite = false) {
         else if (alignment === "center") {
             const [start, firstMain] = mutatinglyApplyTransforms(ornamenter(length / 2), { invertY: isPatternComposite, alignToEnd: true });
             const [, secondMain, end] = ornamenter(length / 2);
-            return mutatinglyApplyTransforms([start, [...firstMain, ...secondMain], end], { invertX, invertY, xOffset, yOffset });
+            return mutatinglyApplyTransforms([start, [...firstMain, ...secondMain], end], { invertX, invertY, yOffset });
         }
         else {
             assertNever(alignment);
         }
     };
 }
-// testing
 function relativePathsToClosedLoop([p1Start, p1Main, p1End], [p2Start, p2Main]) {
     return [
         p1Start,

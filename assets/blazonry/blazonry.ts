@@ -260,10 +260,10 @@ type RelativeOrnamentPath = [
 
 interface OrnamentPathGenerator {
   (
-    x1: number,
-    x2: number,
+    // If negative, assumed to go right-to-left instead of left-to-right.
+    xLength: number,
     yOffset: number,
-    invert: boolean,
+    invertY: boolean,
     alignment?: "start" | "end" | "center"
   ): RelativeOrnamentPath;
 }
@@ -762,10 +762,10 @@ function bend({ tincture, cotised, ornament }: Ordinary) {
       svg.path(
         path.from(
           relativePathsToClosedLoop(
-            ORNAMENTS[ornament](0, BEND_LENGTH, -BEND_WIDTH / 2, false),
+            ORNAMENTS[ornament](BEND_LENGTH, -BEND_WIDTH / 2, false),
             // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
             // we traverse around the bend clockwise.
-            ORNAMENTS[ornament](0, -BEND_LENGTH, BEND_WIDTH / 2, false, "end")
+            ORNAMENTS[ornament](-BEND_LENGTH, BEND_WIDTH / 2, false, "end")
           )
         ),
         tincture
@@ -827,7 +827,6 @@ function chief({ tincture, cotised, ornament }: Ordinary) {
 
   if (ornament != null) {
     const [start, main, end] = ORNAMENTS[ornament](
-      0,
       -W,
       CHIEF_WIDTH,
       false,
@@ -1027,16 +1026,15 @@ function fess({ tincture, cotised, ornament }: Ordinary) {
     fess.appendChild(
       svg.path(
         path.from(
+          { type: "m", loc: [-W_2, 0] },
           relativePathsToClosedLoop(
             ORNAMENTS[ornament](
-              -W_2,
-              W_2,
+              W,
               FESS_VERTICAL_OFFSET - FESS_WIDTH / 2,
               false,
               "center"
             ),
             ORNAMENTS[ornament](
-              0,
               -W,
               FESS_VERTICAL_OFFSET + FESS_WIDTH / 2,
               true,
@@ -1107,10 +1105,10 @@ function pale({ tincture, cotised, ornament }: Ordinary) {
       svg.path(
         path.from(
           relativePathsToClosedLoop(
-            ORNAMENTS[ornament](0, H, -PALE_WIDTH / 2, false),
+            ORNAMENTS[ornament](H, -PALE_WIDTH / 2, false),
             // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
             // we traverse around the pale clockwise.
-            ORNAMENTS[ornament](0, -H, PALE_WIDTH / 2, false, "end")
+            ORNAMENTS[ornament](-H, PALE_WIDTH / 2, false, "end")
           )
         ),
         tincture
@@ -1332,13 +1330,11 @@ function wrapSimpleOrnamenter(
     {
       invertX = false,
       invertY = false,
-      xOffset = 0,
       yOffset = 0,
       alignToEnd = false,
     }: {
       invertX?: boolean;
       invertY?: boolean;
-      xOffset?: number;
       yOffset?: number;
       alignToEnd?: boolean;
     }
@@ -1366,28 +1362,25 @@ function wrapSimpleOrnamenter(
       PathCommand.negateY(end);
     }
 
-    start.loc = Coordinate.add(start.loc, [xOffset, yOffset]);
-    end.loc = Coordinate.add(end.loc, [-xOffset, -yOffset]);
+    start.loc[1] += yOffset;
+    end.loc[1] -= yOffset;
 
     return [start, main, end];
   }
 
-  return (x1, x2, yOffset, invertY, alignment = "start") => {
-    const invertX = x2 < x1;
-    const length = Math.abs(x2 - x1);
-    const xOffset = x1;
+  return (xLength, yOffset, invertY, alignment = "start") => {
+    const invertX = xLength < 0;
+    const length = Math.abs(xLength);
     if (alignment === "start") {
       return mutatinglyApplyTransforms(ornamenter(length), {
         invertX,
         invertY,
-        xOffset,
         yOffset,
       });
     } else if (alignment === "end") {
       return mutatinglyApplyTransforms(ornamenter(length), {
         invertX,
         invertY,
-        xOffset,
         yOffset,
         alignToEnd: true,
       });
@@ -1400,15 +1393,13 @@ function wrapSimpleOrnamenter(
       const [, secondMain, end] = ornamenter(length / 2);
       return mutatinglyApplyTransforms(
         [start, [...firstMain, ...secondMain], end],
-        { invertX, invertY, xOffset, yOffset }
+        { invertX, invertY, yOffset }
       );
     } else {
       assertNever(alignment);
     }
   };
 }
-
-// testing
 
 function relativePathsToClosedLoop(
   [p1Start, p1Main, p1End]: RelativeOrnamentPath,
