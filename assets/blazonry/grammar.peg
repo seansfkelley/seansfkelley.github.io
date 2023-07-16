@@ -13,7 +13,7 @@ SimpleField
   / varied:Varied _ first:Tincture _ "and" _ second:Tincture _ content:SimpleContent? { return { varied, first, second, content } }
 
 PartyPerField
-  = Party? _ "per" _ direction:Direction _ ornament:Ornament? _ first:Tincture _ "and" _ second:Tincture _ content:SimpleContent? { return { direction, first, second, content, ornament } }
+  = Party? _ "per" _ party:Direction _ ornament:Ornament? _ first:Tincture _ "and" _ second:Tincture _ content:SimpleContent? { return { party, first, second, content, ornament } }
 
 Party
   = "party"

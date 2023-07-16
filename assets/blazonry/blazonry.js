@@ -767,7 +767,7 @@ function renderCharge(charge) {
 // #endregion
 // #region ORNAMENT
 // ----------------------------------------------------------------------------
-function wrapSimpleOrnamenter(ornamenter, isPatternComposite = false) {
+function wrapSimpleOrnamenter(ornamenter, isPatternCycleComposite = false) {
     function mutatinglyApplyTransforms([start, main, end], { invertX = false, invertY = false, yOffset = 0, alignToEnd = false, }) {
         if (alignToEnd) {
             [start, end] = [end, start];
@@ -806,13 +806,16 @@ function wrapSimpleOrnamenter(ornamenter, isPatternComposite = false) {
         else if (alignment === "end") {
             return mutatinglyApplyTransforms(ornamenter(length), {
                 invertX,
-                invertY,
+                // Note: invertY must be a function of composite if doing end-alignment.
+                invertY: isPatternCycleComposite !== invertY,
                 yOffset,
                 alignToEnd: true,
             });
         }
         else if (alignment === "center") {
-            const [start, firstMain] = mutatinglyApplyTransforms(ornamenter(length / 2), { invertY: isPatternComposite, alignToEnd: true });
+            const [start, firstMain] = mutatinglyApplyTransforms(ornamenter(length / 2), 
+            // Note: invertY must be a function of composite if doing end-alignment.
+            { invertY: isPatternCycleComposite, alignToEnd: true });
             const [, secondMain, end] = ornamenter(length / 2);
             return mutatinglyApplyTransforms([start, [...firstMain, ...secondMain], end], { invertX, invertY, yOffset });
         }
@@ -1187,11 +1190,11 @@ function complexContent(container, content) {
         }
         return element;
     }
-    if ("direction" in content) {
+    if ("party" in content) {
         const g1 = svg.g();
-        g1.style.clipPath = `path("${PARTY_PER_CLIP_PATHS[content.direction][0]}")`;
+        g1.style.clipPath = `path("${PARTY_PER_CLIP_PATHS[content.party][0]}")`;
         const g2 = svg.g();
-        g2.style.clipPath = `path("${PARTY_PER_CLIP_PATHS[content.direction][1]}")`;
+        g2.style.clipPath = `path("${PARTY_PER_CLIP_PATHS[content.party][1]}")`;
         g1.appendChild(field(content.first));
         g2.appendChild(field(content.second));
         if (content.content) {

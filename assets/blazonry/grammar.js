@@ -348,7 +348,7 @@ function peg$parse(input, options) {
   var peg$f0 = function(content) { return content };
   var peg$f1 = function(tincture, content) { return { tincture, content } };
   var peg$f2 = function(varied, first, second, content) { return { varied, first, second, content } };
-  var peg$f3 = function(direction, ornament, first, second, content) { return { direction, first, second, content, ornament } };
+  var peg$f3 = function(party, ornament, first, second, content) { return { party, first, second, content, ornament } };
   var peg$f4 = function(quarters) { return { quarters } };
   var peg$f5 = function(on, surround) { return { on, surround } };
   var peg$f6 = function(on, charge) { return { on, charge } };

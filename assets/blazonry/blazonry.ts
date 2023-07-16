@@ -184,7 +184,7 @@ interface Varied {
 }
 
 interface PartyPerField {
-  direction: Direction;
+  party: Direction;
   first: Tincture;
   second: Tincture;
   content?: SimpleContent;
@@ -1323,7 +1323,7 @@ function renderCharge(charge: Charge): SVGElement {
 
 function wrapSimpleOrnamenter(
   ornamenter: (length: number) => RelativeOrnamentPath,
-  isPatternComposite: boolean = false
+  isPatternCycleComposite: boolean = false
 ): OrnamentPathGenerator {
   function mutatinglyApplyTransforms(
     [start, main, end]: RelativeOrnamentPath,
@@ -1380,14 +1380,16 @@ function wrapSimpleOrnamenter(
     } else if (alignment === "end") {
       return mutatinglyApplyTransforms(ornamenter(length), {
         invertX,
-        invertY,
+        // Note: invertY must be a function of composite if doing end-alignment.
+        invertY: isPatternCycleComposite !== invertY, // "xor"
         yOffset,
         alignToEnd: true,
       });
     } else if (alignment === "center") {
       const [start, firstMain] = mutatinglyApplyTransforms(
         ornamenter(length / 2),
-        { invertY: isPatternComposite, alignToEnd: true }
+        // Note: invertY must be a function of composite if doing end-alignment.
+        { invertY: isPatternCycleComposite, alignToEnd: true }
       );
 
       const [, secondMain, end] = ornamenter(length / 2);
@@ -1797,11 +1799,11 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     return element;
   }
 
-  if ("direction" in content) {
+  if ("party" in content) {
     const g1 = svg.g();
-    g1.style.clipPath = `path("${PARTY_PER_CLIP_PATHS[content.direction][0]}")`;
+    g1.style.clipPath = `path("${PARTY_PER_CLIP_PATHS[content.party][0]}")`;
     const g2 = svg.g();
-    g2.style.clipPath = `path("${PARTY_PER_CLIP_PATHS[content.direction][1]}")`;
+    g2.style.clipPath = `path("${PARTY_PER_CLIP_PATHS[content.party][1]}")`;
     g1.appendChild(field(content.first));
     g2.appendChild(field(content.second));
     if (content.content) {
