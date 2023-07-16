@@ -833,19 +833,22 @@ function chief({ tincture, cotised, ornament }: Ordinary) {
   const chief = svg.g();
 
   if (ornament != null) {
+    const [start, main, end] = ORNAMENTS[ornament](
+      W_2,
+      -W_2,
+      CHIEF_WIDTH,
+      false,
+      "center"
+    );
     chief.appendChild(
       svg.path(
-        path.fromPoints([
-          [-W_2, -H_2],
-          [W_2, -H_2],
-          ...ORNAMENTS[ornament](
-            W_2,
-            -W_2,
-            -H_2 + CHIEF_WIDTH,
-            false,
-            "center"
-          ),
-        ]),
+        path.from(
+          { type: "M", loc: [-W_2, -H_2] },
+          { type: "L", loc: [W_2, -H_2] },
+          { type: "l", loc: start.loc },
+          main,
+          { type: "l", loc: end.loc }
+        ),
         tincture
       )
     );

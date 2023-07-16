@@ -515,11 +515,8 @@ const CHIEF_WIDTH = H / 3;
 function chief({ tincture, cotised, ornament }) {
     const chief = svg.g();
     if (ornament != null) {
-        chief.appendChild(svg.path(path.fromPoints([
-            [-W_2, -H_2],
-            [W_2, -H_2],
-            ...ORNAMENTS[ornament](W_2, -W_2, -H_2 + CHIEF_WIDTH, false, "center"),
-        ]), tincture));
+        const [start, main, end] = ORNAMENTS[ornament](W_2, -W_2, CHIEF_WIDTH, false, "center");
+        chief.appendChild(svg.path(path.from({ type: "M", loc: [-W_2, -H_2] }, { type: "L", loc: [W_2, -H_2] }, { type: "l", loc: start.loc }, main, { type: "l", loc: end.loc }), tincture));
     }
     else {
         chief.appendChild(svg.line([-W_2, -H_2 + CHIEF_WIDTH / 2], [W_2, -H_2 + CHIEF_WIDTH / 2], tincture, CHIEF_WIDTH));
