@@ -480,7 +480,7 @@ function bend({ tincture, cotised, ornament }) {
         bend.appendChild(svg.path(path.from(relativePathsToClosedLoop(ORNAMENTS[ornament](BEND_LENGTH, -BEND_WIDTH / 2, false), 
         // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
         // we traverse around the bend clockwise.
-        ORNAMENTS[ornament](-BEND_LENGTH, BEND_WIDTH / 2, false, "end"))), tincture));
+        ORNAMENTS[ornament](-BEND_LENGTH, BEND_WIDTH / 2, true, "end"))), tincture));
     }
     else {
         bend.appendChild(svg.line([0, 0], [BEND_LENGTH, 0], tincture, BEND_WIDTH));
@@ -515,7 +515,7 @@ const CHIEF_WIDTH = H / 3;
 function chief({ tincture, cotised, ornament }) {
     const chief = svg.g();
     if (ornament != null) {
-        const [start, main, end] = ORNAMENTS[ornament](-W, CHIEF_WIDTH, false, "center");
+        const [start, main, end] = ORNAMENTS[ornament](-W, CHIEF_WIDTH, true, "center");
         chief.appendChild(svg.path(path.from({ type: "M", loc: [-W_2, -H_2] }, { type: "L", loc: [W_2, -H_2] }, { type: "l", loc: start.loc }, main, { type: "l", loc: end.loc }), tincture));
     }
     else {
@@ -638,7 +638,7 @@ function pale({ tincture, cotised, ornament }) {
         pale.appendChild(svg.path(path.from(relativePathsToClosedLoop(ORNAMENTS[ornament](H, -PALE_WIDTH / 2, false), 
         // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
         // we traverse around the pale clockwise.
-        ORNAMENTS[ornament](-H, PALE_WIDTH / 2, false, "end"))), tincture));
+        ORNAMENTS[ornament](-H, PALE_WIDTH / 2, true, "end"))), tincture));
     }
     else {
         pale.appendChild(svg.line([0, 0], [H, 0], tincture, PALE_WIDTH));
@@ -831,9 +831,8 @@ function relativePathsToClosedLoop([p1Start, p1Main, p1End], [p2Start, p2Main]) 
     ];
 }
 function embattled(length) {
-    const step = W / 12;
-    let xStep = step;
-    let yStep = step / 2;
+    const xStep = W / 12;
+    const yStep = xStep / 2;
     const points = [[xStep / 2, 0]];
     let x = length - xStep / 2;
     let y = -yStep / 2;
@@ -853,8 +852,28 @@ function embattled(length) {
         { type: "m", loc: [x, -y] },
     ];
 }
+function engrailed(length) {
+    const width = W / 6;
+    const height = width / 6;
+    const iterations = Math.ceil(length / width);
+    const curves = [];
+    for (let i = 0; i < iterations; ++i) {
+        curves.push({
+            type: "c",
+            c1: [width / 4, height * 2],
+            c2: [(3 * width) / 4, height * 2],
+            end: [width, 0],
+        });
+    }
+    return [
+        { type: "m", loc: [0, -height / 2] },
+        curves,
+        { type: "m", loc: [length - iterations * width, height / 2] },
+    ];
+}
 const ORNAMENTS = {
     embattled: wrapSimpleOrnamenter(embattled, true),
+    engrailed: wrapSimpleOrnamenter(engrailed),
 };
 // #region VARIED
 // ----------------------------------------------------------------------------
