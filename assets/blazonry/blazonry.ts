@@ -74,6 +74,61 @@ type DiscriminateUnion<T, K extends keyof T, V extends T[K]> = T extends T
     : never
   : never;
 
+const SVG_ELEMENT_TO_COORDINATES: {
+  [K in PathCommand.Element["type"]]: (
+    e: DiscriminateUnion<PathCommand.Element, "type", K>
+  ) => Coordinate[];
+} = {
+  l: (e) => [e.loc],
+  L: (e) => [e.loc],
+  m: (e) => [e.loc],
+  M: (e) => [e.loc],
+  c: (e) => [e.c1, e.c2, e.end],
+  z: () => [],
+  Z: () => [],
+};
+
+namespace PathCommand {
+  type SimpleElement<T extends string> = {
+    type: T;
+    loc: Coordinate;
+  };
+
+  export interface Z {
+    type: "Z" | "z";
+  }
+
+  export type z = Z;
+
+  export type L = SimpleElement<"L">;
+  export type l = SimpleElement<"l">;
+  export type M = SimpleElement<"M">;
+  export type m = SimpleElement<"m">;
+
+  export interface c {
+    type: "c";
+    c1: Coordinate;
+    c2: Coordinate;
+    end: Coordinate;
+  }
+
+  export type Relative = m | l | c | Z | z;
+  export type Absolute = M | L | Z | z;
+  export type Element = Relative | Absolute;
+
+  export function negateX(e: Element): void {
+    for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
+      c[0] *= -1;
+    }
+  }
+
+  export function negateY(e: Element): void {
+    for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
+      c[1] *= -1;
+    }
+  }
+}
+
 type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 type Tincture = string & { __tincture: unknown };
 const Tincture = {
@@ -196,14 +251,20 @@ interface VariedClipPathGenerator {
   (count?: number): string;
 }
 
-interface OrnamentPointGenerator {
+type RelativeOrnamentPath = [
+  PathCommand.m,
+  PathCommand.Relative[],
+  PathCommand.m
+];
+
+interface OrnamentPathGenerator {
   (
     x1: number,
     x2: number,
     yOffset: number,
-    inverse: boolean,
+    invert: boolean,
     alignment?: "start" | "end" | "center"
-  ): Coordinate[];
+  ): RelativeOrnamentPath;
 }
 
 // #endregion
@@ -612,6 +673,20 @@ path.fromPoints = (points: Coordinate[]): string => {
   return "M " + points.map(([x, y]) => `${x} ${y}`).join(" L ") + " Z";
 };
 
+path.from = (
+  ...elements: (PathCommand.Element | PathCommand.Element[])[]
+): string => {
+  return elements
+    .flat()
+    .map(
+      (e) =>
+        `${e.type} ${SVG_ELEMENT_TO_COORDINATES[e.type](e as never)
+          .map(([x, y]) => `${x} ${y}`)
+          .join(" ")}`
+    )
+    .join(" ");
+};
+
 function recursivelyOmitNullish<T>(value: T): T {
   assert(value != null, "cannot omit nullish root values");
   if (Array.isArray(value)) {
@@ -684,12 +759,14 @@ function bend({ tincture, cotised, ornament }: Ordinary) {
   if (ornament != null) {
     bend.appendChild(
       svg.path(
-        path.fromPoints([
-          ...ORNAMENTS[ornament](0, BEND_LENGTH, -BEND_WIDTH / 2, false),
-          // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
-          // we traverse around the bend clockwise.
-          ...ORNAMENTS[ornament](BEND_LENGTH, 0, BEND_WIDTH / 2, true, "end"),
-        ]),
+        path.from(
+          relativePathsToClosedLoop(
+            ORNAMENTS[ornament](0, BEND_LENGTH, -BEND_WIDTH / 2, false),
+            // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
+            // we traverse around the bend clockwise.
+            ORNAMENTS[ornament](BEND_LENGTH, 0, BEND_WIDTH / 2, false, "end")
+          )
+        ),
         tincture
       )
     );
@@ -748,19 +825,22 @@ function chief({ tincture, cotised, ornament }: Ordinary) {
   const chief = svg.g();
 
   if (ornament != null) {
+    const [start, main, end] = ORNAMENTS[ornament](
+      W_2,
+      -W_2,
+      CHIEF_WIDTH,
+      false,
+      "center"
+    );
     chief.appendChild(
       svg.path(
-        path.fromPoints([
-          [-W_2, -H_2],
-          [W_2, -H_2],
-          ...ORNAMENTS[ornament](
-            W_2,
-            -W_2,
-            -H_2 + CHIEF_WIDTH,
-            false,
-            "center"
-          ),
-        ]),
+        path.from(
+          { type: "M", loc: [-W_2, -H_2] },
+          { type: "L", loc: [W_2, -H_2] },
+          { type: "l", loc: start.loc },
+          main,
+          { type: "l", loc: end.loc }
+        ),
         tincture
       )
     );
@@ -945,22 +1025,24 @@ function fess({ tincture, cotised, ornament }: Ordinary) {
   if (ornament != null) {
     fess.appendChild(
       svg.path(
-        path.fromPoints([
-          ...ORNAMENTS[ornament](
-            -W_2,
-            W_2,
-            FESS_VERTICAL_OFFSET - FESS_WIDTH / 2,
-            false,
-            "center"
-          ),
-          ...ORNAMENTS[ornament](
-            -W_2,
-            W_2,
-            FESS_VERTICAL_OFFSET + FESS_WIDTH / 2,
-            true,
-            "center"
-          ).reverse(),
-        ]),
+        path.from(
+          relativePathsToClosedLoop(
+            ORNAMENTS[ornament](
+              -W_2,
+              W_2,
+              FESS_VERTICAL_OFFSET - FESS_WIDTH / 2,
+              false,
+              "center"
+            ),
+            ORNAMENTS[ornament](
+              W_2,
+              -W_2,
+              FESS_VERTICAL_OFFSET + FESS_WIDTH / 2,
+              true,
+              "center"
+            )
+          )
+        ),
         tincture
       )
     );
@@ -1022,12 +1104,14 @@ function pale({ tincture, cotised, ornament }: Ordinary) {
   if (ornament != null) {
     pale.appendChild(
       svg.path(
-        path.fromPoints([
-          ...ORNAMENTS[ornament](0, H, -PALE_WIDTH / 2, false),
-          // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
-          // we traverse around the bend clockwise.
-          ...ORNAMENTS[ornament](H, 0, PALE_WIDTH / 2, true, "end"),
-        ]),
+        path.from(
+          relativePathsToClosedLoop(
+            ORNAMENTS[ornament](0, H, -PALE_WIDTH / 2, false),
+            // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
+            // we traverse around the pale clockwise.
+            ORNAMENTS[ornament](H, 0, PALE_WIDTH / 2, false, "end")
+          )
+        ),
         tincture
       )
     );
@@ -1238,66 +1322,135 @@ function renderCharge(charge: Charge): SVGElement {
 // #region ORNAMENT
 // ----------------------------------------------------------------------------
 
-function embattled(
-  x1: number,
-  x2: number,
-  yOffset: number,
-  invert: boolean,
-  alignment: "start" | "end" | "center" = "start"
-): Coordinate[] {
-  if (alignment === "end") {
-    return embattled(x2, x1, yOffset, invert, "start").reverse();
-  } else if (alignment === "center") {
-    const midpoint = (x1 + x2) / 2;
-    return [
-      // Slice out the repeated midpoints.
-      ...embattled(x1, midpoint, yOffset, invert, "end").slice(0, -1),
-      ...embattled(midpoint, x2, yOffset, invert, "start").slice(1),
-    ];
+function wrapSimpleOrnamenter(
+  ornamenter: (length: number) => RelativeOrnamentPath,
+  isPatternComposite: boolean = false
+): OrnamentPathGenerator {
+  function mutatinglyApplyTransforms(
+    [start, main, end]: RelativeOrnamentPath,
+    {
+      invertY = false,
+      invertX = false,
+      yOffset = 0,
+      // TODO: This is not correct!
+      xOffset = 0,
+      alignToEnd = false,
+    }: {
+      invertY?: boolean;
+      invertX?: boolean;
+      yOffset?: number;
+      xOffset?: number;
+      alignToEnd?: boolean;
+    }
+  ): RelativeOrnamentPath {
+    if (alignToEnd) {
+      [start, end] = [end, start];
+      main.reverse();
+      start.loc[0] += end.loc[0];
+      end.loc[0] = 0;
+    }
+
+    if (invertX) {
+      PathCommand.negateX(start);
+      for (const e of main) {
+        PathCommand.negateX(e);
+      }
+      PathCommand.negateX(end);
+    }
+
+    if (invertY) {
+      PathCommand.negateY(start);
+      for (const e of main) {
+        PathCommand.negateY(e);
+      }
+      PathCommand.negateY(end);
+    }
+
+    start.loc = Coordinate.add(start.loc, [xOffset, yOffset]);
+    end.loc = Coordinate.add(end.loc, [-xOffset, -yOffset]);
+
+    return [start, main, end];
   }
 
+  return (x1, x2, yOffset, invertY, alignment = "start") => {
+    const invertX = x2 < x1;
+    const length = Math.abs(x2 - x1);
+    const xOffset = x1;
+    if (alignment === "start") {
+      return mutatinglyApplyTransforms(ornamenter(length), {
+        invertX,
+        invertY,
+        xOffset,
+        yOffset,
+      });
+    } else if (alignment === "end") {
+      return mutatinglyApplyTransforms(ornamenter(length), {
+        invertX,
+        invertY,
+        xOffset,
+        yOffset,
+        alignToEnd: true,
+      });
+    } else if (alignment === "center") {
+      const [start, firstMain] = mutatinglyApplyTransforms(
+        ornamenter(length / 2),
+        { invertY: isPatternComposite, alignToEnd: true }
+      );
+
+      const [, secondMain, end] = ornamenter(length / 2);
+      return mutatinglyApplyTransforms(
+        [start, [...firstMain, ...secondMain], end],
+        { invertX, invertY, xOffset, yOffset }
+      );
+    } else {
+      assertNever(alignment);
+    }
+  };
+}
+
+function relativePathsToClosedLoop(
+  [p1Start, p1Main, p1End]: RelativeOrnamentPath,
+  [p2Start, p2Main]: RelativeOrnamentPath
+): PathCommand.Relative[] {
+  return [
+    p1Start,
+    ...p1Main,
+    { type: "l", loc: Coordinate.add(p1End.loc, p2Start.loc) },
+    ...p2Main,
+    { type: "z" },
+  ];
+}
+
+function embattled(length: number): RelativeOrnamentPath {
   const step = W / 12;
 
   let xStep = step;
   let yStep = step / 2;
 
-  if (x2 < x1) {
-    xStep = -xStep;
+  const points: Coordinate[] = [[xStep / 2, 0]];
+
+  let x = length - xStep / 2;
+  let y = -yStep / 2;
+  while (x > 0) {
+    points.push([0, yStep], [xStep, 0]);
+    x -= xStep;
+    y += yStep;
+    if (x > 0) {
+      points.push([0, -yStep], [xStep, 0]);
+      x -= xStep;
+      y -= yStep;
+    }
   }
 
-  if (invert) {
-    yStep = -yStep;
-  }
-
-  let x = x1;
-  let y = yOffset - yStep / 2;
-
-  const points: Coordinate[] = [
-    [x, y],
-    [(x += xStep / 2), y],
+  return [
+    { type: "m", loc: [0, -yStep / 2] },
+    points.map((loc) => ({ type: "l", loc })),
+    { type: "m", loc: [x, -y] },
   ];
-
-  const distance = Math.abs(x2 - x1) - step / 2;
-  for (let i = 0; i < distance; i += step * 2) {
-    points.push(
-      [x, (y += yStep)],
-      [(x += xStep), y],
-      [x, (y -= yStep)],
-      [(x += xStep), y]
-    );
-  }
-
-  const index =
-    x1 < x2
-      ? points.findLastIndex(([x]) => x < x2)
-      : points.findLastIndex(([x]) => x > x2);
-  // +2: the one we found is the first one _inside_ the bounds, so +1 to include it, then +1 to
-  // include next one, i.e., the first one outside of the bounds.
-  return points.slice(0, index + 2);
 }
 
-const ORNAMENTS: Record<string, OrnamentPointGenerator> = {
-  embattled,
+const ORNAMENTS: Record<string, OrnamentPathGenerator> = {
+  embattled: wrapSimpleOrnamenter(embattled, true),
 };
 
 // #region VARIED
