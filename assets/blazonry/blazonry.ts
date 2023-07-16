@@ -184,7 +184,7 @@ interface Varied {
 }
 
 interface PartyPerField {
-  direction: Direction;
+  party: Direction;
   first: Tincture;
   second: Tincture;
   content?: SimpleContent;
@@ -1799,11 +1799,11 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     return element;
   }
 
-  if ("direction" in content) {
+  if ("party" in content) {
     const g1 = svg.g();
-    g1.style.clipPath = `path("${PARTY_PER_CLIP_PATHS[content.direction][0]}")`;
+    g1.style.clipPath = `path("${PARTY_PER_CLIP_PATHS[content.party][0]}")`;
     const g2 = svg.g();
-    g2.style.clipPath = `path("${PARTY_PER_CLIP_PATHS[content.direction][1]}")`;
+    g2.style.clipPath = `path("${PARTY_PER_CLIP_PATHS[content.party][1]}")`;
     g1.appendChild(field(content.first));
     g2.appendChild(field(content.second));
     if (content.content) {
