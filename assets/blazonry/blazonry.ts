@@ -1323,7 +1323,7 @@ function renderCharge(charge: Charge): SVGElement {
 
 function wrapSimpleOrnamenter(
   ornamenter: (length: number) => RelativeOrnamentPath,
-  isPatternComposite: boolean = false
+  isPatternCycleComposite: boolean = false
 ): OrnamentPathGenerator {
   function mutatinglyApplyTransforms(
     [start, main, end]: RelativeOrnamentPath,
@@ -1380,14 +1380,16 @@ function wrapSimpleOrnamenter(
     } else if (alignment === "end") {
       return mutatinglyApplyTransforms(ornamenter(length), {
         invertX,
-        invertY,
+        // Note: invertY must be a function of composite if doing end-alignment.
+        invertY: isPatternCycleComposite !== invertY, // "xor"
         yOffset,
         alignToEnd: true,
       });
     } else if (alignment === "center") {
       const [start, firstMain] = mutatinglyApplyTransforms(
         ornamenter(length / 2),
-        { invertY: isPatternComposite, alignToEnd: true }
+        // Note: invertY must be a function of composite if doing end-alignment.
+        { invertY: isPatternCycleComposite, alignToEnd: true }
       );
 
       const [, secondMain, end] = ornamenter(length / 2);
