@@ -74,11 +74,31 @@ type DiscriminateUnion<T, K extends keyof T, V extends T[K]> = T extends T
     : never
   : never;
 
+const SVG_ELEMENT_TO_COORDINATES: {
+  [K in SvgPath.Element["type"]]: (
+    e: DiscriminateUnion<SvgPath.Element, "type", K>
+  ) => Coordinate[];
+} = {
+  l: (e) => [e.loc],
+  L: (e) => [e.loc],
+  m: (e) => [e.loc],
+  M: (e) => [e.loc],
+  c: (e) => [e.c1, e.c2, e.end],
+  z: () => [],
+  Z: () => [],
+};
+
 namespace SvgPath {
   type SimpleElement<T extends string> = {
     type: T;
     loc: Coordinate;
   };
+
+  export interface Z {
+    type: "Z" | "z";
+  }
+
+  export type z = Z;
 
   export type L = SimpleElement<"L">;
   export type l = SimpleElement<"l">;
@@ -92,9 +112,21 @@ namespace SvgPath {
     end: Coordinate;
   }
 
-  export type Relative = m | l | c;
-  export type Absolute = M | L;
+  export type Relative = m | l | c | Z | z;
+  export type Absolute = M | L | Z | z;
   export type Element = Relative | Absolute;
+
+  export function negateX(e: Element): void {
+    for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
+      c[0] *= -1;
+    }
+  }
+
+  export function negateY(e: Element): void {
+    for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
+      c[1] *= -1;
+    }
+  }
 }
 
 type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
@@ -637,20 +669,9 @@ path.fromPoints = (points: Coordinate[]): string => {
   return "M " + points.map(([x, y]) => `${x} ${y}`).join(" L ") + " Z";
 };
 
-const SVG_ELEMENT_TO_COORDINATES: {
-  [K in SvgPath.Element["type"]]: (
-    e: DiscriminateUnion<SvgPath.Element, "type", K>
-  ) => Coordinate[];
-} = {
-  l: (e) => [e.loc],
-  L: (e) => [e.loc],
-  m: (e) => [e.loc],
-  M: (e) => [e.loc],
-  c: (e) => [e.c1, e.c2, e.end],
-};
-
-path.from = (elements: SvgPath.Element[]): string => {
+path.from = (...elements: (SvgPath.Element | SvgPath.Element[])[]): string => {
   return elements
+    .flat()
     .map(
       (e) =>
         `${e.type} ${SVG_ELEMENT_TO_COORDINATES[e.type](e as never)
@@ -730,14 +751,30 @@ function bend({ tincture, cotised, ornament }: Ordinary) {
   const bend = svg.g();
 
   if (ornament != null) {
+    const [start, top, topEnd] = ORNAMENTS[ornament](
+      0,
+      BEND_LENGTH,
+      -BEND_WIDTH / 2,
+      false
+    );
+    // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
+    // we traverse around the bend clockwise.
+    const [bottomStart, bottom] = ORNAMENTS[ornament](
+      BEND_LENGTH,
+      0,
+      BEND_WIDTH / 2,
+      true,
+      "end"
+    );
     bend.appendChild(
       svg.path(
-        path.fromPoints([
-          ...ORNAMENTS[ornament](0, BEND_LENGTH, -BEND_WIDTH / 2, false),
-          // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
-          // we traverse around the bend clockwise.
-          ...ORNAMENTS[ornament](BEND_LENGTH, 0, BEND_WIDTH / 2, true, "end"),
-        ]),
+        path.from(
+          start,
+          top,
+          { type: "l", loc: Coordinate.add(topEnd.loc, bottomStart.loc) },
+          bottom,
+          { type: "z" }
+        ),
         tincture
       )
     );
@@ -1289,25 +1326,80 @@ function renderCharge(charge: Charge): SVGElement {
 function wrapSimpleOrnamenter(
   ornamenter: (length: number) => RelativeOrnamentPath
 ): OrnamentPointGenerator {
-  return (x1, x2, yOffset, invertY, alignment = "start") => {
-    function applyTransforms([
-      start,
-      main,
-      end,
-    ]: RelativeOrnamentPath): RelativeOrnamentPath {
-      // TODO
+  function mutatinglyApplyTransforms(
+    [start, main, end]: RelativeOrnamentPath,
+    {
+      invertY = false,
+      invertX = false,
+      yOffset = 0,
+      alignToEnd = false,
+    }: {
+      invertY?: boolean;
+      invertX?: boolean;
+      yOffset?: number;
+      alignToEnd?: boolean;
+    }
+  ): RelativeOrnamentPath {
+    if (alignToEnd) {
+      start.loc[0] += end.loc[0];
+      end.loc[0] = 0;
+      [start, end] = [end, start];
+      main.reverse();
     }
 
+    if (invertX) {
+      SvgPath.negateX(start);
+      for (const e of main) {
+        SvgPath.negateX(e);
+      }
+      SvgPath.negateX(end);
+    }
+
+    if (invertY) {
+      SvgPath.negateY(start);
+      for (const e of main) {
+        SvgPath.negateY(e);
+      }
+      SvgPath.negateY(end);
+    }
+
+    start.loc[1] += yOffset;
+    end.loc[1] -= yOffset;
+
+    return [start, main, end];
+  }
+
+  return (x1, x2, yOffset, invertY, alignment = "start") => {
+    const invertX = x2 < x1;
     const length = Math.abs(x2 - x1);
     if (alignment === "start") {
-      return applyTransforms(ornamenter(length));
+      return mutatinglyApplyTransforms(ornamenter(length), {
+        invertX,
+        invertY,
+        yOffset,
+      });
     } else if (alignment === "end") {
-      // TODO: something about reversing
+      return mutatinglyApplyTransforms(ornamenter(length), {
+        invertX,
+        invertY,
+        yOffset,
+        alignToEnd: true,
+      });
     } else if (alignment === "center") {
-      // TODO: middle-out
-      const midpoint = (x1 + x2) / 2;
-      // ...embattled(x1, midpoint, yOffset, invert, "end").slice(0, -1),
-      // ...embattled(midpoint, x2, yOffset, invert, "start").slice(1),
+      const [start, firstMain] = mutatinglyApplyTransforms(
+        ornamenter(length / 2),
+        { alignToEnd: true }
+      );
+
+      const [, secondMain, end] = ornamenter(length / 2);
+      return mutatinglyApplyTransforms(
+        [start, [...firstMain, ...secondMain], end],
+        {
+          invertX,
+          invertY,
+          yOffset,
+        }
+      );
     } else {
       assertNever(alignment);
     }
@@ -1322,26 +1414,28 @@ function embattled(length: number): RelativeOrnamentPath {
 
   const points: Coordinate[] = [[xStep / 2, 0]];
 
-  let i = length - xStep / 2;
-  while (i > 0) {
+  let x = length - xStep / 2;
+  let y = -yStep / 2;
+  while (x > 0) {
     points.push([0, yStep], [xStep, 0]);
-    i -= xStep;
-    if (i > 0) {
+    x -= xStep;
+    y += yStep;
+    if (x > 0) {
       points.push([0, -yStep], [xStep, 0]);
-      i -= xStep;
+      x -= xStep;
+      y -= yStep;
     }
   }
 
   return [
     { type: "m", loc: [0, -yStep / 2] },
     points.map((loc) => ({ type: "l", loc })),
-    // TODO: Find the correct y offset, too.
-    { type: "m", loc: [i, 0] },
+    { type: "m", loc: [x, -y] },
   ];
 }
 
 const ORNAMENTS: Record<string, OrnamentPointGenerator> = {
-  embattled,
+  embattled: wrapSimpleOrnamenter(embattled),
 };
 
 // #region VARIED

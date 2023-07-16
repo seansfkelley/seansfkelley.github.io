@@ -40,6 +40,30 @@ const FIELD_PATH = path `
      ${-W_2}          ${H_2 / 3}
   Z
 `;
+const SVG_ELEMENT_TO_COORDINATES = {
+    l: (e) => [e.loc],
+    L: (e) => [e.loc],
+    m: (e) => [e.loc],
+    M: (e) => [e.loc],
+    c: (e) => [e.c1, e.c2, e.end],
+    z: () => [],
+    Z: () => [],
+};
+var SvgPath;
+(function (SvgPath) {
+    function negateX(e) {
+        for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e)) {
+            c[0] *= -1;
+        }
+    }
+    SvgPath.negateX = negateX;
+    function negateY(e) {
+        for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e)) {
+            c[1] *= -1;
+        }
+    }
+    SvgPath.negateY = negateY;
+})(SvgPath || (SvgPath = {}));
 const Tincture = {
     NONE: "none",
     COUNTERCHANGED: "counterchanged",
@@ -382,15 +406,9 @@ function path(strings, ...values) {
 path.fromPoints = (points) => {
     return "M " + points.map(([x, y]) => `${x} ${y}`).join(" L ") + " Z";
 };
-const SVG_ELEMENT_TO_COORDINATES = {
-    l: (e) => [e.loc],
-    L: (e) => [e.loc],
-    m: (e) => [e.loc],
-    M: (e) => [e.loc],
-    c: (e) => [e.c1, e.c2, e.end],
-};
-path.from = (elements) => {
+path.from = (...elements) => {
     return elements
+        .flat()
         .map((e) => `${e.type} ${SVG_ELEMENT_TO_COORDINATES[e.type](e)
         .map(([x, y]) => `${x} ${y}`)
         .join(" ")}`)
@@ -458,12 +476,11 @@ const BEND_LENGTH = Math.hypot(W, H);
 function bend({ tincture, cotised, ornament }) {
     const bend = svg.g();
     if (ornament != null) {
-        bend.appendChild(svg.path(path.fromPoints([
-            ...ORNAMENTS[ornament](0, BEND_LENGTH, -BEND_WIDTH / 2, false),
-            // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
-            // we traverse around the bend clockwise.
-            ...ORNAMENTS[ornament](BEND_LENGTH, 0, BEND_WIDTH / 2, true, "end"),
-        ]), tincture));
+        const [start, top, topEnd] = ORNAMENTS[ornament](0, BEND_LENGTH, -BEND_WIDTH / 2, false);
+        // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
+        // we traverse around the bend clockwise.
+        const [bottomStart, bottom] = ORNAMENTS[ornament](BEND_LENGTH, 0, BEND_WIDTH / 2, true, "end");
+        bend.appendChild(svg.path(path.from(start, top, { type: "l", loc: Coordinate.add(topEnd.loc, bottomStart.loc) }, bottom, { type: "z" }), tincture));
     }
     else {
         bend.appendChild(svg.line([0, 0], [BEND_LENGTH, 0], tincture, BEND_WIDTH));
@@ -759,22 +776,57 @@ function renderCharge(charge) {
 // #region ORNAMENT
 // ----------------------------------------------------------------------------
 function wrapSimpleOrnamenter(ornamenter) {
-    return (x1, x2, yOffset, invertY, alignment = "start") => {
-        function applyTransforms([start, main, end,]) {
-            // TODO
+    function mutatinglyApplyTransforms([start, main, end], { invertY = false, invertX = false, yOffset = 0, alignToEnd = false, }) {
+        if (alignToEnd) {
+            start.loc[0] += end.loc[0];
+            end.loc[0] = 0;
+            [start, end] = [end, start];
+            main.reverse();
         }
+        if (invertX) {
+            SvgPath.negateX(start);
+            for (const e of main) {
+                SvgPath.negateX(e);
+            }
+            SvgPath.negateX(end);
+        }
+        if (invertY) {
+            SvgPath.negateY(start);
+            for (const e of main) {
+                SvgPath.negateY(e);
+            }
+            SvgPath.negateY(end);
+        }
+        start.loc[1] += yOffset;
+        end.loc[1] -= yOffset;
+        return [start, main, end];
+    }
+    return (x1, x2, yOffset, invertY, alignment = "start") => {
+        const invertX = x2 < x1;
         const length = Math.abs(x2 - x1);
         if (alignment === "start") {
-            return applyTransforms(ornamenter(length));
+            return mutatinglyApplyTransforms(ornamenter(length), {
+                invertX,
+                invertY,
+                yOffset,
+            });
         }
         else if (alignment === "end") {
-            // TODO: something about reversing
+            return mutatinglyApplyTransforms(ornamenter(length), {
+                invertX,
+                invertY,
+                yOffset,
+                alignToEnd: true,
+            });
         }
         else if (alignment === "center") {
-            // TODO: middle-out
-            const midpoint = (x1 + x2) / 2;
-            // ...embattled(x1, midpoint, yOffset, invert, "end").slice(0, -1),
-            // ...embattled(midpoint, x2, yOffset, invert, "start").slice(1),
+            const [start, firstMain] = mutatinglyApplyTransforms(ornamenter(length / 2), { alignToEnd: true });
+            const [, secondMain, end] = ornamenter(length / 2);
+            return mutatinglyApplyTransforms([start, [...firstMain, ...secondMain], end], {
+                invertX,
+                invertY,
+                yOffset,
+            });
         }
         else {
             assertNever(alignment);
@@ -786,24 +838,26 @@ function embattled(length) {
     let xStep = step;
     let yStep = step / 2;
     const points = [[xStep / 2, 0]];
-    let i = length - xStep / 2;
-    while (i > 0) {
+    let x = length - xStep / 2;
+    let y = -yStep / 2;
+    while (x > 0) {
         points.push([0, yStep], [xStep, 0]);
-        i -= xStep;
-        if (i > 0) {
+        x -= xStep;
+        y += yStep;
+        if (x > 0) {
             points.push([0, -yStep], [xStep, 0]);
-            i -= xStep;
+            x -= xStep;
+            y -= yStep;
         }
     }
     return [
         { type: "m", loc: [0, -yStep / 2] },
         points.map((loc) => ({ type: "l", loc })),
-        // TODO: Find the correct y offset, too.
-        { type: "m", loc: [i, 0] },
+        { type: "m", loc: [x, -y] },
     ];
 }
 const ORNAMENTS = {
-    embattled,
+    embattled: wrapSimpleOrnamenter(embattled),
 };
 // #region VARIED
 // ----------------------------------------------------------------------------
