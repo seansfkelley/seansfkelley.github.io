@@ -765,7 +765,7 @@ function bend({ tincture, cotised, ornament }: Ordinary) {
             ORNAMENTS[ornament](BEND_LENGTH, -BEND_WIDTH / 2, false),
             // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
             // we traverse around the bend clockwise.
-            ORNAMENTS[ornament](-BEND_LENGTH, BEND_WIDTH / 2, false, "end")
+            ORNAMENTS[ornament](-BEND_LENGTH, BEND_WIDTH / 2, true, "end")
           )
         ),
         tincture
@@ -829,7 +829,7 @@ function chief({ tincture, cotised, ornament }: Ordinary) {
     const [start, main, end] = ORNAMENTS[ornament](
       -W,
       CHIEF_WIDTH,
-      false,
+      true,
       "center"
     );
     chief.appendChild(
@@ -1108,7 +1108,7 @@ function pale({ tincture, cotised, ornament }: Ordinary) {
             ORNAMENTS[ornament](H, -PALE_WIDTH / 2, false),
             // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
             // we traverse around the pale clockwise.
-            ORNAMENTS[ornament](-H, PALE_WIDTH / 2, false, "end")
+            ORNAMENTS[ornament](-H, PALE_WIDTH / 2, true, "end")
           )
         ),
         tincture
@@ -1415,10 +1415,8 @@ function relativePathsToClosedLoop(
 }
 
 function embattled(length: number): RelativeOrnamentPath {
-  const step = W / 12;
-
-  let xStep = step;
-  let yStep = step / 2;
+  const xStep = W / 12;
+  const yStep = xStep / 2;
 
   const points: Coordinate[] = [[xStep / 2, 0]];
 
@@ -1442,8 +1440,32 @@ function embattled(length: number): RelativeOrnamentPath {
   ];
 }
 
+function engrailed(length: number): RelativeOrnamentPath {
+  const width = W / 6;
+  const height = width / 6;
+  const iterations = Math.ceil(length / width);
+
+  const curves: PathCommand.c[] = [];
+
+  for (let i = 0; i < iterations; ++i) {
+    curves.push({
+      type: "c",
+      c1: [width / 4, height * 2],
+      c2: [(3 * width) / 4, height * 2],
+      end: [width, 0],
+    });
+  }
+
+  return [
+    { type: "m", loc: [0, -height / 2] },
+    curves,
+    { type: "m", loc: [length - iterations * width, height / 2] },
+  ];
+}
+
 const ORNAMENTS: Record<string, OrnamentPathGenerator> = {
   embattled: wrapSimpleOrnamenter(embattled, true),
+  engrailed: wrapSimpleOrnamenter(engrailed),
 };
 
 // #region VARIED
