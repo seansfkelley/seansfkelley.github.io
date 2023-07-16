@@ -19,11 +19,12 @@ jobs:
       - checkout
       - node/install-packages
       - run:
-          name: Ensure committed transpiled files are up-to-date
-          command: npm run check-transpile
+          name: Node build
+          command: npm run build
       - ruby/install-deps
       - run:
           name: Jekyll build
+          # note that Jekyll seems to drop .gitignores in assets/, which is generally desirable (built files!), but a bit surprising
           command: bundle exec jekyll build
       - run:
           name: HTMLProofer
