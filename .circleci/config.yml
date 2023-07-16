@@ -19,8 +19,8 @@ jobs:
       - checkout
       - node/install-packages
       - run:
-          name: Ensure committed transpiled files are up-to-date
-          command: npm run check-transpile
+          name: Node build
+          command: npm run build
       - ruby/install-deps
       - run:
           name: Jekyll build
@@ -55,6 +55,10 @@ jobs:
                   # pull out the interesting files to the top level (also for ease of server configuration)
                   mv _site/* .
                   rmdir _site
+
+                  # hopefully self-explanatory; I wish there was a better way to do this
+                  # note that this runs after the _site hoisting so that the script works the same in dev and prod
+                  npm run unignore-built-files
 
                   # bring in the config to silence CircleCI complaining about a lack of configuration,
                   # though the rules elsewhere in the config prevent this branch from ever actually building
