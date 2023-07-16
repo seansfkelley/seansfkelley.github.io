@@ -49,21 +49,21 @@ const SVG_ELEMENT_TO_COORDINATES = {
     z: () => [],
     Z: () => [],
 };
-var SvgPath;
-(function (SvgPath) {
+var PathCommand;
+(function (PathCommand) {
     function negateX(e) {
         for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e)) {
             c[0] *= -1;
         }
     }
-    SvgPath.negateX = negateX;
+    PathCommand.negateX = negateX;
     function negateY(e) {
         for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e)) {
             c[1] *= -1;
         }
     }
-    SvgPath.negateY = negateY;
-})(SvgPath || (SvgPath = {}));
+    PathCommand.negateY = negateY;
+})(PathCommand || (PathCommand = {}));
 const Tincture = {
     NONE: "none",
     COUNTERCHANGED: "counterchanged",
@@ -476,11 +476,10 @@ const BEND_LENGTH = Math.hypot(W, H);
 function bend({ tincture, cotised, ornament }) {
     const bend = svg.g();
     if (ornament != null) {
-        const [start, top, topEnd] = ORNAMENTS[ornament](0, BEND_LENGTH, -BEND_WIDTH / 2, false);
+        bend.appendChild(svg.path(path.from(relativePathsToClosedLoop(ORNAMENTS[ornament](0, BEND_LENGTH, -BEND_WIDTH / 2, false), 
         // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
         // we traverse around the bend clockwise.
-        const [bottomStart, bottom] = ORNAMENTS[ornament](BEND_LENGTH, 0, BEND_WIDTH / 2, false, "end");
-        bend.appendChild(svg.path(path.from(start, top, { type: "l", loc: Coordinate.add(topEnd.loc, bottomStart.loc) }, bottom, { type: "z" }), tincture));
+        ORNAMENTS[ornament](BEND_LENGTH, 0, BEND_WIDTH / 2, false, "end"))), tincture));
     }
     else {
         bend.appendChild(svg.line([0, 0], [BEND_LENGTH, 0], tincture, BEND_WIDTH));
@@ -638,12 +637,10 @@ const PALE_WIDTH = W / 3;
 function pale({ tincture, cotised, ornament }) {
     const pale = svg.g();
     if (ornament != null) {
-        pale.appendChild(svg.path(path.fromPoints([
-            ...ORNAMENTS[ornament](0, H, -PALE_WIDTH / 2, false),
-            // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
-            // we traverse around the bend clockwise.
-            ...ORNAMENTS[ornament](H, 0, PALE_WIDTH / 2, true, "end"),
-        ]), tincture));
+        pale.appendChild(svg.path(path.from(relativePathsToClosedLoop(ORNAMENTS[ornament](0, H, -PALE_WIDTH / 2, false), 
+        // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
+        // we traverse around the pale clockwise.
+        ORNAMENTS[ornament](H, 0, PALE_WIDTH / 2, false, "end"))), tincture));
     }
     else {
         pale.appendChild(svg.line([0, 0], [H, 0], tincture, PALE_WIDTH));
@@ -781,18 +778,18 @@ function wrapSimpleOrnamenter(ornamenter, isPatternComposite = false) {
             end.loc[0] = 0;
         }
         if (invertX) {
-            SvgPath.negateX(start);
+            PathCommand.negateX(start);
             for (const e of main) {
-                SvgPath.negateX(e);
+                PathCommand.negateX(e);
             }
-            SvgPath.negateX(end);
+            PathCommand.negateX(end);
         }
         if (invertY) {
-            SvgPath.negateY(start);
+            PathCommand.negateY(start);
             for (const e of main) {
-                SvgPath.negateY(e);
+                PathCommand.negateY(e);
             }
-            SvgPath.negateY(end);
+            PathCommand.negateY(end);
         }
         start.loc[1] += yOffset;
         end.loc[1] -= yOffset;
@@ -825,6 +822,15 @@ function wrapSimpleOrnamenter(ornamenter, isPatternComposite = false) {
             assertNever(alignment);
         }
     };
+}
+function relativePathsToClosedLoop([p1Start, p1Main, p1End], [p2Start, p2Main]) {
+    return [
+        p1Start,
+        ...p1Main,
+        { type: "l", loc: Coordinate.add(p1End.loc, p2Start.loc) },
+        ...p2Main,
+        { type: "z" },
+    ];
 }
 function embattled(length) {
     const step = W / 12;

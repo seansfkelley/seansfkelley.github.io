@@ -75,8 +75,8 @@ type DiscriminateUnion<T, K extends keyof T, V extends T[K]> = T extends T
   : never;
 
 const SVG_ELEMENT_TO_COORDINATES: {
-  [K in SvgPath.Element["type"]]: (
-    e: DiscriminateUnion<SvgPath.Element, "type", K>
+  [K in PathCommand.Element["type"]]: (
+    e: DiscriminateUnion<PathCommand.Element, "type", K>
   ) => Coordinate[];
 } = {
   l: (e) => [e.loc],
@@ -88,7 +88,7 @@ const SVG_ELEMENT_TO_COORDINATES: {
   Z: () => [],
 };
 
-namespace SvgPath {
+namespace PathCommand {
   type SimpleElement<T extends string> = {
     type: T;
     loc: Coordinate;
@@ -251,9 +251,13 @@ interface VariedClipPathGenerator {
   (count?: number): string;
 }
 
-type RelativeOrnamentPath = [SvgPath.m, SvgPath.Relative[], SvgPath.m];
+type RelativeOrnamentPath = [
+  PathCommand.m,
+  PathCommand.Relative[],
+  PathCommand.m
+];
 
-interface OrnamentPointGenerator {
+interface OrnamentPathGenerator {
   (
     x1: number,
     x2: number,
@@ -669,7 +673,9 @@ path.fromPoints = (points: Coordinate[]): string => {
   return "M " + points.map(([x, y]) => `${x} ${y}`).join(" L ") + " Z";
 };
 
-path.from = (...elements: (SvgPath.Element | SvgPath.Element[])[]): string => {
+path.from = (
+  ...elements: (PathCommand.Element | PathCommand.Element[])[]
+): string => {
   return elements
     .flat()
     .map(
@@ -751,29 +757,15 @@ function bend({ tincture, cotised, ornament }: Ordinary) {
   const bend = svg.g();
 
   if (ornament != null) {
-    const [start, top, topEnd] = ORNAMENTS[ornament](
-      0,
-      BEND_LENGTH,
-      -BEND_WIDTH / 2,
-      false
-    );
-    // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
-    // we traverse around the bend clockwise.
-    const [bottomStart, bottom] = ORNAMENTS[ornament](
-      BEND_LENGTH,
-      0,
-      BEND_WIDTH / 2,
-      false,
-      "end"
-    );
     bend.appendChild(
       svg.path(
         path.from(
-          start,
-          top,
-          { type: "l", loc: Coordinate.add(topEnd.loc, bottomStart.loc) },
-          bottom,
-          { type: "z" }
+          relativePathsToClosedLoop(
+            ORNAMENTS[ornament](0, BEND_LENGTH, -BEND_WIDTH / 2, false),
+            // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
+            // we traverse around the bend clockwise.
+            ORNAMENTS[ornament](BEND_LENGTH, 0, BEND_WIDTH / 2, false, "end")
+          )
         ),
         tincture
       )
@@ -1110,12 +1102,14 @@ function pale({ tincture, cotised, ornament }: Ordinary) {
   if (ornament != null) {
     pale.appendChild(
       svg.path(
-        path.fromPoints([
-          ...ORNAMENTS[ornament](0, H, -PALE_WIDTH / 2, false),
-          // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
-          // we traverse around the bend clockwise.
-          ...ORNAMENTS[ornament](H, 0, PALE_WIDTH / 2, true, "end"),
-        ]),
+        path.from(
+          relativePathsToClosedLoop(
+            ORNAMENTS[ornament](0, H, -PALE_WIDTH / 2, false),
+            // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
+            // we traverse around the pale clockwise.
+            ORNAMENTS[ornament](H, 0, PALE_WIDTH / 2, false, "end")
+          )
+        ),
         tincture
       )
     );
@@ -1329,7 +1323,7 @@ function renderCharge(charge: Charge): SVGElement {
 function wrapSimpleOrnamenter(
   ornamenter: (length: number) => RelativeOrnamentPath,
   isPatternComposite: boolean = false
-): OrnamentPointGenerator {
+): OrnamentPathGenerator {
   function mutatinglyApplyTransforms(
     [start, main, end]: RelativeOrnamentPath,
     {
@@ -1352,19 +1346,19 @@ function wrapSimpleOrnamenter(
     }
 
     if (invertX) {
-      SvgPath.negateX(start);
+      PathCommand.negateX(start);
       for (const e of main) {
-        SvgPath.negateX(e);
+        PathCommand.negateX(e);
       }
-      SvgPath.negateX(end);
+      PathCommand.negateX(end);
     }
 
     if (invertY) {
-      SvgPath.negateY(start);
+      PathCommand.negateY(start);
       for (const e of main) {
-        SvgPath.negateY(e);
+        PathCommand.negateY(e);
       }
-      SvgPath.negateY(end);
+      PathCommand.negateY(end);
     }
 
     start.loc[1] += yOffset;
@@ -1406,6 +1400,19 @@ function wrapSimpleOrnamenter(
   };
 }
 
+function relativePathsToClosedLoop(
+  [p1Start, p1Main, p1End]: RelativeOrnamentPath,
+  [p2Start, p2Main]: RelativeOrnamentPath
+): PathCommand.Relative[] {
+  return [
+    p1Start,
+    ...p1Main,
+    { type: "l", loc: Coordinate.add(p1End.loc, p2Start.loc) },
+    ...p2Main,
+    { type: "z" },
+  ];
+}
+
 function embattled(length: number): RelativeOrnamentPath {
   const step = W / 12;
 
@@ -1434,7 +1441,7 @@ function embattled(length: number): RelativeOrnamentPath {
   ];
 }
 
-const ORNAMENTS: Record<string, OrnamentPointGenerator> = {
+const ORNAMENTS: Record<string, OrnamentPathGenerator> = {
   embattled: wrapSimpleOrnamenter(embattled, true),
 };
 
