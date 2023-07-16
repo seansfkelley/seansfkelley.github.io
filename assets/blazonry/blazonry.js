@@ -824,6 +824,7 @@ function wrapSimpleOrnamenter(ornamenter, isPatternComposite = false) {
         }
     };
 }
+// testing
 function relativePathsToClosedLoop([p1Start, p1Main, p1End], [p2Start, p2Main]) {
     return [
         p1Start,

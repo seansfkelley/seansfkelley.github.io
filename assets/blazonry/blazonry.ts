@@ -1408,6 +1408,8 @@ function wrapSimpleOrnamenter(
   };
 }
 
+// testing
+
 function relativePathsToClosedLoop(
   [p1Start, p1Main, p1End]: RelativeOrnamentPath,
   [p2Start, p2Main]: RelativeOrnamentPath
