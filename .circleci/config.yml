@@ -24,6 +24,7 @@ jobs:
       - ruby/install-deps
       - run:
           name: Jekyll build
+          # note that Jekyll seems to drop .gitignores in assets/, which is generally desirable (built files!), but a bit surprising
           command: bundle exec jekyll build
       - run:
           name: HTMLProofer
@@ -55,10 +56,6 @@ jobs:
                   # pull out the interesting files to the top level (also for ease of server configuration)
                   mv _site/* .
                   rmdir _site
-
-                  # hopefully self-explanatory; I wish there was a better way to do this
-                  # note that this runs after the _site hoisting so that the script works the same in dev and prod
-                  npm run unignore-built-files
 
                   # bring in the config to silence CircleCI complaining about a lack of configuration,
                   # though the rules elsewhere in the config prevent this branch from ever actually building

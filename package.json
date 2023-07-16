@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "build": "tsc && npm run build-grammar",
-    "build-grammar": "peggy -o assets/blazonry/grammar.js --format globals --export-var parser assets/blazonry/grammar.peg && cp assets/blazonry/grammar.peg assets/blazonry/grammar.txt",
-    "unignore-built-files": "rm assets/blazonry/.gitignore"
+    "build-grammar": "peggy -o assets/blazonry/grammar.js --format globals --export-var parser assets/blazonry/grammar.peg && cp assets/blazonry/grammar.peg assets/blazonry/grammar.txt"
   },
   "dependencies": {
     "peggy": "^3.0.2",
