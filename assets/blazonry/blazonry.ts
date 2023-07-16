@@ -15,6 +15,7 @@
 // - make whitespace non-optional to force breaks
 // - multiple ordiaries?
 // - standardize size of charges (40x40?) so that scaling works as expected for all of them
+// - thin lines between quarters?
 
 // TODO OPTIONAL
 // - adjust positioning for `on` -- often the 2s and 3s are too close to each other, like for chief
@@ -764,7 +765,7 @@ function bend({ tincture, cotised, ornament }: Ordinary) {
             ORNAMENTS[ornament](0, BEND_LENGTH, -BEND_WIDTH / 2, false),
             // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
             // we traverse around the bend clockwise.
-            ORNAMENTS[ornament](BEND_LENGTH, 0, BEND_WIDTH / 2, false, "end")
+            ORNAMENTS[ornament](0, -BEND_LENGTH, BEND_WIDTH / 2, false, "end")
           )
         ),
         tincture
@@ -826,8 +827,8 @@ function chief({ tincture, cotised, ornament }: Ordinary) {
 
   if (ornament != null) {
     const [start, main, end] = ORNAMENTS[ornament](
-      W_2,
-      -W_2,
+      0,
+      -W,
       CHIEF_WIDTH,
       false,
       "center"
@@ -1035,8 +1036,8 @@ function fess({ tincture, cotised, ornament }: Ordinary) {
               "center"
             ),
             ORNAMENTS[ornament](
-              W_2,
-              -W_2,
+              0,
+              -W,
               FESS_VERTICAL_OFFSET + FESS_WIDTH / 2,
               true,
               "center"
@@ -1109,7 +1110,7 @@ function pale({ tincture, cotised, ornament }: Ordinary) {
             ORNAMENTS[ornament](0, H, -PALE_WIDTH / 2, false),
             // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
             // we traverse around the pale clockwise.
-            ORNAMENTS[ornament](H, 0, PALE_WIDTH / 2, false, "end")
+            ORNAMENTS[ornament](0, -H, PALE_WIDTH / 2, false, "end")
           )
         ),
         tincture
@@ -1329,17 +1330,16 @@ function wrapSimpleOrnamenter(
   function mutatinglyApplyTransforms(
     [start, main, end]: RelativeOrnamentPath,
     {
-      invertY = false,
       invertX = false,
-      yOffset = 0,
-      // TODO: This is not correct!
+      invertY = false,
       xOffset = 0,
+      yOffset = 0,
       alignToEnd = false,
     }: {
-      invertY?: boolean;
       invertX?: boolean;
-      yOffset?: number;
+      invertY?: boolean;
       xOffset?: number;
+      yOffset?: number;
       alignToEnd?: boolean;
     }
   ): RelativeOrnamentPath {
