@@ -763,7 +763,7 @@ function bend({ tincture, cotised, ornament }: Ordinary) {
       BEND_LENGTH,
       0,
       BEND_WIDTH / 2,
-      true,
+      false,
       "end"
     );
     bend.appendChild(

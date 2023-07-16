@@ -479,7 +479,7 @@ function bend({ tincture, cotised, ornament }) {
         const [start, top, topEnd] = ORNAMENTS[ornament](0, BEND_LENGTH, -BEND_WIDTH / 2, false);
         // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
         // we traverse around the bend clockwise.
-        const [bottomStart, bottom] = ORNAMENTS[ornament](BEND_LENGTH, 0, BEND_WIDTH / 2, true, "end");
+        const [bottomStart, bottom] = ORNAMENTS[ornament](BEND_LENGTH, 0, BEND_WIDTH / 2, false, "end");
         bend.appendChild(svg.path(path.from(start, top, { type: "l", loc: Coordinate.add(topEnd.loc, bottomStart.loc) }, bottom, { type: "z" }), tincture));
     }
     else {
