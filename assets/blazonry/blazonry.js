@@ -616,10 +616,7 @@ const FESS_VERTICAL_OFFSET = -H_2 + (W / 3) * (3 / 2);
 function fess({ tincture, cotised, ornament }) {
     const fess = svg.g();
     if (ornament != null) {
-        fess.appendChild(svg.path(path.fromPoints([
-            ...ORNAMENTS[ornament](-W_2, W_2, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2, false, "center"),
-            ...ORNAMENTS[ornament](-W_2, W_2, FESS_VERTICAL_OFFSET + FESS_WIDTH / 2, true, "center").reverse(),
-        ]), tincture));
+        fess.appendChild(svg.path(path.from(relativePathsToClosedLoop(ORNAMENTS[ornament](-W_2, W_2, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2, false, "center"), ORNAMENTS[ornament](W_2, -W_2, FESS_VERTICAL_OFFSET + FESS_WIDTH / 2, true, "center"))), tincture));
     }
     else {
         fess.appendChild(svg.line([-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET], tincture, FESS_WIDTH));
@@ -770,7 +767,9 @@ function renderCharge(charge) {
 // #region ORNAMENT
 // ----------------------------------------------------------------------------
 function wrapSimpleOrnamenter(ornamenter, isPatternComposite = false) {
-    function mutatinglyApplyTransforms([start, main, end], { invertY = false, invertX = false, yOffset = 0, alignToEnd = false, }) {
+    function mutatinglyApplyTransforms([start, main, end], { invertY = false, invertX = false, yOffset = 0, 
+    // TODO: This is not correct!
+    xOffset = 0, alignToEnd = false, }) {
         if (alignToEnd) {
             [start, end] = [end, start];
             main.reverse();
@@ -791,17 +790,19 @@ function wrapSimpleOrnamenter(ornamenter, isPatternComposite = false) {
             }
             PathCommand.negateY(end);
         }
-        start.loc[1] += yOffset;
-        end.loc[1] -= yOffset;
+        start.loc = Coordinate.add(start.loc, [xOffset, yOffset]);
+        end.loc = Coordinate.add(end.loc, [-xOffset, -yOffset]);
         return [start, main, end];
     }
     return (x1, x2, yOffset, invertY, alignment = "start") => {
         const invertX = x2 < x1;
         const length = Math.abs(x2 - x1);
+        const xOffset = x1;
         if (alignment === "start") {
             return mutatinglyApplyTransforms(ornamenter(length), {
                 invertX,
                 invertY,
+                xOffset,
                 yOffset,
             });
         }
@@ -809,6 +810,7 @@ function wrapSimpleOrnamenter(ornamenter, isPatternComposite = false) {
             return mutatinglyApplyTransforms(ornamenter(length), {
                 invertX,
                 invertY,
+                xOffset,
                 yOffset,
                 alignToEnd: true,
             });
@@ -816,7 +818,7 @@ function wrapSimpleOrnamenter(ornamenter, isPatternComposite = false) {
         else if (alignment === "center") {
             const [start, firstMain] = mutatinglyApplyTransforms(ornamenter(length / 2), { invertY: isPatternComposite, alignToEnd: true });
             const [, secondMain, end] = ornamenter(length / 2);
-            return mutatinglyApplyTransforms([start, [...firstMain, ...secondMain], end], { invertX, invertY, yOffset });
+            return mutatinglyApplyTransforms([start, [...firstMain, ...secondMain], end], { invertX, invertY, xOffset, yOffset });
         }
         else {
             assertNever(alignment);
