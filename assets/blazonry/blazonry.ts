@@ -76,8 +76,8 @@ type DiscriminateUnion<T, K extends keyof T, V extends T[K]> = T extends T
   : never;
 
 const SVG_ELEMENT_TO_COORDINATES: {
-  [K in PathCommand.Element["type"]]: (
-    e: DiscriminateUnion<PathCommand.Element, "type", K>
+  [K in PathCommand.Any["type"]]: (
+    e: DiscriminateUnion<PathCommand.Any, "type", K>
   ) => Coordinate[];
 } = {
   l: (e) => [e.loc],
@@ -115,15 +115,15 @@ namespace PathCommand {
 
   export type Relative = m | l | c | Z | z;
   export type Absolute = M | L | Z | z;
-  export type Element = Relative | Absolute;
+  export type Any = Relative | Absolute;
 
-  export function negateX(e: Element): void {
+  export function negateX(e: Any): void {
     for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
       c[0] *= -1;
     }
   }
 
-  export function negateY(e: Element): void {
+  export function negateY(e: Any): void {
     for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
       c[1] *= -1;
     }
@@ -670,13 +670,7 @@ function path(strings: TemplateStringsArray, ...values: number[]): string {
   return parts.join("").trim().replaceAll("\n", "").replaceAll(/ +/g, " ");
 }
 
-path.fromPoints = (points: Coordinate[]): string => {
-  return "M " + points.map(([x, y]) => `${x} ${y}`).join(" L ") + " Z";
-};
-
-path.from = (
-  ...elements: (PathCommand.Element | PathCommand.Element[])[]
-): string => {
+path.from = (...elements: (PathCommand.Any | PathCommand.Any[])[]): string => {
   return elements
     .flat()
     .map(
@@ -1607,92 +1601,126 @@ const VARIED: Record<string, VariedClipPathGenerator> = {
 // #region HIGHER-ORDER ELEMENTS
 // ----------------------------------------------------------------------------
 
-const PARTY_PER_CLIP_PATHS: Record<Direction, [string, string]> = {
-  pale: [
-    path`
-      M -${W_2} -${H_2}
-      L       0 -${H_2}
-      L       0  ${H_2}
-      L -${W_2}  ${H_2}
-    `,
-    path`
-      M       0 -${H_2}
-      L       0  ${H_2}
-      L  ${W_2}  ${H_2}
-      L  ${W_2} -${H_2}
-    `,
-  ],
-  fess: [
-    path`
-      M -${W_2} -${H_2}
-      L -${W_2}       0
-      L  ${W_2}       0
-      L  ${W_2} -${H_2}
-      Z
-    `,
-    path`
-      M -${W_2} ${H_2}
-      L -${W_2}      0
-      L  ${W_2}      0
-      L  ${W_2} ${H_2}
-      Z
-    `,
-  ],
-  bend: [
-    path`
-      M -${W_2} ${-H_2}
-      L  ${W_2} ${-H_2}
-      L  ${W_2} ${-H_2 + W}
-      Z
-    `,
-    path`
-      M -${W_2} ${-H_2}
-      L  ${W_2} ${-H_2 + W}
-      L  ${W_2} ${H_2}
-      L -${W_2} ${H_2}
-      Z
-    `,
-  ],
-  chevron: [
-    // TODO: Done empirically, and to run the midline of the chevron ordinary. Both these and the
-    // ordinary should be rewritten to be based on W/H.
-    path`
-      M -51  41
-      L   0 -10
-      L  51  41
-      L  51  60
-      L -51  60
-      Z
-    `,
-    path`
-      M -51  41
-      L   0 -10
-      L  51  41
-      L  51 -60
-      L -51 -60
-      Z
-    `,
-  ],
-  saltire: [
-    // TODO: Same here as above for chevron.
-    path`
-      M -51  41
-      L  52 -62
-      L -52 -62
-      L  51  41
-      L  51  60
-      L -51  60
-      Z
-    `,
-    path`
-      M -52 -62
-      L  51  41
-      L  52 -62
-      L -51  41
-      Z
-    `,
-  ],
+type Alignment = "start" | "end" | "center";
+
+type PartyPerClipPath =
+  | [Coordinate, Alignment, Coordinate]
+  | [Coordinate, Alignment, Coordinate, Alignment, Coordinate];
+
+const PARTY_PER_CLIP_PATHS: Record<Direction, PartyPerClipPath> = {
+  // pale: [
+  //   path`
+  //     M -${W_2} -${H_2}
+  //     L       0 -${H_2}
+  //     L       0  ${H_2}
+  //     L -${W_2}  ${H_2}
+  //   `,
+  //   path`
+  //     M       0 -${H_2}
+  //     L       0  ${H_2}
+  //     L  ${W_2}  ${H_2}
+  //     L  ${W_2} -${H_2}
+  //   `,
+  // ],
+  fess: [[-W_2, -H / 10], "center", [W_2, -H / 10]],
+  // bend: [
+  //   path`
+  //     M -${W_2} ${-H_2}
+  //     L  ${W_2} ${-H_2}
+  //     L  ${W_2} ${-H_2 + W}
+  //     Z
+  //   `,
+  //   path`
+  //     M -${W_2} ${-H_2}
+  //     L  ${W_2} ${-H_2 + W}
+  //     L  ${W_2} ${H_2}
+  //     L -${W_2} ${H_2}
+  //     Z
+  //   `,
+  // ],
+  // chevron: [
+  //   // TODO: Done empirically, and to run the midline of the chevron ordinary. Both these and the
+  //   // ordinary should be rewritten to be based on W/H.
+  //   path`
+  //     M -51  41
+  //     L   0 -10
+  //     L  51  41
+  //     L  51  60
+  //     L -51  60
+  //     Z
+  //   `,
+  //   path`
+  //     M -51  41
+  //     L   0 -10
+  //     L  51  41
+  //     L  51 -60
+  //     L -51 -60
+  //     Z
+  //   `,
+  // ],
+  // saltire: [
+  //   // TODO: Same here as above for chevron.
+  //   path`
+  //     M -51  41
+  //     L  52 -62
+  //     L -52 -62
+  //     L  51  41
+  //     L  51  60
+  //     L -51  60
+  //     Z
+  //   `,
+  //   path`
+  //     M -52 -62
+  //     L  51  41
+  //     L  52 -62
+  //     L -51  41
+  //     Z
+  //   `,
+  // ],
 };
+
+function getPartyPerClipPath(
+  direction: Direction,
+  ornament: Ornament | undefined
+): string {
+  // TODO: Special-case pale, which doesn't start from the top. Saltire?
+  const startCommands: PathCommand.Any[] = [
+    { type: "M", loc: [W_2, -H_2] },
+    { type: "L", loc: [-W_2, -H_2] },
+  ];
+
+  const spec = PARTY_PER_CLIP_PATHS[direction];
+  if (spec.length === 3) {
+    const [[x1, y1], alignment, [x2, y2]] = spec;
+    if (ornament != null) {
+      const length = Math.hypot(x2 - x1, y2 - y1);
+      const [start, main, end] = ORNAMENTS[ornament](
+        length,
+        H_2 + y1,
+        false,
+        alignment
+      );
+      return path.from(
+        startCommands,
+        { type: "l", loc: start.loc },
+        main,
+        { type: "l", loc: end.loc },
+        { type: "z" }
+      );
+    } else {
+      return path.from(
+        startCommands,
+        { type: "L", loc: [x1, y1] },
+        { type: "L", loc: [x2, y2] },
+        { type: "Z" }
+      );
+    }
+  } else if (spec.length === 5) {
+    return "";
+  } else {
+    assertNever(spec);
+  }
+}
 
 const QUARTERINGS: Record<Quarter, { translate: Coordinate }> = {
   1: {
@@ -1801,9 +1829,11 @@ function complexContent(container: SVGElement, content: ComplexContent) {
 
   if ("party" in content) {
     const g1 = svg.g();
-    g1.style.clipPath = `path("${PARTY_PER_CLIP_PATHS[content.party][0]}")`;
+    g1.style.clipPath = `path("${getPartyPerClipPath(
+      content.party,
+      content.ornament
+    )}")`;
     const g2 = svg.g();
-    g2.style.clipPath = `path("${PARTY_PER_CLIP_PATHS[content.party][1]}")`;
     g1.appendChild(field(content.first));
     g2.appendChild(field(content.second));
     if (content.content) {
@@ -1816,8 +1846,9 @@ function complexContent(container: SVGElement, content: ComplexContent) {
         overwriteCounterchangedTincture(content.content, content.first)
       );
     }
-    container.appendChild(g1);
+    // Add g2 first so that it's underneath g1, which is the only one with a clip path.
     container.appendChild(g2);
+    container.appendChild(g1);
   } else if ("quarters" in content) {
     const quartered: Record<Quarter, SVGElement> = {
       1: svg.g(),

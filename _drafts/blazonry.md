@@ -31,7 +31,7 @@ Try these:
   <form id="form">
   <!-- argent a bend gules cotised azure -->
   <!-- party per pale argent and gules a bend azure cotised counterchanged -->
-    <input type="text" id="blazon-input" value="argent a bend embattled gules">
+    <input type="text" id="blazon-input" value="party per fess engrailed gules and vert">
     <br>
     <button type="submit">
     Preview
