@@ -1936,7 +1936,7 @@ parseAndRenderBlazon();
 
 // These files are small and there's not that many of them, so it's easier if we just eagerly
 // load of these and then try to access them sync later and hope for the best. Making the ENTIRE
-// implementation sync just for this is a passive PITA.
+// implementation async just for this is a passive PITA.
 fetchComplexSvg("lion", "rampant");
 
 // #endregion
