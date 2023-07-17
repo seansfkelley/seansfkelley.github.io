@@ -943,6 +943,40 @@ chevron.surround = new ExhaustiveLocator(
   [0.5, 0.5, 0.5, 0.5]
 );
 
+chevron.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
+  const [topLeft, midLeft, mid, midRight, topRight] = [
+    [-W_2, -H_2],
+    // See the main renderer for how these values are picked.
+    [-W_2, -H_2 + W],
+    [0, -(H_2 - W_2)],
+    [-W_2 + H, H_2],
+    [W_2, -H_2],
+  ] satisfies Coordinate[];
+
+  if (ornament == null) {
+    return [
+      { type: "M", loc: topLeft },
+      { type: "L", loc: midLeft },
+      { type: "L", loc: mid },
+      { type: "L", loc: midRight },
+      { type: "L", loc: topRight },
+      { type: "Z" },
+    ];
+  } else {
+    const [leftStart, leftMain, leftEnd] = ORNAMENTS[ornament](
+      Math.hypot(mid[0] - midLeft[0], mid[1] - midLeft[1]),
+      0,
+      false,
+      "end"
+    );
+    // TODO:
+    // 1. Rotate all the points
+    // 2. Shift all the points such that the ornament ends on the midpoint (subtract end?).
+    // 3. Rewrite the initial move point to be a line draw. Drop the end point.
+    // 4. Append to list and repeat with the right, but for start-alignment.
+  }
+};
+
 function cross({ tincture, cotised }: Ordinary) {
   const crossWidth = W / 4;
   // 14 is too hardcoded -- should be defined based on W/H ratios instead.
