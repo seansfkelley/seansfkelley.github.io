@@ -242,6 +242,7 @@ interface OrdinaryRenderer {
   (ordinary: Ordinary): SVGElement;
   on: ParametricLocator;
   surround: ParametricLocator;
+  party: (ornament: Ornament | undefined) => PathCommand.Any[];
 }
 
 interface ChargeRenderer<T extends Charge> {
@@ -1096,6 +1097,22 @@ fess.surround = new ReflectiveLocator(
   [W_2, -4]
 );
 
+fess.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
+  const [topLeft, midLeft, midRight, topRight] = [
+    { type: "M", loc: [-W_2, -H_2] },
+    { type: "L", loc: [-W_2, -H / 10] },
+    { type: "L", loc: [W_2, -H / 10] },
+    { type: "L", loc: [W_2, -H_2] },
+  ] satisfies PathCommand.Any[];
+
+  if (ornament == null) {
+    return [topLeft, midLeft, midRight, topRight, { type: "Z" }];
+  } else {
+    const [start, main, end] = ORNAMENTS[ornament](W, 0, false, "center");
+    return [topLeft, midLeft, ...main, midRight, topRight, { type: "Z" }];
+  }
+};
+
 const PALE_WIDTH = W / 3;
 function pale({ tincture, cotised, ornament }: Ordinary) {
   const pale = svg.g();
@@ -1607,137 +1624,6 @@ const VARIED: Record<string, VariedClipPathGenerator> = {
 // #region HIGHER-ORDER ELEMENTS
 // ----------------------------------------------------------------------------
 
-type Alignment = "start" | "end" | "center";
-
-type PartyPerClipPath =
-  | [Coordinate, Alignment, Coordinate]
-  | [Coordinate, Alignment, Coordinate, Alignment, Coordinate];
-
-const PARTY_PER_CLIP_PATHS: Record<Direction, PartyPerClipPath> = {
-  // pale: [
-  //   path`
-  //     M -${W_2} -${H_2}
-  //     L       0 -${H_2}
-  //     L       0  ${H_2}
-  //     L -${W_2}  ${H_2}
-  //   `,
-  //   path`
-  //     M       0 -${H_2}
-  //     L       0  ${H_2}
-  //     L  ${W_2}  ${H_2}
-  //     L  ${W_2} -${H_2}
-  //   `,
-  // ],
-  fess: [
-    [-W_2, -H / 10], //
-    "center",
-    [W_2, -H / 10],
-  ],
-  // bend: [
-  //   path`
-  //     M -${W_2} ${-H_2}
-  //     L  ${W_2} ${-H_2}
-  //     L  ${W_2} ${-H_2 + W}
-  //     Z
-  //   `,
-  //   path`
-  //     M -${W_2} ${-H_2}
-  //     L  ${W_2} ${-H_2 + W}
-  //     L  ${W_2} ${H_2}
-  //     L -${W_2} ${H_2}
-  //     Z
-  //   `,
-  // ],
-  chevron: [
-    [-W_2, -H_2 + W],
-    "end",
-    [0, -(H_2 - W_2)],
-    "start",
-    [-W_2 + H, H_2],
-  ],
-  // chevron: [
-
-  //   path`
-  //     M -51  41
-  //     L   0 -10
-  //     L  51  41
-  //     L  51  60
-  //     L -51  60
-  //     Z
-  //   `,
-  //   path`
-  //     M -51  41
-  //     L   0 -10
-  //     L  51  41
-  //     L  51 -60
-  //     L -51 -60
-  //     Z
-  //   `,
-  // ],
-  // saltire: [
-  //   // TODO: Same here as above for chevron.
-  //   path`
-  //     M -51  41
-  //     L  52 -62
-  //     L -52 -62
-  //     L  51  41
-  //     L  51  60
-  //     L -51  60
-  //     Z
-  //   `,
-  //   path`
-  //     M -52 -62
-  //     L  51  41
-  //     L  52 -62
-  //     L -51  41
-  //     Z
-  //   `,
-  // ],
-};
-
-function getPartyPerClipPath(
-  direction: Direction,
-  ornament: Ornament | undefined
-): string {
-  // TODO: Special-case pale, which doesn't start from the top. Saltire?
-  const commands: PathCommand.Any[] = [
-    { type: "M", loc: [W_2, -H_2] },
-    { type: "L", loc: [-W_2, -H_2] },
-  ];
-
-  const segments = PARTY_PER_CLIP_PATHS[direction];
-  for (let i = 0; i < segments.length - 2; i += 2) {
-    const [[x1, y1], alignment, [x2, y2]] = segments.slice(
-      i,
-      i + 3
-    ) as PartyPerClipPath;
-    if (ornament != null) {
-      const length = Math.hypot(x2 - x1, y2 - y1);
-      const [start, main, end] = ORNAMENTS[ornament](
-        length,
-        H_2 + y1,
-        false,
-        alignment
-      );
-      const angle = radians([x1, y1], [x2, y2]);
-      commands.push(
-        { type: "l" as const, loc: start.loc },
-        ...main.map((e) => {
-          for (const p of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
-            [p[0], p[1]] = rotate(p, angle);
-          }
-          return e;
-        }),
-        { type: "l" as const, loc: end.loc }
-      );
-    } else {
-      commands.push({ type: "L", loc: [x1, y1] }, { type: "L", loc: [x2, y2] });
-    }
-  }
-
-  return path.from(commands, { type: "Z" });
-}
-
 const QUARTERINGS: Record<Quarter, { translate: Coordinate }> = {
   1: {
     translate: [-25, -30],
@@ -1845,9 +1731,8 @@ function complexContent(container: SVGElement, content: ComplexContent) {
 
   if ("party" in content) {
     const g1 = svg.g();
-    g1.style.clipPath = `path("${getPartyPerClipPath(
-      content.party,
-      content.ornament
+    g1.style.clipPath = `path("${path.from(
+      ORDINARIES[content.party].party(content.ornament)
     )}")`;
     const g2 = svg.g();
     g1.appendChild(field(content.first));
