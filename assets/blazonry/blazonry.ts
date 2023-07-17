@@ -900,7 +900,7 @@ function chevron({ tincture, cotised }: Ordinary) {
           svg.line(
             Coordinate.add(end, [0, sign * offset]),
             Coordinate.add(mid, [0, sign * offset]),
-            tincture,
+            cotised,
             COTISED_WIDTH,
             "square"
           )
