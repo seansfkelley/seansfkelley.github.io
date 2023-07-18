@@ -16,16 +16,19 @@ Blazons (and the coats of arms they represent) can get enormously complicated.
 
 [provide example]
 
-Blazonry jargon is highly structured, which makes it a good match for the same sorts of parsers used to implement programming languages. So I took one of those and taught it to parse and render blazons. Check out [the formal grammar](/assets/blazonry/grammar.txt).
+Blazonry jargon is highly structured, which makes it a good match for the same sorts of parsers used to implement programming languages. So I took one of those and taught it to parse and render blazons.
+
+Blazons have many composable components, from <a href="#" data-example="Gules.">simple colors</a> ("field") and <a href="#" data-example="Argent, a fess Sable.">geometric shapes</a> ("ordinary"), through iconography both <a href="#" data-example="Argent, six mullets Sable.">simple</a> and <a href="#" data-example="Sable, a lion rampant Gules armed and langued Or.">complex</a> ("charge"), into <a href="#" data-example="Barry bendy of eight Azure and Argent.">patterned backgrounds</a> ("varied") and <a href="#" data-example="Party per pale Argent and Gules, three rondels counterchanged.">subdivisions</a> ("party").
 
 Try these:
 
 <!-- TODO: Use more famous ones! -->
 
-- <a href="#" data-example>Azure, a bend Or.</a>
-- <a href="#" data-example>Party per pale gules and vert.</a>
-- <a href="#" data-example>Argent, a cross Gules.</a>
+- <a href="#" data-example>Azure, a bend Or.</a> – [_Scrope v. Grosvenor_](https://en.wikipedia.org/wiki/Scrope_v_Grosvenor)
+- <a href="#" data-example>Argent, a cross Gules.</a> – [Cross of St. George](https://en.wikipedia.org/wiki/Flag_of_England)
 - <a href="#" data-example>Argent on a chevron Gules between three leopard's faces Sable three castles Or.</a>
+
+You can mix and match these examples, of course, or copy-paste blazons from the Wikipedia page or other pages linked below. There is a very long tail of unusual ordinaries, charges, varieds, etc., so not everything you may find is supported. You can always poke around [the formal grammar](/assets/blazonry/grammar.txt) to see what's defined or not.
 
 <div class="center">
   <form id="form">
@@ -42,8 +45,8 @@ Try these:
 
   <svg
     id="rendered"
-    width="200"
-    height="240"
+    width="300"
+    height="360"
     viewBox="-52 -62 104 124"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

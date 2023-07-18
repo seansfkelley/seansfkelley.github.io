@@ -2,7 +2,6 @@
 // - party per ornament
 // - finish ornament support in each ordinary
 // - add more ornaments
-// - some introductory text for shapes and colors and keywords with clickable links to demonstrate them
 // - posture -- for things like swords, requires resizing
 // - posture -- incorrect for swords; we should probably rotate the SVG 90 degress and use that as the base
 // - InDirection -- at least in the case of chevron and saltire, they are rotated to match -- matters for swords, at least
@@ -11,6 +10,7 @@
 // - "overall"
 // - standardize size of charges (40x40?) so that scaling works as expected for all of them
 // - thin lines between quarters
+// - bend sinister?
 // - parser issues
 //   - needs backtracking to handle some more complex cases
 //     - quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
