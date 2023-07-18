@@ -277,10 +277,11 @@ interface OrnamentPathGenerator {
 type Coordinate = [x: number, y: number];
 
 const Coordinate = {
-  add: ([x1, y1]: Coordinate, [x2, y2]: Coordinate): Coordinate => [
-    x1 + x2,
-    y1 + y2,
-  ],
+  add: (...coordinates: Coordinate[]): Coordinate =>
+    coordinates.reduce(([x1, y1], [x2, y2]) => [x1 + x2, y1 + y2]),
+  length: ([x1, y1]: Coordinate, [x2, y2]: Coordinate): number =>
+    Math.hypot(x2 - x1, y2 - y1),
+  negate: ([x, y]: Coordinate): Coordinate => [-x, -y],
 };
 
 type Quadrilateral = [Coordinate, Coordinate, Coordinate, Coordinate];
@@ -601,13 +602,21 @@ function applyTransforms(
     translate,
     scale,
     rotate,
-  }: { translate?: Coordinate; scale?: number; rotate?: number } = {}
+  }: {
+    translate?: Coordinate;
+    scale?: number | Coordinate;
+    rotate?: number;
+  } = {}
 ): void {
   const transform = [
     translate != null
       ? `translate(${translate[0]}, ${translate[1]})`
       : undefined,
-    scale != null && scale !== 1 ? `scale(${scale})` : undefined,
+    typeof scale === "number" && scale !== 1
+      ? `scale(${scale})`
+      : Array.isArray(scale)
+      ? `scale(${scale[0]}, ${scale[1]})`
+      : undefined,
     rotate != null ? `rotate(${(rotate / (2 * Math.PI)) * 360})` : undefined,
   ]
     .filter(Boolean)
@@ -878,21 +887,81 @@ chief.on = new LineSegmentLocator(
 
 chief.surround = new NullLocator();
 
-function chevron({ tincture, cotised }: Ordinary) {
-  const chevronWidth = W / 4;
+const CHEVRON_WIDTH = W / 4;
 
+function chevron({ tincture, cotised, ornament }: Ordinary) {
   const left: Coordinate = [-W_2, -H_2 + W];
   const right: Coordinate = [-W_2 + H, H_2];
   // Cross at 45 degrees starting from the top edge, so we bias upwards from the center.
   const mid: Coordinate = [0, -(H_2 - W_2)];
 
   const chevron = svg.g();
-  chevron.appendChild(svg.line(left, mid, tincture, chevronWidth, "square"));
-  chevron.appendChild(svg.line(mid, right, tincture, chevronWidth, "square"));
+
+  if (ornament != null) {
+    const topLength = Coordinate.length(mid, right) + CHEVRON_WIDTH / 2;
+    const bottomLength = Coordinate.length(mid, right) - CHEVRON_WIDTH / 2;
+    for (const sign of [-1, 1]) {
+      const [topStart, topMain, topEnd] = ORNAMENTS[ornament](
+        topLength,
+        0,
+        false,
+        "start"
+      );
+      const [bottomStart, bottomMain, bottomEnd] = ORNAMENTS[ornament](
+        -bottomLength,
+        0,
+        true,
+        "end"
+      );
+
+      const p = svg.path(
+        path.from(
+          { type: "m", loc: [0, 0] },
+          topMain,
+          {
+            type: "l",
+            loc: Coordinate.add(
+              topEnd.loc,
+              [0, CHEVRON_WIDTH],
+              bottomStart.loc
+            ),
+          },
+          bottomMain,
+          {
+            type: "l",
+            // topStart appears here because we didn't include it at the beginning so we would start
+            // at exactly 0, 0. The ornaments typically adjust slightly up or down before drawing
+            // their pattern, which would create a gap when we reflect over the center line.
+            loc: Coordinate.add(topStart.loc, bottomEnd.loc),
+          },
+          // A bit weird, but: juke out of the way a bit to overlap with the other side. Ensures
+          // that the very skinny point at the top of the chevron doesn't turn itself inside out
+          // and fill the wrong side when using e.g. engrailed.
+          { type: "l", loc: [-CHEVRON_WIDTH / 10, 0] },
+          { type: "z" }
+        ),
+        tincture
+      );
+      applyTransforms(p, {
+        scale: [sign, 1],
+        rotate: Math.PI / 4,
+        translate: Coordinate.add(mid, [
+          0,
+          -Math.hypot(CHEVRON_WIDTH, CHEVRON_WIDTH) / 2,
+        ]),
+      });
+      chevron.append(p);
+    }
+  } else {
+    chevron.appendChild(svg.line(left, mid, tincture, CHEVRON_WIDTH, "square"));
+    chevron.appendChild(
+      svg.line(mid, right, tincture, CHEVRON_WIDTH, "square")
+    );
+  }
 
   if (cotised != null) {
     // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
-    const offset = Math.sin(Math.PI / 4) * chevronWidth + COTISED_WIDTH * 2;
+    const offset = Math.sin(Math.PI / 4) * CHEVRON_WIDTH + COTISED_WIDTH * 2;
 
     for (const end of [left, right]) {
       for (const sign of [-1, 1]) {
@@ -1061,20 +1130,15 @@ function fess({ tincture, cotised, ornament }: Ordinary) {
     fess.appendChild(
       svg.path(
         path.from(
-          { type: "m", loc: [-W_2, 0] },
+          { type: "m", loc: [-W_2, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2] },
           relativePathsToClosedLoop(
-            ORNAMENTS[ornament](
-              W,
-              FESS_VERTICAL_OFFSET - FESS_WIDTH / 2,
-              false,
-              "center"
-            ),
-            ORNAMENTS[ornament](
-              -W,
-              FESS_VERTICAL_OFFSET + FESS_WIDTH / 2,
-              true,
-              "center"
-            )
+            ORNAMENTS[ornament](W, 0, false, "center"),
+            [
+              { type: "m", loc: [0, 0] },
+              [{ type: "l", loc: [0, FESS_WIDTH] }],
+              { type: "m", loc: [0, 0] },
+            ],
+            ORNAMENTS[ornament](-W, 0, true, "center")
           )
         ),
         tincture
@@ -1395,6 +1459,17 @@ function wrapSimpleOrnamenter(
       main.reverse();
       start.loc[0] += end.loc[0];
       end.loc[0] = 0;
+      // Swapping start and end means that the adjustments to get to/from the starting baseline are
+      // now in the opposite order, so we'll offset the other direction! Negate them.
+      start.loc[1] *= -1;
+      end.loc[1] *= -1;
+      // If the pattern is composite, each of the pieces of the cycle now has the same problem as
+      // the start/end, since their ordering is reversed. Negate them too.
+      if (isPatternCycleComposite) {
+        for (const e of main) {
+          PathCommand.negateY(e);
+        }
+      }
     }
 
     if (invertX) {
@@ -1431,16 +1506,14 @@ function wrapSimpleOrnamenter(
     } else if (alignment === "end") {
       return mutatinglyApplyTransforms(ornamenter(length), {
         invertX,
-        // Note: invertY must be a function of composite if doing end-alignment.
-        invertY: isPatternCycleComposite !== invertY, // "xor"
+        invertY,
         yOffset,
         alignToEnd: true,
       });
     } else if (alignment === "center") {
       const [start, firstMain] = mutatinglyApplyTransforms(
         ornamenter(length / 2),
-        // Note: invertY must be a function of composite if doing end-alignment.
-        { invertY: isPatternCycleComposite, alignToEnd: true }
+        { alignToEnd: true }
       );
 
       const [, secondMain, end] = ornamenter(length / 2);
@@ -1455,17 +1528,35 @@ function wrapSimpleOrnamenter(
 }
 
 function relativePathsToClosedLoop(
-  [p1Start, p1Main, p1End]: RelativeOrnamentPath,
-  [p2Start, p2Main]: RelativeOrnamentPath
+  ...paths: RelativeOrnamentPath[]
 ): PathCommand.Relative[] {
-  return [
-    p1Start,
-    ...p1Main,
-    { type: "l", loc: Coordinate.add(p1End.loc, p2Start.loc) },
-    ...p2Main,
-    { type: "z" },
+  const commands: PathCommand.Relative[] = [
+    paths[0][0],
+    ...paths[0][1],
+    paths[0][2],
   ];
+  for (const [start, middle, end] of paths.slice(1)) {
+    const previous = commands.pop();
+    assert(
+      previous != null && previous.type === "m",
+      "commands must always end in m"
+    );
+    commands.push(
+      { type: "l", loc: Coordinate.add(previous.loc, start.loc) },
+      ...middle,
+      end
+    );
+  }
+  commands.pop();
+  commands.push({ type: "z" });
+  return commands;
 }
+
+relativePathsToClosedLoop.debug = (
+  ...paths: RelativeOrnamentPath[]
+): PathCommand.Relative[] => {
+  return paths.flat(2).map((c) => (c.type === "m" ? { ...c, type: "l" } : c));
+};
 
 function embattled(length: number): RelativeOrnamentPath {
   const xStep = W / 12;
@@ -1474,20 +1565,20 @@ function embattled(length: number): RelativeOrnamentPath {
   const points: Coordinate[] = [[xStep / 2, 0]];
 
   let x = length - xStep / 2;
-  let y = -yStep / 2;
+  let y = yStep / 2;
   while (x > 0) {
-    points.push([0, yStep], [xStep, 0]);
+    points.push([0, -yStep], [xStep, 0]);
     x -= xStep;
-    y += yStep;
+    y -= yStep;
     if (x > 0) {
-      points.push([0, -yStep], [xStep, 0]);
+      points.push([0, yStep], [xStep, 0]);
       x -= xStep;
-      y -= yStep;
+      y += yStep;
     }
   }
 
   return [
-    { type: "m", loc: [0, -yStep / 2] },
+    { type: "m", loc: [0, yStep / 2] },
     points.map((loc) => ({ type: "l", loc })),
     { type: "m", loc: [x, -y] },
   ];
