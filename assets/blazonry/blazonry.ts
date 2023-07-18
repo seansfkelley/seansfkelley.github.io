@@ -599,10 +599,12 @@ function assertNever(nope: never): never {
 function applyTransforms(
   element: SVGElement,
   {
+    origin,
     translate,
     scale,
     rotate,
   }: {
+    origin?: Coordinate;
     translate?: Coordinate;
     scale?: number | Coordinate;
     rotate?: number;
@@ -622,6 +624,9 @@ function applyTransforms(
     .filter(Boolean)
     .join(" ");
 
+  if (origin != null) {
+    element.setAttribute("transform-origin", `${origin[0]} ${origin[1]}`);
+  }
   element.setAttribute("transform", transform);
 }
 
@@ -916,7 +921,7 @@ function chevron({ tincture, cotised, ornament }: Ordinary) {
 
       const p = svg.path(
         path.from(
-          { type: "m", loc: [0, 0] },
+          { type: "m", loc: topStart.loc }, //
           topMain,
           {
             type: "l",
@@ -929,9 +934,10 @@ function chevron({ tincture, cotised, ornament }: Ordinary) {
           bottomMain,
           {
             type: "l",
-            // topStart appears here because we didn't include it at the beginning so we would start
-            // at exactly 0, 0. The ornaments typically adjust slightly up or down before drawing
-            // their pattern, which would create a gap when we reflect over the center line.
+            // topStart appears here because we want to ensure that the line from the first point
+            // (which is topStart) to the last point is at pi/4 (ignoring the hack immediately
+            // below). We are guaranteed that it is pi/4 from 0, 0 to bottomEnd, but since we shift
+            // it by topStart we need to shift it here too.
             loc: Coordinate.add(topStart.loc, bottomEnd.loc),
           },
           // A bit weird, but: juke out of the way a bit to overlap with the other side. Ensures
@@ -943,6 +949,7 @@ function chevron({ tincture, cotised, ornament }: Ordinary) {
         tincture
       );
       applyTransforms(p, {
+        origin: topStart.loc,
         scale: [sign, 1],
         rotate: Math.PI / 4,
         translate: Coordinate.add(mid, [
