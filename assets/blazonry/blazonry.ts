@@ -1,5 +1,5 @@
 // TODO
-// - party per ornament
+// - party per ornament (and quarterly!)
 // - finish ornament support in each ordinary
 // - add more ornaments
 // - posture -- for things like swords, requires resizing
@@ -11,6 +11,7 @@
 // - standardize size of charges (40x40?) so that scaling works as expected for all of them
 // - thin lines between quarters
 // - bend sinister?
+// - fretty?
 // - parser issues
 //   - needs backtracking to handle some more complex cases
 //     - quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
@@ -28,7 +29,7 @@
 // - canton-specific overrides for ordinaries and charge placements so they don't look squished by the scale
 // - why is a chevron embattled/indented appear to be vertically shifted, but engrailed does not? (or does it?)
 // - multiple ordiaries?
-// - can party per field have complex content in it?
+// - party per field have complex content (using first/second verbiage like with quarterly)
 
 // #region LAYOUT
 
@@ -230,7 +231,7 @@ interface LionCharge extends BaseCharge {
   charge: "lion";
   armed?: Tincture;
   langued?: Tincture;
-  pose: "passant" | "rampant" | "reguardant";
+  pose: "passant" | "rampant";
 }
 
 type Charge = SimpleCharge | LionCharge;
@@ -1219,7 +1220,16 @@ fess.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
     return [topLeft, midLeft, midRight, topRight, { type: "Z" }];
   } else {
     const [start, main, end] = ORNAMENTS[ornament](W, 0, false, "center");
-    return [topLeft, midLeft, ...main, midRight, topRight, { type: "Z" }];
+    return [
+      topLeft,
+      midLeft,
+      { type: "l", loc: start.loc },
+      ...main,
+      { type: "l", loc: end.loc },
+      midRight,
+      topRight,
+      { type: "Z" },
+    ];
   }
 };
 

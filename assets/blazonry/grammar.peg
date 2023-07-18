@@ -65,11 +65,12 @@ LionDescription
 LionPose
   = "rampant"
   / "passant"
-  / "reguardant"
+  // other variants: "passant guardant", "reguardant"
 
 LionModifier
   = "armed"
   / "langued"
+  // other variants: "crowned", "double queued"
 
 LionModifiers
   // This is unfortunately rather repetitive, due to the optional nature of the tincture
