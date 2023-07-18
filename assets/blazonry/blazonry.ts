@@ -1,26 +1,33 @@
 // TODO
+// - party per ornament
+// - finish ornament support in each ordinary
 // - some introductory text for shapes and colors and keywords with clickable links to demonstrate them
 // - posture -- for things like swords, requires resizing
 // - posture -- incorrect for swords; we should probably rotate the SVG 90 degress and use that as the base
 // - InDirection -- at least in the case of chevron and saltire, they are rotated to match -- matters for swords, at least
-// - can party per field have complex content in it?
 // - minor visual effects to make it a little less flat
 // - fancy paths for fancy charges: lion, leopard's head, eagle, castle, boar, swan, tree, rose, escallop, and all their variants
-// - decorations for lines (e.g. embattled, engrailed, etc.)
 // - "overall"
-// - parser can't figure out the correct assignment of the quarterly rules to parse this:
-//     quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
-// - should be able to parse non-redundant usage of colors
-//     argent on a bend between six mullets vert
-// - make whitespace non-optional to force breaks
-// - multiple ordiaries?
 // - standardize size of charges (40x40?) so that scaling works as expected for all of them
-// - thin lines between quarters?
+// - thin lines between quarters
+// - parser issues
+//   - needs backtracking to handle some more complex cases
+//     - quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
+//   - should be able to parse non-redundant usage of colors
+//     - argent on a bend between six mullets vert
+//   - make whitespace non-optional to force breaks
+// - things I want to be able to render
+//   - churchill arms
+//   - weihestephan arms
+//   - ???
 
 // TODO OPTIONAL
 // - adjust positioning for `on` -- often the 2s and 3s are too close to each other, like for chief
 // - push elements around when quartering
 // - canton-specific overrides for ordinaries and charge placements so they don't look squished by the scale
+// - why is a chevron embattled appear to be vertically shifted, but engrailed does not? (or does it?)
+// - multiple ordiaries?
+// - can party per field have complex content in it?
 
 // #region LAYOUT
 
@@ -309,10 +316,7 @@ function widen(
   linecap: "butt" | "square" = "butt"
 ): Quadrilateral {
   const halfWidth = width / 2;
-  const angle =
-    src[0] === dst[0]
-      ? Math.PI / 2
-      : Math.atan((dst[1] - src[1]) / (dst[0] - src[0]));
+  const angle = radians(src, dst);
   if (linecap === "square") {
     const x = Math.cos(angle) * halfWidth;
     const y = Math.sin(angle) * halfWidth;
