@@ -1,6 +1,7 @@
 // TODO
 // - party per ornament
 // - finish ornament support in each ordinary
+// - add more ornaments
 // - some introductory text for shapes and colors and keywords with clickable links to demonstrate them
 // - posture -- for things like swords, requires resizing
 // - posture -- incorrect for swords; we should probably rotate the SVG 90 degress and use that as the base
@@ -25,7 +26,7 @@
 // - adjust positioning for `on` -- often the 2s and 3s are too close to each other, like for chief
 // - push elements around when quartering
 // - canton-specific overrides for ordinaries and charge placements so they don't look squished by the scale
-// - why is a chevron embattled appear to be vertically shifted, but engrailed does not? (or does it?)
+// - why is a chevron embattled/indented appear to be vertically shifted, but engrailed does not? (or does it?)
 // - multiple ordiaries?
 // - can party per field have complex content in it?
 
@@ -1227,40 +1228,38 @@ function pale({ tincture, cotised, ornament }: Ordinary) {
   const pale = svg.g();
 
   if (ornament != null) {
-    pale.appendChild(
-      svg.path(
-        path.from(
-          relativePathsToClosedLoop(
-            ORNAMENTS[ornament](H, -PALE_WIDTH / 2, false),
-            // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
-            // we traverse around the pale clockwise.
-            ORNAMENTS[ornament](-H, PALE_WIDTH / 2, true, "end")
-          )
-        ),
-        tincture
-      )
+    const p = svg.path(
+      path.from(
+        relativePathsToClosedLoop(
+          ORNAMENTS[ornament](H, -PALE_WIDTH / 2, false),
+          // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
+          // we traverse around the pale clockwise.
+          ORNAMENTS[ornament](-H, PALE_WIDTH / 2, true, "end")
+        )
+      ),
+      tincture
     );
+    applyTransforms(p, {
+      translate: [0, -H_2],
+      rotate: Math.PI / 2,
+    });
+    pale.appendChild(p);
   } else {
-    pale.appendChild(svg.line([0, 0], [H, 0], tincture, PALE_WIDTH));
+    pale.appendChild(svg.line([0, -H_2], [0, H_2], tincture, PALE_WIDTH));
   }
 
   if (cotised != null) {
     const offset = PALE_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
 
     pale.appendChild(
-      svg.line([0, -offset], [0, offset], cotised, COTISED_WIDTH)
+      svg.line([offset, -H_2], [offset, H_2], cotised, COTISED_WIDTH)
     );
     pale.appendChild(
-      svg.line([0, -offset], [0, offset], cotised, COTISED_WIDTH)
+      svg.line([-offset, -H_2], [-offset, H_2], cotised, COTISED_WIDTH)
     );
   }
 
-  applyTransforms(pale, {
-    translate: [0, -H_2],
-    rotate: Math.PI / 2,
-  });
-
-  return svg.g(pale);
+  return pale;
 }
 
 pale.on = new LineSegmentLocator(
@@ -1618,9 +1617,35 @@ function engrailed(length: number): RelativeOrnamentPath {
   ];
 }
 
+function indented(length: number): RelativeOrnamentPath {
+  const size = W / 12;
+
+  const points: Coordinate[] = [];
+
+  let x = length;
+  let y = -size / 2;
+  while (x > 0) {
+    points.push([size, size]);
+    x -= size;
+    y += size;
+    if (x > 0) {
+      points.push([size, -size]);
+      x -= size;
+      y -= size;
+    }
+  }
+
+  return [
+    { type: "m", loc: [0, -size / 2] },
+    points.map((loc) => ({ type: "l", loc })),
+    { type: "m", loc: [x, -y] },
+  ];
+}
+
 const ORNAMENTS: Record<string, OrnamentPathGenerator> = {
   embattled: wrapSimpleOrnamenter(embattled, true),
   engrailed: wrapSimpleOrnamenter(engrailed),
+  indented: wrapSimpleOrnamenter(indented, true),
 };
 
 // #region VARIED

@@ -10,7 +10,7 @@ custom-css-list:
 
 [Wikipedia](https://en.wikipedia.org/wiki/Blazon):
 
-> In heraldry and heraldic vexillology, a blazon is a formal description of a coat of arms, flag or similar emblem, from which the reader can reconstruct the appropriate image.
+> In heraldry and heraldic vexillology, a **blazon** is a formal description of a coat of arms, flag or similar emblem, from which the reader can reconstruct the appropriate image.
 
 Blazons (and the coats of arms they represent) can get enormously complicated.
 
@@ -31,7 +31,7 @@ Try these:
   <form id="form">
   <!-- argent a bend gules cotised azure -->
   <!-- party per pale argent and gules a bend azure cotised counterchanged -->
-    <input type="text" id="blazon-input" value="argent a chevron embattled cotised gules">
+    <input type="text" id="blazon-input" value="argent a fess indented gules">
     <br>
     <button type="submit">
     Preview
