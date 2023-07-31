@@ -1368,6 +1368,32 @@ pale.surround = new ReflectiveLocator(
   [0, H_2]
 );
 
+pale.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
+  const [topLeft, topMid, bottomMid, bottomLeft] = [
+    { type: "M", loc: [-W_2, -H_2] },
+    { type: "L", loc: [0, -H_2] },
+    { type: "L", loc: [0, H_2] },
+    { type: "L", loc: [-W_2, H_2] },
+  ] satisfies PathCommand.Any[];
+
+  if (ornament == null) {
+    return [topLeft, topMid, bottomMid, bottomLeft, { type: "Z" }];
+  } else {
+    const [start, main, end] = ORNAMENTS[ornament](H, 0, false, "start");
+    main.forEach((c) => PathCommand.rotate(c, Math.PI / 2));
+    return [
+      topLeft,
+      topMid,
+      { type: "l", loc: Coordinate.rotate(start.loc, Math.PI / 2) },
+      ...main,
+      { type: "l", loc: Coordinate.rotate(end.loc, Math.PI / 2) },
+      bottomMid,
+      bottomLeft,
+      { type: "Z" },
+    ];
+  }
+};
+
 const SALTIRE_WIDTH = W / 4;
 function saltire({ tincture, cotised }: Ordinary) {
   const tl: Coordinate = [-W_2, -H_2];
