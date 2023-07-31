@@ -147,8 +147,7 @@ OrdinaryName "ordinary name"
   / "chief"
 
 SimpleChargeName "charge name"
-  = "sword"
-  / "rondel"
+  = "rondel"
   / "mullet"
 
 Varied "varied"

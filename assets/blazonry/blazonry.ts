@@ -1,9 +1,7 @@
 // TODO
 // - party per ornament: saltire, quarterly
 // - finish ornament support: cross, saltire
-// - posture -- for things like swords, requires resizing
-// - posture -- incorrect for swords; we should probably rotate the SVG 90 degress and use that as the base
-// - InDirection -- at least in the case of chevron and saltire, they are rotated to match -- matters for swords, at least
+// - InDirection -- at least in the case of chevron and saltire, they are rotated to match
 // - minor visual effects to make it a little less flat
 // - "overall"
 // - standardize size of charges (40x40?) so that scaling works as expected for all of them
@@ -177,7 +175,7 @@ interface BaseCharge {
 }
 
 interface SimpleCharge extends BaseCharge {
-  charge: "mullet" | "rondel" | "sword";
+  charge: "mullet" | "rondel";
 }
 
 interface LionCharge extends BaseCharge {
@@ -1533,13 +1531,6 @@ const ORDINARIES: Record<string, OrdinaryRenderer> = {
 // #region CHARGES
 // ----------------------------------------------------------------------------
 
-function sword({ tincture }: SimpleCharge) {
-  return svg.path(
-    "M 35 -2 L 22 -2 L 22 -10 L 18 -10 L 18 -2 L -31 -2 L -35 0 L -31 2 L 18 2 L 18 11 L 22 11 L 22 2 L 35 2 Z",
-    tincture
-  );
-}
-
 function rondel({ tincture }: SimpleCharge) {
   const circle = document.createElementNS(
     "http://www.w3.org/2000/svg",
@@ -1588,14 +1579,13 @@ const SIMPLE_CHARGES: {
   [K in SimpleCharge["charge"]]: ChargeRenderer<
     DiscriminateUnion<Charge, "charge", K>
   >;
-} = { sword, rondel, mullet };
+} = { rondel, mullet };
 
 // A little unfortunate this dispatching wrapper is necessary, but it's the only way to type-safety
 // render based on the string. Throwing all charges, simple and otherwise, into a constant mapping
 // together means the inferred type of the function has `never` as the first argument. :(
 function renderCharge(charge: Charge): SVGElement {
   switch (charge.charge) {
-    case "sword":
     case "rondel":
     case "mullet":
       return SIMPLE_CHARGES[charge.charge](charge);
