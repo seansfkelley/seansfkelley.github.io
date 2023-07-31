@@ -134,7 +134,7 @@ I cannot fathom why the language designers bothered with this feature. Either ma
 
 ### `for-of` versus `for-in`
 
-While I think that the semantics of `for-in` are downright silly -- an array's indices are far less interesting than the value and probably don't need their own syntactic sugar -- the advice here seems pretty clear: always use `for-of`. I would go even further and say: always use `forEach`, or `map`, or `reduce`, etc. Chances are you're doing an operation that is better suited to one or more higher-order functions anyway. I think in the last three years of writing TypeScript I've only written a single `for` loop, and that was because it needed very particular early-abort semantics.
+While I think that the semantics of `for-in` are downright silly -- an array's indices are far less interesting than the value and probably don't need their own syntactic sugar -- the advice here seems pretty clear: always use `for-of`. I would go even further and say: you almost always want to use `forEach`, or `map`, or `reduce`, etc. Chances are you're doing an operation that is better suited to one or more higher-order functions anyway. I think in the last three years of writing TypeScript I've only written a single `for` loop, and that was because it needed very particular early-abort semantics.
 
 ## Lightning Round: Things That Don't Matter Anymore
 
