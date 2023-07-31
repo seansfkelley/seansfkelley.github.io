@@ -1,6 +1,6 @@
 // TODO
-// - party per ornament (and quarterly!)
-// - finish ornament support in each ordinary
+// - party per ornament: saltire, quarterly
+// - finish ornament support: cross, saltire
 // - add more ornaments
 // - posture -- for things like swords, requires resizing
 // - posture -- incorrect for swords; we should probably rotate the SVG 90 degress and use that as the base
@@ -1467,6 +1467,28 @@ saltire.surround = new SequenceLocator(
     1: SequenceLocator.EMPTY,
   }
 );
+
+saltire.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
+  const [topLeft, topRight, bottomLeft, bottomRight] = [
+    { type: "L", loc: [-W_2, -H_2] },
+    { type: "L", loc: [W_2, -H_2] },
+    { type: "L", loc: [-W_2, -H_2 + W] },
+    { type: "L", loc: [W_2, -H_2 + W] },
+  ] satisfies PathCommand.Any[];
+
+  if (ornament == null) {
+    return [
+      { type: "M", loc: topLeft.loc },
+      bottomRight,
+      topRight,
+      bottomLeft,
+      { type: "Z" },
+    ];
+  } else {
+    // TODO: What makes sense here?
+    return [];
+  }
+};
 
 const ORDINARIES: Record<string, OrdinaryRenderer> = {
   bend,
