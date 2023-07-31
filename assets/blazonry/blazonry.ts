@@ -9,7 +9,7 @@
 // - fancy paths for fancy charges: lion, leopard's head, eagle, castle, boar, swan, tree, rose, escallop, and all their variants
 // - "overall"
 // - standardize size of charges (40x40?) so that scaling works as expected for all of them
-// - thin lines between quarters
+// - what is the CSS to make line-stroke not scale? (apply that to the quartering lines so they are always 1 pixel)
 // - fretty?
 // - parser issues
 //   - needs backtracking to handle some more complex cases
@@ -91,6 +91,7 @@ type Tincture = string & { __tincture: unknown };
 const Tincture = {
   NONE: "none" as Tincture,
   COUNTERCHANGED: "counterchanged" as Tincture,
+  of: (tincture: string): Tincture => tincture as Tincture,
 };
 type VariedName = string & { __varied: unknown };
 type Ornament = string & { __ornament: unknown };
@@ -2135,6 +2136,12 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     for (const e of Object.values(quartered)) {
       container.appendChild(e);
     }
+    container.appendChild(
+      svg.line([0, -H_2], [0, H_2], Tincture.of("sable"), 0.25)
+    );
+    container.appendChild(
+      svg.line([-W_2, 0], [W_2, 0], Tincture.of("sable"), 0.25)
+    );
   } else if ("varied" in content) {
     container.appendChild(field(content.first));
     const second = field(content.second);
@@ -2228,7 +2235,7 @@ function parseAndRenderBlazon() {
   container.style.clipPath = `path("${FIELD_PATH}")`;
   rendered.appendChild(container);
   // Make sure there's always a default background.
-  container.appendChild(field("argent" as Tincture));
+  container.appendChild(field(Tincture.of("argent")));
 
   complexContent(container, result);
 }
