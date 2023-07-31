@@ -84,6 +84,9 @@ type DiscriminateUnion<T, K extends keyof T, V extends T[K]> = T extends T
     : never
   : never;
 
+const UNSUPPORTED = Symbol("unsupported");
+type Unsupported = typeof UNSUPPORTED;
+
 type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 type Tincture = string & { __tincture: unknown };
 const Tincture = {
@@ -196,7 +199,9 @@ interface OrdinaryRenderer {
   (ordinary: Ordinary): SVGElement;
   on: ParametricLocator;
   surround: ParametricLocator;
-  party: (ornament: Ornament | undefined) => PathCommand.Any[];
+  // I'd use non-?-optional `undefined` to mean unsupported, but the compiler complains about
+  // implicit `any` if I try that.
+  party: ((ornament: Ornament | undefined) => PathCommand.Any[]) | Unsupported;
 }
 
 interface ChargeRenderer<T extends Charge> {
@@ -855,6 +860,36 @@ bend.surround = new ReflectiveLocator(
   [W_2, -H_2 + W]
 );
 
+bend.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
+  const topLeft: Coordinate = [-W_2, -H_2];
+  const topRight: Coordinate = [W_2, -H_2];
+  const bottomRight = Coordinate.add(topLeft, [BEND_LENGTH, BEND_LENGTH]);
+  if (ornament == null) {
+    return [
+      { type: "M", loc: topLeft },
+      { type: "L", loc: bottomRight },
+      { type: "L", loc: topRight },
+      { type: "Z" },
+    ];
+  } else {
+    const [start, main, end] = ORNAMENTS[ornament](
+      BEND_LENGTH,
+      0,
+      false,
+      "start"
+    );
+    main.forEach((c) => PathCommand.rotate(c, Math.PI / 4));
+    return [
+      { type: "M", loc: topLeft },
+      { type: "l", loc: Coordinate.rotate(start.loc, Math.PI / 4) },
+      ...main,
+      { type: "l", loc: Coordinate.rotate(end.loc, Math.PI / 4) },
+      { type: "L", loc: topRight },
+      { type: "Z" },
+    ];
+  }
+};
+
 const CHIEF_WIDTH = H / 3;
 function chief({ tincture, cotised, ornament }: Ordinary) {
   const chief = svg.g();
@@ -910,6 +945,8 @@ chief.on = new LineSegmentLocator(
 );
 
 chief.surround = new NullLocator();
+
+chief.party = UNSUPPORTED;
 
 const CHEVRON_WIDTH = W / 4;
 
@@ -1172,6 +1209,10 @@ cross.surround = new SequenceLocator(
     1: SequenceLocator.EMPTY,
   }
 );
+
+// Technically this is synonymous with "quarterly", but the code architecture makes it annoying to
+// do that without breaking the abstraction. It'll just be unsupported instead.
+cross.party = UNSUPPORTED;
 
 const FESS_WIDTH = W / 3;
 const FESS_VERTICAL_OFFSET = -H_2 + (W / 3) * (3 / 2);
@@ -1939,10 +1980,11 @@ function complexContent(container: SVGElement, content: ComplexContent) {
   }
 
   if ("party" in content) {
+    const { party } = ORDINARIES[content.party];
+    // This should be prevented in grammar, so this should never fire.
+    assert(party !== UNSUPPORTED, `cannot use 'party' with this ordinary`);
     const g1 = svg.g();
-    g1.style.clipPath = `path("${path.from(
-      ORDINARIES[content.party].party(content.ornament)
-    )}")`;
+    g1.style.clipPath = `path("${path.from(party(content.ornament))}")`;
     const g2 = svg.g();
     g1.appendChild(field(content.first));
     g2.appendChild(field(content.second));

@@ -105,7 +105,8 @@ Direction "direction"
 
 InDirection "direction"
   = "in" _ direction:Direction { return direction }
-  // Special case: things can be "in cross" but they can't be "party per cross".
+  // Special case: things can be "in cross" but they can't be "party per cross". (It is synonymous
+  // with "quarterly" but we don't allow it because it's a pain to implement.)
   / "in" _ "cross" { return "cross" }
 
 QuarterName "quarter name"
