@@ -1779,10 +1779,46 @@ function indented(length: number): RelativeOrnamentPath {
   ];
 }
 
+function wavy(length: number): RelativeOrnamentPath {
+  const halfWidth = W / 12;
+
+  const curves: PathCommand.c[] = [];
+
+  let x = length;
+  let y = -halfWidth / 2;
+  while (x > 0) {
+    curves.push({
+      type: "c",
+      c1: [halfWidth / 2, 0],
+      c2: [halfWidth / 2, halfWidth / 2],
+      end: [halfWidth, halfWidth / 2],
+    });
+    x -= halfWidth;
+    y += halfWidth / 2;
+    if (x > 0) {
+      curves.push({
+        type: "c",
+        c1: [halfWidth / 2, 0],
+        c2: [halfWidth / 2, -halfWidth / 2],
+        end: [halfWidth, -halfWidth / 2],
+      });
+      x -= halfWidth;
+      y -= halfWidth / 2;
+    }
+  }
+
+  return [
+    { type: "m", loc: [0, -halfWidth / 2] },
+    curves,
+    { type: "m", loc: [x, -y] },
+  ];
+}
+
 const ORNAMENTS: Record<string, OrnamentPathGenerator> = {
   embattled: wrapSimpleOrnamenter(embattled, true),
   engrailed: wrapSimpleOrnamenter(engrailed),
   indented: wrapSimpleOrnamenter(indented, true),
+  wavy: wrapSimpleOrnamenter(wavy, true),
 };
 
 // #region VARIED

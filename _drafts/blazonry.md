@@ -32,7 +32,7 @@ You can mix and match these examples, of course, or copy-paste blazons from the 
   <form id="form">
   <!-- argent a bend gules cotised azure -->
   <!-- party per pale argent and gules a bend azure cotised counterchanged -->
-    <input type="text" id="blazon-input" value="party per saltire indented argent and gules">
+    <input type="text" id="blazon-input" value="party per chevron wavy argent and gules">
     <br>
     <button type="submit">
     Preview

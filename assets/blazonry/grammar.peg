@@ -167,6 +167,7 @@ Ornament "ornament"
   = "embattled"
   / "engrailed"
   / "indented"
+  / "wavy"
   // TODO: More.
 
 _ "whitespace"
