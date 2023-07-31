@@ -12,9 +12,7 @@ custom-css-list:
 
 > In heraldry and heraldic vexillology, a **blazon** is a formal description of a coat of arms, flag or similar emblem, from which the reader can reconstruct the appropriate image.
 
-Blazons (and the coats of arms they represent) can get enormously complicated.
-
-[provide example]
+Blazons (and the coats of arms they represent) can get [enormously complicated](https://en.wikipedia.org/wiki/Richard_Temple-Nugent-Brydges-Chandos-Grenville,_2nd_Duke_of_Buckingham_and_Chandos#/media/File:Stowe_Armorial.jpg).
 
 Blazonry jargon is highly structured, which makes it a good match for the same sorts of parsers used to implement programming languages. So I took one of those and taught it to parse and render blazons.
 
@@ -34,7 +32,7 @@ You can mix and match these examples, of course, or copy-paste blazons from the 
   <form id="form">
   <!-- argent a bend gules cotised azure -->
   <!-- party per pale argent and gules a bend azure cotised counterchanged -->
-    <input type="text" id="blazon-input" value="argent a fess indented gules">
+    <input type="text" id="blazon-input" value="party per chevron indented argent and gules">
     <br>
     <button type="submit">
     Preview

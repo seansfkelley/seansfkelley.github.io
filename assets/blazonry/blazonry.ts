@@ -20,7 +20,7 @@
 //   - make whitespace non-optional to force breaks
 // - things I want to be able to render
 //   - churchill arms
-//   - weihestephan arms
+//   - weihenstephan arms
 //   - ???
 
 // TODO OPTIONAL
@@ -83,61 +83,6 @@ type DiscriminateUnion<T, K extends keyof T, V extends T[K]> = T extends T
     ? T
     : never
   : never;
-
-const SVG_ELEMENT_TO_COORDINATES: {
-  [K in PathCommand.Any["type"]]: (
-    e: DiscriminateUnion<PathCommand.Any, "type", K>
-  ) => Coordinate[];
-} = {
-  l: (e) => [e.loc],
-  L: (e) => [e.loc],
-  m: (e) => [e.loc],
-  M: (e) => [e.loc],
-  c: (e) => [e.c1, e.c2, e.end],
-  z: () => [],
-  Z: () => [],
-};
-
-namespace PathCommand {
-  type SimpleElement<T extends string> = {
-    type: T;
-    loc: Coordinate;
-  };
-
-  export interface Z {
-    type: "Z" | "z";
-  }
-
-  export type z = Z;
-
-  export type L = SimpleElement<"L">;
-  export type l = SimpleElement<"l">;
-  export type M = SimpleElement<"M">;
-  export type m = SimpleElement<"m">;
-
-  export interface c {
-    type: "c";
-    c1: Coordinate;
-    c2: Coordinate;
-    end: Coordinate;
-  }
-
-  export type Relative = m | l | c | Z | z;
-  export type Absolute = M | L | Z | z;
-  export type Any = Relative | Absolute;
-
-  export function negateX(e: Any): void {
-    for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
-      c[0] *= -1;
-    }
-  }
-
-  export function negateY(e: Any): void {
-    for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
-      c[1] *= -1;
-    }
-  }
-}
 
 type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 type Tincture = string & { __tincture: unknown };
@@ -280,7 +225,7 @@ interface OrnamentPathGenerator {
 
 // #endregion
 
-// #region LOCATORS AND SHAPES
+// #region GRAPHICS PRIMITIVES
 // ----------------------------------------------------------------------------
 
 type Coordinate = [x: number, y: number];
@@ -290,7 +235,26 @@ const Coordinate = {
     coordinates.reduce(([x1, y1], [x2, y2]) => [x1 + x2, y1 + y2]),
   length: ([x1, y1]: Coordinate, [x2, y2]: Coordinate): number =>
     Math.hypot(x2 - x1, y2 - y1),
-  negate: ([x, y]: Coordinate): Coordinate => [-x, -y],
+  /**
+   * Rotates the given coordinates about the origin.
+   */
+  rotate: ([x, y]: Coordinate, radians: number): Coordinate => {
+    const cos = Math.cos(radians);
+    const sin = Math.sin(radians);
+    return [x * cos - y * sin, x * sin + y * cos];
+  },
+  /**
+   * Return the angle of the given line segment, in radians. Returns a value on [-pi, pi], according
+   * to the relative direction from the first to second point.
+   */
+  radians: ([x1, y1]: Coordinate, [x2, y2]: Coordinate): number => {
+    if (x1 === x2) {
+      // TODO: Confirm this is correct.
+      return ((y1 < y2 ? 1 : -1) * Math.PI) / 2;
+    } else {
+      return Math.atan((y2 - y1) / (x2 - x1)) + (x2 < x1 ? Math.PI : 0);
+    }
+  },
 };
 
 type Quadrilateral = [Coordinate, Coordinate, Coordinate, Coordinate];
@@ -307,6 +271,67 @@ const Quadrilateral = {
   },
 };
 
+const SVG_ELEMENT_TO_COORDINATES: {
+  [K in PathCommand.Any["type"]]: (
+    e: DiscriminateUnion<PathCommand.Any, "type", K>
+  ) => Coordinate[];
+} = {
+  l: (e) => [e.loc],
+  L: (e) => [e.loc],
+  m: (e) => [e.loc],
+  M: (e) => [e.loc],
+  c: (e) => [e.c1, e.c2, e.end],
+  z: () => [],
+  Z: () => [],
+};
+
+namespace PathCommand {
+  type SimpleElement<T extends string> = {
+    type: T;
+    loc: Coordinate;
+  };
+
+  export interface Z {
+    type: "Z" | "z";
+  }
+
+  export type z = Z;
+
+  export type L = SimpleElement<"L">;
+  export type l = SimpleElement<"l">;
+  export type M = SimpleElement<"M">;
+  export type m = SimpleElement<"m">;
+
+  export interface c {
+    type: "c";
+    c1: Coordinate;
+    c2: Coordinate;
+    end: Coordinate;
+  }
+
+  export type Relative = m | l | c | Z | z;
+  export type Absolute = M | L | Z | z;
+  export type Any = Relative | Absolute;
+
+  export function negateX(e: Any): void {
+    for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
+      c[0] *= -1;
+    }
+  }
+
+  export function negateY(e: Any): void {
+    for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
+      c[1] *= -1;
+    }
+  }
+
+  export function rotate(e: Any, radians: number): void {
+    for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
+      [c[0], c[1]] = Coordinate.rotate(c, radians);
+    }
+  }
+}
+
 /**
  * Given the line segment defined by src-dst, widen it along the perpendicular into a rotated
  * rectangle. Points are returned in clockwise order from src to dst.
@@ -318,7 +343,7 @@ function widen(
   linecap: "butt" | "square" = "butt"
 ): Quadrilateral {
   const halfWidth = width / 2;
-  const angle = radians(src, dst);
+  const angle = Coordinate.radians(src, dst);
   if (linecap === "square") {
     const x = Math.cos(angle) * halfWidth;
     const y = Math.sin(angle) * halfWidth;
@@ -336,6 +361,11 @@ function widen(
     Coordinate.add(src, [-x, y]),
   ];
 }
+
+// #endregion
+
+// #region LOCATORS
+// ----------------------------------------------------------------------------
 
 function evaluateLineSegment(
   src: Coordinate,
@@ -720,25 +750,6 @@ function recursivelyOmitNullish<T>(value: T): T {
   }
 }
 
-/**
- * Return the angle of the given line segment, in radians. Returns a value on [-pi, pi], according
- * to the relative direction from the first to second point.
- */
-function radians([x1, y1]: Coordinate, [x2, y2]: Coordinate): number {
-  if (x1 === x2) {
-    // TODO: Confirm this is correct.
-    return ((y1 < y2 ? 1 : -1) * Math.PI) / 2;
-  } else {
-    return Math.atan((y2 - y1) / (x2 - x1)) + (x2 < x1 ? Math.PI : 0);
-  }
-}
-
-function rotate([x, y]: Coordinate, radians: number): Coordinate {
-  const cos = Math.cos(radians);
-  const sin = Math.sin(radians);
-  return [x * cos - y * sin, x * sin + y * cos];
-}
-
 const complexSvgCache: Record<string, SVGElement> = {};
 
 function getComplexSvgSync(kind: string, variant?: string): SVGElement {
@@ -1046,16 +1057,33 @@ chevron.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
     ];
   } else {
     const [leftStart, leftMain, leftEnd] = ORNAMENTS[ornament](
-      Math.hypot(mid[0] - midLeft[0], mid[1] - midLeft[1]),
+      Coordinate.length(midLeft, mid),
       0,
       false,
       "end"
     );
-    // TODO:
-    // 1. Rotate all the points
-    // 2. Shift all the points such that the ornament ends on the midpoint (subtract end?).
-    // 3. Rewrite the initial move point to be a line draw. Drop the end point.
-    // 4. Append to list and repeat with the right, but for start-alignment.
+    const [rightStart, rightMain, rightEnd] = ORNAMENTS[ornament](
+      Coordinate.length(mid, midRight),
+      0,
+      false,
+      "start"
+    );
+    leftMain.forEach((c) => PathCommand.rotate(c, -Math.PI / 4));
+    rightMain.forEach((c) => PathCommand.rotate(c, Math.PI / 4));
+    return [
+      { type: "M", loc: topLeft },
+      { type: "L", loc: midLeft },
+      { type: "l", loc: Coordinate.rotate(leftStart.loc, -Math.PI / 4) },
+      ...leftMain,
+      // Should this shift everything by end instead of converting it to a line draw?
+      { type: "l", loc: Coordinate.rotate(leftEnd.loc, -Math.PI / 4) },
+      { type: "l", loc: Coordinate.rotate(rightStart.loc, Math.PI / 4) },
+      ...rightMain,
+      { type: "l", loc: Coordinate.rotate(rightEnd.loc, Math.PI / 4) },
+      { type: "L", loc: midRight },
+      { type: "L", loc: topRight },
+      { type: "Z" },
+    ];
   }
 };
 
@@ -1288,21 +1316,20 @@ pale.surround = new ReflectiveLocator(
   [0, H_2]
 );
 
+const SALTIRE_WIDTH = W / 4;
 function saltire({ tincture, cotised }: Ordinary) {
-  const saltireWidth = W / 4;
-
   const tl: Coordinate = [-W_2, -H_2];
   const tr: Coordinate = [W_2, -H_2];
   const bl: Coordinate = [-W_2, -H_2 + W];
   const br: Coordinate = [-W_2 + H, H_2];
 
   const saltire = svg.g();
-  saltire.appendChild(svg.line(tl, br, tincture, saltireWidth));
-  saltire.appendChild(svg.line(bl, tr, tincture, saltireWidth));
+  saltire.appendChild(svg.line(tl, br, tincture, SALTIRE_WIDTH));
+  saltire.appendChild(svg.line(bl, tr, tincture, SALTIRE_WIDTH));
 
   if (cotised != null) {
     // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
-    const offset = Math.sin(Math.PI / 4) * saltireWidth + COTISED_WIDTH * 2;
+    const offset = Math.sin(Math.PI / 4) * SALTIRE_WIDTH + COTISED_WIDTH * 2;
     // Cross at 45 degrees starting from the top edge, so we bias upwards from the center.
     const mid: Coordinate = [0, -(H_2 - W_2)];
 
