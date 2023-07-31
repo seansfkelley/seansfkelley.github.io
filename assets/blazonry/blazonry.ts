@@ -233,6 +233,8 @@ type Coordinate = [x: number, y: number];
 const Coordinate = {
   add: (...coordinates: Coordinate[]): Coordinate =>
     coordinates.reduce(([x1, y1], [x2, y2]) => [x1 + x2, y1 + y2]),
+  subtract: (...coordinates: Coordinate[]): Coordinate =>
+    coordinates.reduce(([x1, y1], [x2, y2]) => [x1 - x2, y1 - y2]),
   length: ([x1, y1]: Coordinate, [x2, y2]: Coordinate): number =>
     Math.hypot(x2 - x1, y2 - y1),
   /**
@@ -1042,7 +1044,7 @@ chevron.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
     // See the main renderer for how these values are picked.
     [-W_2, -H_2 + W],
     [0, -(H_2 - W_2)],
-    [-W_2 + H, H_2],
+    [W_2, -H_2 + W],
     [W_2, -H_2],
   ] satisfies Coordinate[];
 
@@ -1073,13 +1075,22 @@ chevron.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
     return [
       { type: "M", loc: topLeft },
       { type: "L", loc: midLeft },
-      { type: "l", loc: Coordinate.rotate(leftStart.loc, -Math.PI / 4) },
+      {
+        type: "l",
+        loc: Coordinate.rotate(
+          Coordinate.add(leftStart.loc, leftEnd.loc),
+          -Math.PI / 4
+        ),
+      },
       ...leftMain,
-      // Should this shift everything by end instead of converting it to a line draw?
-      { type: "l", loc: Coordinate.rotate(leftEnd.loc, -Math.PI / 4) },
-      { type: "l", loc: Coordinate.rotate(rightStart.loc, Math.PI / 4) },
       ...rightMain,
-      { type: "l", loc: Coordinate.rotate(rightEnd.loc, Math.PI / 4) },
+      {
+        type: "l",
+        loc: Coordinate.rotate(
+          Coordinate.add(rightEnd.loc, rightStart.loc),
+          Math.PI / 4
+        ),
+      },
       { type: "L", loc: midRight },
       { type: "L", loc: topRight },
       { type: "Z" },
