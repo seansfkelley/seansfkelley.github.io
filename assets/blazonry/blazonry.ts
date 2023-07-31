@@ -10,7 +10,6 @@
 // - "overall"
 // - standardize size of charges (40x40?) so that scaling works as expected for all of them
 // - thin lines between quarters
-// - bend sinister?
 // - fretty?
 // - parser issues
 //   - needs backtracking to handle some more complex cases
@@ -890,6 +889,28 @@ bend.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
   }
 };
 
+function bendSinister(ordinary: Ordinary) {
+  const g = svg.g(bend(ordinary));
+  applyTransforms(g, {
+    scale: [-1, 1],
+  });
+  return g;
+}
+
+bendSinister.on = new ReflectiveLocator(bend.on, [0, -H_2], [0, H_2]);
+
+bendSinister.surround = new ReflectiveLocator(
+  bend.surround,
+  [0, -H_2],
+  [0, H_2]
+);
+
+bendSinister.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
+  const commands = bend.party(ornament);
+  commands.forEach(PathCommand.negateX);
+  return commands;
+};
+
 const CHIEF_WIDTH = H / 3;
 function chief({ tincture, cotised, ornament }: Ordinary) {
   const chief = svg.g();
@@ -1492,6 +1513,7 @@ saltire.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
 
 const ORDINARIES: Record<string, OrdinaryRenderer> = {
   bend,
+  "bend sinister": bendSinister,
   chevron,
   chief,
   cross,
