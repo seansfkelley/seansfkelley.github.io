@@ -1,21 +1,26 @@
 // TODO
 // - party per ornament: saltire, quarterly
 // - finish ornament support: cross, saltire
-// - add more ornaments
 // - posture -- for things like swords, requires resizing
 // - posture -- incorrect for swords; we should probably rotate the SVG 90 degress and use that as the base
 // - InDirection -- at least in the case of chevron and saltire, they are rotated to match -- matters for swords, at least
 // - minor visual effects to make it a little less flat
-// - fancy paths for fancy charges: lion, leopard's head, eagle, castle, boar, swan, tree, rose, escallop, and all their variants
 // - "overall"
 // - standardize size of charges (40x40?) so that scaling works as expected for all of them
 // - what is the CSS to make line-stroke not scale? (apply that to the quartering lines so they are always 1 pixel)
 // - fretty?
+// - more of the same
+//   - ordinaries
+//   - ornaments
+//   - charges
+//     - are there any other geometric ones?
+//     - lion, leopard's head, eagle, castle, boar, swan, tree, rose, escallop, and all their variants
 // - parser issues
 //   - needs backtracking to handle some more complex cases
 //     - quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
 //   - should be able to parse non-redundant usage of colors
 //     - argent on a bend between six mullets vert
+//     - something something about "of the first", etc.
 //   - make whitespace non-optional to force breaks
 // - things I want to be able to render
 //   - churchill arms
