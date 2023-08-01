@@ -1,37 +1,58 @@
-// TODO
-// - party per ornament: saltire, quarterly
-// - finish ornament support: cross, saltire
-// - InDirection -- at least in the case of chevron and saltire, they are rotated to match
-// - minor visual effects to make it a little less flat
-// - "overall"
-// - standardize size of charges (40x40?) so that scaling works as expected for all of them
-// - what is the CSS to make line-stroke not scale? (apply that to the quartering lines so they are always 1 pixel)
-// - fretty?
-// - more of the same
-//   - ordinaries
-//   - ornaments
-//   - charges
-//     - are there any other geometric ones?
-//     - lion, leopard's head, eagle, castle, boar, swan, tree, rose, escallop, and all their variants
-// - parser issues
-//   - needs backtracking to handle some more complex cases
-//     - quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
-//   - should be able to parse non-redundant usage of colors
-//     - argent on a bend between six mullets vert
-//     - something something about "of the first", etc.
-//   - make whitespace non-optional to force breaks
-// - things I want to be able to render
-//   - churchill arms
-//   - weihenstephan arms
-//   - ???
+/*
+TODO
+-------------------------------------------------------------------------------
+- "quarterly" and "party per cross" are synonymous; make them such
+- party per ornament: saltire, quarterly
+- finish ornament support: cross, saltire
+- InDirection -- at least in the case of chevron and saltire, they are rotated to match
+- minor visual effects to make it a little less flat
+- "overall"
+- standardize size of charges (40x40?) so that scaling works as expected for all of them
+- what is the CSS to make line-stroke not scale? (apply that to the quartering lines so they are always 1 pixel)
+- fretty?
+- why is a chevron embattled/indented appear to be vertically shifted, but engrailed does not? (or does it?)
+- "saltirewise" needs to vary based on where the charge is
+- "embattled" shouldn't do the bottom of chevrons and fesses; that's embattled-counter-embattled
+- more of the same
+  - ordinaries
+  - ornaments
+  - charges
+    - are there any other geometric ones?
+    - lion, leopard's head, eagle, castle, boar, swan, tree, rose, escallop, and all their variants
+- parser issues
+  - needs backtracking to handle some more complex cases
+    - quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
+  - should be able to parse non-redundant usage of colors
+    - argent on a bend between six mullets vert
+    - something something about "of the first", etc.
+  - make whitespace non-optional to force breaks
+- things I want to be able to render
+  - churchill arms
+  - weihenstephan arms
+  - ???
+*/
 
-// TODO OPTIONAL
-// - adjust positioning for `on` -- often the 2s and 3s are too close to each other, like for chief
-// - push elements around when quartering
-// - canton-specific overrides for ordinaries and charge placements so they don't look squished by the scale
-// - why is a chevron embattled/indented appear to be vertically shifted, but engrailed does not? (or does it?)
-// - multiple ordiaries?
-// - party per field have complex content (using first/second verbiage like with quarterly)
+/*
+FUTURE WORK and KNOWN ISSUES
+-------------------------------------------------------------------------------
+- Multiple ordinaries are not supported.
+- Charges `on` an ordinary are often too close; especially 2s and 3s, and especially on chief and fess.
+- Charges in quartered quadrants aren't pushed around to account for the curvature of the bottom of
+  the arms; a proper rendering would make them more cramped rather than cut them off.
+- Cantons are proportionally scaled and cropped at the bottom, which mostly works but can cause
+  elements in them to appear off-center or clipped. Properly, some elements should get custom
+  treatment for the square (rather than rectangular) field in a canton.
+- Divided fields ("party per") should be allowed to contain "complex" content (such as other divided
+  fields) and not just ordinaries and charges.
+
+NOTES ON THE IMPLEMENTATION
+-------------------------------------------------------------------------------
+- I did not want _any_ dependencies, so I re-rolled some things that probably have good library
+  implementations, like SVG element factories and SVG paths.
+- There are several eras of implement represented here. This surfaces as, in particular:
+  - a mix of hardcoded values and values mathemetically derived from the fields width/height
+  - a mix of string-y things like `path` and object-y things like `PathCommand`
+*/
 
 // #region LAYOUT
 
@@ -41,8 +62,6 @@ const H_2 = H / 2;
 const W = 100;
 const W_2 = W / 2;
 
-// This one is pointier, but looks weirder with some bends:
-// "M -50 -60 L 50 -60 L 50 -10 C 50 20 30 50 0 60 C -30 50 -50 20 -50 -10 Z";
 const FIELD_PATH = path`
   M -${W_2} -${H_2}
   L  ${W_2} -${H_2}
@@ -76,7 +95,7 @@ declare namespace PeggyParser {
 
 declare const parser: {
   // Note: this output type is a _slight_ lie, in that the runtime value contains `null`s for some
-  // optional fields, but the type only uses `?`. Call `recursivelyOmitNullish`.
+  // optional fields, but the types only ever use `?`. Call `recursivelyOmitNullish`.
   parse: (text: string, opts?: { grammarSource: string }) => ComplexContent;
 };
 
@@ -1992,11 +2011,14 @@ const QUARTERINGS: Record<Quarter, { translate: Coordinate }> = {
 };
 
 const CANTON_SCALE_FACTOR = 1 / 3;
+// Note that this clips the bottom of the area. Combined with proportional scaling, this permits us
+// to render _most_ things pretty sanely, at the risk of them being slightly off-center or clipped
+// since they expect to be rendered in a taller-than-wide rectangle by default.
 const CANTON_PATH = path`
-  M -${W_2} -${H_2}
-  L  ${W_2} -${H_2}
-  L  ${W_2}  ${H_2}
-  L -${W_2}  ${H_2}
+  M -${W_2} ${-H_2}
+  L  ${W_2} ${-H_2}
+  L  ${W_2} ${-H_2 + W}
+  L -${W_2} ${-H_2 + W}
   Z
 `;
 
@@ -2008,15 +2030,7 @@ function complexContent(container: SVGElement, content: ComplexContent) {
   function renderIntoParent(parent: SVGElement, element: SimpleContent) {
     if ("canton" in element) {
       const g = svg.g();
-      g.setAttribute("transform-origin", `-${W_2} -${H_2}`);
-      g.setAttribute(
-        "transform",
-        // The non-proportional scaling is a bit weird, but we want to have a square canton. A truly
-        // "standards-compliant" implementation would have alternate forms of the ordinaries and
-        // charges designed for a square canton, like a square cross. But this is a shortcut we take.
-        `scale(${CANTON_SCALE_FACTOR}, ${(CANTON_SCALE_FACTOR * W) / H})`
-      );
-
+      applyTransforms(g, { origin: [-W_2, -H_2], scale: CANTON_SCALE_FACTOR });
       g.style.clipPath = `path("${CANTON_PATH}")`;
       g.appendChild(svg.path(CANTON_PATH, element.canton));
       g.classList.add(`fill-${element.canton}`);
