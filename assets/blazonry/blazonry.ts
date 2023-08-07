@@ -21,6 +21,7 @@ TODO
     - lion, leopard's head, eagle, castle, boar, swan, tree, rose, escallop, and all their variants
 - parser issues
   - needs backtracking to handle some more complex cases
+    - nearley!
     - quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
   - should be able to parse non-redundant usage of colors
     - argent on a bend between six mullets vert
@@ -47,9 +48,9 @@ FUTURE WORK and KNOWN ISSUES
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
-- I did not want _any_ dependencies, so I re-rolled some things that probably have good library
-  implementations, like SVG element factories and SVG paths.
-- There are several eras of implement represented here. This surfaces as, in particular:
+- I did not want _any_ dependencies except the parser, so I re-rolled some things that probably have
+  good library implementations, like SVG element factories and SVG paths.
+- There are several eras of implementation represented here. This surfaces as, in particular:
   - a mix of hardcoded values and values mathemetically derived from the fields width/height
   - a mix of string-y things like `path` and object-y things like `PathCommand`
 */
