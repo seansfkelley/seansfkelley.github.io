@@ -65,11 +65,12 @@ LionDescription
 LionPose
   = "rampant"
   / "passant"
-  / "reguardant"
+  // other variants: "passant guardant", "reguardant"
 
 LionModifier
   = "armed"
   / "langued"
+  // other variants: "crowned", "double queued"
 
 LionModifiers
   // This is unfortunately rather repetitive, due to the optional nature of the tincture
@@ -98,13 +99,15 @@ Plural "plural quantity"
 Direction "direction"
   = "pale"
   / "fess"
+  / "bend sinister"
   / "bend"
   / "chevron"
   / "saltire"
 
 InDirection "direction"
   = "in" _ direction:Direction { return direction }
-  // Special case: things can be "in cross" but they can't be "party per cross".
+  // Special case: things can be "in cross" but they can't be "party per cross". (It is synonymous
+  // with "quarterly" but we don't allow it because it's a pain to implement.)
   / "in" _ "cross" { return "cross" }
 
 QuarterName "quarter name"
@@ -134,7 +137,8 @@ Tincture "tincture"
   / "counterchanged"
 
 OrdinaryName "ordinary name"
-  = "bend"
+  = "bend sinister"
+  / "bend"
   / "fess"
   / "cross"
   / "chevron"
@@ -143,8 +147,7 @@ OrdinaryName "ordinary name"
   / "chief"
 
 SimpleChargeName "charge name"
-  = "sword"
-  / "rondel"
+  = "rondel"
   / "mullet"
 
 Varied "varied"
@@ -165,6 +168,7 @@ Ornament "ornament"
   = "embattled"
   / "engrailed"
   / "indented"
+  / "wavy"
   // TODO: More.
 
 _ "whitespace"

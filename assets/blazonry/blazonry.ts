@@ -1,26 +1,59 @@
-// TODO
-// - some introductory text for shapes and colors and keywords with clickable links to demonstrate them
-// - posture -- for things like swords, requires resizing
-// - posture -- incorrect for swords; we should probably rotate the SVG 90 degress and use that as the base
-// - InDirection -- at least in the case of chevron and saltire, they are rotated to match -- matters for swords, at least
-// - can party per field have complex content in it?
-// - minor visual effects to make it a little less flat
-// - fancy paths for fancy charges: lion, leopard's head, eagle, castle, boar, swan, tree, rose, escallop, and all their variants
-// - decorations for lines (e.g. embattled, engrailed, etc.)
-// - "overall"
-// - parser can't figure out the correct assignment of the quarterly rules to parse this:
-//     quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
-// - should be able to parse non-redundant usage of colors
-//     argent on a bend between six mullets vert
-// - make whitespace non-optional to force breaks
-// - multiple ordiaries?
-// - standardize size of charges (40x40?) so that scaling works as expected for all of them
-// - thin lines between quarters?
+/*
+TODO
+-------------------------------------------------------------------------------
+- "quarterly" and "party per cross" are synonymous; make them such
+- party per ornament: saltire, quarterly
+- finish ornament support: cross, saltire
+- InDirection -- at least in the case of chevron and saltire, they are rotated to match
+- minor visual effects to make it a little less flat
+- "overall"
+- standardize size of charges (40x40?) so that scaling works as expected for all of them
+- what is the CSS to make line-stroke not scale? (apply that to the quartering lines so they are always 1 pixel)
+- fretty?
+- why is a chevron embattled/indented appear to be vertically shifted, but engrailed does not? (or does it?)
+- "saltirewise" needs to vary based on where the charge is
+- "embattled" shouldn't do the bottom of chevrons and fesses; that's embattled-counter-embattled
+- more of the same
+  - ordinaries
+  - ornaments
+  - charges
+    - are there any other geometric ones?
+    - lion, leopard's head, eagle, castle, boar, swan, tree, rose, escallop, and all their variants
+- parser issues
+  - needs backtracking to handle some more complex cases
+    - nearley!
+    - quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
+  - should be able to parse non-redundant usage of colors
+    - argent on a bend between six mullets vert
+    - something something about "of the first", etc.
+  - make whitespace non-optional to force breaks
+- things I want to be able to render
+  - churchill arms
+  - weihenstephan arms
+  - ???
+*/
 
-// TODO OPTIONAL
-// - adjust positioning for `on` -- often the 2s and 3s are too close to each other, like for chief
-// - push elements around when quartering
-// - canton-specific overrides for ordinaries and charge placements so they don't look squished by the scale
+/*
+FUTURE WORK and KNOWN ISSUES
+-------------------------------------------------------------------------------
+- Multiple ordinaries are not supported.
+- Charges `on` an ordinary are often too close; especially 2s and 3s, and especially on chief and fess.
+- Charges in quartered quadrants aren't pushed around to account for the curvature of the bottom of
+  the arms; a proper rendering would make them more cramped rather than cut them off.
+- Cantons are proportionally scaled and cropped at the bottom, which mostly works but can cause
+  elements in them to appear off-center or clipped. Properly, some elements should get custom
+  treatment for the square (rather than rectangular) field in a canton.
+- Divided fields ("party per") should be allowed to contain "complex" content (such as other divided
+  fields) and not just ordinaries and charges.
+
+NOTES ON THE IMPLEMENTATION
+-------------------------------------------------------------------------------
+- I did not want _any_ dependencies except the parser, so I re-rolled some things that probably have
+  good library implementations, like SVG element factories and SVG paths.
+- There are several eras of implementation represented here. This surfaces as, in particular:
+  - a mix of hardcoded values and values mathemetically derived from the fields width/height
+  - a mix of string-y things like `path` and object-y things like `PathCommand`
+*/
 
 // #region LAYOUT
 
@@ -30,8 +63,6 @@ const H_2 = H / 2;
 const W = 100;
 const W_2 = W / 2;
 
-// This one is pointier, but looks weirder with some bends:
-// "M -50 -60 L 50 -60 L 50 -10 C 50 20 30 50 0 60 C -30 50 -50 20 -50 -10 Z";
 const FIELD_PATH = path`
   M -${W_2} -${H_2}
   L  ${W_2} -${H_2}
@@ -65,7 +96,7 @@ declare namespace PeggyParser {
 
 declare const parser: {
   // Note: this output type is a _slight_ lie, in that the runtime value contains `null`s for some
-  // optional fields, but the type only uses `?`. Call `recursivelyOmitNullish`.
+  // optional fields, but the types only ever use `?`. Call `recursivelyOmitNullish`.
   parse: (text: string, opts?: { grammarSource: string }) => ComplexContent;
 };
 
@@ -75,66 +106,15 @@ type DiscriminateUnion<T, K extends keyof T, V extends T[K]> = T extends T
     : never
   : never;
 
-const SVG_ELEMENT_TO_COORDINATES: {
-  [K in PathCommand.Element["type"]]: (
-    e: DiscriminateUnion<PathCommand.Element, "type", K>
-  ) => Coordinate[];
-} = {
-  l: (e) => [e.loc],
-  L: (e) => [e.loc],
-  m: (e) => [e.loc],
-  M: (e) => [e.loc],
-  c: (e) => [e.c1, e.c2, e.end],
-  z: () => [],
-  Z: () => [],
-};
-
-namespace PathCommand {
-  type SimpleElement<T extends string> = {
-    type: T;
-    loc: Coordinate;
-  };
-
-  export interface Z {
-    type: "Z" | "z";
-  }
-
-  export type z = Z;
-
-  export type L = SimpleElement<"L">;
-  export type l = SimpleElement<"l">;
-  export type M = SimpleElement<"M">;
-  export type m = SimpleElement<"m">;
-
-  export interface c {
-    type: "c";
-    c1: Coordinate;
-    c2: Coordinate;
-    end: Coordinate;
-  }
-
-  export type Relative = m | l | c | Z | z;
-  export type Absolute = M | L | Z | z;
-  export type Element = Relative | Absolute;
-
-  export function negateX(e: Element): void {
-    for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
-      c[0] *= -1;
-    }
-  }
-
-  export function negateY(e: Element): void {
-    for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
-      c[1] *= -1;
-    }
-  }
-}
+const UNSUPPORTED = Symbol("unsupported");
+type Unsupported = typeof UNSUPPORTED;
 
 type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 type Tincture = string & { __tincture: unknown };
 const Tincture = {
   NONE: "none" as Tincture,
   COUNTERCHANGED: "counterchanged" as Tincture,
+  of: (tincture: string): Tincture => tincture as Tincture,
 };
 type VariedName = string & { __varied: unknown };
 type Ornament = string & { __ornament: unknown };
@@ -215,14 +195,14 @@ interface BaseCharge {
 }
 
 interface SimpleCharge extends BaseCharge {
-  charge: "mullet" | "rondel" | "sword";
+  charge: "mullet" | "rondel";
 }
 
 interface LionCharge extends BaseCharge {
   charge: "lion";
   armed?: Tincture;
   langued?: Tincture;
-  pose: "passant" | "rampant" | "reguardant";
+  pose: "passant" | "rampant";
 }
 
 type Charge = SimpleCharge | LionCharge;
@@ -242,6 +222,9 @@ interface OrdinaryRenderer {
   (ordinary: Ordinary): SVGElement;
   on: ParametricLocator;
   surround: ParametricLocator;
+  // I'd use non-?-optional `undefined` to mean unsupported, but the compiler complains about
+  // implicit `any` if I try that.
+  party: ((ornament: Ornament | undefined) => PathCommand.Any[]) | Unsupported;
 }
 
 interface ChargeRenderer<T extends Charge> {
@@ -270,16 +253,38 @@ interface OrnamentPathGenerator {
 
 // #endregion
 
-// #region LOCATORS AND SHAPES
+// #region GRAPHICS PRIMITIVES
 // ----------------------------------------------------------------------------
 
 type Coordinate = [x: number, y: number];
 
 const Coordinate = {
-  add: ([x1, y1]: Coordinate, [x2, y2]: Coordinate): Coordinate => [
-    x1 + x2,
-    y1 + y2,
-  ],
+  add: (...coordinates: Coordinate[]): Coordinate =>
+    coordinates.reduce(([x1, y1], [x2, y2]) => [x1 + x2, y1 + y2]),
+  subtract: (...coordinates: Coordinate[]): Coordinate =>
+    coordinates.reduce(([x1, y1], [x2, y2]) => [x1 - x2, y1 - y2]),
+  length: ([x1, y1]: Coordinate, [x2, y2]: Coordinate): number =>
+    Math.hypot(x2 - x1, y2 - y1),
+  /**
+   * Rotates the given coordinates about the origin.
+   */
+  rotate: ([x, y]: Coordinate, radians: number): Coordinate => {
+    const cos = Math.cos(radians);
+    const sin = Math.sin(radians);
+    return [x * cos - y * sin, x * sin + y * cos];
+  },
+  /**
+   * Return the angle of the given line segment, in radians. Returns a value on [-pi, pi], according
+   * to the relative direction from the first to second point.
+   */
+  radians: ([x1, y1]: Coordinate, [x2, y2]: Coordinate): number => {
+    if (x1 === x2) {
+      // TODO: Confirm this is correct.
+      return ((y1 < y2 ? 1 : -1) * Math.PI) / 2;
+    } else {
+      return Math.atan((y2 - y1) / (x2 - x1)) + (x2 < x1 ? Math.PI : 0);
+    }
+  },
 };
 
 type Quadrilateral = [Coordinate, Coordinate, Coordinate, Coordinate];
@@ -296,6 +301,67 @@ const Quadrilateral = {
   },
 };
 
+const SVG_ELEMENT_TO_COORDINATES: {
+  [K in PathCommand.Any["type"]]: (
+    e: DiscriminateUnion<PathCommand.Any, "type", K>
+  ) => Coordinate[];
+} = {
+  l: (e) => [e.loc],
+  L: (e) => [e.loc],
+  m: (e) => [e.loc],
+  M: (e) => [e.loc],
+  c: (e) => [e.c1, e.c2, e.end],
+  z: () => [],
+  Z: () => [],
+};
+
+namespace PathCommand {
+  type SimpleElement<T extends string> = {
+    type: T;
+    loc: Coordinate;
+  };
+
+  export interface Z {
+    type: "Z" | "z";
+  }
+
+  export type z = Z;
+
+  export type L = SimpleElement<"L">;
+  export type l = SimpleElement<"l">;
+  export type M = SimpleElement<"M">;
+  export type m = SimpleElement<"m">;
+
+  export interface c {
+    type: "c";
+    c1: Coordinate;
+    c2: Coordinate;
+    end: Coordinate;
+  }
+
+  export type Relative = m | l | c | Z | z;
+  export type Absolute = M | L | Z | z;
+  export type Any = Relative | Absolute;
+
+  export function negateX(e: Any): void {
+    for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
+      c[0] *= -1;
+    }
+  }
+
+  export function negateY(e: Any): void {
+    for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
+      c[1] *= -1;
+    }
+  }
+
+  export function rotate(e: Any, radians: number): void {
+    for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
+      [c[0], c[1]] = Coordinate.rotate(c, radians);
+    }
+  }
+}
+
 /**
  * Given the line segment defined by src-dst, widen it along the perpendicular into a rotated
  * rectangle. Points are returned in clockwise order from src to dst.
@@ -307,10 +373,7 @@ function widen(
   linecap: "butt" | "square" = "butt"
 ): Quadrilateral {
   const halfWidth = width / 2;
-  const angle =
-    src[0] === dst[0]
-      ? Math.PI / 2
-      : Math.atan((dst[1] - src[1]) / (dst[0] - src[0]));
+  const angle = Coordinate.radians(src, dst);
   if (linecap === "square") {
     const x = Math.cos(angle) * halfWidth;
     const y = Math.sin(angle) * halfWidth;
@@ -328,6 +391,11 @@ function widen(
     Coordinate.add(src, [-x, y]),
   ];
 }
+
+// #endregion
+
+// #region LOCATORS
+// ----------------------------------------------------------------------------
 
 function evaluateLineSegment(
   src: Coordinate,
@@ -597,21 +665,34 @@ function assertNever(nope: never): never {
 function applyTransforms(
   element: SVGElement,
   {
+    origin,
     translate,
     scale,
     rotate,
-  }: { translate?: Coordinate; scale?: number; rotate?: number } = {}
+  }: {
+    origin?: Coordinate;
+    translate?: Coordinate;
+    scale?: number | Coordinate;
+    rotate?: number;
+  } = {}
 ): void {
   const transform = [
     translate != null
       ? `translate(${translate[0]}, ${translate[1]})`
       : undefined,
-    scale != null && scale !== 1 ? `scale(${scale})` : undefined,
+    typeof scale === "number" && scale !== 1
+      ? `scale(${scale})`
+      : Array.isArray(scale)
+      ? `scale(${scale[0]}, ${scale[1]})`
+      : undefined,
     rotate != null ? `rotate(${(rotate / (2 * Math.PI)) * 360})` : undefined,
   ]
     .filter(Boolean)
     .join(" ");
 
+  if (origin != null) {
+    element.setAttribute("transform-origin", `${origin[0]} ${origin[1]}`);
+  }
   element.setAttribute("transform", transform);
 }
 
@@ -670,13 +751,7 @@ function path(strings: TemplateStringsArray, ...values: number[]): string {
   return parts.join("").trim().replaceAll("\n", "").replaceAll(/ +/g, " ");
 }
 
-path.fromPoints = (points: Coordinate[]): string => {
-  return "M " + points.map(([x, y]) => `${x} ${y}`).join(" L ") + " Z";
-};
-
-path.from = (
-  ...elements: (PathCommand.Element | PathCommand.Element[])[]
-): string => {
+path.from = (...elements: (PathCommand.Any | PathCommand.Any[])[]): string => {
   return elements
     .flat()
     .map(
@@ -702,19 +777,6 @@ function recursivelyOmitNullish<T>(value: T): T {
     return o as T;
   } else {
     return value;
-  }
-}
-
-/**
- * Return the angle of the given line segment, in radians. Returns a value on [-pi, pi], according
- * to the relative direction from the first to second point.
- */
-function radians([x1, y1]: Coordinate, [x2, y2]: Coordinate): number {
-  if (x1 === x2) {
-    // TODO: Confirm this is correct.
-    return ((y1 < y2 ? 1 : -1) * Math.PI) / 2;
-  } else {
-    return Math.atan((y2 - y1) / (x2 - x1)) + (x2 < x1 ? Math.PI : 0);
   }
 }
 
@@ -821,6 +883,58 @@ bend.surround = new ReflectiveLocator(
   [W_2, -H_2 + W]
 );
 
+bend.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
+  const topLeft: Coordinate = [-W_2, -H_2];
+  const topRight: Coordinate = [W_2, -H_2];
+  const bottomRight = Coordinate.add(topLeft, [BEND_LENGTH, BEND_LENGTH]);
+  if (ornament == null) {
+    return [
+      { type: "M", loc: topLeft },
+      { type: "L", loc: bottomRight },
+      { type: "L", loc: topRight },
+      { type: "Z" },
+    ];
+  } else {
+    const [start, main, end] = ORNAMENTS[ornament](
+      BEND_LENGTH,
+      0,
+      false,
+      "start"
+    );
+    main.forEach((c) => PathCommand.rotate(c, Math.PI / 4));
+    return [
+      { type: "M", loc: topLeft },
+      { type: "l", loc: Coordinate.rotate(start.loc, Math.PI / 4) },
+      ...main,
+      { type: "l", loc: Coordinate.rotate(end.loc, Math.PI / 4) },
+      { type: "L", loc: topRight },
+      { type: "Z" },
+    ];
+  }
+};
+
+function bendSinister(ordinary: Ordinary) {
+  const g = svg.g(bend(ordinary));
+  applyTransforms(g, {
+    scale: [-1, 1],
+  });
+  return g;
+}
+
+bendSinister.on = new ReflectiveLocator(bend.on, [0, -H_2], [0, H_2]);
+
+bendSinister.surround = new ReflectiveLocator(
+  bend.surround,
+  [0, -H_2],
+  [0, H_2]
+);
+
+bendSinister.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
+  const commands = bend.party(ornament);
+  commands.forEach(PathCommand.negateX);
+  return commands;
+};
+
 const CHIEF_WIDTH = H / 3;
 function chief({ tincture, cotised, ornament }: Ordinary) {
   const chief = svg.g();
@@ -877,21 +991,85 @@ chief.on = new LineSegmentLocator(
 
 chief.surround = new NullLocator();
 
-function chevron({ tincture, cotised }: Ordinary) {
-  const chevronWidth = W / 4;
+chief.party = UNSUPPORTED;
 
+const CHEVRON_WIDTH = W / 4;
+
+function chevron({ tincture, cotised, ornament }: Ordinary) {
   const left: Coordinate = [-W_2, -H_2 + W];
   const right: Coordinate = [-W_2 + H, H_2];
   // Cross at 45 degrees starting from the top edge, so we bias upwards from the center.
   const mid: Coordinate = [0, -(H_2 - W_2)];
 
   const chevron = svg.g();
-  chevron.appendChild(svg.line(left, mid, tincture, chevronWidth, "square"));
-  chevron.appendChild(svg.line(mid, right, tincture, chevronWidth, "square"));
+
+  if (ornament != null) {
+    const topLength = Coordinate.length(mid, right) + CHEVRON_WIDTH / 2;
+    const bottomLength = Coordinate.length(mid, right) - CHEVRON_WIDTH / 2;
+    for (const sign of [-1, 1]) {
+      const [topStart, topMain, topEnd] = ORNAMENTS[ornament](
+        topLength,
+        0,
+        false,
+        "start"
+      );
+      const [bottomStart, bottomMain, bottomEnd] = ORNAMENTS[ornament](
+        -bottomLength,
+        0,
+        true,
+        "end"
+      );
+
+      const p = svg.path(
+        path.from(
+          { type: "m", loc: topStart.loc }, //
+          topMain,
+          {
+            type: "l",
+            loc: Coordinate.add(
+              topEnd.loc,
+              [0, CHEVRON_WIDTH],
+              bottomStart.loc
+            ),
+          },
+          bottomMain,
+          {
+            type: "l",
+            // topStart appears here because we want to ensure that the line from the first point
+            // (which is topStart) to the last point is at pi/4 (ignoring the hack immediately
+            // below). We are guaranteed that it is pi/4 from 0, 0 to bottomEnd, but since we shift
+            // it by topStart we need to shift it here too.
+            loc: Coordinate.add(topStart.loc, bottomEnd.loc),
+          },
+          // A bit weird, but: juke out of the way a bit to overlap with the other side. Ensures
+          // that the very skinny point at the top of the chevron doesn't turn itself inside out
+          // and fill the wrong side when using e.g. engrailed.
+          { type: "l", loc: [-CHEVRON_WIDTH / 10, 0] },
+          { type: "z" }
+        ),
+        tincture
+      );
+      applyTransforms(p, {
+        origin: topStart.loc,
+        scale: [sign, 1],
+        rotate: Math.PI / 4,
+        translate: Coordinate.add(mid, [
+          0,
+          -Math.hypot(CHEVRON_WIDTH, CHEVRON_WIDTH) / 2,
+        ]),
+      });
+      chevron.append(p);
+    }
+  } else {
+    chevron.appendChild(svg.line(left, mid, tincture, CHEVRON_WIDTH, "square"));
+    chevron.appendChild(
+      svg.line(mid, right, tincture, CHEVRON_WIDTH, "square")
+    );
+  }
 
   if (cotised != null) {
     // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
-    const offset = Math.sin(Math.PI / 4) * chevronWidth + COTISED_WIDTH * 2;
+    const offset = Math.sin(Math.PI / 4) * CHEVRON_WIDTH + COTISED_WIDTH * 2;
 
     for (const end of [left, right]) {
       for (const sign of [-1, 1]) {
@@ -899,7 +1077,7 @@ function chevron({ tincture, cotised }: Ordinary) {
           svg.line(
             Coordinate.add(end, [0, sign * offset]),
             Coordinate.add(mid, [0, sign * offset]),
-            tincture,
+            cotised,
             COTISED_WIDTH,
             "square"
           )
@@ -941,6 +1119,66 @@ chevron.surround = new ExhaustiveLocator(
   ],
   [0.5, 0.5, 0.5, 0.5]
 );
+
+chevron.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
+  const [topLeft, midLeft, mid, midRight, topRight] = [
+    [-W_2, -H_2],
+    // See the main renderer for how these values are picked.
+    [-W_2, -H_2 + W],
+    [0, -(H_2 - W_2)],
+    [W_2, -H_2 + W],
+    [W_2, -H_2],
+  ] satisfies Coordinate[];
+
+  if (ornament == null) {
+    return [
+      { type: "M", loc: topLeft },
+      { type: "L", loc: midLeft },
+      { type: "L", loc: mid },
+      { type: "L", loc: midRight },
+      { type: "L", loc: topRight },
+      { type: "Z" },
+    ];
+  } else {
+    const [leftStart, leftMain, leftEnd] = ORNAMENTS[ornament](
+      Coordinate.length(midLeft, mid),
+      0,
+      false,
+      "end"
+    );
+    const [rightStart, rightMain, rightEnd] = ORNAMENTS[ornament](
+      Coordinate.length(mid, midRight),
+      0,
+      false,
+      "start"
+    );
+    leftMain.forEach((c) => PathCommand.rotate(c, -Math.PI / 4));
+    rightMain.forEach((c) => PathCommand.rotate(c, Math.PI / 4));
+    return [
+      { type: "M", loc: topLeft },
+      { type: "L", loc: midLeft },
+      {
+        type: "l",
+        loc: Coordinate.rotate(
+          Coordinate.add(leftStart.loc, leftEnd.loc),
+          -Math.PI / 4
+        ),
+      },
+      ...leftMain,
+      ...rightMain,
+      {
+        type: "l",
+        loc: Coordinate.rotate(
+          Coordinate.add(rightEnd.loc, rightStart.loc),
+          Math.PI / 4
+        ),
+      },
+      { type: "L", loc: midRight },
+      { type: "L", loc: topRight },
+      { type: "Z" },
+    ];
+  }
+};
 
 function cross({ tincture, cotised }: Ordinary) {
   const crossWidth = W / 4;
@@ -1017,6 +1255,10 @@ cross.surround = new SequenceLocator(
   }
 );
 
+// Technically this is synonymous with "quarterly", but the code architecture makes it annoying to
+// do that without breaking the abstraction. It'll just be unsupported instead.
+cross.party = UNSUPPORTED;
+
 const FESS_WIDTH = W / 3;
 const FESS_VERTICAL_OFFSET = -H_2 + (W / 3) * (3 / 2);
 function fess({ tincture, cotised, ornament }: Ordinary) {
@@ -1026,20 +1268,15 @@ function fess({ tincture, cotised, ornament }: Ordinary) {
     fess.appendChild(
       svg.path(
         path.from(
-          { type: "m", loc: [-W_2, 0] },
+          { type: "m", loc: [-W_2, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2] },
           relativePathsToClosedLoop(
-            ORNAMENTS[ornament](
-              W,
-              FESS_VERTICAL_OFFSET - FESS_WIDTH / 2,
-              false,
-              "center"
-            ),
-            ORNAMENTS[ornament](
-              -W,
-              FESS_VERTICAL_OFFSET + FESS_WIDTH / 2,
-              true,
-              "center"
-            )
+            ORNAMENTS[ornament](W, 0, false, "center"),
+            [
+              { type: "m", loc: [0, 0] },
+              [{ type: "l", loc: [0, FESS_WIDTH] }],
+              { type: "m", loc: [0, 0] },
+            ],
+            ORNAMENTS[ornament](-W, 0, true, "center")
           )
         ),
         tincture
@@ -1096,45 +1333,68 @@ fess.surround = new ReflectiveLocator(
   [W_2, -4]
 );
 
+fess.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
+  const [topLeft, midLeft, midRight, topRight] = [
+    { type: "M", loc: [-W_2, -H_2] },
+    { type: "L", loc: [-W_2, -H / 10] },
+    { type: "L", loc: [W_2, -H / 10] },
+    { type: "L", loc: [W_2, -H_2] },
+  ] satisfies PathCommand.Any[];
+
+  if (ornament == null) {
+    return [topLeft, midLeft, midRight, topRight, { type: "Z" }];
+  } else {
+    const [start, main, end] = ORNAMENTS[ornament](W, 0, false, "center");
+    return [
+      topLeft,
+      midLeft,
+      { type: "l", loc: start.loc },
+      ...main,
+      { type: "l", loc: end.loc },
+      midRight,
+      topRight,
+      { type: "Z" },
+    ];
+  }
+};
+
 const PALE_WIDTH = W / 3;
 function pale({ tincture, cotised, ornament }: Ordinary) {
   const pale = svg.g();
 
   if (ornament != null) {
-    pale.appendChild(
-      svg.path(
-        path.from(
-          relativePathsToClosedLoop(
-            ORNAMENTS[ornament](H, -PALE_WIDTH / 2, false),
-            // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
-            // we traverse around the pale clockwise.
-            ORNAMENTS[ornament](-H, PALE_WIDTH / 2, true, "end")
-          )
-        ),
-        tincture
-      )
+    const p = svg.path(
+      path.from(
+        relativePathsToClosedLoop(
+          ORNAMENTS[ornament](H, -PALE_WIDTH / 2, false),
+          // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
+          // we traverse around the pale clockwise.
+          ORNAMENTS[ornament](-H, PALE_WIDTH / 2, true, "end")
+        )
+      ),
+      tincture
     );
+    applyTransforms(p, {
+      translate: [0, -H_2],
+      rotate: Math.PI / 2,
+    });
+    pale.appendChild(p);
   } else {
-    pale.appendChild(svg.line([0, 0], [H, 0], tincture, PALE_WIDTH));
+    pale.appendChild(svg.line([0, -H_2], [0, H_2], tincture, PALE_WIDTH));
   }
 
   if (cotised != null) {
     const offset = PALE_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
 
     pale.appendChild(
-      svg.line([0, -offset], [0, offset], cotised, COTISED_WIDTH)
+      svg.line([offset, -H_2], [offset, H_2], cotised, COTISED_WIDTH)
     );
     pale.appendChild(
-      svg.line([0, -offset], [0, offset], cotised, COTISED_WIDTH)
+      svg.line([-offset, -H_2], [-offset, H_2], cotised, COTISED_WIDTH)
     );
   }
 
-  applyTransforms(pale, {
-    translate: [0, -H_2],
-    rotate: Math.PI / 2,
-  });
-
-  return svg.g(pale);
+  return pale;
 }
 
 pale.on = new LineSegmentLocator(
@@ -1153,21 +1413,46 @@ pale.surround = new ReflectiveLocator(
   [0, H_2]
 );
 
-function saltire({ tincture, cotised }: Ordinary) {
-  const saltireWidth = W / 4;
+pale.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
+  const [topLeft, topMid, bottomMid, bottomLeft] = [
+    { type: "M", loc: [-W_2, -H_2] },
+    { type: "L", loc: [0, -H_2] },
+    { type: "L", loc: [0, H_2] },
+    { type: "L", loc: [-W_2, H_2] },
+  ] satisfies PathCommand.Any[];
 
+  if (ornament == null) {
+    return [topLeft, topMid, bottomMid, bottomLeft, { type: "Z" }];
+  } else {
+    const [start, main, end] = ORNAMENTS[ornament](H, 0, false, "start");
+    main.forEach((c) => PathCommand.rotate(c, Math.PI / 2));
+    return [
+      topLeft,
+      topMid,
+      { type: "l", loc: Coordinate.rotate(start.loc, Math.PI / 2) },
+      ...main,
+      { type: "l", loc: Coordinate.rotate(end.loc, Math.PI / 2) },
+      bottomMid,
+      bottomLeft,
+      { type: "Z" },
+    ];
+  }
+};
+
+const SALTIRE_WIDTH = W / 4;
+function saltire({ tincture, cotised }: Ordinary) {
   const tl: Coordinate = [-W_2, -H_2];
   const tr: Coordinate = [W_2, -H_2];
   const bl: Coordinate = [-W_2, -H_2 + W];
   const br: Coordinate = [-W_2 + H, H_2];
 
   const saltire = svg.g();
-  saltire.appendChild(svg.line(tl, br, tincture, saltireWidth));
-  saltire.appendChild(svg.line(bl, tr, tincture, saltireWidth));
+  saltire.appendChild(svg.line(tl, br, tincture, SALTIRE_WIDTH));
+  saltire.appendChild(svg.line(bl, tr, tincture, SALTIRE_WIDTH));
 
   if (cotised != null) {
     // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
-    const offset = Math.sin(Math.PI / 4) * saltireWidth + COTISED_WIDTH * 2;
+    const offset = Math.sin(Math.PI / 4) * SALTIRE_WIDTH + COTISED_WIDTH * 2;
     // Cross at 45 degrees starting from the top edge, so we bias upwards from the center.
     const mid: Coordinate = [0, -(H_2 - W_2)];
 
@@ -1228,8 +1513,31 @@ saltire.surround = new SequenceLocator(
   }
 );
 
+saltire.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
+  const [topLeft, topRight, bottomLeft, bottomRight] = [
+    { type: "L", loc: [-W_2, -H_2] },
+    { type: "L", loc: [W_2, -H_2] },
+    { type: "L", loc: [-W_2, -H_2 + W] },
+    { type: "L", loc: [W_2, -H_2 + W] },
+  ] satisfies PathCommand.Any[];
+
+  if (ornament == null) {
+    return [
+      { type: "M", loc: topLeft.loc },
+      bottomRight,
+      topRight,
+      bottomLeft,
+      { type: "Z" },
+    ];
+  } else {
+    // TODO: What makes sense here?
+    return [];
+  }
+};
+
 const ORDINARIES: Record<string, OrdinaryRenderer> = {
   bend,
+  "bend sinister": bendSinister,
   chevron,
   chief,
   cross,
@@ -1242,13 +1550,6 @@ const ORDINARIES: Record<string, OrdinaryRenderer> = {
 
 // #region CHARGES
 // ----------------------------------------------------------------------------
-
-function sword({ tincture }: SimpleCharge) {
-  return svg.path(
-    "M 35 -2 L 22 -2 L 22 -10 L 18 -10 L 18 -2 L -31 -2 L -35 0 L -31 2 L 18 2 L 18 11 L 22 11 L 22 2 L 35 2 Z",
-    tincture
-  );
-}
 
 function rondel({ tincture }: SimpleCharge) {
   const circle = document.createElementNS(
@@ -1298,14 +1599,13 @@ const SIMPLE_CHARGES: {
   [K in SimpleCharge["charge"]]: ChargeRenderer<
     DiscriminateUnion<Charge, "charge", K>
   >;
-} = { sword, rondel, mullet };
+} = { rondel, mullet };
 
 // A little unfortunate this dispatching wrapper is necessary, but it's the only way to type-safety
 // render based on the string. Throwing all charges, simple and otherwise, into a constant mapping
 // together means the inferred type of the function has `never` as the first argument. :(
 function renderCharge(charge: Charge): SVGElement {
   switch (charge.charge) {
-    case "sword":
     case "rondel":
     case "mullet":
       return SIMPLE_CHARGES[charge.charge](charge);
@@ -1344,6 +1644,17 @@ function wrapSimpleOrnamenter(
       main.reverse();
       start.loc[0] += end.loc[0];
       end.loc[0] = 0;
+      // Swapping start and end means that the adjustments to get to/from the starting baseline are
+      // now in the opposite order, so we'll offset the other direction! Negate them.
+      start.loc[1] *= -1;
+      end.loc[1] *= -1;
+      // If the pattern is composite, each of the pieces of the cycle now has the same problem as
+      // the start/end, since their ordering is reversed. Negate them too.
+      if (isPatternCycleComposite) {
+        for (const e of main) {
+          PathCommand.negateY(e);
+        }
+      }
     }
 
     if (invertX) {
@@ -1380,16 +1691,14 @@ function wrapSimpleOrnamenter(
     } else if (alignment === "end") {
       return mutatinglyApplyTransforms(ornamenter(length), {
         invertX,
-        // Note: invertY must be a function of composite if doing end-alignment.
-        invertY: isPatternCycleComposite !== invertY, // "xor"
+        invertY,
         yOffset,
         alignToEnd: true,
       });
     } else if (alignment === "center") {
       const [start, firstMain] = mutatinglyApplyTransforms(
         ornamenter(length / 2),
-        // Note: invertY must be a function of composite if doing end-alignment.
-        { invertY: isPatternCycleComposite, alignToEnd: true }
+        { alignToEnd: true }
       );
 
       const [, secondMain, end] = ornamenter(length / 2);
@@ -1404,17 +1713,35 @@ function wrapSimpleOrnamenter(
 }
 
 function relativePathsToClosedLoop(
-  [p1Start, p1Main, p1End]: RelativeOrnamentPath,
-  [p2Start, p2Main]: RelativeOrnamentPath
+  ...paths: RelativeOrnamentPath[]
 ): PathCommand.Relative[] {
-  return [
-    p1Start,
-    ...p1Main,
-    { type: "l", loc: Coordinate.add(p1End.loc, p2Start.loc) },
-    ...p2Main,
-    { type: "z" },
+  const commands: PathCommand.Relative[] = [
+    paths[0][0],
+    ...paths[0][1],
+    paths[0][2],
   ];
+  for (const [start, middle, end] of paths.slice(1)) {
+    const previous = commands.pop();
+    assert(
+      previous != null && previous.type === "m",
+      "commands must always end in m"
+    );
+    commands.push(
+      { type: "l", loc: Coordinate.add(previous.loc, start.loc) },
+      ...middle,
+      end
+    );
+  }
+  commands.pop();
+  commands.push({ type: "z" });
+  return commands;
 }
+
+relativePathsToClosedLoop.debug = (
+  ...paths: RelativeOrnamentPath[]
+): PathCommand.Relative[] => {
+  return paths.flat(2).map((c) => (c.type === "m" ? { ...c, type: "l" } : c));
+};
 
 function embattled(length: number): RelativeOrnamentPath {
   const xStep = W / 12;
@@ -1423,20 +1750,20 @@ function embattled(length: number): RelativeOrnamentPath {
   const points: Coordinate[] = [[xStep / 2, 0]];
 
   let x = length - xStep / 2;
-  let y = -yStep / 2;
+  let y = yStep / 2;
   while (x > 0) {
-    points.push([0, yStep], [xStep, 0]);
+    points.push([0, -yStep], [xStep, 0]);
     x -= xStep;
-    y += yStep;
+    y -= yStep;
     if (x > 0) {
-      points.push([0, -yStep], [xStep, 0]);
+      points.push([0, yStep], [xStep, 0]);
       x -= xStep;
-      y -= yStep;
+      y += yStep;
     }
   }
 
   return [
-    { type: "m", loc: [0, -yStep / 2] },
+    { type: "m", loc: [0, yStep / 2] },
     points.map((loc) => ({ type: "l", loc })),
     { type: "m", loc: [x, -y] },
   ];
@@ -1465,9 +1792,71 @@ function engrailed(length: number): RelativeOrnamentPath {
   ];
 }
 
+function indented(length: number): RelativeOrnamentPath {
+  const size = W / 12;
+
+  const points: Coordinate[] = [];
+
+  let x = length;
+  let y = -size / 2;
+  while (x > 0) {
+    points.push([size, size]);
+    x -= size;
+    y += size;
+    if (x > 0) {
+      points.push([size, -size]);
+      x -= size;
+      y -= size;
+    }
+  }
+
+  return [
+    { type: "m", loc: [0, -size / 2] },
+    points.map((loc) => ({ type: "l", loc })),
+    { type: "m", loc: [x, -y] },
+  ];
+}
+
+function wavy(length: number): RelativeOrnamentPath {
+  const halfWidth = W / 12;
+
+  const curves: PathCommand.c[] = [];
+
+  let x = length;
+  let y = -halfWidth / 2;
+  while (x > 0) {
+    curves.push({
+      type: "c",
+      c1: [halfWidth / 2, 0],
+      c2: [halfWidth / 2, halfWidth / 2],
+      end: [halfWidth, halfWidth / 2],
+    });
+    x -= halfWidth;
+    y += halfWidth / 2;
+    if (x > 0) {
+      curves.push({
+        type: "c",
+        c1: [halfWidth / 2, 0],
+        c2: [halfWidth / 2, -halfWidth / 2],
+        end: [halfWidth, -halfWidth / 2],
+      });
+      x -= halfWidth;
+      y -= halfWidth / 2;
+    }
+  }
+
+  return [
+    { type: "m", loc: [0, -halfWidth / 2] },
+    curves,
+    { type: "m", loc: [x, -y] },
+  ];
+}
+
 const ORNAMENTS: Record<string, OrnamentPathGenerator> = {
   embattled: wrapSimpleOrnamenter(embattled, true),
   engrailed: wrapSimpleOrnamenter(engrailed),
+  indented: wrapSimpleOrnamenter(indented, true),
+  wavy: wrapSimpleOrnamenter(wavy, true),
 };
 
 // #region VARIED
@@ -1607,93 +1996,6 @@ const VARIED: Record<string, VariedClipPathGenerator> = {
 // #region HIGHER-ORDER ELEMENTS
 // ----------------------------------------------------------------------------
 
-const PARTY_PER_CLIP_PATHS: Record<Direction, [string, string]> = {
-  pale: [
-    path`
-      M -${W_2} -${H_2}
-      L       0 -${H_2}
-      L       0  ${H_2}
-      L -${W_2}  ${H_2}
-    `,
-    path`
-      M       0 -${H_2}
-      L       0  ${H_2}
-      L  ${W_2}  ${H_2}
-      L  ${W_2} -${H_2}
-    `,
-  ],
-  fess: [
-    path`
-      M -${W_2} -${H_2}
-      L -${W_2}       0
-      L  ${W_2}       0
-      L  ${W_2} -${H_2}
-      Z
-    `,
-    path`
-      M -${W_2} ${H_2}
-      L -${W_2}      0
-      L  ${W_2}      0
-      L  ${W_2} ${H_2}
-      Z
-    `,
-  ],
-  bend: [
-    path`
-      M -${W_2} ${-H_2}
-      L  ${W_2} ${-H_2}
-      L  ${W_2} ${-H_2 + W}
-      Z
-    `,
-    path`
-      M -${W_2} ${-H_2}
-      L  ${W_2} ${-H_2 + W}
-      L  ${W_2} ${H_2}
-      L -${W_2} ${H_2}
-      Z
-    `,
-  ],
-  chevron: [
-    // TODO: Done empirically, and to run the midline of the chevron ordinary. Both these and the
-    // ordinary should be rewritten to be based on W/H.
-    path`
-      M -51  41
-      L   0 -10
-      L  51  41
-      L  51  60
-      L -51  60
-      Z
-    `,
-    path`
-      M -51  41
-      L   0 -10
-      L  51  41
-      L  51 -60
-      L -51 -60
-      Z
-    `,
-  ],
-  saltire: [
-    // TODO: Same here as above for chevron.
-    path`
-      M -51  41
-      L  52 -62
-      L -52 -62
-      L  51  41
-      L  51  60
-      L -51  60
-      Z
-    `,
-    path`
-      M -52 -62
-      L  51  41
-      L  52 -62
-      L -51  41
-      Z
-    `,
-  ],
-};
-
 const QUARTERINGS: Record<Quarter, { translate: Coordinate }> = {
   1: {
     translate: [-25, -30],
@@ -1710,11 +2012,14 @@ const QUARTERINGS: Record<Quarter, { translate: Coordinate }> = {
 };
 
 const CANTON_SCALE_FACTOR = 1 / 3;
+// Note that this clips the bottom of the area. Combined with proportional scaling, this permits us
+// to render _most_ things pretty sanely, at the risk of them being slightly off-center or clipped
+// since they expect to be rendered in a taller-than-wide rectangle by default.
 const CANTON_PATH = path`
-  M -${W_2} -${H_2}
-  L  ${W_2} -${H_2}
-  L  ${W_2}  ${H_2}
-  L -${W_2}  ${H_2}
+  M -${W_2} ${-H_2}
+  L  ${W_2} ${-H_2}
+  L  ${W_2} ${-H_2 + W}
+  L -${W_2} ${-H_2 + W}
   Z
 `;
 
@@ -1726,15 +2031,7 @@ function complexContent(container: SVGElement, content: ComplexContent) {
   function renderIntoParent(parent: SVGElement, element: SimpleContent) {
     if ("canton" in element) {
       const g = svg.g();
-      g.setAttribute("transform-origin", `-${W_2} -${H_2}`);
-      g.setAttribute(
-        "transform",
-        // The non-proportional scaling is a bit weird, but we want to have a square canton. A truly
-        // "standards-compliant" implementation would have alternate forms of the ordinaries and
-        // charges designed for a square canton, like a square cross. But this is a shortcut we take.
-        `scale(${CANTON_SCALE_FACTOR}, ${(CANTON_SCALE_FACTOR * W) / H})`
-      );
-
+      applyTransforms(g, { origin: [-W_2, -H_2], scale: CANTON_SCALE_FACTOR });
       g.style.clipPath = `path("${CANTON_PATH}")`;
       g.appendChild(svg.path(CANTON_PATH, element.canton));
       g.classList.add(`fill-${element.canton}`);
@@ -1800,10 +2097,12 @@ function complexContent(container: SVGElement, content: ComplexContent) {
   }
 
   if ("party" in content) {
+    const { party } = ORDINARIES[content.party];
+    // This should be prevented in grammar, so this should never fire.
+    assert(party !== UNSUPPORTED, `cannot use 'party' with this ordinary`);
     const g1 = svg.g();
-    g1.style.clipPath = `path("${PARTY_PER_CLIP_PATHS[content.party][0]}")`;
+    g1.style.clipPath = `path("${path.from(party(content.ornament))}")`;
     const g2 = svg.g();
-    g2.style.clipPath = `path("${PARTY_PER_CLIP_PATHS[content.party][1]}")`;
     g1.appendChild(field(content.first));
     g2.appendChild(field(content.second));
     if (content.content) {
@@ -1816,8 +2115,9 @@ function complexContent(container: SVGElement, content: ComplexContent) {
         overwriteCounterchangedTincture(content.content, content.first)
       );
     }
-    container.appendChild(g1);
+    // Add g2 first so that it's underneath g1, which is the only one with a clip path.
     container.appendChild(g2);
+    container.appendChild(g1);
   } else if ("quarters" in content) {
     const quartered: Record<Quarter, SVGElement> = {
       1: svg.g(),
@@ -1846,6 +2146,12 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     for (const e of Object.values(quartered)) {
       container.appendChild(e);
     }
+    container.appendChild(
+      svg.line([0, -H_2], [0, H_2], Tincture.of("sable"), 0.25)
+    );
+    container.appendChild(
+      svg.line([-W_2, 0], [W_2, 0], Tincture.of("sable"), 0.25)
+    );
   } else if ("varied" in content) {
     container.appendChild(field(content.first));
     const second = field(content.second);
@@ -1939,7 +2245,7 @@ function parseAndRenderBlazon() {
   container.style.clipPath = `path("${FIELD_PATH}")`;
   rendered.appendChild(container);
   // Make sure there's always a default background.
-  container.appendChild(field("argent" as Tincture));
+  container.appendChild(field(Tincture.of("argent")));
 
   complexContent(container, result);
 }
@@ -1970,7 +2276,7 @@ parseAndRenderBlazon();
 
 // These files are small and there's not that many of them, so it's easier if we just eagerly
 // load of these and then try to access them sync later and hope for the best. Making the ENTIRE
-// implementation sync just for this is a passive PITA.
+// implementation async just for this is a passive PITA.
 fetchComplexSvg("lion", "rampant");
 
 // #endregion

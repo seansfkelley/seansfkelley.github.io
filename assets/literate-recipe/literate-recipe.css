@@ -6,18 +6,18 @@ body[data-theme="auto"], body[data-theme="light"] { --brand-color:              
 
 body[data-theme="dark"] { --brand-color:                #a2a2a2; --brand-color-light:          #424242; --brand-color-dark:           #e8e8e8; --site-title-color:           var(--brand-color-dark); --text-color:                 #d0d0d0; --text-color-faded:           #909090; --background-color:           #202020; --code-background-color:      #404040; --input-background-color:     #404040; --input-border-color:         transparent; --input-hover-color:          #505050; --highlight-background-color: #434418; --link-color-base:            #689fe6; --link-color-visited:         #567bac; --link-color-hover:           var(--text-color); --text-color-blockquote:      var(--text-color-faded); --border-color-blockquote:    #808080; --intent-default-background-color: rgba(19,124,189,.25); --intent-default-text-color:       #48aff0; --intent-success-background-color: rgba(15,153,96,.25); --intent-success-text-color:       #3dcc91; --intent-warning-background-color: rgba(217, 130, 43, 0.25); --intent-warning-text-color:       #ffb366; --intent-danger-background-color:  rgba(219, 55, 55, 0.25); --intent-danger-text-color:        #ff7373; --sol-mono3:  var(--sol-base03); --sol-mono2:  var(--sol-base02); --sol-mono1:  var(--sol-base01); --sol-mono00: var(--sol-base0); --sol-mono01: var(--sol-base1); }
 
-section.recipe-step h3 { display: flex; align-items: center; }
+header.recipe-step h3 { display: flex; align-items: center; }
 
-section.recipe-step h3 hr { flex: 1; }
+header.recipe-step h3 hr { flex: 1; }
 
-section.recipe-step .metadata { display: flex; align-items: center; }
+header.recipe-step .metadata { display: flex; align-items: center; }
 
-section.recipe-step .metadata input { -webkit-appearance: none; }
+header.recipe-step .metadata input { -webkit-appearance: none; }
 
-section.recipe-step .metadata input[type="button"] { margin-left: auto; opacity: 0; transition: opacity 100ms; }
+header.recipe-step .metadata input[type="button"] { margin-left: auto; opacity: 0; transition: opacity 100ms; }
 
-section.recipe-step .metadata input[type="time"] { margin-left: 4px; }
+header.recipe-step .metadata input[type="time"] { margin-left: 4px; }
 
-section.recipe-step:hover .metadata input[type="button"] { opacity: 1; }
+header.recipe-step:hover .metadata input[type="button"] { opacity: 1; }
 
-@media screen and (max-width: 600px) { section.recipe-step .metadata input[type="button"] { opacity: 1; } }
+@media screen and (max-width: 600px) { header.recipe-step .metadata input[type="button"] { opacity: 1; } }

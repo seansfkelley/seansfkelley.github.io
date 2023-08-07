@@ -1,4 +1,226 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2023-07-16T23:04:16+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Why Is Facebook So Awful?</title><link href="https://blog.sea.nkelley.me/2021/11/01/moderation-broadcastability/" rel="alternate" type="text/html" title="Why Is Facebook So Awful?" /><published>2021-11-01T00:00:00+00:00</published><updated>2022-01-07T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2021/11/01/moderation-broadcastability</id><content type="html" xml:base="https://blog.sea.nkelley.me/2021/11/01/moderation-broadcastability/">&lt;figure&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2023-08-07T03:05:13+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Sourdough Loaf (and Recipe Planner)</title><link href="https://blog.sea.nkelley.me/2023/08/06/literate-sourdough/" rel="alternate" type="text/html" title="Sourdough Loaf (and Recipe Planner)" /><published>2023-08-06T00:00:00+00:00</published><updated>2023-08-06T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/08/06/literate-sourdough</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/08/06/literate-sourdough/">&lt;p&gt;This recipe is my transcription and adaptation of &lt;a href=&quot;https://www.youtube.com/watch?v=APEavQg8rMw&quot;&gt;A Non-Baker’s Guide To Making Sourdough Bread&lt;/a&gt;, written in a style loosely inspired by &lt;a href=&quot;https://en.wikipedia.org/wiki/Literate_programming&quot;&gt;literate programming&lt;/a&gt;. A bit more background on what this “literate recipe” thing is at &lt;a href=&quot;/2021/05/17/literate-focaccia/&quot;&gt;my focaccia recipe&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This recipe is intended as a terse reference for those already familiar with the recipe, or sourdough breads in general. If you aren’t very experienced, you can watch the full video recipe linked above (also great as a visual reference), follow &lt;a href=&quot;https://tartinebakery.com/stories/country-bread&quot;&gt;Tartine’s Country Bread&lt;/a&gt; recipe, and/or check out &lt;a href=&quot;/2021/04/28/sourdough-starter/&quot;&gt;my advice on maintaining a starter&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Onto the recipe!&lt;/p&gt;
+
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;0&quot; data-duration=&quot;5&quot; data-wait=&quot;0&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      to begin
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      5 minutes of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
+
+&lt;p&gt;Feed your starter with&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;100 grams lukewarm water&lt;/li&gt;
+  &lt;li&gt;100 grams bread or all-purpose flour&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;1&quot; data-duration=&quot;10&quot; data-wait=&quot;720&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      12 hours later
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      10 minutes of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
+
+&lt;p&gt;In a large bowl, mix&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;200 grams starter&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+  &lt;li&gt;400 grams water&lt;/li&gt;
+  &lt;li&gt;600 grams bread or all-purpose flour&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;getting out most of the lumps. Rest, covered, for 30 minutes.&lt;/p&gt;
+
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;2&quot; data-duration=&quot;15&quot; data-wait=&quot;30&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      30 minutes later
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      15 minutes of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
+
+&lt;p&gt;Add&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;12 grams salt&lt;/li&gt;
+  &lt;li&gt;splash of water&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;and mix. Scoop dough out onto hard, non-porous, unfloured surface.&lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; Knead: turn, grab, turn, smash, pull, roll for 10 minutes. You want dough that is smooth, elastic and tacky (but not sticky).&lt;/p&gt;
+
+&lt;p&gt;Cover bowl and proof for 4 hours in a warm environment.&lt;/p&gt;
+
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;3&quot; data-duration=&quot;5&quot; data-wait=&quot;240&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      4 hours later
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      5 minutes of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
+
+&lt;p&gt;Put dough on unfloured countertop. Sprinkle with flour, and flip. Fold each of the four edges over the center until you get a rough ball.&lt;/p&gt;
+
+&lt;p&gt;Rest for 30 minutes.&lt;/p&gt;
+
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;4&quot; data-duration=&quot;10&quot; data-wait=&quot;30&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      30 minutes later
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      10 minutes of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
+
+&lt;p&gt;Sprinkle with flour and flip. Fold all four edges to their opposite sides. Shape into a ball, then with the dough scraper, firmly push the dough in all directions to roll across the surface and build tension.&lt;/p&gt;
+
+&lt;p&gt;Dust a proof basket with flour and transfer the dough to it, seam side up. (If you do not have a proofing basket, you can put a dry kitchen towel in a bowl.)&lt;/p&gt;
+
+&lt;p&gt;Dust with flour, cover with towel, and place in fridge overnight.&lt;/p&gt;
+
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;5&quot; data-duration=&quot;1&quot; data-wait=&quot;720&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      12 hours later
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      1 minute of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
+
+&lt;p&gt;Take the dough out of the fridge 2 hours before baking to bring it to room temperature.&lt;/p&gt;
+
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;6&quot; data-duration=&quot;1&quot; data-wait=&quot;90&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      1 hour, 30 minutes later
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      1 minute of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
+
+&lt;p&gt;Preheat a dutch oven with a lid to 475°F (245°C).&lt;/p&gt;
+
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;7&quot; data-duration=&quot;5&quot; data-wait=&quot;30&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      30 minutes later
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      5 minutes of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
+
+&lt;p&gt;Flip the dough into the dutch oven using your preferred technique.&lt;sup id=&quot;fnref:4&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;Score it, spritz several times with water, and cover. Place into oven and lower temperature to 425°F (220°C).&lt;/p&gt;
+
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;8&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      25 minutes later
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      1 minute of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
+
+&lt;p&gt;Take the lid of the dutch oven off.&lt;/p&gt;
+
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;9&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      25 minutes later
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      1 minute of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
+
+&lt;p&gt;Take the bread out of the oven and place on a wire rack.&lt;/p&gt;
+
+&lt;p&gt;Let cool completely before slicing to allow the structure to set.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;section class=&quot;next-previous&quot;&gt;
+  
+  &lt;a href=&quot;/2021/11/01/moderation-broadcastability/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: Why Is Facebook So Awful?&quot;&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;Why Is Facebook So Awful?&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+  
+  
+  &lt;div class=&quot;next-previous-placeholder&quot;&gt;&lt;/div&gt;
+  
+&lt;/section&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;All-purpose flour &lt;em&gt;does&lt;/em&gt; work, it’s just less forgiving and the texture is slightly different (but still good!). Bread flour is just high-protein flour, usually about 13%. Some flours state the protein percentage on their package; others mention it on their site. &lt;a href=&quot;https://shop.kingarthurbaking.com/items/bread-flour&quot;&gt;King Arthur’s bread flour&lt;/a&gt; is 12.7%. Trader Joe’s all purpose was, &lt;a href=&quot;https://www.pizzamaking.com/forum/index.php?topic=30417.msg305351#msg305351&quot;&gt;in 2014&lt;/a&gt;, 11.8%. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Don’t forget to save some to feed it again! &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;If you don’t have a stone countertop, you can use a baking sheet, though they tend to slide around a lot. You can flour a wooden surface if you really want, but the non-porous surface really does make a big difference. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:4&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Techniques I have seen: dropping the basket into the dutch oven then palming the top to take it out; flipping the dough onto a plate then picking it up with both hands underneath; inverting the bowl-with-towel above the dutch oven and hoping your aim is good. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">This recipe is my transcription and adaptation of A Non-Baker’s Guide To Making Sourdough Bread, written in a style loosely inspired by literate programming. A bit more background on what this “literate recipe” thing is at my focaccia recipe.</summary></entry><entry><title type="html">Why Is Facebook So Awful?</title><link href="https://blog.sea.nkelley.me/2021/11/01/moderation-broadcastability/" rel="alternate" type="text/html" title="Why Is Facebook So Awful?" /><published>2021-11-01T00:00:00+00:00</published><updated>2022-01-07T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2021/11/01/moderation-broadcastability</id><content type="html" xml:base="https://blog.sea.nkelley.me/2021/11/01/moderation-broadcastability/">&lt;figure&gt;
 &lt;!-- I wanted to call this post facebook-moderation-broadcastability but then uBlock Origin saw `facebook` in the URL and blocked it. :( --&gt;
 &lt;img src=&quot;/assets/moderation-broadcastability/street-art.jpg&quot; alt=&quot;Street art showing Facebook logo as a cigarette.&quot; /&gt;
 &lt;figcaption&gt;
@@ -70,7 +292,13 @@
   &lt;/a&gt;
   
   
-  &lt;div class=&quot;next-previous-placeholder&quot;&gt;&lt;/div&gt;
+  &lt;a href=&quot;/2023/08/06/literate-sourdough/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: Sourdough Loaf (and Recipe Planner)&quot;&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;Sourdough Loaf (and Recipe Planner)&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
+  &lt;/a&gt;
   
 &lt;/section&gt;
 
@@ -446,16 +674,19 @@
 
 &lt;p&gt;Enjoy!&lt;/p&gt;
 
-&lt;section class=&quot;recipe-step&quot; data-step-index=&quot;0&quot; data-duration=&quot;10&quot; data-wait=&quot;0&quot;&gt;
-        &lt;h3&gt;
-          &lt;hr /&gt;
-          to begin
-          &lt;hr /&gt;
-        &lt;/h3&gt;
-        &lt;h4 class=&quot;metadata&quot;&gt;
-          &lt;span class=&quot;duration&quot;&gt;10 minutes of work&lt;/span&gt;
-        &lt;/h4&gt;
-        
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;0&quot; data-duration=&quot;10&quot; data-wait=&quot;0&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      to begin
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      10 minutes of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
+
 &lt;p&gt;In a medium bowl, stir together&lt;/p&gt;
 
 &lt;ul&gt;
@@ -481,18 +712,19 @@
 
 &lt;p&gt;to flour mixture. Stir with a rubber spatula until just incorporated, then scrape the sides of the bowl clean and cover with plastic wrap. Leave out at room temperature to ferment for 12 to 14 hours until at least doubled in volume.&lt;/p&gt;
 
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;1&quot; data-duration=&quot;5&quot; data-wait=&quot;720&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      12 hours later
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      5 minutes of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
 
-      &lt;/section&gt;
-&lt;section class=&quot;recipe-step&quot; data-step-index=&quot;1&quot; data-duration=&quot;5&quot; data-wait=&quot;720&quot;&gt;
-        &lt;h3&gt;
-          &lt;hr /&gt;
-          12 hours later
-          &lt;hr /&gt;
-        &lt;/h3&gt;
-        &lt;h4 class=&quot;metadata&quot;&gt;
-          &lt;span class=&quot;duration&quot;&gt;5 minutes of work&lt;/span&gt;
-        &lt;/h4&gt;
-        
 &lt;p&gt;Spread&lt;/p&gt;
 
 &lt;ul&gt;
@@ -507,32 +739,34 @@
 
 &lt;p&gt;over dough and gently spread across. Gently stretch the dough to the edge of the sheet by placing your hands underneath and pulling outward. The dough will shrink a bit, so rest it for 15 minutes, then repeat stretching.&lt;/p&gt;
 
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;2&quot; data-duration=&quot;1&quot; data-wait=&quot;15&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      15 minutes later
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      1 minute of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
 
-      &lt;/section&gt;
-&lt;section class=&quot;recipe-step&quot; data-step-index=&quot;2&quot; data-duration=&quot;1&quot; data-wait=&quot;15&quot;&gt;
-        &lt;h3&gt;
-          &lt;hr /&gt;
-          15 minutes later
-          &lt;hr /&gt;
-        &lt;/h3&gt;
-        &lt;h4 class=&quot;metadata&quot;&gt;
-          &lt;span class=&quot;duration&quot;&gt;1 minute of work&lt;/span&gt;
-        &lt;/h4&gt;
-        
 &lt;p&gt;Repeat gentle stretching of dough. Rest another 15 minutes.&lt;/p&gt;
 
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;3&quot; data-duration=&quot;5&quot; data-wait=&quot;15&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      15 minutes later
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      5 minutes of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
 
-      &lt;/section&gt;
-&lt;section class=&quot;recipe-step&quot; data-step-index=&quot;3&quot; data-duration=&quot;5&quot; data-wait=&quot;15&quot;&gt;
-        &lt;h3&gt;
-          &lt;hr /&gt;
-          15 minutes later
-          &lt;hr /&gt;
-        &lt;/h3&gt;
-        &lt;h4 class=&quot;metadata&quot;&gt;
-          &lt;span class=&quot;duration&quot;&gt;5 minutes of work&lt;/span&gt;
-        &lt;/h4&gt;
-        
 &lt;p&gt;Dimple the dough by pressing the pads of your first three fingers in at an angle. Make the brine by stirring together&lt;/p&gt;
 
 &lt;ul&gt;
@@ -542,36 +776,38 @@
 
 &lt;p&gt;until salt is dissolved. Pour the brine over the dough to fill dimples. Proof focaccia until light and bubbly, about 45 minutes.&lt;/p&gt;
 
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;4&quot; data-duration=&quot;1&quot; data-wait=&quot;30&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      30 minutes later
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      1 minute of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
 
-      &lt;/section&gt;
-&lt;section class=&quot;recipe-step&quot; data-step-index=&quot;4&quot; data-duration=&quot;1&quot; data-wait=&quot;30&quot;&gt;
-        &lt;h3&gt;
-          &lt;hr /&gt;
-          30 minutes later
-          &lt;hr /&gt;
-        &lt;/h3&gt;
-        &lt;h4 class=&quot;metadata&quot;&gt;
-          &lt;span class=&quot;duration&quot;&gt;1 minute of work&lt;/span&gt;
-        &lt;/h4&gt;
-        
 &lt;p&gt;Adjust oven rack to center position.&lt;/p&gt;
 
 &lt;p&gt;If you prefer a crispy bottom, place a baking stone or inverted, sturdy baking sheet on the rack and allow it to preheat with the oven until very hot. If you prefer a soft bottom, place another rack below the first and put an empty baking sheet on it to insulate the upper rack from the heat source below.&lt;/p&gt;
 
 &lt;p&gt;Preheat oven to 450°F (235°C).&lt;/p&gt;
 
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;5&quot; data-duration=&quot;1&quot; data-wait=&quot;15&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      15 minutes later
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      1 minute of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
 
-      &lt;/section&gt;
-&lt;section class=&quot;recipe-step&quot; data-step-index=&quot;5&quot; data-duration=&quot;1&quot; data-wait=&quot;15&quot;&gt;
-        &lt;h3&gt;
-          &lt;hr /&gt;
-          15 minutes later
-          &lt;hr /&gt;
-        &lt;/h3&gt;
-        &lt;h4 class=&quot;metadata&quot;&gt;
-          &lt;span class=&quot;duration&quot;&gt;1 minute of work&lt;/span&gt;
-        &lt;/h4&gt;
-        
 &lt;p&gt;Sprinkle focaccia with&lt;/p&gt;
 
 &lt;ul&gt;
@@ -580,32 +816,34 @@
 
 &lt;p&gt;Bake for 25 to 30 minutes directly on top of stone or inverted pan (if using) until bottom crust is crisp and golden brown when checked with a metal spatula.&lt;/p&gt;
 
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;6&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      25 minutes later
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      1 minute of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
 
-      &lt;/section&gt;
-&lt;section class=&quot;recipe-step&quot; data-step-index=&quot;6&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
-        &lt;h3&gt;
-          &lt;hr /&gt;
-          25 minutes later
-          &lt;hr /&gt;
-        &lt;/h3&gt;
-        &lt;h4 class=&quot;metadata&quot;&gt;
-          &lt;span class=&quot;duration&quot;&gt;1 minute of work&lt;/span&gt;
-        &lt;/h4&gt;
-        
 &lt;p&gt;To finish browning top crust, place focaccia on upper rack and bake for 5 to 7 minutes more.&lt;/p&gt;
 
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;7&quot; data-duration=&quot;5&quot; data-wait=&quot;5&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      5 minutes later
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      5 minutes of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
 
-      &lt;/section&gt;
-&lt;section class=&quot;recipe-step&quot; data-step-index=&quot;7&quot; data-duration=&quot;5&quot; data-wait=&quot;5&quot;&gt;
-        &lt;h3&gt;
-          &lt;hr /&gt;
-          5 minutes later
-          &lt;hr /&gt;
-        &lt;/h3&gt;
-        &lt;h4 class=&quot;metadata&quot;&gt;
-          &lt;span class=&quot;duration&quot;&gt;5 minutes of work&lt;/span&gt;
-        &lt;/h4&gt;
-        
 &lt;p&gt;Remove from oven and brush or douse with&lt;/p&gt;
 
 &lt;ul&gt;
@@ -614,24 +852,22 @@
 
 &lt;p&gt;over the whole surface (don’t worry if the olive pools in pockets, it will absorb as it sits). Let cool for 5 minutes.&lt;/p&gt;
 
+&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;8&quot; data-duration=&quot;1&quot; data-wait=&quot;5&quot;&gt;
+  &lt;h3&gt;
+    &lt;hr /&gt;
+      5 minutes later
+    &lt;hr /&gt;
+  &lt;/h3&gt;
+  &lt;h4 class=&quot;metadata&quot;&gt;
+    &lt;span class=&quot;duration&quot;&gt;
+      1 minute of work
+    &lt;/span&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
 
-      &lt;/section&gt;
-&lt;section class=&quot;recipe-step&quot; data-step-index=&quot;8&quot; data-duration=&quot;1&quot; data-wait=&quot;5&quot;&gt;
-        &lt;h3&gt;
-          &lt;hr /&gt;
-          5 minutes later
-          &lt;hr /&gt;
-        &lt;/h3&gt;
-        &lt;h4 class=&quot;metadata&quot;&gt;
-          &lt;span class=&quot;duration&quot;&gt;1 minute of work&lt;/span&gt;
-        &lt;/h4&gt;
-        
 &lt;p&gt;Release focaccia from pan with metal spatula and transfer to a cooling rack to cool completely.&lt;/p&gt;
 
 &lt;p&gt;Store on the counter wrapped in wax paper.&lt;/p&gt;
-
-
-      &lt;/section&gt;
 
 &lt;hr /&gt;
 
@@ -896,7 +1132,7 @@
 
 &lt;h3 id=&quot;for-of-versus-for-in&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for-of&lt;/code&gt; versus &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for-in&lt;/code&gt;&lt;/h3&gt;
 
-&lt;p&gt;While I think that the semantics of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for-in&lt;/code&gt; are downright silly – an array’s indices are far less interesting than the value and probably don’t need their own syntactic sugar – the advice here seems pretty clear: always use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for-of&lt;/code&gt;. I would go even further and say: always use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;forEach&lt;/code&gt;, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;map&lt;/code&gt;, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;reduce&lt;/code&gt;, etc. Chances are you’re doing an operation that is better suited to one or more higher-order functions anyway. I think in the last three years of writing TypeScript I’ve only written a single &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for&lt;/code&gt; loop, and that was because it needed very particular early-abort semantics.&lt;/p&gt;
+&lt;p&gt;While I think that the semantics of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for-in&lt;/code&gt; are downright silly – an array’s indices are far less interesting than the value and probably don’t need their own syntactic sugar – the advice here seems pretty clear: always use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for-of&lt;/code&gt;. I would go even further and say: you almost always want to use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;forEach&lt;/code&gt;, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;map&lt;/code&gt;, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;reduce&lt;/code&gt;, etc. Chances are you’re doing an operation that is better suited to one or more higher-order functions anyway. I think in the last three years of writing TypeScript I’ve only written a single &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for&lt;/code&gt; loop, and that was because it needed very particular early-abort semantics.&lt;/p&gt;
 
 &lt;h2 id=&quot;lightning-round-things-that-dont-matter-anymore&quot;&gt;Lightning Round: Things That Don’t Matter Anymore&lt;/h2&gt;
 
@@ -1129,324 +1365,4 @@
       &lt;p&gt;Seriously, what a stupid idea. These locks are &lt;em&gt;intended&lt;/em&gt; to be opened by the people you “voluntarily” give your luggage to. The rest of your luggage you shouldn’t leave unattended anyway, even if there weren’t terrorists hiding around every corner. So what are they preventing? &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name></name></author><summary type="html">tl;dr: I took a flight, and my belongings ended up crushed, dented, opened, wrinkled and dirty in a bag that I was locked out of. Fuck the TSA. We can do better than this.</summary></entry><entry><title type="html">Oculus Rift CV1 Teardown</title><link href="https://blog.sea.nkelley.me/2020/10/19/oculus-teardown/" rel="alternate" type="text/html" title="Oculus Rift CV1 Teardown" /><published>2020-10-19T00:00:00+00:00</published><updated>2020-10-19T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2020/10/19/oculus-teardown</id><content type="html" xml:base="https://blog.sea.nkelley.me/2020/10/19/oculus-teardown/">&lt;p&gt;During quarantine, I came into possession of a used Oculus Rift CV1 setup (that’s the original one) that had an infuriating tendency to disconnect if you moved your head around too fast. After some basic debugging techniques (ahem, turning it off and on again), I determined that there was a hardware issue in the headset and, since the CV1 has been discontinued for some time, I would have to fix it myself.&lt;/p&gt;
-
-&lt;p&gt;I was disappointed to find that there were no good teardown guides for repairing the CV1. &lt;a href=&quot;https://www.ifixit.com/Teardown/Oculus+Rift+CV1+Teardown/60612&quot;&gt;iFixit’s guide&lt;/a&gt; was light on details you’d want for taking apart your own CV1. The best content I could find was a &lt;a href=&quot;https://www.youtube.com/watch?v=l1kTD5qQ5Vo&quot;&gt;series of unedited (and, therefore, lengthy) YouTube videos&lt;/a&gt; that ended up only being useful for the first couple steps.&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;p&gt;Fast forward through two more pre-broken headsets from eBay and a handful of individually-purchased components, some of which I personally broke and some of which were sold as working but weren’t, and I’ve gotten pretty good at disassembling and reassembling CV1s. Unfortunately, I only ended up with the equivalent of my first headset (complete with hardware flaw) and one other frankensteined, but functioning, headset, so I wouldn’t say it was worth the money. But at least it was a fun quarantine project, and I hope someone finds this guide useful if they need to do their own CV1 surgery!&lt;/p&gt;
-
-&lt;h2 id=&quot;what-youll-need&quot;&gt;What You’ll Need&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;T4 Torx screwdriver&lt;/li&gt;
-  &lt;li&gt;#0 Phillips head screwdriver with a narrow shaft 3” or longer&lt;/li&gt;
-  &lt;li&gt;medium-large flathead screwdriver or spudger&lt;/li&gt;
-  &lt;li&gt;small flathead screwdriver, ~1/16” wide&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;The Phillips head will have to fit in a very narrow space&lt;/strong&gt;, so most replaceable-bit screwdrivers with a bulky socket for the bits won’t fit. Also, the screws are quite small, so a magnetic screwdriver and/or an organizing tray will help keep you from losing them.&lt;/p&gt;
-
-&lt;h2 id=&quot;parts-list&quot;&gt;Parts List&lt;/h2&gt;
-
-&lt;p&gt;Ignoring the parts that can be removed without any tools, these are the parts you will end up with at the end of this teardown.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;1x head strap/outer housing assembly&lt;/li&gt;
-  &lt;li&gt;1x fabric face shroud&lt;/li&gt;
-  &lt;li&gt;2x lens assemblies&lt;/li&gt;
-  &lt;li&gt;1x moveable lens mount/front housing&lt;/li&gt;
-  &lt;li&gt;3x PCB
-    &lt;ul&gt;
-      &lt;li&gt;1x main board&lt;/li&gt;
-      &lt;li&gt;1x breakout board&lt;/li&gt;
-      &lt;li&gt;1x proximity sensor board&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;1x main board support&lt;/li&gt;
-  &lt;li&gt;1x ribbon cable brace&lt;/li&gt;
-  &lt;li&gt;1x IPD slider assembly
-    &lt;ul&gt;
-      &lt;li&gt;1x outer ring&lt;/li&gt;
-      &lt;li&gt;1x slider thumb&lt;/li&gt;
-      &lt;li&gt;2x springs&lt;/li&gt;
-      &lt;li&gt;1x rack gear/thumb holder&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;19x T4 Torx screws&lt;/li&gt;
-  &lt;li&gt;9x small Phillips head screws&lt;/li&gt;
-  &lt;li&gt;4x large Phillips head screws&lt;/li&gt;
-  &lt;li&gt;1x Phillips shoulder screw&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;step-by-step-teardown&quot;&gt;Step-by-step Teardown&lt;/h2&gt;
-
-&lt;p&gt;The next several sections are separated somewhat arbitrarily into sets of steps that felt like useful checkpoints. I suggest you skim each section before following the steps, just to get a feel for what you’re about to do and to maybe help set up your light/tools/workspace for best effect.&lt;/p&gt;
-
-&lt;p&gt;I’ve torn down headsets half a dozen times following these instructions, but keep in mind that I am not an expert and if you aren’t careful you may damage your headset. Follow these instructions at your own risk; I am not responsible for any damage you may incur by following them. With that disclaimer out of the way, let’s get started!&lt;/p&gt;
-
-&lt;h3 id=&quot;1-preliminaries&quot;&gt;1. Preliminaries&lt;/h3&gt;
-
-&lt;p&gt;Before getting into the teardown proper, start by removing all the extranous parts: headphones, foam faceplate and cable. I also recommend you unvelcro the top strap and wrap it around the brace for the back of the head to keep it out of the way.&lt;/p&gt;
-
-&lt;h3 id=&quot;2-face-shroud&quot;&gt;2. Face Shroud&lt;/h3&gt;
-
-&lt;p&gt;Removing the flexible &lt;strong&gt;fabric shroud&lt;/strong&gt; is, right out the gate, one of the more stressful parts of the process, because you’re doing it almost totally blind and it requires a good amount of prying that makes you feel like you’re about to break the headset. The fabric is held in shape by an outer plastic frame, which is screwed into the outer housing of the headset.&lt;/p&gt;
-
-&lt;p&gt;First, remove the &lt;strong&gt;6x T4 screws&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-1-3805-annotated.jpg&quot; alt=&quot;img-1&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Next, you have to separate the tabs that keep the left and right sides of the plastic frame attached to the outer housing.&lt;/p&gt;
-
-&lt;p&gt;Insert your screwdriver between the plastic frame and the outer housing, without going too deep, and slide it along until it’s at the far left (or far right) side of the headset. If you can pull the plastic frame ~1/4” away from the outer housing, you know you’ve separated the tabs. You can let the now-separated frame rest back against the outer housing; it doesn’t tend to re-engage unless you push it.&lt;/p&gt;
-
-&lt;p class=&quot;alert alert-info&quot;&gt;&lt;span class=&quot;alert-title&quot;&gt;Watch Your Screwdriver&lt;/span&gt;
-    &lt;br /&gt;Keep your screwdriver head tilted away from the inside surface of the outer housing. Some infrared LEDs are adhered there and you don&apos;t want to disturb them.
-&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;img src=&quot;/assets/oculus-teardown/img-2-combined.jpg&quot; alt=&quot;There will be plenty of jabs at the insides of expensive electronics with pointy metal sticks.&quot; /&gt;
-  &lt;figcaption&gt;There will be plenty of jabs at the insides of expensive electronics with pointy metal sticks.&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Next, you have to separate the fabric shroud from the lenses. Each eye hole in the shroud has a floating plastic ring attached to the fabric with three tabs that clip onto anchors on the lens housing. This picture is a view from the inside so you can see what you’ll be blindly working with.&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;img src=&quot;/assets/oculus-teardown/img-4-combined-annotated.jpg&quot; alt=&quot;This isn&apos;t the view you&apos;ll have; it&apos;s from the future.&quot; /&gt;
-  &lt;figcaption&gt;This isn&apos;t the view you&apos;ll have; it&apos;s from the future.&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;This step is probably the one that most makes you feel like you’re going to break the headset. It’s also a pain to get a light into the right place to see what you’re doing. It’s the best technique I’ve found to do this, however.&lt;/p&gt;
-
-&lt;p&gt;The tab on the bottom side of the lens can be reached with the flathead screwdriver if you gently pull the shroud’s plastic frame away from the outer housing of the headset. Photographing the moment of release is difficult, so here’s what it looks like right after the tab has been separated. Note that the screwdriver is held at a shallow angle so it can get under the tab.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-6-3665-annotated.jpg&quot; alt=&quot;img-6&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Once you’ve separated the first tab, you’ll gain some flexibility to move the plastic ring up a little bit, which will help with the next two tabs. Here’s a reference for where all three of the left lens tabs can be found. (The tab locations are mirrored for the left and right lenses.)&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-5-3805-annotated.jpg&quot; alt=&quot;img-5&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Lightly tug on the ring to pull it away from the lens, and slot the screwdriver in the gap. Slide the screwdriver around the ring, which should pop off the remaining two tabs with not much effort.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-7-3668.jpg&quot; alt=&quot;img-7&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;After you’ve done one lens, you should be able to tug most of the shroud out at least 1/2”. That will make it easier to maneuver your hands and screwdriver in order to repeat these steps for the other lens.&lt;/p&gt;
-
-&lt;p&gt;When you’ve got them apart, your headset should look like this!&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-7a-3835.jpg&quot; alt=&quot;img-7a&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-ipd-slider&quot;&gt;3. IPD Slider&lt;/h3&gt;
-
-&lt;p&gt;Before removing the outer housing, the &lt;strong&gt;IPD slider&lt;/strong&gt; on the bottom right has to be taken out. It’s held in by &lt;strong&gt;1x T4 screw&lt;/strong&gt;, so remove that first.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-8-3672-annotated.jpg&quot; alt=&quot;img-8&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Next, release the front two plastic snaps holding the &lt;strong&gt;outer ring&lt;/strong&gt; using the small flathead screwdriver by pressing them in and down.&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;img src=&quot;/assets/oculus-teardown/img-9-combined-annotated.jpg&quot; alt=&quot;On the left, the view you&apos;ll have. On the right, a close-up of the outer ring, so you can see the snaps.&quot; /&gt;
-  &lt;figcaption&gt;On the left, the view you&apos;ll have. On the right, a close-up of the outer ring, so you can see the snaps.&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Once you’ve pushed the snaps in, the outer ring has probably mostly separated itself from the headset. If it hasn’t, use your screwdriver to lever the ring away from the housing. It’s held in by inaccessible snaps on the inside and back of the slider assembly, so you’re trying to tilt it until those snaps simply pull away from their anchors.&lt;/p&gt;
-
-&lt;p class=&quot;alert alert-info&quot;&gt;&lt;span class=&quot;alert-title&quot;&gt;Don&apos;t Lose the Springs&lt;/span&gt;
-    &lt;br /&gt;Underneath the switch&apos;s thumb there are two tiny springs. Make sure you work slowly and/or in an enclosed space to prevent them flying off into the distance.
-&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-10-3693.jpg&quot; alt=&quot;img-10&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;At this point, the &lt;strong&gt;slider thumb&lt;/strong&gt; and &lt;strong&gt;springs&lt;/strong&gt; have probably launched themselves at you, so put them aside.&lt;/p&gt;
-
-&lt;p&gt;A note on reassembly: the slider thumb is asymmmetrical and only goes in one way.&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;img src=&quot;/assets/oculus-teardown/img-11-3695.jpg&quot; alt=&quot;I made the picture tiny because these are tiny. It&apos;s amazing I never lost any of these.&quot; /&gt;
-  &lt;figcaption&gt;I made the picture tiny because these are tiny. It&apos;s amazing I never lost any of these.&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Lastly, pop out the &lt;strong&gt;rack gear&lt;/strong&gt; with a flathead screwdriver or your fingers.&lt;/p&gt;
-
-&lt;p&gt;Another note on reassembly: make sure you place the rack gear so you get the full range of the slider.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-12-3698.jpg&quot; alt=&quot;img-12&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;4-outer-housing&quot;&gt;4. Outer Housing&lt;/h3&gt;
-
-&lt;p&gt;The &lt;strong&gt;outer housing&lt;/strong&gt; is attached to the front of the headset by a bunch of screws of all sizes.&lt;/p&gt;
-
-&lt;p&gt;The following image shows the location of &lt;strong&gt;2x T4 screws&lt;/strong&gt;, &lt;strong&gt;2x small Phillips head screws&lt;/strong&gt; and &lt;strong&gt;4x large Phillips head screws&lt;/strong&gt;. Note that there are two pairs of screws that are very close to each other. Remove all eight of these.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-13-3673-annotated.jpg&quot; alt=&quot;img-13&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;There are two more screws here that are not obvious to find. The easier of the two is another &lt;strong&gt;1x small Phillips head screw&lt;/strong&gt; hiding under the sliding lenses. Hold the lenses apart with your free hand if necessary&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; and take it out.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-14-3674-annotated.jpg&quot; alt=&quot;img-14&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;There is also &lt;strong&gt;1x Phillips head shoulder screw&lt;/strong&gt; tucked away such that it is only accessible using a narrow-shaft Phillips head crossing right over the main board support. This is why replaceable-bit screwdrivers don’t cut it!&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-15-combined-annotated.jpg&quot; alt=&quot;img-15&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Once all the screws are out, it’s time to separate the outer housing from the front of the headset.&lt;/p&gt;
-
-&lt;p class=&quot;alert alert-warning&quot;&gt;&lt;span class=&quot;alert-title&quot;&gt;Take It Slow!&lt;/span&gt;
-    &lt;br /&gt;The outer housing is connected to the front of the headset by several small ribbon cables. Don&apos;t rush this part.
-&lt;/p&gt;
-
-&lt;p&gt;To initially separate the outer housing, bend the top middle of the housing up about 3/16” to allow the bracket that was holding the shoulder screw to clear the main board support. The following picture shows a later view from the inside (left) and what you’ll actually be looking at (right).&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-16-combined-annotated.jpg&quot; alt=&quot;img-16&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;While still holding the bracket out of the way, pull the front of the headset straight out from the outer housing until you’ve got a 1/4-1/2” gap between the two. Don’t pull it all the way! There are ribbon cables connecting the outer housing to the rest of the headset.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-17-combined.jpg&quot; alt=&quot;img-17&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Lay the headset’s top flat on the work surface. Turn its right side towards you, where you will see a small metal &lt;strong&gt;ribbon cable brace&lt;/strong&gt;. Remove the &lt;strong&gt;2x T4 screws&lt;/strong&gt; holding the brace in place and take the brace off to expose the ribbon cable connectors.&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;img src=&quot;/assets/oculus-teardown/img-18-3705-annotated.jpg&quot; alt=&quot;This brace holds the ribbon cable connectors against a PCB while you accidentally punch yourself in the head trying to pull off those head crabs.&quot; /&gt;
-  &lt;figcaption&gt;This brace holds the ribbon cable connectors against a PCB while you accidentally punch yourself in the head trying to pull off those head crabs.&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Lastly, pop the ribbon cable connectors off by sticking your fingernail under their edges and giving them a little tug. They should come off with very little force and a satisfying pop. I don’t suggest using a screwdriver for this step.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-19-3708.jpg&quot; alt=&quot;img-19&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Now the outer housing should be free, so put it aside.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-19-and-a-half-3873.jpg&quot; alt=&quot;img-19-and-a-half&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;5-main-board&quot;&gt;5. Main Board&lt;/h3&gt;
-
-&lt;p&gt;Once the outer housing is separated, you have a lot more room to work.&lt;/p&gt;
-
-&lt;p&gt;First, release the &lt;strong&gt;breakout board&lt;/strong&gt; by taking out the &lt;strong&gt;2x T4 screws&lt;/strong&gt; and popping off the last ribbon cable connector (if you haven’t already).&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-20-3715-annotated.jpg&quot; alt=&quot;img-20&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;The breakout board will flop around a bit for the rest of this step, so be careful. I’ve found that removing it first is ultimately easier and less dangerous to the boards.&lt;/p&gt;
-
-&lt;p class=&quot;alert alert-warning&quot;&gt;&lt;span class=&quot;alert-title&quot;&gt;Don&apos;t Break Your Headset!&lt;/span&gt;
-    &lt;br /&gt;The next step is by far the riskiest when it comes to breaking your headset unintentionally.
-&lt;/p&gt;
-
-&lt;p&gt;Once the breakout board is free, you’ll want to separate the &lt;strong&gt;main board&lt;/strong&gt; and the &lt;strong&gt;main board support&lt;/strong&gt;. The board and its support have a tendency to flop around too once their screws are removed, so be very careful, because there is a &lt;em&gt;tiny&lt;/em&gt; plastic handle on the IPD sensor attached to the board that lodges into a slot on the right lens housing. It is &lt;em&gt;very&lt;/em&gt; easy to snap the handle off and permanently break your IPD sensor.&lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; Also, there are more ribbon cables tethering the main board to rest of the headset that you have to be careful not to break.&lt;/p&gt;
-
-&lt;p&gt;The following picture shows the IPD sensor handle and the slot on the right lens housing after the parts have been separated.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-21-3827-annotated.jpg&quot; alt=&quot;img-21&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;First, make sure the lenses are as close to each other as possible. This is the resting position for the lens mount, so moving the lenses first will prevent any abrupt sliding that could break the IPD sensor.&lt;/p&gt;
-
-&lt;p&gt;Note that there are two plastic pegs that help align the main board support with the front of the headset.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-22-3874-annotated.jpg&quot; alt=&quot;img-22&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Hold the main board and its support in place with one hand, relying on the pegs for stability. Don’t let it jostle around or you risk breaking the switch handle! Then, remove the &lt;strong&gt;2x small Phillips head screws&lt;/strong&gt; holding it in place.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-23-3874-annotated.jpg&quot; alt=&quot;img-23&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Once the screws are removed, carefully move the main board and its support straight up a little bit and then tilt it away from the headset. It’s attached by two large ribbon cables that you can’t yet remove.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-24-3718.jpg&quot; alt=&quot;img-24&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;6-main-board-again-and-other-pcbs&quot;&gt;6. Main Board (again) and Other PCBs&lt;/h3&gt;
-
-&lt;p&gt;The &lt;strong&gt;main board&lt;/strong&gt; is attached to the plastic &lt;strong&gt;main board support&lt;/strong&gt; by &lt;strong&gt;5x T4 screws&lt;/strong&gt; and some plastic clips and pegs. The &lt;strong&gt;proximity board&lt;/strong&gt; is attached to the main board by a ribbon cable and the main board support by &lt;strong&gt;1x T4 screw&lt;/strong&gt;. Remove all six screws. The proximity board will flop a bit, but it’s only twice the size of its own ribbon cable so it won’t move very far or fast.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-25-3718-annotated.jpg&quot; alt=&quot;img-25&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Once all the screws have been removed, carefully tilt and maneuver the main board out of its plastic clips and pegs. There is one of each on each end of the board, which you can see in the following picture. I suggest you release the right side of the board first.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-26-3718-annotated.jpg&quot; alt=&quot;img-26&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Once the main board is no longer attached to its support, pull it out slightly to expose the ribbon cable connectors.&lt;/p&gt;
-
-&lt;p&gt;Pop off all the connectors on the main board with your fingernails: two large ribbon cables connected to the display, one small ribbon cable going to the breakout board, and the gold-plated antenna connector on the right side.&lt;sup id=&quot;fnref:4&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-27-3723-annotated.jpg&quot; alt=&quot;img-27&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Put the PCBs aside, and unthread the ribbon cables from the main board support.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-28-3879.jpg&quot; alt=&quot;img-28&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;A note on reassembly: take note of the way that the ribbon cables pass through the support. If you don’t match it, you risk pinching/breaking the cables or even causing the displays to get caught when adjusting the IPD.&lt;sup id=&quot;fnref:5&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:5&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;img src=&quot;/assets/oculus-teardown/img-28-and-a-half-3877-annotated.jpg&quot; alt=&quot;Reference image for reassembly. Notice that the ribbon cable is underneath not just the thin bar spanning the gap, but also underneath two small pegs on the upper side. Those keep it from getting caught on the housing as they slide around.&quot; /&gt;
-  &lt;figcaption&gt;Reference image for reassembly. Notice that the ribbon cable is underneath not just the thin bar spanning the gap, but also underneath two small pegs on the upper side. Those keep it from getting caught on the housing as they slide around.&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;h2 id=&quot;7-lens-assemblies&quot;&gt;7. Lens Assemblies&lt;/h2&gt;
-
-&lt;p&gt;The final step is to separate the lens assemblies from the front of the headset. There are &lt;strong&gt;4x small Phillips head screws&lt;/strong&gt; holding the displays in, two on each side. Remove all four screws.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-29-3727-annotated.jpg&quot; alt=&quot;img-29&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;The lens assemblies are also held in by four metal clips each, one in each corner. Pry the clips away with your fingernails, starting with the ones in the middle, while lifting the assembly slightly away from the front of the headet. The lens assemblies should pop right out.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-30-3882.jpg&quot; alt=&quot;img-30&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;8-wrap-up&quot;&gt;8. Wrap-up&lt;/h2&gt;
-
-&lt;p&gt;…and here you have it, the fully-disassembled CV1!&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/oculus-teardown/img-31-3733.jpg&quot; alt=&quot;img-31&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;As usual for teardowns, reassembly is just following the instructions in reverse.&lt;/p&gt;
-
-&lt;p&gt;That’s all, folks! I hope you found this interesting and/or helpful. If you’re curious, I used &lt;a href=&quot;https://evernote.com/products/skitch&quot;&gt;Skitch&lt;/a&gt; to annotate some of the images.&lt;/p&gt;
-
-&lt;h2 id=&quot;some-thoughts-on-repairs&quot;&gt;Some Thoughts on Repairs&lt;/h2&gt;
-
-&lt;p&gt;While I was at first put off by the difficulty of removing the shroud, the CV1 is actually quite repairable. The real difficulty lies in finding replacement parts, since it’s discontinued.&lt;/p&gt;
-
-&lt;p&gt;I had surprisingly good luck buying headsets and parts off of eBay. There were a number of broken headsets that just had a single display that wasn’t working that you could get for a pretty low price. There were also a handful of sellers with individual parts – boards, mostly – that were more hit-and-miss. I once blindly bought a main board that turned out to have a broken HDMI connector and/or chip, but within minutes of finding that out I had ripped off the entire IPD sensor (not just the plastic handle – all of it) so I didn’t bother to try to return it. Oops. Still, three out of four sales were exactly as broken as advertised.&lt;/p&gt;
-
-&lt;p&gt;As for my own headset, the issue turned out to be a faulty main board. Twisting or bending the board slightly causes it to lose power, so I guess that when I swing my head around too fast the acceleration of the board against the headset body causes it to bend ever so slightly and drop out. Very, very annoying, and really destroys the immersion even in a relatively low-immersion game like Beat Saber.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;section class=&quot;next-previous&quot;&gt;
-  
-  &lt;a href=&quot;/2020/10/01/stock-options/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: What is the Point of ISOs?&quot;&gt;
-    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
-    &lt;div class=&quot;next-previous-name&quot;&gt;
-      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
-      &lt;div class=&quot;next-previous-title&quot;&gt;What is the Point of ISOs?&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/a&gt;
-  
-  
-  &lt;a href=&quot;/2020/12/03/tsa-rant/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: A Brief Rant About the TSA&quot;&gt;
-    &lt;div class=&quot;next-previous-name&quot;&gt;
-      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
-      &lt;div class=&quot;next-previous-title&quot;&gt;A Brief Rant About the TSA&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
-  &lt;/a&gt;
-  
-&lt;/section&gt;
-
-&lt;hr /&gt;
-
-&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Also, I don’t like guides in video form because they’re a pain in the ass to navigate. That’s why this one is pictures! &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;In earlier teardowns I tried to remove this screw before the IPD slider, which you can do, but I found it was easier to keep track of what I was doing if I didn’t split the outer housing screws across two chunks of work. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:3&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Trust me, I did it twice. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:4&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;As far as I can tell, the Touch controllers use Bluetooth to talk to the headset, and the headset forwards control inputs over USB to the computer. I found this out by accident: I was testing a mostly-disassembled headset by plugging just the displays into the board without any housing or anything else, and had a hell of a time getting the controllers to sync. As soon as I plugged the antenna back in, all my problems were solved. Some futher investigation revealed a Bluetooth chip on the main board, and my computer doesn’t have Bluetooth, so there you have it. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:5&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;These ribbon cables are covered in little obstructive components and are surprisingly tough. I once put one in improperly and it would cause the display to catch and then suddenly snap into position when adjusting the IPD. &lt;a href=&quot;#fnref:5&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;</content><author><name></name></author><summary type="html">During quarantine, I came into possession of a used Oculus Rift CV1 setup (that’s the original one) that had an infuriating tendency to disconnect if you moved your head around too fast. After some basic debugging techniques (ahem, turning it off and on again), I determined that there was a hardware issue in the headset and, since the CV1 has been discontinued for some time, I would have to fix it myself.</summary></entry></feed>
+&lt;/div&gt;</content><author><name></name></author><summary type="html">tl;dr: I took a flight, and my belongings ended up crushed, dented, opened, wrinkled and dirty in a bag that I was locked out of. Fuck the TSA. We can do better than this.</summary></entry></feed>
