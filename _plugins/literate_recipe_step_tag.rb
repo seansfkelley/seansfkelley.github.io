@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LiterateRecipeStepTag < Liquid::Block
+class LiterateRecipeStepTag < Liquid::Tag
   VALID_SYNTAX = %r!
     ([\w-]+)\s*=\s*
     (?:"([^"\\]*(?:\\.[^"\\]*)*)"|'([^'\\]*(?:\\.[^'\\]*)*)'|([\w.-]+))
@@ -20,10 +20,6 @@ class LiterateRecipeStepTag < Liquid::Block
     @params = text.strip
     validate_params if @params
     @tag_name = tag_name
-  end
-
-  def syntax_example
-    "{% #{@tag_name} param='value' param2='value' %}"
   end
 
   def parse_params(context)
@@ -47,8 +43,6 @@ class LiterateRecipeStepTag < Liquid::Block
       raise ArgumentError, <<~MSG
         Invalid syntax for literate_recipe_step tag:
         #{@params}
-        Valid syntax:
-        #{syntax_example}
       MSG
     end
   end
@@ -57,35 +51,38 @@ class LiterateRecipeStepTag < Liquid::Block
     site = context.registers[:site]
     page = context.registers[:page]
 
-    text = super
-    converter = site.find_converter_instance(::Jekyll::Converters::Markdown)
-
     params = self.parse_params(context)
     page[:__recipe_steps__] = [] unless page[:__recipe_steps__]
     page[:__recipe_steps__] << params
 
-    context.stack do
-      duration = self.parse_duration(params["duration"])
-      wait = self.parse_duration(params["wait"] || "0m")
+    duration = self.parse_duration(params["duration"])
+    wait = self.parse_duration(params["wait"] || "0m")
 
-      title = if page[:__recipe_steps__].length == 1
-                "to begin"
-              else
-                "#{self.print_duration_longform(wait)} later"
-              end
+    title = if page[:__recipe_steps__].length == 1
+              "to begin"
+            else
+              "#{self.print_duration_longform(wait)} later"
+            end
 
-      "<section class=\"recipe-step\" data-step-index=\"#{page[:__recipe_steps__].length - 1}\" data-duration=\"#{duration}\" data-wait=\"#{wait}\">
+    <<~END
+      <header
+        class="recipe-step"
+        data-step-index="#{page[:__recipe_steps__].length - 1}"
+        data-duration="#{duration}"
+        data-wait="#{wait}"
+      >
         <h3>
           <hr />
-          #{title}
+            #{title}
           <hr />
         </h3>
-        <h4 class=\"metadata\">
-          <span class=\"duration\">#{self.print_duration_longform(duration)} of work</span>
+        <h4 class="metadata">
+          <span class="duration">
+            #{self.print_duration_longform(duration)} of work
+          </span>
         </h4>
-        #{converter.convert(text)}
-      </section>"
-    end
+      </header>
+    END
   end
 
   def parse_duration(duration)
