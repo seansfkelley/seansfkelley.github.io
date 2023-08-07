@@ -1,3 +1,5 @@
+.hidden { display: none !important; }
+
 .fill-argent { fill: white; }
 
 .stroke-argent { stroke: white; }

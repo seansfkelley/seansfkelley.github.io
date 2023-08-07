@@ -1559,6 +1559,8 @@ for (const example of document.querySelectorAll("[data-example]")) {
         parseAndRenderBlazon();
     });
 }
+document.querySelector("#no-javascript-alert").remove();
+document.querySelector("#interactive").classList.remove("hidden");
 parseAndRenderBlazon();
 // These files are small and there's not that many of them, so it's easier if we just eagerly
 // load of these and then try to access them sync later and hope for the best. Making the ENTIRE
