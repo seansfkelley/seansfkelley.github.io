@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2023-08-07T03:23:20+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Sourdough Loaf (and Recipe Planner)</title><link href="https://blog.sea.nkelley.me/2023/08/06/literate-sourdough/" rel="alternate" type="text/html" title="Sourdough Loaf (and Recipe Planner)" /><published>2023-08-06T00:00:00+00:00</published><updated>2023-08-06T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/08/06/literate-sourdough</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/08/06/literate-sourdough/">&lt;p&gt;This recipe is my transcription and adaptation of &lt;a href=&quot;https://www.youtube.com/watch?v=APEavQg8rMw&quot;&gt;A Non-Baker’s Guide To Making Sourdough Bread&lt;/a&gt;, written in a style loosely inspired by &lt;a href=&quot;https://en.wikipedia.org/wiki/Literate_programming&quot;&gt;literate programming&lt;/a&gt;. A bit more background on what this “literate recipe” thing is at &lt;a href=&quot;/2021/05/17/literate-focaccia/&quot;&gt;my focaccia recipe&lt;/a&gt;.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2023-08-07T04:39:30+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Sourdough Loaf (and Recipe Planner)</title><link href="https://blog.sea.nkelley.me/2023/08/06/literate-sourdough/" rel="alternate" type="text/html" title="Sourdough Loaf (and Recipe Planner)" /><published>2023-08-06T00:00:00+00:00</published><updated>2023-08-06T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/08/06/literate-sourdough</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/08/06/literate-sourdough/">&lt;p&gt;This recipe is my transcription and adaptation of &lt;a href=&quot;https://www.youtube.com/watch?v=APEavQg8rMw&quot;&gt;A Non-Baker’s Guide To Making Sourdough Bread&lt;/a&gt;, written in a style loosely inspired by &lt;a href=&quot;https://en.wikipedia.org/wiki/Literate_programming&quot;&gt;literate programming&lt;/a&gt;. A bit more background on what this “literate recipe” thing is at &lt;a href=&quot;/2021/05/17/literate-focaccia/&quot;&gt;my focaccia recipe&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;This recipe is intended as a terse reference for those already familiar with the recipe, or sourdough breads in general. If you aren’t very experienced, you can watch the full video recipe linked above (also great as a visual reference), follow &lt;a href=&quot;https://tartinebakery.com/stories/country-bread&quot;&gt;Tartine’s Country Bread&lt;/a&gt; recipe, and/or check out &lt;a href=&quot;/2021/04/28/sourdough-starter/&quot;&gt;my advice on maintaining a starter&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Onto the recipe!&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;0&quot; data-duration=&quot;5&quot; data-wait=&quot;0&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;0&quot; data-step-index=&quot;0&quot; data-duration=&quot;5&quot; data-wait=&quot;overnight&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
-      to begin
+      day 1
     &lt;hr /&gt;
   &lt;/h3&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -24,12 +24,12 @@
   &lt;li&gt;100 grams bread or all-purpose flour&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Let it grow until it peaks, about 8-12 hours.&lt;/p&gt;
+&lt;p&gt;Let it grow overnight until it peaks.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;1&quot; data-duration=&quot;10&quot; data-wait=&quot;480&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;0&quot; data-duration=&quot;10&quot; data-wait=&quot;overnight&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
-      8 hours later
+      day 2
     &lt;hr /&gt;
   &lt;/h3&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -51,7 +51,7 @@
 
 &lt;p&gt;Rest, covered, for 30 minutes.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;2&quot; data-duration=&quot;15&quot; data-wait=&quot;30&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;1&quot; data-duration=&quot;15&quot; data-wait=&quot;30&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
       30 minutes later
@@ -75,7 +75,7 @@
 
 &lt;p&gt;Cover bowl and proof for 4 hours in a warm environment.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;3&quot; data-duration=&quot;5&quot; data-wait=&quot;240&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;2&quot; data-duration=&quot;5&quot; data-wait=&quot;240&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
       4 hours later
@@ -92,7 +92,7 @@
 
 &lt;p&gt;Rest for 30 minutes.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;4&quot; data-duration=&quot;10&quot; data-wait=&quot;30&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;3&quot; data-duration=&quot;10&quot; data-wait=&quot;30&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
       30 minutes later
@@ -111,10 +111,10 @@
 
 &lt;p&gt;Dust with flour, cover with towel, and place in fridge overnight.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;5&quot; data-duration=&quot;1&quot; data-wait=&quot;720&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;2&quot; data-step-index=&quot;0&quot; data-duration=&quot;1&quot; data-wait=&quot;overnight&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
-      12 hours later
+      day 3
     &lt;hr /&gt;
   &lt;/h3&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -126,7 +126,7 @@
 
 &lt;p&gt;Take the dough out of the fridge 2 hours before baking to bring it to room temperature.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;6&quot; data-duration=&quot;1&quot; data-wait=&quot;90&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;2&quot; data-step-index=&quot;1&quot; data-duration=&quot;1&quot; data-wait=&quot;90&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
       1 hour, 30 minutes later
@@ -141,7 +141,7 @@
 
 &lt;p&gt;Preheat a dutch oven with a lid to 475°F (245°C).&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;7&quot; data-duration=&quot;5&quot; data-wait=&quot;30&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;2&quot; data-step-index=&quot;2&quot; data-duration=&quot;5&quot; data-wait=&quot;30&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
       30 minutes later
@@ -158,7 +158,7 @@
 
 &lt;p&gt;Score it, spritz several times with water, and cover. Place into oven and lower temperature to 425°F (220°C).&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;8&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;2&quot; data-step-index=&quot;3&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
       25 minutes later
@@ -173,7 +173,7 @@
 
 &lt;p&gt;Take the lid of the dutch oven off to allow the loaf to brown.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;9&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;2&quot; data-step-index=&quot;4&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
       25 minutes later
@@ -678,10 +678,10 @@
 
 &lt;p&gt;Enjoy!&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;0&quot; data-duration=&quot;10&quot; data-wait=&quot;0&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;0&quot; data-step-index=&quot;0&quot; data-duration=&quot;10&quot; data-wait=&quot;overnight&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
-      to begin
+      day 1
     &lt;hr /&gt;
   &lt;/h3&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -716,10 +716,10 @@
 
 &lt;p&gt;to flour mixture. Stir with a rubber spatula until just incorporated, then scrape the sides of the bowl clean and cover with plastic wrap. Leave out at room temperature to ferment for 12 to 14 hours until at least doubled in volume.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;1&quot; data-duration=&quot;5&quot; data-wait=&quot;720&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;0&quot; data-duration=&quot;5&quot; data-wait=&quot;overnight&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
-      12 hours later
+      day 2
     &lt;hr /&gt;
   &lt;/h3&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -743,7 +743,7 @@
 
 &lt;p&gt;over dough and gently spread across. Gently stretch the dough to the edge of the sheet by placing your hands underneath and pulling outward. The dough will shrink a bit, so rest it for 15 minutes, then repeat stretching.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;2&quot; data-duration=&quot;1&quot; data-wait=&quot;15&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;1&quot; data-duration=&quot;1&quot; data-wait=&quot;15&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
       15 minutes later
@@ -758,7 +758,7 @@
 
 &lt;p&gt;Repeat gentle stretching of dough. Rest another 15 minutes.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;3&quot; data-duration=&quot;5&quot; data-wait=&quot;15&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;2&quot; data-duration=&quot;5&quot; data-wait=&quot;15&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
       15 minutes later
@@ -780,7 +780,7 @@
 
 &lt;p&gt;until salt is dissolved. Pour the brine over the dough to fill dimples. Proof focaccia until light and bubbly, about 45 minutes.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;4&quot; data-duration=&quot;1&quot; data-wait=&quot;30&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;3&quot; data-duration=&quot;1&quot; data-wait=&quot;30&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
       30 minutes later
@@ -799,7 +799,7 @@
 
 &lt;p&gt;Preheat oven to 450°F (235°C).&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;5&quot; data-duration=&quot;1&quot; data-wait=&quot;15&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;4&quot; data-duration=&quot;1&quot; data-wait=&quot;15&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
       15 minutes later
@@ -820,7 +820,7 @@
 
 &lt;p&gt;Bake for 25 to 30 minutes directly on top of stone or inverted pan (if using) until bottom crust is crisp and golden brown when checked with a metal spatula.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;6&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;5&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
       25 minutes later
@@ -835,7 +835,7 @@
 
 &lt;p&gt;To finish browning top crust, place focaccia on upper rack and bake for 5 to 7 minutes more.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;7&quot; data-duration=&quot;5&quot; data-wait=&quot;5&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;6&quot; data-duration=&quot;5&quot; data-wait=&quot;5&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
       5 minutes later
@@ -856,7 +856,7 @@
 
 &lt;p&gt;over the whole surface (don’t worry if the olive pools in pockets, it will absorb as it sits). Let cool for 5 minutes.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-index=&quot;8&quot; data-duration=&quot;1&quot; data-wait=&quot;5&quot;&gt;
+&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;7&quot; data-duration=&quot;1&quot; data-wait=&quot;5&quot;&gt;
   &lt;h3&gt;
     &lt;hr /&gt;
       5 minutes later
