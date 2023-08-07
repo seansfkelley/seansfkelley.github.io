@@ -28,7 +28,14 @@ Try these:
 
 You can mix and match these examples, of course, or copy-paste blazons from the Wikipedia page or other pages linked below. There is a very long tail of unusual ordinaries, charges, varieds, etc., so not everything you may find is supported. You can always poke around [the formal grammar](/assets/blazonry/grammar.txt) to see what's defined or not.
 
-<div class="center">
+{% include alert.html
+kind="danger"
+id="no-javascript-alert"
+title="JavaScript Required"
+content="This page is interactive, and only works with JavaScript enabled!"
+%}
+
+<div class="center hidden" id="interactive">
   <form id="form">
     <input type="text" id="blazon-input" value="argent a rondel gules">
     <br>

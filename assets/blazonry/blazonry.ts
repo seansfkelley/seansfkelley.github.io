@@ -2272,6 +2272,9 @@ for (const example of document.querySelectorAll<HTMLAnchorElement>(
   });
 }
 
+document.querySelector("#no-javascript-alert")!.remove();
+document.querySelector("#interactive")!.classList.remove("hidden");
+
 parseAndRenderBlazon();
 
 // These files are small and there's not that many of them, so it's easier if we just eagerly

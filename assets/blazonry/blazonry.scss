@@ -12,6 +12,10 @@ $colors: (
   purpure: purple,
 );
 
+.hidden {
+  display: none !important;
+}
+
 @each $key, $val in $colors {
   .fill-#{$key} {
     fill: $val;

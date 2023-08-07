@@ -1,4 +1,7 @@
-<p class="alert alert-{{ include.kind | default: "info" }}">
+<p
+  class="alert alert-{{ include.kind | default: "info" }} {{ include.classes || "" }}"
+  {% if include.id %}id="{{ include.id }}"{% endif %}
+>
   {%- if include.title -%}
     <span class="alert-title">{{ include.title }}</span>
     <br/>
