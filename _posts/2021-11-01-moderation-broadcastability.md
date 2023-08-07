@@ -10,7 +10,7 @@ last_modified_at: 2022-01-07
 <!-- I wanted to call this post facebook-moderation-broadcastability but then uBlock Origin saw `facebook` in the URL and blocked it. :( -->
 <img src="/assets/moderation-broadcastability/street-art.jpg" alt="Street art showing Facebook logo as a cigarette." />
 <figcaption markdown="1">
-In a nice coincidence, I stumbled upon this art while this post was forming in my head. [51° 31' 12.89" N, 0° 4' 11.65" W](https://www.google.com/maps/@51.5202493,-0.0699047,3a,75y,209.65h,83.89t/data=!3m6!1e1!3m4!1sYtB3iBiH61iUjZhV3V7fbQ!2e0!7i16384!8i8192)
+In a nice coincidence, I stumbled upon this art while this post was forming in my head. [51° 31' 12.89" N, 0° 4' 11.65" W](https://www.google.com/maps/@51.5202684,-0.0699052,2a,75y,205.43h,81.72t,0.49r/data=!3m6!1e1!3m4!1sYtB3iBiH61iUjZhV3V7fbQ!2e0!7i13312!8i6656?entry=ttu)
 </figcaption>
 </figure>
 
