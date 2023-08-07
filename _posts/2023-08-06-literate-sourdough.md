@@ -21,7 +21,9 @@ Feed your starter with
 - 100 grams lukewarm water
 - 100 grams bread or all-purpose flour[^1]
 
-{% literate_recipe_step wait="12h" duration="10m" %}
+Let it grow until it peaks, about 8-12 hours.
+
+{% literate_recipe_step wait="8h" duration="10m" %}
 
 In a large bowl, mix
 
@@ -29,7 +31,9 @@ In a large bowl, mix
 - 400 grams water
 - 600 grams bread or all-purpose flour
 
-getting out most of the lumps. Rest, covered, for 30 minutes.
+in that order, being sure to get out most of the lumps.
+
+Rest, covered, for 30 minutes.
 
 {% literate_recipe_step wait="30m" duration="15m" %}
 
@@ -38,7 +42,7 @@ Add
 - 12 grams salt
 - splash of water
 
-and mix. Scoop dough out onto hard, non-porous, unfloured surface.[^3] Knead: turn, grab, turn, smash, pull, roll for 10 minutes. You want dough that is smooth, elastic and tacky (but not sticky).
+and mix. Scoop dough out onto hard, non-porous, unfloured surface.[^3] Knead: grab, pull, smash, roll, turn. Repeat for 10 minutes. You want dough that is smooth, elastic and tacky (but not sticky).
 
 Cover bowl and proof for 4 hours in a warm environment.
 
@@ -72,13 +76,13 @@ Score it, spritz several times with water, and cover. Place into oven and lower 
 
 {% literate_recipe_step wait="25m" duration="1m" %}
 
-Take the lid of the dutch oven off.
+Take the lid of the dutch oven off to allow the loaf to brown.
 
 {% literate_recipe_step wait="25m" duration="1m" %}
 
 Take the bread out of the oven and place on a wire rack.
 
-Let cool completely before slicing to allow the structure to set.
+Let cool completely before slicing. Yeah, it's difficult.
 
 -------------------------------------------------------------------------------
 
