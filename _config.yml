@@ -9,3 +9,5 @@ exclude:
   - README.md
 sass:
   sourcemap: never
+kramdown:
+  show_warnings: true
