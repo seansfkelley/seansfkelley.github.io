@@ -21,7 +21,7 @@ Lastly, the times shown in each step are all linked to one another and you can a
 
 Enjoy!
 
-{% literate_recipe_step duration="10m" %}
+{% literate_recipe_step kind="multiday" duration="10m" %}
 
 In a medium bowl, stir together
 
@@ -42,7 +42,7 @@ Add yeast mixture and
 
 to flour mixture. Stir with a rubber spatula until just incorporated, then scrape the sides of the bowl clean and cover with plastic wrap. Leave out at room temperature to ferment for 12 to 14 hours until at least doubled in volume.
 
-{% literate_recipe_step wait="12h" duration="5m" %}
+{% literate_recipe_step wait="overnight" duration="5m" %}
 
 Spread
 

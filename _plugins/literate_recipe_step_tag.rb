@@ -5,12 +5,13 @@ class LiterateRecipeStepTag < Liquid::Tag
     ([\w-]+)\s*=\s*
     (?:"([^"\\]*(?:\\.[^"\\]*)*)"|'([^'\\]*(?:\\.[^'\\]*)*)'|([\w.-]+))
   !x.freeze
+
   DURATION_SYNTAX = %r!
-    \s*
-    ((?<hours>\d+)h)?
-    \s*
-    ((?<minutes>\d+)m)?
-    \s*
+    (
+      ((?<hours>\d+)h)?
+      \s*
+      ((?<minutes>\d+)m)?
+    )|overnight
   !mx.freeze
 
   FULL_VALID_SYNTAX = %r!\A\s*(?:#{VALID_SYNTAX}(?=\s|\z)\s*)*\z!.freeze
@@ -52,22 +53,45 @@ class LiterateRecipeStepTag < Liquid::Tag
     page = context.registers[:page]
 
     params = self.parse_params(context)
-    page[:__recipe_steps__] = [] unless page[:__recipe_steps__]
-    page[:__recipe_steps__] << params
+    kind = params["kind"]
+
+    if kind
+      if params["wait"]
+        raise "cannot specify both kind and wait"
+      end
+
+      wait = :overnight
+      page[:step_groups] = [[]]
+    else
+      wait = self.parse_duration(params["wait"])
+
+      if wait == :overnight
+        page[:step_groups] << []
+      end
+    end
 
     duration = self.parse_duration(params["duration"])
-    wait = self.parse_duration(params["wait"] || "0m")
 
-    title = if page[:__recipe_steps__].length == 1
-              "to begin"
-            else
-              "#{self.print_duration_longform(wait)} later"
-            end
+    page[:step_groups].last << params
+
+    title = \
+      if kind == "multiday"
+        "day 1"
+      elsif kind == "default"
+        "to begin"
+      else
+        "#{self.print_duration_longform(
+          wait,
+          overnight_text: "day #{page[:step_groups].length}",
+          non_overnight_suffix: " later"
+        )}"
+      end
 
     <<~END
       <header
         class="recipe-step"
-        data-step-index="#{page[:__recipe_steps__].length - 1}"
+        data-step-group="#{page[:step_groups].length - 1}"
+        data-step-index="#{page[:step_groups].last.length - 1}"
         data-duration="#{duration}"
         data-wait="#{wait}"
       >
@@ -86,6 +110,10 @@ class LiterateRecipeStepTag < Liquid::Tag
   end
 
   def parse_duration(duration)
+    if duration == 'overnight'
+      return :overnight
+    end
+
     matched = duration.match(DURATION_SYNTAX)
     raise "must provide a duration argument including hours, minutes or both" unless matched
 
@@ -95,7 +123,11 @@ class LiterateRecipeStepTag < Liquid::Tag
     hours * 60 + minutes
   end
 
-  def print_duration_longform(duration)
+  def print_duration_longform(duration, overnight_text: nil, non_overnight_suffix: nil)
+    if duration == :overnight
+      return overnight_text || "the next day"
+    end
+
     hours = duration / 60
     minutes = duration % 60
 
@@ -119,7 +151,7 @@ class LiterateRecipeStepTag < Liquid::Tag
            end
     end
 
-    s
+    s + (non_overnight_suffix || "")
   end
 end
 

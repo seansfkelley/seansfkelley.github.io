@@ -14,16 +14,16 @@ This recipe is intended as a terse reference for those already familiar with the
 
 Onto the recipe!
 
-{% literate_recipe_step duration="5m" %}
+{% literate_recipe_step kind="multiday" duration="5m" %}
 
 Feed your starter with
 
 - 100 grams lukewarm water
 - 100 grams bread or all-purpose flour[^1]
 
-Let it grow until it peaks, about 8-12 hours.
+Let it grow overnight until it peaks.
 
-{% literate_recipe_step wait="8h" duration="10m" %}
+{% literate_recipe_step wait="overnight" duration="10m" %}
 
 In a large bowl, mix
 
@@ -56,17 +56,17 @@ Rest for 30 minutes.
 
 Sprinkle with flour and flip. Fold all four edges to their opposite sides. Shape into a ball, then with the dough scraper, firmly push the dough in all directions to roll across the surface and build tension.
 
-Dust a proof basket with flour and transfer the dough to it, seam side up. (If you do not have a proofing basket, you can put a dry kitchen towel in a bowl.)
+Dust a proofing basket with flour and transfer the dough to it, seam side up. (If you do not have a proofing basket, you can put a dry kitchen towel in a bowl.)
 
 Dust with flour, cover with towel, and place in fridge overnight.
 
-{% literate_recipe_step wait="12h" duration="1m" %}
+{% literate_recipe_step wait="overnight" duration="1m" %}
 
 Take the dough out of the fridge 2 hours before baking to bring it to room temperature.
 
 {% literate_recipe_step wait="1h30m" duration="1m" %}
 
-Preheat a dutch oven with a lid to 475°F (245°C).
+Preheat oven to 475°F (245°C). Put in a dutch oven, with lid, to preheat with the oven.
 
 {% literate_recipe_step wait="30m" duration="5m" %}
 
