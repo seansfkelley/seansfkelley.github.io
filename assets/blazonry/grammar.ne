@@ -74,20 +74,17 @@ Charge ->
   | Lion                                                                                                   {% id %}
 
 Lion ->
-    "a" __ "lion" __ LionDescription     {% (d) => ({ ...d[4], count: 1 }) %}
-  | Plural __ "lions" __ LionDescription {% (d) => ({ ...d[4], count: d[0] }) %}
-
-# This extra layer of indirection is pretty meh. It's here because we want to couple this verbiage
-# to the presence of the "lion" charge "keyword", above, combined with the requirement that the
-# pluralization is in the middle of the spec, rather than at the end ("s") like a simple charge.
-LionDescription ->
-  LionPose:? (__ Posture {% nth(1) %}):? __ Tincture (__ LionModifiers {% nth(1) %}):? (__ InDirection {% nth(1) %}):? {% (d) => ({
+  (
+      "a" __ "lion"     {% literal(1) %}
+    | Plural __ "lions" {% nth(0) %}
+  ) (__ LionPose {% nth(1) %}):? (__ Posture {% nth(1) %}):? __ Tincture (__ LionModifiers {% nth(1) %}):? (__ InDirection {% nth(1) %}):? {% (d) => ({
     charge: "lion",
-    pose: d[0] ?? "rampant",
-    posture: d[1],
-    tincture: d[3],
-    ...d[4],
-    direction: d[5],
+    count: d[0],
+    pose: d[1] ?? "rampant",
+    posture: d[2],
+    tincture: d[4],
+    ...d[5],
+    direction: d[6],
   }) %}
 
 LionPose ->
