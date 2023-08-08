@@ -93,20 +93,7 @@ interface Node {
   cloneNode<T>(this: T, deep?: boolean): T;
 }
 
-declare namespace PeggyParser {
-  interface SyntaxError extends Error {
-    expected: any;
-    found: any;
-    location: any;
-    format: (opts: { source: string; text: string }[]) => string;
-  }
-}
-
-declare const parser: {
-  // Note: this output type is a _slight_ lie, in that the runtime value contains `null`s for some
-  // optional fields, but the types only ever use `?`. Call `recursivelyOmitNullish`.
-  parse: (text: string, opts?: { grammarSource: string }) => ComplexContent;
-};
+declare const grammar: nearley.CompiledRules;
 
 type DiscriminateUnion<T, K extends keyof T, V extends T[K]> = T extends T
   ? V extends T[K]
