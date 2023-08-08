@@ -55,14 +55,6 @@ NOTES ON THE IMPLEMENTATION
   - a mix of string-y things like `path` and object-y things like `PathCommand`
 */
 
-const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
-
-// Parse something!
-parser.feed("foo\n");
-
-// parser.results is an array of possible parsings.
-console.log(JSON.stringify(parser.results)); // [[[[["foo"],"\n"]]]]
-
 // #region LAYOUT
 
 // TODO: Make _everything_ a function of these proportions.
@@ -2213,14 +2205,21 @@ function on(parent: SVGElement, { on, surround, charge }: On) {
 function parseAndRenderBlazon() {
   let result;
   try {
-    result = parser.parse(input.value.trim().toLowerCase(), {
-      grammarSource: "input",
-    });
-    error.style.display = "none";
+    const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
+    parser.feed(input.value.trim().toLowerCase());
+    const { results } = parser;
+    if (results.length === 0) {
+      error.style.display = "block";
+      error.innerHTML = "Unexpected end of input.";
+    } else if (results.length > 1) {
+      error.style.display = "block";
+      error.innerHTML = "Ambiguous blazon!";
+    } else {
+      result = results[0];
+      error.style.display = "none";
+    }
   } catch (e) {
-    error.innerHTML = (e as PeggyParser.SyntaxError).format([
-      { source: "input", text: input.value },
-    ]);
+    error.innerHTML = (e as any).toString();
     error.style.display = "block";
     return;
   }

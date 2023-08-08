@@ -13,7 +13,7 @@
 %}
 
 Enter ->
-  ComplexContent (__ "."):? {% nth(0) %}
+  ComplexContent (_ "."):? {% nth(0) %}
 
 ComplexContent ->
     SimpleField   {% id %}
@@ -48,14 +48,11 @@ SimpleContent ->
   | Charge                                            {% id %}
   | Canton                                            {% id %}
 
-Quarter -> "TODO"
-
 # TODO: Make this an actual list rule.
-# Quarter ->
-#     quarter:QuarterName _ content:ComplexContent { return { quarters: [quarter], content } }
-#   | quarter1:QuarterName _ "and" _ quarter2:QuarterName _ content:ComplexContent { return { quarters: [quarter1, quarter2], content  } }
-#   | quarter1:QuarterName _ quarter2:QuarterName _ "and" _ quarter3:QuarterName _ content:ComplexContent { return { quarters: [quarter1, quarter2, quarter3], content  } }
-#   | quarter1:QuarterName _ quarter2:QuarterName _ quarter3:QuarterName _ "and" _ quarter4:QuarterName _ content:ComplexContent { return { quarters: [quarter1, quarter2, quarter3, quarter4], content  } }
+Quarter ->
+  (
+    (QuarterName __ {% nth(0) %}):+ "and" __ {% nth(0) %}
+  ):? QuarterName __ ComplexContent {% (d) => ({ quarters: [...d[0], d[1]], content: d[3] }) %}
 
 Canton ->
     "a" __ "canton" __ Tincture                          {% $({ canton: 4 }) %}
@@ -63,22 +60,21 @@ Canton ->
 
 # Note that we do not support multiple ordinaries. Yet?
 Ordinary ->
-    Singular __ OrdinaryName (__ Ornament {% nth(1) %}):? (__ Tincture {% nth(1) %}):? __ "cotised" __ Tincture {% $({
-      ordinary: 2, ornament: 3, tincture: 4, cotised: 8  # TODO: 4 defaults to 8 if not present.
+    Singular __ OrdinaryName (__ Ornament {% nth(1) %}):? (__ Tincture {% nth(1) %}):? __ "cotised" __ Tincture {% (d) => ({
+      ordinary: d[2], ornament: d[3], tincture: d[4] ?? d[8], cotised: d[8]
     }) %}
   | Singular __ OrdinaryName (__ Ornament {% nth(1) %}):? __ Tincture {% $({
       ordinary: 2, ornament: 3, tincture : 5
     }) %}
 
-# TODO: Default count to 1 for singular.
 Charge ->
-    Singular __ SimpleChargeName (__ Posture {% nth(1) %}):? __ Tincture {% $({
-      charge: 2, posture: 3, tincture: 5
+    Singular __ SimpleChargeName (__ Posture {% nth(1) %}):? __ Tincture                   {% (d) => ({
+      count: 1, charge: d[2], posture: d[3], tincture: d[5]
     }) %}
   | Plural __ SimpleChargeName "s" (__ Posture {% nth(1) %}):? __ Tincture (__ InDirection {% nth(1) %}):? {% $({
       count: 0, charge: 2, posture: 4, tincture: 6, direction : 7
     }) %}
-  | Lion
+  | Lion                                                                                   {% id %}
 
 Lion ->
     "a" __ "lion" __ LionDescription     {% (d) => ({ ...d[4], count: 1 }) %}
@@ -88,7 +84,7 @@ Lion ->
 # to the presence of the "lion" charge "keyword", above, combined with the requirement that the
 # pluralization is in the middle of the spec, rather than at the end ("s") like a simple charge.
 LionDescription ->
-  LionPose:? (__ Posture {% id %}):? __ Tincture (__ LionModifiers {% id %}):? (__ InDirection {% id %}):? {% (d) => ({
+  LionPose:? (__ Posture {% nth(1) %}):? __ Tincture (__ LionModifiers {% nth(1) %}):? (__ InDirection {% nth(1) %}):? {% (d) => ({
     charge: "lion",
     pose: d[0] ?? "rampant",
     posture: d[1],
@@ -107,14 +103,12 @@ LionModifier ->
   | "langued" {% id %}
   # other variants: "crowned", "double queued"
 
-LionModifiers -> "TODO"
-
-# LionModifiers ->
-#   # This is unfortunately rather repetitive, due to the optional nature of the tincture
-#   # specification when using both "armed" and "langued". Not sure how to tighten it up.
-#     modifier1:LionModifier _ tincture1:Tincture _ "and" _ modifier2:LionModifier _ tincture2:Tincture { return { [modifier1]: tincture1, [modifier2]: tincture2 } }
-#   | modifier:LionModifier _ tincture:Tincture { return { [modifier]: tincture } }
-#   | modifier1:LionModifier _ "and" _ modifier2:LionModifier _ tincture:Tincture { return { [modifier1]: tincture, [modifier2]: tincture } }
+LionModifiers ->
+  # This is unfortunately rather repetitive, due to the optional nature of the tincture
+  # specification when using both "armed" and "langued". Not sure how to tighten it up.
+    LionModifier __ Tincture __ "and" __ LionModifier __ Tincture {% (d) => ({ [d[0]]: d[2], [d[6]]: d[8] }) %}
+  | LionModifier __ Tincture                                      {% (d) => ({ [d[0]]: d[2] }) %}
+  | LionModifier __ "and" __ LionModifier __ Tincture             {% (d) => ({ [d[0]]: d[6], [d[4]]: d[6] }) %}
 
 Singular ->
     "a"  {% nop %}
