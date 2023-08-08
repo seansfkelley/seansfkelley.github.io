@@ -2,6 +2,7 @@
 layout: post
 title: Blazonry
 custom-js-list:
+  - /assets/blazonry/moo.js
   - /assets/blazonry/nearley.js
   - /assets/blazonry/randexp.min.js
   - /assets/blazonry/nearley-unparse.js

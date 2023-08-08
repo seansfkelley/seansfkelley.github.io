@@ -5,6 +5,13 @@ __metadata:
   version: 6
   cacheKey: 8
 
+"@types/moo@npm:^0.5.6":
+  version: 0.5.6
+  resolution: "@types/moo@npm:0.5.6"
+  checksum: f001264897cd8e75189a6ee4194222368b7efd5ac1897eed1e5e9bd51dbb9b963927970f6aa66b61802b32db15473f98fe1830c29a75e649ed86a1f8e44c57b5
+  languageName: node
+  linkType: hard
+
 "@types/nearley@npm:^2.11.2":
   version: 2.11.2
   resolution: "@types/nearley@npm:2.11.2"
@@ -26,7 +33,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moo@npm:^0.5.0":
+"moo@npm:^0.5.0, moo@npm:^0.5.2":
   version: 0.5.2
   resolution: "moo@npm:0.5.2"
   checksum: 5a41ddf1059fd0feb674d917c4774e41c877f1ca980253be4d3aae1a37f4bc513f88815041243f36f5cf67a62fb39324f3f997cf7fb17b6cb00767c165e7c499
@@ -95,7 +102,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "seansfkelley.github.io@workspace:."
   dependencies:
+    "@types/moo": ^0.5.6
     "@types/nearley": ^2.11.2
+    moo: ^0.5.2
     nearley: ^2.20.1
     typescript: ^5.1.6
   languageName: unknown
