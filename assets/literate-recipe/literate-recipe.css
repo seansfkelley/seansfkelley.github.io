@@ -10,7 +10,7 @@ header.recipe-step h3 { display: flex; align-items: center; }
 
 header.recipe-step h3 hr { flex: 1; }
 
-header.recipe-step[data-wait=overnight] h3 hr { border-color: black; border-width: 2px; }
+header.recipe-step[data-wait=overnight] h3 hr { border-color: var(--brand-color-dark); border-width: 2px; }
 
 header.recipe-step .metadata { display: flex; align-items: center; }
 
