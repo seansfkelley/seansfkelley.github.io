@@ -2,10 +2,11 @@
   "name": "seansfkelley.github.io",
   "version": "0.0.0",
   "scripts": {
-    "build": "tsc && npm run build-grammar",
-    "build-grammar": "peggy -o assets/blazonry/grammar.js --format globals --export-var parser assets/blazonry/grammar.peg && cp assets/blazonry/grammar.peg assets/blazonry/grammar.txt"
+    "build": "tsc && npm run build-blazonry",
+    "build-blazonry": "assets/blazonry/build.sh"
   },
   "dependencies": {
+    "nearley": "^2.20.1",
     "peggy": "^3.0.2",
     "typescript": "^5.1.6"
   }

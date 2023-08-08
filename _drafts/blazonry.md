@@ -2,6 +2,7 @@
 layout: post
 title: Blazonry
 custom-js-list:
+  - /assets/blazonry/nearley.js
   - /assets/blazonry/grammar.js
   - /assets/blazonry/blazonry.js
 custom-css-list:

@@ -55,6 +55,14 @@ NOTES ON THE IMPLEMENTATION
   - a mix of string-y things like `path` and object-y things like `PathCommand`
 */
 
+const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
+
+// Parse something!
+parser.feed("foo\n");
+
+// parser.results is an array of possible parsings.
+console.log(JSON.stringify(parser.results)); // [[[[["foo"],"\n"]]]]
+
 // #region LAYOUT
 
 // TODO: Make _everything_ a function of these proportions.
