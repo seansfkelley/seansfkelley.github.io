@@ -37,7 +37,7 @@ content="This page is interactive, and only works with JavaScript enabled!"
 
 <div class="center hidden" id="interactive">
   <form id="form">
-    <input type="text" id="blazon-input" value="argent a rondel gules">
+    <input type="text" id="blazon-input" value="quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable">
     <br>
     <button type="submit">
     Preview

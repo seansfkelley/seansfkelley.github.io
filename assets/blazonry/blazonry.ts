@@ -2181,6 +2181,23 @@ function on(parent: SVGElement, { on, surround, charge }: On) {
 // #region INITIALIZATION
 // ----------------------------------------------------------------------------
 
+function recursivelyOmitNullish<T>(value: T): T {
+  assert(value != null, "cannot omit nullish root values");
+  if (Array.isArray(value)) {
+    return value.filter((e) => e != null).map(recursivelyOmitNullish) as T;
+  } else if (typeof value === "object") {
+    const o: Record<string, any> = {};
+    for (const [k, v] of Object.entries(value)) {
+      if (v != null) {
+        o[k] = recursivelyOmitNullish(v);
+      }
+    }
+    return o as T;
+  } else {
+    return value;
+  }
+}
+
 function parseAndRenderBlazon() {
   let result;
   try {
@@ -2194,7 +2211,7 @@ function parseAndRenderBlazon() {
       error.style.display = "block";
       error.innerHTML = "Ambiguous blazon!";
     } else {
-      result = results[0];
+      result = recursivelyOmitNullish(results[0]);
       error.style.display = "none";
     }
   } catch (e) {
