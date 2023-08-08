@@ -63,7 +63,7 @@ content="This page is interactive, and only works with JavaScript enabled!"
 
 References:
 
-- [Armorials – Twenty Trees](https://www.twentytrees.co.uk/Guest/General/Thing/Heraldry.html?Armorials) (an enourmous list of blazons and their renderings; requires clicking through pages)
+- [Armorials – Twenty Trees](https://www.twentytrees.co.uk/History/General/Thing/Heraldry.html?Armorials) (an enourmous list of blazons and their renderings; requires clicking through pages)
 - [A Grammar of Balzonry – Society for Creative Anachronism](http://heraldry.sca.org/armory/bruce.html)
 - [Heraldry and Blazon – U. Chicago](https://penelope.uchicago.edu/~grout/encyclopaedia_romana/britannia/anglo-saxon/flowers/heraldry.html)
 - [DrawShield](https://drawshield.net/index.html) (yeah, turns out someone already did this, but it was fun anyway)
