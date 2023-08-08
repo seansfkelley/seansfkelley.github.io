@@ -65,13 +65,13 @@ Ordinary ->
     }) %}
 
 Charge ->
-    Singular __ SimpleChargeName (__ Posture {% nth(1) %}):? __ Tincture                   {% (d) => ({
+    Singular __ SimpleChargeName (__ Posture {% nth(1) %}):? __ Tincture                                   {% (d) => ({
       count: 1, charge: d[2], posture: d[3], tincture: d[5]
     }) %}
   | Plural __ SimpleChargeName "s" (__ Posture {% nth(1) %}):? __ Tincture (__ InDirection {% nth(1) %}):? {% $({
       count: 0, charge: 2, posture: 4, tincture: 6, direction : 7
     }) %}
-  | Lion                                                                                   {% id %}
+  | Lion                                                                                                   {% id %}
 
 Lion ->
     "a" __ "lion" __ LionDescription     {% (d) => ({ ...d[4], count: 1 }) %}
