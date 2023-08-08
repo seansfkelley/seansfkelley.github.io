@@ -23,6 +23,9 @@ SimpleField ->
       varied: 0, first: 2, second: 6, content: 7
     }) %}
 
+Varied ->
+  VariedName (__ "of" __ Plural {% nth(3) %}):? {% $({ type: 0, count: 1 }) %}
+
 PartyPerField ->
   (Party __):? "per" __ Direction (__ Ornament {% nth(1) %}):? __ Tincture __ "and" __ Tincture (__ SimpleContent {% nth(1) %}):? {% $({
     party: 3, ornament: 4, first: 6, second: 10, content: 11
@@ -174,9 +177,6 @@ OrdinaryName ->
 SimpleChargeName ->
     "rondel" {% id %}
   | "mullet" {% id %}
-
-Varied ->
-  VariedName (__ "of" __ Plural {% nth(3) %}):? {% $({ type: 0, count: 1 }) %}
 
 VariedName ->
     "barry bendy" {% id %}
