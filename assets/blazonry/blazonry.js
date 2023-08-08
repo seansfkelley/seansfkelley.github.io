@@ -20,14 +20,11 @@ TODO
   - charges
     - are there any other geometric ones?
     - lion, leopard's head, eagle, castle, boar, swan, tree, rose, escallop, and all their variants
-- parser issues
-  - needs backtracking to handle some more complex cases
-    - nearley!
-    - quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
+- grammar improvements
   - should be able to parse non-redundant usage of colors
     - argent on a bend between six mullets vert
     - something something about "of the first", etc.
-  - make whitespace non-optional to force breaks
+- add nearley-unparse to allow generating examples
 - things I want to be able to render
   - churchill arms
   - weihenstephan arms
@@ -479,24 +476,6 @@ path.from = (...elements) => {
         .join(" ")}`)
         .join(" ");
 };
-function recursivelyOmitNullish(value) {
-    assert(value != null, "cannot omit nullish root values");
-    if (Array.isArray(value)) {
-        return value.filter((e) => e != null).map(recursivelyOmitNullish);
-    }
-    else if (typeof value === "object") {
-        const o = {};
-        for (const [k, v] of Object.entries(value)) {
-            if (v != null) {
-                o[k] = recursivelyOmitNullish(v);
-            }
-        }
-        return o;
-    }
-    else {
-        return value;
-    }
-}
 const complexSvgCache = {};
 function getComplexSvgSync(kind, variant) {
     const key = variant ? `${kind}-${variant}` : kind;
@@ -1512,22 +1491,48 @@ function on(parent, { on, surround, charge }) {
 // #endregion
 // #region INITIALIZATION
 // ----------------------------------------------------------------------------
+function recursivelyOmitNullish(value) {
+    assert(value != null, "cannot omit nullish root values");
+    if (Array.isArray(value)) {
+        return value.filter((e) => e != null).map(recursivelyOmitNullish);
+    }
+    else if (typeof value === "object") {
+        const o = {};
+        for (const [k, v] of Object.entries(value)) {
+            if (v != null) {
+                o[k] = recursivelyOmitNullish(v);
+            }
+        }
+        return o;
+    }
+    else {
+        return value;
+    }
+}
 function parseAndRenderBlazon() {
     let result;
     try {
-        result = parser.parse(input.value.trim().toLowerCase(), {
-            grammarSource: "input",
-        });
-        error.style.display = "none";
+        const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
+        parser.feed(input.value.trim().toLowerCase());
+        const { results } = parser;
+        if (results.length === 0) {
+            error.style.display = "block";
+            error.innerHTML = "Unexpected end of input.";
+        }
+        else if (results.length > 1) {
+            error.style.display = "block";
+            error.innerHTML = "Ambiguous blazon!";
+        }
+        else {
+            result = recursivelyOmitNullish(results[0]);
+            error.style.display = "none";
+        }
     }
     catch (e) {
-        error.innerHTML = e.format([
-            { source: "input", text: input.value },
-        ]);
+        error.innerHTML = e.toString();
         error.style.display = "block";
         return;
     }
-    result = recursivelyOmitNullish(result);
     ast.innerHTML = JSON.stringify(result, null, 2);
     rendered.innerHTML = "";
     const outline = svg.path(FIELD_PATH, Tincture.NONE);
