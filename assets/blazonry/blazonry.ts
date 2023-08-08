@@ -19,10 +19,11 @@ TODO
   - charges
     - are there any other geometric ones?
     - lion, leopard's head, eagle, castle, boar, swan, tree, rose, escallop, and all their variants
-- parser issues
+- grammar improvements
   - should be able to parse non-redundant usage of colors
     - argent on a bend between six mullets vert
     - something something about "of the first", etc.
+- add nearley-unparse to allow generating examples
 - things I want to be able to render
   - churchill arms
   - weihenstephan arms
