@@ -15,7 +15,7 @@ header.recipe-step {
   }
 
   &[data-wait=overnight] h3 hr {
-    border-color: black;
+    border-color: var(--brand-color-dark);
     border-width: 2px;
   }
 
