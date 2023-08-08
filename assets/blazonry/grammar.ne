@@ -38,7 +38,7 @@ Party ->
   | "parted" {% nop %}
 
 Quarterly ->
-  "quarterly" __ Quarter:+ {% $({ quarters: 2 }) %}
+  "quarterly" __ Quarter (__ Quarter {% nth(1) %}):* {% (d) => ({ quarters: [d[2], ...d[3]] }) %}
 
 SimpleContent ->
     Ordinary __ "between" __ Charge                   {% $({ on: 0, surround: 4 }) %}
@@ -52,7 +52,7 @@ SimpleContent ->
 Quarter ->
   (
     (QuarterName __ {% nth(0) %}):+ "and" __ {% nth(0) %}
-  ):? QuarterName __ ComplexContent {% (d) => ({ quarters: [...d[0], d[1]], content: d[3] }) %}
+  ):? QuarterName __ ComplexContent {% (d) => ({ quarters: [...(d[0] ?? []), d[1]], content: d[3] }) %}
 
 Canton ->
     "a" __ "canton" __ Tincture                          {% $({ canton: 4 }) %}

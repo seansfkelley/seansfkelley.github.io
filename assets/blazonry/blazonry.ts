@@ -20,13 +20,9 @@ TODO
     - are there any other geometric ones?
     - lion, leopard's head, eagle, castle, boar, swan, tree, rose, escallop, and all their variants
 - parser issues
-  - needs backtracking to handle some more complex cases
-    - nearley!
-    - quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable
   - should be able to parse non-redundant usage of colors
     - argent on a bend between six mullets vert
     - something something about "of the first", etc.
-  - make whitespace non-optional to force breaks
 - things I want to be able to render
   - churchill arms
   - weihenstephan arms
@@ -749,23 +745,6 @@ path.from = (...elements: (PathCommand.Any | PathCommand.Any[])[]): string => {
     )
     .join(" ");
 };
-
-function recursivelyOmitNullish<T>(value: T): T {
-  assert(value != null, "cannot omit nullish root values");
-  if (Array.isArray(value)) {
-    return value.filter((e) => e != null).map(recursivelyOmitNullish) as T;
-  } else if (typeof value === "object") {
-    const o: Record<string, any> = {};
-    for (const [k, v] of Object.entries(value)) {
-      if (v != null) {
-        o[k] = recursivelyOmitNullish(v);
-      }
-    }
-    return o as T;
-  } else {
-    return value;
-  }
-}
 
 const complexSvgCache: Record<string, SVGElement> = {};
 
@@ -2223,8 +2202,6 @@ function parseAndRenderBlazon() {
     error.style.display = "block";
     return;
   }
-
-  result = recursivelyOmitNullish(result);
 
   ast.innerHTML = JSON.stringify(result, null, 2);
 
