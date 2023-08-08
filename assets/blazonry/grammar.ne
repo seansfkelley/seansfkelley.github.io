@@ -3,13 +3,8 @@
 @builtin "postprocessors.ne"
 
 @{%
-  function nop() {
-    return undefined;
-  }
-
-  function literal(l) {
-    return () => l;
-  }
+  function nop() { return undefined; }
+  function literal(l) { return () => l; }
 %}
 
 Enter ->
