@@ -33,7 +33,7 @@ Party ->
   | "parted" {% nop %}
 
 Quarterly ->
-  "quarterly" __ Quarter (__ Quarter {% nth(1) %}):* {% (d) => ({ quarters: [d[2], ...d[3]] }) %}
+  "quarterly" __ Quartering (__ Quartering {% nth(1) %}):* {% (d) => ({ quarters: [d[2], ...d[3]] }) %}
 
 SimpleContent ->
     Ordinary __ "between" __ Charge                   {% $({ on: 0, surround: 4 }) %}
@@ -43,8 +43,7 @@ SimpleContent ->
   | Charge                                            {% id %}
   | Canton                                            {% id %}
 
-# TODO: Make this an actual list rule.
-Quarter ->
+Quartering ->
   (
     (QuarterName __ {% nth(0) %}):+ "and" __ {% nth(0) %}
   ):? QuarterName __ ComplexContent {% (d) => ({ quarters: [...(d[0] ?? []), d[1]], content: d[3] }) %}
