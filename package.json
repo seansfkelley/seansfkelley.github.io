@@ -8,7 +8,6 @@
   "dependencies": {
     "@types/nearley": "^2.11.2",
     "nearley": "^2.20.1",
-    "peggy": "^3.0.2",
     "typescript": "^5.1.6"
   }
 }
