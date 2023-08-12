@@ -8,8 +8,6 @@ TODO
 - minor visual effects to make it a little less flat
 - "overall"
 - fretty?
-- why is a chevron embattled/indented appear to be vertically shifted, but engrailed does not? (or does it?)
-  - "per pale wavy argent and purpure" is definitely off-center
 - "saltirewise" needs to vary based on where the charge is
 - "embattled" shouldn't do the bottom of chevrons and fesses; that's embattled-counter-embattled
 - more of the same
@@ -1812,7 +1810,7 @@ function wavy(length: number): RelativeOrnamentPath {
   const curves: PathCommand.c[] = [];
 
   let x = length;
-  let y = -halfWidth / 2;
+  let y = -halfWidth / 4;
   while (x > 0) {
     curves.push({
       type: "c",
@@ -1835,7 +1833,7 @@ function wavy(length: number): RelativeOrnamentPath {
   }
 
   return [
-    { type: "m", loc: [0, -halfWidth / 2] },
+    { type: "m", loc: [0, -halfWidth / 4] },
     curves,
     { type: "m", loc: [x, -y] },
   ];

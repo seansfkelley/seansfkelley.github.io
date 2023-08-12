@@ -39,7 +39,7 @@ content="This page is interactive, and only works with JavaScript enabled!"
 
 <div class="center hidden" id="interactive">
   <form id="form">
-    <input type="text" id="blazon-input" value="argent on a fess gules between two mullets sable an rondel sable.">
+    <input type="text" id="blazon-input" value="per pale wavy argent and purpure">
     <div>
       <button id="random-blazon" type="button">
       Generate Hideous Random Blazon
