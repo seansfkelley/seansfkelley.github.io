@@ -685,6 +685,12 @@ function applyTransforms(
   element.setAttribute("transform", transform);
 }
 
+function roundToPrecision(n: number, precision: number = 0): number {
+  assert(precision >= 0, "precision must be non-negative"); // It's well-defined, but not useful to me.
+  const magnitude = Math.pow(10, precision);
+  return Math.round(n * magnitude) / magnitude;
+}
+
 const svg = {
   path: (d: string, tincture: Tincture): SVGPathElement => {
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -746,7 +752,9 @@ path.from = (...elements: (PathCommand.Any | PathCommand.Any[])[]): string => {
     .map(
       (e) =>
         `${e.type} ${SVG_ELEMENT_TO_COORDINATES[e.type](e as never)
-          .map(([x, y]) => `${x} ${y}`)
+          .map(
+            ([x, y]) => `${roundToPrecision(x, 3)} ${roundToPrecision(y, 3)}`
+          )
           .join(" ")}`
     )
     .join(" ");
