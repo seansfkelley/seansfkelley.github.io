@@ -1553,13 +1553,13 @@ function rondel({ tincture }: SimpleCharge) {
 
 function mullet({ tincture }: SimpleCharge) {
   return svg.path(
-    "M 0 -23 L 6 -6 H 24 L 10 5 L 15 22 L 0 12 L -15 22 L -10 5 L -24 -6 H -6 Z",
+    // These awkward numbers keep the proportions nice while just filling out a 40x40 square.
+    "M 0 -18.8 L 5 -4.6 L 20 -4.6 L 8.4 4.5 L 12.5 18.8 L 0 10.4 L -12.5 18.8 L -8.4 4.5 L -20 -4.6 L -5 -4.6 Z",
     tincture
   );
 }
 
 function lion({ tincture, armed, langued, pose }: LionCharge) {
-  // TODO: tail is missing highlights
   // TODO: sizing and positioning still seems wrong
   // TODO: coloration should be optional, I guess?
   const lion = getComplexSvgSync("lion", pose).cloneNode(true);
