@@ -1160,23 +1160,23 @@ chevron.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
   }
 };
 
-function cross({ tincture, cotised }: Ordinary) {
-  const crossWidth = W / 4;
-  // 14 is too hardcoded -- should be defined based on W/H ratios instead.
-  const horizontalOffset = -14;
+// Ensure that the sides and top arms are all the same length!
+const CROSS_WIDTH = W / 4;
+const CROSS_VERTICAL_OFFSET = (H - W) / 2;
 
+function cross({ tincture, cotised }: Ordinary) {
   const top: Coordinate = [0, -H_2];
   const bottom: Coordinate = [0, H_2];
-  const left: Coordinate = [-W_2, horizontalOffset];
-  const right: Coordinate = [W_2, horizontalOffset];
+  const left: Coordinate = [-W_2, -CROSS_VERTICAL_OFFSET];
+  const right: Coordinate = [W_2, -CROSS_VERTICAL_OFFSET];
 
   const cross = svg.g();
-  cross.appendChild(svg.line(top, bottom, tincture, crossWidth));
-  cross.appendChild(svg.line(left, right, tincture, crossWidth));
+  cross.appendChild(svg.line(top, bottom, tincture, CROSS_WIDTH));
+  cross.appendChild(svg.line(left, right, tincture, CROSS_WIDTH));
 
   if (cotised != null) {
-    const offset = crossWidth / 2 + (COTISED_WIDTH * 3) / 2;
-    const mid: Coordinate = [0, horizontalOffset];
+    const offset = CROSS_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
+    const mid: Coordinate = [0, -CROSS_VERTICAL_OFFSET];
 
     for (const [p, [x1sign, y1sign], [x2sign, y2sign]] of [
       [top, [-1, -1], [1, -1]],
@@ -1210,24 +1210,32 @@ function cross({ tincture, cotised }: Ordinary) {
 
 cross.on = new SequenceLocator(
   [
-    [-30, -14],
-    [30, -14],
-    [0, -44],
-    [0, 16],
-    [0, -14],
+    [-H_2 / 2, -CROSS_VERTICAL_OFFSET],
+    [H_2 / 2, -CROSS_VERTICAL_OFFSET],
+    [0, -H_2 / 2 - CROSS_VERTICAL_OFFSET],
+    [0, H_2 / 2 - CROSS_VERTICAL_OFFSET],
+    [0, -CROSS_VERTICAL_OFFSET],
   ],
   [0.4, 0.4, 0.4, 0.4, 0.4],
   {
-    1: [[0, -14]],
+    1: [[0, -CROSS_VERTICAL_OFFSET]],
   }
 );
 
+const CROSS_SECTOR_2 = (W - CROSS_WIDTH) / 4;
+
 cross.surround = new SequenceLocator(
   [
-    [-30, -42],
-    [30, -42],
-    [30, 12],
-    [-30, 12],
+    [W_2 - CROSS_SECTOR_2, -H_2 + CROSS_SECTOR_2],
+    [-W_2 + CROSS_SECTOR_2, -H_2 + CROSS_SECTOR_2],
+    [
+      -W_2 + CROSS_SECTOR_2,
+      CROSS_SECTOR_2 - CROSS_VERTICAL_OFFSET + CROSS_WIDTH / 2,
+    ],
+    [
+      W_2 - CROSS_SECTOR_2,
+      CROSS_SECTOR_2 - CROSS_VERTICAL_OFFSET + CROSS_WIDTH / 2,
+    ],
   ],
   [0.5, 0.5, 0.5, 0.5],
   {
@@ -1545,7 +1553,7 @@ function rondel({ tincture }: SimpleCharge) {
 
 function mullet({ tincture }: SimpleCharge) {
   return svg.path(
-    "M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z",
+    "M 0 -23 L 6 -6 H 24 L 10 5 L 15 22 L 0 12 L -15 22 L -10 5 L -24 -6 H -6 Z",
     tincture
   );
 }
