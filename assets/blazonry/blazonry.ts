@@ -9,7 +9,6 @@ TODO
 - "overall"
 - fretty?
 - "saltirewise" needs to vary based on where the charge is
-- "embattled" shouldn't do the bottom of chevrons and fesses; that's embattled-counter-embattled
 - more of the same
   - ordinaries
   - ornaments
@@ -24,6 +23,7 @@ TODO
   - churchill arms
   - weihenstephan arms
   - ???
+- A "chevron embattled" has a little blip at the bottom middle as an artifact of an unrelated hack.
 */
 
 /*
@@ -232,6 +232,9 @@ interface OrnamentPathGenerator {
     xLength: number,
     yOffset: number,
     invertY: boolean,
+    // This is only for 'embattled'. It has special rules that means it should only render on the
+    // _top_ of ordinaries. "Primary" means top.
+    side: "primary" | "secondary",
     alignment?: "start" | "end" | "center"
   ): RelativeOrnamentPath;
 }
@@ -800,10 +803,16 @@ function bend({ tincture, cotised, ornament }: Ordinary) {
       svg.path(
         path.from(
           relativePathsToClosedLoop(
-            ORNAMENTS[ornament](BEND_LENGTH, -BEND_WIDTH / 2, false),
+            ORNAMENTS[ornament](BEND_LENGTH, -BEND_WIDTH / 2, false, "primary"),
             // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
             // we traverse around the bend clockwise.
-            ORNAMENTS[ornament](-BEND_LENGTH, BEND_WIDTH / 2, true, "end")
+            ORNAMENTS[ornament](
+              -BEND_LENGTH,
+              BEND_WIDTH / 2,
+              true,
+              "secondary",
+              "end"
+            )
           )
         ),
         tincture
@@ -875,6 +884,7 @@ bend.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
       BEND_LENGTH,
       0,
       false,
+      "primary",
       "start"
     );
     main.forEach((c) => PathCommand.rotate(c, Math.PI / 4));
@@ -920,6 +930,7 @@ function chief({ tincture, cotised, ornament }: Ordinary) {
       -W,
       CHIEF_WIDTH,
       true,
+      "primary",
       "center"
     );
     chief.appendChild(
@@ -987,12 +998,14 @@ function chevron({ tincture, cotised, ornament }: Ordinary) {
         topLength,
         0,
         false,
+        "primary",
         "start"
       );
       const [bottomStart, bottomMain, bottomEnd] = ORNAMENTS[ornament](
         -bottomLength,
         0,
         true,
+        "secondary",
         "end"
       );
 
@@ -1017,9 +1030,9 @@ function chevron({ tincture, cotised, ornament }: Ordinary) {
             // it by topStart we need to shift it here too.
             loc: Coordinate.add(topStart.loc, bottomEnd.loc),
           },
-          // A bit weird, but: juke out of the way a bit to overlap with the other side. Ensures
-          // that the very skinny point at the top of the chevron doesn't turn itself inside out
-          // and fill the wrong side when using e.g. engrailed.
+          // HACK: juke out of the way a bit to overlap with the other side. Ensures that the very
+          // skinny point at the top of the chevron doesn't turn itself inside out and fill the
+          // wrong side when using e.g. engrailed.
           { type: "l", loc: [-CHEVRON_WIDTH / 10, 0] },
           { type: "z" }
         ),
@@ -1120,12 +1133,14 @@ chevron.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
       Coordinate.length(midLeft, mid),
       0,
       false,
+      "primary",
       "end"
     );
     const [rightStart, rightMain, rightEnd] = ORNAMENTS[ornament](
       Coordinate.length(mid, midRight),
       0,
       false,
+      "primary",
       "start"
     );
     leftMain.forEach((c) => PathCommand.rotate(c, -Math.PI / 4));
@@ -1257,13 +1272,13 @@ function fess({ tincture, cotised, ornament }: Ordinary) {
             loc: [-W_2, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2],
           },
           relativePathsToClosedLoop(
-            ORNAMENTS[ornament](W, 0, false, "center"),
+            ORNAMENTS[ornament](W, 0, false, "primary", "center"),
             [
               { type: "m", loc: [0, 0] },
               [{ type: "l", loc: [0, FESS_WIDTH] }],
               { type: "m", loc: [0, 0] },
             ],
-            ORNAMENTS[ornament](-W, 0, true, "center")
+            ORNAMENTS[ornament](-W, 0, true, "secondary", "center")
           )
         ),
         tincture
@@ -1331,7 +1346,13 @@ fess.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
   if (ornament == null) {
     return [topLeft, midLeft, midRight, topRight, { type: "Z" }];
   } else {
-    const [start, main, end] = ORNAMENTS[ornament](W, 0, false, "center");
+    const [start, main, end] = ORNAMENTS[ornament](
+      W,
+      0,
+      false,
+      "primary",
+      "center"
+    );
     return [
       topLeft,
       midLeft,
@@ -1353,10 +1374,10 @@ function pale({ tincture, cotised, ornament }: Ordinary) {
     const p = svg.path(
       path.from(
         relativePathsToClosedLoop(
-          ORNAMENTS[ornament](H, -PALE_WIDTH / 2, false),
+          ORNAMENTS[ornament](H, -PALE_WIDTH / 2, false, "primary"),
           // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
           // we traverse around the pale clockwise.
-          ORNAMENTS[ornament](-H, PALE_WIDTH / 2, true, "end")
+          ORNAMENTS[ornament](-H, PALE_WIDTH / 2, true, "secondary", "end")
         )
       ),
       tincture
@@ -1411,7 +1432,13 @@ pale.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
   if (ornament == null) {
     return [topLeft, topMid, bottomMid, bottomLeft, { type: "Z" }];
   } else {
-    const [start, main, end] = ORNAMENTS[ornament](H, 0, false, "start");
+    const [start, main, end] = ORNAMENTS[ornament](
+      H,
+      0,
+      false,
+      "primary",
+      "start"
+    );
     main.forEach((c) => PathCommand.rotate(c, Math.PI / 2));
     return [
       topLeft,
@@ -1610,7 +1637,8 @@ function renderCharge(charge: Charge): SVGElement {
 
 function wrapSimpleOrnamenter(
   ornamenter: (length: number) => RelativeOrnamentPath,
-  isPatternCycleComposite: boolean = false
+  isPatternCycleComposite: boolean,
+  onlyRenderPrimary: boolean
 ): OrnamentPathGenerator {
   function mutatinglyApplyTransforms(
     [start, main, end]: RelativeOrnamentPath,
@@ -1666,17 +1694,20 @@ function wrapSimpleOrnamenter(
     return [start, main, end];
   }
 
-  return (xLength, yOffset, invertY, alignment = "start") => {
+  return (xLength, yOffset, invertY, side, alignment = "start") => {
+    const chosenOrnamenter =
+      side !== "primary" && onlyRenderPrimary ? defaultOrnamenter : ornamenter;
+
     const invertX = xLength < 0;
     const length = Math.abs(xLength);
     if (alignment === "start") {
-      return mutatinglyApplyTransforms(ornamenter(length), {
+      return mutatinglyApplyTransforms(chosenOrnamenter(length), {
         invertX,
         invertY,
         yOffset,
       });
     } else if (alignment === "end") {
-      return mutatinglyApplyTransforms(ornamenter(length), {
+      return mutatinglyApplyTransforms(chosenOrnamenter(length), {
         invertX,
         invertY,
         yOffset,
@@ -1684,11 +1715,11 @@ function wrapSimpleOrnamenter(
       });
     } else if (alignment === "center") {
       const [start, firstMain] = mutatinglyApplyTransforms(
-        ornamenter(length / 2),
+        chosenOrnamenter(length / 2),
         { alignToEnd: true }
       );
 
-      const [, secondMain, end] = ornamenter(length / 2);
+      const [, secondMain, end] = chosenOrnamenter(length / 2);
       return mutatinglyApplyTransforms(
         [start, [...firstMain, ...secondMain], end],
         { invertX, invertY, yOffset }
@@ -1729,6 +1760,14 @@ relativePathsToClosedLoop.debug = (
 ): PathCommand.Relative[] => {
   return paths.flat(2).map((c) => (c.type === "m" ? { ...c, type: "l" } : c));
 };
+
+function defaultOrnamenter(length: number): RelativeOrnamentPath {
+  return [
+    { type: "m", loc: [0, 0] },
+    [{ type: "l", loc: [length, 0] }],
+    { type: "m", loc: [0, 0] },
+  ];
+}
 
 function embattled(length: number): RelativeOrnamentPath {
   const xStep = W / 12;
@@ -1840,10 +1879,11 @@ function wavy(length: number): RelativeOrnamentPath {
 }
 
 const ORNAMENTS: Record<string, OrnamentPathGenerator> = {
-  embattled: wrapSimpleOrnamenter(embattled, true),
-  engrailed: wrapSimpleOrnamenter(engrailed),
-  indented: wrapSimpleOrnamenter(indented, true),
-  wavy: wrapSimpleOrnamenter(wavy, true),
+  embattled: wrapSimpleOrnamenter(embattled, true, true),
+  "embattled-counter-embattled": wrapSimpleOrnamenter(embattled, true, false),
+  engrailed: wrapSimpleOrnamenter(engrailed, false, false),
+  indented: wrapSimpleOrnamenter(indented, true, false),
+  wavy: wrapSimpleOrnamenter(wavy, true, false),
 };
 
 // #region VARIED
