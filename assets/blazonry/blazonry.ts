@@ -21,10 +21,13 @@ TODO
     - something something about "of the first", etc.
 - things I want to be able to render
   - churchill arms
-  - weihenstephan arms
+  - bavarian arms
+    - the "...a lion rampant argent on a canton..." part represents multiple ordinaries in a row; this is unsupported and not the first time I've seen that
+    - "of the first"... is the ordering for all tinctures that have ever appeared?
   - ???
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - remove yOffset from ornaments; it shouldn't be necessary
+- add a lexer so the errors have useful names present and don't explode every string literal into characters
 */
 
 /*
@@ -1640,8 +1643,6 @@ function mullet({ tincture }: SimpleCharge) {
 }
 
 function lion({ tincture, armed, langued, pose }: LionCharge) {
-  // TODO: sizing and positioning still seems wrong
-  // TODO: coloration should be optional, I guess?
   const lion = getComplexSvgSync("lion", pose).cloneNode(true);
   lion.classList.add(tincture);
   if (armed != null) {
@@ -2405,7 +2406,7 @@ document.querySelector("#interactive")!.classList.remove("hidden");
 
 // These files are small and there's not that many of them, so it's easier if we just eagerly
 // load of these and then try to access them sync later and hope for the best. Making the ENTIRE
-// implementation async just for this is a passive PITA.
+// implementation async just for this is a massive PITA.
 fetchComplexSvg("lion", "rampant");
 
 // This should happen last so that when the default text includes a complex SVG charge, at least
