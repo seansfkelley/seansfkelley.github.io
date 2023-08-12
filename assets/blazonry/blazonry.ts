@@ -52,6 +52,10 @@ NOTES ON THE IMPLEMENTATION
   - a mix of string-y things like `path` and object-y things like `PathCommand`
 */
 
+// Do this first thing so there's something to see ASAP!
+document.querySelector("#no-javascript-alert")!.remove();
+document.querySelector("#interactive")!.classList.remove("hidden");
+
 // #region LAYOUT
 
 // TODO: Make _everything_ a function of these proportions.
@@ -2400,9 +2404,6 @@ for (const example of document.querySelectorAll<HTMLAnchorElement>(
     parseAndRenderBlazon();
   });
 }
-
-document.querySelector("#no-javascript-alert")!.remove();
-document.querySelector("#interactive")!.classList.remove("hidden");
 
 // These files are small and there's not that many of them, so it's easier if we just eagerly
 // load of these and then try to access them sync later and hope for the best. Making the ENTIRE
