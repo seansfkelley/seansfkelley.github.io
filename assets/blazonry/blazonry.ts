@@ -24,6 +24,7 @@ TODO
   - weihenstephan arms
   - ???
 - A "chevron embattled" has a little blip at the bottom middle as an artifact of an unrelated hack.
+- remove yOffset from ornaments; it shouldn't be necessary
 */
 
 /*
@@ -273,6 +274,24 @@ const Coordinate = {
       return Math.atan((y2 - y1) / (x2 - x1)) + (x2 < x1 ? Math.PI : 0);
     }
   },
+  /**
+   * Reflect the coordinate over the given line segment.
+   */
+  reflect: (
+    [x, y]: Coordinate,
+    [x1, y1]: Coordinate,
+    [x2, y2]: Coordinate
+  ): Coordinate => {
+    // Too lazy to figure this out on my own, adapted from https://stackoverflow.com/a/3307181.
+    if (x1 === x2) {
+      return [x1 - x, y];
+    }
+
+    const m = (y2 - y1) / (x2 - x1);
+    const c = (x2 * y1 - x1 * y2) / (x2 - x1);
+    const d = (x + (y - c) * m) / (1 + m * m);
+    return [2 * d - x, 2 * d * m - y + 2 * c];
+  },
 };
 
 type Quadrilateral = [Coordinate, Coordinate, Coordinate, Coordinate];
@@ -516,24 +535,8 @@ class ReflectiveLocator implements ParametricLocator {
     generator: Generator<[Coordinate, number]>
   ): Generator<[Coordinate, number]> {
     for (const [translate, scale] of generator) {
-      yield [this.reflect(translate), scale];
+      yield [Coordinate.reflect(translate, this.a, this.b), scale];
     }
-  }
-
-  private reflect(coordinate: Coordinate): Coordinate {
-    // Too lazy to figure this out on my own, adapted from https://stackoverflow.com/a/3307181.
-    const [x, y] = coordinate;
-    const [x1, y1] = this.a;
-    const [x2, y2] = this.b;
-
-    if (x1 === x2) {
-      return [x1 - x, y];
-    }
-
-    const m = (y2 - y1) / (x2 - x1);
-    const c = (x2 * y1 - x1 * y2) / (x2 - x1);
-    const d = (x + (y - c) * m) / (1 + m * m);
-    return [2 * d - x, 2 * d * m - y + 2 * c];
   }
 }
 
