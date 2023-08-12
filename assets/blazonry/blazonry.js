@@ -25,7 +25,6 @@ TODO
   - should be able to parse non-redundant usage of colors
     - argent on a bend between six mullets vert
     - something something about "of the first", etc.
-- add nearley-unparse to allow generating examples
 - things I want to be able to render
   - churchill arms
   - weihenstephan arms
@@ -1551,12 +1550,28 @@ function parseAndRenderBlazon() {
     complexContent(container, result);
 }
 const input = document.querySelector("#blazon-input");
+const random = document.querySelector("#random-blazon");
 const form = document.querySelector("#form");
 const rendered = document.querySelector("#rendered");
 const error = document.querySelector("#error");
 const ast = document.querySelector("#ast");
 form.addEventListener("submit", (e) => {
     e.preventDefault();
+    parseAndRenderBlazon();
+});
+random.addEventListener("click", () => {
+    // 12 chosen empirically. Seems nice.
+    const blazon = Unparser(grammar, grammar.ParserStart, 12)
+        .replaceAll(/[ \t\n\v\f,;]+/g, " ")
+        .replace(/ ?\.?$/, ".")
+        .replace(/^./, (l) => l.toUpperCase())
+        .replaceAll(
+    // Gross and duplicative, but the entire grammar is written in lowercase and I don't want to
+    // sprinkle case-insensitive markers EVERYWHERE just so the tinctures can be generated with
+    // typical casing by the unparser.
+    /(^| )(azure|or|argent|gules|vert|sable|purpure)( |\.$)/g, (_, prefix, tincture, suffix) => `${prefix}${tincture[0].toUpperCase()}${tincture.slice(1)}${suffix}`)
+        .trim();
+    input.value = blazon;
     parseAndRenderBlazon();
 });
 for (const example of document.querySelectorAll("[data-example]")) {

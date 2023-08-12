@@ -24,7 +24,6 @@ TODO
   - should be able to parse non-redundant usage of colors
     - argent on a bend between six mullets vert
     - something something about "of the first", etc.
-- add nearley-unparse to allow generating examples
 - things I want to be able to render
   - churchill arms
   - weihenstephan arms
@@ -84,6 +83,11 @@ interface Node {
 }
 
 declare const grammar: nearley.CompiledRules;
+declare const Unparser: (
+  grammar: nearley.CompiledRules,
+  start: string,
+  depth?: number
+) => string;
 
 type DiscriminateUnion<T, K extends keyof T, V extends T[K]> = T extends T
   ? V extends T[K]
@@ -2243,6 +2247,7 @@ function parseAndRenderBlazon() {
 }
 
 const input: HTMLTextAreaElement = document.querySelector("#blazon-input")!;
+const random: HTMLButtonElement = document.querySelector("#random-blazon")!;
 const form: HTMLFormElement = document.querySelector("#form")!;
 const rendered: SVGSVGElement = document.querySelector("#rendered")!;
 const error: HTMLPreElement = document.querySelector("#error")!;
@@ -2250,6 +2255,25 @@ const ast: HTMLPreElement = document.querySelector("#ast")!;
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+  parseAndRenderBlazon();
+});
+
+random.addEventListener("click", () => {
+  // 12 chosen empirically. Seems nice.
+  const blazon = Unparser(grammar, grammar.ParserStart, 12)
+    .replaceAll(/[ \t\n\v\f,;]+/g, " ")
+    .replace(/ ?\.?$/, ".")
+    .replace(/^./, (l) => l.toUpperCase())
+    .replaceAll(
+      // Gross and duplicative, but the entire grammar is written in lowercase and I don't want to
+      // sprinkle case-insensitive markers EVERYWHERE just so the tinctures can be generated with
+      // typical casing by the unparser.
+      /(^| )(azure|or|argent|gules|vert|sable|purpure)( |\.$)/g,
+      (_, prefix, tincture, suffix) =>
+        `${prefix}${tincture[0].toUpperCase()}${tincture.slice(1)}${suffix}`
+    )
+    .trim();
+  input.value = blazon;
   parseAndRenderBlazon();
 });
 

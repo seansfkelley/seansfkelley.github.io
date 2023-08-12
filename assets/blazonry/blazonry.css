@@ -94,10 +94,12 @@
   width: 100%;
   box-sizing: border-box;
 }
-#form button[type=submit] {
-  margin: 0;
+#form > div {
   margin-top: 6px;
   float: right;
+}
+#form > div button {
+  margin: 0;
 }
 
 .center {
