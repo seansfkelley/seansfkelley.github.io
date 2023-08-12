@@ -19,7 +19,6 @@ TODO
 - grammar improvements
   - should be able to parse non-redundant usage of colors
     - argent on a bend between six mullets vert
-    - something something about "of the first", etc.
 - things I want to be able to render
   - churchill arms
   - bavarian arms
