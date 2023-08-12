@@ -1,129 +1,247 @@
-.hidden { display: none !important; }
-
-.fill-argent { fill: white; }
-
-.stroke-argent { stroke: white; }
-
-.fill-sable { fill: black; }
-
-.stroke-sable { stroke: black; }
-
-.fill-gules { fill: red; }
-
-.stroke-gules { stroke: red; }
-
-.fill-vert { fill: green; }
-
-.stroke-vert { stroke: green; }
-
-.fill-azure { fill: blue; }
-
-.stroke-azure { stroke: blue; }
-
-.fill-or { fill: yellow; }
-
-.stroke-or { stroke: yellow; }
-
-.fill-purpure { fill: purple; }
-
-.stroke-purpure { stroke: purple; }
-
-.fill-none { fill: none; }
-
-.stroke-none { stroke: none; }
-
-#form, #error, #rendered, #ast { margin-top: 12px; }
-
-#error { margin-bottom: 0; width: 100%; box-sizing: border-box; background-color: var(--intent-danger-background-color); color: var(--intent-danger-text-color); }
-
-#ast-wrapper { width: 100%; box-sizing: border-box; margin-bottom: 12px; }
-
-#form { width: 100%; }
-
-#form #blazon-input { width: 100%; box-sizing: border-box; }
-
-#form button[type="submit"] { margin: 0; margin-top: 6px; float: right; }
-
-.center { display: flex; flex-direction: column; align-items: center; }
-
-.lion { stroke-width: 1 !important; }
-
-.lion .outline { stroke: black; opacity: 0.3; }
-
-.lion .teeth { fill: white; }
-
-.lion .eye .white { fill: white; }
-
-.lion .eye .pupil, .lion .eye .edge { fill: black; }
-
-.lion .ear { fill: #444; }
-
-.lion.argent .body, .lion.argent .claw, .lion.argent .langue { fill: white; }
-
-.lion.argent .highlight.low { fill: white; }
-
-.lion.argent .highlight.high { fill: white; }
-
-.lion.armed-argent .claw { fill: white !important; }
-
-.lion.langued-argent .langue { fill: white !important; }
-
-.lion.sable .body, .lion.sable .claw, .lion.sable .langue { fill: black; }
-
-.lion.sable .highlight.low { fill: #1a1a1a; }
-
-.lion.sable .highlight.high { fill: #262626; }
-
-.lion.armed-sable .claw { fill: black !important; }
-
-.lion.langued-sable .langue { fill: black !important; }
-
-.lion.gules .body, .lion.gules .claw, .lion.gules .langue { fill: red; }
-
-.lion.gules .highlight.low { fill: #ff3333; }
-
-.lion.gules .highlight.high { fill: #ff4d4d; }
-
-.lion.armed-gules .claw { fill: red !important; }
-
-.lion.langued-gules .langue { fill: red !important; }
-
-.lion.vert .body, .lion.vert .claw, .lion.vert .langue { fill: green; }
-
-.lion.vert .highlight.low { fill: #00b300; }
-
-.lion.vert .highlight.high { fill: #00cd00; }
-
-.lion.armed-vert .claw { fill: green !important; }
-
-.lion.langued-vert .langue { fill: green !important; }
-
-.lion.azure .body, .lion.azure .claw, .lion.azure .langue { fill: blue; }
-
-.lion.azure .highlight.low { fill: #3333ff; }
-
-.lion.azure .highlight.high { fill: #4d4dff; }
-
-.lion.armed-azure .claw { fill: blue !important; }
-
-.lion.langued-azure .langue { fill: blue !important; }
-
-.lion.or .body, .lion.or .claw, .lion.or .langue { fill: yellow; }
-
-.lion.or .highlight.low { fill: #ffff33; }
-
-.lion.or .highlight.high { fill: #ffff4d; }
-
-.lion.armed-or .claw { fill: yellow !important; }
-
-.lion.langued-or .langue { fill: yellow !important; }
-
-.lion.purpure .body, .lion.purpure .claw, .lion.purpure .langue { fill: purple; }
-
-.lion.purpure .highlight.low { fill: #b300b3; }
-
-.lion.purpure .highlight.high { fill: #cd00cd; }
-
-.lion.armed-purpure .claw { fill: purple !important; }
-
-.lion.langued-purpure .langue { fill: purple !important; }
+.hidden {
+  display: none !important;
+}
+
+.fill-argent {
+  fill: white;
+}
+
+.stroke-argent {
+  stroke: white;
+}
+
+.fill-sable {
+  fill: black;
+}
+
+.stroke-sable {
+  stroke: black;
+}
+
+.fill-gules {
+  fill: red;
+}
+
+.stroke-gules {
+  stroke: red;
+}
+
+.fill-vert {
+  fill: green;
+}
+
+.stroke-vert {
+  stroke: green;
+}
+
+.fill-azure {
+  fill: blue;
+}
+
+.stroke-azure {
+  stroke: blue;
+}
+
+.fill-or {
+  fill: yellow;
+}
+
+.stroke-or {
+  stroke: yellow;
+}
+
+.fill-purpure {
+  fill: purple;
+}
+
+.stroke-purpure {
+  stroke: purple;
+}
+
+.fill-none {
+  fill: none;
+}
+
+.stroke-none {
+  stroke: none;
+}
+
+#form,
+#error,
+#rendered,
+#ast {
+  margin-top: 12px;
+}
+
+#error {
+  margin-bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--intent-danger-background-color);
+  color: var(--intent-danger-text-color);
+}
+
+#ast-wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 12px;
+}
+
+#form {
+  width: 100%;
+}
+#form #blazon-input {
+  width: 100%;
+  box-sizing: border-box;
+}
+#form button[type=submit] {
+  margin: 0;
+  margin-top: 6px;
+  float: right;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lion {
+  stroke-width: 1 !important;
+}
+.lion .outline {
+  stroke: black;
+  opacity: 0.3;
+}
+.lion .teeth {
+  fill: white;
+}
+.lion .eye .white {
+  fill: white;
+}
+.lion .eye .pupil,
+.lion .eye .edge {
+  fill: black;
+}
+.lion .ear {
+  fill: #444;
+}
+.lion.argent .body,
+.lion.argent .claw,
+.lion.argent .langue {
+  fill: white;
+}
+.lion.argent .highlight.low {
+  fill: white;
+}
+.lion.argent .highlight.high {
+  fill: white;
+}
+.lion.armed-argent .claw {
+  fill: white !important;
+}
+.lion.langued-argent .langue {
+  fill: white !important;
+}
+.lion.sable .body,
+.lion.sable .claw,
+.lion.sable .langue {
+  fill: black;
+}
+.lion.sable .highlight.low {
+  fill: #1a1a1a;
+}
+.lion.sable .highlight.high {
+  fill: #262626;
+}
+.lion.armed-sable .claw {
+  fill: black !important;
+}
+.lion.langued-sable .langue {
+  fill: black !important;
+}
+.lion.gules .body,
+.lion.gules .claw,
+.lion.gules .langue {
+  fill: red;
+}
+.lion.gules .highlight.low {
+  fill: #ff3333;
+}
+.lion.gules .highlight.high {
+  fill: #ff4d4d;
+}
+.lion.armed-gules .claw {
+  fill: red !important;
+}
+.lion.langued-gules .langue {
+  fill: red !important;
+}
+.lion.vert .body,
+.lion.vert .claw,
+.lion.vert .langue {
+  fill: green;
+}
+.lion.vert .highlight.low {
+  fill: #00b300;
+}
+.lion.vert .highlight.high {
+  fill: #00cd00;
+}
+.lion.armed-vert .claw {
+  fill: green !important;
+}
+.lion.langued-vert .langue {
+  fill: green !important;
+}
+.lion.azure .body,
+.lion.azure .claw,
+.lion.azure .langue {
+  fill: blue;
+}
+.lion.azure .highlight.low {
+  fill: #3333ff;
+}
+.lion.azure .highlight.high {
+  fill: #4d4dff;
+}
+.lion.armed-azure .claw {
+  fill: blue !important;
+}
+.lion.langued-azure .langue {
+  fill: blue !important;
+}
+.lion.or .body,
+.lion.or .claw,
+.lion.or .langue {
+  fill: yellow;
+}
+.lion.or .highlight.low {
+  fill: #ffff33;
+}
+.lion.or .highlight.high {
+  fill: #ffff4d;
+}
+.lion.armed-or .claw {
+  fill: yellow !important;
+}
+.lion.langued-or .langue {
+  fill: yellow !important;
+}
+.lion.purpure .body,
+.lion.purpure .claw,
+.lion.purpure .langue {
+  fill: purple;
+}
+.lion.purpure .highlight.low {
+  fill: #b300b3;
+}
+.lion.purpure .highlight.high {
+  fill: #cd00cd;
+}
+.lion.armed-purpure .claw {
+  fill: purple !important;
+}
+.lion.langued-purpure .langue {
+  fill: purple !important;
+}

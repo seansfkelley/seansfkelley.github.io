@@ -4,7 +4,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
 <title>Javascript: The Bad Parts | fiddlybits</title>
-<meta name="generator" content="Jekyll v4.2.0" />
+<meta name="generator" content="Jekyll v4.3.2" />
 <meta property="og:title" content="Javascript: The Bad Parts" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Last week I stumbled upon TC39’s record and tuple proposal for the first time, and was really happy to see the language taking a long-overdue big step forward in safety and usability." />
@@ -72,9 +72,9 @@
 
 <h2 id="automatic-type-coercion">Automatic Type Coercion</h2>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">assert</span><span class="p">(</span><span class="mi">0</span> <span class="o">==</span> <span class="dl">""</span><span class="p">);</span>
-<span class="nx">assert</span><span class="p">([]</span> <span class="o">==</span> <span class="dl">""</span><span class="p">);</span>
-<span class="nx">assert</span><span class="p">({}</span> <span class="o">!=</span> <span class="dl">""</span><span class="p">);</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">assert</span><span class="p">(</span><span class="mi">0</span> <span class="o">==</span> <span class="dl">""</span><span class="p">);</span>
+<span class="nf">assert</span><span class="p">([]</span> <span class="o">==</span> <span class="dl">""</span><span class="p">);</span>
+<span class="nf">assert</span><span class="p">({}</span> <span class="o">!=</span> <span class="dl">""</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>(FYI: This page has a basic <code class="language-plaintext highlighter-rouge">assert</code> function defined if you want to pop open the browser console and copy-paste these examples in.)</p>
@@ -87,11 +87,11 @@
 
 <h2 id="two-null-types-null-and-undefined">Two Null Types: <code class="language-plaintext highlighter-rouge">null</code> and <code class="language-plaintext highlighter-rouge">undefined</code></h2>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">assert</span><span class="p">(({}).</span><span class="nx">foo</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">);</span>
-<span class="nx">assert</span><span class="p">(</span><span class="dl">"</span><span class="s2">bar</span><span class="dl">"</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/foo/</span><span class="p">)</span> <span class="o">===</span> <span class="kc">null</span><span class="p">);</span>
-<span class="nx">assert</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span> <span class="na">foo</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span> <span class="na">bar</span><span class="p">:</span> <span class="kc">undefined</span> <span class="p">})</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">{"foo":null}</span><span class="dl">'</span><span class="p">);</span>
-<span class="nx">assert</span><span class="p">(</span><span class="k">typeof</span> <span class="kc">null</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">object</span><span class="dl">"</span><span class="p">);</span>
-<span class="nx">assert</span><span class="p">(</span><span class="k">typeof</span> <span class="kc">undefined</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">undefined</span><span class="dl">"</span><span class="p">);</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">assert</span><span class="p">(({}).</span><span class="nx">foo</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">);</span>
+<span class="nf">assert</span><span class="p">(</span><span class="dl">"</span><span class="s2">bar</span><span class="dl">"</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/foo/</span><span class="p">)</span> <span class="o">===</span> <span class="kc">null</span><span class="p">);</span>
+<span class="nf">assert</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">({</span> <span class="na">foo</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span> <span class="na">bar</span><span class="p">:</span> <span class="kc">undefined</span> <span class="p">})</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">{"foo":null}</span><span class="dl">'</span><span class="p">);</span>
+<span class="nf">assert</span><span class="p">(</span><span class="k">typeof</span> <span class="kc">null</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">object</span><span class="dl">"</span><span class="p">);</span>
+<span class="nf">assert</span><span class="p">(</span><span class="k">typeof</span> <span class="kc">undefined</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">undefined</span><span class="dl">"</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>JavaScript kind of worked itself into a corner on this one, because it wanted to silently report a null value for fields that didn’t exist on objects. Unlike <code class="language-plaintext highlighter-rouge">==</code>, I can kind of see the value in this feature both during the flying-by-the-seat-of-your-pants phase and after. Objective-C, for instance, has well-defined semantics for sending messages to nil (or “calling methods on null” in more-normal terminology).<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
@@ -104,9 +104,9 @@
 
 <h2 id="dynamic-this">Dynamic <code class="language-plaintext highlighter-rouge">this</code></h2>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Foo</span> <span class="p">{</span> <span class="nx">getThis</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">;</span> <span class="p">}};</span>
-<span class="kd">const</span> <span class="nx">fn</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Foo</span><span class="p">().</span><span class="nx">getThis</span><span class="p">;</span>
-<span class="nx">assert</span><span class="p">(</span><span class="nx">fn</span><span class="p">()</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">);</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Foo</span> <span class="p">{</span> <span class="nf">getThis</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">;</span> <span class="p">}};</span>
+<span class="kd">const</span> <span class="nx">fn</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Foo</span><span class="p">().</span><span class="nx">getThis</span><span class="p">;</span>
+<span class="nf">assert</span><span class="p">(</span><span class="nf">fn</span><span class="p">()</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>Dynamic <code class="language-plaintext highlighter-rouge">this</code> is an interesting feature in theory, but in practice the implementation and usage is confusing if not outright developer-hostile. In every language with it, <code class="language-plaintext highlighter-rouge">this</code> is just syntactic sugar to name an implicit argument to an instance method. Dynamic <code class="language-plaintext highlighter-rouge">this</code> is just giving you a mechanism to provide a value for that parameter, which sounds simple on paper.</p>
@@ -128,7 +128,7 @@
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">map</span> <span class="o">=</span> <span class="p">{};</span>
 <span class="nx">map</span><span class="p">[{</span> <span class="na">my</span><span class="p">:</span> <span class="dl">"</span><span class="s2">object</span><span class="dl">"</span> <span class="p">}]</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-<span class="nx">assert</span><span class="p">(</span><span class="nx">map</span><span class="p">[</span><span class="dl">'</span><span class="s1">[object Object]</span><span class="dl">'</span><span class="p">]</span> <span class="o">===</span> <span class="mi">10</span><span class="p">);</span>
+<span class="nf">assert</span><span class="p">(</span><span class="nx">map</span><span class="p">[</span><span class="dl">'</span><span class="s1">[object Object]</span><span class="dl">'</span><span class="p">]</span> <span class="o">===</span> <span class="mi">10</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>First, some definitions. A “record” type is one which has a well-known set of field names that can be accessed to retreive values. A “map” is a data structure that pairs up arbitrary keys with arbitrary values. A record can be thought of as a special case of a map that only allows string keys.</p>
@@ -141,8 +141,8 @@
 
 <h2 id="reference-semantics-and-the-failures-of-map-and-set">Reference Semantics and the Failures of <code class="language-plaintext highlighter-rouge">Map</code> and <code class="language-plaintext highlighter-rouge">Set</code></h2>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">assert</span><span class="p">(</span><span class="k">new</span> <span class="nb">Set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]).</span><span class="nx">size</span> <span class="o">===</span> <span class="mi">1</span><span class="p">);</span>
-<span class="nx">assert</span><span class="p">(</span><span class="k">new</span> <span class="nb">Set</span><span class="p">([{},</span> <span class="p">{}]).</span><span class="nx">size</span> <span class="o">===</span> <span class="mi">2</span><span class="p">);</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">assert</span><span class="p">(</span><span class="k">new</span> <span class="nc">Set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]).</span><span class="nx">size</span> <span class="o">===</span> <span class="mi">1</span><span class="p">);</span>
+<span class="nf">assert</span><span class="p">(</span><span class="k">new</span> <span class="nc">Set</span><span class="p">([{},</span> <span class="p">{}]).</span><span class="nx">size</span> <span class="o">===</span> <span class="mi">2</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>Continuing from the previous section: <code class="language-plaintext highlighter-rouge">Map</code> didn’t really fix many problems, practically speaking. Yes, JavaScript now had a dedicated map type, so objects-as-maps were theoretically obsolete. But  <code class="language-plaintext highlighter-rouge">Map</code> (and <code class="language-plaintext highlighter-rouge">Set</code>, which has all the same problems) operates using reference equality, not value equality.</p>
@@ -166,10 +166,10 @@
 <p>A motivating code sample:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">fns</span> <span class="o">=</span> <span class="p">[];</span>
-<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">fns</span><span class="p">.</span><span class="nx">push</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">i</span><span class="p">);</span>
+<span class="k">for </span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">fns</span><span class="p">.</span><span class="nf">push</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">i</span><span class="p">);</span>
 <span class="p">}</span>
-<span class="nx">fns</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">fn</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">fn</span><span class="p">());</span> <span class="p">});</span>
+<span class="nx">fns</span><span class="p">.</span><span class="nf">forEach</span><span class="p">(</span><span class="nx">fn</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nf">fn</span><span class="p">());</span> <span class="p">});</span>
 <span class="c1">// prints "3" three times</span>
 </code></pre></div></div>
 
