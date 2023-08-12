@@ -24,6 +24,7 @@ jobs:
             corepack prepare yarn@3.6.1 --activate
       - node/install-packages:
           pkg-manager: yarn-berry
+          cache-version: v2
       - run:
           name: Node build
           command: yarn run build
