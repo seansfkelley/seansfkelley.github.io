@@ -41,7 +41,7 @@ content="This page is interactive, and only works with JavaScript enabled!"
   <form id="form">
     <input type="text" id="blazon-input" value="quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable">
     <div>
-      <button id="random-blazon">
+      <button id="random-blazon" type="button">
       Generate Hideous Random Blazon
       </button>
       <button type="submit">
