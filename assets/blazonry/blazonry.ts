@@ -7,7 +7,6 @@ TODO
 - InDirection -- at least in the case of chevron and saltire, they are rotated to match
 - minor visual effects to make it a little less flat
 - "overall"
-- standardize size of charges (40x40?) so that scaling works as expected for all of them
 - what is the CSS to make line-stroke not scale? (apply that to the quartering lines so they are always 1 pixel)
 - fretty?
 - why is a chevron embattled/indented appear to be vertically shifted, but engrailed does not? (or does it?)
@@ -590,7 +589,7 @@ class DefaultChargeLocator implements ParametricLocator {
   ];
 
   private static SCALES = [
-    1.1, //
+    1.5, //
     0.7,
     0.6,
     0.5,
@@ -2307,11 +2306,13 @@ for (const example of document.querySelectorAll<HTMLAnchorElement>(
 document.querySelector("#no-javascript-alert")!.remove();
 document.querySelector("#interactive")!.classList.remove("hidden");
 
-parseAndRenderBlazon();
-
 // These files are small and there's not that many of them, so it's easier if we just eagerly
 // load of these and then try to access them sync later and hope for the best. Making the ENTIRE
 // implementation async just for this is a passive PITA.
 fetchComplexSvg("lion", "rampant");
+
+// This should happen last so that when the default text includes a complex SVG charge, at least
+// the immediate failure to render doesn't cause us to skip the loading!
+parseAndRenderBlazon();
 
 // #endregion
