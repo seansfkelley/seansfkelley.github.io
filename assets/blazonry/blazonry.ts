@@ -7,7 +7,6 @@ TODO
 - InDirection -- at least in the case of chevron and saltire, they are rotated to match
 - minor visual effects to make it a little less flat
 - "overall"
-- what is the CSS to make line-stroke not scale? (apply that to the quartering lines so they are always 1 pixel)
 - fretty?
 - why is a chevron embattled/indented appear to be vertically shifted, but engrailed does not? (or does it?)
   - "per pale wavy argent and purpure" is definitely off-center
@@ -2133,12 +2132,13 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     for (const e of Object.values(quartered)) {
       container.appendChild(e);
     }
-    container.appendChild(
-      svg.line([0, -H_2], [0, H_2], Tincture.of("sable"), 0.25)
-    );
-    container.appendChild(
-      svg.line([-W_2, 0], [W_2, 0], Tincture.of("sable"), 0.25)
-    );
+
+    let line = svg.line([0, -H_2], [0, H_2], Tincture.of("sable"), 0.5);
+    line.setAttribute("vector-effect", "non-scaling-stroke");
+    container.appendChild(line);
+    line = svg.line([-W_2, 0], [W_2, 0], Tincture.of("sable"), 0.5);
+    line.setAttribute("vector-effect", "non-scaling-stroke");
+    container.appendChild(line);
   } else if ("varied" in content) {
     container.appendChild(field(content.first));
     const second = field(content.second);
