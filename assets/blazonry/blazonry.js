@@ -8,7 +8,6 @@ TODO
 - InDirection -- at least in the case of chevron and saltire, they are rotated to match
 - minor visual effects to make it a little less flat
 - "overall"
-- standardize size of charges (40x40?) so that scaling works as expected for all of them
 - what is the CSS to make line-stroke not scale? (apply that to the quartering lines so they are always 1 pixel)
 - fretty?
 - why is a chevron embattled/indented appear to be vertically shifted, but engrailed does not? (or does it?)
@@ -357,7 +356,7 @@ class DefaultChargeLocator {
         [4, 3, 2, 1],
     ];
     static SCALES = [
-        1.1,
+        1.5,
         0.7,
         0.6,
         0.5,
@@ -425,6 +424,11 @@ function applyTransforms(element, { origin, translate, scale, rotate, } = {}) {
     }
     element.setAttribute("transform", transform);
 }
+function roundToPrecision(n, precision = 0) {
+    assert(precision >= 0, "precision must be non-negative"); // It's well-defined, but not useful to me.
+    const magnitude = Math.pow(10, precision);
+    return Math.round(n * magnitude) / magnitude;
+}
 const svg = {
     path: (d, tincture) => {
         const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -472,7 +476,7 @@ path.from = (...elements) => {
     return elements
         .flat()
         .map((e) => `${e.type} ${SVG_ELEMENT_TO_COORDINATES[e.type](e)
-        .map(([x, y]) => `${x} ${y}`)
+        .map(([x, y]) => `${roundToPrecision(x, 3)} ${roundToPrecision(y, 3)}`)
         .join(" ")}`)
         .join(" ");
 };
@@ -718,20 +722,20 @@ chevron.party = (ornament) => {
         ];
     }
 };
+// Ensure that the sides and top arms are all the same length!
+const CROSS_WIDTH = W / 4;
+const CROSS_VERTICAL_OFFSET = (H - W) / 2;
 function cross({ tincture, cotised }) {
-    const crossWidth = W / 4;
-    // 14 is too hardcoded -- should be defined based on W/H ratios instead.
-    const horizontalOffset = -14;
     const top = [0, -H_2];
     const bottom = [0, H_2];
-    const left = [-W_2, horizontalOffset];
-    const right = [W_2, horizontalOffset];
+    const left = [-W_2, -CROSS_VERTICAL_OFFSET];
+    const right = [W_2, -CROSS_VERTICAL_OFFSET];
     const cross = svg.g();
-    cross.appendChild(svg.line(top, bottom, tincture, crossWidth));
-    cross.appendChild(svg.line(left, right, tincture, crossWidth));
+    cross.appendChild(svg.line(top, bottom, tincture, CROSS_WIDTH));
+    cross.appendChild(svg.line(left, right, tincture, CROSS_WIDTH));
     if (cotised != null) {
-        const offset = crossWidth / 2 + (COTISED_WIDTH * 3) / 2;
-        const mid = [0, horizontalOffset];
+        const offset = CROSS_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
+        const mid = [0, -CROSS_VERTICAL_OFFSET];
         for (const [p, [x1sign, y1sign], [x2sign, y2sign]] of [
             [top, [-1, -1], [1, -1]],
             [bottom, [-1, 1], [1, 1]],
@@ -745,19 +749,26 @@ function cross({ tincture, cotised }) {
     return cross;
 }
 cross.on = new SequenceLocator([
-    [-30, -14],
-    [30, -14],
-    [0, -44],
-    [0, 16],
-    [0, -14],
+    [-H_2 / 2, -CROSS_VERTICAL_OFFSET],
+    [H_2 / 2, -CROSS_VERTICAL_OFFSET],
+    [0, -H_2 / 2 - CROSS_VERTICAL_OFFSET],
+    [0, H_2 / 2 - CROSS_VERTICAL_OFFSET],
+    [0, -CROSS_VERTICAL_OFFSET],
 ], [0.4, 0.4, 0.4, 0.4, 0.4], {
-    1: [[0, -14]],
+    1: [[0, -CROSS_VERTICAL_OFFSET]],
 });
+const CROSS_SECTOR_2 = (W - CROSS_WIDTH) / 4;
 cross.surround = new SequenceLocator([
-    [-30, -42],
-    [30, -42],
-    [30, 12],
-    [-30, 12],
+    [W_2 - CROSS_SECTOR_2, -H_2 + CROSS_SECTOR_2],
+    [-W_2 + CROSS_SECTOR_2, -H_2 + CROSS_SECTOR_2],
+    [
+        -W_2 + CROSS_SECTOR_2,
+        CROSS_SECTOR_2 - CROSS_VERTICAL_OFFSET + CROSS_WIDTH / 2,
+    ],
+    [
+        W_2 - CROSS_SECTOR_2,
+        CROSS_SECTOR_2 - CROSS_VERTICAL_OFFSET + CROSS_WIDTH / 2,
+    ],
 ], [0.5, 0.5, 0.5, 0.5], {
     1: SequenceLocator.EMPTY,
 });
@@ -948,10 +959,11 @@ function rondel({ tincture }) {
     return circle;
 }
 function mullet({ tincture }) {
-    return svg.path("M 0 -24 L 6 -7 H 24 L 10 4 L 15 21 L 0 11 L -15 21 L -10 4 L -24 -7 H -6 Z", tincture);
+    return svg.path(
+    // These awkward numbers keep the proportions nice while just filling out a 40x40 square.
+    "M 0 -18.8 L 5 -4.6 L 20 -4.6 L 8.4 4.5 L 12.5 18.8 L 0 10.4 L -12.5 18.8 L -8.4 4.5 L -20 -4.6 L -5 -4.6 Z", tincture);
 }
 function lion({ tincture, armed, langued, pose }) {
-    // TODO: tail is missing highlights
     // TODO: sizing and positioning still seems wrong
     // TODO: coloration should be optional, I guess?
     const lion = getComplexSvgSync("lion", pose).cloneNode(true);
@@ -1584,10 +1596,12 @@ for (const example of document.querySelectorAll("[data-example]")) {
 }
 document.querySelector("#no-javascript-alert").remove();
 document.querySelector("#interactive").classList.remove("hidden");
-parseAndRenderBlazon();
 // These files are small and there's not that many of them, so it's easier if we just eagerly
 // load of these and then try to access them sync later and hope for the best. Making the ENTIRE
 // implementation async just for this is a passive PITA.
 fetchComplexSvg("lion", "rampant");
+// This should happen last so that when the default text includes a complex SVG charge, at least
+// the immediate failure to render doesn't cause us to skip the loading!
+parseAndRenderBlazon();
 // #endregion
 //# sourceMappingURL=blazonry.js.map
