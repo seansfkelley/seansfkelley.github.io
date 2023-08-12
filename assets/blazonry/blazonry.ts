@@ -1246,7 +1246,7 @@ cross.surround = new SequenceLocator(
 cross.party = UNSUPPORTED;
 
 const FESS_WIDTH = W / 3;
-const FESS_VERTICAL_OFFSET = -H_2 + (W / 3) * (3 / 2);
+const FESS_VERTICAL_OFFSET = -H_2 + FESS_WIDTH * (3 / 2);
 function fess({ tincture, cotised, ornament }: Ordinary) {
   const fess = svg.g();
 
@@ -1254,7 +1254,10 @@ function fess({ tincture, cotised, ornament }: Ordinary) {
     fess.appendChild(
       svg.path(
         path.from(
-          { type: "m", loc: [-W_2, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2] },
+          {
+            type: "m",
+            loc: [-W_2, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2],
+          },
           relativePathsToClosedLoop(
             ORNAMENTS[ornament](W, 0, false, "center"),
             [
@@ -1304,19 +1307,19 @@ function fess({ tincture, cotised, ornament }: Ordinary) {
 }
 
 fess.on = new LineSegmentLocator(
-  [-W_2, -4],
-  [W_2, -4],
+  [-W_2, FESS_VERTICAL_OFFSET],
+  [W_2, FESS_VERTICAL_OFFSET],
   [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]
 );
 
 fess.surround = new ReflectiveLocator(
   new LineSegmentLocator(
-    [-W_2, -H_2 + 18],
-    [W_2, -H_2 + 18],
+    [-W_2, -H_2 + FESS_WIDTH / 2],
+    [W_2, -H_2 + FESS_WIDTH / 2],
     [0.6, 0.5, 0.4, 0.4]
   ),
-  [-W_2, -4],
-  [W_2, -4]
+  [-W_2, FESS_VERTICAL_OFFSET],
+  [W_2, FESS_VERTICAL_OFFSET]
 );
 
 fess.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
@@ -1391,8 +1394,8 @@ pale.on = new LineSegmentLocator(
 
 pale.surround = new ReflectiveLocator(
   new LineSegmentLocator(
-    [-W_2 + 18, -H_2],
-    [-W_2 + 18, W_2 - 10],
+    [-W_2 + PALE_WIDTH / 2, -H_2],
+    [-W_2 + PALE_WIDTH / 2, H_2],
     [0.6, 0.5, 0.4, 0.4]
   ),
   [0, -H_2],

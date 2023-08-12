@@ -775,11 +775,14 @@ cross.surround = new SequenceLocator([
 // do that without breaking the abstraction. It'll just be unsupported instead.
 cross.party = UNSUPPORTED;
 const FESS_WIDTH = W / 3;
-const FESS_VERTICAL_OFFSET = -H_2 + (W / 3) * (3 / 2);
+const FESS_VERTICAL_OFFSET = -H_2 + FESS_WIDTH * (3 / 2);
 function fess({ tincture, cotised, ornament }) {
     const fess = svg.g();
     if (ornament != null) {
-        fess.appendChild(svg.path(path.from({ type: "m", loc: [-W_2, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2] }, relativePathsToClosedLoop(ORNAMENTS[ornament](W, 0, false, "center"), [
+        fess.appendChild(svg.path(path.from({
+            type: "m",
+            loc: [-W_2, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2],
+        }, relativePathsToClosedLoop(ORNAMENTS[ornament](W, 0, false, "center"), [
             { type: "m", loc: [0, 0] },
             [{ type: "l", loc: [0, FESS_WIDTH] }],
             { type: "m", loc: [0, 0] },
@@ -795,8 +798,8 @@ function fess({ tincture, cotised, ornament }) {
     }
     return fess;
 }
-fess.on = new LineSegmentLocator([-W_2, -4], [W_2, -4], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
-fess.surround = new ReflectiveLocator(new LineSegmentLocator([-W_2, -H_2 + 18], [W_2, -H_2 + 18], [0.6, 0.5, 0.4, 0.4]), [-W_2, -4], [W_2, -4]);
+fess.on = new LineSegmentLocator([-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
+fess.surround = new ReflectiveLocator(new LineSegmentLocator([-W_2, -H_2 + FESS_WIDTH / 2], [W_2, -H_2 + FESS_WIDTH / 2], [0.6, 0.5, 0.4, 0.4]), [-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET]);
 fess.party = (ornament) => {
     const [topLeft, midLeft, midRight, topRight] = [
         { type: "M", loc: [-W_2, -H_2] },
@@ -846,7 +849,7 @@ function pale({ tincture, cotised, ornament }) {
     return pale;
 }
 pale.on = new LineSegmentLocator([0, -H_2], [0, H_2], [0.6, 0.6, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2]);
-pale.surround = new ReflectiveLocator(new LineSegmentLocator([-W_2 + 18, -H_2], [-W_2 + 18, W_2 - 10], [0.6, 0.5, 0.4, 0.4]), [0, -H_2], [0, H_2]);
+pale.surround = new ReflectiveLocator(new LineSegmentLocator([-W_2 + PALE_WIDTH / 2, -H_2], [-W_2 + PALE_WIDTH / 2, H_2], [0.6, 0.5, 0.4, 0.4]), [0, -H_2], [0, H_2]);
 pale.party = (ornament) => {
     const [topLeft, topMid, bottomMid, bottomLeft] = [
         { type: "M", loc: [-W_2, -H_2] },
