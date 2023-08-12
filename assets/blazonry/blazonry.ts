@@ -11,6 +11,7 @@ TODO
 - what is the CSS to make line-stroke not scale? (apply that to the quartering lines so they are always 1 pixel)
 - fretty?
 - why is a chevron embattled/indented appear to be vertically shifted, but engrailed does not? (or does it?)
+  - "per pale wavy argent and purpure" is definitely off-center
 - "saltirewise" needs to vary based on where the charge is
 - "embattled" shouldn't do the bottom of chevrons and fesses; that's embattled-counter-embattled
 - more of the same
@@ -2208,9 +2209,11 @@ function parseAndRenderBlazon() {
     if (results.length === 0) {
       error.style.display = "block";
       error.innerHTML = "Unexpected end of input.";
+      return;
     } else if (results.length > 1) {
       error.style.display = "block";
       error.innerHTML = "Ambiguous blazon!";
+      return;
     } else {
       result = recursivelyOmitNullish(results[0]);
       error.style.display = "none";
