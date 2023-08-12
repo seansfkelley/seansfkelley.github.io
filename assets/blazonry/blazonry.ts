@@ -3,7 +3,7 @@ TODO
 -------------------------------------------------------------------------------
 - "quarterly" and "party per cross" are synonymous; make them such
 - party per ornament: saltire, quarterly
-- finish ornament support: cross, saltire
+- finish ornament support: saltire
 - InDirection -- at least in the case of chevron and saltire, they are rotated to match
 - minor visual effects to make it a little less flat
 - "overall"
@@ -23,7 +23,7 @@ TODO
   - churchill arms
   - weihenstephan arms
   - ???
-- A "chevron embattled" has a little blip at the bottom middle as an artifact of an unrelated hack.
+- embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - remove yOffset from ornaments; it shouldn't be necessary
 */
 
@@ -1186,15 +1186,58 @@ chevron.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
 const CROSS_WIDTH = W / 4;
 const CROSS_VERTICAL_OFFSET = (H - W) / 2;
 
-function cross({ tincture, cotised }: Ordinary) {
+function cross({ tincture, cotised, ornament }: Ordinary) {
   const top: Coordinate = [0, -H_2];
   const bottom: Coordinate = [0, H_2];
   const left: Coordinate = [-W_2, -CROSS_VERTICAL_OFFSET];
   const right: Coordinate = [W_2, -CROSS_VERTICAL_OFFSET];
 
   const cross = svg.g();
-  cross.appendChild(svg.line(top, bottom, tincture, CROSS_WIDTH));
-  cross.appendChild(svg.line(left, right, tincture, CROSS_WIDTH));
+
+  if (ornament != null) {
+    const g = svg.g();
+
+    const hLength = W_2 - CROSS_WIDTH / 2;
+    const vLength = H_2 - CROSS_WIDTH / 2 + CROSS_VERTICAL_OFFSET;
+
+    const ornamentations = [
+      // Starting on the bottom right, moving around counter-clockwise.
+      ORNAMENTS[ornament](-vLength, 0, false, "secondary", "end"),
+      ORNAMENTS[ornament](hLength, 0, true, "secondary", "start"),
+      straightLineOrnamenter(-CROSS_WIDTH),
+      ORNAMENTS[ornament](-hLength, 0, false, "primary", "end"),
+      ORNAMENTS[ornament](-vLength, 0, false, "secondary", "start"),
+      straightLineOrnamenter(-CROSS_WIDTH),
+      ORNAMENTS[ornament](vLength, 0, true, "secondary", "end"),
+      ORNAMENTS[ornament](-hLength, 0, false, "primary", "start"),
+      straightLineOrnamenter(CROSS_WIDTH),
+      ORNAMENTS[ornament](hLength, 0, true, "secondary", "end"),
+      ORNAMENTS[ornament](vLength, 0, true, "secondary", "start"),
+    ];
+
+    for (const index of [0, 2, 4, 6, 8, 10]) {
+      RelativeOrnamentPath.rotate(ornamentations[index], Math.PI / 2);
+    }
+
+    g.appendChild(
+      svg.path(
+        path.from(relativePathsToClosedLoop(...ornamentations)),
+        tincture
+      )
+    );
+
+    applyTransforms(g, {
+      // I _think_ this is the correct offset: the vertical offset is accounted for by being
+      // included in the vertical length, and even though the first ornamentation can vary in length
+      // depending on the type, the end-alignment means that it'll grow downwards, out of view.
+      translate: [CROSS_WIDTH / 2, H_2],
+    });
+
+    cross.appendChild(g);
+  } else {
+    cross.appendChild(svg.line(top, bottom, tincture, CROSS_WIDTH));
+    cross.appendChild(svg.line(left, right, tincture, CROSS_WIDTH));
+  }
 
   if (cotised != null) {
     const offset = CROSS_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
@@ -1707,7 +1750,9 @@ function wrapSimpleOrnamenter(
 
   return (xLength, yOffset, invertY, side, alignment = "start") => {
     const chosenOrnamenter =
-      side !== "primary" && onlyRenderPrimary ? defaultOrnamenter : ornamenter;
+      side !== "primary" && onlyRenderPrimary
+        ? straightLineOrnamenter
+        : ornamenter;
 
     const invertX = xLength < 0;
     const length = Math.abs(xLength);
@@ -1772,7 +1817,7 @@ relativePathsToClosedLoop.debug = (
   return paths.flat(2).map((c) => (c.type === "m" ? { ...c, type: "l" } : c));
 };
 
-function defaultOrnamenter(length: number): RelativeOrnamentPath {
+function straightLineOrnamenter(length: number): RelativeOrnamentPath {
   return [
     { type: "m", loc: [0, 0] },
     [{ type: "l", loc: [length, 0] }],
