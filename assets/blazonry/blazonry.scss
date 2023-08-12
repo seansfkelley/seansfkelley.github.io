@@ -17,11 +17,11 @@ $colors: (
 }
 
 @each $key, $val in $colors {
-  .fill-#{$key} {
+  .fill-#{"" + $key} {
     fill: $val;
   }
 
-  .stroke-#{$key} {
+  .stroke-#{"" + $key} {
     stroke: $val;
   }
 }
@@ -104,7 +104,7 @@ $colors: (
   }
 
   @each $key, $val in $colors {
-    &.#{$key} {
+    &.#{"" + $key} {
       .body,
       .claw,
       .langue {
@@ -120,13 +120,13 @@ $colors: (
       }
     }
 
-    &.armed-#{$key} .claw {
+    &.armed-#{"" + $key} .claw {
       // Fucking CSS specificity rules. I DON'T HAVE ANY MORE CLASSES TO INCREASE SPECIFICITY WITH.
       // JUST LET ME MAKE THIS RULE TAKE PRECEDENCE.
       fill: $val !important;
     }
 
-    &.langued-#{$key} .langue {
+    &.langued-#{"" + $key} .langue {
       fill: $val !important;
     }
   }

@@ -2,6 +2,7 @@
 # why do I have to put this nonsense header in and break my syntax highlighter
 ---
 
+@use "sass:math";
 @import "variables";
 
 #data-table table {
@@ -92,13 +93,13 @@ $karnaugh-grid-size: $font-size-base * $line-height-base;
       width: $karnaugh-grid-size;
       text-align: center;
       // except also bump it out a little bit because it's very cozy
-      margin-right: $spacing / 2;
+      margin-right: math.div($spacing, 2);
     }
   }
 
   .karnaugh-label.top {
     margin-bottom: 0;
-    margin-left: $spacing / 2 + ($karnaugh-grid-size * 4);
+    margin-left: math.div($spacing, 2) + ($karnaugh-grid-size * 4);
   }
 
   .karnaugh-label.bottom {

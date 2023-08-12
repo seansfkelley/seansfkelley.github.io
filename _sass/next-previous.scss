@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .next-previous {
   display: flex;
   justify-content: space-between;
@@ -59,7 +61,7 @@
     margin-left: -($spacing * 2);
 
     &:hover .next-previous-icon {
-      transform: translateX(-($spacing / 2));
+      transform: translateX(math.div($spacing, 2));
     }
   }
 
@@ -67,7 +69,7 @@
     margin-right: -($spacing * 2);
 
     &:hover .next-previous-icon {
-      transform: translateX($spacing / 2);
+      transform: translateX(math.div($spacing, 2));
     }
   }
 }
