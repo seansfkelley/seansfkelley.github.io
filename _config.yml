@@ -7,6 +7,7 @@ exclude:
   - hooks/
   - TODO.md
   - README.md
+  - .yarn/
 sass:
   sourcemap: never
 kramdown:
