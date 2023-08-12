@@ -227,6 +227,14 @@ type RelativeOrnamentPath = [
   PathCommand.m
 ];
 
+const RelativeOrnamentPath = {
+  rotate: ([start, main, end]: RelativeOrnamentPath, radians: number): void => {
+    PathCommand.rotate(start, radians);
+    main.forEach((c) => PathCommand.rotate(c, radians));
+    PathCommand.rotate(end, radians);
+  },
+};
+
 interface OrnamentPathGenerator {
   (
     // If negative, assumed to go right-to-left instead of left-to-right.
@@ -883,19 +891,19 @@ bend.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
       { type: "Z" },
     ];
   } else {
-    const [start, main, end] = ORNAMENTS[ornament](
+    const ornamentPath = ORNAMENTS[ornament](
       BEND_LENGTH,
       0,
       false,
       "primary",
       "start"
     );
-    main.forEach((c) => PathCommand.rotate(c, Math.PI / 4));
+    RelativeOrnamentPath.rotate(ornamentPath, Math.PI / 4);
     return [
       { type: "M", loc: topLeft },
-      { type: "l", loc: Coordinate.rotate(start.loc, Math.PI / 4) },
-      ...main,
-      { type: "l", loc: Coordinate.rotate(end.loc, Math.PI / 4) },
+      { type: "l", loc: ornamentPath[0].loc },
+      ...ornamentPath[1],
+      { type: "l", loc: ornamentPath[2].loc },
       { type: "L", loc: topRight },
       { type: "Z" },
     ];
