@@ -39,7 +39,7 @@ content="This page is interactive, and only works with JavaScript enabled!"
 
 <div class="center hidden" id="interactive">
   <form id="form">
-    <input type="text" id="blazon-input" value="argent a lion rampant gules">
+    <input type="text" id="blazon-input" value="quarterly first quarterly first argent">
     <div>
       <button id="random-blazon" type="button">
       Generate Hideous Random Blazon
