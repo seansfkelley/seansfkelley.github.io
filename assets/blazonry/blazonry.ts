@@ -18,12 +18,10 @@ TODO
 - grammar improvements
   - should be able to parse non-redundant usage of colors
     - argent on a bend between six mullets vert
-    - something something about "of the first", etc.
 - things I want to be able to render
   - churchill arms
   - bavarian arms
     - the "...a lion rampant argent on a canton..." part represents multiple ordinaries in a row; this is unsupported and not the first time I've seen that
-    - "of the first"... is the ordering for all tinctures that have ever appeared?
   - ???
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - remove yOffset from ornaments; it shouldn't be necessary
@@ -34,6 +32,8 @@ TODO
 FUTURE WORK and KNOWN ISSUES
 -------------------------------------------------------------------------------
 - Multiple ordinaries are not supported.
+- Tincture references ("of the first", "of the field", etc.) are not supported. Apparently they are
+  generally disliked for introducing complexity and ambiguity.
 - Charges `on` an ordinary are often too close; especially 2s and 3s, and especially on chief and fess.
 - Charges in quartered quadrants aren't pushed around to account for the curvature of the bottom of
   the arms; a proper rendering would make them more cramped rather than cut them off.
