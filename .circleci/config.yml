@@ -20,7 +20,8 @@ jobs:
       - run:
           name: Enable Corepack
           command: |
-            sudo corepack enable
+            sudo corepack enable # this is fine
+            corepack prepare yarn@3.6.1 --activate
             yarn --version
       - node/install-packages:
           pkg-manager: yarn-berry
