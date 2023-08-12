@@ -17,8 +17,14 @@ jobs:
           fingerprints:
             - "55:39:f6:ef:0d:9d:64:81:4a:a5:88:20:d5:ed:a1:ff"
       - checkout
+      - run:
+          name: Enable Corepack
+          command: |
+            mkdir ~/corepack
+            corepack enable --install-directory ~/corepack
+            yarn --version
       - node/install-packages:
-          pkg-manager: yarn
+          pkg-manager: yarn-berry
       - run:
           name: Node build
           command: yarn run build
