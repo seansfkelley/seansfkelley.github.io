@@ -22,15 +22,19 @@ TODO
     - something something about "of the first", etc.
 - things I want to be able to render
   - churchill arms
-  - weihenstephan arms
+  - bavarian arms
+    - the "...a lion rampant argent on a canton..." part represents multiple ordinaries in a row; this is unsupported and not the first time I've seen that
   - ???
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - remove yOffset from ornaments; it shouldn't be necessary
+- add a lexer so the errors have useful names present and don't explode every string literal into characters
 */
 /*
 FUTURE WORK and KNOWN ISSUES
 -------------------------------------------------------------------------------
 - Multiple ordinaries are not supported.
+- Tincture references ("of the first", "of the field", etc.) are not supported. Apparently they are
+  generally disliked for introducing complexity and ambiguity.
 - Charges `on` an ordinary are often too close; especially 2s and 3s, and especially on chief and fess.
 - Charges in quartered quadrants aren't pushed around to account for the curvature of the bottom of
   the arms; a proper rendering would make them more cramped rather than cut them off.
@@ -1004,8 +1008,6 @@ function mullet({ tincture }) {
     "M 0 -18.8 L 5 -4.6 L 20 -4.6 L 8.4 4.5 L 12.5 18.8 L 0 10.4 L -12.5 18.8 L -8.4 4.5 L -20 -4.6 L -5 -4.6 Z", tincture);
 }
 function lion({ tincture, armed, langued, pose }) {
-    // TODO: sizing and positioning still seems wrong
-    // TODO: coloration should be optional, I guess?
     const lion = getComplexSvgSync("lion", pose).cloneNode(true);
     lion.classList.add(tincture);
     if (armed != null) {
@@ -1653,7 +1655,7 @@ document.querySelector("#no-javascript-alert").remove();
 document.querySelector("#interactive").classList.remove("hidden");
 // These files are small and there's not that many of them, so it's easier if we just eagerly
 // load of these and then try to access them sync later and hope for the best. Making the ENTIRE
-// implementation async just for this is a passive PITA.
+// implementation async just for this is a massive PITA.
 fetchComplexSvg("lion", "rampant");
 // This should happen last so that when the default text includes a complex SVG charge, at least
 // the immediate failure to render doesn't cause us to skip the loading!
