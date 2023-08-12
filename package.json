@@ -2,7 +2,7 @@
   "name": "seansfkelley.github.io",
   "version": "0.0.0",
   "scripts": {
-    "build": "tsc && npm run build-blazonry",
+    "build": "tsc && yarn run build-blazonry",
     "build-blazonry": "assets/blazonry/build.sh"
   },
   "dependencies": {

@@ -17,10 +17,11 @@ jobs:
           fingerprints:
             - "55:39:f6:ef:0d:9d:64:81:4a:a5:88:20:d5:ed:a1:ff"
       - checkout
-      - node/install-packages
+      - node/install-packages:
+          pkg-manager: yarn
       - run:
           name: Node build
-          command: npm run build
+          command: yarn run build
       - ruby/install-deps
       - run:
           name: Jekyll build
