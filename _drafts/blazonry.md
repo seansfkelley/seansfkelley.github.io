@@ -3,6 +3,8 @@ layout: post
 title: Blazonry
 custom-js-list:
   - /assets/blazonry/nearley.js
+  - /assets/blazonry/randexp.min.js
+  - /assets/blazonry/nearley-unparse.js
   - /assets/blazonry/grammar.js
   - /assets/blazonry/blazonry.js
 custom-css-list:
@@ -38,10 +40,14 @@ content="This page is interactive, and only works with JavaScript enabled!"
 <div class="center hidden" id="interactive">
   <form id="form">
     <input type="text" id="blazon-input" value="quarterly first and fourth party per pale argent and azure three mullets counterchanged in fess second and third sable">
-    <br>
-    <button type="submit">
-    Preview
-    </button>
+    <div>
+      <button id="random-blazon">
+      Generate Hideous Random Blazon
+      </button>
+      <button type="submit">
+      Preview
+      </button>
+    </div>
   </form>
 
   <pre id="error"></pre>

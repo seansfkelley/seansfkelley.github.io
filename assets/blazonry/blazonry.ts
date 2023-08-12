@@ -84,6 +84,11 @@ interface Node {
 }
 
 declare const grammar: nearley.CompiledRules;
+declare const Unparser: (
+  grammar: nearley.CompiledRules,
+  start: nearley.Rule,
+  depth?: number
+) => string;
 
 type DiscriminateUnion<T, K extends keyof T, V extends T[K]> = T extends T
   ? V extends T[K]
@@ -2243,6 +2248,7 @@ function parseAndRenderBlazon() {
 }
 
 const input: HTMLTextAreaElement = document.querySelector("#blazon-input")!;
+const random: HTMLButtonElement = document.querySelector("#random-blazon")!;
 const form: HTMLFormElement = document.querySelector("#form")!;
 const rendered: SVGSVGElement = document.querySelector("#rendered")!;
 const error: HTMLPreElement = document.querySelector("#error")!;
@@ -2251,6 +2257,10 @@ const ast: HTMLPreElement = document.querySelector("#ast")!;
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   parseAndRenderBlazon();
+});
+
+random.addEventListener("click", () => {
+  console.log("HI");
 });
 
 for (const example of document.querySelectorAll<HTMLAnchorElement>(

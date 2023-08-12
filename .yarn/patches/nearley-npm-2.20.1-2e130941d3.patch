@@ -1,0 +1,20 @@
+diff --git a/lib/unparse.js b/lib/unparse.js
+index 51194102043079b6e2cc9add125e02e5340788dd..a803543026d3ed7c57951eccc71197bd02450ed7 100644
+--- a/lib/unparse.js
++++ b/lib/unparse.js
+@@ -1,12 +1,10 @@
+ (function(root, factory) {
+     if (typeof module === 'object' && module.exports) {
+-        module.exports = factory(require('./nearley'));
++        module.exports = factory(require('./nearley'), require('randexp'));
+     } else {
+-        root.Unparser = factory(root.nearley);
++        root.Unparser = factory(root.nearley, root.RandExp);
+     }
+-}(this, function(nearley) {
+-
+-    var randexp = require('randexp');
++}(this, function(nearley, randexp) {
+ 
+     function genRandom(grammar, start) {
+         // The first-generation generator. It just spews out stuff randomly, and is

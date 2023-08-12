@@ -63,10 +63,13 @@ $colors: (
     box-sizing: border-box;
   }
 
-  button[type="submit"] {
-    margin: 0;
+  > div {
     margin-top: 6px;
     float: right;
+
+    button {
+      margin: 0;
+    }
   }
 }
 
