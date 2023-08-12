@@ -186,10 +186,11 @@ VariedName ->
   | "paly"        {% id %}
 
 Ornament ->
-    "embattled" {% id %}
-  | "engrailed" {% id %}
-  | "indented"  {% id %}
-  | "wavy"      {% id %}
+    "embattled-counter-embattled" {% id %}
+  | "embattled"                   {% id %}
+  | "engrailed"                   {% id %}
+  | "indented"                    {% id %}
+  | "wavy"                        {% id %}
   # TODO: More.
 
 _  -> whitespace:* {% nop %}
