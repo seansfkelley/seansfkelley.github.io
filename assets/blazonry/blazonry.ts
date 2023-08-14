@@ -26,6 +26,8 @@ TODO
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - remove yOffset from ornaments; it shouldn't be necessary
 - add a lexer so the errors have useful names present and don't explode every string literal into characters
+- why does the parted show through ordinaries in front of it?
+  - Per pale wavy Purpure and Gules on a chief Argent a mullet Sable.
 */
 
 /*
@@ -446,7 +448,7 @@ class LineSegmentLocator implements ParametricLocator {
   ) {}
 
   public *forCount(total: number): Generator<[Coordinate, number]> {
-    if (total > this.scales.length) {
+    if (total <= 0 || total > this.scales.length) {
       return;
     }
 
@@ -477,7 +479,7 @@ class SequenceLocator implements ParametricLocator {
   }
 
   public *forCount(total: number): Generator<[Coordinate, number]> {
-    if (total > this.sequence.length) {
+    if (total <= 0 || total > this.sequence.length) {
       return;
     }
 
@@ -508,7 +510,7 @@ class ExhaustiveLocator implements ParametricLocator {
   }
 
   public *forCount(total: number): Generator<[Coordinate, number]> {
-    if (total > this.sequences.length) {
+    if (total <= 0 || total > this.sequences.length) {
       return;
     }
 
@@ -518,7 +520,7 @@ class ExhaustiveLocator implements ParametricLocator {
   }
 }
 
-class ReflectiveLocator implements ParametricLocator {
+class AlternatingReflectiveLocator implements ParametricLocator {
   constructor(
     private delegate: ParametricLocator,
     private a: Coordinate,
@@ -526,6 +528,10 @@ class ReflectiveLocator implements ParametricLocator {
   ) {}
 
   public *forCount(total: number): Generator<[Coordinate, number]> {
+    if (total <= 0) {
+      return;
+    }
+
     const locations =
       total % 2 === 1
         ? [
@@ -555,6 +561,20 @@ class ReflectiveLocator implements ParametricLocator {
   }
 }
 
+class ReflectiveLocator implements ParametricLocator {
+  constructor(
+    private delegate: ParametricLocator,
+    private a: Coordinate,
+    private b: Coordinate
+  ) {}
+
+  public *forCount(total: number): Generator<[Coordinate, number]> {
+    for (const [translate, scale] of this.delegate.forCount(total)) {
+      yield [Coordinate.reflect(translate, this.a, this.b), scale];
+    }
+  }
+}
+
 class OnChevronLocator implements ParametricLocator {
   constructor(
     private left: Coordinate,
@@ -564,7 +584,7 @@ class OnChevronLocator implements ParametricLocator {
   ) {}
 
   public *forCount(total: number): Generator<[Coordinate, number]> {
-    if (total > this.scales.length) {
+    if (total <= 0 || total > this.scales.length) {
       return;
     }
 
@@ -625,7 +645,7 @@ class DefaultChargeLocator implements ParametricLocator {
   ) {}
 
   public *forCount(total: number): Generator<[Coordinate, number]> {
-    if (total > DefaultChargeLocator.ROWS.length) {
+    if (total <= 0 || total > DefaultChargeLocator.ROWS.length) {
       return;
     }
 
@@ -864,7 +884,7 @@ bend.on = new LineSegmentLocator(
   [0.5, 0.5, 0.5, 0.5, 0.4, 0.35, 0.3, 0.25]
 );
 
-bend.surround = new ReflectiveLocator(
+bend.surround = new AlternatingReflectiveLocator(
   new ExhaustiveLocator(
     [
       [
@@ -925,7 +945,11 @@ function bendSinister(ordinary: Ordinary) {
   return g;
 }
 
-bendSinister.on = new ReflectiveLocator(bend.on, [0, -H_2], [0, H_2]);
+bendSinister.on = new AlternatingReflectiveLocator(
+  bend.on,
+  [0, -H_2],
+  [0, H_2]
+);
 
 bendSinister.surround = new ReflectiveLocator(
   bend.surround,
@@ -1386,7 +1410,7 @@ fess.on = new LineSegmentLocator(
   [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]
 );
 
-fess.surround = new ReflectiveLocator(
+fess.surround = new AlternatingReflectiveLocator(
   new LineSegmentLocator(
     [-W_2, -H_2 + FESS_WIDTH / 2],
     [W_2, -H_2 + FESS_WIDTH / 2],
@@ -1472,7 +1496,7 @@ pale.on = new LineSegmentLocator(
   [0.6, 0.6, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2]
 );
 
-pale.surround = new ReflectiveLocator(
+pale.surround = new AlternatingReflectiveLocator(
   new LineSegmentLocator(
     [-W_2 + PALE_WIDTH / 2, -H_2],
     [-W_2 + PALE_WIDTH / 2, H_2],

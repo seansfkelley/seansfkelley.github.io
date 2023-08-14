@@ -27,6 +27,8 @@ TODO
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - remove yOffset from ornaments; it shouldn't be necessary
 - add a lexer so the errors have useful names present and don't explode every string literal into characters
+- why does the parted show through ordinaries in front of it?
+  - Per pale wavy Purpure and Gules on a chief Argent a mullet Sable.
 */
 /*
 FUTURE WORK and KNOWN ISSUES
@@ -230,7 +232,7 @@ class LineSegmentLocator {
         this.scales = scales;
     }
     *forCount(total) {
-        if (total > this.scales.length) {
+        if (total <= 0 || total > this.scales.length) {
             return;
         }
         for (let i = 0; i < total; ++i) {
@@ -253,7 +255,7 @@ class SequenceLocator {
         assert(sequence.length === scales.length, "must have the same number of coordinates in sequence as scales");
     }
     *forCount(total) {
-        if (total > this.sequence.length) {
+        if (total <= 0 || total > this.sequence.length) {
             return;
         }
         const sequence = this.exceptions[total] ?? this.sequence;
@@ -277,7 +279,7 @@ class ExhaustiveLocator {
         }
     }
     *forCount(total) {
-        if (total > this.sequences.length) {
+        if (total <= 0 || total > this.sequences.length) {
             return;
         }
         for (const coordinates of this.sequences[total - 1]) {
@@ -285,7 +287,7 @@ class ExhaustiveLocator {
         }
     }
 }
-class ReflectiveLocator {
+class AlternatingReflectiveLocator {
     delegate;
     a;
     b;
@@ -295,6 +297,9 @@ class ReflectiveLocator {
         this.b = b;
     }
     *forCount(total) {
+        if (total <= 0) {
+            return;
+        }
         const locations = total % 2 === 1
             ? [
                 ...this.delegate.forCount((total - 1) / 2),
@@ -317,6 +322,21 @@ class ReflectiveLocator {
         }
     }
 }
+class ReflectiveLocator {
+    delegate;
+    a;
+    b;
+    constructor(delegate, a, b) {
+        this.delegate = delegate;
+        this.a = a;
+        this.b = b;
+    }
+    *forCount(total) {
+        for (const [translate, scale] of this.delegate.forCount(total)) {
+            yield [Coordinate.reflect(translate, this.a, this.b), scale];
+        }
+    }
+}
 class OnChevronLocator {
     left;
     midpoint;
@@ -329,7 +349,7 @@ class OnChevronLocator {
         this.scales = scales;
     }
     *forCount(total) {
-        if (total > this.scales.length) {
+        if (total <= 0 || total > this.scales.length) {
             return;
         }
         const scale = this.scales[total - 1];
@@ -383,7 +403,7 @@ class DefaultChargeLocator {
         this.vertical = vertical;
     }
     *forCount(total) {
-        if (total > DefaultChargeLocator.ROWS.length) {
+        if (total <= 0 || total > DefaultChargeLocator.ROWS.length) {
             return;
         }
         const rows = DefaultChargeLocator.ROWS[total - 1];
@@ -542,7 +562,7 @@ function bend({ tincture, cotised, ornament }) {
     return svg.g(bend);
 }
 bend.on = new LineSegmentLocator([-W_2, -H_2], [W_2, -H_2 + W], [0.5, 0.5, 0.5, 0.5, 0.4, 0.35, 0.3, 0.25]);
-bend.surround = new ReflectiveLocator(new ExhaustiveLocator([
+bend.surround = new AlternatingReflectiveLocator(new ExhaustiveLocator([
     [
         [W_2 - 22, -H_2 + 22], //
     ],
@@ -588,7 +608,7 @@ function bendSinister(ordinary) {
     });
     return g;
 }
-bendSinister.on = new ReflectiveLocator(bend.on, [0, -H_2], [0, H_2]);
+bendSinister.on = new AlternatingReflectiveLocator(bend.on, [0, -H_2], [0, H_2]);
 bendSinister.surround = new ReflectiveLocator(bend.surround, [0, -H_2], [0, H_2]);
 bendSinister.party = (ornament) => {
     const commands = bend.party(ornament);
@@ -843,7 +863,7 @@ function fess({ tincture, cotised, ornament }) {
     return fess;
 }
 fess.on = new LineSegmentLocator([-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
-fess.surround = new ReflectiveLocator(new LineSegmentLocator([-W_2, -H_2 + FESS_WIDTH / 2], [W_2, -H_2 + FESS_WIDTH / 2], [0.6, 0.5, 0.4, 0.4]), [-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET]);
+fess.surround = new AlternatingReflectiveLocator(new LineSegmentLocator([-W_2, -H_2 + FESS_WIDTH / 2], [W_2, -H_2 + FESS_WIDTH / 2], [0.6, 0.5, 0.4, 0.4]), [-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET]);
 fess.party = (ornament) => {
     const [topLeft, midLeft, midRight, topRight] = [
         { type: "M", loc: [-W_2, -H_2] },
@@ -893,7 +913,7 @@ function pale({ tincture, cotised, ornament }) {
     return pale;
 }
 pale.on = new LineSegmentLocator([0, -H_2], [0, H_2], [0.6, 0.6, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2]);
-pale.surround = new ReflectiveLocator(new LineSegmentLocator([-W_2 + PALE_WIDTH / 2, -H_2], [-W_2 + PALE_WIDTH / 2, H_2], [0.6, 0.5, 0.4, 0.4]), [0, -H_2], [0, H_2]);
+pale.surround = new AlternatingReflectiveLocator(new LineSegmentLocator([-W_2 + PALE_WIDTH / 2, -H_2], [-W_2 + PALE_WIDTH / 2, H_2], [0.6, 0.5, 0.4, 0.4]), [0, -H_2], [0, H_2]);
 pale.party = (ornament) => {
     const [topLeft, topMid, bottomMid, bottomLeft] = [
         { type: "M", loc: [-W_2, -H_2] },
