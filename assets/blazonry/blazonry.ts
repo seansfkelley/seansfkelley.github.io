@@ -2414,7 +2414,7 @@ const TINCTURES = [
 // casing by the unparser.
 const TINCTURE_REGEX = new RegExp(`(^| )(${TINCTURES.join("|")})( |\.$)`, "g");
 random.addEventListener("click", () => {
-  // 12 chosen empirically. Seems nice.
+  // 14 chosen empirically. Seems nice. Gets lions, where 12 does not.
   const blazon = Unparser(grammar, grammar.ParserStart, 14)
     // This is restatement of the regex rule for acceptable whitespace.
     .replaceAll(/[ \t\n\v\f,;]+/g, " ")
