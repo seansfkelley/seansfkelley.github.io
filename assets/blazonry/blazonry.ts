@@ -6,6 +6,7 @@ TODO
 - finish ornament support: saltire
 - InDirection -- at least in the case of chevron and saltire, they are rotated to match
 - minor visual effects to make it a little less flat
+- multiple ordinaries? e.g. "sable a fess argent a saltire gules"
 - "overall"
 - fretty?
 - "saltirewise" needs to vary based on where the charge is
@@ -123,11 +124,11 @@ const Posture = {
       case "palewise":
         return 0;
       case "fesswise":
-        return Math.PI / 2;
+        return -Math.PI / 2;
       case "bendwise":
-        return Math.PI / 4;
+        return -Math.PI / 4;
       case "saltirewise":
-        return Math.PI / 4; // TODO
+        return -Math.PI / 4; // TODO
       default:
         assertNever(posture);
     }
@@ -2399,21 +2400,42 @@ form.addEventListener("submit", (e) => {
   parseAndRenderBlazon();
 });
 
+const TINCTURES = [
+  "argent",
+  "azure",
+  "gules",
+  "or",
+  "purpure",
+  "sable",
+  "vert",
+];
+// Gross and duplicative, but the entire grammar is written in lowercase and I don't want to
+// sprinkle case-insensitive markers EVERYWHERE just so the tinctures can be generated with typical
+// casing by the unparser.
+const TINCTURE_REGEX = new RegExp(`(^| )(${TINCTURES.join("|")})( |\.$)`, "g");
 random.addEventListener("click", () => {
   // 12 chosen empirically. Seems nice.
-  const blazon = Unparser(grammar, grammar.ParserStart, 12)
+  const blazon = Unparser(grammar, grammar.ParserStart, 14)
+    // This is restatement of the regex rule for acceptable whitespace.
     .replaceAll(/[ \t\n\v\f,;]+/g, " ")
+    .trim()
     .replace(/ ?\.?$/, ".")
-    .replace(/^./, (l) => l.toUpperCase())
     .replaceAll(
-      // Gross and duplicative, but the entire grammar is written in lowercase and I don't want to
-      // sprinkle case-insensitive markers EVERYWHERE just so the tinctures can be generated with
-      // typical casing by the unparser.
-      /(^| )(azure|or|argent|gules|vert|sable|purpure)( |\.$)/g,
+      // It's REALLY hard to generate a random blazon where counterchanged makes sense, since the
+      // grammar does not express a relationship between the context ("party per") and the tincture.
+      // Since it's 1/8th of the colors, just ban it to reduce nonsense blazons by a lot.
+      /(^| )counterchanged( |\.$)/g,
+      (_, prefix, suffix) =>
+        `${prefix}${
+          TINCTURES[Math.floor(Math.random() * TINCTURES.length)]
+        }${suffix}`
+    )
+    .replaceAll(
+      TINCTURE_REGEX,
       (_, prefix, tincture, suffix) =>
         `${prefix}${tincture[0].toUpperCase()}${tincture.slice(1)}${suffix}`
     )
-    .trim();
+    .replace(/^./, (l) => l.toUpperCase());
   input.value = blazon;
   parseAndRenderBlazon();
 });

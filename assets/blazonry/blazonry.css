@@ -3,11 +3,11 @@
 }
 
 .fill-argent {
-  fill: white;
+  fill: whitesmoke;
 }
 
 .stroke-argent {
-  stroke: white;
+  stroke: whitesmoke;
 }
 
 .fill-sable {
@@ -19,11 +19,11 @@
 }
 
 .fill-gules {
-  fill: red;
+  fill: crimson;
 }
 
 .stroke-gules {
-  stroke: red;
+  stroke: crimson;
 }
 
 .fill-vert {
@@ -35,27 +35,27 @@
 }
 
 .fill-azure {
-  fill: blue;
+  fill: mediumblue;
 }
 
 .stroke-azure {
-  stroke: blue;
+  stroke: mediumblue;
 }
 
 .fill-or {
-  fill: yellow;
+  fill: gold;
 }
 
 .stroke-or {
-  stroke: yellow;
+  stroke: gold;
 }
 
 .fill-purpure {
-  fill: purple;
+  fill: blueviolet;
 }
 
 .stroke-purpure {
-  stroke: purple;
+  stroke: blueviolet;
 }
 
 .fill-none {
@@ -131,7 +131,7 @@
 .lion.argent .body,
 .lion.argent .claw,
 .lion.argent .langue {
-  fill: white;
+  fill: whitesmoke;
 }
 .lion.argent .highlight.low {
   fill: white;
@@ -140,10 +140,10 @@
   fill: white;
 }
 .lion.armed-argent .claw {
-  fill: white !important;
+  fill: whitesmoke !important;
 }
 .lion.langued-argent .langue {
-  fill: white !important;
+  fill: whitesmoke !important;
 }
 .lion.sable .body,
 .lion.sable .claw,
@@ -165,19 +165,19 @@
 .lion.gules .body,
 .lion.gules .claw,
 .lion.gules .langue {
-  fill: red;
+  fill: crimson;
 }
 .lion.gules .highlight.low {
-  fill: #ff3333;
+  fill: #ed365b;
 }
 .lion.gules .highlight.high {
-  fill: #ff4d4d;
+  fill: #ef4e6e;
 }
 .lion.armed-gules .claw {
-  fill: red !important;
+  fill: crimson !important;
 }
 .lion.langued-gules .langue {
-  fill: red !important;
+  fill: crimson !important;
 }
 .lion.vert .body,
 .lion.vert .claw,
@@ -199,51 +199,51 @@
 .lion.azure .body,
 .lion.azure .claw,
 .lion.azure .langue {
-  fill: blue;
+  fill: mediumblue;
 }
 .lion.azure .highlight.low {
-  fill: #3333ff;
+  fill: #0101ff;
 }
 .lion.azure .highlight.high {
-  fill: #4d4dff;
+  fill: #1b1bff;
 }
 .lion.armed-azure .claw {
-  fill: blue !important;
+  fill: mediumblue !important;
 }
 .lion.langued-azure .langue {
-  fill: blue !important;
+  fill: mediumblue !important;
 }
 .lion.or .body,
 .lion.or .claw,
 .lion.or .langue {
-  fill: yellow;
+  fill: gold;
 }
 .lion.or .highlight.low {
-  fill: #ffff33;
+  fill: #ffdf33;
 }
 .lion.or .highlight.high {
-  fill: #ffff4d;
+  fill: #ffe34d;
 }
 .lion.armed-or .claw {
-  fill: yellow !important;
+  fill: gold !important;
 }
 .lion.langued-or .langue {
-  fill: yellow !important;
+  fill: gold !important;
 }
 .lion.purpure .body,
 .lion.purpure .claw,
 .lion.purpure .langue {
-  fill: purple;
+  fill: blueviolet;
 }
 .lion.purpure .highlight.low {
-  fill: #b300b3;
+  fill: #a358e8;
 }
 .lion.purpure .highlight.high {
-  fill: #cd00cd;
+  fill: #af6eeb;
 }
 .lion.armed-purpure .claw {
-  fill: purple !important;
+  fill: blueviolet !important;
 }
 .lion.langued-purpure .langue {
-  fill: purple !important;
+  fill: blueviolet !important;
 }
