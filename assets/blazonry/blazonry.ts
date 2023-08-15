@@ -27,8 +27,6 @@ TODO
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - remove yOffset from ornaments; it shouldn't be necessary
 - add a lexer so the errors have useful names present and don't explode every string literal into characters
-- why does the parted show through ordinaries in front of it?
-  - Per pale wavy Purpure and Gules on a chief Argent a mullet Sable.
 */
 
 /*
@@ -53,6 +51,7 @@ NOTES ON THE IMPLEMENTATION
 - There are several eras of implementation represented here. This surfaces as, in particular:
   - a mix of hardcoded values and values mathemetically derived from the fields width/height
   - a mix of string-y things like `path` and object-y things like `PathCommand`
+- An SVG path editor/debugger is an essential tool. I used https://yqnn.github.io/svg-path-editor/.
 */
 
 // Do this first thing so there's something to see ASAP!
@@ -687,6 +686,26 @@ function assert(condition: boolean, message: string): asserts condition {
 
 function assertNever(nope: never): never {
   throw new Error("was not never");
+}
+
+// Not foolproof, but simple and suitable for us.
+function deepEqual<T>(one: T, two: T): boolean {
+  if (one == null || two == null) {
+    return one === two;
+  } else if (Array.isArray(one) && Array.isArray(two)) {
+    return (
+      one.length === two.length && one.every((o, i) => deepEqual(o, two[i]))
+    );
+  } else if (typeof one === "object" && typeof two === "object") {
+    const oneKeys = Object.getOwnPropertyNames(one);
+    const twoKeys = Object.getOwnPropertyNames(two);
+    return (
+      deepEqual(oneKeys, twoKeys) &&
+      oneKeys.every((k) => deepEqual((one as any)[k], (two as any)[k]))
+    );
+  } else {
+    return one === two;
+  }
 }
 
 function applyTransforms(
@@ -1972,6 +1991,8 @@ const ORNAMENTS: Record<string, OrnamentPathGenerator> = {
   wavy: wrapSimpleOrnamenter(wavy, true, false),
 };
 
+// #endregion
+
 // #region VARIED
 // ----------------------------------------------------------------------------
 
@@ -2218,19 +2239,33 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     const g2 = svg.g();
     g1.appendChild(field(content.first));
     g2.appendChild(field(content.second));
-    if (content.content) {
-      renderIntoParent(
-        g1,
-        overwriteCounterchangedTincture(content.content, content.second)
-      );
-      renderIntoParent(
-        g2,
-        overwriteCounterchangedTincture(content.content, content.first)
-      );
-    }
-    // Add g2 first so that it's underneath g1, which is the only one with a clip path.
+    // Add g2 first so that it's underneath g1, which has the only clip path.
     container.appendChild(g2);
     container.appendChild(g1);
+    if (content.content != null) {
+      const counterchangedFirst = overwriteCounterchangedTincture(
+        content.content,
+        content.first
+      );
+      // This branch is not just a perf/DOM optimization, but prevents visual artifacts. If we
+      // unconditionally do the counterchanged thing, even when not necessary, the line of division
+      // often leaks through any superimposed ordinaries as a thin line of off-color pixels since
+      // those ordinaries are actually two compatible shapes, overlapping and clipped.
+      //
+      // This does not fix the artifact in the case where we do actually need to render something
+      // counterchanged. A fuller fix would involve a lot more fiddling and masking to ensure we
+      // always render a single ordinary, which I am not willing to do at the moment.
+      if (!deepEqual(content.content, counterchangedFirst)) {
+        const counterchangedSecond = overwriteCounterchangedTincture(
+          content.content,
+          content.second
+        );
+        renderIntoParent(g1, counterchangedSecond);
+        renderIntoParent(g2, counterchangedFirst);
+      } else {
+        renderIntoParent(container, content.content);
+      }
+    }
   } else if ("quarters" in content) {
     const quartered: Record<Quarter, SVGElement> = {
       1: svg.g(),
