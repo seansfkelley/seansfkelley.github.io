@@ -19,6 +19,10 @@ TODO
     - argent on a bend between six mullets vert
 - things I want to be able to render
   - churchill arms
+    - fleur de lys
+    - inescutcheon
+    - escallop
+    - fret
   - bavarian arms
   - ???
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
