@@ -73,6 +73,18 @@ $colors: (
   }
 }
 
+#ambiguous {
+  width: 100%;
+  margin-top: 6px;
+
+  display: flex;
+  justify-content: flex-end;
+
+  > * {
+    margin: 0 3px;
+  }
+}
+
 .center {
   display: flex;
   flex-direction: column;

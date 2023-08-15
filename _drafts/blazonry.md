@@ -39,7 +39,7 @@ content="This page is interactive, and only works with JavaScript enabled!"
 
 <div class="center hidden" id="interactive">
   <form id="form">
-    <input type="text" id="blazon-input" value="Per pale wavy Purpure and Gules on a chief Argent a mullet Sable.">
+    <input type="text" id="blazon-input" value="Quarterly 1st and 4th Sable a lion rampant or on a canton Argent a cross Gules; 2nd and 3rd quarterly 1st and 4th argent overall a bend Sable">
     <div>
       <button id="random-blazon" type="button">
       Generate Hideous Random Blazon
@@ -50,7 +50,14 @@ content="This page is interactive, and only works with JavaScript enabled!"
     </div>
   </form>
 
-  <pre id="error"></pre>
+  <div id="ambiguous" class="hidden">
+    <span>Ambiguous blazon! Navigate variations:</span>
+    <button id="ambiguous-previous">⇦</button>
+    <span id="ambiguous-count"></span>
+    <button id="ambiguous-next">⇨</button>
+  </div>
+
+  <pre id="error" class="hidden"></pre>
 
   <svg
     id="rendered"

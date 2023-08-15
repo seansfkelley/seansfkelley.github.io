@@ -6,7 +6,6 @@ TODO
 - finish ornament support: saltire
 - InDirection -- at least in the case of chevron and saltire, they are rotated to match
 - minor visual effects to make it a little less flat
-- "overall"
 - fretty?
 - "saltirewise" needs to vary based on where the charge is
 - more of the same
@@ -20,11 +19,17 @@ TODO
     - argent on a bend between six mullets vert
 - things I want to be able to render
   - churchill arms
+    - fleur de lys
+    - inescutcheon
+    - escallop
+    - fret
   - bavarian arms
   - ???
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - remove yOffset from ornaments; it shouldn't be necessary
 - add a lexer so the errors have useful names present and don't explode every string literal into characters
+- saltires don't extend far enough on the bottom left
+  - "Quarterly fourth second 4th and 1st Vert on a saltire cotised Sable a mullet Azure 3rd Argent fourth barry bendy Argent and Vert 3rd Vert fourth Argent."
 */
 
 /*
@@ -165,6 +170,7 @@ interface PartyPerField {
 
 interface Quarterly {
   quarters: Quartering[];
+  overall?: SimpleContent;
 }
 
 interface Quartering {
@@ -2288,6 +2294,7 @@ function complexContent(container: SVGElement, content: ComplexContent) {
         complexContent(quartered[quarter], quartering.content);
       }
     }
+
     for (const e of Object.values(quartered)) {
       container.appendChild(e);
     }
@@ -2298,6 +2305,10 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     line = svg.line([-W_2, 0], [W_2, 0], Tincture.of("sable"), 0.5);
     line.setAttribute("vector-effect", "non-scaling-stroke");
     container.appendChild(line);
+
+    if (content.overall) {
+      renderIntoParent(container, content.overall);
+    }
   } else if ("varied" in content) {
     container.appendChild(field(content.first));
     const second = field(content.second);
@@ -2378,46 +2389,69 @@ function recursivelyOmitNullish<T>(value: T): T {
   }
 }
 
+let previousPrevEventHandler;
+let previousNextEventHandler;
 function parseAndRenderBlazon() {
-  let result;
+  function render(parsed: ComplexContent): void {
+    parsed = recursivelyOmitNullish(parsed);
+
+    ast.innerHTML = JSON.stringify(parsed, null, 2);
+
+    rendered.innerHTML = "";
+    const outline = svg.path(FIELD_PATH, Tincture.NONE);
+    outline.classList.add("stroke-sable");
+    outline.setAttribute("stroke-width", "2");
+    rendered.appendChild(outline);
+
+    // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
+    const container = svg.g();
+    container.style.clipPath = `path("${FIELD_PATH}")`;
+    rendered.appendChild(container);
+    // Make sure there's always a default background.
+    container.appendChild(field(Tincture.of("argent")));
+
+    complexContent(container, parsed);
+  }
+
+  let results: ComplexContent[];
   try {
     const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
     parser.feed(input.value.trim().toLowerCase());
-    const { results } = parser;
-    if (results.length === 0) {
-      error.style.display = "block";
-      error.innerHTML = "Unexpected end of input.";
-      return;
-    } else if (results.length > 1) {
-      error.style.display = "block";
-      error.innerHTML = "Ambiguous blazon!";
-      return;
-    } else {
-      result = recursivelyOmitNullish(results[0]);
-      error.style.display = "none";
-    }
+    results = parser.results;
   } catch (e) {
     error.innerHTML = (e as any).toString();
-    error.style.display = "block";
+    error.classList.remove("hidden");
     return;
   }
 
-  ast.innerHTML = JSON.stringify(result, null, 2);
+  if (results.length === 0) {
+    error.classList.remove("hidden");
+    error.innerHTML = "Unexpected end of input.";
+  } else if (results.length > 1) {
+    ambiguousPrev.removeEventListener("click", previousPrevEventHandler!);
+    ambiguousNext.removeEventListener("click", previousNextEventHandler!);
 
-  rendered.innerHTML = "";
-  const outline = svg.path(FIELD_PATH, Tincture.NONE);
-  outline.classList.add("stroke-sable");
-  outline.setAttribute("stroke-width", "2");
-  rendered.appendChild(outline);
+    let which = 0;
+    function step(sign: number) {
+      which = (which + sign + results.length) % results.length;
+      ambiguousCount.innerHTML = `${which + 1} / ${results.length}`;
+      render(results[which]);
+    }
 
-  // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
-  const container = svg.g();
-  container.style.clipPath = `path("${FIELD_PATH}")`;
-  rendered.appendChild(container);
-  // Make sure there's always a default background.
-  container.appendChild(field(Tincture.of("argent")));
+    previousPrevEventHandler = () => step(-1);
+    ambiguousPrev.addEventListener("click", previousPrevEventHandler);
+    previousNextEventHandler = () => step(1);
+    ambiguousNext.addEventListener("click", previousNextEventHandler);
 
-  complexContent(container, result);
+    step(0);
+
+    error.classList.add("hidden");
+    ambiguous.classList.remove("hidden");
+  } else {
+    error.classList.add("hidden");
+    ambiguous.classList.add("hidden");
+    render(results[0]);
+  }
 }
 
 const input: HTMLTextAreaElement = document.querySelector("#blazon-input")!;
@@ -2426,6 +2460,14 @@ const form: HTMLFormElement = document.querySelector("#form")!;
 const rendered: SVGSVGElement = document.querySelector("#rendered")!;
 const error: HTMLPreElement = document.querySelector("#error")!;
 const ast: HTMLPreElement = document.querySelector("#ast")!;
+const ambiguous: HTMLDivElement = document.querySelector("#ambiguous")!;
+const ambiguousPrev: HTMLButtonElement = document.querySelector(
+  "#ambiguous-previous"
+)!;
+const ambiguousNext: HTMLButtonElement =
+  document.querySelector("#ambiguous-next")!;
+const ambiguousCount: HTMLSpanElement =
+  document.querySelector("#ambiguous-count")!;
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();

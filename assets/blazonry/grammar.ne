@@ -36,7 +36,9 @@ Party ->
   | "parted" {% nop %}
 
 Quarterly ->
-  "quarterly" __ Quartering (__ Quartering {% nth(1) %}):* {% (d) => ({ quarters: [d[2], ...d[3]] }) %}
+  "quarterly" __ Quartering (__ Quartering {% nth(1) %}):* (__ "overall" __ SimpleContent {% nth(3) %}):? {% (d) => ({
+    quarters: [d[2], ...d[3]], overall: d[4]
+  }) %}
 
 SimpleContent ->
     Ordinary __ "between" __ Charge                   {% $({ on: 0, surround: 4 }) %}
