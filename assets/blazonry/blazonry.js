@@ -7,8 +7,6 @@ TODO
 - finish ornament support: saltire
 - InDirection -- at least in the case of chevron and saltire, they are rotated to match
 - minor visual effects to make it a little less flat
-- multiple ordinaries? e.g. "sable a fess argent a saltire gules"
-- "overall"
 - fretty?
 - "saltirewise" needs to vary based on where the charge is
 - more of the same
@@ -23,18 +21,14 @@ TODO
 - things I want to be able to render
   - churchill arms
   - bavarian arms
-    - the "...a lion rampant argent on a canton..." part represents multiple ordinaries in a row; this is unsupported and not the first time I've seen that
   - ???
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - remove yOffset from ornaments; it shouldn't be necessary
 - add a lexer so the errors have useful names present and don't explode every string literal into characters
-- why does the parted show through ordinaries in front of it?
-  - Per pale wavy Purpure and Gules on a chief Argent a mullet Sable.
 */
 /*
 FUTURE WORK and KNOWN ISSUES
 -------------------------------------------------------------------------------
-- Multiple ordinaries are not supported.
 - Tincture references ("of the first", "of the field", etc.) are not supported. Apparently they are
   generally disliked for introducing complexity and ambiguity.
 - Charges `on` an ordinary are often too close; especially 2s and 3s, and especially on chief and fess.
@@ -53,6 +47,7 @@ NOTES ON THE IMPLEMENTATION
 - There are several eras of implementation represented here. This surfaces as, in particular:
   - a mix of hardcoded values and values mathemetically derived from the fields width/height
   - a mix of string-y things like `path` and object-y things like `PathCommand`
+- An SVG path editor/debugger is an essential tool. I used https://yqnn.github.io/svg-path-editor/.
 */
 // Do this first thing so there's something to see ASAP!
 document.querySelector("#no-javascript-alert").remove();
@@ -436,6 +431,24 @@ function assert(condition, message) {
 }
 function assertNever(nope) {
     throw new Error("was not never");
+}
+// Not foolproof, but simple and suitable for us.
+function deepEqual(one, two) {
+    if (one == null || two == null) {
+        return one === two;
+    }
+    else if (Array.isArray(one) && Array.isArray(two)) {
+        return (one.length === two.length && one.every((o, i) => deepEqual(o, two[i])));
+    }
+    else if (typeof one === "object" && typeof two === "object") {
+        const oneKeys = Object.getOwnPropertyNames(one);
+        const twoKeys = Object.getOwnPropertyNames(two);
+        return (deepEqual(oneKeys, twoKeys) &&
+            oneKeys.every((k) => deepEqual(one[k], two[k])));
+    }
+    else {
+        return one === two;
+    }
 }
 function applyTransforms(element, { origin, translate, scale, rotate, } = {}) {
     const transform = [
@@ -1261,6 +1274,7 @@ const ORNAMENTS = {
     indented: wrapSimpleOrnamenter(indented, true, false),
     wavy: wrapSimpleOrnamenter(wavy, true, false),
 };
+// #endregion
 // #region VARIED
 // ----------------------------------------------------------------------------
 function barry(count = 6) {
@@ -1424,8 +1438,8 @@ function complexContent(container, content) {
             g.appendChild(svg.path(CANTON_PATH, element.canton));
             g.classList.add(`fill-${element.canton}`);
             parent.appendChild(g);
-            if (element.content) {
-                renderIntoParent(g, element.content);
+            for (const c of element.content ?? []) {
+                renderIntoParent(g, c);
             }
         }
         else if ("on" in element) {
@@ -1494,13 +1508,28 @@ function complexContent(container, content) {
         const g2 = svg.g();
         g1.appendChild(field(content.first));
         g2.appendChild(field(content.second));
-        if (content.content) {
-            renderIntoParent(g1, overwriteCounterchangedTincture(content.content, content.second));
-            renderIntoParent(g2, overwriteCounterchangedTincture(content.content, content.first));
-        }
-        // Add g2 first so that it's underneath g1, which is the only one with a clip path.
+        // Add g2 first so that it's underneath g1, which has the only clip path.
         container.appendChild(g2);
         container.appendChild(g1);
+        if (content.content != null) {
+            const counterchangedFirst = overwriteCounterchangedTincture(content.content, content.first);
+            // This branch is not just a perf/DOM optimization, but prevents visual artifacts. If we
+            // unconditionally do the counterchanged thing, even when not necessary, the line of division
+            // often leaks through any superimposed ordinaries as a thin line of off-color pixels since
+            // those ordinaries are actually two compatible shapes, overlapping and clipped.
+            //
+            // This does not fix the artifact in the case where we do actually need to render something
+            // counterchanged. A fuller fix would involve a lot more fiddling and masking to ensure we
+            // always render a single ordinary, which I am not willing to do at the moment.
+            if (!deepEqual(content.content, counterchangedFirst)) {
+                const counterchangedSecond = overwriteCounterchangedTincture(content.content, content.second);
+                renderIntoParent(g1, counterchangedSecond);
+                renderIntoParent(g2, counterchangedFirst);
+            }
+            else {
+                renderIntoParent(container, content.content);
+            }
+        }
     }
     else if ("quarters" in content) {
         const quartered = {
@@ -1534,20 +1563,23 @@ function complexContent(container, content) {
         line = svg.line([-W_2, 0], [W_2, 0], Tincture.of("sable"), 0.5);
         line.setAttribute("vector-effect", "non-scaling-stroke");
         container.appendChild(line);
+        if (content.overall) {
+            renderIntoParent(container, content.overall);
+        }
     }
     else if ("varied" in content) {
         container.appendChild(field(content.first));
         const second = field(content.second);
         second.style.clipPath = `path("${VARIED[content.varied.type](content.varied.count)}")`;
         container.appendChild(second);
-        if (content.content) {
-            renderIntoParent(container, content.content);
+        for (const c of content.content ?? []) {
+            renderIntoParent(container, c);
         }
     }
     else {
         container.appendChild(field(content.tincture));
-        if (content.content) {
-            renderIntoParent(container, content.content);
+        for (const c of content.content ?? []) {
+            renderIntoParent(container, c);
         }
     }
 }
@@ -1601,45 +1633,62 @@ function recursivelyOmitNullish(value) {
         return value;
     }
 }
+let previousPrevEventHandler;
+let previousNextEventHandler;
 function parseAndRenderBlazon() {
-    let result;
+    function render(parsed) {
+        parsed = recursivelyOmitNullish(parsed);
+        ast.innerHTML = JSON.stringify(parsed, null, 2);
+        rendered.innerHTML = "";
+        const outline = svg.path(FIELD_PATH, Tincture.NONE);
+        outline.classList.add("stroke-sable");
+        outline.setAttribute("stroke-width", "2");
+        rendered.appendChild(outline);
+        // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
+        const container = svg.g();
+        container.style.clipPath = `path("${FIELD_PATH}")`;
+        rendered.appendChild(container);
+        // Make sure there's always a default background.
+        container.appendChild(field(Tincture.of("argent")));
+        complexContent(container, parsed);
+    }
+    let results;
     try {
         const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
         parser.feed(input.value.trim().toLowerCase());
-        const { results } = parser;
-        if (results.length === 0) {
-            error.style.display = "block";
-            error.innerHTML = "Unexpected end of input.";
-            return;
-        }
-        else if (results.length > 1) {
-            error.style.display = "block";
-            error.innerHTML = "Ambiguous blazon!";
-            return;
-        }
-        else {
-            result = recursivelyOmitNullish(results[0]);
-            error.style.display = "none";
-        }
+        results = parser.results;
     }
     catch (e) {
         error.innerHTML = e.toString();
-        error.style.display = "block";
+        error.classList.remove("hidden");
         return;
     }
-    ast.innerHTML = JSON.stringify(result, null, 2);
-    rendered.innerHTML = "";
-    const outline = svg.path(FIELD_PATH, Tincture.NONE);
-    outline.classList.add("stroke-sable");
-    outline.setAttribute("stroke-width", "2");
-    rendered.appendChild(outline);
-    // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
-    const container = svg.g();
-    container.style.clipPath = `path("${FIELD_PATH}")`;
-    rendered.appendChild(container);
-    // Make sure there's always a default background.
-    container.appendChild(field(Tincture.of("argent")));
-    complexContent(container, result);
+    if (results.length === 0) {
+        error.classList.remove("hidden");
+        error.innerHTML = "Unexpected end of input.";
+    }
+    else if (results.length > 1) {
+        ambiguousPrev.removeEventListener("click", previousPrevEventHandler);
+        ambiguousNext.removeEventListener("click", previousNextEventHandler);
+        let which = 0;
+        function step(sign) {
+            which = (which + sign + results.length) % results.length;
+            ambiguousCount.innerHTML = `${which + 1} / ${results.length}`;
+            render(results[which]);
+        }
+        previousPrevEventHandler = () => step(-1);
+        ambiguousPrev.addEventListener("click", previousPrevEventHandler);
+        previousNextEventHandler = () => step(1);
+        ambiguousNext.addEventListener("click", previousNextEventHandler);
+        step(0);
+        error.classList.add("hidden");
+        ambiguous.classList.remove("hidden");
+    }
+    else {
+        error.classList.add("hidden");
+        ambiguous.classList.add("hidden");
+        render(results[0]);
+    }
 }
 const input = document.querySelector("#blazon-input");
 const random = document.querySelector("#random-blazon");
@@ -1647,6 +1696,10 @@ const form = document.querySelector("#form");
 const rendered = document.querySelector("#rendered");
 const error = document.querySelector("#error");
 const ast = document.querySelector("#ast");
+const ambiguous = document.querySelector("#ambiguous");
+const ambiguousPrev = document.querySelector("#ambiguous-previous");
+const ambiguousNext = document.querySelector("#ambiguous-next");
+const ambiguousCount = document.querySelector("#ambiguous-count");
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     parseAndRenderBlazon();

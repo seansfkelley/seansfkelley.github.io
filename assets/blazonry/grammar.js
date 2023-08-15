@@ -37,16 +37,16 @@ var grammar = {
     {"name": "ComplexContent", "symbols": ["SimpleField"], "postprocess": id},
     {"name": "ComplexContent", "symbols": ["PartyPerField"], "postprocess": id},
     {"name": "ComplexContent", "symbols": ["Quarterly"], "postprocess": id},
+    {"name": "SimpleField$ebnf$1", "symbols": []},
     {"name": "SimpleField$ebnf$1$subexpression$1", "symbols": ["__", "SimpleContent"], "postprocess": nth(1)},
-    {"name": "SimpleField$ebnf$1", "symbols": ["SimpleField$ebnf$1$subexpression$1"], "postprocess": id},
-    {"name": "SimpleField$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "SimpleField$ebnf$1", "symbols": ["SimpleField$ebnf$1", "SimpleField$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
     {"name": "SimpleField", "symbols": ["Tincture", "SimpleField$ebnf$1"], "postprocess":  $({
           tincture: 0, content: 1
         }) },
     {"name": "SimpleField$string$1", "symbols": [{"literal":"a"}, {"literal":"n"}, {"literal":"d"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "SimpleField$ebnf$2", "symbols": []},
     {"name": "SimpleField$ebnf$2$subexpression$1", "symbols": ["__", "SimpleContent"], "postprocess": nth(1)},
-    {"name": "SimpleField$ebnf$2", "symbols": ["SimpleField$ebnf$2$subexpression$1"], "postprocess": id},
-    {"name": "SimpleField$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "SimpleField$ebnf$2", "symbols": ["SimpleField$ebnf$2", "SimpleField$ebnf$2$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
     {"name": "SimpleField", "symbols": ["Varied", "__", "Tincture", "__", "SimpleField$string$1", "__", "Tincture", "SimpleField$ebnf$2"], "postprocess":  $({
           varied: 0, first: 2, second: 6, content: 7
         }) },
@@ -77,7 +77,13 @@ var grammar = {
     {"name": "Quarterly$ebnf$1", "symbols": []},
     {"name": "Quarterly$ebnf$1$subexpression$1", "symbols": ["__", "Quartering"], "postprocess": nth(1)},
     {"name": "Quarterly$ebnf$1", "symbols": ["Quarterly$ebnf$1", "Quarterly$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "Quarterly", "symbols": ["Quarterly$string$1", "__", "Quartering", "Quarterly$ebnf$1"], "postprocess": (d) => ({ quarters: [d[2], ...d[3]] })},
+    {"name": "Quarterly$ebnf$2$subexpression$1$string$1", "symbols": [{"literal":"o"}, {"literal":"v"}, {"literal":"e"}, {"literal":"r"}, {"literal":"a"}, {"literal":"l"}, {"literal":"l"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "Quarterly$ebnf$2$subexpression$1", "symbols": ["__", "Quarterly$ebnf$2$subexpression$1$string$1", "__", "SimpleContent"], "postprocess": nth(3)},
+    {"name": "Quarterly$ebnf$2", "symbols": ["Quarterly$ebnf$2$subexpression$1"], "postprocess": id},
+    {"name": "Quarterly$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "Quarterly", "symbols": ["Quarterly$string$1", "__", "Quartering", "Quarterly$ebnf$1", "Quarterly$ebnf$2"], "postprocess":  (d) => ({
+          quarters: [d[2], ...d[3]], overall: d[4]
+        }) },
     {"name": "SimpleContent$string$1", "symbols": [{"literal":"b"}, {"literal":"e"}, {"literal":"t"}, {"literal":"w"}, {"literal":"e"}, {"literal":"e"}, {"literal":"n"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "SimpleContent", "symbols": ["Ordinary", "__", "SimpleContent$string$1", "__", "Charge"], "postprocess": $({ on: 0, surround: 4 })},
     {"name": "SimpleContent$string$2", "symbols": [{"literal":"o"}, {"literal":"n"}], "postprocess": function joiner(d) {return d.join('');}},
@@ -101,7 +107,11 @@ var grammar = {
     {"name": "Canton", "symbols": [{"literal":"a"}, "__", "Canton$string$1", "__", "Tincture"], "postprocess": $({ canton: 4 })},
     {"name": "Canton$string$2", "symbols": [{"literal":"o"}, {"literal":"n"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "Canton$string$3", "symbols": [{"literal":"c"}, {"literal":"a"}, {"literal":"n"}, {"literal":"t"}, {"literal":"o"}, {"literal":"n"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "Canton", "symbols": ["Canton$string$2", "__", {"literal":"a"}, "__", "Canton$string$3", "__", "Tincture", "__", "SimpleContent"], "postprocess": $({ canton: 6, content: 8 })},
+    {"name": "Canton$ebnf$1$subexpression$1", "symbols": ["__", "SimpleContent"], "postprocess": nth(1)},
+    {"name": "Canton$ebnf$1", "symbols": ["Canton$ebnf$1$subexpression$1"]},
+    {"name": "Canton$ebnf$1$subexpression$2", "symbols": ["__", "SimpleContent"], "postprocess": nth(1)},
+    {"name": "Canton$ebnf$1", "symbols": ["Canton$ebnf$1", "Canton$ebnf$1$subexpression$2"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
+    {"name": "Canton", "symbols": ["Canton$string$2", "__", {"literal":"a"}, "__", "Canton$string$3", "__", "Tincture", "Canton$ebnf$1"], "postprocess": $({ canton: 6, content: 7 })},
     {"name": "Ordinary$ebnf$1$subexpression$1", "symbols": ["__", "Ornament"], "postprocess": nth(1)},
     {"name": "Ordinary$ebnf$1", "symbols": ["Ordinary$ebnf$1$subexpression$1"], "postprocess": id},
     {"name": "Ordinary$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
