@@ -6,7 +6,6 @@ TODO
 - finish ornament support: saltire
 - InDirection -- at least in the case of chevron and saltire, they are rotated to match
 - minor visual effects to make it a little less flat
-- multiple ordinaries? e.g. "sable a fess argent a saltire gules"
 - "overall"
 - fretty?
 - "saltirewise" needs to vary based on where the charge is
@@ -22,7 +21,6 @@ TODO
 - things I want to be able to render
   - churchill arms
   - bavarian arms
-    - the "...a lion rampant argent on a canton..." part represents multiple ordinaries in a row; this is unsupported and not the first time I've seen that
   - ???
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - remove yOffset from ornaments; it shouldn't be necessary
@@ -32,7 +30,6 @@ TODO
 /*
 FUTURE WORK and KNOWN ISSUES
 -------------------------------------------------------------------------------
-- Multiple ordinaries are not supported.
 - Tincture references ("of the first", "of the field", etc.) are not supported. Apparently they are
   generally disliked for introducing complexity and ambiguity.
 - Charges `on` an ordinary are often too close; especially 2s and 3s, and especially on chief and fess.
@@ -144,13 +141,13 @@ type SimpleContent = Ordinary | Charge | Canton | On;
 type SimpleField =
   | {
       tincture: Tincture;
-      content?: SimpleContent;
+      content?: SimpleContent[];
     }
   | {
       varied: Varied;
       first: Tincture;
       second: Tincture;
-      content?: SimpleContent;
+      content?: SimpleContent[];
     };
 
 interface Varied {
@@ -204,7 +201,7 @@ type Charge = SimpleCharge | LionCharge;
 
 interface Canton {
   canton: Tincture;
-  content?: SimpleContent;
+  content?: SimpleContent[];
 }
 
 interface On {
@@ -2170,8 +2167,8 @@ function complexContent(container: SVGElement, content: ComplexContent) {
       g.appendChild(svg.path(CANTON_PATH, element.canton));
       g.classList.add(`fill-${element.canton}`);
       parent.appendChild(g);
-      if (element.content) {
-        renderIntoParent(g, element.content);
+      for (const c of element.content ?? []) {
+        renderIntoParent(g, c);
       }
     } else if ("on" in element) {
       on(parent, element);
@@ -2308,13 +2305,13 @@ function complexContent(container: SVGElement, content: ComplexContent) {
       content.varied.count
     )}")`;
     container.appendChild(second);
-    if (content.content) {
-      renderIntoParent(container, content.content);
+    for (const c of content.content ?? []) {
+      renderIntoParent(container, c);
     }
   } else {
     container.appendChild(field(content.tincture));
-    if (content.content) {
-      renderIntoParent(container, content.content);
+    for (const c of content.content ?? []) {
+      renderIntoParent(container, c);
     }
   }
 }

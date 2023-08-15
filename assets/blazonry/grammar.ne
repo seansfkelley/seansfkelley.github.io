@@ -16,10 +16,10 @@ ComplexContent ->
   | Quarterly     {% id %}
 
 SimpleField ->
-    Tincture (__ SimpleContent {% nth(1) %}):?                                {% $({
+    Tincture (__ SimpleContent {% nth(1) %}):*                                {% $({
       tincture: 0, content: 1
     }) %}
-  | Varied __ Tincture __ "and" __ Tincture (__ SimpleContent {% nth(1) %}):? {% $({
+  | Varied __ Tincture __ "and" __ Tincture (__ SimpleContent {% nth(1) %}):* {% $({
       varied: 0, first: 2, second: 6, content: 7
     }) %}
 
@@ -52,8 +52,8 @@ Quartering ->
   ):? QuarterName __ ComplexContent {% (d) => ({ quarters: [...(d[0] ?? []), d[1]], content: d[3] }) %}
 
 Canton ->
-    "a" __ "canton" __ Tincture                          {% $({ canton: 4 }) %}
-  | "on" __ "a" __ "canton" __ Tincture __ SimpleContent {% $({ canton: 6, content: 8 }) %}
+    "a" __ "canton" __ Tincture                                           {% $({ canton: 4 }) %}
+  | "on" __ "a" __ "canton" __ Tincture (__ SimpleContent {% nth(1) %}):+ {% $({ canton: 6, content: 7 }) %}
 
 # Note that we do not support multiple ordinaries. Yet?
 Ordinary ->
