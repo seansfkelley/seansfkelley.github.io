@@ -26,7 +26,6 @@ TODO
   - bavarian arms
   - ???
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
-- remove yOffset from ornaments; it shouldn't be necessary
 - add a lexer so the errors have useful names present and don't explode every string literal into characters
 - saltires don't extend far enough on the bottom left
   - "Quarterly fourth second 4th and 1st Vert on a saltire cotised Sable a mullet Azure 3rd Argent fourth barry bendy Argent and Vert 3rd Vert fourth Argent."
@@ -863,16 +862,12 @@ function bend({ tincture, cotised, ornament }: Ordinary) {
       svg.path(
         path.from(
           relativePathsToClosedLoop(
-            ORNAMENTS[ornament](BEND_LENGTH, -BEND_WIDTH / 2, false, "primary"),
+            relativePathFor([0, -BEND_WIDTH / 2], undefined, undefined),
+            ORNAMENTS[ornament](BEND_LENGTH, false, "primary"),
+            relativePathFor(undefined, [0, BEND_WIDTH], undefined),
             // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
             // we traverse around the bend clockwise.
-            ORNAMENTS[ornament](
-              -BEND_LENGTH,
-              BEND_WIDTH / 2,
-              true,
-              "secondary",
-              "end"
-            )
+            ORNAMENTS[ornament](-BEND_LENGTH, true, "secondary", "end")
           )
         ),
         tincture
@@ -991,7 +986,6 @@ function chief({ tincture, cotised, ornament }: Ordinary) {
   if (ornament != null) {
     const [start, main, end] = ORNAMENTS[ornament](
       -W,
-      CHIEF_WIDTH,
       true,
       "primary",
       "center"
@@ -1001,9 +995,9 @@ function chief({ tincture, cotised, ornament }: Ordinary) {
         path.from(
           { type: "M", loc: [-W_2, -H_2] },
           { type: "L", loc: [W_2, -H_2] },
-          { type: "l", loc: start.loc },
+          { type: "l", loc: Coordinate.add([0, CHIEF_WIDTH], start.loc) },
           main,
-          { type: "l", loc: end.loc }
+          { type: "l", loc: Coordinate.add([0, -CHIEF_WIDTH], end.loc) }
         ),
         tincture
       )
@@ -1475,10 +1469,12 @@ function pale({ tincture, cotised, ornament }: Ordinary) {
     const p = svg.path(
       path.from(
         relativePathsToClosedLoop(
-          ORNAMENTS[ornament](H, -PALE_WIDTH / 2, false, "primary"),
+          relativePathFor([0, -PALE_WIDTH / 2], undefined, undefined),
+          ORNAMENTS[ornament](H, false, "primary"),
+          relativePathFor(undefined, [0, PALE_WIDTH], undefined),
           // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
           // we traverse around the pale clockwise.
-          ORNAMENTS[ornament](-H, PALE_WIDTH / 2, true, "secondary", "end")
+          ORNAMENTS[ornament](-H, true, "secondary", "end")
         )
       ),
       tincture
@@ -1821,6 +1817,18 @@ function wrapSimpleOrnamenter(
       assertNever(alignment);
     }
   };
+}
+
+function relativePathFor(
+  start: Coordinate | undefined,
+  main: Coordinate | undefined,
+  end: Coordinate | undefined
+): RelativeOrnamentPath {
+  return [
+    { type: "m", loc: start ?? [0, 0] },
+    main ? [{ type: "l", loc: main }] : [],
+    { type: "m", loc: end ?? [0, 0] },
+  ];
 }
 
 function relativePathsToClosedLoop(
