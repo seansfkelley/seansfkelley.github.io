@@ -1632,11 +1632,16 @@ saltire.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
   ] satisfies PathCommand.Any[];
 
   if (ornament == null) {
+    // The ordering of this is significant, since it defines which tincture is on the top/bottom
+    // versus left/right.
     return [
       { type: "M", loc: topLeft.loc },
-      bottomRight,
       topRight,
       bottomLeft,
+      // These two are to make the clip path reaches the bottom of the taller-than-wide shield.
+      { type: "l", loc: [0, H - W] },
+      { type: "l", loc: [W, 0] },
+      bottomRight,
       { type: "Z" },
     ];
   } else {
