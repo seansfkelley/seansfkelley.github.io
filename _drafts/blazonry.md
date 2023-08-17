@@ -39,7 +39,7 @@ content="This page is interactive, and only works with JavaScript enabled!"
 
 <div class="center hidden" id="interactive">
   <form id="form">
-    <input type="text" id="blazon-input" value="argent a saltire embattled sable">
+    <input type="text" id="blazon-input" value="party per saltire engrailed argent and gules">
     <div>
       <button id="random-blazon" type="button">
       Generate Hideous Random Blazon
