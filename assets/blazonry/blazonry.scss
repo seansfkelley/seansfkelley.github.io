@@ -47,6 +47,8 @@ $colors: (
   box-sizing: border-box;
   background-color: var(--intent-danger-background-color);
   color: var(--intent-danger-text-color);
+  white-space: pre;
+  overflow-x: auto;
 }
 
 #ast-wrapper {
