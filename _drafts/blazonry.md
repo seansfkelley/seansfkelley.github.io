@@ -39,7 +39,7 @@ content="This page is interactive, and only works with JavaScript enabled!"
 
 <div class="center hidden" id="interactive">
   <form id="form">
-    <input type="text" id="blazon-input" value="Quarterly 1st and 4th Sable a lion rampant or on a canton Argent a cross Gules; 2nd and 3rd quarterly 1st and 4th argent overall a bend Sable">
+    <input type="text" id="blazon-input" value="argent a saltire embattled sable">
     <div>
       <button id="random-blazon" type="button">
       Generate Hideous Random Blazon
