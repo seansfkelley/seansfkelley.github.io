@@ -3,7 +3,6 @@ TODO
 -------------------------------------------------------------------------------
 - "quarterly" and "party per cross" are synonymous; make them such
 - party per ornament: saltire, quarterly
-- finish ornament support: saltire
 - InDirection -- at least in the case of chevron and saltire, they are rotated to match
 - minor visual effects to make it a little less flat
 - fretty?
@@ -1550,15 +1549,60 @@ pale.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
 };
 
 const SALTIRE_WIDTH = W / 4;
-function saltire({ tincture, cotised }: Ordinary) {
+function saltire({ tincture, cotised, ornament }: Ordinary) {
   const tl: Coordinate = [-W_2, -H_2];
   const tr: Coordinate = [W_2, -H_2];
   const bl: Coordinate = [-W_2, -H_2 + W];
   const br: Coordinate = [-W_2 + H, H_2];
 
   const saltire = svg.g();
-  saltire.appendChild(svg.line(tl, br, tincture, SALTIRE_WIDTH));
-  saltire.appendChild(svg.line(bl, tr, tincture, SALTIRE_WIDTH));
+
+  if (ornament != null) {
+    const g = svg.g();
+
+    const length = Math.hypot(W_2, W_2);
+
+    const ornamentations = [
+      // Starting on the bottom left, moving around clockwise.
+      ORNAMENTS[ornament](length, false, "primary", "end"),
+      ORNAMENTS[ornament](length, false, "secondary", "start"),
+      straightLineOrnamenter(SALTIRE_WIDTH),
+      ORNAMENTS[ornament](-length, true, "primary", "end"),
+      ORNAMENTS[ornament](length, false, "primary", "start"),
+      straightLineOrnamenter(-SALTIRE_WIDTH),
+      ORNAMENTS[ornament](-length, true, "secondary", "end"),
+      ORNAMENTS[ornament](-length, true, "primary", "start"),
+      straightLineOrnamenter(-SALTIRE_WIDTH),
+      ORNAMENTS[ornament](length, false, "secondary", "end"),
+      ORNAMENTS[ornament](-length, true, "secondary", "start"),
+    ];
+
+    for (const index of [1, 3, 5, 7, 9]) {
+      RelativeOrnamentPath.rotate(ornamentations[index], -Math.PI / 2);
+    }
+
+    const saltirePath = svg.path(
+      path.from(relativePathsToClosedLoop(...ornamentations)),
+      tincture
+    );
+
+    applyTransforms(saltirePath, {
+      translate: [
+        -(length + SALTIRE_WIDTH / 2),
+        -H_2 - SALTIRE_WIDTH / 2 + W_2,
+      ],
+    });
+    applyTransforms(g, {
+      rotate: -Math.PI / 4,
+      origin: [0, -H_2 + W_2],
+    });
+
+    g.appendChild(saltirePath);
+    saltire.appendChild(g);
+  } else {
+    saltire.appendChild(svg.line(tl, br, tincture, SALTIRE_WIDTH));
+    saltire.appendChild(svg.line(bl, tr, tincture, SALTIRE_WIDTH));
+  }
 
   if (cotised != null) {
     // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
@@ -1632,11 +1676,16 @@ saltire.party = (ornament: Ornament | undefined): PathCommand.Any[] => {
   ] satisfies PathCommand.Any[];
 
   if (ornament == null) {
+    // The ordering of this is significant, since it defines which tincture is on the top/bottom
+    // versus left/right.
     return [
       { type: "M", loc: topLeft.loc },
-      bottomRight,
       topRight,
       bottomLeft,
+      // These two are to make the clip path reaches the bottom of the taller-than-wide shield.
+      { type: "l", loc: [0, H - W] },
+      { type: "l", loc: [W, 0] },
+      bottomRight,
       { type: "Z" },
     ];
   } else {
