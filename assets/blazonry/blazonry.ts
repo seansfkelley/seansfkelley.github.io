@@ -25,8 +25,6 @@ TODO
   - ???
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - add a lexer so the errors have useful names present and don't explode every string literal into characters
-- saltires don't extend far enough on the bottom left
-  - "Quarterly fourth second 4th and 1st Vert on a saltire cotised Sable a mullet Azure 3rd Argent fourth barry bendy Argent and Vert 3rd Vert fourth Argent."
 */
 
 /*
@@ -1552,7 +1550,7 @@ const SALTIRE_WIDTH = W / 4;
 function saltire({ tincture, cotised, ornament }: Ordinary) {
   const tl: Coordinate = [-W_2, -H_2];
   const tr: Coordinate = [W_2, -H_2];
-  const bl: Coordinate = [-W_2, -H_2 + W];
+  const bl: Coordinate = [W_2 - H, H_2];
   const br: Coordinate = [-W_2 + H, H_2];
 
   const saltire = svg.g();
