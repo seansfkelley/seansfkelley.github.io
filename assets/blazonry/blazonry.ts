@@ -24,7 +24,6 @@ TODO
   - bavarian arms
   - ???
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
-- add a lexer so the errors have useful names present and don't explode every string literal into characters
 */
 
 /*
@@ -41,6 +40,8 @@ FUTURE WORK and KNOWN ISSUES
 - Divided fields ("party per") should be allowed to contain "complex" content (such as other divided
   fields) and not just ordinaries and charges.
 - "Party per cross" is not allowed, even though it's synonymous with "quarterly".
+- The error messages are really hard to read. A lexer that properly groups characters into tokens
+  would probably help (as right now every character in a literal is its own rule).
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
