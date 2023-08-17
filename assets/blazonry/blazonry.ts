@@ -1,7 +1,6 @@
 /*
 TODO
 -------------------------------------------------------------------------------
-- "quarterly" and "party per cross" are synonymous; make them such
 - party per ornament: quarterly
 - InDirection -- at least in the case of chevron and saltire, they are rotated to match
 - minor visual effects to make it a little less flat
@@ -43,6 +42,7 @@ FUTURE WORK and KNOWN ISSUES
   treatment for the square (rather than rectangular) field in a canton.
 - Divided fields ("party per") should be allowed to contain "complex" content (such as other divided
   fields) and not just ordinaries and charges.
+- "Party per cross" is not allowed, even though it's synonymous with "quarterly".
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------

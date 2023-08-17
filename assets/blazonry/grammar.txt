@@ -193,6 +193,7 @@ Ornament ->
   | "engrailed"                   {% id %}
   | "indented"                    {% id %}
   | "wavy"                        {% id %}
+  | "undy"                        {% literal("wavy") %}
   # TODO: More.
 
 _  -> whitespace:* {% nop %}

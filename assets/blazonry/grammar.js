@@ -310,6 +310,8 @@ var grammar = {
     {"name": "Ornament", "symbols": ["Ornament$string$4"], "postprocess": id},
     {"name": "Ornament$string$5", "symbols": [{"literal":"w"}, {"literal":"a"}, {"literal":"v"}, {"literal":"y"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "Ornament", "symbols": ["Ornament$string$5"], "postprocess": id},
+    {"name": "Ornament$string$6", "symbols": [{"literal":"u"}, {"literal":"n"}, {"literal":"d"}, {"literal":"y"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "Ornament", "symbols": ["Ornament$string$6"], "postprocess": literal("wavy")},
     {"name": "_$ebnf$1", "symbols": []},
     {"name": "_$ebnf$1", "symbols": ["_$ebnf$1", "whitespace"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
     {"name": "_", "symbols": ["_$ebnf$1"], "postprocess": nop},
