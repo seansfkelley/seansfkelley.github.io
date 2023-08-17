@@ -3,7 +3,7 @@
 TODO
 -------------------------------------------------------------------------------
 - "quarterly" and "party per cross" are synonymous; make them such
-- party per ornament: saltire, quarterly
+- party per ornament: quarterly
 - InDirection -- at least in the case of chevron and saltire, they are rotated to match
 - minor visual effects to make it a little less flat
 - fretty?
@@ -944,13 +944,13 @@ pale.party = (ornament) => {
     }
     else {
         const [start, main, end] = ORNAMENTS[ornament](H, false, "primary", "start");
-        main.forEach((c) => PathCommand.rotate(c, Math.PI / 2));
+        RelativeOrnamentPath.rotate([start, main, end], Math.PI / 2);
         return [
             topLeft,
             topMid,
-            { type: "l", loc: Coordinate.rotate(start.loc, Math.PI / 2) },
+            { type: "l", loc: start.loc },
             ...main,
-            { type: "l", loc: Coordinate.rotate(end.loc, Math.PI / 2) },
+            { type: "l", loc: end.loc },
             bottomMid,
             bottomLeft,
             { type: "Z" },
@@ -1058,8 +1058,26 @@ saltire.party = (ornament) => {
         ];
     }
     else {
-        // TODO: What makes sense here?
-        return [];
+        const [start1, main1, end1] = ORNAMENTS[ornament](Math.hypot(W, W), true, "primary", "center");
+        RelativeOrnamentPath.rotate([start1, main1, end1], (3 * Math.PI) / 4);
+        const [start2, main2, end2] = ORNAMENTS[ornament](Math.hypot(W, W), true, "primary", "center");
+        RelativeOrnamentPath.rotate([start2, main2, end2], -(3 * Math.PI) / 4);
+        return [
+            { type: "M", loc: topLeft.loc },
+            topRight,
+            { type: "l", loc: start1.loc },
+            ...main1,
+            { type: "l", loc: end1.loc },
+            bottomLeft,
+            // These two are to make the clip path reaches the bottom of the taller-than-wide shield.
+            { type: "l", loc: [0, H - W] },
+            { type: "l", loc: [W, 0] },
+            bottomRight,
+            { type: "l", loc: start2.loc },
+            ...main2,
+            { type: "l", loc: end2.loc },
+            { type: "Z" },
+        ];
     }
 };
 const ORDINARIES = {
