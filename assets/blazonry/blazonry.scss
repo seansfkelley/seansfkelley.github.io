@@ -148,3 +148,26 @@ $colors: (
     }
   }
 }
+
+.fleur-de-lys {
+  .outline {
+    stroke: black;
+    opacity: 0.3;
+  }
+
+  @each $key, $val in $colors {
+    &.#{"" + $key} {
+      .main {
+        fill: $val;
+      }
+
+      .lowlight {
+        fill: darken($val, 5%);
+      }
+
+      .highlight {
+        fill: lighten($val, 15%);
+      }
+    }
+  }
+}
