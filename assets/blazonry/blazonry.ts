@@ -190,7 +190,7 @@ interface BaseCharge {
 }
 
 interface SimpleCharge extends BaseCharge {
-  charge: "mullet" | "rondel";
+  charge: "mullet" | "rondel" | "fleur-de-lys";
 }
 
 interface LionCharge extends BaseCharge {
@@ -1759,6 +1759,12 @@ function mullet({ tincture }: SimpleCharge) {
   );
 }
 
+function fleurDeLys({ tincture }: SimpleCharge) {
+  const fleurDeLys = getComplexSvgSync("fleur-de-lys").cloneNode(true);
+  fleurDeLys.classList.add(tincture);
+  return fleurDeLys;
+}
+
 function lion({ tincture, armed, langued, pose }: LionCharge) {
   const lion = getComplexSvgSync("lion", pose).cloneNode(true);
   lion.classList.add(tincture);
@@ -1785,7 +1791,7 @@ const SIMPLE_CHARGES: {
   [K in SimpleCharge["charge"]]: ChargeRenderer<
     DiscriminateUnion<Charge, "charge", K>
   >;
-} = { rondel, mullet };
+} = { rondel, mullet, "fleur-de-lys": fleurDeLys };
 
 // A little unfortunate this dispatching wrapper is necessary, but it's the only way to type-safety
 // render based on the string. Throwing all charges, simple and otherwise, into a constant mapping
@@ -1794,6 +1800,7 @@ function renderCharge(charge: Charge): SVGElement {
   switch (charge.charge) {
     case "rondel":
     case "mullet":
+    case "fleur-de-lys":
       return SIMPLE_CHARGES[charge.charge](charge);
     case "lion":
       return lion(charge);
@@ -2600,6 +2607,7 @@ for (const example of document.querySelectorAll<HTMLAnchorElement>(
 // load of these and then try to access them sync later and hope for the best. Making the ENTIRE
 // implementation async just for this is a massive PITA.
 fetchComplexSvg("lion", "rampant");
+fetchComplexSvg("fleur-de-lys");
 
 // This should happen last so that when the default text includes a complex SVG charge, at least
 // the immediate failure to render doesn't cause us to skip the loading!
