@@ -259,3 +259,72 @@
 .lion.langued-purpure .langue {
   fill: blueviolet !important;
 }
+
+.fleur-de-lys .outline {
+  stroke: black;
+  opacity: 0.3;
+  stroke-width: 2;
+}
+.fleur-de-lys.argent .main {
+  fill: whitesmoke;
+}
+.fleur-de-lys.argent .lowlight {
+  fill: #e8e8e8;
+}
+.fleur-de-lys.argent .highlight {
+  fill: white;
+}
+.fleur-de-lys.sable .main {
+  fill: black;
+}
+.fleur-de-lys.sable .lowlight {
+  fill: black;
+}
+.fleur-de-lys.sable .highlight {
+  fill: #262626;
+}
+.fleur-de-lys.gules .main {
+  fill: crimson;
+}
+.fleur-de-lys.gules .lowlight {
+  fill: #c51236;
+}
+.fleur-de-lys.gules .highlight {
+  fill: #ef4e6e;
+}
+.fleur-de-lys.vert .main {
+  fill: green;
+}
+.fleur-de-lys.vert .lowlight {
+  fill: #006700;
+}
+.fleur-de-lys.vert .highlight {
+  fill: #00cd00;
+}
+.fleur-de-lys.azure .main {
+  fill: mediumblue;
+}
+.fleur-de-lys.azure .lowlight {
+  fill: #0000b4;
+}
+.fleur-de-lys.azure .highlight {
+  fill: #1b1bff;
+}
+.fleur-de-lys.or .main {
+  fill: gold;
+}
+.fleur-de-lys.or .lowlight {
+  fill: #e6c200;
+}
+.fleur-de-lys.or .highlight {
+  fill: #ffe34d;
+}
+.fleur-de-lys.purpure .main {
+  fill: blueviolet;
+}
+.fleur-de-lys.purpure .lowlight {
+  fill: #7d1dd6;
+}
+.fleur-de-lys.purpure .highlight {
+  fill: #af6eeb;
+}

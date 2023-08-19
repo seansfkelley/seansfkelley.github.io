@@ -27,6 +27,7 @@ function $(o) {
 
   function nop() { return undefined; }
   function literal(l) { return () => l; }
+  function spread(o) { return (delegate) => ({ ...id(delegate), ...o }); }
 var grammar = {
     Lexer: undefined,
     ParserRules: [
@@ -128,21 +129,86 @@ var grammar = {
     {"name": "Ordinary", "symbols": ["Singular", "__", "OrdinaryName", "Ordinary$ebnf$3", "__", "Tincture"], "postprocess":  $({
           ordinary: 2, ornament: 3, tincture : 5
         }) },
-    {"name": "Charge$ebnf$1$subexpression$1", "symbols": ["__", "Posture"], "postprocess": nth(1)},
-    {"name": "Charge$ebnf$1", "symbols": ["Charge$ebnf$1$subexpression$1"], "postprocess": id},
-    {"name": "Charge$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
-    {"name": "Charge", "symbols": ["Singular", "__", "SimpleChargeName", "Charge$ebnf$1", "__", "Tincture"], "postprocess":  (d) => ({
-          count: 1, charge: d[2], posture: d[3], tincture: d[5]
+    {"name": "Charge$macrocall$2$string$1", "symbols": [{"literal":"r"}, {"literal":"o"}, {"literal":"n"}, {"literal":"d"}, {"literal":"e"}, {"literal":"l"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "Charge$macrocall$2", "symbols": ["Charge$macrocall$2$string$1"]},
+    {"name": "Charge$macrocall$3$string$1", "symbols": [{"literal":"r"}, {"literal":"o"}, {"literal":"n"}, {"literal":"d"}, {"literal":"e"}, {"literal":"l"}, {"literal":"s"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "Charge$macrocall$3", "symbols": ["Charge$macrocall$3$string$1"]},
+    {"name": "Charge$macrocall$1$ebnf$1$subexpression$1", "symbols": ["__", "Posture"], "postprocess": nth(1)},
+    {"name": "Charge$macrocall$1$ebnf$1", "symbols": ["Charge$macrocall$1$ebnf$1$subexpression$1"], "postprocess": id},
+    {"name": "Charge$macrocall$1$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "Charge$macrocall$1", "symbols": ["Singular", "__", "Charge$macrocall$2", "Charge$macrocall$1$ebnf$1", "__", "Tincture"], "postprocess":  (d) => ({
+          count: 1, posture: d[3], tincture: d[5]
         }) },
-    {"name": "Charge$ebnf$2$subexpression$1", "symbols": ["__", "Posture"], "postprocess": nth(1)},
-    {"name": "Charge$ebnf$2", "symbols": ["Charge$ebnf$2$subexpression$1"], "postprocess": id},
-    {"name": "Charge$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
-    {"name": "Charge$ebnf$3$subexpression$1", "symbols": ["__", "InDirection"], "postprocess": nth(1)},
-    {"name": "Charge$ebnf$3", "symbols": ["Charge$ebnf$3$subexpression$1"], "postprocess": id},
-    {"name": "Charge$ebnf$3", "symbols": [], "postprocess": function(d) {return null;}},
-    {"name": "Charge", "symbols": ["Plural", "__", "SimpleChargeName", {"literal":"s"}, "Charge$ebnf$2", "__", "Tincture", "Charge$ebnf$3"], "postprocess":  $({
-          count: 0, charge: 2, posture: 4, tincture: 6, direction : 7
+    {"name": "Charge$macrocall$1$ebnf$2$subexpression$1", "symbols": ["__", "Posture"], "postprocess": nth(1)},
+    {"name": "Charge$macrocall$1$ebnf$2", "symbols": ["Charge$macrocall$1$ebnf$2$subexpression$1"], "postprocess": id},
+    {"name": "Charge$macrocall$1$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "Charge$macrocall$1$ebnf$3$subexpression$1", "symbols": ["__", "InDirection"], "postprocess": nth(1)},
+    {"name": "Charge$macrocall$1$ebnf$3", "symbols": ["Charge$macrocall$1$ebnf$3$subexpression$1"], "postprocess": id},
+    {"name": "Charge$macrocall$1$ebnf$3", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "Charge$macrocall$1", "symbols": ["Plural", "__", "Charge$macrocall$3", "Charge$macrocall$1$ebnf$2", "__", "Tincture", "Charge$macrocall$1$ebnf$3"], "postprocess":  (d) => ({
+          count: d[0], posture: d[3], tincture: d[5], direction: d[6]
         }) },
+    {"name": "Charge", "symbols": ["Charge$macrocall$1"], "postprocess": spread({ charge: 'rondel' })},
+    {"name": "Charge$macrocall$5$string$1", "symbols": [{"literal":"m"}, {"literal":"u"}, {"literal":"l"}, {"literal":"l"}, {"literal":"e"}, {"literal":"t"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "Charge$macrocall$5", "symbols": ["Charge$macrocall$5$string$1"]},
+    {"name": "Charge$macrocall$6$string$1", "symbols": [{"literal":"m"}, {"literal":"u"}, {"literal":"l"}, {"literal":"l"}, {"literal":"e"}, {"literal":"t"}, {"literal":"s"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "Charge$macrocall$6", "symbols": ["Charge$macrocall$6$string$1"]},
+    {"name": "Charge$macrocall$4$ebnf$1$subexpression$1", "symbols": ["__", "Posture"], "postprocess": nth(1)},
+    {"name": "Charge$macrocall$4$ebnf$1", "symbols": ["Charge$macrocall$4$ebnf$1$subexpression$1"], "postprocess": id},
+    {"name": "Charge$macrocall$4$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "Charge$macrocall$4", "symbols": ["Singular", "__", "Charge$macrocall$5", "Charge$macrocall$4$ebnf$1", "__", "Tincture"], "postprocess":  (d) => ({
+          count: 1, posture: d[3], tincture: d[5]
+        }) },
+    {"name": "Charge$macrocall$4$ebnf$2$subexpression$1", "symbols": ["__", "Posture"], "postprocess": nth(1)},
+    {"name": "Charge$macrocall$4$ebnf$2", "symbols": ["Charge$macrocall$4$ebnf$2$subexpression$1"], "postprocess": id},
+    {"name": "Charge$macrocall$4$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "Charge$macrocall$4$ebnf$3$subexpression$1", "symbols": ["__", "InDirection"], "postprocess": nth(1)},
+    {"name": "Charge$macrocall$4$ebnf$3", "symbols": ["Charge$macrocall$4$ebnf$3$subexpression$1"], "postprocess": id},
+    {"name": "Charge$macrocall$4$ebnf$3", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "Charge$macrocall$4", "symbols": ["Plural", "__", "Charge$macrocall$6", "Charge$macrocall$4$ebnf$2", "__", "Tincture", "Charge$macrocall$4$ebnf$3"], "postprocess":  (d) => ({
+          count: d[0], posture: d[3], tincture: d[5], direction: d[6]
+        }) },
+    {"name": "Charge", "symbols": ["Charge$macrocall$4"], "postprocess": spread({ charge: 'mullet' })},
+    {"name": "Charge$macrocall$8$string$1", "symbols": [{"literal":"f"}, {"literal":"l"}, {"literal":"e"}, {"literal":"u"}, {"literal":"r"}, {"literal":"-"}, {"literal":"d"}, {"literal":"e"}, {"literal":"-"}, {"literal":"l"}, {"literal":"y"}, {"literal":"s"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "Charge$macrocall$8", "symbols": ["Charge$macrocall$8$string$1"]},
+    {"name": "Charge$macrocall$9$string$1", "symbols": [{"literal":"f"}, {"literal":"l"}, {"literal":"e"}, {"literal":"u"}, {"literal":"r"}, {"literal":"s"}, {"literal":"-"}, {"literal":"d"}, {"literal":"e"}, {"literal":"-"}, {"literal":"l"}, {"literal":"y"}, {"literal":"s"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "Charge$macrocall$9", "symbols": ["Charge$macrocall$9$string$1"]},
+    {"name": "Charge$macrocall$7$ebnf$1$subexpression$1", "symbols": ["__", "Posture"], "postprocess": nth(1)},
+    {"name": "Charge$macrocall$7$ebnf$1", "symbols": ["Charge$macrocall$7$ebnf$1$subexpression$1"], "postprocess": id},
+    {"name": "Charge$macrocall$7$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "Charge$macrocall$7", "symbols": ["Singular", "__", "Charge$macrocall$8", "Charge$macrocall$7$ebnf$1", "__", "Tincture"], "postprocess":  (d) => ({
+          count: 1, posture: d[3], tincture: d[5]
+        }) },
+    {"name": "Charge$macrocall$7$ebnf$2$subexpression$1", "symbols": ["__", "Posture"], "postprocess": nth(1)},
+    {"name": "Charge$macrocall$7$ebnf$2", "symbols": ["Charge$macrocall$7$ebnf$2$subexpression$1"], "postprocess": id},
+    {"name": "Charge$macrocall$7$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "Charge$macrocall$7$ebnf$3$subexpression$1", "symbols": ["__", "InDirection"], "postprocess": nth(1)},
+    {"name": "Charge$macrocall$7$ebnf$3", "symbols": ["Charge$macrocall$7$ebnf$3$subexpression$1"], "postprocess": id},
+    {"name": "Charge$macrocall$7$ebnf$3", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "Charge$macrocall$7", "symbols": ["Plural", "__", "Charge$macrocall$9", "Charge$macrocall$7$ebnf$2", "__", "Tincture", "Charge$macrocall$7$ebnf$3"], "postprocess":  (d) => ({
+          count: d[0], posture: d[3], tincture: d[5], direction: d[6]
+        }) },
+    {"name": "Charge", "symbols": ["Charge$macrocall$7"], "postprocess": spread({ charge: 'fleur-de-lys' })},
+    {"name": "Charge$macrocall$11$string$1", "symbols": [{"literal":"f"}, {"literal":"l"}, {"literal":"e"}, {"literal":"u"}, {"literal":"r"}, {"literal":"-"}, {"literal":"d"}, {"literal":"e"}, {"literal":"-"}, {"literal":"l"}, {"literal":"i"}, {"literal":"s"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "Charge$macrocall$11", "symbols": ["Charge$macrocall$11$string$1"]},
+    {"name": "Charge$macrocall$12$string$1", "symbols": [{"literal":"f"}, {"literal":"l"}, {"literal":"e"}, {"literal":"u"}, {"literal":"r"}, {"literal":"s"}, {"literal":"-"}, {"literal":"d"}, {"literal":"e"}, {"literal":"-"}, {"literal":"l"}, {"literal":"i"}, {"literal":"s"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "Charge$macrocall$12", "symbols": ["Charge$macrocall$12$string$1"]},
+    {"name": "Charge$macrocall$10$ebnf$1$subexpression$1", "symbols": ["__", "Posture"], "postprocess": nth(1)},
+    {"name": "Charge$macrocall$10$ebnf$1", "symbols": ["Charge$macrocall$10$ebnf$1$subexpression$1"], "postprocess": id},
+    {"name": "Charge$macrocall$10$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "Charge$macrocall$10", "symbols": ["Singular", "__", "Charge$macrocall$11", "Charge$macrocall$10$ebnf$1", "__", "Tincture"], "postprocess":  (d) => ({
+          count: 1, posture: d[3], tincture: d[5]
+        }) },
+    {"name": "Charge$macrocall$10$ebnf$2$subexpression$1", "symbols": ["__", "Posture"], "postprocess": nth(1)},
+    {"name": "Charge$macrocall$10$ebnf$2", "symbols": ["Charge$macrocall$10$ebnf$2$subexpression$1"], "postprocess": id},
+    {"name": "Charge$macrocall$10$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "Charge$macrocall$10$ebnf$3$subexpression$1", "symbols": ["__", "InDirection"], "postprocess": nth(1)},
+    {"name": "Charge$macrocall$10$ebnf$3", "symbols": ["Charge$macrocall$10$ebnf$3$subexpression$1"], "postprocess": id},
+    {"name": "Charge$macrocall$10$ebnf$3", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "Charge$macrocall$10", "symbols": ["Plural", "__", "Charge$macrocall$12", "Charge$macrocall$10$ebnf$2", "__", "Tincture", "Charge$macrocall$10$ebnf$3"], "postprocess":  (d) => ({
+          count: d[0], posture: d[3], tincture: d[5], direction: d[6]
+        }) },
+    {"name": "Charge", "symbols": ["Charge$macrocall$10"], "postprocess": spread({ charge: 'fleur-de-lys' })},
     {"name": "Charge", "symbols": ["Lion"], "postprocess": id},
     {"name": "Lion$subexpression$1$string$1", "symbols": [{"literal":"l"}, {"literal":"i"}, {"literal":"o"}, {"literal":"n"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "Lion$subexpression$1", "symbols": [{"literal":"a"}, "__", "Lion$subexpression$1$string$1"], "postprocess": literal(1)},
@@ -280,10 +346,6 @@ var grammar = {
     {"name": "OrdinaryName", "symbols": ["OrdinaryName$string$7"], "postprocess": id},
     {"name": "OrdinaryName$string$8", "symbols": [{"literal":"c"}, {"literal":"h"}, {"literal":"i"}, {"literal":"e"}, {"literal":"f"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "OrdinaryName", "symbols": ["OrdinaryName$string$8"], "postprocess": id},
-    {"name": "SimpleChargeName$string$1", "symbols": [{"literal":"r"}, {"literal":"o"}, {"literal":"n"}, {"literal":"d"}, {"literal":"e"}, {"literal":"l"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "SimpleChargeName", "symbols": ["SimpleChargeName$string$1"], "postprocess": id},
-    {"name": "SimpleChargeName$string$2", "symbols": [{"literal":"m"}, {"literal":"u"}, {"literal":"l"}, {"literal":"l"}, {"literal":"e"}, {"literal":"t"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "SimpleChargeName", "symbols": ["SimpleChargeName$string$2"], "postprocess": id},
     {"name": "VariedName$string$1", "symbols": [{"literal":"b"}, {"literal":"a"}, {"literal":"r"}, {"literal":"r"}, {"literal":"y"}, {"literal":" "}, {"literal":"b"}, {"literal":"e"}, {"literal":"n"}, {"literal":"d"}, {"literal":"y"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "VariedName", "symbols": ["VariedName$string$1"], "postprocess": id},
     {"name": "VariedName$string$2", "symbols": [{"literal":"b"}, {"literal":"a"}, {"literal":"r"}, {"literal":"r"}, {"literal":"y"}], "postprocess": function joiner(d) {return d.join('');}},
