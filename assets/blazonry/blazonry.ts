@@ -748,21 +748,34 @@ function roundToPrecision(n: number, precision: number = 0): number {
 }
 
 const svg = {
-  path: (d: string, tincture: Tincture): SVGPathElement => {
+  path: (
+    d: string,
+    {
+      fill,
+      stroke,
+      strokeWidth = 1,
+    }: { fill?: Tincture; stroke?: Tincture; strokeWidth?: number } = {}
+  ): SVGPathElement => {
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     path.setAttribute("d", d);
-    path.classList.add(`fill-${tincture}`);
+    path.setAttribute("stroke-width", strokeWidth.toString());
+    if (fill != null) {
+      path.classList.add(`fill-${fill}`);
+    }
+    if (stroke != null) {
+      path.classList.add(`stroke-${stroke}`);
+    }
     return path;
   },
   line: (
     [x1, y1]: Coordinate,
     [x2, y2]: Coordinate,
     {
-      tincture,
+      stroke,
       width = 1,
       linecap = "butt",
     }: {
-      tincture?: Tincture;
+      stroke?: Tincture;
       width?: number;
       linecap?: "butt" | "round" | "square";
     } = {}
@@ -774,22 +787,24 @@ const svg = {
     line.setAttribute("y2", `${y2}`);
     line.setAttribute("stroke-width", `${width}`);
     line.setAttribute("stroke-linecap", linecap);
-    if (tincture != null) {
-      line.classList.add(`stroke-${tincture}`);
+    if (stroke != null) {
+      line.classList.add(`stroke-${stroke}`);
     }
     return line;
   },
   rect: (
     [x1, y1]: Coordinate,
     [x2, y2]: Coordinate,
-    tincture: Tincture
+    { fill }: { fill?: Tincture } = {}
   ): SVGRectElement => {
     const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     rect.setAttribute("x", `${x1}`);
     rect.setAttribute("y", `${y1}`);
     rect.setAttribute("width", `${x2 - x1}`);
     rect.setAttribute("height", `${y2 - y1}`);
-    rect.classList.add(`fill-${tincture}`);
+    if (fill != null) {
+      rect.classList.add(`fill-${fill}`);
+    }
     return rect;
   },
   g: (...children: SVGElement[]): SVGGElement => {
@@ -876,12 +891,15 @@ function bend({ tincture, cotised, ornament }: Ordinary) {
             ORNAMENTS[ornament](-BEND_LENGTH, true, "secondary", "end")
           )
         ),
-        tincture
+        { fill: tincture }
       )
     );
   } else {
     bend.appendChild(
-      svg.line([0, 0], [BEND_LENGTH, 0], { tincture, width: BEND_WIDTH })
+      svg.line([0, 0], [BEND_LENGTH, 0], {
+        stroke: tincture,
+        width: BEND_WIDTH,
+      })
     );
   }
 
@@ -889,13 +907,13 @@ function bend({ tincture, cotised, ornament }: Ordinary) {
     const offset = BEND_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
     bend.appendChild(
       svg.line([0, -offset], [BEND_LENGTH, -offset], {
-        tincture: cotised,
+        stroke: cotised,
         width: COTISED_WIDTH,
       })
     );
     bend.appendChild(
       svg.line([0, offset], [BEND_LENGTH, offset], {
-        tincture: cotised,
+        stroke: cotised,
         width: COTISED_WIDTH,
       })
     );
@@ -1013,7 +1031,7 @@ function chief({ tincture, cotised, ornament }: Ordinary) {
           main,
           { type: "l", loc: Coordinate.add([0, -CHIEF_WIDTH], end.loc) }
         ),
-        tincture
+        { fill: tincture }
       )
     );
   } else {
@@ -1022,7 +1040,7 @@ function chief({ tincture, cotised, ornament }: Ordinary) {
         [-W_2, -H_2 + CHIEF_WIDTH / 2],
         [W_2, -H_2 + CHIEF_WIDTH / 2],
 
-        { tincture, width: CHIEF_WIDTH }
+        { stroke: tincture, width: CHIEF_WIDTH }
       )
     );
   }
@@ -1033,7 +1051,7 @@ function chief({ tincture, cotised, ornament }: Ordinary) {
         [-W_2, -H_2 + CHIEF_WIDTH + (COTISED_WIDTH * 3) / 2],
         [W_2, -H_2 + CHIEF_WIDTH + (COTISED_WIDTH * 3) / 2],
 
-        { tincture: cotised, width: COTISED_WIDTH }
+        { stroke: cotised, width: COTISED_WIDTH }
       )
     );
   }
@@ -1105,7 +1123,7 @@ function chevron({ tincture, cotised, ornament }: Ordinary) {
           { type: "l", loc: [-CHEVRON_WIDTH / 10, 0] },
           { type: "z" }
         ),
-        tincture
+        { fill: tincture }
       );
       applyTransforms(p, {
         origin: topStart.loc,
@@ -1120,11 +1138,15 @@ function chevron({ tincture, cotised, ornament }: Ordinary) {
     }
   } else {
     chevron.appendChild(
-      svg.line(left, mid, { tincture, width: CHEVRON_WIDTH, linecap: "square" })
+      svg.line(left, mid, {
+        stroke: tincture,
+        width: CHEVRON_WIDTH,
+        linecap: "square",
+      })
     );
     chevron.appendChild(
       svg.line(mid, right, {
-        tincture,
+        stroke: tincture,
         width: CHEVRON_WIDTH,
         linecap: "square",
       })
@@ -1141,7 +1163,7 @@ function chevron({ tincture, cotised, ornament }: Ordinary) {
           svg.line(
             Coordinate.add(end, [0, sign * offset]),
             Coordinate.add(mid, [0, sign * offset]),
-            { tincture: cotised, width: COTISED_WIDTH, linecap: "square" }
+            { stroke: cotised, width: COTISED_WIDTH, linecap: "square" }
           )
         );
       }
@@ -1280,10 +1302,9 @@ function cross({ tincture, cotised, ornament }: Ordinary) {
     }
 
     g.appendChild(
-      svg.path(
-        path.from(relativePathsToClosedLoop(...ornamentations)),
-        tincture
-      )
+      svg.path(path.from(relativePathsToClosedLoop(...ornamentations)), {
+        fill: tincture,
+      })
     );
 
     applyTransforms(g, {
@@ -1295,8 +1316,12 @@ function cross({ tincture, cotised, ornament }: Ordinary) {
 
     cross.appendChild(g);
   } else {
-    cross.appendChild(svg.line(top, bottom, { tincture, width: CROSS_WIDTH }));
-    cross.appendChild(svg.line(left, right, { tincture, width: CROSS_WIDTH }));
+    cross.appendChild(
+      svg.line(top, bottom, { stroke: tincture, width: CROSS_WIDTH })
+    );
+    cross.appendChild(
+      svg.line(left, right, { stroke: tincture, width: CROSS_WIDTH })
+    );
   }
 
   if (cotised != null) {
@@ -1313,14 +1338,14 @@ function cross({ tincture, cotised, ornament }: Ordinary) {
         svg.line(
           Coordinate.add(p, [offset * x1sign, offset * y1sign]),
           Coordinate.add(mid, [offset * x1sign, offset * y1sign]),
-          { tincture: cotised, width: COTISED_WIDTH, linecap: "square" }
+          { stroke: cotised, width: COTISED_WIDTH, linecap: "square" }
         )
       );
       cross.appendChild(
         svg.line(
           Coordinate.add(p, [offset * x2sign, offset * y2sign]),
           Coordinate.add(mid, [offset * x2sign, offset * y2sign]),
-          { tincture: cotised, width: COTISED_WIDTH, linecap: "square" }
+          { stroke: cotised, width: COTISED_WIDTH, linecap: "square" }
         )
       );
     }
@@ -1391,13 +1416,13 @@ function fess({ tincture, cotised, ornament }: Ordinary) {
             ORNAMENTS[ornament](-W, true, "secondary", "center")
           )
         ),
-        tincture
+        { fill: tincture }
       )
     );
   } else {
     fess.appendChild(
       svg.line([-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET], {
-        tincture,
+        stroke: tincture,
         width: FESS_WIDTH,
       })
     );
@@ -1410,14 +1435,14 @@ function fess({ tincture, cotised, ornament }: Ordinary) {
       svg.line(
         [-W_2, FESS_VERTICAL_OFFSET - offset],
         [W_2, FESS_VERTICAL_OFFSET - offset],
-        { tincture: cotised, width: COTISED_WIDTH }
+        { stroke: cotised, width: COTISED_WIDTH }
       )
     );
     fess.appendChild(
       svg.line(
         [-W_2, FESS_VERTICAL_OFFSET + offset],
         [W_2, FESS_VERTICAL_OFFSET + offset],
-        { tincture: cotised, width: COTISED_WIDTH }
+        { stroke: cotised, width: COTISED_WIDTH }
       )
     );
   }
@@ -1487,7 +1512,7 @@ function pale({ tincture, cotised, ornament }: Ordinary) {
           ORNAMENTS[ornament](-H, true, "secondary", "end")
         )
       ),
-      tincture
+      { fill: tincture }
     );
     applyTransforms(p, {
       translate: [0, -H_2],
@@ -1496,7 +1521,7 @@ function pale({ tincture, cotised, ornament }: Ordinary) {
     pale.appendChild(p);
   } else {
     pale.appendChild(
-      svg.line([0, -H_2], [0, H_2], { tincture, width: PALE_WIDTH })
+      svg.line([0, -H_2], [0, H_2], { stroke: tincture, width: PALE_WIDTH })
     );
   }
 
@@ -1505,13 +1530,13 @@ function pale({ tincture, cotised, ornament }: Ordinary) {
 
     pale.appendChild(
       svg.line([offset, -H_2], [offset, H_2], {
-        tincture: cotised,
+        stroke: cotised,
         width: COTISED_WIDTH,
       })
     );
     pale.appendChild(
       svg.line([-offset, -H_2], [-offset, H_2], {
-        tincture: cotised,
+        stroke: cotised,
         width: COTISED_WIDTH,
       })
     );
@@ -1602,7 +1627,7 @@ function saltire({ tincture, cotised, ornament }: Ordinary) {
 
     const saltirePath = svg.path(
       path.from(relativePathsToClosedLoop(...ornamentations)),
-      tincture
+      { fill: tincture }
     );
 
     applyTransforms(saltirePath, {
@@ -1619,8 +1644,12 @@ function saltire({ tincture, cotised, ornament }: Ordinary) {
     g.appendChild(saltirePath);
     saltire.appendChild(g);
   } else {
-    saltire.appendChild(svg.line(tl, br, { tincture, width: SALTIRE_WIDTH }));
-    saltire.appendChild(svg.line(bl, tr, { tincture, width: SALTIRE_WIDTH }));
+    saltire.appendChild(
+      svg.line(tl, br, { stroke: tincture, width: SALTIRE_WIDTH })
+    );
+    saltire.appendChild(
+      svg.line(bl, tr, { stroke: tincture, width: SALTIRE_WIDTH })
+    );
   }
 
   if (cotised != null) {
@@ -1639,14 +1668,14 @@ function saltire({ tincture, cotised, ornament }: Ordinary) {
         svg.line(
           Coordinate.add(p, [offset * x1sign, offset * y1sign]),
           Coordinate.add(mid, [offset * x1sign, offset * y1sign]),
-          { tincture: cotised, width: COTISED_WIDTH, linecap: "square" }
+          { stroke: cotised, width: COTISED_WIDTH, linecap: "square" }
         )
       );
       saltire.appendChild(
         svg.line(
           Coordinate.add(p, [offset * x2sign, offset * y2sign]),
           Coordinate.add(mid, [offset * x2sign, offset * y2sign]),
-          { tincture: cotised, width: COTISED_WIDTH, linecap: "square" }
+          { stroke: cotised, width: COTISED_WIDTH, linecap: "square" }
         )
       );
     }
@@ -1771,7 +1800,7 @@ function mullet({ tincture }: SimpleCharge) {
   return svg.path(
     // These awkward numbers keep the proportions nice while just filling out a 40x40 square.
     "M 0 -18.8 L 5 -4.6 L 20 -4.6 L 8.4 4.5 L 12.5 18.8 L 0 10.4 L -12.5 18.8 L -8.4 4.5 L -20 -4.6 L -5 -4.6 Z",
-    tincture
+    { fill: tincture }
   );
 }
 
@@ -1790,8 +1819,7 @@ function fret({ tincture }: SimpleCharge) {
       L ${thirdWidth} 0
       L 0 ${thirdWidth}
       Z
-      `,
-      Tincture.NONE
+      `
     ),
     svg.line([-halfWidth, -halfWidth], [halfWidth, halfWidth]),
     svg.line([-halfWidth, halfWidth], [halfWidth, -halfWidth]),
@@ -1800,12 +1828,12 @@ function fret({ tincture }: SimpleCharge) {
   for (const e of elements) {
     const under = e.cloneNode(true);
     under.classList.add("stroke-sable");
-    under.setAttribute("stroke-width", "4.5");
+    under.setAttribute("stroke-width", "3.5");
     fret.appendChild(under);
 
     const over = e.cloneNode(true);
     over.classList.add(`stroke-${tincture}`);
-    over.setAttribute("stroke-width", "4");
+    over.setAttribute("stroke-width", "3");
     fret.append(over);
   }
 
@@ -2300,7 +2328,7 @@ const CANTON_PATH = path`
 `;
 
 function field(tincture: Tincture) {
-  return svg.rect([-W_2, -H_2], [W_2, H_2], tincture);
+  return svg.rect([-W_2, -H_2], [W_2, H_2], { fill: tincture });
 }
 
 function complexContent(container: SVGElement, content: ComplexContent) {
@@ -2309,7 +2337,7 @@ function complexContent(container: SVGElement, content: ComplexContent) {
       const g = svg.g();
       applyTransforms(g, { origin: [-W_2, -H_2], scale: CANTON_SCALE_FACTOR });
       g.style.clipPath = `path("${CANTON_PATH}")`;
-      g.appendChild(svg.path(CANTON_PATH, element.canton));
+      g.appendChild(svg.path(CANTON_PATH, { fill: element.canton }));
       g.classList.add(`fill-${element.canton}`);
       parent.appendChild(g);
       for (const c of element.content ?? []) {
@@ -2439,13 +2467,13 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     }
 
     let line = svg.line([0, -H_2], [0, H_2], {
-      tincture: Tincture.of("sable"),
+      stroke: Tincture.of("sable"),
       width: 0.5,
     });
     line.setAttribute("vector-effect", "non-scaling-stroke");
     container.appendChild(line);
     line = svg.line([-W_2, 0], [W_2, 0], {
-      tincture: Tincture.of("sable"),
+      stroke: Tincture.of("sable"),
       width: 0.5,
     });
     line.setAttribute("vector-effect", "non-scaling-stroke");
@@ -2543,10 +2571,9 @@ function parseAndRenderBlazon() {
     ast.innerHTML = JSON.stringify(parsed, null, 2);
 
     rendered.innerHTML = "";
-    const outline = svg.path(FIELD_PATH, Tincture.NONE);
-    outline.classList.add("stroke-sable");
-    outline.setAttribute("stroke-width", "2");
-    rendered.appendChild(outline);
+    rendered.appendChild(
+      svg.path(FIELD_PATH, { stroke: Tincture.of("sable"), strokeWidth: 2 })
+    );
 
     // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
     const container = svg.g();
