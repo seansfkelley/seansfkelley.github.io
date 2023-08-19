@@ -5,7 +5,16 @@
 @{%
   function nop() { return undefined; }
   function literal(l) { return () => l; }
+  function spread(o) { return (delegate) => ({ ...id(delegate), ...o }); }
 %}
+
+SIMPLE_CHARGE[S, P] ->
+    Singular __ $S (__ Posture {% nth(1) %}):? __ Tincture                               {% (d) => ({
+      count: 1, posture: d[3], tincture: d[5]
+    }) %}
+  | Plural __ $P (__ Posture {% nth(1) %}):? __ Tincture (__ InDirection {% nth(1) %}):? {% (d) => ({
+      count: d[0], posture: d[3], tincture: d[5], direction: d[6]
+    }) %}
 
 Enter ->
   ComplexContent (_ "."):? {% nth(0) %}
@@ -67,12 +76,8 @@ Ordinary ->
     }) %}
 
 Charge ->
-    Singular __ SimpleChargeName (__ Posture {% nth(1) %}):? __ Tincture                                   {% (d) => ({
-      count: 1, charge: d[2], posture: d[3], tincture: d[5]
-    }) %}
-  | Plural __ SimpleChargeName "s" (__ Posture {% nth(1) %}):? __ Tincture (__ InDirection {% nth(1) %}):? {% $({
-      count: 0, charge: 2, posture: 4, tincture: 6, direction : 7
-    }) %}
+    SIMPLE_CHARGE["rondel", "rondels"] {% spread({ charge: 'rondel' }) %}
+  | SIMPLE_CHARGE["mullet", "mullets"] {% spread({ charge: 'mullet' }) %}
   | Lion                                                                                                   {% id %}
 
 Lion ->
@@ -172,10 +177,6 @@ OrdinaryName ->
   | "pale"          {% id %}
   | "saltire"       {% id %}
   | "chief"         {% id %}
-
-SimpleChargeName ->
-    "rondel" {% id %}
-  | "mullet" {% id %}
 
 VariedName ->
     "barry bendy" {% id %}
