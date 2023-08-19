@@ -125,7 +125,7 @@
 }
 .lion .outline {
   stroke: black;
-  opacity: 0.3;
+  stroke-opacity: 0.3;
 }
 .lion .teeth {
   fill: white;
@@ -260,9 +260,57 @@
   fill: blueviolet !important;
 }
 
+.escallop .outline {
+  stroke: black;
+  stroke-opacity: 0.3;
+  stroke-width: 2;
+}
+.escallop.argent .light {
+  fill: whitesmoke;
+}
+.escallop.argent .dark {
+  fill: gainsboro;
+}
+.escallop.sable .light {
+  fill: black;
+}
+.escallop.sable .dark {
+  fill: black;
+}
+.escallop.gules .light {
+  fill: crimson;
+}
+.escallop.gules .dark {
+  fill: #ad102f;
+}
+.escallop.vert .light {
+  fill: green;
+}
+.escallop.vert .dark {
+  fill: #004d00;
+}
+.escallop.azure .light {
+  fill: mediumblue;
+}
+.escallop.azure .dark {
+  fill: #00009a;
+}
+.escallop.or .light {
+  fill: gold;
+}
+.escallop.or .dark {
+  fill: #ccac00;
+}
+.escallop.purpure .light {
+  fill: blueviolet;
+}
+.escallop.purpure .dark {
+  fill: #701ac0;
+}
+
 .fleur-de-lys .outline {
   stroke: black;
-  opacity: 0.3;
+  stroke-opacity: 0.3;
   stroke-width: 2;
 }
 .fleur-de-lys.argent .main {

@@ -19,11 +19,11 @@ TODO
 - things I want to be able to render
   - churchill arms
     - inescutcheon
-    - escallop
     - fret
   - bavarian arms
   - ???
 - lion is missing outlines and some highlights
+- use bounding client rect to correctly position/size lion and fleur-de-lys
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 */
 /*
@@ -1105,6 +1105,11 @@ function mullet({ tincture }) {
     // These awkward numbers keep the proportions nice while just filling out a 40x40 square.
     "M 0 -18.8 L 5 -4.6 L 20 -4.6 L 8.4 4.5 L 12.5 18.8 L 0 10.4 L -12.5 18.8 L -8.4 4.5 L -20 -4.6 L -5 -4.6 Z", tincture);
 }
+function escallop({ tincture }) {
+    const escallop = getComplexSvgSync("escallop").cloneNode(true);
+    escallop.classList.add(tincture);
+    return escallop;
+}
 function fleurDeLys({ tincture }) {
     const fleurDeLys = getComplexSvgSync("fleur-de-lys").cloneNode(true);
     fleurDeLys.classList.add(tincture);
@@ -1130,7 +1135,7 @@ const CHARGE_DIRECTIONS = {
     saltire: saltire.on,
     cross: cross.on,
 };
-const SIMPLE_CHARGES = { rondel, mullet, "fleur-de-lys": fleurDeLys };
+const SIMPLE_CHARGES = { rondel, mullet, escallop, "fleur-de-lys": fleurDeLys };
 // A little unfortunate this dispatching wrapper is necessary, but it's the only way to type-safety
 // render based on the string. Throwing all charges, simple and otherwise, into a constant mapping
 // together means the inferred type of the function has `never` as the first argument. :(
@@ -1139,6 +1144,7 @@ function renderCharge(charge) {
         case "rondel":
         case "mullet":
         case "fleur-de-lys":
+        case "escallop":
             return SIMPLE_CHARGES[charge.charge](charge);
         case "lion":
             return lion(charge);
@@ -1818,6 +1824,7 @@ for (const example of document.querySelectorAll("[data-example]")) {
 // implementation async just for this is a massive PITA.
 fetchComplexSvg("lion", "rampant");
 fetchComplexSvg("fleur-de-lys");
+fetchComplexSvg("escallop");
 // This should happen last so that when the default text includes a complex SVG charge, at least
 // the immediate failure to render doesn't cause us to skip the loading!
 parseAndRenderBlazon();
