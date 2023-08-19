@@ -484,15 +484,17 @@ const svg = {
         path.classList.add(`fill-${tincture}`);
         return path;
     },
-    line: ([x1, y1], [x2, y2], tincture, width = 1, linecap = "butt") => {
+    line: ([x1, y1], [x2, y2], { tincture, width = 1, linecap = "butt", } = {}) => {
         const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
         line.setAttribute("x1", `${x1}`);
         line.setAttribute("y1", `${y1}`);
         line.setAttribute("x2", `${x2}`);
         line.setAttribute("y2", `${y2}`);
-        line.classList.add(`stroke-${tincture}`);
         line.setAttribute("stroke-width", `${width}`);
         line.setAttribute("stroke-linecap", linecap);
+        if (tincture != null) {
+            line.classList.add(`stroke-${tincture}`);
+        }
         return line;
     },
     rect: ([x1, y1], [x2, y2], tincture) => {
@@ -565,12 +567,18 @@ function bend({ tincture, cotised, ornament }) {
         ORNAMENTS[ornament](-BEND_LENGTH, true, "secondary", "end"))), tincture));
     }
     else {
-        bend.appendChild(svg.line([0, 0], [BEND_LENGTH, 0], tincture, BEND_WIDTH));
+        bend.appendChild(svg.line([0, 0], [BEND_LENGTH, 0], { tincture, width: BEND_WIDTH }));
     }
     if (cotised != null) {
         const offset = BEND_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
-        bend.appendChild(svg.line([0, -offset], [BEND_LENGTH, -offset], cotised, COTISED_WIDTH));
-        bend.appendChild(svg.line([0, offset], [BEND_LENGTH, offset], cotised, COTISED_WIDTH));
+        bend.appendChild(svg.line([0, -offset], [BEND_LENGTH, -offset], {
+            tincture: cotised,
+            width: COTISED_WIDTH,
+        }));
+        bend.appendChild(svg.line([0, offset], [BEND_LENGTH, offset], {
+            tincture: cotised,
+            width: COTISED_WIDTH,
+        }));
     }
     applyTransforms(bend, {
         translate: [-W_2, -H_2],
@@ -640,10 +648,10 @@ function chief({ tincture, cotised, ornament }) {
         chief.appendChild(svg.path(path.from({ type: "M", loc: [-W_2, -H_2] }, { type: "L", loc: [W_2, -H_2] }, { type: "l", loc: Coordinate.add([0, CHIEF_WIDTH], start.loc) }, main, { type: "l", loc: Coordinate.add([0, -CHIEF_WIDTH], end.loc) }), tincture));
     }
     else {
-        chief.appendChild(svg.line([-W_2, -H_2 + CHIEF_WIDTH / 2], [W_2, -H_2 + CHIEF_WIDTH / 2], tincture, CHIEF_WIDTH));
+        chief.appendChild(svg.line([-W_2, -H_2 + CHIEF_WIDTH / 2], [W_2, -H_2 + CHIEF_WIDTH / 2], { tincture, width: CHIEF_WIDTH }));
     }
     if (cotised != null) {
-        chief.append(svg.line([-W_2, -H_2 + CHIEF_WIDTH + (COTISED_WIDTH * 3) / 2], [W_2, -H_2 + CHIEF_WIDTH + (COTISED_WIDTH * 3) / 2], cotised, COTISED_WIDTH));
+        chief.append(svg.line([-W_2, -H_2 + CHIEF_WIDTH + (COTISED_WIDTH * 3) / 2], [W_2, -H_2 + CHIEF_WIDTH + (COTISED_WIDTH * 3) / 2], { tincture: cotised, width: COTISED_WIDTH }));
     }
     return chief;
 }
@@ -692,15 +700,19 @@ function chevron({ tincture, cotised, ornament }) {
         }
     }
     else {
-        chevron.appendChild(svg.line(left, mid, tincture, CHEVRON_WIDTH, "square"));
-        chevron.appendChild(svg.line(mid, right, tincture, CHEVRON_WIDTH, "square"));
+        chevron.appendChild(svg.line(left, mid, { tincture, width: CHEVRON_WIDTH, linecap: "square" }));
+        chevron.appendChild(svg.line(mid, right, {
+            tincture,
+            width: CHEVRON_WIDTH,
+            linecap: "square",
+        }));
     }
     if (cotised != null) {
         // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
         const offset = Math.sin(Math.PI / 4) * CHEVRON_WIDTH + COTISED_WIDTH * 2;
         for (const end of [left, right]) {
             for (const sign of [-1, 1]) {
-                chevron.appendChild(svg.line(Coordinate.add(end, [0, sign * offset]), Coordinate.add(mid, [0, sign * offset]), cotised, COTISED_WIDTH, "square"));
+                chevron.appendChild(svg.line(Coordinate.add(end, [0, sign * offset]), Coordinate.add(mid, [0, sign * offset]), { tincture: cotised, width: COTISED_WIDTH, linecap: "square" }));
             }
         }
     }
@@ -810,8 +822,8 @@ function cross({ tincture, cotised, ornament }) {
         cross.appendChild(g);
     }
     else {
-        cross.appendChild(svg.line(top, bottom, tincture, CROSS_WIDTH));
-        cross.appendChild(svg.line(left, right, tincture, CROSS_WIDTH));
+        cross.appendChild(svg.line(top, bottom, { tincture, width: CROSS_WIDTH }));
+        cross.appendChild(svg.line(left, right, { tincture, width: CROSS_WIDTH }));
     }
     if (cotised != null) {
         const offset = CROSS_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
@@ -822,8 +834,8 @@ function cross({ tincture, cotised, ornament }) {
             [left, [-1, -1], [-1, 1]],
             [right, [1, 1], [1, -1]],
         ]) {
-            cross.appendChild(svg.line(Coordinate.add(p, [offset * x1sign, offset * y1sign]), Coordinate.add(mid, [offset * x1sign, offset * y1sign]), cotised, COTISED_WIDTH, "square"));
-            cross.appendChild(svg.line(Coordinate.add(p, [offset * x2sign, offset * y2sign]), Coordinate.add(mid, [offset * x2sign, offset * y2sign]), cotised, COTISED_WIDTH, "square"));
+            cross.appendChild(svg.line(Coordinate.add(p, [offset * x1sign, offset * y1sign]), Coordinate.add(mid, [offset * x1sign, offset * y1sign]), { tincture: cotised, width: COTISED_WIDTH, linecap: "square" }));
+            cross.appendChild(svg.line(Coordinate.add(p, [offset * x2sign, offset * y2sign]), Coordinate.add(mid, [offset * x2sign, offset * y2sign]), { tincture: cotised, width: COTISED_WIDTH, linecap: "square" }));
         }
     }
     return cross;
@@ -870,12 +882,15 @@ function fess({ tincture, cotised, ornament }) {
         ], ORNAMENTS[ornament](-W, true, "secondary", "center"))), tincture));
     }
     else {
-        fess.appendChild(svg.line([-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET], tincture, FESS_WIDTH));
+        fess.appendChild(svg.line([-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET], {
+            tincture,
+            width: FESS_WIDTH,
+        }));
     }
     if (cotised != null) {
         const offset = FESS_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
-        fess.appendChild(svg.line([-W_2, FESS_VERTICAL_OFFSET - offset], [W_2, FESS_VERTICAL_OFFSET - offset], cotised, COTISED_WIDTH));
-        fess.appendChild(svg.line([-W_2, FESS_VERTICAL_OFFSET + offset], [W_2, FESS_VERTICAL_OFFSET + offset], cotised, COTISED_WIDTH));
+        fess.appendChild(svg.line([-W_2, FESS_VERTICAL_OFFSET - offset], [W_2, FESS_VERTICAL_OFFSET - offset], { tincture: cotised, width: COTISED_WIDTH }));
+        fess.appendChild(svg.line([-W_2, FESS_VERTICAL_OFFSET + offset], [W_2, FESS_VERTICAL_OFFSET + offset], { tincture: cotised, width: COTISED_WIDTH }));
     }
     return fess;
 }
@@ -920,12 +935,18 @@ function pale({ tincture, cotised, ornament }) {
         pale.appendChild(p);
     }
     else {
-        pale.appendChild(svg.line([0, -H_2], [0, H_2], tincture, PALE_WIDTH));
+        pale.appendChild(svg.line([0, -H_2], [0, H_2], { tincture, width: PALE_WIDTH }));
     }
     if (cotised != null) {
         const offset = PALE_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
-        pale.appendChild(svg.line([offset, -H_2], [offset, H_2], cotised, COTISED_WIDTH));
-        pale.appendChild(svg.line([-offset, -H_2], [-offset, H_2], cotised, COTISED_WIDTH));
+        pale.appendChild(svg.line([offset, -H_2], [offset, H_2], {
+            tincture: cotised,
+            width: COTISED_WIDTH,
+        }));
+        pale.appendChild(svg.line([-offset, -H_2], [-offset, H_2], {
+            tincture: cotised,
+            width: COTISED_WIDTH,
+        }));
     }
     return pale;
 }
@@ -998,8 +1019,8 @@ function saltire({ tincture, cotised, ornament }) {
         saltire.appendChild(g);
     }
     else {
-        saltire.appendChild(svg.line(tl, br, tincture, SALTIRE_WIDTH));
-        saltire.appendChild(svg.line(bl, tr, tincture, SALTIRE_WIDTH));
+        saltire.appendChild(svg.line(tl, br, { tincture, width: SALTIRE_WIDTH }));
+        saltire.appendChild(svg.line(bl, tr, { tincture, width: SALTIRE_WIDTH }));
     }
     if (cotised != null) {
         // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
@@ -1012,8 +1033,8 @@ function saltire({ tincture, cotised, ornament }) {
             [bl, [-1, 0], [0, 1]],
             [br, [0, 1], [1, 0]],
         ]) {
-            saltire.appendChild(svg.line(Coordinate.add(p, [offset * x1sign, offset * y1sign]), Coordinate.add(mid, [offset * x1sign, offset * y1sign]), cotised, COTISED_WIDTH, "square"));
-            saltire.appendChild(svg.line(Coordinate.add(p, [offset * x2sign, offset * y2sign]), Coordinate.add(mid, [offset * x2sign, offset * y2sign]), cotised, COTISED_WIDTH, "square"));
+            saltire.appendChild(svg.line(Coordinate.add(p, [offset * x1sign, offset * y1sign]), Coordinate.add(mid, [offset * x1sign, offset * y1sign]), { tincture: cotised, width: COTISED_WIDTH, linecap: "square" }));
+            saltire.appendChild(svg.line(Coordinate.add(p, [offset * x2sign, offset * y2sign]), Coordinate.add(mid, [offset * x2sign, offset * y2sign]), { tincture: cotised, width: COTISED_WIDTH, linecap: "square" }));
         }
     }
     return saltire;
@@ -1105,6 +1126,34 @@ function mullet({ tincture }) {
     // These awkward numbers keep the proportions nice while just filling out a 40x40 square.
     "M 0 -18.8 L 5 -4.6 L 20 -4.6 L 8.4 4.5 L 12.5 18.8 L 0 10.4 L -12.5 18.8 L -8.4 4.5 L -20 -4.6 L -5 -4.6 Z", tincture);
 }
+const FRET_WIDTH = 40;
+function fret({ tincture }) {
+    const halfWidth = FRET_WIDTH / 2;
+    const thirdWidth = FRET_WIDTH / 3;
+    const fret = svg.g();
+    const elements = [
+        svg.path(`
+      M ${-thirdWidth} 0
+      L 0 ${-thirdWidth}
+      L ${thirdWidth} 0
+      L 0 ${thirdWidth}
+      Z
+      `, Tincture.NONE),
+        svg.line([-halfWidth, -halfWidth], [halfWidth, halfWidth]),
+        svg.line([-halfWidth, halfWidth], [halfWidth, -halfWidth]),
+    ];
+    for (const e of elements) {
+        const under = e.cloneNode(true);
+        under.classList.add("stroke-sable");
+        under.setAttribute("stroke-width", "4.5");
+        fret.appendChild(under);
+        const over = e.cloneNode(true);
+        over.classList.add(`stroke-${tincture}`);
+        over.setAttribute("stroke-width", "4");
+        fret.append(over);
+    }
+    return fret;
+}
 function escallop({ tincture }) {
     const escallop = getComplexSvgSync("escallop").cloneNode(true);
     escallop.classList.add(tincture);
@@ -1135,7 +1184,7 @@ const CHARGE_DIRECTIONS = {
     saltire: saltire.on,
     cross: cross.on,
 };
-const SIMPLE_CHARGES = { rondel, mullet, escallop, "fleur-de-lys": fleurDeLys };
+const SIMPLE_CHARGES = { rondel, mullet, fret, escallop, "fleur-de-lys": fleurDeLys };
 // A little unfortunate this dispatching wrapper is necessary, but it's the only way to type-safety
 // render based on the string. Throwing all charges, simple and otherwise, into a constant mapping
 // together means the inferred type of the function has `never` as the first argument. :(
@@ -1145,6 +1194,7 @@ function renderCharge(charge) {
         case "mullet":
         case "fleur-de-lys":
         case "escallop":
+        case "fret":
             return SIMPLE_CHARGES[charge.charge](charge);
         case "lion":
             return lion(charge);
@@ -1634,10 +1684,16 @@ function complexContent(container, content) {
         for (const e of Object.values(quartered)) {
             container.appendChild(e);
         }
-        let line = svg.line([0, -H_2], [0, H_2], Tincture.of("sable"), 0.5);
+        let line = svg.line([0, -H_2], [0, H_2], {
+            tincture: Tincture.of("sable"),
+            width: 0.5,
+        });
         line.setAttribute("vector-effect", "non-scaling-stroke");
         container.appendChild(line);
-        line = svg.line([-W_2, 0], [W_2, 0], Tincture.of("sable"), 0.5);
+        line = svg.line([-W_2, 0], [W_2, 0], {
+            tincture: Tincture.of("sable"),
+            width: 0.5,
+        });
         line.setAttribute("vector-effect", "non-scaling-stroke");
         container.appendChild(line);
         if (content.overall) {

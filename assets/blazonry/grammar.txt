@@ -78,6 +78,7 @@ Ordinary ->
 Charge ->
     SIMPLE_CHARGE["rondel", "rondels"]             {% spread({ charge: 'rondel' }) %}
   | SIMPLE_CHARGE["mullet", "mullets"]             {% spread({ charge: 'mullet' }) %}
+  | SIMPLE_CHARGE["fret", "frets"]                 {% spread({ charge: 'fret' }) %}
   | SIMPLE_CHARGE["escallop", "escallops"]         {% spread({ charge: 'escallop' }) %}
   | SIMPLE_CHARGE["fleur-de-lys", "fleurs-de-lys"] {% spread({ charge: 'fleur-de-lys' }) %}
   | SIMPLE_CHARGE["fleur-de-lis", "fleurs-de-lis"] {% spread({ charge: 'fleur-de-lys' }) %}
