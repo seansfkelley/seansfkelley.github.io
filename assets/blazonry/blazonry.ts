@@ -18,11 +18,11 @@ TODO
 - things I want to be able to render
   - churchill arms
     - inescutcheon
-    - escallop
     - fret
   - bavarian arms
   - ???
 - lion is missing outlines and some highlights
+- use bounding client rect to correctly position/size lion and fleur-de-lys
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 */
 
@@ -190,7 +190,7 @@ interface BaseCharge {
 }
 
 interface SimpleCharge extends BaseCharge {
-  charge: "mullet" | "rondel" | "fleur-de-lys";
+  charge: "mullet" | "rondel" | "fleur-de-lys" | "escallop";
 }
 
 interface LionCharge extends BaseCharge {
@@ -1759,6 +1759,12 @@ function mullet({ tincture }: SimpleCharge) {
   );
 }
 
+function escallop({ tincture }: SimpleCharge) {
+  const escallop = getComplexSvgSync("escallop").cloneNode(true);
+  escallop.classList.add(tincture);
+  return escallop;
+}
+
 function fleurDeLys({ tincture }: SimpleCharge) {
   const fleurDeLys = getComplexSvgSync("fleur-de-lys").cloneNode(true);
   fleurDeLys.classList.add(tincture);
@@ -1791,7 +1797,7 @@ const SIMPLE_CHARGES: {
   [K in SimpleCharge["charge"]]: ChargeRenderer<
     DiscriminateUnion<Charge, "charge", K>
   >;
-} = { rondel, mullet, "fleur-de-lys": fleurDeLys };
+} = { rondel, mullet, escallop, "fleur-de-lys": fleurDeLys };
 
 // A little unfortunate this dispatching wrapper is necessary, but it's the only way to type-safety
 // render based on the string. Throwing all charges, simple and otherwise, into a constant mapping
@@ -1801,6 +1807,7 @@ function renderCharge(charge: Charge): SVGElement {
     case "rondel":
     case "mullet":
     case "fleur-de-lys":
+    case "escallop":
       return SIMPLE_CHARGES[charge.charge](charge);
     case "lion":
       return lion(charge);
@@ -2608,6 +2615,7 @@ for (const example of document.querySelectorAll<HTMLAnchorElement>(
 // implementation async just for this is a massive PITA.
 fetchComplexSvg("lion", "rampant");
 fetchComplexSvg("fleur-de-lys");
+fetchComplexSvg("escallop");
 
 // This should happen last so that when the default text includes a complex SVG charge, at least
 // the immediate failure to render doesn't cause us to skip the loading!
