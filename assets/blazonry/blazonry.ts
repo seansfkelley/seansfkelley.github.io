@@ -19,8 +19,7 @@ TODO
     - inescutcheon
   - bavarian arms
   - ???
-- lion is missing outlines and some highlights
-- use bounding client rect to correctly position/size lion and fleur-de-lys
+- use bounding client rect to correctly position/size fleur-de-lys
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - textbox with word wrap so you can read it better
 */
