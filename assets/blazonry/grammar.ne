@@ -185,6 +185,7 @@ VariedName ->
   | "chequey"     {% literal("checky") %}
   | "chevronny"   {% id %}
   | "lozengy"     {% id %}
+  | "fusilly"     {% id %}
   | "paly"        {% id %}
 
 Treatment ->

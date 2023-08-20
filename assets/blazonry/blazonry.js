@@ -78,12 +78,6 @@ const FIELD_PATH = path `
   Z
 `;
 const UNSUPPORTED = Symbol("unsupported");
-const Tincture = {
-    NONE: "none",
-    SABLE: "sable",
-    COUNTERCHANGED: "counterchanged",
-    of: (tincture) => tincture,
-};
 const Posture = {
     toRadians: (posture) => {
         switch (posture) {
@@ -1162,7 +1156,7 @@ function fret({ tincture }) {
     // but would still require patching-up of the outline to produce the proper visual layering, and
     // doesn't have ae good way to make sure the open ends in the four corners also have an outline.
     return svg.g(svg.line([-halfWidth - outlineWidth, -halfWidth - outlineWidth], [halfWidth + outlineWidth, halfWidth + outlineWidth], {
-        stroke: Tincture.SABLE,
+        stroke: "sable",
         strokeWidth: strokeWidth + outlineWidth * 2,
     }), svg.line([-halfWidth, -halfWidth], [halfWidth, halfWidth], {
         stroke: tincture,
@@ -1173,14 +1167,14 @@ function fret({ tincture }) {
       L ${thirdWidth} 0
       L 0 ${thirdWidth}
       Z
-      `, { stroke: Tincture.SABLE, strokeWidth: strokeWidth + outlineWidth * 2 }), svg.path(`
+      `, { stroke: "sable", strokeWidth: strokeWidth + outlineWidth * 2 }), svg.path(`
       M ${-thirdWidth} 0
       L 0 ${-thirdWidth}
       L ${thirdWidth} 0
       L 0 ${thirdWidth}
       Z
       `, { stroke: tincture, strokeWidth: strokeWidth }), svg.line([-halfWidth - outlineWidth, halfWidth + outlineWidth], [halfWidth + outlineWidth, -halfWidth - outlineWidth], {
-        stroke: Tincture.SABLE,
+        stroke: "sable",
         strokeWidth: strokeWidth + outlineWidth * 2,
     }), svg.line([-halfWidth, halfWidth], [halfWidth, -halfWidth], {
         stroke: tincture,
@@ -1188,7 +1182,7 @@ function fret({ tincture }) {
     }), 
     // Patch up the first line to have it appear over the last one, as is the style.
     svg.line([-strokeWidth, -strokeWidth], [strokeWidth, strokeWidth], {
-        stroke: Tincture.SABLE,
+        stroke: "sable",
         strokeWidth: strokeWidth + 0.5,
     }), svg.line(
     // Bump this out to be longer so that it doesn't produce visual artifacts.
@@ -1439,8 +1433,8 @@ function wavy(length) {
     ];
 }
 const TREATMENTS = {
-    embattled: wrapSimpleTreatment(embattled, true, true),
     "embattled-counter-embattled": wrapSimpleTreatment(embattled, true, false),
+    embattled: wrapSimpleTreatment(embattled, true, true),
     engrailed: wrapSimpleTreatment(engrailed, false, false),
     indented: wrapSimpleTreatment(indented, true, false),
     wavy: wrapSimpleTreatment(wavy, true, false),
@@ -1529,6 +1523,24 @@ function chevronny(count = 6) {
     }
     return d;
 }
+function fusilly(count = 8) {
+    // -1 because we have half of one on the left and half on the right, so we want a _slightly_
+    // larger step to make sure we end up spanning the whole width
+    const step = W / (count - 1);
+    let d = "";
+    for (let y = 0; y < ((H / W) * count) / 2; y += 4) {
+        for (let x = 0; x < count; x++) {
+            d += path `
+        M ${-W_2 + x * step}         ${-H_2 + y * step}
+        L ${-W_2 + (x + 0.5) * step} ${-H_2 + (y + 2) * step}
+        L ${-W_2 + x * step}         ${-H_2 + (y + 4) * step}
+        L ${-W_2 + (x - 0.5) * step} ${-H_2 + (y + 2) * step}
+        Z
+      `;
+        }
+    }
+    return d;
+}
 function lozengy(count = 8) {
     // -1 because we have half of one on the left and half on the right, so we want a _slightly_
     // larger step to make sure we end up spanning the whole width
@@ -1566,6 +1578,7 @@ const VARIED = {
     bendy,
     checky,
     chevronny,
+    fusilly,
     lozengy,
     paly,
 };
@@ -1637,14 +1650,14 @@ function complexContent(container, content) {
     }
     function overwriteCounterchangedTincture(element, tincture) {
         function maybeToCounterchanged(t) {
-            return (t === Tincture.COUNTERCHANGED ? tincture : t);
+            return (t === "counterchanged" ? tincture : t);
         }
         if ("canton" in element) {
             // Cantons cannot be counterchanged; they always have a background and everything on them is
             // relative to their background. Thus, nop.
         }
         else if ("on" in element) {
-            if (element.surround?.tincture === Tincture.COUNTERCHANGED) {
+            if (element.surround?.tincture === "counterchanged") {
                 return {
                     ...element,
                     // Note that we do NOT overwrite the `charge` tincture. That's a function of the `on`, not the field.
@@ -1729,13 +1742,13 @@ function complexContent(container, content) {
             container.appendChild(e);
         }
         let line = svg.line([0, -H_2], [0, H_2], {
-            stroke: Tincture.SABLE,
+            stroke: "sable",
             strokeWidth: 0.5,
         });
         line.setAttribute("vector-effect", "non-scaling-stroke");
         container.appendChild(line);
         line = svg.line([-W_2, 0], [W_2, 0], {
-            stroke: Tincture.SABLE,
+            stroke: "sable",
             strokeWidth: 0.5,
         });
         line.setAttribute("vector-effect", "non-scaling-stroke");
@@ -1817,13 +1830,13 @@ function parseAndRenderBlazon() {
         parsed = recursivelyOmitNullish(parsed);
         ast.innerHTML = JSON.stringify(parsed, null, 2);
         rendered.innerHTML = "";
-        rendered.appendChild(svg.path(FIELD_PATH, { stroke: Tincture.SABLE, strokeWidth: 2 }));
+        rendered.appendChild(svg.path(FIELD_PATH, { stroke: "sable", strokeWidth: 2 }));
         // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
         const container = svg.g();
         container.style.clipPath = `path("${FIELD_PATH}")`;
         rendered.appendChild(container);
         // Make sure there's always a default background.
-        container.appendChild(field(Tincture.of("argent")));
+        container.appendChild(field("argent"));
         complexContent(container, parsed);
     }
     let results;
