@@ -201,6 +201,6 @@ Treatment ->
 _  -> whitespace:* {% nop %}
 __ -> whitespace:+ {% nop %}
 
-# Note that comma and semicolon are considered, effectively, whitespace. They are not used to
+# Note that comma, colon and semicolon are considered, effectively, whitespace. They are not used to
 # delimit anything that is not already delimited by whitespace.
-whitespace -> [ \t\n\v\f,;] {% id %}
+whitespace -> [ \t\n\v\f,;:] {% id %}
