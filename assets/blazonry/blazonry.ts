@@ -18,7 +18,7 @@ TODO
   - churchill arms
     - inescutcheon
   - bavarian arms
-    - fusilly in bends
+    - [varied]] in [placement]
     - lion passant
     - indented
     - inescutcheon
@@ -108,15 +108,31 @@ const UNSUPPORTED = Symbol("unsupported");
 type Unsupported = typeof UNSUPPORTED;
 
 type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
-type Tincture = string & { __tincture: unknown };
-const Tincture = {
-  NONE: "none" as Tincture,
-  SABLE: "sable" as Tincture,
-  COUNTERCHANGED: "counterchanged" as Tincture,
-  of: (tincture: string): Tincture => tincture as Tincture,
-};
-type VariedName = string & { __varied: unknown };
-type Treatment = string & { __treatment: unknown };
+type Tincture =
+  | "argent"
+  | "azure"
+  | "gules"
+  | "or"
+  | "purpure"
+  | "sable"
+  | "vert"
+  | "counterchanged";
+type Treatment =
+  | "embattled-counter-embattled"
+  | "embattled"
+  | "engrailed"
+  | "indented"
+  | "wavy";
+type VariedName =
+  | "barry bendy"
+  | "barry"
+  | "bendy"
+  | "checky"
+  | "chevronny"
+  | "fusilly"
+  | "lozengy"
+  | "paly";
+
 type Posture = "palewise" | "fesswise" | "bendwise" | "saltirewise";
 const Posture = {
   toRadians: (posture: Posture | undefined): number | undefined => {
@@ -1834,7 +1850,7 @@ function fret({ tincture }: SimpleCharge) {
       [-halfWidth - outlineWidth, -halfWidth - outlineWidth],
       [halfWidth + outlineWidth, halfWidth + outlineWidth],
       {
-        stroke: Tincture.SABLE,
+        stroke: "sable",
         strokeWidth: strokeWidth + outlineWidth * 2,
       }
     ),
@@ -1850,7 +1866,7 @@ function fret({ tincture }: SimpleCharge) {
       L 0 ${thirdWidth}
       Z
       `,
-      { stroke: Tincture.SABLE, strokeWidth: strokeWidth + outlineWidth * 2 }
+      { stroke: "sable", strokeWidth: strokeWidth + outlineWidth * 2 }
     ),
     svg.path(
       `
@@ -1866,7 +1882,7 @@ function fret({ tincture }: SimpleCharge) {
       [-halfWidth - outlineWidth, halfWidth + outlineWidth],
       [halfWidth + outlineWidth, -halfWidth - outlineWidth],
       {
-        stroke: Tincture.SABLE,
+        stroke: "sable",
         strokeWidth: strokeWidth + outlineWidth * 2,
       }
     ),
@@ -1876,7 +1892,7 @@ function fret({ tincture }: SimpleCharge) {
     }),
     // Patch up the first line to have it appear over the last one, as is the style.
     svg.line([-strokeWidth, -strokeWidth], [strokeWidth, strokeWidth], {
-      stroke: Tincture.SABLE,
+      stroke: "sable",
       strokeWidth: strokeWidth + 0.5,
     }),
     svg.line(
@@ -2206,9 +2222,9 @@ function wavy(length: number): RelativeTreatmentPath {
   ];
 }
 
-const TREATMENTS: Record<string, TreatmentPathGenerator> = {
-  embattled: wrapSimpleTreatment(embattled, true, true),
+const TREATMENTS: Record<Treatment, TreatmentPathGenerator> = {
   "embattled-counter-embattled": wrapSimpleTreatment(embattled, true, false),
+  embattled: wrapSimpleTreatment(embattled, true, true),
   engrailed: wrapSimpleTreatment(engrailed, false, false),
   indented: wrapSimpleTreatment(indented, true, false),
   wavy: wrapSimpleTreatment(wavy, true, false),
@@ -2305,6 +2321,25 @@ function chevronny(count: number = 6) {
   return d;
 }
 
+function fusilly(count: number = 8) {
+  // -1 because we have half of one on the left and half on the right, so we want a _slightly_
+  // larger step to make sure we end up spanning the whole width
+  const step = W / (count - 1);
+  let d = "";
+  for (let y = 0; y < ((H / W) * count) / 2; y += 4) {
+    for (let x = 0; x < count; x++) {
+      d += path`
+        M ${-W_2 + x * step}         ${-H_2 + y * step}
+        L ${-W_2 + (x + 0.5) * step} ${-H_2 + (y + 2) * step}
+        L ${-W_2 + x * step}         ${-H_2 + (y + 4) * step}
+        L ${-W_2 + (x - 0.5) * step} ${-H_2 + (y + 2) * step}
+        Z
+      `;
+    }
+  }
+  return d;
+}
+
 function lozengy(count: number = 8) {
   // -1 because we have half of one on the left and half on the right, so we want a _slightly_
   // larger step to make sure we end up spanning the whole width
@@ -2338,12 +2373,13 @@ function paly(count: number = 6) {
   return d;
 }
 
-const VARIED: Record<string, VariedClipPathGenerator> = {
+const VARIED: Record<VariedName, VariedClipPathGenerator> = {
   barry,
   "barry bendy": barryBendy,
   bendy,
   checky,
   chevronny,
+  fusilly,
   lozengy,
   paly,
 };
@@ -2421,14 +2457,14 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     tincture: Tincture
   ): SimpleContent {
     function maybeToCounterchanged<T extends Tincture | undefined>(t: T): T {
-      return (t === Tincture.COUNTERCHANGED ? tincture : t) as T;
+      return (t === "counterchanged" ? tincture : t) as T;
     }
 
     if ("canton" in element) {
       // Cantons cannot be counterchanged; they always have a background and everything on them is
       // relative to their background. Thus, nop.
     } else if ("on" in element) {
-      if (element.surround?.tincture === Tincture.COUNTERCHANGED) {
+      if (element.surround?.tincture === "counterchanged") {
         return {
           ...element,
           // Note that we do NOT overwrite the `charge` tincture. That's a function of the `on`, not the field.
@@ -2520,13 +2556,13 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     }
 
     let line = svg.line([0, -H_2], [0, H_2], {
-      stroke: Tincture.SABLE,
+      stroke: "sable",
       strokeWidth: 0.5,
     });
     line.setAttribute("vector-effect", "non-scaling-stroke");
     container.appendChild(line);
     line = svg.line([-W_2, 0], [W_2, 0], {
-      stroke: Tincture.SABLE,
+      stroke: "sable",
       strokeWidth: 0.5,
     });
     line.setAttribute("vector-effect", "non-scaling-stroke");
@@ -2625,7 +2661,7 @@ function parseAndRenderBlazon() {
 
     rendered.innerHTML = "";
     rendered.appendChild(
-      svg.path(FIELD_PATH, { stroke: Tincture.SABLE, strokeWidth: 2 })
+      svg.path(FIELD_PATH, { stroke: "sable", strokeWidth: 2 })
     );
 
     // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
@@ -2633,7 +2669,7 @@ function parseAndRenderBlazon() {
     container.style.clipPath = `path("${FIELD_PATH}")`;
     rendered.appendChild(container);
     // Make sure there's always a default background.
-    container.appendChild(field(Tincture.of("argent")));
+    container.appendChild(field("argent"));
 
     complexContent(container, parsed);
   }
