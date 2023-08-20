@@ -10,7 +10,7 @@ TODO
   - ornaments
   - charges
     - leopard's head, eagle, castle, boar, swan, tree, rose (and variants)
-    - lion rampant
+    - lion passant
 - grammar improvements
   - should be able to parse non-redundant usage of colors
     - argent on a bend between six mullets vert
