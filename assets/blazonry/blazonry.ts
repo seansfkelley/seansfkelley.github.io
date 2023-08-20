@@ -19,12 +19,12 @@ TODO
   - churchill arms
     - inescutcheon
   - bavarian arms
-    - [varied]] in [placement]
+    - [varied] in [placement]
     - lion passant
     - indented
     - inescutcheon
     - panther rampant (?)
-  - Flag of baltimore, almost: https://en.wikipedia.org/wiki/Flag_of_Baltimore (ineschutcheon)
+  - Flag of baltimore, almost: https://en.wikipedia.org/wiki/Flag_of_Baltimore (minus inescutcheon)
   - ???
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - textbox with word wrap so you can read it better
@@ -72,7 +72,7 @@ const H_2 = H / 2;
 const W = 100;
 const W_2 = W / 2;
 
-const FIELD_PATH = path`
+const ESCUTCHEON_PATH = path`
   M -${W_2} -${H_2}
   L  ${W_2} -${H_2}
   L  ${W_2}  ${H_2 / 3}
@@ -111,6 +111,7 @@ const UNSUPPORTED = Symbol("unsupported");
 type Unsupported = typeof UNSUPPORTED;
 
 type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+
 type Tincture =
   | "argent"
   | "azure"
@@ -120,12 +121,14 @@ type Tincture =
   | "sable"
   | "vert"
   | "counterchanged";
+
 type Treatment =
   | "embattled-counter-embattled"
   | "embattled"
   | "engrailed"
   | "indented"
   | "wavy";
+
 type VariedName =
   | "barry bendy"
   | "barry"
@@ -142,10 +145,10 @@ type Posture =
   | "bendwise"
   | "bendwise sinister"
   | "saltirewise";
+
 const Posture = {
   toRadians: (posture: Posture | undefined): number | undefined => {
     switch (posture) {
-      case null:
       case undefined:
         return undefined;
       case "palewise":
@@ -167,6 +170,28 @@ const Posture = {
 type Direction = "pale" | "fess" | "bend" | "chevron" | "saltire";
 type Placement = Direction | "cross";
 type Quarter = 1 | 2 | 3 | 4;
+
+// Stupid name because Location is a DOM type.
+type Location_ = "chief" | "base";
+const Location_ = {
+  toOffset: (location: Location_ | undefined): Coordinate | undefined => {
+    switch (location) {
+      case undefined:
+        return undefined;
+      case "base":
+        return [0, H_2 / 2];
+      case "chief":
+        return [0, -H_2 / 2];
+      default:
+        assertNever(location);
+    }
+  },
+};
+
+interface Blazon {
+  main: ComplexContent;
+  inescutcheon?: Inescutcheon;
+}
 
 type ComplexContent = SimpleField | PartyPerField | Quarterly;
 type SimpleContent = Ordinary | Charge | Canton | On;
@@ -214,7 +239,6 @@ interface Ordinary {
 }
 
 interface BaseCharge {
-  tincture: Tincture;
   count: Count;
   posture?: Posture;
   placement?: Placement;
@@ -222,16 +246,23 @@ interface BaseCharge {
 
 interface SimpleCharge extends BaseCharge {
   charge: "mullet" | "rondel" | "fleur-de-lys" | "escallop" | "fret";
+  tincture: Tincture;
 }
 
 interface LionCharge extends BaseCharge {
   charge: "lion";
+  tincture: Tincture;
   armed: Tincture;
   langued: Tincture;
   pose: "passant" | "rampant";
 }
 
-type Charge = SimpleCharge | LionCharge;
+interface EscutcheonCharge extends BaseCharge {
+  charge: "escutcheon";
+  content: ComplexContent;
+}
+
+type Charge = SimpleCharge | LionCharge | EscutcheonCharge;
 
 interface Canton {
   canton: Tincture;
@@ -242,6 +273,11 @@ interface On {
   on: Ordinary;
   surround?: Charge;
   charge?: Charge;
+}
+
+interface Inescutcheon {
+  content: ComplexContent;
+  location?: Location_;
 }
 
 interface OrdinaryRenderer {
@@ -1911,8 +1947,6 @@ function fret({ tincture }: SimpleCharge) {
       }
     )
   );
-
-  const elements = [svg.line([-halfWidth, -halfWidth], [halfWidth, halfWidth])];
 }
 
 function escallop({ tincture }: SimpleCharge) {
@@ -1935,8 +1969,23 @@ function lion({ tincture, armed, langued, pose }: LionCharge) {
   return lion;
 }
 
+function escutcheon({ content }: EscutcheonCharge) {
+  const escutcheon = svg.g();
+  escutcheon.setAttribute("clip-path", `path("${ESCUTCHEON_PATH}")`);
+  complexContent(escutcheon, content);
+  escutcheon.appendChild(
+    svg.path(ESCUTCHEON_PATH, { stroke: "sable", strokeWidth: 2 })
+  );
+  applyTransforms(escutcheon, {
+    scale: 0.45,
+  });
+  // Charges are scaled according to count and placement, so wrap in an extra layer in order to
+  // apply our own scaling.
+  return svg.g(escutcheon);
+}
+
 const CHARGE_DIRECTIONS: Record<Placement | "none", ParametricLocator> = {
-  none: new DefaultChargeLocator([-W_2, W_2], [-H_2, H_2 - 10]),
+  none: new DefaultChargeLocator([-W_2, W_2], [-H_2, H_2]),
   fess: fess.on,
   pale: pale.on,
   bend: bend.on,
@@ -1964,6 +2013,8 @@ function renderCharge(charge: Charge): SVGElement {
       return SIMPLE_CHARGES[charge.charge](charge);
     case "lion":
       return lion(charge);
+    case "escutcheon":
+      return escutcheon(charge);
     default:
       assertNever(charge);
   }
@@ -2466,7 +2517,11 @@ function complexContent(container: SVGElement, content: ComplexContent) {
       // Cantons cannot be counterchanged; they always have a background and everything on them is
       // relative to their background. Thus, nop.
     } else if ("on" in element) {
-      if (element.surround?.tincture === "counterchanged") {
+      if (
+        element.surround != null &&
+        "tincture" in element.surround &&
+        element.surround.tincture === "counterchanged"
+      ) {
         return {
           ...element,
           // Note that we do NOT overwrite the `charge` tincture. That's a function of the `on`, not the field.
@@ -2480,10 +2535,12 @@ function complexContent(container: SVGElement, content: ComplexContent) {
         cotised: maybeToCounterchanged(element.cotised),
       };
     } else if ("charge" in element) {
-      return {
-        ...element,
-        tincture: maybeToCounterchanged(element.tincture),
-      };
+      if ("tincture" in element) {
+        return {
+          ...element,
+          tincture: maybeToCounterchanged(element.tincture),
+        };
+      }
     } else {
       assertNever(element);
     }
@@ -2631,6 +2688,20 @@ function on(parent: SVGElement, { on, surround, charge }: On) {
   }
 }
 
+function inescutcheon(parent: SVGElement, { location, content }: Inescutcheon) {
+  const escutcheon = svg.g();
+  escutcheon.setAttribute("clip-path", `path("${ESCUTCHEON_PATH}")`);
+  complexContent(escutcheon, content);
+  escutcheon.appendChild(
+    svg.path(ESCUTCHEON_PATH, { stroke: "sable", strokeWidth: 2 })
+  );
+  applyTransforms(escutcheon, {
+    scale: 0.25,
+    translate: Location_.toOffset(location),
+  });
+  parent.appendChild(escutcheon);
+}
+
 // #endregion
 
 // #region INITIALIZATION
@@ -2656,27 +2727,30 @@ function recursivelyOmitNullish<T>(value: T): T {
 let previousPrevEventHandler;
 let previousNextEventHandler;
 function parseAndRenderBlazon() {
-  function render(parsed: ComplexContent): void {
-    parsed = recursivelyOmitNullish(parsed);
+  function render(blazon: Blazon): void {
+    blazon = recursivelyOmitNullish(blazon);
 
-    ast.innerHTML = JSON.stringify(parsed, null, 2);
+    ast.innerHTML = JSON.stringify(blazon, null, 2);
 
     rendered.innerHTML = "";
     rendered.appendChild(
-      svg.path(FIELD_PATH, { stroke: "sable", strokeWidth: 2 })
+      svg.path(ESCUTCHEON_PATH, { stroke: "sable", strokeWidth: 2 })
     );
 
     // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
     const container = svg.g();
-    container.style.clipPath = `path("${FIELD_PATH}")`;
+    container.style.clipPath = `path("${ESCUTCHEON_PATH}")`;
     rendered.appendChild(container);
     // Make sure there's always a default background.
     container.appendChild(field("argent"));
 
-    complexContent(container, parsed);
+    complexContent(container, blazon.main);
+    if (blazon.inescutcheon != null) {
+      inescutcheon(container, blazon.inescutcheon);
+    }
   }
 
-  let results: ComplexContent[];
+  let results: Blazon[];
   try {
     const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
     parser.feed(input.value.trim().toLowerCase());
