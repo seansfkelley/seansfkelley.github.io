@@ -17,7 +17,10 @@ SIMPLE_CHARGE[S, P] ->
     }) %}
 
 Enter ->
-  ComplexContent (_ "."):? {% nth(0) %}
+  ComplexContent (
+      _ "." __ Inescutcheon _ ".":? {% nth(3) %}
+    | (_ "."):?                     {% nop %}
+  ) {% $({ main: 0, inescutcheon: 1 }) %}
 
 ComplexContent ->
     SimpleField   {% id %}
@@ -128,6 +131,9 @@ Escutcheon ->
     content: d[2],
   }) %}
 
+Inescutcheon ->
+  "an" __ "inescutcheon" (__ Location {% nth(1) %}):? __ ComplexContent {% $({ location: 3, content: 5 }) %}
+
 Singular ->
     "a"  {% nop %}
   | "an" {% nop %}
@@ -158,6 +164,8 @@ Placement ->
   # Special case: things can be "in cross" but they can't be "party per cross". (It is synonymous
   # with "quarterly" but we don't allow it because it's a pain to implement.)
   | "in" __ "cross"   {% nth(2) %}
+
+Location -> "in" __ ("chief" {% id %} | "base" {% id %}) {% nth(2) %}
 
 QuarterName ->
     ("first" | "1st" | "(1)")  {% literal(1) %}

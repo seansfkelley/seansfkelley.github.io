@@ -29,7 +29,7 @@ Try these:
 - <a href="#" data-example>Argent, a cross Gules.</a> – [Cross of St. George](https://en.wikipedia.org/wiki/Flag_of_England)
 - <a href="#" data-example>Per pale Sable and Argent, a fess embattled counterchanged.</a> – Arms of [Muri bei Bern, Switzerland](https://en.wikipedia.org/wiki/Muri_bei_Bern)
 - <a href="#" data-example>Azure, a bend Argent cotised Or between six lions rampant Or.</a> – [Bohun family arms](https://en.wikipedia.org/wiki/Bohun_family)
-- <a href="#" data-example="Quarterly 1st and 4th Sable a lion rampant Argent on a canton Argent a cross Gules; 2nd and 3rd quarterly 1st and 4th Argent 2nd and 3rd Gules a fret Or overall on a bend Sable three escallops bendwise Argent.">Quarterly 1st and 4th Sable a lion rampant on a canton Argent a cross Gules...</a>[^1] – [Arms of Winston Churchill](https://winstonchurchill.org/resources/reference/the-armorial-bearings-of-sir-winston-churchill/)
+- <a href="#" data-example="Quarterly 1st and 4th Sable a lion rampant Argent on a canton Argent a cross Gules; 2nd and 3rd quarterly 1st and 4th Argent 2nd and 3rd Gules a fret Or overall on a bend Sable three escallops bendwise Argent. An inescutcheon in chief Argent a cross Gules.">Quarterly 1st and 4th Sable a lion rampant on a canton Argent a cross Gules...</a>[^1] – [Arms of Winston Churchill](https://winstonchurchill.org/resources/reference/the-armorial-bearings-of-sir-winston-churchill/)
 
 You can mix and match these examples, of course, or copy-paste blazons from the Wikipedia page or other pages linked below. There is a very long tail of unusual ordinaries, charges, varieds, etc., so not everything you may find is supported. You can always poke around [the formal grammar](/assets/blazonry/grammar.txt) to see what's defined or not.
 
@@ -42,7 +42,7 @@ content="This page is interactive, and only works with JavaScript enabled!"
 
 <div class="center hidden" id="interactive">
   <form id="form">
-    <input type="text" id="blazon-input" value="argent an Escutcheon gules">
+    <input type="text" id="blazon-input" value="argent an escutcheon gules. an inescutcheon azure three mullets or">
     <div>
       <button id="random-blazon" type="button">
       Generate Hideous Random Blazon
@@ -91,4 +91,4 @@ References:
 
 -------------------------------------------------------------------------------
 
-[^1]: Not _exactly_; some changes had to be made to the official blazoning because I don't support certain things like "of the first" (which is a reference the first tincture listed in the blazon, used later in the blazon to avoid repeating oneself), and there is a lot of unusual or highly implicit phrasing/ordering when defining the quarters.
+[^1]: Not _exactly_; some changes had to be made to the official blazoning because I don't support phrasings like "of the first" (dispreferred ["Victorianisms"](https://heraldry.sca.org/armory/bruce.html)), the million different ways of specifying quarterings, or the underspecified "as anaugmentation" phrasing for inescutcheons.
