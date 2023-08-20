@@ -137,6 +137,10 @@
 .lion .eye .edge {
   fill: black;
 }
+.lion .nose {
+  fill: black;
+  opacity: 0.3;
+}
 .lion .ear {
   fill: #444;
 }
