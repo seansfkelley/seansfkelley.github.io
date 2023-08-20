@@ -24,9 +24,11 @@ TODO
     - indented
     - inescutcheon
     - panther rampant (?)
+  - Flag of baltimore, almost: https://en.wikipedia.org/wiki/Flag_of_Baltimore (ineschutcheon)
   - ???
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - textbox with word wrap so you can read it better
+- Baltimore doesn't work: Paly of six Or and sable, a bend counterchanged
 */
 /*
 FUTURE WORK and KNOWN ISSUES
