@@ -17,13 +17,10 @@ TODO
   - should be able to parse non-redundant usage of colors
     - argent on a bend between six mullets vert
 - things I want to be able to render
-  - churchill arms
-    - inescutcheon
   - bavarian arms
     - [varied] in [placement]
     - lion passant
     - indented
-    - inescutcheon
     - panther rampant (?)
   - Flag of baltimore, almost: https://en.wikipedia.org/wiki/Flag_of_Baltimore (minus inescutcheon)
   - ???
@@ -404,15 +401,15 @@ class DefaultChargeLocator {
     ];
     static SCALES = [
         1.5,
-        0.7,
+        0.8,
+        0.8,
+        0.6,
+        0.6,
+        0.6,
+        0.6,
+        0.6,
         0.6,
         0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.5,
-        0.4,
     ];
     constructor(horizontal, vertical) {
         this.horizontal = horizontal;
@@ -1232,14 +1229,14 @@ function escutcheon({ content }) {
     complexContent(escutcheon, content);
     escutcheon.appendChild(svg.path(ESCUTCHEON_PATH, { stroke: "sable", strokeWidth: 2 }));
     applyTransforms(escutcheon, {
-        scale: 0.45,
+        scale: 0.35,
     });
     // Charges are scaled according to count and placement, so wrap in an extra layer in order to
     // apply our own scaling.
     return svg.g(escutcheon);
 }
 const CHARGE_DIRECTIONS = {
-    none: new DefaultChargeLocator([-W_2, W_2], [-H_2, H_2]),
+    none: new DefaultChargeLocator([-W_2, W_2], [-H_2, H_2 - 10]),
     fess: fess.on,
     pale: pale.on,
     bend: bend.on,
