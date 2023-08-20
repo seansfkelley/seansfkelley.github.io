@@ -27,7 +27,9 @@ Try these:
 
 - <a href="#" data-example>Azure, a bend Or.</a> – [_Scrope v. Grosvenor_](https://en.wikipedia.org/wiki/Scrope_v_Grosvenor)
 - <a href="#" data-example>Argent, a cross Gules.</a> – [Cross of St. George](https://en.wikipedia.org/wiki/Flag_of_England)
-- <a href="#" data-example="Quarterly 1st and 4th Sable a lion rampant Argent armed and langued Gules on a canton Argent a cross Gules; 2nd and 3rd quarterly 1st and 4th Argent 2nd and 3rd Gules a fret Or overall on a bend Sable three escallops bendwise Argent.">Quarterly 1st and 4th Sable a lion rampant on a canton Argent a cross Gules...</a>[^1] – [Arms of Winston Churchill](https://winstonchurchill.org/resources/reference/the-armorial-bearings-of-sir-winston-churchill/)
+- <a href="#" data-example>Per pale Sable and Argent, a fess embattled counterchanged.</a> – Arms of [Muri bei Bern, Switzerland](https://en.wikipedia.org/wiki/Muri_bei_Bern)
+- <a href="#" data-example>Azure, a bend Argent cotised Or between six lions rampant Or.</a> – [Bohun family arms](https://en.wikipedia.org/wiki/Bohun_family)
+- <a href="#" data-example="Quarterly 1st and 4th Sable a lion rampant Argent on a canton Argent a cross Gules; 2nd and 3rd quarterly 1st and 4th Argent 2nd and 3rd Gules a fret Or overall on a bend Sable three escallops bendwise Argent.">Quarterly 1st and 4th Sable a lion rampant on a canton Argent a cross Gules...</a>[^1] – [Arms of Winston Churchill](https://winstonchurchill.org/resources/reference/the-armorial-bearings-of-sir-winston-churchill/)
 
 You can mix and match these examples, of course, or copy-paste blazons from the Wikipedia page or other pages linked below. There is a very long tail of unusual ordinaries, charges, varieds, etc., so not everything you may find is supported. You can always poke around [the formal grammar](/assets/blazonry/grammar.txt) to see what's defined or not.
 
