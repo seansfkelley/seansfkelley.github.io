@@ -1907,7 +1907,7 @@ random.addEventListener("click", () => {
     // 14 chosen empirically. Seems nice. Gets lions, where 12 does not.
     const blazon = Unparser(grammar, grammar.ParserStart, 14)
         // This is restatement of the regex rule for acceptable whitespace.
-        .replaceAll(/[ \t\n\v\f,;]+/g, " ")
+        .replaceAll(/[ \t\n\v\f,;:]+/g, " ")
         .trim()
         .replace(/ ?\.?$/, ".")
         .replaceAll(

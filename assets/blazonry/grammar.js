@@ -422,7 +422,7 @@ var grammar = {
     {"name": "__$ebnf$1", "symbols": ["whitespace"]},
     {"name": "__$ebnf$1", "symbols": ["__$ebnf$1", "whitespace"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
     {"name": "__", "symbols": ["__$ebnf$1"], "postprocess": nop},
-    {"name": "whitespace", "symbols": [/[ \t\n\v\f,;]/], "postprocess": id}
+    {"name": "whitespace", "symbols": [/[ \t\n\v\f,;:]/], "postprocess": id}
 ]
   , ParserStart: "Enter"
 }
