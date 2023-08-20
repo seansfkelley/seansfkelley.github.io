@@ -66,7 +66,6 @@ Canton ->
     "a" __ "canton" __ Tincture                                           {% $({ canton: 4 }) %}
   | "on" __ "a" __ "canton" __ Tincture (__ SimpleContent {% nth(1) %}):+ {% $({ canton: 6, content: 7 }) %}
 
-# Note that we do not support multiple ordinaries. Yet?
 Ordinary ->
     Singular __ OrdinaryName (__ Treatment {% nth(1) %}):? (__ Tincture {% nth(1) %}):? __ "cotised" __ Tincture {% (d) => ({
       ordinary: d[2], treatment: d[3], tincture: d[4] ?? d[8], cotised: d[8]
