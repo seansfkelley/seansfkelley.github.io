@@ -18,7 +18,7 @@ TODO
   - churchill arms
     - inescutcheon
   - bavarian arms
-    - fusilly in bends
+    - [varied]] in [placement]
     - lion passant
     - indented
     - inescutcheon
