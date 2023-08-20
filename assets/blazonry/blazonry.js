@@ -19,7 +19,6 @@ TODO
 - things I want to be able to render
   - churchill arms
     - inescutcheon
-    - fret
   - bavarian arms
   - ???
 - lion is missing outlines and some highlights
@@ -42,6 +41,8 @@ FUTURE WORK and KNOWN ISSUES
 - "Party per cross" is not allowed, even though it's synonymous with "quarterly".
 - The error messages are really hard to read. A lexer that properly groups characters into tokens
   would probably help (as right now every character in a literal is its own rule).
+- A singular fret should extend to the corners of the containing field, but there's currently no
+  facility to treat charges differently depending on their count. (Abstraction break?)
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
