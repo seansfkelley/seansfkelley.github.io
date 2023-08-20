@@ -12,8 +12,8 @@ SIMPLE_CHARGE[S, P] ->
     Singular __ $S (__ Posture {% nth(1) %}):? __ Tincture                               {% (d) => ({
       count: 1, posture: d[3], tincture: d[5]
     }) %}
-  | Plural __ $P (__ Posture {% nth(1) %}):? __ Tincture (__ InDirection {% nth(1) %}):? {% (d) => ({
-      count: d[0], posture: d[3], tincture: d[5], direction: d[6]
+  | Plural __ $P (__ Posture {% nth(1) %}):? __ Tincture (__ Placement {% nth(1) %}):? {% (d) => ({
+      count: d[0], posture: d[3], tincture: d[5], placement: d[6]
     }) %}
 
 Enter ->
@@ -88,14 +88,14 @@ Lion ->
   (
       "a" __ "lion"     {% literal(1) %}
     | Plural __ "lions" {% nth(0) %}
-  ) (__ LionPose {% nth(1) %}):? (__ Posture {% nth(1) %}):? __ Tincture (__ LionModifiers {% nth(1) %}):? (__ InDirection {% nth(1) %}):? {% (d) => ({
+  ) (__ LionPose {% nth(1) %}):? (__ Posture {% nth(1) %}):? __ Tincture (__ LionModifiers {% nth(1) %}):? (__ Placement {% nth(1) %}):? {% (d) => ({
     charge: "lion",
     count: d[0],
     pose: d[1] ?? "rampant",
     posture: d[2],
     tincture: d[4],
     ...d[5],
-    direction: d[6],
+    placement: d[6],
   }) %}
 
 LionPose ->
@@ -140,21 +140,17 @@ Direction ->
   | "chevron"       {% id %}
   | "saltire"       {% id %}
 
-InDirection ->
+Placement ->
     "in" __ Direction {% nth(2) %}
   # Special case: things can be "in cross" but they can't be "party per cross". (It is synonymous
   # with "quarterly" but we don't allow it because it's a pain to implement.)
   | "in" __ "cross"   {% nth(2) %}
 
 QuarterName ->
-    "first"  {% literal(1) %}
-  | "1st"    {% literal(1) %}
-  | "second" {% literal(2) %}
-  | "2nd"    {% literal(2) %}
-  | "third"  {% literal(3) %}
-  | "3rd"    {% literal(3) %}
-  | "fourth" {% literal(4) %}
-  | "4th"    {% literal(4) %}
+    ("first" | "1st" | "(1)")  {% literal(1) %}
+  | ("second" | "2nd" | "(2)") {% literal(2) %}
+  | ("third" | "3rd" | "(3)")  {% literal(3) %}
+  | ("fourth" | "4th" | "(4)") {% literal(4) %}
 
 Posture ->
     "palewise"    {% id %}
