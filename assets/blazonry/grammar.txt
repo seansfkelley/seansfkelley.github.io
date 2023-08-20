@@ -153,10 +153,11 @@ QuarterName ->
   | ("fourth" | "4th" | "(4)") {% literal(4) %}
 
 Posture ->
-    "palewise"    {% id %}
-  | "fesswise"    {% id %}
-  | "bendwise"    {% id %}
-  | "saltirewise" {% id %}
+    "palewise"          {% id %}
+  | "fesswise"          {% id %}
+  | "bendwise sinister" {% id %}
+  | "bendwise"          {% id %}
+  | "saltirewise"       {% id %}
 
 Tincture ->
     "azure"          {% id %}
