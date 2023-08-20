@@ -18,6 +18,11 @@ TODO
   - churchill arms
     - inescutcheon
   - bavarian arms
+    - fusilly in bends
+    - lion passant
+    - indented
+    - inescutcheon
+    - panther rampant (?)
   - ???
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - textbox with word wrap so you can read it better
@@ -134,7 +139,7 @@ const Posture = {
 };
 
 type Direction = "pale" | "fess" | "bend" | "chevron" | "saltire";
-type InDirection = Direction | "cross";
+type Placement = Direction | "cross";
 type Quarter = 1 | 2 | 3 | 4;
 
 type ComplexContent = SimpleField | PartyPerField | Quarterly;
@@ -186,7 +191,7 @@ interface BaseCharge {
   tincture: Tincture;
   count: Count;
   posture?: Posture;
-  direction?: InDirection;
+  placement?: Placement;
 }
 
 interface SimpleCharge extends BaseCharge {
@@ -1907,7 +1912,7 @@ function lion({ tincture, armed, langued, pose }: LionCharge) {
   return lion;
 }
 
-const CHARGE_DIRECTIONS: Record<InDirection | "none", ParametricLocator> = {
+const CHARGE_DIRECTIONS: Record<Placement | "none", ParametricLocator> = {
   none: new DefaultChargeLocator([-W_2, W_2], [-H_2, H_2 - 10]),
   fess: fess.on,
   pale: pale.on,
@@ -2391,7 +2396,7 @@ function complexContent(container: SVGElement, content: ComplexContent) {
     } else if ("ordinary" in element) {
       parent.appendChild(ORDINARIES[element.ordinary](element));
     } else if ("charge" in element) {
-      const locator = CHARGE_DIRECTIONS[element.direction ?? "none"];
+      const locator = CHARGE_DIRECTIONS[element.placement ?? "none"];
       for (const [translate, scale] of locator.forCount(element.count)) {
         const rendered = renderCharge(element);
         applyTransforms(rendered, {
@@ -2548,7 +2553,7 @@ function on(parent: SVGElement, { on, surround, charge }: On) {
 
   if (charge != null) {
     assert(
-      charge.direction == null,
+      charge.placement == null,
       'cannot specify a direction for charges in "on"'
     );
 
@@ -2566,7 +2571,7 @@ function on(parent: SVGElement, { on, surround, charge }: On) {
 
   if (surround != null) {
     assert(
-      surround.direction == null,
+      surround.placement == null,
       'cannot specify a direction for charges in "between"'
     );
 

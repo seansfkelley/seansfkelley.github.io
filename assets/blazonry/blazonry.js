@@ -19,6 +19,11 @@ TODO
   - churchill arms
     - inescutcheon
   - bavarian arms
+    - fusilly in bends
+    - lion passant
+    - indented
+    - inescutcheon
+    - panther rampant (?)
   - ???
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - textbox with word wrap so you can read it better
@@ -1615,7 +1620,7 @@ function complexContent(container, content) {
             parent.appendChild(ORDINARIES[element.ordinary](element));
         }
         else if ("charge" in element) {
-            const locator = CHARGE_DIRECTIONS[element.direction ?? "none"];
+            const locator = CHARGE_DIRECTIONS[element.placement ?? "none"];
             for (const [translate, scale] of locator.forCount(element.count)) {
                 const rendered = renderCharge(element);
                 applyTransforms(rendered, {
@@ -1758,7 +1763,7 @@ function complexContent(container, content) {
 function on(parent, { on, surround, charge }) {
     parent.appendChild(ORDINARIES[on.ordinary](on));
     if (charge != null) {
-        assert(charge.direction == null, 'cannot specify a direction for charges in "on"');
+        assert(charge.placement == null, 'cannot specify a direction for charges in "on"');
         const locator = ORDINARIES[on.ordinary].on;
         for (const [translate, scale] of locator.forCount(charge.count)) {
             const c = renderCharge(charge);
@@ -1771,7 +1776,7 @@ function on(parent, { on, surround, charge }) {
         }
     }
     if (surround != null) {
-        assert(surround.direction == null, 'cannot specify a direction for charges in "between"');
+        assert(surround.placement == null, 'cannot specify a direction for charges in "between"');
         const locator = ORDINARIES[on.ordinary].surround;
         for (const [translate, scale] of locator.forCount(surround.count)) {
             const c = renderCharge(surround);
