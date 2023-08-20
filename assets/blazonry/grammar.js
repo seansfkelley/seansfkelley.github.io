@@ -258,6 +258,8 @@ var grammar = {
           pose: d[1] ?? "rampant",
           posture: d[2],
           tincture: d[4],
+          armed: "gules",
+          langued: "gules",
           ...d[5],
           placement: d[6],
         }) },

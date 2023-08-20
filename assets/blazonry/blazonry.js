@@ -12,6 +12,7 @@ TODO
   - charges
     - leopard's head, eagle, castle, boar, swan, tree, rose (and variants)
     - lion passant
+    - escutcheon
 - grammar improvements
   - should be able to parse non-redundant usage of colors
     - argent on a bend between six mullets vert
@@ -563,7 +564,7 @@ async function fetchComplexSvg(kind, variant) {
 // #endregion
 // #region ORDINARIES
 // ----------------------------------------------------------------------------
-const COTISED_WIDTH = W_2 / 10;
+const COTISED_WIDTH = W_2 / 12;
 const BEND_WIDTH = W / 3;
 // Make sure it's long enough to reach diagonally!
 const BEND_LENGTH = Math.hypot(W, H);
@@ -599,18 +600,18 @@ function bend({ tincture, cotised, treatment }) {
     return svg.g(bend);
 }
 bend.on = new LineSegmentLocator([-W_2, -H_2], [W_2, -H_2 + W], [0.5, 0.5, 0.5, 0.5, 0.4, 0.35, 0.3, 0.25]);
-bend.surround = new AlternatingReflectiveLocator(new ExhaustiveLocator([
+bend.between = new AlternatingReflectiveLocator(new ExhaustiveLocator([
     [
-        [W_2 - 22, -H_2 + 22], //
+        [W_2 - 24, -H_2 + 24], //
     ],
     [
-        [W_2 - 35, -H_2 + 15],
-        [W_2 - 15, -H_2 + 35],
+        [W_2 - 32, -H_2 + 12],
+        [W_2 - 12, -H_2 + 32],
     ],
     [
         [W_2 - 15, -H_2 + 15],
-        [W_2 - 40, -H_2 + 15],
-        [W_2 - 15, -H_2 + 40],
+        [W_2 - 35, -H_2 + 15],
+        [W_2 - 15, -H_2 + 35],
     ],
 ], [0.7, 0.5, 0.4]), [-W_2, -H_2], [W_2, -H_2 + W]);
 bend.party = (treatment) => {
@@ -646,7 +647,7 @@ function bendSinister(ordinary) {
     return g;
 }
 bendSinister.on = new AlternatingReflectiveLocator(bend.on, [0, -H_2], [0, H_2]);
-bendSinister.surround = new ReflectiveLocator(bend.surround, [0, -H_2], [0, H_2]);
+bendSinister.between = new ReflectiveLocator(bend.between, [0, -H_2], [0, H_2]);
 bendSinister.party = (treatment) => {
     const commands = bend.party(treatment);
     commands.forEach(PathCommand.negateX);
@@ -668,7 +669,7 @@ function chief({ tincture, cotised, treatment }) {
     return chief;
 }
 chief.on = new LineSegmentLocator([-W_2, -H_2 + H_2 / 3], [W_2, -H_2 + H_2 / 3], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
-chief.surround = new NullLocator();
+chief.between = new NullLocator();
 chief.party = UNSUPPORTED;
 const CHEVRON_WIDTH = W / 4;
 function chevron({ tincture, cotised, treatment }) {
@@ -735,7 +736,7 @@ function chevron({ tincture, cotised, treatment }) {
     return chevron;
 }
 chevron.on = new OnChevronLocator([-W_2, W_2 - 10], [0, -10], [W_2, W_2 - 10], [0.4, 0.4, 0.4, 0.4, 0.35, 0.35, 0.3, 0.25]);
-chevron.surround = new ExhaustiveLocator([
+chevron.between = new ExhaustiveLocator([
     [
         [0, H_2 - 25], //
     ],
@@ -868,7 +869,7 @@ cross.on = new SequenceLocator([
     1: [[0, -CROSS_VERTICAL_OFFSET]],
 });
 const CROSS_SECTOR_2 = (W - CROSS_WIDTH) / 4;
-cross.surround = new SequenceLocator([
+cross.between = new SequenceLocator([
     [W_2 - CROSS_SECTOR_2, -H_2 + CROSS_SECTOR_2],
     [-W_2 + CROSS_SECTOR_2, -H_2 + CROSS_SECTOR_2],
     [
@@ -913,7 +914,7 @@ function fess({ tincture, cotised, treatment }) {
     return fess;
 }
 fess.on = new LineSegmentLocator([-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
-fess.surround = new AlternatingReflectiveLocator(new LineSegmentLocator([-W_2, -H_2 + FESS_WIDTH / 2], [W_2, -H_2 + FESS_WIDTH / 2], [0.6, 0.5, 0.4, 0.4]), [-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET]);
+fess.between = new AlternatingReflectiveLocator(new LineSegmentLocator([-W_2, -H_2 + FESS_WIDTH / 2], [W_2, -H_2 + FESS_WIDTH / 2], [0.6, 0.5, 0.4, 0.4]), [-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET]);
 fess.party = (treatment) => {
     const [topLeft, midLeft, midRight, topRight] = [
         { type: "M", loc: [-W_2, -H_2] },
@@ -972,7 +973,7 @@ function pale({ tincture, cotised, treatment }) {
     return pale;
 }
 pale.on = new LineSegmentLocator([0, -H_2], [0, H_2], [0.6, 0.6, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2]);
-pale.surround = new AlternatingReflectiveLocator(new LineSegmentLocator([-W_2 + PALE_WIDTH / 2, -H_2], [-W_2 + PALE_WIDTH / 2, H_2], [0.6, 0.5, 0.4, 0.4]), [0, -H_2], [0, H_2]);
+pale.between = new AlternatingReflectiveLocator(new LineSegmentLocator([-W_2 + PALE_WIDTH / 2, -H_2], [-W_2 + PALE_WIDTH / 2, H_2], [0.6, 0.5, 0.4, 0.4]), [0, -H_2], [0, H_2]);
 pale.party = (treatment) => {
     const [topLeft, topMid, bottomMid, bottomLeft] = [
         { type: "M", loc: [-W_2, -H_2] },
@@ -1069,7 +1070,7 @@ saltire.on = new SequenceLocator([
 ], [0.5, 0.5, 0.5, 0.5, 0.5], {
     1: [[0, -10]],
 });
-saltire.surround = new SequenceLocator([
+saltire.between = new SequenceLocator([
     [0, -H_2 + 12],
     [-W_2 + 12, -10],
     [W_2 - 12, -10],
@@ -1207,12 +1208,8 @@ function fleurDeLys({ tincture }) {
 function lion({ tincture, armed, langued, pose }) {
     const lion = getComplexSvgSync("lion", pose).cloneNode(true);
     lion.classList.add(tincture);
-    if (armed != null) {
-        lion.classList.add(`armed-${armed}`);
-    }
-    if (langued != null) {
-        lion.classList.add(`langued-${langued}`);
-    }
+    lion.classList.add(`armed-${armed}`);
+    lion.classList.add(`langued-${langued}`);
     return lion;
 }
 const CHARGE_DIRECTIONS = {
@@ -1792,7 +1789,7 @@ function on(parent, { on, surround, charge }) {
     }
     if (surround != null) {
         assert(surround.placement == null, 'cannot specify a direction for charges in "between"');
-        const locator = ORDINARIES[on.ordinary].surround;
+        const locator = ORDINARIES[on.ordinary].between;
         for (const [translate, scale] of locator.forCount(surround.count)) {
             const c = renderCharge(surround);
             applyTransforms(c, {

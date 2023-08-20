@@ -11,6 +11,7 @@ TODO
   - charges
     - leopard's head, eagle, castle, boar, swan, tree, rose (and variants)
     - lion passant
+    - escutcheon
 - grammar improvements
   - should be able to parse non-redundant usage of colors
     - argent on a bend between six mullets vert
@@ -218,8 +219,8 @@ interface SimpleCharge extends BaseCharge {
 
 interface LionCharge extends BaseCharge {
   charge: "lion";
-  armed?: Tincture;
-  langued?: Tincture;
+  armed: Tincture;
+  langued: Tincture;
   pose: "passant" | "rampant";
 }
 
@@ -239,7 +240,7 @@ interface On {
 interface OrdinaryRenderer {
   (ordinary: Ordinary): SVGElement;
   on: ParametricLocator;
-  surround: ParametricLocator;
+  between: ParametricLocator;
   // I'd use non-?-optional `undefined` to mean unsupported, but the compiler complains about
   // implicit `any` if I try that.
   party:
@@ -898,7 +899,7 @@ async function fetchComplexSvg(kind: string, variant?: string): Promise<void> {
 // #region ORDINARIES
 // ----------------------------------------------------------------------------
 
-const COTISED_WIDTH = W_2 / 10;
+const COTISED_WIDTH = W_2 / 12;
 
 const BEND_WIDTH = W / 3;
 // Make sure it's long enough to reach diagonally!
@@ -961,20 +962,20 @@ bend.on = new LineSegmentLocator(
   [0.5, 0.5, 0.5, 0.5, 0.4, 0.35, 0.3, 0.25]
 );
 
-bend.surround = new AlternatingReflectiveLocator(
+bend.between = new AlternatingReflectiveLocator(
   new ExhaustiveLocator(
     [
       [
-        [W_2 - 22, -H_2 + 22], //
+        [W_2 - 24, -H_2 + 24], //
       ],
       [
-        [W_2 - 35, -H_2 + 15], //
-        [W_2 - 15, -H_2 + 35],
+        [W_2 - 32, -H_2 + 12], //
+        [W_2 - 12, -H_2 + 32],
       ],
       [
         [W_2 - 15, -H_2 + 15], //
-        [W_2 - 40, -H_2 + 15],
-        [W_2 - 15, -H_2 + 40],
+        [W_2 - 35, -H_2 + 15],
+        [W_2 - 15, -H_2 + 35],
       ],
     ],
     [0.7, 0.5, 0.4]
@@ -1027,11 +1028,7 @@ bendSinister.on = new AlternatingReflectiveLocator(
   [0, H_2]
 );
 
-bendSinister.surround = new ReflectiveLocator(
-  bend.surround,
-  [0, -H_2],
-  [0, H_2]
-);
+bendSinister.between = new ReflectiveLocator(bend.between, [0, -H_2], [0, H_2]);
 
 bendSinister.party = (treatment: Treatment | undefined): PathCommand.Any[] => {
   const commands = bend.party(treatment);
@@ -1093,7 +1090,7 @@ chief.on = new LineSegmentLocator(
   [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]
 );
 
-chief.surround = new NullLocator();
+chief.between = new NullLocator();
 
 chief.party = UNSUPPORTED;
 
@@ -1208,7 +1205,7 @@ chevron.on = new OnChevronLocator(
   [0.4, 0.4, 0.4, 0.4, 0.35, 0.35, 0.3, 0.25]
 );
 
-chevron.surround = new ExhaustiveLocator(
+chevron.between = new ExhaustiveLocator(
   [
     [
       [0, H_2 - 25], //
@@ -1398,7 +1395,7 @@ cross.on = new SequenceLocator(
 
 const CROSS_SECTOR_2 = (W - CROSS_WIDTH) / 4;
 
-cross.surround = new SequenceLocator(
+cross.between = new SequenceLocator(
   [
     [W_2 - CROSS_SECTOR_2, -H_2 + CROSS_SECTOR_2],
     [-W_2 + CROSS_SECTOR_2, -H_2 + CROSS_SECTOR_2],
@@ -1484,7 +1481,7 @@ fess.on = new LineSegmentLocator(
   [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]
 );
 
-fess.surround = new AlternatingReflectiveLocator(
+fess.between = new AlternatingReflectiveLocator(
   new LineSegmentLocator(
     [-W_2, -H_2 + FESS_WIDTH / 2],
     [W_2, -H_2 + FESS_WIDTH / 2],
@@ -1582,7 +1579,7 @@ pale.on = new LineSegmentLocator(
   [0.6, 0.6, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2]
 );
 
-pale.surround = new AlternatingReflectiveLocator(
+pale.between = new AlternatingReflectiveLocator(
   new LineSegmentLocator(
     [-W_2 + PALE_WIDTH / 2, -H_2],
     [-W_2 + PALE_WIDTH / 2, H_2],
@@ -1729,7 +1726,7 @@ saltire.on = new SequenceLocator(
   }
 );
 
-saltire.surround = new SequenceLocator(
+saltire.between = new SequenceLocator(
   [
     [0, -H_2 + 12],
     [-W_2 + 12, -10],
@@ -1926,12 +1923,8 @@ function fleurDeLys({ tincture }: SimpleCharge) {
 function lion({ tincture, armed, langued, pose }: LionCharge) {
   const lion = getComplexSvgSync("lion", pose).cloneNode(true);
   lion.classList.add(tincture);
-  if (armed != null) {
-    lion.classList.add(`armed-${armed}`);
-  }
-  if (langued != null) {
-    lion.classList.add(`langued-${langued}`);
-  }
+  lion.classList.add(`armed-${armed}`);
+  lion.classList.add(`langued-${langued}`);
   return lion;
 }
 
@@ -2618,7 +2611,7 @@ function on(parent: SVGElement, { on, surround, charge }: On) {
       'cannot specify a direction for charges in "between"'
     );
 
-    const locator = ORDINARIES[on.ordinary].surround;
+    const locator = ORDINARIES[on.ordinary].between;
     for (const [translate, scale] of locator.forCount(surround.count)) {
       const c = renderCharge(surround);
       applyTransforms(c, {
