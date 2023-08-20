@@ -2,13 +2,13 @@
 /*
 TODO
 -------------------------------------------------------------------------------
-- party per ornament: quarterly
+- party per treatment: quarterly
 - InDirection -- at least in the case of chevron and saltire, they are rotated to match
 - minor visual effects to make it a little less flat
 - "saltirewise" needs to vary based on where the charge is
 - more of the same
   - ordinaries
-  - ornaments
+  - treatments
   - charges
     - leopard's head, eagle, castle, boar, swan, tree, rose (and variants)
     - lion passant
@@ -103,7 +103,7 @@ const Posture = {
         }
     },
 };
-const RelativeOrnamentPath = {
+const RelativeTreatmentPath = {
     rotate: ([start, main, end], radians) => {
         PathCommand.rotate(start, radians);
         main.forEach((c) => PathCommand.rotate(c, radians));
@@ -571,13 +571,13 @@ const COTISED_WIDTH = W_2 / 10;
 const BEND_WIDTH = W / 3;
 // Make sure it's long enough to reach diagonally!
 const BEND_LENGTH = Math.hypot(W, H);
-function bend({ tincture, cotised, ornament }) {
+function bend({ tincture, cotised, treatment }) {
     const bend = svg.g();
-    if (ornament != null) {
-        bend.appendChild(svg.path(path.from(relativePathsToClosedLoop(relativePathFor([0, -BEND_WIDTH / 2], undefined, undefined), ORNAMENTS[ornament](BEND_LENGTH, false, "primary"), relativePathFor(undefined, [0, BEND_WIDTH], undefined), 
+    if (treatment != null) {
+        bend.appendChild(svg.path(path.from(relativePathsToClosedLoop(relativePathFor([0, -BEND_WIDTH / 2], undefined, undefined), TREATMENTS[treatment](BEND_LENGTH, false, "primary"), relativePathFor(undefined, [0, BEND_WIDTH], undefined), 
         // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
         // we traverse around the bend clockwise.
-        ORNAMENTS[ornament](-BEND_LENGTH, true, "secondary", "end"))), { fill: tincture }));
+        TREATMENTS[treatment](-BEND_LENGTH, true, "secondary", "end"))), { fill: tincture }));
     }
     else {
         bend.appendChild(svg.line([0, 0], [BEND_LENGTH, 0], {
@@ -617,11 +617,11 @@ bend.surround = new AlternatingReflectiveLocator(new ExhaustiveLocator([
         [W_2 - 15, -H_2 + 40],
     ],
 ], [0.7, 0.5, 0.4]), [-W_2, -H_2], [W_2, -H_2 + W]);
-bend.party = (ornament) => {
+bend.party = (treatment) => {
     const topLeft = [-W_2, -H_2];
     const topRight = [W_2, -H_2];
     const bottomRight = Coordinate.add(topLeft, [BEND_LENGTH, BEND_LENGTH]);
-    if (ornament == null) {
+    if (treatment == null) {
         return [
             { type: "M", loc: topLeft },
             { type: "L", loc: bottomRight },
@@ -630,13 +630,13 @@ bend.party = (ornament) => {
         ];
     }
     else {
-        const ornamentPath = ORNAMENTS[ornament](BEND_LENGTH, false, "primary", "start");
-        RelativeOrnamentPath.rotate(ornamentPath, Math.PI / 4);
+        const treatmentPath = TREATMENTS[treatment](BEND_LENGTH, false, "primary", "start");
+        RelativeTreatmentPath.rotate(treatmentPath, Math.PI / 4);
         return [
             { type: "M", loc: topLeft },
-            { type: "l", loc: ornamentPath[0].loc },
-            ...ornamentPath[1],
-            { type: "l", loc: ornamentPath[2].loc },
+            { type: "l", loc: treatmentPath[0].loc },
+            ...treatmentPath[1],
+            { type: "l", loc: treatmentPath[2].loc },
             { type: "L", loc: topRight },
             { type: "Z" },
         ];
@@ -651,16 +651,16 @@ function bendSinister(ordinary) {
 }
 bendSinister.on = new AlternatingReflectiveLocator(bend.on, [0, -H_2], [0, H_2]);
 bendSinister.surround = new ReflectiveLocator(bend.surround, [0, -H_2], [0, H_2]);
-bendSinister.party = (ornament) => {
-    const commands = bend.party(ornament);
+bendSinister.party = (treatment) => {
+    const commands = bend.party(treatment);
     commands.forEach(PathCommand.negateX);
     return commands;
 };
 const CHIEF_WIDTH = H / 3;
-function chief({ tincture, cotised, ornament }) {
+function chief({ tincture, cotised, treatment }) {
     const chief = svg.g();
-    if (ornament != null) {
-        const [start, main, end] = ORNAMENTS[ornament](-W, true, "primary", "center");
+    if (treatment != null) {
+        const [start, main, end] = TREATMENTS[treatment](-W, true, "primary", "center");
         chief.appendChild(svg.path(path.from({ type: "M", loc: [-W_2, -H_2] }, { type: "L", loc: [W_2, -H_2] }, { type: "l", loc: Coordinate.add([0, CHIEF_WIDTH], start.loc) }, main, { type: "l", loc: Coordinate.add([0, -CHIEF_WIDTH], end.loc) }), { fill: tincture }));
     }
     else {
@@ -675,18 +675,18 @@ chief.on = new LineSegmentLocator([-W_2, -H_2 + H_2 / 3], [W_2, -H_2 + H_2 / 3],
 chief.surround = new NullLocator();
 chief.party = UNSUPPORTED;
 const CHEVRON_WIDTH = W / 4;
-function chevron({ tincture, cotised, ornament }) {
+function chevron({ tincture, cotised, treatment }) {
     const left = [-W_2, -H_2 + W];
     const right = [-W_2 + H, H_2];
     // Cross at 45 degrees starting from the top edge, so we bias upwards from the center.
     const mid = [0, -(H_2 - W_2)];
     const chevron = svg.g();
-    if (ornament != null) {
+    if (treatment != null) {
         const topLength = Coordinate.length(mid, right) + CHEVRON_WIDTH / 2;
         const bottomLength = Coordinate.length(mid, right) - CHEVRON_WIDTH / 2;
         for (const sign of [-1, 1]) {
-            const [topStart, topMain, topEnd] = ORNAMENTS[ornament](topLength, false, "primary", "start");
-            const [bottomStart, bottomMain, bottomEnd] = ORNAMENTS[ornament](-bottomLength, true, "secondary", "end");
+            const [topStart, topMain, topEnd] = TREATMENTS[treatment](topLength, false, "primary", "start");
+            const [bottomStart, bottomMain, bottomEnd] = TREATMENTS[treatment](-bottomLength, true, "secondary", "end");
             const p = svg.path(path.from({ type: "m", loc: topStart.loc }, //
             topMain, {
                 type: "l",
@@ -759,7 +759,7 @@ chevron.surround = new ExhaustiveLocator([
         [30, -H_2 + 30],
     ],
 ], [0.5, 0.5, 0.5, 0.5]);
-chevron.party = (ornament) => {
+chevron.party = (treatment) => {
     const [topLeft, midLeft, mid, midRight, topRight] = [
         [-W_2, -H_2],
         // See the main renderer for how these values are picked.
@@ -768,7 +768,7 @@ chevron.party = (ornament) => {
         [W_2, -H_2 + W],
         [W_2, -H_2],
     ];
-    if (ornament == null) {
+    if (treatment == null) {
         return [
             { type: "M", loc: topLeft },
             { type: "L", loc: midLeft },
@@ -779,8 +779,8 @@ chevron.party = (ornament) => {
         ];
     }
     else {
-        const [leftStart, leftMain, leftEnd] = ORNAMENTS[ornament](Coordinate.length(midLeft, mid), false, "primary", "end");
-        const [rightStart, rightMain, rightEnd] = ORNAMENTS[ornament](Coordinate.length(mid, midRight), false, "primary", "start");
+        const [leftStart, leftMain, leftEnd] = TREATMENTS[treatment](Coordinate.length(midLeft, mid), false, "primary", "end");
+        const [rightStart, rightMain, rightEnd] = TREATMENTS[treatment](Coordinate.length(mid, midRight), false, "primary", "start");
         leftMain.forEach((c) => PathCommand.rotate(c, -Math.PI / 4));
         rightMain.forEach((c) => PathCommand.rotate(c, Math.PI / 4));
         return [
@@ -805,39 +805,39 @@ chevron.party = (ornament) => {
 // Ensure that the sides and top arms are all the same length!
 const CROSS_WIDTH = W / 4;
 const CROSS_VERTICAL_OFFSET = (H - W) / 2;
-function cross({ tincture, cotised, ornament }) {
+function cross({ tincture, cotised, treatment }) {
     const top = [0, -H_2];
     const bottom = [0, H_2];
     const left = [-W_2, -CROSS_VERTICAL_OFFSET];
     const right = [W_2, -CROSS_VERTICAL_OFFSET];
     const cross = svg.g();
-    if (ornament != null) {
+    if (treatment != null) {
         const g = svg.g();
         const hLength = W_2 - CROSS_WIDTH / 2;
         const vLength = H_2 - CROSS_WIDTH / 2 + CROSS_VERTICAL_OFFSET;
-        const ornamentations = [
+        const treatments = [
             // Starting on the bottom right, moving around counter-clockwise.
-            ORNAMENTS[ornament](-vLength, false, "secondary", "end"),
-            ORNAMENTS[ornament](hLength, true, "secondary", "start"),
-            straightLineOrnamenter(-CROSS_WIDTH),
-            ORNAMENTS[ornament](-hLength, false, "primary", "end"),
-            ORNAMENTS[ornament](-vLength, false, "secondary", "start"),
-            straightLineOrnamenter(-CROSS_WIDTH),
-            ORNAMENTS[ornament](vLength, true, "secondary", "end"),
-            ORNAMENTS[ornament](-hLength, false, "primary", "start"),
-            straightLineOrnamenter(CROSS_WIDTH),
-            ORNAMENTS[ornament](hLength, true, "secondary", "end"),
-            ORNAMENTS[ornament](vLength, true, "secondary", "start"),
+            TREATMENTS[treatment](-vLength, false, "secondary", "end"),
+            TREATMENTS[treatment](hLength, true, "secondary", "start"),
+            straightLineTreatment(-CROSS_WIDTH),
+            TREATMENTS[treatment](-hLength, false, "primary", "end"),
+            TREATMENTS[treatment](-vLength, false, "secondary", "start"),
+            straightLineTreatment(-CROSS_WIDTH),
+            TREATMENTS[treatment](vLength, true, "secondary", "end"),
+            TREATMENTS[treatment](-hLength, false, "primary", "start"),
+            straightLineTreatment(CROSS_WIDTH),
+            TREATMENTS[treatment](hLength, true, "secondary", "end"),
+            TREATMENTS[treatment](vLength, true, "secondary", "start"),
         ];
         for (const index of [0, 2, 4, 6, 8, 10]) {
-            RelativeOrnamentPath.rotate(ornamentations[index], Math.PI / 2);
+            RelativeTreatmentPath.rotate(treatments[index], Math.PI / 2);
         }
-        g.appendChild(svg.path(path.from(relativePathsToClosedLoop(...ornamentations)), {
+        g.appendChild(svg.path(path.from(relativePathsToClosedLoop(...treatments)), {
             fill: tincture,
         }));
         applyTransforms(g, {
             // I _think_ this is the correct offset: the vertical offset is accounted for by being
-            // included in the vertical length, and even though the first ornamentation can vary in length
+            // included in the vertical length, and even though the first treatment can vary in length
             // depending on the type, the end-alignment means that it'll grow downwards, out of view.
             translate: [CROSS_WIDTH / 2, H_2],
         });
@@ -891,17 +891,17 @@ cross.surround = new SequenceLocator([
 cross.party = UNSUPPORTED;
 const FESS_WIDTH = W / 3;
 const FESS_VERTICAL_OFFSET = -H_2 + FESS_WIDTH * (3 / 2);
-function fess({ tincture, cotised, ornament }) {
+function fess({ tincture, cotised, treatment }) {
     const fess = svg.g();
-    if (ornament != null) {
+    if (treatment != null) {
         fess.appendChild(svg.path(path.from({
             type: "m",
             loc: [-W_2, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2],
-        }, relativePathsToClosedLoop(ORNAMENTS[ornament](W, false, "primary", "center"), [
+        }, relativePathsToClosedLoop(TREATMENTS[treatment](W, false, "primary", "center"), [
             { type: "m", loc: [0, 0] },
             [{ type: "l", loc: [0, FESS_WIDTH] }],
             { type: "m", loc: [0, 0] },
-        ], ORNAMENTS[ornament](-W, true, "secondary", "center"))), { fill: tincture }));
+        ], TREATMENTS[treatment](-W, true, "secondary", "center"))), { fill: tincture }));
     }
     else {
         fess.appendChild(svg.line([-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET], {
@@ -918,18 +918,18 @@ function fess({ tincture, cotised, ornament }) {
 }
 fess.on = new LineSegmentLocator([-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
 fess.surround = new AlternatingReflectiveLocator(new LineSegmentLocator([-W_2, -H_2 + FESS_WIDTH / 2], [W_2, -H_2 + FESS_WIDTH / 2], [0.6, 0.5, 0.4, 0.4]), [-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET]);
-fess.party = (ornament) => {
+fess.party = (treatment) => {
     const [topLeft, midLeft, midRight, topRight] = [
         { type: "M", loc: [-W_2, -H_2] },
         { type: "L", loc: [-W_2, -H / 10] },
         { type: "L", loc: [W_2, -H / 10] },
         { type: "L", loc: [W_2, -H_2] },
     ];
-    if (ornament == null) {
+    if (treatment == null) {
         return [topLeft, midLeft, midRight, topRight, { type: "Z" }];
     }
     else {
-        const [start, main, end] = ORNAMENTS[ornament](W, false, "primary", "center");
+        const [start, main, end] = TREATMENTS[treatment](W, false, "primary", "center");
         return [
             topLeft,
             midLeft,
@@ -943,13 +943,13 @@ fess.party = (ornament) => {
     }
 };
 const PALE_WIDTH = W / 3;
-function pale({ tincture, cotised, ornament }) {
+function pale({ tincture, cotised, treatment }) {
     const pale = svg.g();
-    if (ornament != null) {
-        const p = svg.path(path.from(relativePathsToClosedLoop(relativePathFor([0, -PALE_WIDTH / 2], undefined, undefined), ORNAMENTS[ornament](H, false, "primary"), relativePathFor(undefined, [0, PALE_WIDTH], undefined), 
+    if (treatment != null) {
+        const p = svg.path(path.from(relativePathsToClosedLoop(relativePathFor([0, -PALE_WIDTH / 2], undefined, undefined), TREATMENTS[treatment](H, false, "primary"), relativePathFor(undefined, [0, PALE_WIDTH], undefined), 
         // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
         // we traverse around the pale clockwise.
-        ORNAMENTS[ornament](-H, true, "secondary", "end"))), { fill: tincture });
+        TREATMENTS[treatment](-H, true, "secondary", "end"))), { fill: tincture });
         applyTransforms(p, {
             translate: [0, -H_2],
             rotate: Math.PI / 2,
@@ -977,19 +977,19 @@ function pale({ tincture, cotised, ornament }) {
 }
 pale.on = new LineSegmentLocator([0, -H_2], [0, H_2], [0.6, 0.6, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2]);
 pale.surround = new AlternatingReflectiveLocator(new LineSegmentLocator([-W_2 + PALE_WIDTH / 2, -H_2], [-W_2 + PALE_WIDTH / 2, H_2], [0.6, 0.5, 0.4, 0.4]), [0, -H_2], [0, H_2]);
-pale.party = (ornament) => {
+pale.party = (treatment) => {
     const [topLeft, topMid, bottomMid, bottomLeft] = [
         { type: "M", loc: [-W_2, -H_2] },
         { type: "L", loc: [0, -H_2] },
         { type: "L", loc: [0, H_2] },
         { type: "L", loc: [-W_2, H_2] },
     ];
-    if (ornament == null) {
+    if (treatment == null) {
         return [topLeft, topMid, bottomMid, bottomLeft, { type: "Z" }];
     }
     else {
-        const [start, main, end] = ORNAMENTS[ornament](H, false, "primary", "start");
-        RelativeOrnamentPath.rotate([start, main, end], Math.PI / 2);
+        const [start, main, end] = TREATMENTS[treatment](H, false, "primary", "start");
+        RelativeTreatmentPath.rotate([start, main, end], Math.PI / 2);
         return [
             topLeft,
             topMid,
@@ -1003,33 +1003,33 @@ pale.party = (ornament) => {
     }
 };
 const SALTIRE_WIDTH = W / 4;
-function saltire({ tincture, cotised, ornament }) {
+function saltire({ tincture, cotised, treatment }) {
     const tl = [-W_2, -H_2];
     const tr = [W_2, -H_2];
     const bl = [W_2 - H, H_2];
     const br = [-W_2 + H, H_2];
     const saltire = svg.g();
-    if (ornament != null) {
+    if (treatment != null) {
         const g = svg.g();
         const length = Math.hypot(W_2, W_2);
-        const ornamentations = [
+        const treatments = [
             // Starting on the bottom left, moving around clockwise.
-            ORNAMENTS[ornament](length, false, "primary", "end"),
-            ORNAMENTS[ornament](length, false, "secondary", "start"),
-            straightLineOrnamenter(SALTIRE_WIDTH),
-            ORNAMENTS[ornament](-length, true, "primary", "end"),
-            ORNAMENTS[ornament](length, false, "primary", "start"),
-            straightLineOrnamenter(-SALTIRE_WIDTH),
-            ORNAMENTS[ornament](-length, true, "secondary", "end"),
-            ORNAMENTS[ornament](-length, true, "primary", "start"),
-            straightLineOrnamenter(-SALTIRE_WIDTH),
-            ORNAMENTS[ornament](length, false, "secondary", "end"),
-            ORNAMENTS[ornament](-length, true, "secondary", "start"),
+            TREATMENTS[treatment](length, false, "primary", "end"),
+            TREATMENTS[treatment](length, false, "secondary", "start"),
+            straightLineTreatment(SALTIRE_WIDTH),
+            TREATMENTS[treatment](-length, true, "primary", "end"),
+            TREATMENTS[treatment](length, false, "primary", "start"),
+            straightLineTreatment(-SALTIRE_WIDTH),
+            TREATMENTS[treatment](-length, true, "secondary", "end"),
+            TREATMENTS[treatment](-length, true, "primary", "start"),
+            straightLineTreatment(-SALTIRE_WIDTH),
+            TREATMENTS[treatment](length, false, "secondary", "end"),
+            TREATMENTS[treatment](-length, true, "secondary", "start"),
         ];
         for (const index of [1, 3, 5, 7, 9]) {
-            RelativeOrnamentPath.rotate(ornamentations[index], -Math.PI / 2);
+            RelativeTreatmentPath.rotate(treatments[index], -Math.PI / 2);
         }
-        const saltirePath = svg.path(path.from(relativePathsToClosedLoop(...ornamentations)), { fill: tincture });
+        const saltirePath = svg.path(path.from(relativePathsToClosedLoop(...treatments)), { fill: tincture });
         applyTransforms(saltirePath, {
             translate: [
                 -(length + SALTIRE_WIDTH / 2),
@@ -1081,14 +1081,14 @@ saltire.surround = new SequenceLocator([
 ], [0.5, 0.5, 0.5, 0.5], {
     1: SequenceLocator.EMPTY,
 });
-saltire.party = (ornament) => {
+saltire.party = (treatment) => {
     const [topLeft, topRight, bottomLeft, bottomRight] = [
         { type: "L", loc: [-W_2, -H_2] },
         { type: "L", loc: [W_2, -H_2] },
         { type: "L", loc: [-W_2, -H_2 + W] },
         { type: "L", loc: [W_2, -H_2 + W] },
     ];
-    if (ornament == null) {
+    if (treatment == null) {
         // The ordering of this is significant, since it defines which tincture is on the top/bottom
         // versus left/right.
         return [
@@ -1103,10 +1103,10 @@ saltire.party = (ornament) => {
         ];
     }
     else {
-        const [start1, main1, end1] = ORNAMENTS[ornament](Math.hypot(W, W), true, "primary", "center");
-        RelativeOrnamentPath.rotate([start1, main1, end1], (3 * Math.PI) / 4);
-        const [start2, main2, end2] = ORNAMENTS[ornament](Math.hypot(W, W), true, "primary", "center");
-        RelativeOrnamentPath.rotate([start2, main2, end2], -(3 * Math.PI) / 4);
+        const [start1, main1, end1] = TREATMENTS[treatment](Math.hypot(W, W), true, "primary", "center");
+        RelativeTreatmentPath.rotate([start1, main1, end1], (3 * Math.PI) / 4);
+        const [start2, main2, end2] = TREATMENTS[treatment](Math.hypot(W, W), true, "primary", "center");
+        RelativeTreatmentPath.rotate([start2, main2, end2], -(3 * Math.PI) / 4);
         return [
             { type: "M", loc: topLeft.loc },
             topRight,
@@ -1247,9 +1247,9 @@ function renderCharge(charge) {
     }
 }
 // #endregion
-// #region ORNAMENT
+// #region TREATMENTS
 // ----------------------------------------------------------------------------
-function wrapSimpleOrnamenter(ornamenter, isPatternCycleComposite, onlyRenderPrimary) {
+function wrapSimpleTreatment(treatment, isPatternCycleComposite, onlyRenderPrimary) {
     function mutatinglyApplyTransforms([start, main, end], { invertX = false, invertY = false, alignToEnd = false, }) {
         if (alignToEnd) {
             [start, end] = [end, start];
@@ -1285,27 +1285,27 @@ function wrapSimpleOrnamenter(ornamenter, isPatternCycleComposite, onlyRenderPri
         return [start, main, end];
     }
     return (xLength, invertY, side, alignment = "start") => {
-        const chosenOrnamenter = side !== "primary" && onlyRenderPrimary
-            ? straightLineOrnamenter
-            : ornamenter;
+        const chosenTreatment = side !== "primary" && onlyRenderPrimary
+            ? straightLineTreatment
+            : treatment;
         const invertX = xLength < 0;
         const length = Math.abs(xLength);
         if (alignment === "start") {
-            return mutatinglyApplyTransforms(chosenOrnamenter(length), {
+            return mutatinglyApplyTransforms(chosenTreatment(length), {
                 invertX,
                 invertY,
             });
         }
         else if (alignment === "end") {
-            return mutatinglyApplyTransforms(chosenOrnamenter(length), {
+            return mutatinglyApplyTransforms(chosenTreatment(length), {
                 invertX,
                 invertY,
                 alignToEnd: true,
             });
         }
         else if (alignment === "center") {
-            const [start, firstMain] = mutatinglyApplyTransforms(chosenOrnamenter(length / 2), { alignToEnd: true });
-            const [, secondMain, end] = chosenOrnamenter(length / 2);
+            const [start, firstMain] = mutatinglyApplyTransforms(chosenTreatment(length / 2), { alignToEnd: true });
+            const [, secondMain, end] = chosenTreatment(length / 2);
             return mutatinglyApplyTransforms([start, [...firstMain, ...secondMain], end], { invertX, invertY });
         }
         else {
@@ -1338,7 +1338,7 @@ function relativePathsToClosedLoop(...paths) {
 relativePathsToClosedLoop.debug = (...paths) => {
     return paths.flat(2).map((c) => (c.type === "m" ? { ...c, type: "l" } : c));
 };
-function straightLineOrnamenter(length) {
+function straightLineTreatment(length) {
     return [
         { type: "m", loc: [0, 0] },
         [{ type: "l", loc: [length, 0] }],
@@ -1438,12 +1438,12 @@ function wavy(length) {
         { type: "m", loc: [x, -y] },
     ];
 }
-const ORNAMENTS = {
-    embattled: wrapSimpleOrnamenter(embattled, true, true),
-    "embattled-counter-embattled": wrapSimpleOrnamenter(embattled, true, false),
-    engrailed: wrapSimpleOrnamenter(engrailed, false, false),
-    indented: wrapSimpleOrnamenter(indented, true, false),
-    wavy: wrapSimpleOrnamenter(wavy, true, false),
+const TREATMENTS = {
+    embattled: wrapSimpleTreatment(embattled, true, true),
+    "embattled-counter-embattled": wrapSimpleTreatment(embattled, true, false),
+    engrailed: wrapSimpleTreatment(engrailed, false, false),
+    indented: wrapSimpleTreatment(indented, true, false),
+    wavy: wrapSimpleTreatment(wavy, true, false),
 };
 // #endregion
 // #region VARIED
@@ -1675,7 +1675,7 @@ function complexContent(container, content) {
         // This should be prevented in grammar, so this should never fire.
         assert(party !== UNSUPPORTED, `cannot use 'party' with this ordinary`);
         const g1 = svg.g();
-        g1.style.clipPath = `path("${path.from(party(content.ornament))}")`;
+        g1.style.clipPath = `path("${path.from(party(content.treatment))}")`;
         const g2 = svg.g();
         g1.appendChild(field(content.first));
         g2.appendChild(field(content.second));

@@ -36,8 +36,8 @@ Varied ->
   VariedName (__ "of" __ Plural {% nth(3) %}):? {% $({ type: 0, count: 1 }) %}
 
 PartyPerField ->
-  (Party __):? "per" __ Direction (__ Ornament {% nth(1) %}):? __ Tincture __ "and" __ Tincture (__ SimpleContent {% nth(1) %}):? {% $({
-    party: 3, ornament: 4, first: 6, second: 10, content: 11
+  (Party __):? "per" __ Direction (__ Treatment {% nth(1) %}):? __ Tincture __ "and" __ Tincture (__ SimpleContent {% nth(1) %}):? {% $({
+    party: 3, treatment: 4, first: 6, second: 10, content: 11
   }) %}
 
 Party ->
@@ -68,11 +68,11 @@ Canton ->
 
 # Note that we do not support multiple ordinaries. Yet?
 Ordinary ->
-    Singular __ OrdinaryName (__ Ornament {% nth(1) %}):? (__ Tincture {% nth(1) %}):? __ "cotised" __ Tincture {% (d) => ({
-      ordinary: d[2], ornament: d[3], tincture: d[4] ?? d[8], cotised: d[8]
+    Singular __ OrdinaryName (__ Treatment {% nth(1) %}):? (__ Tincture {% nth(1) %}):? __ "cotised" __ Tincture {% (d) => ({
+      ordinary: d[2], treatment: d[3], tincture: d[4] ?? d[8], cotised: d[8]
     }) %}
-  | Singular __ OrdinaryName (__ Ornament {% nth(1) %}):? __ Tincture {% $({
-      ordinary: 2, ornament: 3, tincture : 5
+  | Singular __ OrdinaryName (__ Treatment {% nth(1) %}):? __ Tincture {% $({
+      ordinary: 2, treatment: 3, tincture : 5
     }) %}
 
 Charge ->
@@ -188,7 +188,7 @@ VariedName ->
   | "lozengy"     {% id %}
   | "paly"        {% id %}
 
-Ornament ->
+Treatment ->
     "embattled-counter-embattled" {% id %}
   | "embattled"                   {% id %}
   | "engrailed"                   {% id %}
