@@ -4,14 +4,13 @@ TODO
 - party per ornament: quarterly
 - InDirection -- at least in the case of chevron and saltire, they are rotated to match
 - minor visual effects to make it a little less flat
-- fretty?
 - "saltirewise" needs to vary based on where the charge is
 - more of the same
   - ordinaries
   - ornaments
   - charges
-    - are there any other geometric ones?
-    - lion, leopard's head, eagle, castle, boar, swan, tree, rose, escallop, and all their variants
+    - leopard's head, eagle, castle, boar, swan, tree, rose (and variants)
+    - lion rampant
 - grammar improvements
   - should be able to parse non-redundant usage of colors
     - argent on a bend between six mullets vert
@@ -23,6 +22,7 @@ TODO
 - lion is missing outlines and some highlights
 - use bounding client rect to correctly position/size lion and fleur-de-lys
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
+- textbox with word wrap so you can read it better
 */
 
 /*
