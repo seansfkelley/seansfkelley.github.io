@@ -81,11 +81,13 @@ Charge ->
   | SIMPLE_CHARGE["escallop", "escallops"]                                                {% spread({ charge: 'escallop' }) %}
   | SIMPLE_CHARGE[("fleur-de-lys" | "fleur-de-lis"), ("fleurs-de-lys" | "fleurs-de-lis")] {% spread({ charge: 'fleur-de-lys' }) %}
   | Lion                                                                                  {% id %}
+  | Escutcheon                                                                            {% id %}
 
 Lion ->
   (
-      "a" __ "lion"     {% literal(1) %}
-    | Plural __ "lions" {% nth(0) %}
+      # Don't bother to restrict to "a" as singular, this makes it easier to play with different charges.
+      Singular __ "lion" {% literal(1) %}
+    | Plural __ "lions"  {% nth(0) %}
   ) (__ LionPose {% nth(1) %}):? (__ Posture {% nth(1) %}):? __ Tincture (__ LionModifiers {% nth(1) %}):? (__ Placement {% nth(1) %}):? {% (d) => ({
     charge: "lion",
     count: d[0],
@@ -114,6 +116,17 @@ LionModifiers ->
     LionModifier __ Tincture __ "and" __ LionModifier __ Tincture {% (d) => ({ [d[0]]: d[2], [d[6]]: d[8] }) %}
   | LionModifier __ Tincture                                      {% (d) => ({ [d[0]]: d[2] }) %}
   | LionModifier __ "and" __ LionModifier __ Tincture             {% (d) => ({ [d[0]]: d[6], [d[4]]: d[6] }) %}
+
+Escutcheon ->
+  (
+    # Don't bother to restrict to "an" as singular, this makes it easier to play with different charges.
+      Singular __ "escutcheon" {% literal(1) %}
+    | Plural __ "escutcheons"  {% nth(0) %}
+  ) __ ComplexContent {% (d) => ({
+    charge: "escutcheon",
+    count: d[0],
+    content: d[2],
+  }) %}
 
 Singular ->
     "a"  {% nop %}
