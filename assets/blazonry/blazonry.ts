@@ -136,7 +136,12 @@ type VariedName =
   | "lozengy"
   | "paly";
 
-type Posture = "palewise" | "fesswise" | "bendwise" | "saltirewise";
+type Posture =
+  | "palewise"
+  | "fesswise"
+  | "bendwise"
+  | "bendwise sinister"
+  | "saltirewise";
 const Posture = {
   toRadians: (posture: Posture | undefined): number | undefined => {
     switch (posture) {
@@ -149,6 +154,8 @@ const Posture = {
         return -Math.PI / 2;
       case "bendwise":
         return -Math.PI / 4;
+      case "bendwise sinister":
+        return Math.PI / 4;
       case "saltirewise":
         return -Math.PI / 4; // TODO
       default:
