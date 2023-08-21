@@ -98,27 +98,10 @@ $colors: (
 
   .outline {
     stroke: black;
-    stroke-opacity: 0.3;
   }
 
   .teeth {
     fill: white;
-  }
-
-  .eye {
-    .white {
-      fill: white;
-    }
-
-    .pupil,
-    .edge {
-      fill: black;
-    }
-  }
-
-  .nose {
-    fill: black;
-    opacity: 0.3;
   }
 
   .ear {
@@ -131,14 +114,6 @@ $colors: (
       .claw,
       .langue {
         fill: $val;
-      }
-
-      .highlight.low {
-        fill: lighten($val, 10%);
-      }
-
-      .highlight.high {
-        fill: lighten($val, 15%);
       }
     }
 
