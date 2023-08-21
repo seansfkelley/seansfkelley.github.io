@@ -52,7 +52,7 @@ __metadata:
 
 "nearley@patch:nearley@npm%3A2.20.1#./.yarn/patches/nearley-npm-2.20.1-2e130941d3.patch::locator=seansfkelley.github.io%40workspace%3A.":
   version: 2.20.1
-  resolution: "nearley@patch:nearley@npm%3A2.20.1#./.yarn/patches/nearley-npm-2.20.1-2e130941d3.patch::version=2.20.1&hash=2b9587&locator=seansfkelley.github.io%40workspace%3A."
+  resolution: "nearley@patch:nearley@npm%3A2.20.1#./.yarn/patches/nearley-npm-2.20.1-2e130941d3.patch::version=2.20.1&hash=c858fd&locator=seansfkelley.github.io%40workspace%3A."
   dependencies:
     commander: ^2.19.0
     moo: ^0.5.0
@@ -63,7 +63,7 @@ __metadata:
     nearley-test: bin/nearley-test.js
     nearley-unparse: bin/nearley-unparse.js
     nearleyc: bin/nearleyc.js
-  checksum: ace4dae1e5b3d6c28c621d79f1f4b29c47376c21fd6054d157aee61bcb0798b44b0da26ad4a3ab09688978e9fadc545c94ea313e23863cd00430b39bb35d240f
+  checksum: 77cc5baa297e87b0fa1797b684344d37b675a2e6708dd84dc6917b4b74d8164b201912c3db99729ed19c5b55050e8b0a73ff9c604fd6e7a06762a90d7b7e632d
   languageName: node
   linkType: hard
 

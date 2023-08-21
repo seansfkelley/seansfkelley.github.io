@@ -52,13 +52,15 @@
 
         var rules = grammar.rules;
         var min_depths_rule = [];
+        for (var i=0; i<rules.length; i++) {
+            min_depth_rule(i, []);
+        }
 
         function synth_nt(name, depth) {
             var good_rules = [];
             var min_min_depth = Infinity;
             for (var i=0; i<rules.length; i++) {
-                min_depths_rule = [];
-                var size = min_depth_rule(i, []);
+                var size = min_depths_rule[i];
                 if (rules[i].name === name) {
                     min_min_depth = Math.min(min_min_depth, size);
                     if (size < depth) {
