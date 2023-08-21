@@ -46,10 +46,10 @@ content="This page is interactive, and only works with JavaScript enabled!"
     <input type="text" id="blazon-input" value="argent a lion rampant reguardant or">
     <div>
       <button id="random-blazon" type="button">
-      Generate Hideous Random Blazon
+      Generate Hideous Random Blazon (Slow!)
       </button>
       <button type="submit">
-      Preview
+      Render It!
       </button>
     </div>
   </form>

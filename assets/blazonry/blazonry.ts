@@ -17,7 +17,6 @@ TODO
 - things I want to be able to render
   - bavarian arms
     - [varied] in [placement]
-    - panther rampant (?)
   - Flag of baltimore, almost: https://en.wikipedia.org/wiki/Flag_of_Baltimore (minus inescutcheon)
   - ???
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
@@ -1969,6 +1968,7 @@ function lion({ tincture, armed, langued, attitude }: LionCharge) {
 function escutcheon({ content }: EscutcheonCharge) {
   const escutcheon = svg.g();
   escutcheon.setAttribute("clip-path", `path("${ESCUTCHEON_PATH}")`);
+  escutcheon.appendChild(field("argent"));
   complexContent(escutcheon, content);
   escutcheon.appendChild(
     svg.path(ESCUTCHEON_PATH, { stroke: "sable", strokeWidth: 2 })
@@ -2688,6 +2688,7 @@ function on(parent: SVGElement, { on, surround, charge }: On) {
 function inescutcheon(parent: SVGElement, { location, content }: Inescutcheon) {
   const escutcheon = svg.g();
   escutcheon.setAttribute("clip-path", `path("${ESCUTCHEON_PATH}")`);
+  escutcheon.appendChild(field("argent"));
   complexContent(escutcheon, content);
   escutcheon.appendChild(
     svg.path(ESCUTCHEON_PATH, { stroke: "sable", strokeWidth: 2 })
