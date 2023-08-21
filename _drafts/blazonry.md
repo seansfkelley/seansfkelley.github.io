@@ -54,7 +54,7 @@ content="This page is interactive, and only works with JavaScript enabled!"
     </div>
   </form>
 
-  <div id="ambiguous" class="hidden">
+  <div id="ambiguous" class="hidden alert alert-warning">
     <span>Ambiguous blazon! Navigate variations:</span>
     <button id="ambiguous-previous">⇦</button>
     <span id="ambiguous-count"></span>
