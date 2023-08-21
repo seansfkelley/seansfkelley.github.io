@@ -27,6 +27,7 @@ function $(o) {
 
   function nop() { return undefined; }
   function literal(l) { return () => l; }
+  function slugify(delegate) { return delegate[0].replaceAll(' ', '-'); }
   function spread(o) { return (delegate) => ({ ...id(delegate), ...o }); }
 var grammar = {
     Lexer: undefined,
@@ -269,9 +270,17 @@ var grammar = {
           placement: d[6],
         }) },
     {"name": "LionAttitude$string$1", "symbols": [{"literal":"r"}, {"literal":"a"}, {"literal":"m"}, {"literal":"p"}, {"literal":"a"}, {"literal":"n"}, {"literal":"t"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "LionAttitude", "symbols": ["LionAttitude$string$1"], "postprocess": id},
-    {"name": "LionAttitude$string$2", "symbols": [{"literal":"p"}, {"literal":"a"}, {"literal":"s"}, {"literal":"s"}, {"literal":"a"}, {"literal":"n"}, {"literal":"t"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "LionAttitude", "symbols": ["LionAttitude$string$2"], "postprocess": id},
+    {"name": "LionAttitude", "symbols": ["LionAttitude$string$1"], "postprocess": slugify},
+    {"name": "LionAttitude$string$2", "symbols": [{"literal":"r"}, {"literal":"a"}, {"literal":"m"}, {"literal":"p"}, {"literal":"a"}, {"literal":"n"}, {"literal":"t"}, {"literal":" "}, {"literal":"g"}, {"literal":"u"}, {"literal":"a"}, {"literal":"r"}, {"literal":"d"}, {"literal":"a"}, {"literal":"n"}, {"literal":"t"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "LionAttitude", "symbols": ["LionAttitude$string$2"], "postprocess": slugify},
+    {"name": "LionAttitude$string$3", "symbols": [{"literal":"r"}, {"literal":"a"}, {"literal":"m"}, {"literal":"p"}, {"literal":"a"}, {"literal":"n"}, {"literal":"t"}, {"literal":" "}, {"literal":"r"}, {"literal":"e"}, {"literal":"g"}, {"literal":"u"}, {"literal":"a"}, {"literal":"r"}, {"literal":"d"}, {"literal":"a"}, {"literal":"n"}, {"literal":"t"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "LionAttitude", "symbols": ["LionAttitude$string$3"], "postprocess": slugify},
+    {"name": "LionAttitude$string$4", "symbols": [{"literal":"p"}, {"literal":"a"}, {"literal":"s"}, {"literal":"s"}, {"literal":"a"}, {"literal":"n"}, {"literal":"t"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "LionAttitude", "symbols": ["LionAttitude$string$4"], "postprocess": slugify},
+    {"name": "LionAttitude$string$5", "symbols": [{"literal":"p"}, {"literal":"a"}, {"literal":"s"}, {"literal":"s"}, {"literal":"a"}, {"literal":"n"}, {"literal":"t"}, {"literal":" "}, {"literal":"g"}, {"literal":"u"}, {"literal":"a"}, {"literal":"r"}, {"literal":"d"}, {"literal":"a"}, {"literal":"n"}, {"literal":"t"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "LionAttitude", "symbols": ["LionAttitude$string$5"], "postprocess": slugify},
+    {"name": "LionAttitude$string$6", "symbols": [{"literal":"p"}, {"literal":"a"}, {"literal":"s"}, {"literal":"s"}, {"literal":"a"}, {"literal":"n"}, {"literal":"t"}, {"literal":" "}, {"literal":"r"}, {"literal":"e"}, {"literal":"g"}, {"literal":"u"}, {"literal":"a"}, {"literal":"r"}, {"literal":"d"}, {"literal":"a"}, {"literal":"n"}, {"literal":"t"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "LionAttitude", "symbols": ["LionAttitude$string$6"], "postprocess": slugify},
     {"name": "LionModifier$string$1", "symbols": [{"literal":"a"}, {"literal":"r"}, {"literal":"m"}, {"literal":"e"}, {"literal":"d"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "LionModifier", "symbols": ["LionModifier$string$1"], "postprocess": id},
     {"name": "LionModifier$string$2", "symbols": [{"literal":"l"}, {"literal":"a"}, {"literal":"n"}, {"literal":"g"}, {"literal":"u"}, {"literal":"e"}, {"literal":"d"}], "postprocess": function joiner(d) {return d.join('');}},

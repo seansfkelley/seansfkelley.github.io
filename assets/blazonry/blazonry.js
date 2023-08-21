@@ -25,6 +25,7 @@ TODO
 - textbox with word wrap so you can read it better
 - Baltimore doesn't work: Paly of six Or and sable, a bend counterchanged
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
+- lion SVGs can be aggressively deduplicated -- 3 heads x 2 bodies
 */
 /*
 FUTURE WORK and KNOWN ISSUES
@@ -1974,7 +1975,11 @@ for (const example of document.querySelectorAll("[data-example]")) {
 // load of these and then try to access them sync later and hope for the best. Making the ENTIRE
 // implementation async just for this is a massive PITA.
 fetchComplexSvg("lion", "rampant");
+fetchComplexSvg("lion", "rampant-guardant");
+fetchComplexSvg("lion", "rampant-reguardant");
 fetchComplexSvg("lion", "passant");
+fetchComplexSvg("lion", "passant-guardant");
+fetchComplexSvg("lion", "passant-reguardant");
 fetchComplexSvg("fleur-de-lys");
 fetchComplexSvg("escallop");
 // This should happen last so that when the default text includes a complex SVG charge, at least

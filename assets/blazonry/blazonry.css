@@ -129,7 +129,7 @@
 .lion .teeth, .lion .white {
   fill: white;
 }
-.lion .ear, .lion .pupil {
+.lion .ear, .lion .pupil, .lion .medial-sulcus {
   fill: black;
 }
 .lion.argent .body,

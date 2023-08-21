@@ -5,6 +5,7 @@
 @{%
   function nop() { return undefined; }
   function literal(l) { return () => l; }
+  function slugify(delegate) { return delegate[0].replaceAll(' ', '-'); }
   function spread(o) { return (delegate) => ({ ...id(delegate), ...o }); }
 %}
 
@@ -104,9 +105,12 @@ Lion ->
   }) %}
 
 LionAttitude ->
-    "rampant" {% id %}
-  | "passant" {% id %}
-  # other variants: "passant guardant", "reguardant"
+    "rampant"            {% slugify %}
+  | "rampant guardant"   {% slugify %}
+  | "rampant reguardant" {% slugify %}
+  | "passant"            {% slugify %}
+  | "passant guardant"   {% slugify %}
+  | "passant reguardant" {% slugify %}
 
 LionModifier ->
     "armed"   {% id %}
