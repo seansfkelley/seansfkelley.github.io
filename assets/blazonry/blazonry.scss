@@ -100,12 +100,12 @@ $colors: (
     stroke: black;
   }
 
-  .teeth {
+  .teeth, .white { // white, as in, whites of the eyes
     fill: white;
   }
 
-  .ear {
-    fill: #444;
+  .ear, .pupil {
+    fill: black;
   }
 
   @each $key, $val in $colors {
