@@ -11,7 +11,6 @@ TODO
   - treatments
   - charges
     - leopard's head, eagle, castle, boar, swan, tree, rose (and variants)
-    - lion passant
     - escutcheon
 - grammar improvements
   - should be able to parse non-redundant usage of colors
@@ -19,14 +18,13 @@ TODO
 - things I want to be able to render
   - bavarian arms
     - [varied] in [placement]
-    - lion passant
-    - indented
     - panther rampant (?)
   - Flag of baltimore, almost: https://en.wikipedia.org/wiki/Flag_of_Baltimore (minus inescutcheon)
   - ???
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - textbox with word wrap so you can read it better
 - Baltimore doesn't work: Paly of six Or and sable, a bend counterchanged
+- lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
 */
 /*
 FUTURE WORK and KNOWN ISSUES
@@ -1216,8 +1214,9 @@ function fleurDeLys({ tincture }) {
     fleurDeLys.classList.add(tincture);
     return fleurDeLys;
 }
-function lion({ tincture, armed, langued, pose }) {
-    const lion = getComplexSvgSync("lion", pose).cloneNode(true);
+// The lion SVGs are pulled from https://en.wikipedia.org/wiki/Attitude_(heraldry).
+function lion({ tincture, armed, langued, attitude }) {
+    const lion = getComplexSvgSync("lion", attitude).cloneNode(true);
     lion.classList.add(tincture);
     lion.classList.add(`armed-${armed}`);
     lion.classList.add(`langued-${langued}`);
@@ -1975,6 +1974,7 @@ for (const example of document.querySelectorAll("[data-example]")) {
 // load of these and then try to access them sync later and hope for the best. Making the ENTIRE
 // implementation async just for this is a massive PITA.
 fetchComplexSvg("lion", "rampant");
+fetchComplexSvg("lion", "passant");
 fetchComplexSvg("fleur-de-lys");
 fetchComplexSvg("escallop");
 // This should happen last so that when the default text includes a complex SVG charge, at least

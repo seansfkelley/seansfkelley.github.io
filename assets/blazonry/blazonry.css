@@ -125,35 +125,17 @@
 }
 .lion .outline {
   stroke: black;
-  stroke-opacity: 0.3;
 }
-.lion .teeth {
+.lion .teeth, .lion .white {
   fill: white;
 }
-.lion .eye .white {
-  fill: white;
-}
-.lion .eye .pupil,
-.lion .eye .edge {
+.lion .ear, .lion .pupil {
   fill: black;
-}
-.lion .nose {
-  fill: black;
-  opacity: 0.3;
-}
-.lion .ear {
-  fill: #444;
 }
 .lion.argent .body,
 .lion.argent .claw,
 .lion.argent .langue {
   fill: whitesmoke;
-}
-.lion.argent .highlight.low {
-  fill: white;
-}
-.lion.argent .highlight.high {
-  fill: white;
 }
 .lion.armed-argent .claw {
   fill: whitesmoke !important;
@@ -166,12 +148,6 @@
 .lion.sable .langue {
   fill: black;
 }
-.lion.sable .highlight.low {
-  fill: #1a1a1a;
-}
-.lion.sable .highlight.high {
-  fill: #262626;
-}
 .lion.armed-sable .claw {
   fill: black !important;
 }
@@ -182,12 +158,6 @@
 .lion.gules .claw,
 .lion.gules .langue {
   fill: crimson;
-}
-.lion.gules .highlight.low {
-  fill: #ed365b;
-}
-.lion.gules .highlight.high {
-  fill: #ef4e6e;
 }
 .lion.armed-gules .claw {
   fill: crimson !important;
@@ -200,12 +170,6 @@
 .lion.vert .langue {
   fill: green;
 }
-.lion.vert .highlight.low {
-  fill: #00b300;
-}
-.lion.vert .highlight.high {
-  fill: #00cd00;
-}
 .lion.armed-vert .claw {
   fill: green !important;
 }
@@ -216,12 +180,6 @@
 .lion.azure .claw,
 .lion.azure .langue {
   fill: mediumblue;
-}
-.lion.azure .highlight.low {
-  fill: #0101ff;
-}
-.lion.azure .highlight.high {
-  fill: #1b1bff;
 }
 .lion.armed-azure .claw {
   fill: mediumblue !important;
@@ -234,12 +192,6 @@
 .lion.or .langue {
   fill: gold;
 }
-.lion.or .highlight.low {
-  fill: #ffdf33;
-}
-.lion.or .highlight.high {
-  fill: #ffe34d;
-}
 .lion.armed-or .claw {
   fill: gold !important;
 }
@@ -250,12 +202,6 @@
 .lion.purpure .claw,
 .lion.purpure .langue {
   fill: blueviolet;
-}
-.lion.purpure .highlight.low {
-  fill: #a358e8;
-}
-.lion.purpure .highlight.high {
-  fill: #af6eeb;
 }
 .lion.armed-purpure .claw {
   fill: blueviolet !important;
