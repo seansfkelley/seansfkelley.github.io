@@ -106,9 +106,9 @@
 
 #ambiguous {
   width: 100%;
-  margin-top: 6px;
+  margin-top: 10px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 #ambiguous > * {
   margin: 0 3px;

@@ -3,7 +3,7 @@
 TODO
 -------------------------------------------------------------------------------
 - party per treatment: quarterly
-- InDirection -- at least in the case of chevron and saltire, they are rotated to match
+- Placement -- at least in the case of chevron and saltire, they are rotated to match
 - minor visual effects to make it a little less flat
 - "saltirewise" needs to vary based on where the charge is
 - more of the same
@@ -16,6 +16,8 @@ TODO
   - should be able to parse non-redundant usage of colors
     - argent on a bend between six mullets vert
 - things I want to be able to render
+  - churchill
+    - technically it's two laters of inescutcheon, not one plus an escutcheon -- can do? thereon?
   - bavarian arms
     - [varied] in [placement]
   - Flag of baltimore, almost: https://en.wikipedia.org/wiki/Flag_of_Baltimore (minus inescutcheon)
@@ -25,6 +27,18 @@ TODO
 - Baltimore doesn't work: Paly of six Or and sable, a bend counterchanged
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
 - lion SVGs can be aggressively deduplicated -- 3 heads x 2 bodies
+- maybe actually make rendering async to avoid having to load eagerly?
+- why are the scallops in the wrong places?
+  - Party per fess wavy Purpure and Vert on an bend sinister Argent four escallops bendwise Purpure.
+- not enough fusilly iterations
+  - Fusilly of twelve Or and Sable.
+  - should the backgrounds be made of a single path with repeating elements?
+- estucheons are not lined up with rondels behind them
+  - Per chevron Vert and Or an rondel palewise Argent. An inescutcheon Or.
+- fret is not lined up with bend line
+  - Parted per bend undy Argent and Sable a fret palewise Gules.
+- still see artifacts from parting when there is a thing on top
+  - Party per pale embattled-counter-embattled Gules and Azure a cross wavy Argent.
 */
 /*
 FUTURE WORK and KNOWN ISSUES
@@ -1167,7 +1181,7 @@ function fret({ tincture }) {
     // This is kind of un-DRY, but this is the best way I determined to do this, when you account for
     // having to duplicate-with-slight-modifications the various elements. A single path almost works,
     // but would still require patching-up of the outline to produce the proper visual layering, and
-    // doesn't have ae good way to make sure the open ends in the four corners also have an outline.
+    // doesn't have a good way to make sure the open ends in the four corners also have an outline.
     return svg.g(svg.line([-halfWidth - outlineWidth, -halfWidth - outlineWidth], [halfWidth + outlineWidth, halfWidth + outlineWidth], {
         stroke: "sable",
         strokeWidth: strokeWidth + outlineWidth * 2,
@@ -1235,7 +1249,7 @@ function escutcheon({ content }) {
     // apply our own scaling.
     return svg.g(escutcheon);
 }
-const CHARGE_DIRECTIONS = {
+const CHARGE_LOCATORS = {
     none: new DefaultChargeLocator([-W_2, W_2], [-H_2, H_2 - 10]),
     fess: fess.on,
     pale: pale.on,
@@ -1657,7 +1671,7 @@ function complexContent(container, content) {
             parent.appendChild(ORDINARIES[element.ordinary](element));
         }
         else if ("charge" in element) {
-            const locator = CHARGE_DIRECTIONS[element.placement ?? "none"];
+            const locator = CHARGE_LOCATORS[element.placement ?? "none"];
             for (const [translate, scale] of locator.forCount(element.count)) {
                 const rendered = renderCharge(element);
                 applyTransforms(rendered, {
@@ -1804,7 +1818,7 @@ function complexContent(container, content) {
 function on(parent, { on, surround, charge }) {
     parent.appendChild(ORDINARIES[on.ordinary](on));
     if (charge != null) {
-        assert(charge.placement == null, 'cannot specify a direction for charges in "on"');
+        assert(charge.placement == null, 'cannot specify a placement for charges in "on"');
         const locator = ORDINARIES[on.ordinary].on;
         for (const [translate, scale] of locator.forCount(charge.count)) {
             const c = renderCharge(charge);
@@ -1817,7 +1831,7 @@ function on(parent, { on, surround, charge }) {
         }
     }
     if (surround != null) {
-        assert(surround.placement == null, 'cannot specify a direction for charges in "between"');
+        assert(surround.placement == null, 'cannot specify a placement for charges in "between"');
         const locator = ORDINARIES[on.ordinary].between;
         for (const [translate, scale] of locator.forCount(surround.count)) {
             const c = renderCharge(surround);
@@ -1948,8 +1962,8 @@ const TINCTURES = [
 // casing by the unparser.
 const TINCTURE_REGEX = new RegExp(`\\b(${TINCTURES.join("|")})\\b`, "g");
 random.addEventListener("click", () => {
-    // 14 chosen empirically. Seems nice. Gets lions, where 12 does not.
-    const blazon = Unparser(grammar, grammar.ParserStart, 14)
+    // 15 chosen empirically. Seems nice. Gets lions, where 12 does not.
+    const blazon = Unparser(grammar, grammar.ParserStart, 15)
         // This is restatement of the regex rule for acceptable whitespace.
         .replaceAll(/[ \t\n\v\f,;:]+/g, " ")
         .trim()
@@ -1958,7 +1972,7 @@ random.addEventListener("click", () => {
     // It's REALLY hard to generate a random blazon where counterchanged makes sense, since the
     // grammar does not express a relationship between the context ("party per") and the tincture.
     // Since it's 1/8th of the colors, just ban it to reduce nonsense blazons by a lot.
-    /(^| )counterchanged( |\.$)/g, (_, prefix, suffix) => `${prefix}${TINCTURES[Math.floor(Math.random() * TINCTURES.length)]}${suffix}`)
+    /\bcounterchanged\b/g, () => TINCTURES[Math.floor(Math.random() * TINCTURES.length)])
         .replaceAll(TINCTURE_REGEX, (tincture) => `${tincture[0].toUpperCase()}${tincture.slice(1)}`)
         .replaceAll(/^.|\. ./g, (l) => l.toUpperCase());
     input.value = blazon;

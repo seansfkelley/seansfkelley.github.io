@@ -129,10 +129,12 @@ Escutcheon ->
     # Don't bother to restrict to "an" as singular, this makes it easier to play with different charges.
       Singular __ "escutcheon" {% literal(1) %}
     | Plural __ "escutcheons"  {% nth(0) %}
-  ) __ ComplexContent {% (d) => ({
+  ) __ ComplexContent (__ Posture {% nth(1) %}):? (__ Placement {% nth(1) %}):? {% (d) => ({
     charge: "escutcheon",
     count: d[0],
     content: d[2],
+    posture: d[3],
+    placement: d[4],
   }) %}
 
 Inescutcheon ->
