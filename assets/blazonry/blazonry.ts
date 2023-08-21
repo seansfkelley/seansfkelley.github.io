@@ -1869,7 +1869,9 @@ function rondel({ tincture }: SimpleCharge) {
     "http://www.w3.org/2000/svg",
     "circle"
   );
-  circle.setAttribute("r", "20");
+  // Not quite the full 40x40. Since these are the more visually heavyweight and fill out their
+  // allotted space entirely without natural negative spaces, shrink them so they don't crowd too much.
+  circle.setAttribute("r", "18");
   circle.setAttribute("cx", "0");
   circle.setAttribute("cy", "0");
   circle.classList.add(`fill-${tincture}`);
