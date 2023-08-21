@@ -1,5 +1,5 @@
 diff --git a/lib/unparse.js b/lib/unparse.js
-index 51194102043079b6e2cc9add125e02e5340788dd..a803543026d3ed7c57951eccc71197bd02450ed7 100644
+index 51194102043079b6e2cc9add125e02e5340788dd..0d9acd17176a38b3b9056d389ec8918dff5bc4a4 100644
 --- a/lib/unparse.js
 +++ b/lib/unparse.js
 @@ -1,12 +1,10 @@
@@ -18,3 +18,21 @@ index 51194102043079b6e2cc9add125e02e5340788dd..a803543026d3ed7c57951eccc71197bd
  
      function genRandom(grammar, start) {
          // The first-generation generator. It just spews out stuff randomly, and is
+@@ -54,13 +52,15 @@
+ 
+         var rules = grammar.rules;
+         var min_depths_rule = [];
++        for (var i=0; i<rules.length; i++) {
++            min_depth_rule(i, []);
++        }
+ 
+         function synth_nt(name, depth) {
+             var good_rules = [];
+             var min_min_depth = Infinity;
+             for (var i=0; i<rules.length; i++) {
+-                min_depths_rule = [];
+-                var size = min_depth_rule(i, []);
++                var size = min_depths_rule[i];
+                 if (rules[i].name === name) {
+                     min_min_depth = Math.min(min_min_depth, size);
+                     if (size < depth) {
