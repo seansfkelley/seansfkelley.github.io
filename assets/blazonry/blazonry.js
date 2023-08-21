@@ -1946,7 +1946,7 @@ const TINCTURES = [
 // Gross and duplicative, but the entire grammar is written in lowercase and I don't want to
 // sprinkle case-insensitive markers EVERYWHERE just so the tinctures can be generated with typical
 // casing by the unparser.
-const TINCTURE_REGEX = new RegExp(`(^| )(${TINCTURES.join("|")})( |\.$)`, "g");
+const TINCTURE_REGEX = new RegExp(`\\b(${TINCTURES.join("|")})\\b`, "g");
 random.addEventListener("click", () => {
     // 14 chosen empirically. Seems nice. Gets lions, where 12 does not.
     const blazon = Unparser(grammar, grammar.ParserStart, 14)
@@ -1959,8 +1959,8 @@ random.addEventListener("click", () => {
     // grammar does not express a relationship between the context ("party per") and the tincture.
     // Since it's 1/8th of the colors, just ban it to reduce nonsense blazons by a lot.
     /(^| )counterchanged( |\.$)/g, (_, prefix, suffix) => `${prefix}${TINCTURES[Math.floor(Math.random() * TINCTURES.length)]}${suffix}`)
-        .replaceAll(TINCTURE_REGEX, (_, prefix, tincture, suffix) => `${prefix}${tincture[0].toUpperCase()}${tincture.slice(1)}${suffix}`)
-        .replace(/^./, (l) => l.toUpperCase());
+        .replaceAll(TINCTURE_REGEX, (tincture) => `${tincture[0].toUpperCase()}${tincture.slice(1)}`)
+        .replaceAll(/^.|\. ./g, (l) => l.toUpperCase());
     input.value = blazon;
     parseAndRenderBlazon();
 });
