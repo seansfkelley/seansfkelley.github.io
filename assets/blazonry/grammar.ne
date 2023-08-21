@@ -91,10 +91,10 @@ Lion ->
       # Don't bother to restrict to "a" as singular, this makes it easier to play with different charges.
       Singular __ "lion" {% literal(1) %}
     | Plural __ "lions"  {% nth(0) %}
-  ) (__ LionPose {% nth(1) %}):? (__ Posture {% nth(1) %}):? __ Tincture (__ LionModifiers {% nth(1) %}):? (__ Placement {% nth(1) %}):? {% (d) => ({
+  ) (__ LionAttitude {% nth(1) %}):? (__ Posture {% nth(1) %}):? __ Tincture (__ LionModifiers {% nth(1) %}):? (__ Placement {% nth(1) %}):? {% (d) => ({
     charge: "lion",
     count: d[0],
-    pose: d[1] ?? "rampant",
+    attitude: d[1] ?? "rampant",
     posture: d[2],
     tincture: d[4],
     armed: "gules",
@@ -103,7 +103,7 @@ Lion ->
     placement: d[6],
   }) %}
 
-LionPose ->
+LionAttitude ->
     "rampant" {% id %}
   | "passant" {% id %}
   # other variants: "passant guardant", "reguardant"

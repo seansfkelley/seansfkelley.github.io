@@ -30,6 +30,7 @@ Try these:
 - <a href="#" data-example>Per pale Sable and Argent, a fess embattled counterchanged.</a> – Arms of [Muri bei Bern, Switzerland](https://en.wikipedia.org/wiki/Muri_bei_Bern)
 - <a href="#" data-example>Azure, a bend Argent cotised Or between six lions rampant Or.</a> – [Bohun family arms](https://en.wikipedia.org/wiki/Bohun_family)
 - <a href="#" data-example="Quarterly 1st and 4th Sable a lion rampant Argent on a canton Argent a cross Gules; 2nd and 3rd quarterly 1st and 4th Argent 2nd and 3rd Gules a fret Or overall on a bend Sable three escallops bendwise Argent. An inescutcheon in chief Argent a cross Gules an escutcheon Azure three fleurs-de-lis Or.">Quarterly 1st and 4th Sable a lion rampant on a canton Argent a cross Gules...</a>[^1] – [Arms of Winston Churchill](https://winstonchurchill.org/resources/reference/the-armorial-bearings-of-sir-winston-churchill/)
+- <a href="#" data-example="Quarterly: (1) sable, a lion rampant Or, armed and langued gules; (2) per fess indented gules and argent; (3) argent, a lion rampant azure, armed Or and langued gules; (4) Or, three lions sable, armed and langued gules. An inescutcheon fusilly Argent and Azure.">Quarterly: (1) sable, a lion rampant Or, armed and langued gules...</a>[^2] – [Arms of Bavaria](https://en.wikipedia.org/wiki/Coat_of_arms_of_Bavaria), which you may have seen on [Weihenstephan beers](https://www.weihenstephaner.com/our-brewery)
 
 You can mix and match these examples, of course, or copy-paste blazons from the Wikipedia page or other pages linked below. There is a very long tail of unusual ordinaries, charges, varieds, etc., so not everything you may find is supported. You can always poke around [the formal grammar](/assets/blazonry/grammar.txt) to see what's defined or not.
 
@@ -82,6 +83,7 @@ References:
 - [Armorials – Twenty Trees](https://www.twentytrees.co.uk/History/General/Thing/Heraldry.html?Armorials) (an enourmous list of blazons and their renderings; requires clicking through pages)
 - [A Grammar of Balzonry – Society for Creative Anachronism](http://heraldry.sca.org/armory/bruce.html)
 - [Heraldry and Blazon – U. Chicago](https://penelope.uchicago.edu/~grout/encyclopaedia_romana/britannia/anglo-saxon/flowers/heraldry.html)
+- [Roll of Arms – U.S. Heraldic Registry](http://usheraldicregistry.com/index.php?n=Main.Contents)
 - [Line (heraldry) – Wikipedia](https://en.wikipedia.org/wiki/Line_(heraldry))
 - [DrawShield](https://drawshield.net/index.html) (yeah, turns out someone already did this, but it was fun anyway)
 
@@ -92,3 +94,4 @@ References:
 -------------------------------------------------------------------------------
 
 [^1]: Not _exactly_; some changes had to be made to the official blazoning because I don't support phrasings like "of the first" (dispreferred ["Victorianisms"](https://heraldry.sca.org/armory/bruce.html) ctrl-f "victorian"), the million different ways of specifying quarterings, or the underspecified "as anaugmentation" phrasing for inescutcheons.
+[^2]: Like Churchill's arms, I had to tweak some of the phrasing. I also subbed the panther for a lion because I couldn't find a good panther graphic. Sorry!

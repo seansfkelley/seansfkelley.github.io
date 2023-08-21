@@ -19,7 +19,6 @@ TODO
   - bavarian arms
     - [varied] in [placement]
     - lion passant
-    - indented
     - panther rampant (?)
   - Flag of baltimore, almost: https://en.wikipedia.org/wiki/Flag_of_Baltimore (minus inescutcheon)
   - ???
@@ -251,7 +250,7 @@ interface LionCharge extends BaseCharge {
   tincture: Tincture;
   armed: Tincture;
   langued: Tincture;
-  pose: "passant" | "rampant";
+  attitude: "passant" | "rampant";
 }
 
 interface EscutcheonCharge extends BaseCharge {
@@ -1958,8 +1957,8 @@ function fleurDeLys({ tincture }: SimpleCharge) {
   return fleurDeLys;
 }
 
-function lion({ tincture, armed, langued, pose }: LionCharge) {
-  const lion = getComplexSvgSync("lion", pose).cloneNode(true);
+function lion({ tincture, armed, langued, attitude }: LionCharge) {
+  const lion = getComplexSvgSync("lion", attitude).cloneNode(true);
   lion.classList.add(tincture);
   lion.classList.add(`armed-${armed}`);
   lion.classList.add(`langued-${langued}`);
