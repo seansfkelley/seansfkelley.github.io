@@ -4,22 +4,12 @@ TODO
 - party per treatment: quarterly
 - Placement -- at least in the case of chevron and saltire, they are rotated to match
 - "saltirewise" needs to vary based on where the charge is
-- more of the same
-  - ordinaries
-  - treatments
-  - charges
-    - leopard's head, eagle, castle, boar, swan, tree, rose (and variants)
-    - escutcheon
-- grammar improvements
-  - should be able to parse non-redundant usage of colors
-    - argent on a bend between six mullets vert
 - things I want to be able to render
   - churchill
     - technically it's two laters of inescutcheon, not one plus an escutcheon -- can do? thereon?
   - bavarian arms
     - [varied] in [placement]
-  - Flag of baltimore, almost: https://en.wikipedia.org/wiki/Flag_of_Baltimore (minus inescutcheon)
-  - ???
+  - https://en.wikipedia.org/wiki/Baron_Baltimore as it appears in the flag of Baltimore, almost: https://en.wikipedia.org/wiki/Flag_of_Baltimore (minus inescutcheon)
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - textbox with word wrap so you can read it better
 - Baltimore doesn't work: Paly of six Or and sable, a bend counterchanged
@@ -45,7 +35,8 @@ FUTURE WORK and KNOWN ISSUES
 -------------------------------------------------------------------------------
 - Tincture references ("of the first", "of the field", etc.) are not supported. Apparently they are
   generally disliked for introducing complexity and ambiguity.
-- Charges `on` an ordinary are often too close; especially 2s and 3s, and especially on chief and fess.
+- Charges `on` an ordinary are often too close; especially 2s and 3s, and more especially on chief
+  and fess.
 - Charges in quartered quadrants aren't pushed around to account for the curvature of the bottom of
   the arms; a proper rendering would make them more cramped rather than cut them off.
 - Cantons are proportionally scaled and cropped at the bottom, which mostly works but can cause
@@ -59,6 +50,10 @@ FUTURE WORK and KNOWN ISSUES
 - A singular fret should extend to the corners of the containing field, but there's currently no
   facility to treat charges differently depending on their count. (Abstraction break?)
 - It would be nice if the shield looked at least a little more realistic.
+- There are plenty more charges/ordinaries (and their attitudes) to add!
+- When several charges in a row have the same tincture, it is idiomatically only specified once at
+  the end. The parser does not support that, instead requiring every charge to have a tincture
+  specified.
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
