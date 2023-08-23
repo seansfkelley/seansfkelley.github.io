@@ -3,7 +3,6 @@ TODO
 -------------------------------------------------------------------------------
 - party per treatment: quarterly
 - Placement -- at least in the case of chevron and saltire, they are rotated to match
-- minor visual effects to make it a little less flat
 - "saltirewise" needs to vary based on where the charge is
 - more of the same
   - ordinaries
@@ -58,6 +57,7 @@ FUTURE WORK and KNOWN ISSUES
   would probably help (as right now every character in a literal is its own rule).
 - A singular fret should extend to the corners of the containing field, but there's currently no
   facility to treat charges differently depending on their count. (Abstraction break?)
+- It would be nice if the shield looked at least a little more realistic.
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
