@@ -2770,7 +2770,15 @@ function parseAndRenderBlazon() {
     parser.feed(input.value.trim().toLowerCase());
     results = parser.results;
   } catch (e) {
-    error.innerHTML = (e as any).toString();
+    const message = (e as any)
+      .toString()
+      .replaceAll(/("(.)"[ \n$])+/g, (match: string) =>
+        match.replaceAll('" "', "")
+      )
+      .replaceAll(/:\n.*?→ /g, " ")
+      .replaceAll(/    [^\n]+\n/g, "")
+      .replaceAll(/A ("[aehilmnorsx]")/g, "An $1");
+    error.innerHTML = message;
     error.classList.remove("hidden");
     return;
   }
