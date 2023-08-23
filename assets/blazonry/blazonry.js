@@ -4,7 +4,6 @@ TODO
 -------------------------------------------------------------------------------
 - party per treatment: quarterly
 - Placement -- at least in the case of chevron and saltire, they are rotated to match
-- minor visual effects to make it a little less flat
 - "saltirewise" needs to vary based on where the charge is
 - more of the same
   - ordinaries
@@ -27,7 +26,6 @@ TODO
 - Baltimore doesn't work: Paly of six Or and sable, a bend counterchanged
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
 - lion SVGs can be aggressively deduplicated -- 3 heads x 2 bodies
-- maybe actually make rendering async to avoid having to load eagerly?
 - why are the scallops in the wrong places?
   - Party per fess wavy Purpure and Vert on an bend sinister Argent four escallops bendwise Purpure.
 - not enough fusilly iterations
@@ -39,6 +37,8 @@ TODO
   - Parted per bend undy Argent and Sable a fret palewise Gules.
 - still see artifacts from parting when there is a thing on top
   - Party per pale embattled-counter-embattled Gules and Azure a cross wavy Argent.
+- change renderers to not take out parameters ("container")
+  - besides being easier to grok, this will be more consistent and make sure that we `await` where necessary
 */
 /*
 FUTURE WORK and KNOWN ISSUES
@@ -58,6 +58,7 @@ FUTURE WORK and KNOWN ISSUES
   would probably help (as right now every character in a literal is its own rule).
 - A singular fret should extend to the corners of the containing field, but there's currently no
   facility to treat charges differently depending on their count. (Abstraction break?)
+- It would be nice if the shield looked at least a little more realistic.
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
@@ -565,25 +566,19 @@ path.from = (...elements) => {
         .join(" ");
 };
 const complexSvgCache = {};
-function getComplexSvgSync(kind, variant) {
-    const key = variant ? `${kind}-${variant}` : kind;
-    if (key in complexSvgCache) {
-        return complexSvgCache[key];
-    }
-    else {
-        throw new Error(`still waiting for ${key}.svg to load!`);
-    }
-}
 async function fetchComplexSvg(kind, variant) {
     const key = variant ? `${kind}-${variant}` : kind;
-    const response = await fetch(`/assets/blazonry/svg/${key}.svg`);
-    const root = new DOMParser().parseFromString(await response.text(), "image/svg+xml").documentElement;
-    const wrapper = svg.g();
-    wrapper.classList.add(kind);
-    for (const c of root.children) {
-        wrapper.appendChild(c);
+    if (!(key in complexSvgCache)) {
+        const response = await fetch(`/assets/blazonry/svg/${key}.svg`);
+        const root = new DOMParser().parseFromString(await response.text(), "image/svg+xml").documentElement;
+        const wrapper = svg.g();
+        wrapper.classList.add(kind);
+        for (const c of root.children) {
+            wrapper.appendChild(c);
+        }
+        complexSvgCache[key] = wrapper;
     }
-    complexSvgCache[key] = wrapper;
+    return complexSvgCache[key];
 }
 // #endregion
 // #region ORDINARIES
@@ -1220,29 +1215,29 @@ function fret({ tincture }) {
         strokeWidth,
     }));
 }
-function escallop({ tincture }) {
-    const escallop = getComplexSvgSync("escallop").cloneNode(true);
+async function escallop({ tincture }) {
+    const escallop = (await fetchComplexSvg("escallop")).cloneNode(true);
     escallop.classList.add(tincture);
     return escallop;
 }
-function fleurDeLys({ tincture }) {
-    const fleurDeLys = getComplexSvgSync("fleur-de-lys").cloneNode(true);
+async function fleurDeLys({ tincture }) {
+    const fleurDeLys = (await fetchComplexSvg("fleur-de-lys")).cloneNode(true);
     fleurDeLys.classList.add(tincture);
     return fleurDeLys;
 }
 // The lion SVGs are pulled from https://en.wikipedia.org/wiki/Attitude_(heraldry).
-function lion({ tincture, armed, langued, attitude }) {
-    const lion = getComplexSvgSync("lion", attitude).cloneNode(true);
+async function lion({ tincture, armed, langued, attitude }) {
+    const lion = (await fetchComplexSvg("lion", attitude)).cloneNode(true);
     lion.classList.add(tincture);
     lion.classList.add(`armed-${armed}`);
     lion.classList.add(`langued-${langued}`);
     return lion;
 }
-function escutcheon({ content }) {
+async function escutcheon({ content }) {
     const escutcheon = svg.g();
     escutcheon.setAttribute("clip-path", `path("${ESCUTCHEON_PATH}")`);
     escutcheon.appendChild(field("argent"));
-    complexContent(escutcheon, content);
+    await complexContent(escutcheon, content);
     escutcheon.appendChild(svg.path(ESCUTCHEON_PATH, { stroke: "sable", strokeWidth: 2 }));
     applyTransforms(escutcheon, {
         scale: 0.35,
@@ -1264,7 +1259,7 @@ const SIMPLE_CHARGES = { rondel, mullet, fret, escallop, "fleur-de-lys": fleurDe
 // A little unfortunate this dispatching wrapper is necessary, but it's the only way to type-safety
 // render based on the string. Throwing all charges, simple and otherwise, into a constant mapping
 // together means the inferred type of the function has `never` as the first argument. :(
-function renderCharge(charge) {
+async function renderCharge(charge) {
     switch (charge.charge) {
         case "rondel":
         case "mullet":
@@ -1625,19 +1620,14 @@ const VARIED = {
 // #endregion
 // #region HIGHER-ORDER ELEMENTS
 // ----------------------------------------------------------------------------
-const QUARTERINGS = {
-    1: {
-        translate: [-25, -30],
-    },
-    2: {
-        translate: [25, -30],
-    },
-    3: {
-        translate: [-25, 30],
-    },
-    4: {
-        translate: [25, 30],
-    },
+function field(tincture) {
+    return svg.rect([-W_2, -H_2], [W_2, H_2], { fill: tincture });
+}
+const QUARTERING_TRANSLATIONS = {
+    1: [-25, -30],
+    2: [25, -30],
+    3: [-25, 30],
+    4: [25, 30],
 };
 const CANTON_SCALE_FACTOR = 1 / 3;
 // Note that this clips the bottom of the area. Combined with proportional scaling, this permits us
@@ -1650,11 +1640,8 @@ const CANTON_PATH = path `
   L -${W_2} ${-H_2 + W}
   Z
 `;
-function field(tincture) {
-    return svg.rect([-W_2, -H_2], [W_2, H_2], { fill: tincture });
-}
-function complexContent(container, content) {
-    function renderIntoParent(parent, element) {
+async function complexContent(container, content) {
+    async function renderIntoParent(parent, element) {
         if ("canton" in element) {
             const g = svg.g();
             applyTransforms(g, { origin: [-W_2, -H_2], scale: CANTON_SCALE_FACTOR });
@@ -1663,11 +1650,11 @@ function complexContent(container, content) {
             g.classList.add(`fill-${element.canton}`);
             parent.appendChild(g);
             for (const c of element.content ?? []) {
-                renderIntoParent(g, c);
+                await renderIntoParent(g, c);
             }
         }
         else if ("on" in element) {
-            on(parent, element);
+            await on(parent, element);
         }
         else if ("ordinary" in element) {
             parent.appendChild(ORDINARIES[element.ordinary](element));
@@ -1675,7 +1662,7 @@ function complexContent(container, content) {
         else if ("charge" in element) {
             const locator = CHARGE_LOCATORS[element.placement ?? "none"];
             for (const [translate, scale] of locator.forCount(element.count)) {
-                const rendered = renderCharge(element);
+                const rendered = await renderCharge(element);
                 applyTransforms(rendered, {
                     translate,
                     scale,
@@ -1751,11 +1738,11 @@ function complexContent(container, content) {
             // always render a single ordinary, which I am not willing to do at the moment.
             if (!deepEqual(content.content, counterchangedFirst)) {
                 const counterchangedSecond = overwriteCounterchangedTincture(content.content, content.second);
-                renderIntoParent(g1, counterchangedSecond);
-                renderIntoParent(g2, counterchangedFirst);
+                await renderIntoParent(g1, counterchangedSecond);
+                await renderIntoParent(g2, counterchangedFirst);
             }
             else {
-                renderIntoParent(container, content.content);
+                await renderIntoParent(container, content.content);
             }
         }
     }
@@ -1766,7 +1753,7 @@ function complexContent(container, content) {
             3: svg.g(),
             4: svg.g(),
         };
-        for (const [i_, { translate }] of Object.entries(QUARTERINGS)) {
+        for (const [i_, translate] of Object.entries(QUARTERING_TRANSLATIONS)) {
             const i = +i_;
             applyTransforms(quartered[i], { translate, scale: 0.5 });
             quartered[i].style.clipPath = path `path("
@@ -1779,7 +1766,7 @@ function complexContent(container, content) {
         }
         for (const quartering of content.quarters) {
             for (const quarter of quartering.quarters) {
-                complexContent(quartered[quarter], quartering.content);
+                await complexContent(quartered[quarter], quartering.content);
             }
         }
         for (const e of Object.values(quartered)) {
@@ -1798,7 +1785,7 @@ function complexContent(container, content) {
         line.setAttribute("vector-effect", "non-scaling-stroke");
         container.appendChild(line);
         if (content.overall) {
-            renderIntoParent(container, content.overall);
+            await renderIntoParent(container, content.overall);
         }
     }
     else if ("varied" in content) {
@@ -1807,23 +1794,23 @@ function complexContent(container, content) {
         second.style.clipPath = `path("${VARIED[content.varied.type](content.varied.count)}")`;
         container.appendChild(second);
         for (const c of content.content ?? []) {
-            renderIntoParent(container, c);
+            await renderIntoParent(container, c);
         }
     }
     else {
         container.appendChild(field(content.tincture));
         for (const c of content.content ?? []) {
-            renderIntoParent(container, c);
+            await renderIntoParent(container, c);
         }
     }
 }
-function on(parent, { on, surround, charge }) {
+async function on(parent, { on, surround, charge }) {
     parent.appendChild(ORDINARIES[on.ordinary](on));
     if (charge != null) {
         assert(charge.placement == null, 'cannot specify a placement for charges in "on"');
         const locator = ORDINARIES[on.ordinary].on;
         for (const [translate, scale] of locator.forCount(charge.count)) {
-            const c = renderCharge(charge);
+            const c = await renderCharge(charge);
             applyTransforms(c, {
                 translate,
                 scale,
@@ -1836,7 +1823,7 @@ function on(parent, { on, surround, charge }) {
         assert(surround.placement == null, 'cannot specify a placement for charges in "between"');
         const locator = ORDINARIES[on.ordinary].between;
         for (const [translate, scale] of locator.forCount(surround.count)) {
-            const c = renderCharge(surround);
+            const c = await renderCharge(surround);
             applyTransforms(c, {
                 translate,
                 scale,
@@ -1846,11 +1833,11 @@ function on(parent, { on, surround, charge }) {
         }
     }
 }
-function inescutcheon(parent, { location, content }) {
+async function inescutcheon(parent, { location, content }) {
     const escutcheon = svg.g();
     escutcheon.setAttribute("clip-path", `path("${ESCUTCHEON_PATH}")`);
     escutcheon.appendChild(field("argent"));
-    complexContent(escutcheon, content);
+    await complexContent(escutcheon, content);
     escutcheon.appendChild(svg.path(ESCUTCHEON_PATH, { stroke: "sable", strokeWidth: 2 }));
     applyTransforms(escutcheon, {
         scale: 0.25,
@@ -1881,8 +1868,8 @@ function recursivelyOmitNullish(value) {
 }
 let previousPrevEventHandler;
 let previousNextEventHandler;
-function parseAndRenderBlazon() {
-    function render(blazon) {
+async function parseAndRenderBlazon() {
+    async function render(blazon) {
         blazon = recursivelyOmitNullish(blazon);
         ast.innerHTML = JSON.stringify(blazon, null, 2);
         rendered.innerHTML = "";
@@ -1893,9 +1880,9 @@ function parseAndRenderBlazon() {
         rendered.appendChild(container);
         // Make sure there's always a default background.
         container.appendChild(field("argent"));
-        complexContent(container, blazon.main);
+        await complexContent(container, blazon.main);
         if (blazon.inescutcheon != null) {
-            inescutcheon(container, blazon.inescutcheon);
+            await inescutcheon(container, blazon.inescutcheon);
         }
     }
     let results;
@@ -1905,7 +1892,13 @@ function parseAndRenderBlazon() {
         results = parser.results;
     }
     catch (e) {
-        error.innerHTML = e.toString();
+        const message = e
+            .toString()
+            .replaceAll(/("(.)"[ \n$])+/g, (match) => match.replaceAll('" "', ""))
+            .replaceAll(/:\n.*?→ /g, " ")
+            .replaceAll(/    [^\n]+\n/g, "")
+            .replaceAll(/A ("[aehilmnorsx]")/g, "An $1");
+        error.innerHTML = message;
         error.classList.remove("hidden");
         return;
     }
@@ -1917,10 +1910,10 @@ function parseAndRenderBlazon() {
         ambiguousPrev.removeEventListener("click", previousPrevEventHandler);
         ambiguousNext.removeEventListener("click", previousNextEventHandler);
         let which = 0;
-        function step(sign) {
+        async function step(sign) {
             which = (which + sign + results.length) % results.length;
             ambiguousCount.innerHTML = `${which + 1} / ${results.length}`;
-            render(results[which]);
+            await render(results[which]);
         }
         previousPrevEventHandler = () => step(-1);
         ambiguousPrev.addEventListener("click", previousPrevEventHandler);
@@ -1933,7 +1926,7 @@ function parseAndRenderBlazon() {
     else {
         error.classList.add("hidden");
         ambiguous.classList.add("hidden");
-        render(results[0]);
+        await render(results[0]);
     }
 }
 const input = document.querySelector("#blazon-input");
@@ -1946,9 +1939,9 @@ const ambiguous = document.querySelector("#ambiguous");
 const ambiguousPrev = document.querySelector("#ambiguous-previous");
 const ambiguousNext = document.querySelector("#ambiguous-next");
 const ambiguousCount = document.querySelector("#ambiguous-count");
-form.addEventListener("submit", (e) => {
+form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    parseAndRenderBlazon();
+    await parseAndRenderBlazon();
 });
 const TINCTURES = [
     "argent",
@@ -1963,7 +1956,7 @@ const TINCTURES = [
 // sprinkle case-insensitive markers EVERYWHERE just so the tinctures can be generated with typical
 // casing by the unparser.
 const TINCTURE_REGEX = new RegExp(`\\b(${TINCTURES.join("|")})\\b`, "g");
-random.addEventListener("click", () => {
+random.addEventListener("click", async () => {
     // 15 chosen empirically. Seems nice. Gets lions, where 12 does not.
     const blazon = Unparser(grammar, grammar.ParserStart, 15)
         // This is restatement of the regex rule for acceptable whitespace.
@@ -1978,29 +1971,16 @@ random.addEventListener("click", () => {
         .replaceAll(TINCTURE_REGEX, (tincture) => `${tincture[0].toUpperCase()}${tincture.slice(1)}`)
         .replaceAll(/^.|\. ./g, (l) => l.toUpperCase());
     input.value = blazon;
-    parseAndRenderBlazon();
+    await parseAndRenderBlazon();
 });
 for (const example of document.querySelectorAll("[data-example]")) {
-    example.addEventListener("click", (e) => {
+    example.addEventListener("click", async (e) => {
         e.preventDefault();
         const a = e.target;
         input.value = a.dataset.example || a.innerHTML;
-        parseAndRenderBlazon();
+        await parseAndRenderBlazon();
     });
 }
-// These files are small and there's not that many of them, so it's easier if we just eagerly
-// load of these and then try to access them sync later and hope for the best. Making the ENTIRE
-// implementation async just for this is a massive PITA.
-fetchComplexSvg("lion", "rampant");
-fetchComplexSvg("lion", "rampant-guardant");
-fetchComplexSvg("lion", "rampant-reguardant");
-fetchComplexSvg("lion", "passant");
-fetchComplexSvg("lion", "passant-guardant");
-fetchComplexSvg("lion", "passant-reguardant");
-fetchComplexSvg("fleur-de-lys");
-fetchComplexSvg("escallop");
-// This should happen last so that when the default text includes a complex SVG charge, at least
-// the immediate failure to render doesn't cause us to skip the loading!
 parseAndRenderBlazon();
 // #endregion
 //# sourceMappingURL=blazonry.js.map
