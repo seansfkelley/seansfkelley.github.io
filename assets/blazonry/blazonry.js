@@ -17,6 +17,9 @@ TODO
 - not enough fusilly iterations
   - Fusilly of twelve Or and Sable.
   - should the backgrounds be made of a single path with repeating elements?
+    - YES. make it a clip path, instead, and then give the varied render pathway the same treatment
+      as the content one w/r/t counterchanging, and it should Just Work. excepting that you'll also
+      end up with visual artifacts at the borders.
 - still see artifacts from parting when there is a thing on top
   - Party per pale embattled-counter-embattled Gules and Azure a cross wavy Argent.
 */
