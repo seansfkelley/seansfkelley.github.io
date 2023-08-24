@@ -15,15 +15,9 @@ TODO
 - Baltimore doesn't work: Paly of six Or and sable, a bend counterchanged
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
 - lion SVGs can be aggressively deduplicated -- 3 heads x 2 bodies
-- why are the scallops in the wrong places?
-  - Party per fess wavy Purpure and Vert on an bend sinister Argent four escallops bendwise Purpure.
 - not enough fusilly iterations
   - Fusilly of twelve Or and Sable.
   - should the backgrounds be made of a single path with repeating elements?
-- estucheons are not lined up with rondels behind them
-  - Per chevron Vert and Or an rondel palewise Argent. An inescutcheon Or.
-- fret is not lined up with bend line
-  - Parted per bend undy Argent and Sable a fret palewise Gules.
 - still see artifacts from parting when there is a thing on top
   - Party per pale embattled-counter-embattled Gules and Azure a cross wavy Argent.
 - change renderers to not take out parameters ("container")
@@ -179,14 +173,16 @@ type Quarter = 1 | 2 | 3 | 4;
 // Stupid name because Location is a DOM type.
 type Location_ = "chief" | "base";
 const Location_ = {
-  toOffset: (location: Location_ | undefined): Coordinate | undefined => {
+  toOffset: (location: Location_ | undefined): Coordinate => {
+    const yOffset = -H_2 + W_2;
+
     switch (location) {
       case undefined:
-        return undefined;
+        return [0, yOffset];
       case "base":
-        return [0, H_2 / 2];
+        return [0, yOffset + (H_2 + (H_2 - W_2)) / 2];
       case "chief":
-        return [0, -H_2 / 2];
+        return [0, yOffset - W_2 / 2];
       default:
         assertNever(location);
     }
@@ -948,7 +944,7 @@ const COTISED_WIDTH = W_2 / 12;
 
 const BEND_WIDTH = W / 3;
 // Make sure it's long enough to reach diagonally!
-const BEND_LENGTH = Math.hypot(W, H);
+const BEND_LENGTH = Math.hypot(W, W) + BEND_WIDTH / 2;
 function bend({ tincture, cotised, treatment }: Ordinary) {
   const bend = svg.g();
 
@@ -1067,11 +1063,7 @@ function bendSinister(ordinary: Ordinary) {
   return g;
 }
 
-bendSinister.on = new AlternatingReflectiveLocator(
-  bend.on,
-  [0, -H_2],
-  [0, H_2]
-);
+bendSinister.on = new ReflectiveLocator(bend.on, [0, -H_2], [0, H_2]);
 
 bendSinister.between = new ReflectiveLocator(bend.between, [0, -H_2], [0, H_2]);
 
@@ -1991,7 +1983,9 @@ async function escutcheon({ content }: EscutcheonCharge) {
 }
 
 const CHARGE_LOCATORS: Record<Placement | "none", ParametricLocator> = {
-  none: new DefaultChargeLocator([-W_2, W_2], [-H_2, H_2 - 10]),
+  // The vertical offset here matches the offset for both quarterings and some of the ordinaries
+  // (cross, saltire, etc.) so that they all stack neatly vertically over the center.
+  none: new DefaultChargeLocator([-W_2, W_2], [-H_2, -H_2 + W]),
   fess: fess.on,
   pale: pale.on,
   bend: bend.on,
@@ -2449,15 +2443,22 @@ const VARIED: Record<VariedName, VariedClipPathGenerator> = {
 // ----------------------------------------------------------------------------
 
 function field(tincture: Tincture) {
-  return svg.rect([-W_2, -H_2], [W_2, H_2], { fill: tincture });
+  // Expand the height so that when this is rendered on the extra-tal quarter segments it still fills.
+  return svg.rect([-W_2, -H_2], [W_2, H_2 + 2 * (H_2 - W_2)], {
+    fill: tincture,
+  });
 }
 
-const QUARTERING_TRANSLATIONS: Record<Quarter, Coordinate> = {
-  1: [-25, -30],
-  2: [25, -30],
-  3: [-25, 30],
-  4: [25, 30],
-};
+// Note that quarterings are NOT the same size. The top two are clipped to be square and the bottom
+// two are made taller to compensate. This means that the cross point of the quarter ends up neatly
+// centered underneath centered ordinaries or collections of charges.
+const QUARTERINGS: Record<Quarter, { translate: Coordinate; height: number }> =
+  {
+    1: { translate: [-W_2 / 2, -H_2 / 2], height: W },
+    2: { translate: [W_2 / 2, -H_2 / 2], height: W },
+    3: { translate: [-W_2 / 2, (-H_2 + W) / 2], height: H + (H - W) },
+    4: { translate: [W_2 / 2, (-H_2 + W) / 2], height: H + (H - W) },
+  };
 
 const CANTON_SCALE_FACTOR = 1 / 3;
 // Note that this clips the bottom of the area. Combined with proportional scaling, this permits us
@@ -2590,14 +2591,14 @@ async function complexContent(container: SVGElement, content: ComplexContent) {
       4: svg.g(),
     };
 
-    for (const [i_, translate] of Object.entries(QUARTERING_TRANSLATIONS)) {
+    for (const [i_, { translate, height }] of Object.entries(QUARTERINGS)) {
       const i = +i_ as any as Quarter;
       applyTransforms(quartered[i], { translate, scale: 0.5 });
       quartered[i].style.clipPath = path`path("
         M -${W_2} -${H_2}
-        L  ${W_2} -${H_2}
-        L  ${W_2}  ${H_2}
-        L -${W_2}  ${H_2}
+        l  ${W}    0
+        l  0       ${height}
+        l -${W}    0
         Z
       ")`;
     }
@@ -2609,6 +2610,9 @@ async function complexContent(container: SVGElement, content: ComplexContent) {
     }
 
     for (const e of Object.values(quartered)) {
+      if (e.children.length === 0) {
+        e.appendChild(field("argent"));
+      }
       container.appendChild(e);
     }
 
@@ -2618,7 +2622,7 @@ async function complexContent(container: SVGElement, content: ComplexContent) {
     });
     line.setAttribute("vector-effect", "non-scaling-stroke");
     container.appendChild(line);
-    line = svg.line([-W_2, 0], [W_2, 0], {
+    line = svg.line([-W_2, -H_2 + W_2], [W_2, -H_2 + W_2], {
       stroke: "sable",
       strokeWidth: 0.5,
     });
@@ -2758,13 +2762,14 @@ async function parseAndRenderBlazon() {
     parser.feed(input.value.trim().toLowerCase());
     results = parser.results;
   } catch (e) {
+    console.error(e);
     const message = (e as any)
       .toString()
       .replaceAll(/("(.)"[ \n$])+/g, (match: string) =>
         match.replaceAll('" "', "")
       )
       .replaceAll(/:\n.*?→ /g, " ")
-      .replaceAll(/    [^\n]+\n/g, "")
+      .replaceAll(/    [^^\n]+\n/g, "") // ^^
       .replaceAll(/A ("[aehilmnorsx]")/g, "An $1");
     error.innerHTML = message;
     error.classList.remove("hidden");
