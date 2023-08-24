@@ -32,12 +32,12 @@ SimpleField ->
     Tincture (__ SimpleContent {% nth(1) %}):*                                {% $({
       tincture: 0, content: 1
     }) %}
-  | Varied __ Tincture __ "and" __ Tincture (__ SimpleContent {% nth(1) %}):* {% $({
-      varied: 0, first: 2, second: 6, content: 7
+  | Variation __ Tincture __ "and" __ Tincture (__ SimpleContent {% nth(1) %}):* {% $({
+      variation: 0, first: 2, second: 6, content: 7
     }) %}
 
-Varied ->
-  VariedName (__ "of" __ Plural {% nth(3) %}):? {% $({ type: 0, count: 1 }) %}
+Variation ->
+  VariationName (__ "of" __ Plural {% nth(3) %}):? {% $({ type: 0, count: 1 }) %}
 
 PartyPerField ->
   (Party __):? "per" __ Direction (__ Treatment {% nth(1) %}):? __ Tincture __ "and" __ Tincture (__ SimpleContent {% nth(1) %}):? {% $({
@@ -205,16 +205,17 @@ OrdinaryName ->
   | "saltire"       {% id %}
   | "chief"         {% id %}
 
-VariedName ->
-    "barry bendy" {% id %}
-  | "barry"       {% id %}
-  | "bendy"       {% id %}
-  | "checky"      {% id %}
-  | "chequey"     {% literal("checky") %}
-  | "chevronny"   {% id %}
-  | "lozengy"     {% id %}
-  | "fusilly"     {% id %}
-  | "paly"        {% id %}
+VariationName ->
+    "barry bendy"    {% id %}
+  | "barry"          {% id %}
+  | "bendy sinister" {% id %}
+  | "bendy"          {% id %}
+  | "checky"         {% id %}
+  | "chequey"        {% literal("checky") %}
+  | "chevronny"      {% id %}
+  | "lozengy"        {% id %}
+  | "fusilly"        {% id %}
+  | "paly"           {% id %}
 
 Treatment ->
     "embattled-counter-embattled" {% id %}

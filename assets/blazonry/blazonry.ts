@@ -5,7 +5,7 @@ TODO
 - Placement -- at least in the case of chevron and saltire, they are rotated to match
 - things I want to be able to render
   - bavarian arms
-    - [varied] in [placement]
+    - [variation] in [placement]
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - textbox with word wrap so you can read it better
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
@@ -123,10 +123,11 @@ type Treatment =
   | "indented"
   | "wavy";
 
-type VariedName =
+type VariationName =
   | "barry bendy"
   | "barry"
   | "bendy"
+  | "bendy sinister"
   | "checky"
   | "chevronny"
   | "fusilly"
@@ -191,14 +192,14 @@ type SimpleField =
       content?: SimpleContent[];
     }
   | {
-      varied: Varied;
+      variation: Variation;
       first: Tincture;
       second: Tincture;
       content?: SimpleContent[];
     };
 
-interface Varied {
-  type: VariedName;
+interface Variation {
+  type: VariationName;
   count?: number;
 }
 
@@ -284,7 +285,7 @@ interface ChargeRenderer<T extends Charge> {
   (charge: T): SVGElement | Promise<SVGElement>;
 }
 
-interface VariedPatternGenerator {
+interface VariationPatternGenerator {
   (count?: number): SVGPatternElement;
 }
 
@@ -2373,7 +2374,7 @@ const TREATMENTS: Record<Treatment, TreatmentPathGenerator> = {
 
 // #endregion
 
-// #region VARIED
+// #region VARIATIONS
 // ----------------------------------------------------------------------------
 
 function barry(count: number = 6) {
@@ -2525,7 +2526,7 @@ function paly(count: number = 6) {
   );
 }
 
-const VARIED: Record<VariedName, VariedPatternGenerator> = {
+const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
   barry,
   "barry bendy": barryBendy,
   bendy,
@@ -2741,7 +2742,7 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
     }
 
     return children;
-  } else if ("varied" in content) {
+  } else if ("variation" in content) {
     const g1 = svg.g();
     const g2 = svg.g();
 
@@ -2750,7 +2751,7 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
 
     // TODO: Deduplicate this with party-per, if possible, or at least make them consistent.
     const id = uniqueId("pattern");
-    const pattern = VARIED[content.varied.type](content.varied.count);
+    const pattern = VARIATIONS[content.variation.type](content.variation.count);
     pattern.id = id;
     const mask = svg.mask(
       { id: `${id}-mask` },
