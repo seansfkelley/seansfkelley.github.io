@@ -3,7 +3,6 @@ TODO
 -------------------------------------------------------------------------------
 - party per treatment: quarterly
 - Placement -- at least in the case of chevron and saltire, they are rotated to match
-- "saltirewise" needs to vary based on where the charge is
 - things I want to be able to render
   - bavarian arms
     - [varied] in [placement]
@@ -11,12 +10,6 @@ TODO
 - textbox with word wrap so you can read it better
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
 - lion SVGs can be aggressively deduplicated -- 3 heads x 2 bodies
-- not enough fusilly iterations
-  - Fusilly of twelve Or and Sable.
-  - should the backgrounds be made of a single path with repeating elements?
-    - YES. make it a clip path, instead, and then give the varied render pathway the same treatment
-      as the content one w/r/t counterchanging, and it should Just Work. excepting that you'll also
-      end up with visual artifacts at the borders.
 - still see artifacts from parting when there is a thing on top
   - Party per pale embattled-counter-embattled Gules and Azure a cross wavy Argent.
   - instead of rendering twice and modifying the tincture high-level, pass the mask/clip path (it
@@ -28,6 +21,7 @@ TODO
 /*
 FUTURE WORK and KNOWN ISSUES
 -------------------------------------------------------------------------------
+- In general, more vocabulary (charges, ordinaries, postures, treatments, etc.) is always welcome.
 - Tincture references ("of the first", "of the field", etc.) are not supported. Apparently they are
   generally disliked for introducing complexity and ambiguity.
 - Charges `on` an ordinary are often too close; especially 2s and 3s, and more especially on chief
@@ -139,12 +133,7 @@ type VariedName =
   | "lozengy"
   | "paly";
 
-type Posture =
-  | "palewise"
-  | "fesswise"
-  | "bendwise"
-  | "bendwise sinister"
-  | "saltirewise";
+type Posture = "palewise" | "fesswise" | "bendwise" | "bendwise sinister";
 
 const Posture = {
   toRadians: (posture: Posture | undefined): number | undefined => {
@@ -159,8 +148,6 @@ const Posture = {
         return -Math.PI / 4;
       case "bendwise sinister":
         return Math.PI / 4;
-      case "saltirewise":
-        return -Math.PI / 4; // TODO
       default:
         assertNever(posture);
     }

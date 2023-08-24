@@ -184,7 +184,6 @@ Posture ->
   | "fesswise"          {% id %}
   | "bendwise sinister" {% id %}
   | "bendwise"          {% id %}
-  | "saltirewise"       {% id %}
 
 Tincture ->
     "azure"          {% id %}
