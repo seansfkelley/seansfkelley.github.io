@@ -20,8 +20,6 @@ TODO
 - not enough fusilly iterations
   - Fusilly of twelve Or and Sable.
   - should the backgrounds be made of a single path with repeating elements?
-- fret is not lined up with bend line
-  - Parted per bend undy Argent and Sable a fret palewise Gules.
 - still see artifacts from parting when there is a thing on top
   - Party per pale embattled-counter-embattled Gules and Azure a cross wavy Argent.
 - change renderers to not take out parameters ("container")
