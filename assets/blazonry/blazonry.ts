@@ -7,10 +7,8 @@ TODO
 - things I want to be able to render
   - bavarian arms
     - [varied] in [placement]
-  - https://en.wikipedia.org/wiki/Baron_Baltimore as it appears in the flag of Baltimore, almost: https://en.wikipedia.org/wiki/Flag_of_Baltimore (minus inescutcheon)
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - textbox with word wrap so you can read it better
-- Baltimore doesn't work: Paly of six Or and sable, a bend counterchanged
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
 - lion SVGs can be aggressively deduplicated -- 3 heads x 2 bodies
 - not enough fusilly iterations
@@ -2498,7 +2496,6 @@ function fusilly(count: number = 8) {
 
 function lozengy(count: number = 8) {
   const width = W / count;
-
   return svg.pattern(
     {
       viewBox: [
