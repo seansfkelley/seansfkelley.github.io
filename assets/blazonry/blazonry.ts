@@ -15,8 +15,6 @@ TODO
 - Baltimore doesn't work: Paly of six Or and sable, a bend counterchanged
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
 - lion SVGs can be aggressively deduplicated -- 3 heads x 2 bodies
-- why are the scallops in the wrong places?
-  - Party per fess wavy Purpure and Vert on an bend sinister Argent four escallops bendwise Purpure.
 - not enough fusilly iterations
   - Fusilly of twelve Or and Sable.
   - should the backgrounds be made of a single path with repeating elements?
@@ -1065,11 +1063,7 @@ function bendSinister(ordinary: Ordinary) {
   return g;
 }
 
-bendSinister.on = new AlternatingReflectiveLocator(
-  bend.on,
-  [0, -H_2],
-  [0, H_2]
-);
+bendSinister.on = new ReflectiveLocator(bend.on, [0, -H_2], [0, H_2]);
 
 bendSinister.between = new ReflectiveLocator(bend.between, [0, -H_2], [0, H_2]);
 
