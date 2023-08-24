@@ -841,13 +841,23 @@ const svg = {
   rect: (
     [x1, y1]: Coordinate,
     [x2, y2]: Coordinate,
-    { classes }: { classes?: { fill?: Tincture } } = {}
+    {
+      fill,
+      stroke,
+      classes,
+    }: { fill?: string; stroke?: string; classes?: { fill?: Tincture } } = {}
   ): SVGRectElement => {
     const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     rect.setAttribute("x", `${x1}`);
     rect.setAttribute("y", `${y1}`);
     rect.setAttribute("width", `${x2 - x1}`);
     rect.setAttribute("height", `${y2 - y1}`);
+    if (fill != null) {
+      rect.setAttribute("fill", fill);
+    }
+    if (stroke != null) {
+      rect.setAttribute("stroke", stroke);
+    }
     if (classes?.fill != null) {
       rect.classList.add(`fill-${classes.fill}`);
     }
@@ -865,6 +875,7 @@ const svg = {
       y = 0,
       width,
       height,
+      preserveAspectRatio,
       patternTransform,
     }: {
       viewBox: [Coordinate, Coordinate];
@@ -872,6 +883,7 @@ const svg = {
       y?: number;
       width: number;
       height: number;
+      preserveAspectRatio?: string;
       patternTransform?: { rotate?: number };
     },
     ...children: SVGElement[]
@@ -894,6 +906,10 @@ const svg = {
     // Tiling size.
     pattern.setAttribute("width", width.toString());
     pattern.setAttribute("height", height.toString());
+
+    if (preserveAspectRatio != null) {
+      pattern.setAttribute("preserveAspectRatio", preserveAspectRatio);
+    }
 
     if (patternTransform?.rotate != null) {
       pattern.setAttribute(
@@ -930,6 +946,17 @@ const svg = {
       polygon.setAttribute("stroke", stroke);
     }
     return polygon;
+  },
+  mask: (
+    { id }: { id?: string },
+    ...children: SVGElement[]
+  ): SVGMaskElement => {
+    const mask = document.createElementNS("http://www.w3.org/2000/svg", "mask");
+    if (id != null) {
+      mask.id = id;
+    }
+    mask.append(...children);
+    return mask;
   },
 };
 
@@ -2496,19 +2523,21 @@ function lozengy(count: number = 8) {
 }
 
 function paly(count: number = 6) {
-  const width = W / count; // TODO: This produces twice as many as it's supposed to.
+  const width = W / (count / 2);
   return svg.pattern(
     {
       viewBox: [
         [0, 0],
-        [2, 1],
+        [4, 1],
       ],
       x: -W_2,
       y: -H_2,
       width,
       height: H,
+      // Explicitly require non-uniform scaling; it's the easiest way to implement paly.
+      preserveAspectRatio: "none",
     },
-    svg.line([1, 0], [1, 1], { strokeWidth: 1, stroke: "white" })
+    svg.line([3, 0], [3, 1], { strokeWidth: 2, stroke: "white" })
   );
 }
 
@@ -2735,17 +2764,16 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
     g1.appendChild(field(content.first));
     g2.appendChild(field(content.second));
 
-    // TODO: Clean this shit up.
     // TODO: Deduplicate this with party-per, if possible, or at least make them consistent.
     const id = uniqueId("pattern");
     const pattern = VARIED[content.varied.type](content.varied.count);
-    const mask = document.createElementNS("http://www.w3.org/2000/svg", "mask");
-    const rect = svg.rect([-W_2, -H_2], [W_2, H_2]);
-    rect.setAttribute("fill", `url(#${id})`);
-    mask.appendChild(rect); // TODO: Is this always the correct size? If rotates and such happen
-    // at the pattern level, do we ever need to worry about changing the shape?
-    mask.id = `${id}-mask`;
     pattern.id = id;
+    const mask = svg.mask(
+      { id: `${id}-mask` },
+      // TODO: Is this always the correct size? If rotates and such happen
+      // at the pattern level, do we ever need to worry about changing the shape?
+      svg.rect([-W_2, -H_2], [W_2, H_2], { fill: `url(#${id})` })
+    );
     g2.setAttribute("mask", `url(#${id}-mask)`);
 
     const children: SVGElement[] = [pattern, mask, g1, g2];
