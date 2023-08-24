@@ -6,8 +6,6 @@ TODO
 - Placement -- at least in the case of chevron and saltire, they are rotated to match
 - "saltirewise" needs to vary based on where the charge is
 - things I want to be able to render
-  - churchill
-    - technically it's two laters of inescutcheon, not one plus an escutcheon -- can do? thereon?
   - bavarian arms
     - [varied] in [placement]
   - https://en.wikipedia.org/wiki/Baron_Baltimore as it appears in the flag of Baltimore, almost: https://en.wikipedia.org/wiki/Flag_of_Baltimore (minus inescutcheon)
@@ -21,8 +19,6 @@ TODO
   - should the backgrounds be made of a single path with repeating elements?
 - still see artifacts from parting when there is a thing on top
   - Party per pale embattled-counter-embattled Gules and Azure a cross wavy Argent.
-- change renderers to not take out parameters ("container")
-  - besides being easier to grok, this will be more consistent and make sure that we `await` where necessary
 */
 /*
 FUTURE WORK and KNOWN ISSUES
@@ -1227,7 +1223,7 @@ async function escutcheon({ content }) {
     const escutcheon = svg.g();
     escutcheon.setAttribute("clip-path", `path("${ESCUTCHEON_PATH}")`);
     escutcheon.appendChild(field("argent"));
-    await complexContent(escutcheon, content);
+    escutcheon.append(...(await complexContent(content)));
     escutcheon.appendChild(svg.path(ESCUTCHEON_PATH, { stroke: "sable", strokeWidth: 2 }));
     applyTransforms(escutcheon, {
         scale: 0.35,
@@ -1638,41 +1634,43 @@ const CANTON_PATH = path `
   L -${W_2} ${-H_2 + W}
   Z
 `;
-async function complexContent(container, content) {
-    async function renderIntoParent(parent, element) {
-        if ("canton" in element) {
-            const g = svg.g();
-            applyTransforms(g, { origin: [-W_2, -H_2], scale: CANTON_SCALE_FACTOR });
-            g.style.clipPath = `path("${CANTON_PATH}")`;
-            g.appendChild(svg.path(CANTON_PATH, { fill: element.canton }));
-            g.classList.add(`fill-${element.canton}`);
-            parent.appendChild(g);
-            for (const c of element.content ?? []) {
-                await renderIntoParent(g, c);
-            }
+async function simpleContent(element) {
+    if ("canton" in element) {
+        const g = svg.g();
+        applyTransforms(g, { origin: [-W_2, -H_2], scale: CANTON_SCALE_FACTOR });
+        g.style.clipPath = `path("${CANTON_PATH}")`;
+        g.appendChild(svg.path(CANTON_PATH, { fill: element.canton }));
+        g.classList.add(`fill-${element.canton}`);
+        for (const c of element.content ?? []) {
+            g.append(...(await simpleContent(c)));
         }
-        else if ("on" in element) {
-            await on(parent, element);
-        }
-        else if ("ordinary" in element) {
-            parent.appendChild(ORDINARIES[element.ordinary](element));
-        }
-        else if ("charge" in element) {
-            const locator = CHARGE_LOCATORS[element.placement ?? "none"];
-            for (const [translate, scale] of locator.forCount(element.count)) {
-                const rendered = await renderCharge(element);
-                applyTransforms(rendered, {
-                    translate,
-                    scale,
-                    rotate: Posture.toRadians(element.posture),
-                });
-                parent.appendChild(rendered);
-            }
-        }
-        else {
-            assertNever(element);
-        }
+        return [g];
     }
+    else if ("on" in element) {
+        return on(element);
+    }
+    else if ("ordinary" in element) {
+        return [ORDINARIES[element.ordinary](element)];
+    }
+    else if ("charge" in element) {
+        const children = [];
+        const locator = CHARGE_LOCATORS[element.placement ?? "none"];
+        for (const [translate, scale] of locator.forCount(element.count)) {
+            const rendered = await renderCharge(element);
+            applyTransforms(rendered, {
+                translate,
+                scale,
+                rotate: Posture.toRadians(element.posture),
+            });
+            children.push(rendered);
+        }
+        return children;
+    }
+    else {
+        assertNever(element);
+    }
+}
+async function complexContent(content) {
     function overwriteCounterchangedTincture(element, tincture) {
         function maybeToCounterchanged(t) {
             return (t === "counterchanged" ? tincture : t);
@@ -1722,8 +1720,7 @@ async function complexContent(container, content) {
         g1.appendChild(field(content.first));
         g2.appendChild(field(content.second));
         // Add g2 first so that it's underneath g1, which has the only clip path.
-        container.appendChild(g2);
-        container.appendChild(g1);
+        const children = [g2, g1];
         if (content.content != null) {
             const counterchangedFirst = overwriteCounterchangedTincture(content.content, content.first);
             // This branch is not just a perf/DOM optimization, but prevents visual artifacts. If we
@@ -1736,13 +1733,14 @@ async function complexContent(container, content) {
             // always render a single ordinary, which I am not willing to do at the moment.
             if (!deepEqual(content.content, counterchangedFirst)) {
                 const counterchangedSecond = overwriteCounterchangedTincture(content.content, content.second);
-                await renderIntoParent(g1, counterchangedSecond);
-                await renderIntoParent(g2, counterchangedFirst);
+                g1.append(...(await simpleContent(counterchangedSecond)));
+                g2.append(...(await simpleContent(counterchangedFirst)));
             }
             else {
-                await renderIntoParent(container, content.content);
+                children.push(...(await simpleContent(content.content)));
             }
         }
+        return children;
     }
     else if ("quarters" in content) {
         const quartered = {
@@ -1764,49 +1762,52 @@ async function complexContent(container, content) {
         }
         for (const quartering of content.quarters) {
             for (const quarter of quartering.quarters) {
-                await complexContent(quartered[quarter], quartering.content);
+                quartered[quarter].append(...(await complexContent(quartering.content)));
             }
         }
         for (const e of Object.values(quartered)) {
             if (e.children.length === 0) {
                 e.appendChild(field("argent"));
             }
-            container.appendChild(e);
         }
+        const children = Object.values(quartered);
         let line = svg.line([0, -H_2], [0, H_2], {
             stroke: "sable",
             strokeWidth: 0.5,
         });
         line.setAttribute("vector-effect", "non-scaling-stroke");
-        container.appendChild(line);
+        children.push(line);
         line = svg.line([-W_2, -H_2 + W_2], [W_2, -H_2 + W_2], {
             stroke: "sable",
             strokeWidth: 0.5,
         });
         line.setAttribute("vector-effect", "non-scaling-stroke");
-        container.appendChild(line);
+        children.push(line);
         if (content.overall) {
-            await renderIntoParent(container, content.overall);
+            children.push(...(await simpleContent(content.overall)));
         }
+        return children;
     }
     else if ("varied" in content) {
-        container.appendChild(field(content.first));
+        const children = [field(content.first)];
         const second = field(content.second);
         second.style.clipPath = `path("${VARIED[content.varied.type](content.varied.count)}")`;
-        container.appendChild(second);
+        children.push(second);
         for (const c of content.content ?? []) {
-            await renderIntoParent(container, c);
+            children.push(...(await simpleContent(c)));
         }
+        return children;
     }
     else {
-        container.appendChild(field(content.tincture));
+        const children = [field(content.tincture)];
         for (const c of content.content ?? []) {
-            await renderIntoParent(container, c);
+            children.push(...(await simpleContent(c)));
         }
+        return children;
     }
 }
-async function on(parent, { on, surround, charge }) {
-    parent.appendChild(ORDINARIES[on.ordinary](on));
+async function on({ on, surround, charge }) {
+    const children = [ORDINARIES[on.ordinary](on)];
     if (charge != null) {
         assert(charge.placement == null, 'cannot specify a placement for charges in "on"');
         const locator = ORDINARIES[on.ordinary].on;
@@ -1817,7 +1818,7 @@ async function on(parent, { on, surround, charge }) {
                 scale,
                 rotate: Posture.toRadians(charge.posture),
             });
-            parent.appendChild(c);
+            children.push(c);
         }
     }
     if (surround != null) {
@@ -1830,15 +1831,16 @@ async function on(parent, { on, surround, charge }) {
                 scale,
                 rotate: Posture.toRadians(surround.posture),
             });
-            parent.appendChild(c);
+            children.push(c);
         }
     }
+    return children;
 }
 async function inescutcheon(parent, { location, content }) {
     const escutcheon = svg.g();
     escutcheon.setAttribute("clip-path", `path("${ESCUTCHEON_PATH}")`);
     escutcheon.appendChild(field("argent"));
-    await complexContent(escutcheon, content);
+    escutcheon.append(...(await complexContent(content)));
     escutcheon.appendChild(svg.path(ESCUTCHEON_PATH, { stroke: "sable", strokeWidth: 2 }));
     applyTransforms(escutcheon, {
         scale: 0.25,
@@ -1881,7 +1883,7 @@ async function parseAndRenderBlazon() {
         rendered.appendChild(container);
         // Make sure there's always a default background.
         container.appendChild(field("argent"));
-        await complexContent(container, blazon.main);
+        container.append(...(await complexContent(blazon.main)));
         if (blazon.inescutcheon != null) {
             await inescutcheon(container, blazon.inescutcheon);
         }
