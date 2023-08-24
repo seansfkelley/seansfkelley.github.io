@@ -2056,13 +2056,12 @@ async function lion({ tincture, armed, langued, attitude }: LionCharge) {
 }
 
 async function escutcheon({ content }: EscutcheonCharge) {
-  const escutcheon = svg.g();
-  escutcheon.setAttribute("clip-path", `path("${ESCUTCHEON_PATH}")`);
-  escutcheon.appendChild(field("argent"));
-  escutcheon.append(...(await complexContent(content)));
-  escutcheon.appendChild(
+  const escutcheon = svg.g(
+    field("argent"),
+    ...(await complexContent(content)),
     svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } })
   );
+  escutcheon.setAttribute("clip-path", `path("${ESCUTCHEON_PATH}")`);
   applyTransforms(escutcheon, {
     scale: 0.35,
   });
@@ -2839,13 +2838,12 @@ async function inescutcheon(
   parent: SVGElement,
   { location, content }: Inescutcheon
 ) {
-  const escutcheon = svg.g();
-  escutcheon.setAttribute("clip-path", `path("${ESCUTCHEON_PATH}")`);
-  escutcheon.appendChild(field("argent"));
-  escutcheon.append(...(await complexContent(content)));
-  escutcheon.appendChild(
+  const escutcheon = svg.g(
+    field("argent"),
+    ...(await complexContent(content)),
     svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } })
   );
+  escutcheon.setAttribute("clip-path", `path("${ESCUTCHEON_PATH}")`);
   applyTransforms(escutcheon, {
     scale: 0.25,
     translate: Location_.toOffset(location),
