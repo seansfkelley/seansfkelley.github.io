@@ -906,7 +906,15 @@ const svg = {
 
     return pattern;
   },
-  polygon: ({ points }: { points: Coordinate[] }): SVGPolygonElement => {
+  polygon: ({
+    points,
+    fill,
+    stroke,
+  }: {
+    points: Coordinate[];
+    fill?: string;
+    stroke?: string;
+  }): SVGPolygonElement => {
     const polygon = document.createElementNS(
       "http://www.w3.org/2000/svg",
       "polygon"
@@ -915,6 +923,12 @@ const svg = {
       "points",
       points.map(([x, y]) => `${x},${y}`).join(" ")
     );
+    if (fill != null) {
+      polygon.setAttribute("fill", fill);
+    }
+    if (stroke != null) {
+      polygon.setAttribute("stroke", stroke);
+    }
     return polygon;
   },
 };
@@ -2458,16 +2472,6 @@ function fusilly(count: number = 8) {
 function lozengy(count: number = 8) {
   const width = W / count;
 
-  const polygon = svg.polygon({
-    points: [
-      [1, 0],
-      [2, 2],
-      [1, 4],
-      [0, 2],
-    ],
-  });
-  polygon.setAttribute("fill", "white");
-
   return svg.pattern(
     {
       viewBox: [
@@ -2479,25 +2483,33 @@ function lozengy(count: number = 8) {
       width,
       height: width * 2,
     },
-    polygon
+    svg.polygon({
+      points: [
+        [1, 0],
+        [2, 2],
+        [1, 4],
+        [0, 2],
+      ],
+      fill: "white",
+    })
   );
 }
 
 function paly(count: number = 6) {
   const width = W / count; // TODO: This produces twice as many as it's supposed to.
-  const pattern = svg.pattern({
-    viewBox: [
-      [0, 0],
-      [2, 1],
-    ],
-    x: -W_2,
-    y: -H_2,
-    width,
-    height: H,
-  });
-  const line = svg.line([1, 0], [1, 1], { strokeWidth: 1, stroke: "white" });
-  pattern.appendChild(line);
-  return pattern;
+  return svg.pattern(
+    {
+      viewBox: [
+        [0, 0],
+        [2, 1],
+      ],
+      x: -W_2,
+      y: -H_2,
+      width,
+      height: H,
+    },
+    svg.line([1, 0], [1, 1], { strokeWidth: 1, stroke: "white" })
+  );
 }
 
 const VARIED: Record<VariedName, VariedPatternGenerator> = {
