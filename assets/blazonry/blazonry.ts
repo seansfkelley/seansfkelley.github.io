@@ -16,6 +16,9 @@ TODO
 - not enough fusilly iterations
   - Fusilly of twelve Or and Sable.
   - should the backgrounds be made of a single path with repeating elements?
+    - YES. make it a clip path, instead, and then give the varied render pathway the same treatment
+      as the content one w/r/t counterchanging, and it should Just Work. excepting that you'll also
+      end up with visual artifacts at the borders.
 - still see artifacts from parting when there is a thing on top
   - Party per pale embattled-counter-embattled Gules and Azure a cross wavy Argent.
 */
@@ -379,20 +382,6 @@ const Coordinate = {
   },
 };
 
-type Quadrilateral = [Coordinate, Coordinate, Coordinate, Coordinate];
-
-const Quadrilateral = {
-  toSvgPath: ([p1, p2, p3, p4]: Quadrilateral) => {
-    return path`
-      M ${p1[0]} ${p1[1]}
-      L ${p2[0]} ${p2[1]}
-      L ${p3[0]} ${p3[1]}
-      L ${p4[0]} ${p4[1]}
-      Z
-    `;
-  },
-};
-
 const SVG_ELEMENT_TO_COORDINATES: {
   [K in PathCommand.Any["type"]]: (
     e: DiscriminateUnion<PathCommand.Any, "type", K>
@@ -452,36 +441,6 @@ namespace PathCommand {
       [c[0], c[1]] = Coordinate.rotate(c, radians);
     }
   }
-}
-
-/**
- * Given the line segment defined by src-dst, widen it along the perpendicular into a rotated
- * rectangle. Points are returned in clockwise order from src to dst.
- */
-function widen(
-  src: Coordinate,
-  dst: Coordinate,
-  width: number,
-  linecap: "butt" | "square" = "butt"
-): Quadrilateral {
-  const halfWidth = width / 2;
-  const angle = Coordinate.radians(src, dst);
-  if (linecap === "square") {
-    const x = Math.cos(angle) * halfWidth;
-    const y = Math.sin(angle) * halfWidth;
-    src = Coordinate.add(src, [-x, -y]);
-    dst = Coordinate.add(dst, [x, y]);
-  }
-  // Note! These x/y ~ sin/cos relationships are flipped from the usual, because to widen we need
-  // to draw lines perpendicular -- thereby reversing the normal roles of x and y!
-  const x = Math.sin(angle) * halfWidth;
-  const y = Math.cos(angle) * halfWidth;
-  return [
-    Coordinate.add(src, [x, -y]),
-    Coordinate.add(dst, [x, -y]),
-    Coordinate.add(dst, [-x, y]),
-    Coordinate.add(src, [-x, y]),
-  ];
 }
 
 // #endregion
