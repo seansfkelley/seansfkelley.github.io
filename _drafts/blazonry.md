@@ -43,7 +43,7 @@ content="This page is interactive, and only works with JavaScript enabled!"
 
 <div class="center hidden" id="interactive">
   <form id="form">
-    <input type="text" id="blazon-input" value="quarterly first and fourth argent a bend sable between six mullets sable. an inescutcheon vert.">
+    <input type="text" id="blazon-input" value="lozengy argent and gules">
     <div>
       <button id="random-blazon" type="button">
       Generate Hideous Random Blazon

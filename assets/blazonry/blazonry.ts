@@ -295,8 +295,8 @@ interface ChargeRenderer<T extends Charge> {
   (charge: T): SVGElement | Promise<SVGElement>;
 }
 
-interface VariedClipPathGenerator {
-  (count?: number): string;
+interface VariedPatternGenerator {
+  (count?: number): SVGPatternElement;
 }
 
 type RelativeTreatmentPath = [
@@ -715,6 +715,11 @@ function assertNever(nope: never): never {
   throw new Error("was not never");
 }
 
+let idCounter = 1;
+function uniqueId(): string {
+  return `id${idCounter++}`;
+}
+
 // Not foolproof, but simple and suitable for us.
 function deepEqual<T>(one: T, two: T): boolean {
   if (one == null || two == null) {
@@ -841,6 +846,57 @@ const svg = {
       g.appendChild(c);
     }
     return g;
+  },
+  pattern: ({
+    viewBox,
+    x,
+    y,
+    width,
+    height,
+    patternTransform,
+  }: {
+    viewBox: [Coordinate, Coordinate];
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    patternTransform?: { rotate?: number };
+  }): SVGPatternElement => {
+    const pattern = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "pattern"
+    );
+
+    // Make sure that the coordinate system is the same as the referent, rather than some kind of
+    // scaling. This is what we always want in this project.
+    pattern.setAttribute("patternUnits", "userSpaceOnUse");
+    pattern.setAttribute(
+      "viewBox",
+      `${viewBox[0][0]} ${viewBox[0][1]} ${viewBox[1][0]} ${viewBox[1][1]}`
+    );
+    // W/H offsets so that we start in the top-left corner.
+    pattern.setAttribute("x", x.toString());
+    pattern.setAttribute("y", y.toString());
+    // Tiling size.
+    pattern.setAttribute("width", width.toString());
+    pattern.setAttribute("height", height.toString());
+
+    if (patternTransform?.rotate != null) {
+      pattern.setAttribute(
+        "patternTransform",
+        `rotate(${(patternTransform.rotate / (2 * Math.PI)) * 360})`
+      );
+    }
+
+    return pattern;
+  },
+  polygon: ({ points }: { points: string }): SVGPolygonElement => {
+    const polygon = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "polygon"
+    );
+    polygon.setAttribute("points", points);
+    return polygon;
   },
 };
 
@@ -2349,22 +2405,21 @@ function fusilly(count: number = 8) {
 }
 
 function lozengy(count: number = 8) {
-  // -1 because we have half of one on the left and half on the right, so we want a _slightly_
-  // larger step to make sure we end up spanning the whole width
-  const step = W / (count - 1);
-  let d = "";
-  for (let y = 0; y < (H / W) * count; y += 2) {
-    for (let x = 0; x < count; x++) {
-      d += path`
-        M ${-W_2 + x * step}         ${-H_2 + y * step}
-        L ${-W_2 + (x + 0.5) * step} ${-H_2 + (y + 1) * step}
-        L ${-W_2 + x * step}         ${-H_2 + (y + 2) * step}
-        L ${-W_2 + (x - 0.5) * step} ${-H_2 + (y + 1) * step}
-        Z
-      `;
-    }
-  }
-  return d;
+  const width = W / count;
+  const pattern = svg.pattern({
+    viewBox: [
+      [0, 0],
+      [2, 4],
+    ],
+    x: -width / 2 - W_2,
+    y: -H_2,
+    width,
+    height: width * 2,
+  });
+  const polygon = svg.polygon({ points: "1,0 2,2 1,4 0,2" });
+  polygon.setAttribute("fill", "white");
+  pattern.appendChild(polygon);
+  return pattern;
 }
 
 function paly(count: number = 6) {
@@ -2381,7 +2436,7 @@ function paly(count: number = 6) {
   return d;
 }
 
-const VARIED: Record<VariedName, VariedClipPathGenerator> = {
+const VARIED: Record<VariedName, VariedPatternGenerator> = {
   barry,
   "barry bendy": barryBendy,
   bendy,
@@ -2597,10 +2652,17 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
   } else if ("varied" in content) {
     const children: SVGElement[] = [field(content.first)];
     const second = field(content.second);
-    second.style.clipPath = `path("${VARIED[content.varied.type](
-      content.varied.count
-    )}")`;
-    children.push(second);
+    const id = uniqueId();
+    const pattern = VARIED[content.varied.type](content.varied.count);
+    const mask = document.createElementNS("http://www.w3.org/2000/svg", "mask");
+    const rect = svg.rect([-W_2, -H_2], [W_2, H_2]);
+    rect.setAttribute("fill", `url(#${id})`);
+    mask.appendChild(rect);
+
+    mask.id = `${id}-mask`;
+    pattern.id = id;
+    second.setAttribute("mask", `url(#${id}-mask)`);
+    children.push(pattern, mask, second);
     for (const c of content.content ?? []) {
       children.push(...(await simpleContent(c)));
     }
