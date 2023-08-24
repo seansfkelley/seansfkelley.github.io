@@ -730,8 +730,8 @@ function deepEqual<T>(one: T, two: T): boolean {
       one.length === two.length && one.every((o, i) => deepEqual(o, two[i]))
     );
   } else if (typeof one === "object" && typeof two === "object") {
-    const oneKeys = Object.getOwnPropertyNames(one);
-    const twoKeys = Object.getOwnPropertyNames(two);
+    const oneKeys = Object.getOwnPropertyNames(one).sort();
+    const twoKeys = Object.getOwnPropertyNames(two).sort();
     return (
       deepEqual(oneKeys, twoKeys) &&
       oneKeys.every((k) => deepEqual((one as any)[k], (two as any)[k]))
@@ -850,15 +850,15 @@ const svg = {
   },
   pattern: ({
     viewBox,
-    x,
-    y,
+    x = 0,
+    y = 0,
     width,
     height,
     patternTransform,
   }: {
     viewBox: [Coordinate, Coordinate];
-    x: number;
-    y: number;
+    x?: number;
+    y?: number;
     width: number;
     height: number;
     patternTransform?: { rotate?: number };
@@ -2424,17 +2424,21 @@ function lozengy(count: number = 8) {
 }
 
 function paly(count: number = 6) {
-  const step = W / count;
-  let d = "";
-  for (let x = 1; x < count; x += 2) {
-    d += path`
-      M ${-W_2 + x * step}        -${H_2}
-      L ${-W_2 + x * step}         ${H_2}
-      L ${-W_2 + x * step + step}  ${H_2}
-      L ${-W_2 + x * step + step} -${H_2}
-      Z`;
-  }
-  return d;
+  const width = W / count; // TODO: This produces twice as many as it's supposed to.
+  const pattern = svg.pattern({
+    viewBox: [
+      [0, 0],
+      [2, 1],
+    ],
+    x: -W_2,
+    y: -H_2,
+    width,
+    height: H,
+  });
+  const line = svg.line([1, 0], [1, 1], { strokeWidth: 1 });
+  line.setAttribute("stroke", "white");
+  pattern.appendChild(line);
+  return pattern;
 }
 
 const VARIED: Record<VariedName, VariedPatternGenerator> = {
@@ -2657,12 +2661,15 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
     g1.appendChild(field(content.first));
     g2.appendChild(field(content.second));
 
+    // TODO: Clean this shit up.
+    // TODO: Deduplicate this with party-per, if possible, or at least make them consistent.
     const id = uniqueId();
     const pattern = VARIED[content.varied.type](content.varied.count);
     const mask = document.createElementNS("http://www.w3.org/2000/svg", "mask");
     const rect = svg.rect([-W_2, -H_2], [W_2, H_2]);
     rect.setAttribute("fill", `url(#${id})`);
-    mask.appendChild(rect);
+    mask.appendChild(rect); // TODO: Is this always the correct size? If rotates and such happen
+    // at the pattern level, do we ever need to worry about changing the shape?
     mask.id = `${id}-mask`;
     pattern.id = id;
     g2.setAttribute("mask", `url(#${id}-mask)`);
