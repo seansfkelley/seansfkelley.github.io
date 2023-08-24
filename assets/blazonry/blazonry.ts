@@ -948,7 +948,7 @@ const COTISED_WIDTH = W_2 / 12;
 
 const BEND_WIDTH = W / 3;
 // Make sure it's long enough to reach diagonally!
-const BEND_LENGTH = Math.hypot(W, H);
+const BEND_LENGTH = Math.hypot(W, W) + BEND_WIDTH / 2;
 function bend({ tincture, cotised, treatment }: Ordinary) {
   const bend = svg.g();
 
