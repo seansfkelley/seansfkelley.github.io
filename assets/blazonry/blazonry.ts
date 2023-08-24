@@ -20,10 +20,6 @@ TODO
 - not enough fusilly iterations
   - Fusilly of twelve Or and Sable.
   - should the backgrounds be made of a single path with repeating elements?
-- estucheons are not lined up with rondels behind them
-  - Per chevron Vert and Or an rondel palewise Argent. An inescutcheon Or.
-  - problem is that I shifted things upwards to look more visually pleasing even though they're not
-    strictly _centered_ -- this is probably desirable, however, quarterly makes it look weird, so
 - fret is not lined up with bend line
   - Parted per bend undy Argent and Sable a fret palewise Gules.
 - still see artifacts from parting when there is a thing on top
@@ -182,13 +178,15 @@ type Quarter = 1 | 2 | 3 | 4;
 type Location_ = "chief" | "base";
 const Location_ = {
   toOffset: (location: Location_ | undefined): Coordinate => {
+    const yOffset = -H_2 + W_2;
+
     switch (location) {
       case undefined:
-        return [0, 0];
+        return [0, yOffset];
       case "base":
-        return [0, H_2 / 2];
+        return [0, yOffset + (H_2 + (H_2 - W_2)) / 2];
       case "chief":
-        return [0, -H_2 / 2];
+        return [0, yOffset - W_2 / 2];
       default:
         assertNever(location);
     }
@@ -1993,7 +1991,9 @@ async function escutcheon({ content }: EscutcheonCharge) {
 }
 
 const CHARGE_LOCATORS: Record<Placement | "none", ParametricLocator> = {
-  none: new DefaultChargeLocator([-W_2, W_2], [-H_2, H_2 - 10]),
+  // The vertical offset here matches the offset for both quarterings and some of the ordinaries
+  // (cross, saltire, etc.) so that they all stack neatly vertically over the center.
+  none: new DefaultChargeLocator([-W_2, W_2], [-H_2, -H_2 + W]),
   fess: fess.on,
   pale: pale.on,
   bend: bend.on,
@@ -2451,15 +2451,22 @@ const VARIED: Record<VariedName, VariedClipPathGenerator> = {
 // ----------------------------------------------------------------------------
 
 function field(tincture: Tincture) {
-  return svg.rect([-W_2, -H_2], [W_2, H_2], { fill: tincture });
+  // Expand the height so that when this is rendered on the extra-tal quarter segments it still fills.
+  return svg.rect([-W_2, -H_2], [W_2, H_2 + 2 * (H_2 - W_2)], {
+    fill: tincture,
+  });
 }
 
-const QUARTERING_TRANSLATIONS: Record<Quarter, Coordinate> = {
-  1: [-W_2 / 2, -H_2 / 2],
-  2: [W_2 / 2, -H_2 / 2],
-  3: [-W_2 / 2, H_2 / 2],
-  4: [W_2 / 2, H_2 / 2],
-};
+// Note that quarterings are NOT the same size. The top two are clipped to be square and the bottom
+// two are made taller to compensate. This means that the cross point of the quarter ends up neatly
+// centered underneath centered ordinaries or collections of charges.
+const QUARTERINGS: Record<Quarter, { translate: Coordinate; height: number }> =
+  {
+    1: { translate: [-W_2 / 2, -H_2 / 2], height: W },
+    2: { translate: [W_2 / 2, -H_2 / 2], height: W },
+    3: { translate: [-W_2 / 2, (-H_2 + W) / 2], height: H + (H - W) },
+    4: { translate: [W_2 / 2, (-H_2 + W) / 2], height: H + (H - W) },
+  };
 
 const CANTON_SCALE_FACTOR = 1 / 3;
 // Note that this clips the bottom of the area. Combined with proportional scaling, this permits us
@@ -2592,14 +2599,14 @@ async function complexContent(container: SVGElement, content: ComplexContent) {
       4: svg.g(),
     };
 
-    for (const [i_, translate] of Object.entries(QUARTERING_TRANSLATIONS)) {
+    for (const [i_, { translate, height }] of Object.entries(QUARTERINGS)) {
       const i = +i_ as any as Quarter;
       applyTransforms(quartered[i], { translate, scale: 0.5 });
       quartered[i].style.clipPath = path`path("
         M -${W_2} -${H_2}
-        L  ${W_2} -${H_2}
-        L  ${W_2}  ${H_2}
-        L -${W_2}  ${H_2}
+        l  ${W}    0
+        l  0       ${height}
+        l -${W}    0
         Z
       ")`;
     }
@@ -2623,7 +2630,7 @@ async function complexContent(container: SVGElement, content: ComplexContent) {
     });
     line.setAttribute("vector-effect", "non-scaling-stroke");
     container.appendChild(line);
-    line = svg.line([-W_2, 0], [W_2, 0], {
+    line = svg.line([-W_2, -H_2 + W_2], [W_2, -H_2 + W_2], {
       stroke: "sable",
       strokeWidth: 0.5,
     });
