@@ -21,6 +21,7 @@ TODO
       end up with visual artifacts at the borders.
 - still see artifacts from parting when there is a thing on top
   - Party per pale embattled-counter-embattled Gules and Azure a cross wavy Argent.
+- allow multiple charges in party-per
 */
 
 /*
@@ -2650,21 +2651,43 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
 
     return children;
   } else if ("varied" in content) {
-    const children: SVGElement[] = [field(content.first)];
-    const second = field(content.second);
+    const g1 = svg.g();
+    const g2 = svg.g();
+
+    g1.appendChild(field(content.first));
+    g2.appendChild(field(content.second));
+
     const id = uniqueId();
     const pattern = VARIED[content.varied.type](content.varied.count);
     const mask = document.createElementNS("http://www.w3.org/2000/svg", "mask");
     const rect = svg.rect([-W_2, -H_2], [W_2, H_2]);
     rect.setAttribute("fill", `url(#${id})`);
     mask.appendChild(rect);
-
     mask.id = `${id}-mask`;
     pattern.id = id;
-    second.setAttribute("mask", `url(#${id}-mask)`);
-    children.push(pattern, mask, second);
-    for (const c of content.content ?? []) {
-      children.push(...(await simpleContent(c)));
+    g2.setAttribute("mask", `url(#${id}-mask)`);
+
+    const children: SVGElement[] = [pattern, mask, g1, g2];
+    if (content.content != null) {
+      const counterchangedFirst = content.content.map((c) =>
+        overwriteCounterchangedTincture(c, content.first)
+      );
+      // See the party-per branch for why this check is here. I do not like it.
+      if (!deepEqual(content.content, counterchangedFirst)) {
+        const counterchangedSecond = content.content.map((c) =>
+          overwriteCounterchangedTincture(c, content.second)
+        );
+        for (const c of counterchangedSecond) {
+          g1.append(...(await simpleContent(c)));
+        }
+        for (const c of counterchangedFirst) {
+          g2.append(...(await simpleContent(c)));
+        }
+      } else {
+        for (const c of content.content) {
+          children.push(...(await simpleContent(c)));
+        }
+      }
     }
     return children;
   } else {
