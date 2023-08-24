@@ -22,6 +22,8 @@ TODO
   - should the backgrounds be made of a single path with repeating elements?
 - estucheons are not lined up with rondels behind them
   - Per chevron Vert and Or an rondel palewise Argent. An inescutcheon Or.
+  - problem is that I shifted things upwards to look more visually pleasing even though they're not
+    strictly _centered_ -- this is probably desirable, however, quarterly makes it look weird, so
 - fret is not lined up with bend line
   - Parted per bend undy Argent and Sable a fret palewise Gules.
 - still see artifacts from parting when there is a thing on top
@@ -179,10 +181,10 @@ type Quarter = 1 | 2 | 3 | 4;
 // Stupid name because Location is a DOM type.
 type Location_ = "chief" | "base";
 const Location_ = {
-  toOffset: (location: Location_ | undefined): Coordinate | undefined => {
+  toOffset: (location: Location_ | undefined): Coordinate => {
     switch (location) {
       case undefined:
-        return undefined;
+        return [0, 0];
       case "base":
         return [0, H_2 / 2];
       case "chief":
@@ -2453,10 +2455,10 @@ function field(tincture: Tincture) {
 }
 
 const QUARTERING_TRANSLATIONS: Record<Quarter, Coordinate> = {
-  1: [-25, -30],
-  2: [25, -30],
-  3: [-25, 30],
-  4: [25, 30],
+  1: [-W_2 / 2, -H_2 / 2],
+  2: [W_2 / 2, -H_2 / 2],
+  3: [-W_2 / 2, H_2 / 2],
+  4: [W_2 / 2, H_2 / 2],
 };
 
 const CANTON_SCALE_FACTOR = 1 / 3;
@@ -2609,6 +2611,9 @@ async function complexContent(container: SVGElement, content: ComplexContent) {
     }
 
     for (const e of Object.values(quartered)) {
+      if (e.children.length === 0) {
+        e.appendChild(field("argent"));
+      }
       container.appendChild(e);
     }
 
@@ -2758,13 +2763,14 @@ async function parseAndRenderBlazon() {
     parser.feed(input.value.trim().toLowerCase());
     results = parser.results;
   } catch (e) {
+    console.error(e);
     const message = (e as any)
       .toString()
       .replaceAll(/("(.)"[ \n$])+/g, (match: string) =>
         match.replaceAll('" "', "")
       )
       .replaceAll(/:\n.*?→ /g, " ")
-      .replaceAll(/    [^\n]+\n/g, "")
+      .replaceAll(/    [^^\n]+\n/g, "") // ^^
       .replaceAll(/A ("[aehilmnorsx]")/g, "An $1");
     error.innerHTML = message;
     error.classList.remove("hidden");
