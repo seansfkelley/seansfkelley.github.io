@@ -2420,15 +2420,18 @@ function barryBendy(count: number = 8) {
 }
 
 function bendy(count: number = 8) {
+  const width = (2 * Math.hypot(W, W)) / count;
   return svg.pattern(
     {
       viewBox: [
         [0, 0],
         [4, 1],
       ],
-      x: -Math.hypot(W, W),
-      // y: -H_2,
-      width: Math.hypot(W, W) / (count / 2),
+      // The rotation happens last, so translating positively in x actually shifts visually
+      // northeast. The rotation also happens around (0, 0), but we're trying to line up the corner
+      // at (-50, -60), hence the weird math. There was a geometry drawing to prove this.
+      x: Math.sqrt(Math.pow(H_2 - W_2, 2) / 2) + width / 2,
+      width,
       height: H,
       // Explicitly require non-uniform scaling; it's the easiest way to implement paly.
       preserveAspectRatio: "none",
@@ -2438,22 +2441,22 @@ function bendy(count: number = 8) {
   );
 }
 
-function checky(count: number = 8) {
-  // w < h, so we use that to determine step (also it's more intuitive)
-  const step = W / count;
-  let d = "";
-  for (let y = 0; y < (H / W) * count; y++) {
-    for (let x = y % 2; x < count; x += 2) {
-      d += path`
-        M ${-W_2 + x * step}       ${-H_2 + y * step}
-        L ${-W_2 + x * step}       ${-H_2 + (y + 1) * step}
-        L ${-W_2 + (x + 1) * step} ${-H_2 + (y + 1) * step}
-        L ${-W_2 + (x + 1) * step} ${-H_2 + y * step}
-        Z
-      `;
-    }
-  }
-  return d;
+function checky(count: number = 6) {
+  const size = (2 * W) / count; // W < H, so we'll step based on that.
+  return svg.pattern(
+    {
+      viewBox: [
+        [0, 0],
+        [2, 2],
+      ],
+      width: size,
+      height: size,
+      x: -W_2,
+      y: -H_2,
+    },
+    svg.rect([0, 0], [1, 1], { fill: "white" }),
+    svg.rect([1, 1], [2, 2], { fill: "white" })
+  );
 }
 
 function chevronny(count: number = 6) {
@@ -2475,22 +2478,28 @@ function chevronny(count: number = 6) {
 }
 
 function fusilly(count: number = 8) {
-  // -1 because we have half of one on the left and half on the right, so we want a _slightly_
-  // larger step to make sure we end up spanning the whole width
-  const step = W / (count - 1);
-  let d = "";
-  for (let y = 0; y < ((H / W) * count) / 2; y += 4) {
-    for (let x = 0; x < count; x++) {
-      d += path`
-        M ${-W_2 + x * step}         ${-H_2 + y * step}
-        L ${-W_2 + (x + 0.5) * step} ${-H_2 + (y + 2) * step}
-        L ${-W_2 + x * step}         ${-H_2 + (y + 4) * step}
-        L ${-W_2 + (x - 0.5) * step} ${-H_2 + (y + 2) * step}
-        Z
-      `;
-    }
-  }
-  return d;
+  const width = W / count;
+  return svg.pattern(
+    {
+      viewBox: [
+        [0, 0],
+        [2, 8],
+      ],
+      x: -width / 2 - W_2,
+      y: -H_2,
+      width,
+      height: width * 4,
+    },
+    svg.polygon({
+      points: [
+        [1, 0],
+        [2, 4],
+        [1, 8],
+        [0, 4],
+      ],
+      fill: "white",
+    })
+  );
 }
 
 function lozengy(count: number = 8) {
@@ -2527,7 +2536,7 @@ function paly(count: number = 6) {
       ],
       x: -W_2,
       y: -H_2,
-      width: W / (count / 2),
+      width: (2 * W) / count,
       height: H,
       // Explicitly require non-uniform scaling; it's the easiest way to implement paly.
       preserveAspectRatio: "none",
