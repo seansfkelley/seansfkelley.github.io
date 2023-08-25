@@ -2463,11 +2463,33 @@ function bendy(count: number = 8) {
       x: Math.sqrt(Math.pow(H_2 - W_2, 2) / 2) + width / 2,
       width,
       height: H,
-      // Explicitly require non-uniform scaling; it's the easiest way to implement paly.
+      // Explicitly require non-uniform scaling; it's the easiest way to implement bendy.
       preserveAspectRatio: "none",
       patternTransform: { rotate: Radians.NEG_EIGHTH_TURN },
     },
     svg.line([3, 0], [3, 1], { strokeWidth: 2, stroke: "white" })
+  );
+}
+
+function bendySinister(count: number = 8) {
+  const width = (2 * Math.hypot(W, W)) / count;
+  return svg.pattern(
+    {
+      viewBox: [
+        [0, 0],
+        [4, 1],
+      ],
+      // The rotation happens last, so translating positively in x actually shifts visually
+      // northeast. The rotation also happens around (0, 0), but we're trying to line up the corner
+      // at (-50, -60), hence the weird math. There was a geometry drawing to prove this.
+      x: -Math.sqrt(Math.pow(H_2 - W_2, 2) / 2) - width / 2,
+      width,
+      height: H,
+      // Explicitly require non-uniform scaling; it's the easiest way to implement bendy.
+      preserveAspectRatio: "none",
+      patternTransform: { rotate: Radians.EIGHTH_TURN },
+    },
+    svg.line([1, 0], [1, 1], { strokeWidth: 2, stroke: "white" })
   );
 }
 
@@ -2604,6 +2626,7 @@ const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
   barry,
   "barry bendy": barryBendy,
   bendy,
+  "bendy sinister": bendySinister,
   checky,
   chevronny,
   fusilly,
