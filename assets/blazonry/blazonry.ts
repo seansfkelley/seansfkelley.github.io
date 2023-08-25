@@ -143,18 +143,18 @@ type VariationName =
 type Posture = "palewise" | "fesswise" | "bendwise" | "bendwise sinister";
 
 const Posture = {
-  toRadians: (posture: Posture | undefined): number | undefined => {
+  toRadians: (posture: Posture | undefined): Radians | undefined => {
     switch (posture) {
       case undefined:
         return undefined;
       case "palewise":
-        return 0;
+        return Radians.ZERO;
       case "fesswise":
-        return -Math.PI / 2;
+        return Radians.NEG_QUARTER_TURN;
       case "bendwise":
-        return -Math.PI / 4;
+        return Radians.NEG_EIGHTH_TURN;
       case "bendwise sinister":
-        return Math.PI / 4;
+        return Radians.EIGHTH_TURN;
       default:
         assertNever(posture);
     }
@@ -750,21 +750,30 @@ function deepEqual<T>(one: T, two: T): boolean {
   }
 }
 
-function applyTransforms(
-  element: SVGElement,
-  {
-    origin,
-    translate,
-    scale,
-    rotate,
-  }: {
-    origin?: Coordinate;
-    translate?: Coordinate;
-    scale?: number | Coordinate;
-    rotate?: number;
-  } = {}
-): void {
-  const transform = [
+type Radians = number & { __radians: unknown };
+const Radians = {
+  ZERO: 0 as Radians,
+  QUARTER_TURN: (Math.PI / 2) as Radians,
+  NEG_QUARTER_TURN: (-Math.PI / 2) as Radians,
+  EIGHTH_TURN: (Math.PI / 4) as Radians,
+  NEG_EIGHTH_TURN: (-Math.PI / 4) as Radians,
+  toDeg: (r: Radians): number => (r / (2 * Math.PI)) * 360,
+};
+
+interface Transforms {
+  translate?: Coordinate;
+  scale?: number | Coordinate;
+  rotate?: Radians;
+  skewX?: Radians;
+}
+
+function toTransformString({
+  translate,
+  scale,
+  rotate,
+  skewX,
+}: Transforms): string {
+  return [
     translate != null
       ? `translate(${translate[0]}, ${translate[1]})`
       : undefined,
@@ -773,15 +782,22 @@ function applyTransforms(
       : Array.isArray(scale)
       ? `scale(${scale[0]}, ${scale[1]})`
       : undefined,
-    rotate != null ? `rotate(${(rotate / (2 * Math.PI)) * 360})` : undefined,
+    rotate != null ? `rotate(${Radians.toDeg(rotate)})` : undefined,
+    // TODO: Unsure if this is the correct location for skew to make it less surprising.
+    skewX != null ? `skewX(${Radians.toDeg(skewX)})` : undefined,
   ]
     .filter(Boolean)
     .join(" ");
+}
 
+function applyTransforms(
+  element: SVGElement,
+  { origin, ...transforms }: Transforms & { origin?: Coordinate } = {}
+): void {
   if (origin != null) {
     element.setAttribute("transform-origin", `${origin[0]} ${origin[1]}`);
   }
-  element.setAttribute("transform", transform);
+  element.setAttribute("transform", toTransformString(transforms));
 }
 
 function roundToPrecision(n: number, precision: number = 0): number {
@@ -901,7 +917,7 @@ const svg = {
       width: number;
       height: number;
       preserveAspectRatio?: string;
-      patternTransform?: { rotate?: number };
+      patternTransform?: Transforms;
     },
     ...children: SVGElement[]
   ): SVGPatternElement => {
@@ -928,10 +944,10 @@ const svg = {
       pattern.setAttribute("preserveAspectRatio", preserveAspectRatio);
     }
 
-    if (patternTransform?.rotate != null) {
+    if (patternTransform != null) {
       pattern.setAttribute(
         "patternTransform",
-        `rotate(${(patternTransform.rotate / (2 * Math.PI)) * 360})`
+        toTransformString(patternTransform)
       );
     }
 
@@ -1063,7 +1079,7 @@ function bend({ tincture, cotised, treatment }: Ordinary) {
 
   applyTransforms(bend, {
     translate: [-W_2, -H_2],
-    rotate: Math.PI / 4,
+    rotate: Radians.EIGHTH_TURN,
   });
 
   return svg.g(bend);
@@ -1259,7 +1275,7 @@ function chevron({ tincture, cotised, treatment }: Ordinary) {
       applyTransforms(p, {
         origin: topStart.loc,
         scale: [sign, 1],
-        rotate: Math.PI / 4,
+        rotate: Radians.EIGHTH_TURN,
         translate: Coordinate.add(mid, [
           0,
           -Math.hypot(CHEVRON_WIDTH, CHEVRON_WIDTH) / 2,
@@ -1663,7 +1679,7 @@ function pale({ tincture, cotised, treatment }: Ordinary) {
     );
     applyTransforms(p, {
       translate: [0, -H_2],
-      rotate: Math.PI / 2,
+      rotate: Radians.QUARTER_TURN,
     });
     pale.appendChild(p);
   } else {
@@ -1786,7 +1802,7 @@ function saltire({ tincture, cotised, treatment }: Ordinary) {
       ],
     });
     applyTransforms(g, {
-      rotate: -Math.PI / 4,
+      rotate: Radians.NEG_EIGHTH_TURN,
       origin: [0, -H_2 + W_2],
     });
 
@@ -2407,22 +2423,30 @@ function barry(count: number = 6) {
 }
 
 function barryBendy(count: number = 8) {
-  count *= 2; // Looks better, and feels easier to specify the desired value, with higher counts.
-  const step = (W / count) * 2;
-  let d = "";
-  for (let y = 0; y < (H / W) * count; y++) {
-    for (let x = y % 2; x < count; x += 2) {
-      const offset = (1 / 2) * y;
-      d += path`
-        M  ${W_2 - (x - offset) * step}         ${-H_2 + y * step}
-        L  ${W_2 - (x + 1 - offset) * step}     ${-H_2 + y * step}
-        L  ${W_2 - (x + 1 / 2 - offset) * step} ${-H_2 + (y + 1) * step}
-        L  ${W_2 - (x - 1 / 2 - offset) * step} ${-H_2 + (y + 1) * step}
-        Z
-      `;
-    }
-  }
-  return d;
+  const size = (2 * W) / count; // W < H, so we'll step based on that.
+  // This angle allows nice patterning where a 2x2 checkered unit shifts horizontally by half a unit
+  // (0.5) for every full checked unit height (2). So it lines up vertically nicely.
+  const angle = Math.asin(1 / Math.sqrt(5)) as Radians;
+  return svg.pattern(
+    {
+      viewBox: [
+        [0, 0],
+        [2, 2],
+      ],
+      width: size,
+      height: size,
+      // The height component compensates for the horizontal shift due to the shifting y. Since we
+      // skew, shifting by y also shifts horizontally. The chosen angle has a nice 2-to-1 ratio, so
+      // we can return the horizontal shift to the center by just dividing by 2. Once there, we
+      // shift horizontally according to how many size-sized units we can fit.
+      // dead center according to the size, so it's lined up with the edges.
+      x: H_2 / 2 - (W_2 % size),
+      y: -H_2,
+      patternTransform: { skewX: angle },
+    },
+    svg.rect([0, 0], [1, 1], { fill: "white" }),
+    svg.rect([1, 1], [2, 2], { fill: "white" })
+  );
 }
 
 function bendy(count: number = 8) {
@@ -2441,7 +2465,7 @@ function bendy(count: number = 8) {
       height: H,
       // Explicitly require non-uniform scaling; it's the easiest way to implement paly.
       preserveAspectRatio: "none",
-      patternTransform: { rotate: -Math.PI / 4 },
+      patternTransform: { rotate: Radians.NEG_EIGHTH_TURN },
     },
     svg.line([3, 0], [3, 1], { strokeWidth: 2, stroke: "white" })
   );

@@ -44,7 +44,7 @@ content="This page is interactive, and only works with JavaScript enabled!"
 
 <div class="center hidden" id="interactive">
   <form id="form">
-    <input type="text" id="blazon-input" value="chevronny argent and gules">
+    <input type="text" id="blazon-input" value="barry bendy argent and gules">
     <div>
       <button id="random-blazon" type="button">
       Generate Hideous Random Blazon
