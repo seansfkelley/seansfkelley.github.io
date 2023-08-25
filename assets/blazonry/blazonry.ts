@@ -22,6 +22,7 @@ FUTURE WORK and KNOWN ISSUES
   generally disliked for introducing complexity and ambiguity.
 - Charges `on` an ordinary are often too close; especially 2s and 3s, and more especially on chief
   and fess.
+- Treated variations (e.g. "barry wavy", like ocean waves) is not supported.
 - Charges in quartered quadrants aren't pushed around to account for the curvature of the bottom of
   the arms; a proper rendering would make them more cramped rather than cut them off.
 - Cantons are proportionally scaled and cropped at the bottom, which mostly works but can cause
@@ -42,6 +43,8 @@ FUTURE WORK and KNOWN ISSUES
 - It's unclear what to do with nested counterchanges. If you have "on a canton counterchanged a
   rondel counterchanged" on a variated background, does the rondel match the background variation,
   or does it become invisible because it matches the canton's counterchanging?
+- Specialized charges that imply tinctures (or other attributes) like "bezant" (meaning "rondel or")
+  are not supported.
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
