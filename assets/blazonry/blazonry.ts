@@ -1,24 +1,17 @@
 /*
 TODO
 -------------------------------------------------------------------------------
-- party per treatment: quarterly
 - Placement -- at least in the case of chevron and saltire, they are rotated to match
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - textbox with word wrap so you can read it better
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
-- lion SVGs can be aggressively deduplicated -- 3 heads x 2 bodies
 - still see artifacts from parting when there is a thing on top
   - Party per pale embattled-counter-embattled Gules and Azure a cross wavy Argent.
   - instead of rendering twice and modifying the tincture high-level, pass the mask/clip path (it
     will probably have to all become masks) down, along with a pair of colors, so any counterchanged
     element knows how to clip itself
   - alternately, what if this just switched to masks instead of clip paths? would it just work?
-- does not work
-  - paly gules and argent on a bend counterchanged three rondels sable
 - allow multiple charges in party-per
-- should cantons be counterchangeable?
-  - then things on them are recurseively counterchanged in reverse?
-    - this should already be true of counterchanged ordinaries in `on`
 */
 
 /*
@@ -46,6 +39,9 @@ FUTURE WORK and KNOWN ISSUES
 - When several charges in a row have the same tincture, it is idiomatically only specified once at
   the end. The parser does not support that, instead requiring every charge to have a tincture
   specified.
+- It's unclear what to do with nested counterchanges. If you have "on a canton counterchanged a
+  rondel counterchanged" on a variated background, does the rondel match the background variation,
+  or does it become invisible because it matches the canton's counterchanging?
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
@@ -2069,6 +2065,9 @@ async function fleurDeLys({ tincture }: SimpleCharge) {
 }
 
 // The lion SVGs are pulled from https://en.wikipedia.org/wiki/Attitude_(heraldry).
+// In the future, they should probably be aggressively deduplicated -- whoever made the heads and
+// bodies did a good job reusing the same elements across the different images, but at the moment
+// we just hardcode each one individually instead of combining N heads * M bodies.
 async function lion({ tincture, armed, langued, attitude }: LionCharge) {
   const lion = (await fetchComplexSvg("lion", attitude)).cloneNode(true);
   lion.classList.add(tincture);
@@ -2729,47 +2728,70 @@ async function simpleContent(element: SimpleContent): Promise<SVGElement[]> {
 }
 
 async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
+  // Note that counterchanging happens shallowly. If you have e.g. "on an ordinary counterchange a
+  // charge counterchanged", both will receive the _same_ patterning, even though the charge is on
+  // top of the ordinary (and could justifiably be re-reversed, matching the background variation).
   function overwriteCounterchangedTincture(
     element: SimpleContent,
     tincture: Tincture
   ): SimpleContent {
-    function maybeToCounterchanged<T extends Tincture | undefined>(t: T): T {
+    function counterchangeTincture<T extends Tincture | undefined>(t: T): T {
       return (t === "counterchanged" ? tincture : t) as T;
     }
 
-    if ("canton" in element) {
-      // Cantons cannot be counterchanged; they always have a background and everything on them is
-      // relative to their background. Thus, nop.
-    } else if ("on" in element) {
-      if (
-        element.surround != null &&
-        "tincture" in element.surround &&
-        element.surround.tincture === "counterchanged"
-      ) {
-        return {
-          ...element,
-          // Note that we do NOT overwrite the `charge` tincture. That's a function of the `on`, not the field.
-          surround: { ...element.surround, tincture },
-        };
+    function counterchangeOrdinary(ordinary: Ordinary): Ordinary {
+      return {
+        ...ordinary,
+        tincture: counterchangeTincture(ordinary.tincture),
+        cotised: counterchangeTincture(ordinary.cotised),
+      };
+    }
+
+    function counterchangeCharge<T extends Charge | undefined>(charge: T): T {
+      if (charge == null) {
+        return undefined as T;
       }
-    } else if ("ordinary" in element) {
+
+      switch (charge.charge) {
+        case "mullet":
+        case "rondel":
+        case "fleur-de-lys":
+        case "escallop":
+        case "fret":
+        case "lion":
+          return {
+            ...charge,
+            tincture: counterchangeTincture(charge.tincture),
+          };
+        case "escutcheon":
+          return charge; // TODO: Unsupported!
+        default:
+          assertNever(charge);
+      }
+    }
+
+    if ("canton" in element) {
       return {
         ...element,
-        tincture: maybeToCounterchanged(element.tincture),
-        cotised: maybeToCounterchanged(element.cotised),
+        canton: counterchangeTincture(element.canton),
+        content: element.content?.map((c) =>
+          overwriteCounterchangedTincture(c, tincture)
+        ),
       };
+    } else if ("on" in element) {
+      return {
+        ...element,
+        on: counterchangeOrdinary(element.on),
+        charge: counterchangeCharge(element.charge),
+        surround: counterchangeCharge(element.surround),
+      };
+    } else if ("ordinary" in element) {
+      return counterchangeOrdinary(element);
     } else if ("charge" in element) {
-      if ("tincture" in element) {
-        return {
-          ...element,
-          tincture: maybeToCounterchanged(element.tincture),
-        };
-      }
+      return counterchangeCharge(element);
     } else {
       assertNever(element);
     }
-
-    return element;
   }
 
   if ("party" in content) {
