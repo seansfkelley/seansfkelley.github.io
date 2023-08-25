@@ -206,16 +206,18 @@ OrdinaryName ->
   | "chief"         {% id %}
 
 VariationName ->
-    "barry bendy"    {% id %}
-  | "barry"          {% id %}
-  | "bendy sinister" {% id %}
-  | "bendy"          {% id %}
-  | "checky"         {% id %}
-  | "chequey"        {% literal("checky") %}
-  | "chevronny"      {% id %}
-  | "lozengy"        {% id %}
-  | "fusilly"        {% id %}
-  | "paly"           {% id %}
+    "barry bendy"      {% id %}
+  | "barry"            {% id %}
+  | "bendy sinister"   {% id %}
+  | "bendy"            {% id %}
+  | "checky"           {% id %}
+  | "chequey"          {% literal("checky") %}
+  | "chevronny"        {% id %}
+  | "lozengy"          {% id %}
+  # It's unclear if any other variation can get modified in this way, so I didn't generalize it.
+  | "fusilly in bends" {% id %}
+  | "fusilly"          {% id %}
+  | "paly"             {% id %}
 
 Treatment ->
     "embattled-counter-embattled" {% id %}
@@ -224,7 +226,6 @@ Treatment ->
   | "indented"                    {% id %}
   | "wavy"                        {% id %}
   | "undy"                        {% literal("wavy") %}
-  # TODO: More.
 
 _  -> whitespace:* {% nop %}
 __ -> whitespace:+ {% nop %}
