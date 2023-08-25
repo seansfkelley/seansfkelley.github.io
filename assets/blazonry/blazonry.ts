@@ -11,7 +11,6 @@ TODO
     element knows how to clip itself
   - alternately, what if this just switched to masks instead of clip paths? would it just work?
 - allow multiple charges in party-per
-- remove `path`
 */
 
 /*
@@ -50,9 +49,7 @@ NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
 - I did not want _any_ dependencies except the parser, so I re-rolled some things that probably have
   good library implementations, like SVG element factories and SVG paths.
-- There are several eras of implementation represented here. This surfaces as, in particular:
-  - a mix of hardcoded values and values mathemetically derived from the fields width/height
-  - a mix of string-y things like `path` and object-y things like `PathCommand`
+- There are a number of hardcoded values still present in some of the older graphics.
 - An SVG path editor/debugger is an essential tool. I used https://yqnn.github.io/svg-path-editor/.
 */
 
@@ -68,18 +65,24 @@ const H_2 = H / 2;
 const W = 100;
 const W_2 = W / 2;
 
-const ESCUTCHEON_PATH = path`
-  M -${W_2} -${H_2}
-  L  ${W_2} -${H_2}
-  L  ${W_2}  ${H_2 / 3}
-  C  ${W_2}           ${H_2 * (2 / 3)}
-     ${W_2 * (3 / 5)} ${H_2 * (5 / 6)}
-     0                ${H_2}
-  C -${W_2 * (3 / 5)} ${H_2 * (5 / 6)}
-     ${-W_2}          ${H_2 * (2 / 3)}
-     ${-W_2}          ${H_2 / 3}
-  Z
-`;
+const ESCUTCHEON_PATH: PathCommand.Any[] = [
+  { type: "M", loc: [-W_2, -H_2] },
+  { type: "L", loc: [W_2, -H_2] },
+  { type: "L", loc: [W_2, H_2 / 3] },
+  {
+    type: "C",
+    c1: [W_2, H_2 * (2 / 3)],
+    c2: [W_2 * (3 / 5), H_2 * (5 / 6)],
+    end: [0, H_2],
+  },
+  {
+    type: "C",
+    c1: [-W_2 * (3 / 5), H_2 * (5 / 6)],
+    c2: [-W_2, H_2 * (2 / 3)],
+    end: [-W_2, H_2 / 3],
+  },
+  { type: "Z" },
+];
 
 // #endregion
 
@@ -382,25 +385,26 @@ namespace PathCommand {
   };
 
   export interface Z {
-    type: "Z" | "z";
+    type: "Z";
   }
-
-  export type z = Z;
-
   export type L = SimpleElement<"L">;
-  export type l = SimpleElement<"l">;
   export type M = SimpleElement<"M">;
-  export type m = SimpleElement<"m">;
-
-  export interface c {
-    type: "c";
+  export interface C {
+    type: "C";
     c1: Coordinate;
     c2: Coordinate;
     end: Coordinate;
   }
 
-  export type Relative = m | l | c | Z | z;
-  export type Absolute = M | L | Z | z;
+  type WithType<T extends { type: string }, U> = Omit<T, "type"> & { type: U };
+
+  export type z = WithType<Z, "z">;
+  export type l = WithType<L, "l">;
+  export type m = WithType<M, "m">;
+  export type c = WithType<C, "c">;
+
+  export type Absolute = M | L | C | Z;
+  export type Relative = m | l | c | z;
   export type Any = Relative | Absolute;
 
   const SVG_ELEMENT_TO_COORDINATES: {
@@ -413,6 +417,7 @@ namespace PathCommand {
     m: (e) => [e.loc],
     M: (e) => [e.loc],
     c: (e) => [e.c1, e.c2, e.end],
+    C: (e) => [e.c1, e.c2, e.end],
     z: () => [],
     Z: () => [],
   };
@@ -801,7 +806,7 @@ function roundToPrecision(n: number, precision: number = 0): number {
 
 const svg = {
   path: (
-    d: string | PathCommand.Any[],
+    d: PathCommand.Any[],
     {
       stroke,
       strokeWidth = 1,
@@ -815,10 +820,7 @@ const svg = {
     } = {}
   ): SVGPathElement => {
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    if (Array.isArray(d)) {
-      d = PathCommand.toDString(d);
-    }
-    path.setAttribute("d", d);
+    path.setAttribute("d", PathCommand.toDString(d));
     path.setAttribute("stroke-width", strokeWidth.toString());
     path.setAttribute("stroke-linecap", strokeLinecap);
     if (stroke != null) {
@@ -985,15 +987,6 @@ const svg = {
     return mask;
   },
 };
-
-function path(strings: TemplateStringsArray, ...values: number[]): string {
-  const parts = [];
-  for (let i = 0; i < values.length; ++i) {
-    parts.push(strings[i], values[i]);
-  }
-  parts.push(strings.at(-1));
-  return parts.join("").trim().replaceAll("\n", "").replaceAll(/ +/g, " ");
-}
 
 const complexSvgCache: Record<string, SVGElement> = {};
 async function fetchComplexSvg(
@@ -1972,8 +1965,20 @@ function rondel({ tincture }: SimpleCharge) {
 
 function mullet({ tincture }: SimpleCharge) {
   return svg.path(
-    // These awkward numbers keep the proportions nice while just filling out a 40x40 square.
-    "M 0 -18.8 L 5 -4.6 L 20 -4.6 L 8.4 4.5 L 12.5 18.8 L 0 10.4 L -12.5 18.8 L -8.4 4.5 L -20 -4.6 L -5 -4.6 Z",
+    [
+      // These awkward numbers keep the proportions nice while just filling out a 40x40 square.
+      { type: "M", loc: [0, -18.8] },
+      { type: "L", loc: [5, -4.6] },
+      { type: "L", loc: [20, -4.6] },
+      { type: "L", loc: [8.4, 4.5] },
+      { type: "L", loc: [12.5, 18.8] },
+      { type: "L", loc: [0, 10.4] },
+      { type: "L", loc: [-12.5, 18.8] },
+      { type: "L", loc: [-8.4, 4.5] },
+      { type: "L", loc: [-20, -4.6] },
+      { type: "L", loc: [-5, -4.6] },
+      { type: "Z" },
+    ],
     { classes: { fill: tincture } }
   );
 }
@@ -2004,26 +2009,26 @@ function fret({ tincture }: SimpleCharge) {
       classes: { stroke: tincture },
     }),
     svg.path(
-      `
-      M ${-thirdWidth} 0
-      L 0 ${-thirdWidth}
-      L ${thirdWidth} 0
-      L 0 ${thirdWidth}
-      Z
-      `,
+      [
+        { type: "M", loc: [-thirdWidth, 0] },
+        { type: "L", loc: [0, -thirdWidth] },
+        { type: "L", loc: [thirdWidth, 0] },
+        { type: "L", loc: [0, thirdWidth] },
+        { type: "Z" },
+      ],
       {
         strokeWidth: strokeWidth + outlineWidth * 2,
         classes: { stroke: "sable" },
       }
     ),
     svg.path(
-      `
-      M ${-thirdWidth} 0
-      L 0 ${-thirdWidth}
-      L ${thirdWidth} 0
-      L 0 ${thirdWidth}
-      Z
-      `,
+      [
+        { type: "M", loc: [-thirdWidth, 0] },
+        { type: "L", loc: [0, -thirdWidth] },
+        { type: "L", loc: [thirdWidth, 0] },
+        { type: "L", loc: [0, thirdWidth] },
+        { type: "Z" },
+      ],
       { strokeWidth: strokeWidth, classes: { stroke: tincture } }
     ),
     svg.line(
@@ -2085,7 +2090,10 @@ async function escutcheon({ content }: EscutcheonCharge) {
     ...(await complexContent(content)),
     svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } })
   );
-  escutcheon.setAttribute("clip-path", `path("${ESCUTCHEON_PATH}")`);
+  escutcheon.setAttribute(
+    "clip-path",
+    `path("${PathCommand.toDString(ESCUTCHEON_PATH)}")`
+  );
   Transforms.apply(escutcheon, {
     scale: 0.35,
   });
@@ -2689,19 +2697,19 @@ const CANTON_SCALE_FACTOR = 1 / 3;
 // Note that this clips the bottom of the area. Combined with proportional scaling, this permits us
 // to render _most_ things pretty sanely, at the risk of them being slightly off-center or clipped
 // since they expect to be rendered in a taller-than-wide rectangle by default.
-const CANTON_PATH = path`
-  M -${W_2} ${-H_2}
-  L  ${W_2} ${-H_2}
-  L  ${W_2} ${-H_2 + W}
-  L -${W_2} ${-H_2 + W}
-  Z
-`;
+const CANTON_PATH: PathCommand.Any[] = [
+  { type: "M", loc: [-W_2, -H_2] },
+  { type: "L", loc: [W_2, -H_2] },
+  { type: "L", loc: [W_2, -H_2 + W] },
+  { type: "L", loc: [-W_2, -H_2 + W] },
+  { type: "Z" },
+];
 
 async function simpleContent(element: SimpleContent): Promise<SVGElement[]> {
   if ("canton" in element) {
     const g = svg.g();
     Transforms.apply(g, { origin: [-W_2, -H_2], scale: CANTON_SCALE_FACTOR });
-    g.style.clipPath = `path("${CANTON_PATH}")`;
+    g.style.clipPath = `path("${PathCommand.toDString(CANTON_PATH)}")`;
     g.appendChild(svg.path(CANTON_PATH, { classes: { fill: element.canton } }));
     g.classList.add(`fill-${element.canton}`);
     for (const c of element.content ?? []) {
@@ -2850,13 +2858,13 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
     for (const [i_, { translate, height }] of Object.entries(QUARTERINGS)) {
       const i = +i_ as any as Quarter;
       Transforms.apply(quartered[i], { translate, scale: 0.5 });
-      quartered[i].style.clipPath = path`path("
-        M -${W_2} -${H_2}
-        l  ${W}    0
-        l  0       ${height}
-        l -${W}    0
-        Z
-      ")`;
+      quartered[i].style.clipPath = `path("${PathCommand.toDString([
+        { type: "M", loc: [-W_2, -H_2] },
+        { type: "l", loc: [W, 0] },
+        { type: "l", loc: [0, height] },
+        { type: "l", loc: [-W, 0] },
+        { type: "Z" },
+      ])}")`;
     }
 
     for (const quartering of content.quarters) {
@@ -2995,7 +3003,10 @@ async function inescutcheon(
     ...(await complexContent(content)),
     svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } })
   );
-  escutcheon.setAttribute("clip-path", `path("${ESCUTCHEON_PATH}")`);
+  escutcheon.setAttribute(
+    "clip-path",
+    `path("${PathCommand.toDString(ESCUTCHEON_PATH)}")`
+  );
   Transforms.apply(escutcheon, {
     scale: 0.25,
     translate: Location_.toOffset(location),
@@ -3043,7 +3054,9 @@ async function parseAndRenderBlazon() {
 
     // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
     const container = svg.g();
-    container.style.clipPath = `path("${ESCUTCHEON_PATH}")`;
+    container.style.clipPath = `path("${PathCommand.toDString(
+      ESCUTCHEON_PATH
+    )}")`;
     rendered.appendChild(container);
     // Make sure there's always a default background.
     container.appendChild(field("argent"));
