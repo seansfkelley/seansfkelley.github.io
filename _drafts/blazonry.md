@@ -28,7 +28,7 @@ Try these:
 - <a href="#" data-example>Per pale Sable and Argent, a fess embattled counterchanged.</a> — arms of [Muri bei Bern, Switzerland](https://en.wikipedia.org/wiki/Muri_bei_Bern)
 - <a href="#" data-example>Paly of six Or and Sable, a bend counterchanged.</a> — arms of the [1st Baron Baltimore](https://en.wikipedia.org/wiki/George_Calvert,_1st_Baron_Baltimore), yes, [that Baltimore](https://en.wikipedia.org/wiki/Flag_of_Baltimore)
 - <a href="#" data-example>Azure, a bend Argent cotised Or between six lions rampant Or.</a> — [Bohun family arms](https://en.wikipedia.org/wiki/Bohun_family), to which Henry IV and Henry V are related
-- <a href="#" data-example="Quarterly: (1) Sable, a lion rampant Or, armed and langued Gules; (2) per fess indented Gules and Argent; (3) Argent, a lion rampant Azure, armed Or and langued Gules; (4) Or, three lions passant Sable, armed and langued Gules in pale. An inescutcheon fusilly in bends Argent and Azure.">Quarterly: (1) sable, a lion rampant Or, armed and langued gules...</a>[^1] — [arms of Bavaria](https://en.wikipedia.org/wiki/Coat_of_arms_of_Bavaria), which you may have seen on [Weihenstephan beers](https://www.weihenstephaner.com/our-brewery)
+- <a href="#" data-example="Quarterly: (1) Sable, a lion rampant Or, armed and langued Gules; (2) per fess indented Gules and Argent; (3) Argent, a lion rampant Azure, armed Or and langued Gules; (4) Or, three lions passant Sable, armed and langued Gules in pale. An inescutcheon fusilly in bends Argent and Azure.">Quarterly: (1) Sable, a lion rampant Or, armed and langued Gules...</a>[^1] — [arms of Bavaria](https://en.wikipedia.org/wiki/Coat_of_arms_of_Bavaria), which you may have seen on [Weihenstephan beers](https://www.weihenstephaner.com/our-brewery)
 - <a href="#" data-example="Quarterly 1st and 4th Sable a lion rampant Argent on a canton Argent a cross Gules; 2nd and 3rd quarterly 1st and 4th Argent 2nd and 3rd Gules a fret Or overall on a bend Sable three escallops bendwise Argent. An inescutcheon in chief Argent a cross Gules an escutcheon Azure three fleurs-de-lis Or.">Quarterly 1st and 4th Sable a lion rampant on a canton Argent a cross Gules...</a>[^2] — [arms of Winston Churchill](https://winstonchurchill.org/resources/reference/the-armorial-bearings-of-sir-winston-churchill/)
 
 Mix and match, or hit the random button! Just note that the very long tail of charges and unusual phrasing isn't always supported. Check [the formal grammar](/assets/blazonry/grammar.txt) for details.
@@ -42,7 +42,7 @@ content="This page is interactive, and only works with JavaScript enabled!"
 
 <div class="center hidden" id="interactive">
   <form id="form">
-    <input type="text" id="blazon-input" value="fusilly in bends argent and azure">
+    <textarea id="blazon-input" rows="3" placeholder="Enter blazon..." spellcheck="false">fusilly in bends argent and azure</textarea>
     <div>
       <button id="random-blazon" type="button">
       Generate Hideous Random Blazon

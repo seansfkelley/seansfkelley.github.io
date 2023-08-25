@@ -1,9 +1,10 @@
 /*
 TODO
 -------------------------------------------------------------------------------
+- pick arms to show by default
+- then show to Julia
 - Placement -- at least in the case of chevron and saltire, they are rotated to match
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
-- textbox with word wrap so you can read it better
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
 - still see artifacts from parting when there is a thing on top
   - Party per pale embattled-counter-embattled Gules and Azure a cross wavy Argent.
@@ -12,6 +13,7 @@ TODO
     element knows how to clip itself
   - alternately, what if this just switched to masks instead of clip paths? would it just work?
 - allow multiple charges in party-per
+- remove `path`
 */
 
 /*
@@ -3118,6 +3120,12 @@ const ambiguousNext: HTMLButtonElement =
   document.querySelector("#ambiguous-next")!;
 const ambiguousCount: HTMLSpanElement =
   document.querySelector("#ambiguous-count")!;
+
+input.addEventListener("keydown", async (e) => {
+  if (e.code === "Enter" && (e.metaKey || e.shiftKey || e.ctrlKey)) {
+    await parseAndRenderBlazon();
+  }
+});
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
