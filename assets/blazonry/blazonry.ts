@@ -15,7 +15,13 @@ TODO
   - instead of rendering twice and modifying the tincture high-level, pass the mask/clip path (it
     will probably have to all become masks) down, along with a pair of colors, so any counterchanged
     element knows how to clip itself
+  - alternately, what if this just switched to masks instead of clip paths? would it just work?
+- does not work
+  - paly gules and argent on a bend counterchanged three rondels sable
 - allow multiple charges in party-per
+- should cantons be counterchangeable?
+  - then things on them are recurseively counterchanged in reverse?
+    - this should already be true of counterchanged ordinaries in `on`
 */
 
 /*
@@ -2377,18 +2383,21 @@ const TREATMENTS: Record<Treatment, TreatmentPathGenerator> = {
 // ----------------------------------------------------------------------------
 
 function barry(count: number = 6) {
-  const step = H / count;
-  let d = "";
-  for (let y = 1; y < count; y += 2) {
-    d += path`
-      M -${W_2} ${-H_2 + y * step}
-      L  ${W_2} ${-H_2 + y * step}
-      L  ${W_2} ${-H_2 + y * step + step}
-      L -${W_2} ${-H_2 + y * step + step}
-      Z
-    `;
-  }
-  return d;
+  return svg.pattern(
+    {
+      viewBox: [
+        [0, 0],
+        [1, 4],
+      ],
+      x: -W_2,
+      y: -H_2,
+      width: W,
+      height: H / (count / 2),
+      // Explicitly require non-uniform scaling; it's the easiest way to implement barry.
+      preserveAspectRatio: "none",
+    },
+    svg.line([0, 3], [1, 3], { strokeWidth: 2, stroke: "white" })
+  );
 }
 
 function barryBendy(count: number = 8) {
@@ -2411,19 +2420,22 @@ function barryBendy(count: number = 8) {
 }
 
 function bendy(count: number = 8) {
-  const step = (W / count) * 2;
-  let d = "";
-  // This is a bit wasteful, as it generates a clipping path considerably larger than the w * h area...
-  for (let i = 1; i < count * 2; i += 2) {
-    d += path`
-      M  ${W_2 - i * step}       ${-H_2}
-      L  ${W_2 - (i + 1) * step} ${-H_2}
-      L  ${W_2}                  ${-H_2 + (i + 1) * step}
-      L  ${W_2}                  ${-H_2 + i * step}
-      Z
-    `;
-  }
-  return d;
+  return svg.pattern(
+    {
+      viewBox: [
+        [0, 0],
+        [4, 1],
+      ],
+      x: -Math.hypot(W, W),
+      // y: -H_2,
+      width: Math.hypot(W, W) / (count / 2),
+      height: H,
+      // Explicitly require non-uniform scaling; it's the easiest way to implement paly.
+      preserveAspectRatio: "none",
+      patternTransform: { rotate: -Math.PI / 4 },
+    },
+    svg.line([3, 0], [3, 1], { strokeWidth: 2, stroke: "white" })
+  );
 }
 
 function checky(count: number = 8) {
@@ -2507,7 +2519,6 @@ function lozengy(count: number = 8) {
 }
 
 function paly(count: number = 6) {
-  const width = W / (count / 2);
   return svg.pattern(
     {
       viewBox: [
@@ -2516,7 +2527,7 @@ function paly(count: number = 6) {
       ],
       x: -W_2,
       y: -H_2,
-      width,
+      width: W / (count / 2),
       height: H,
       // Explicitly require non-uniform scaling; it's the easiest way to implement paly.
       preserveAspectRatio: "none",
