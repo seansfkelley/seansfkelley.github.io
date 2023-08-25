@@ -7,7 +7,6 @@ TODO
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - textbox with word wrap so you can read it better
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
-- lion SVGs can be aggressively deduplicated -- 3 heads x 2 bodies
 - still see artifacts from parting when there is a thing on top
   - Party per pale embattled-counter-embattled Gules and Azure a cross wavy Argent.
   - instead of rendering twice and modifying the tincture high-level, pass the mask/clip path (it
@@ -1303,6 +1302,9 @@ async function fleurDeLys({ tincture }) {
     return fleurDeLys;
 }
 // The lion SVGs are pulled from https://en.wikipedia.org/wiki/Attitude_(heraldry).
+// In the future, they should probably be aggressively deduplicated -- whoever made the heads and
+// bodies did a good job reusing the same elements across the different images, but at the moment
+// we just hardcode each one individually instead of combining N heads * M bodies.
 async function lion({ tincture, armed, langued, attitude }) {
     const lion = (await fetchComplexSvg("lion", attitude)).cloneNode(true);
     lion.classList.add(tincture);
