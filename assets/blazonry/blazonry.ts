@@ -2466,25 +2466,45 @@ function checky(count: number = 6) {
 }
 
 function chevronny(count: number = 6) {
-  const strokeVerticalHeight = H / count;
+  function roundUpToEven(n: number) {
+    return n % 2 === 1 ? n + 1 : n;
+  }
+
+  // -2 because the nature of chevrons means that even if you have exactly `count` bands along the
+  // center line, you'll see more off to the sides. -2 empirally splits the difference, where the
+  // center line has less but the sides have more and it looks approximately like what you wanted.
+  const strokeVerticalHeight = H / (count - 2);
   const strokeWidth = Math.sqrt(Math.pow(strokeVerticalHeight, 2) / 2);
+  const chevronCount = roundUpToEven(Math.ceil(W_2 / strokeVerticalHeight) + 1);
+
+  const chevrons = [];
+  for (let i = -chevronCount / 2; i <= chevronCount / 2; ++i) {
+    chevrons.push(
+      svg.path(
+        [
+          {
+            type: "M",
+            loc: [0, strokeVerticalHeight / 2 + i * 2 * strokeVerticalHeight],
+          },
+          { type: "l", loc: [W_2, W_2] },
+          { type: "l", loc: [W_2, -W_2] },
+        ],
+        { strokeWidth, stroke: "white", strokeLinecap: "square" }
+      )
+    );
+  }
+
   return svg.pattern(
     {
       viewBox: [
         [0, 0],
-        [W, W_2 + strokeVerticalHeight],
+        [W, chevronCount * strokeVerticalHeight],
       ],
       width: W,
-      height: W_2 + strokeVerticalHeight,
+      height: chevronCount * strokeVerticalHeight,
+      y: -strokeVerticalHeight,
     },
-    svg.path(
-      [
-        { type: "M", loc: [0, strokeVerticalHeight / 2] },
-        { type: "L", loc: [W_2, W_2 + strokeVerticalHeight / 2] },
-        { type: "L", loc: [W, strokeVerticalHeight / 2] },
-      ],
-      { strokeWidth, stroke: "white", strokeLinecap: "square" }
-    )
+    ...chevrons
   );
 }
 
