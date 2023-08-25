@@ -1,7 +1,6 @@
 /*
 TODO
 -------------------------------------------------------------------------------
-- party per treatment: quarterly
 - Placement -- at least in the case of chevron and saltire, they are rotated to match
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - textbox with word wrap so you can read it better
