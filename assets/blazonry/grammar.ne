@@ -145,17 +145,18 @@ Singular ->
   | "an" {% nop %}
 
 Plural ->
-    "two"    {% literal(2) %}
-  | "three"  {% literal(3) %}
-  | "four"   {% literal(4) %}
-  | "five"   {% literal(5) %}
-  | "six"    {% literal(6) %}
-  | "seven"  {% literal(7) %}
-  | "eight"  {% literal(8) %}
-  | "nine"   {% literal(9) %}
-  | "ten"    {% literal(10) %}
-  | "eleven" {% literal(11) %}
-  | "twelve" {% literal(12) %}
+    "two"      {% literal(2) %}
+  | "three"    {% literal(3) %}
+  | "four"     {% literal(4) %}
+  | "five"     {% literal(5) %}
+  | "six"      {% literal(6) %}
+  | "seven"    {% literal(7) %}
+  | "eight"    {% literal(8) %}
+  | "nine"     {% literal(9) %}
+  | "ten"      {% literal(10) %}
+  | "eleven"   {% literal(11) %}
+  | "twelve"   {% literal(12) %}
+  | "thirteen" {% literal(13) %}
 
 Direction ->
     "pale"          {% id %}

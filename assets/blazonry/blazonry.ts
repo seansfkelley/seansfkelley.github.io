@@ -1,8 +1,6 @@
 /*
 TODO
 -------------------------------------------------------------------------------
-- pick arms to show by default
-- then show to Julia
 - Placement -- at least in the case of chevron and saltire, they are rotated to match
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?

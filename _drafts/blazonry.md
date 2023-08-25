@@ -42,7 +42,7 @@ content="This page is interactive, and only works with JavaScript enabled!"
 
 <div class="center hidden" id="interactive">
   <form id="form">
-    <textarea id="blazon-input" rows="3" placeholder="Enter blazon..." spellcheck="false">fusilly in bends argent and azure</textarea>
+    <textarea id="blazon-input" rows="3" placeholder="Enter blazon..." spellcheck="false">Paly of thirteen Argent and Gules, a chief Azure.</textarea>
     <div>
       <button id="random-blazon" type="button">
       Generate Hideous Random Blazon
