@@ -3,9 +3,6 @@ TODO
 -------------------------------------------------------------------------------
 - party per treatment: quarterly
 - Placement -- at least in the case of chevron and saltire, they are rotated to match
-- things I want to be able to render
-  - bavarian arms
-    - [variation] in [placement]
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - textbox with word wrap so you can read it better
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
@@ -137,6 +134,7 @@ type VariationName =
   | "checky"
   | "chevronny"
   | "fusilly"
+  | "fusilly in bends"
   | "lozengy"
   | "paly";
 
@@ -767,38 +765,34 @@ interface Transforms {
   skewX?: Radians;
 }
 
-function toTransformString({
-  translate,
-  scale,
-  rotate,
-  skewX,
-}: Transforms): string {
-  return [
-    translate != null
-      ? `translate(${translate[0]}, ${translate[1]})`
-      : undefined,
-    typeof scale === "number" && scale !== 1
-      ? `scale(${scale})`
-      : Array.isArray(scale)
-      ? `scale(${scale[0]}, ${scale[1]})`
-      : undefined,
-    rotate != null ? `rotate(${Radians.toDeg(rotate)})` : undefined,
-    // TODO: Unsure if this is the correct location for skew to make it less surprising.
-    skewX != null ? `skewX(${Radians.toDeg(skewX)})` : undefined,
-  ]
-    .filter(Boolean)
-    .join(" ");
-}
-
-function applyTransforms(
-  element: SVGElement,
-  { origin, ...transforms }: Transforms & { origin?: Coordinate } = {}
-): void {
-  if (origin != null) {
-    element.setAttribute("transform-origin", `${origin[0]} ${origin[1]}`);
-  }
-  element.setAttribute("transform", toTransformString(transforms));
-}
+const Transforms = {
+  toString: ({ translate, scale, rotate, skewX }: Transforms): string => {
+    return [
+      translate != null
+        ? `translate(${translate[0]}, ${translate[1]})`
+        : undefined,
+      typeof scale === "number" && scale !== 1
+        ? `scale(${scale})`
+        : Array.isArray(scale)
+        ? `scale(${scale[0]}, ${scale[1]})`
+        : undefined,
+      rotate != null ? `rotate(${Radians.toDeg(rotate)})` : undefined,
+      // TODO: Unsure if this is the correct location for skew to make it less surprising.
+      skewX != null ? `skewX(${Radians.toDeg(skewX)})` : undefined,
+    ]
+      .filter(Boolean)
+      .join(" ");
+  },
+  apply: (
+    element: SVGElement,
+    { origin, ...transforms }: Transforms & { origin?: Coordinate }
+  ): void => {
+    if (origin != null) {
+      element.setAttribute("transform-origin", `${origin[0]} ${origin[1]}`);
+    }
+    element.setAttribute("transform", Transforms.toString(transforms));
+  },
+};
 
 function roundToPrecision(n: number, precision: number = 0): number {
   assert(precision >= 0, "precision must be non-negative"); // It's well-defined, but not useful to me.
@@ -947,7 +941,7 @@ const svg = {
     if (patternTransform != null) {
       pattern.setAttribute(
         "patternTransform",
-        toTransformString(patternTransform)
+        Transforms.toString(patternTransform)
       );
     }
 
@@ -1077,7 +1071,7 @@ function bend({ tincture, cotised, treatment }: Ordinary) {
     );
   }
 
-  applyTransforms(bend, {
+  Transforms.apply(bend, {
     translate: [-W_2, -H_2],
     rotate: Radians.EIGHTH_TURN,
   });
@@ -1145,7 +1139,7 @@ bend.party = (treatment: Treatment | undefined): PathCommand.Any[] => {
 
 function bendSinister(ordinary: Ordinary) {
   const g = svg.g(bend(ordinary));
-  applyTransforms(g, {
+  Transforms.apply(g, {
     scale: [-1, 1],
   });
   return g;
@@ -1272,7 +1266,7 @@ function chevron({ tincture, cotised, treatment }: Ordinary) {
         ],
         { classes: { fill: tincture } }
       );
-      applyTransforms(p, {
+      Transforms.apply(p, {
         origin: topStart.loc,
         scale: [sign, 1],
         rotate: Radians.EIGHTH_TURN,
@@ -1458,7 +1452,7 @@ function cross({ tincture, cotised, treatment }: Ordinary) {
       })
     );
 
-    applyTransforms(g, {
+    Transforms.apply(g, {
       // I _think_ this is the correct offset: the vertical offset is accounted for by being
       // included in the vertical length, and even though the first treatment can vary in length
       // depending on the type, the end-alignment means that it'll grow downwards, out of view.
@@ -1677,7 +1671,7 @@ function pale({ tincture, cotised, treatment }: Ordinary) {
       ),
       { classes: { fill: tincture } }
     );
-    applyTransforms(p, {
+    Transforms.apply(p, {
       translate: [0, -H_2],
       rotate: Radians.QUARTER_TURN,
     });
@@ -1795,13 +1789,13 @@ function saltire({ tincture, cotised, treatment }: Ordinary) {
       classes: { fill: tincture },
     });
 
-    applyTransforms(saltirePath, {
+    Transforms.apply(saltirePath, {
       translate: [
         -(length + SALTIRE_WIDTH / 2),
         -H_2 - SALTIRE_WIDTH / 2 + W_2,
       ],
     });
-    applyTransforms(g, {
+    Transforms.apply(g, {
       rotate: Radians.NEG_EIGHTH_TURN,
       origin: [0, -H_2 + W_2],
     });
@@ -2090,7 +2084,7 @@ async function escutcheon({ content }: EscutcheonCharge) {
     svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } })
   );
   escutcheon.setAttribute("clip-path", `path("${ESCUTCHEON_PATH}")`);
-  applyTransforms(escutcheon, {
+  Transforms.apply(escutcheon, {
     scale: 0.35,
   });
   // Charges are scaled according to count and placement, so wrap in an extra layer in order to
@@ -2579,6 +2573,37 @@ function fusilly(count: number = 8) {
   );
 }
 
+// There is no visual reference I could find for this besides the arms of Bavaria, so the precise
+// positioning of the variations relative to the corners and edges matches the appearance there.
+function fusillyInBends(count: number = 8) {
+  const width = W / count;
+  return svg.pattern(
+    {
+      viewBox: [
+        [0, 0],
+        [2, 8],
+      ],
+      x: -W_2,
+      y: -H_2,
+      width,
+      height: width * 4,
+      patternTransform: {
+        rotate: Radians.NEG_EIGHTH_TURN,
+        translate: [-width, -width - (H_2 - W_2)],
+      },
+    },
+    svg.polygon({
+      points: [
+        [1, 0],
+        [2, 4],
+        [1, 8],
+        [0, 4],
+      ],
+      fill: "white",
+    })
+  );
+}
+
 function lozengy(count: number = 8) {
   const width = W / count;
   return svg.pattern(
@@ -2630,6 +2655,7 @@ const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
   checky,
   chevronny,
   fusilly,
+  "fusilly in bends": fusillyInBends,
   lozengy,
   paly,
 };
@@ -2672,7 +2698,7 @@ const CANTON_PATH = path`
 async function simpleContent(element: SimpleContent): Promise<SVGElement[]> {
   if ("canton" in element) {
     const g = svg.g();
-    applyTransforms(g, { origin: [-W_2, -H_2], scale: CANTON_SCALE_FACTOR });
+    Transforms.apply(g, { origin: [-W_2, -H_2], scale: CANTON_SCALE_FACTOR });
     g.style.clipPath = `path("${CANTON_PATH}")`;
     g.appendChild(svg.path(CANTON_PATH, { classes: { fill: element.canton } }));
     g.classList.add(`fill-${element.canton}`);
@@ -2689,7 +2715,7 @@ async function simpleContent(element: SimpleContent): Promise<SVGElement[]> {
     const locator = CHARGE_LOCATORS[element.placement ?? "none"];
     for (const [translate, scale] of locator.forCount(element.count)) {
       const rendered = await renderCharge(element);
-      applyTransforms(rendered, {
+      Transforms.apply(rendered, {
         translate,
         scale,
         rotate: Posture.toRadians(element.posture),
@@ -2798,7 +2824,7 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
 
     for (const [i_, { translate, height }] of Object.entries(QUARTERINGS)) {
       const i = +i_ as any as Quarter;
-      applyTransforms(quartered[i], { translate, scale: 0.5 });
+      Transforms.apply(quartered[i], { translate, scale: 0.5 });
       quartered[i].style.clipPath = path`path("
         M -${W_2} -${H_2}
         l  ${W}    0
@@ -2905,7 +2931,7 @@ async function on({ on, surround, charge }: On): Promise<SVGElement[]> {
     const locator = ORDINARIES[on.ordinary].on;
     for (const [translate, scale] of locator.forCount(charge.count)) {
       const c = await renderCharge(charge);
-      applyTransforms(c, {
+      Transforms.apply(c, {
         translate,
         scale,
         rotate: Posture.toRadians(charge.posture),
@@ -2923,7 +2949,7 @@ async function on({ on, surround, charge }: On): Promise<SVGElement[]> {
     const locator = ORDINARIES[on.ordinary].between;
     for (const [translate, scale] of locator.forCount(surround.count)) {
       const c = await renderCharge(surround);
-      applyTransforms(c, {
+      Transforms.apply(c, {
         translate,
         scale,
         rotate: Posture.toRadians(surround.posture),
@@ -2945,7 +2971,7 @@ async function inescutcheon(
     svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } })
   );
   escutcheon.setAttribute("clip-path", `path("${ESCUTCHEON_PATH}")`);
-  applyTransforms(escutcheon, {
+  Transforms.apply(escutcheon, {
     scale: 0.25,
     translate: Location_.toOffset(location),
   });
