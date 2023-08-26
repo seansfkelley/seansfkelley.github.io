@@ -6,7 +6,6 @@ TODO
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
 - allow multiple charges in party-per
-- DRY up SVG element rendering
 */
 /*
 FUTURE WORK and KNOWN ISSUES
@@ -480,57 +479,59 @@ function roundToPrecision(n, precision = 0) {
     const magnitude = Math.pow(10, precision);
     return Math.round(n * magnitude) / magnitude;
 }
+function applySvgAttributes(element, attributes) {
+    for (const [attribute, value] of Object.entries(attributes)) {
+        if (value != null) {
+            element.setAttribute(attribute, value.toString());
+        }
+    }
+}
+function applyClasses(element, classes) {
+    if (classes?.fill != null) {
+        element.classList.add(`fill-${classes.fill}`);
+    }
+    if (classes?.stroke != null) {
+        element.classList.add(`stroke-${classes.stroke}`);
+    }
+}
 const svg = {
     path: (d, { stroke, strokeWidth = 1, strokeLinecap = "butt", fill, classes, } = {}) => {
         const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        path.setAttribute("d", PathCommand.toDString(d));
-        path.setAttribute("stroke-width", strokeWidth.toString());
-        path.setAttribute("stroke-linecap", strokeLinecap);
-        if (stroke != null) {
-            path.setAttribute("stroke", stroke);
-        }
-        if (fill != null) {
-            path.setAttribute("fill", fill);
-        }
-        if (classes?.fill != null) {
-            path.classList.add(`fill-${classes.fill}`);
-        }
-        if (classes?.stroke != null) {
-            path.classList.add(`stroke-${classes.stroke}`);
-        }
+        applySvgAttributes(path, {
+            d: PathCommand.toDString(d),
+            "stroke-width": strokeWidth,
+            "stroke-linecap": strokeLinecap,
+            stroke,
+            fill,
+        });
+        applyClasses(path, classes);
         return path;
     },
     line: ([x1, y1], [x2, y2], { stroke, strokeWidth = 1, strokeLinecap = "butt", classes, } = {}) => {
         const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-        line.setAttribute("x1", x1.toString());
-        line.setAttribute("y1", y1.toString());
-        line.setAttribute("x2", x2.toString());
-        line.setAttribute("y2", y2.toString());
-        line.setAttribute("stroke-width", strokeWidth.toString());
-        line.setAttribute("stroke-linecap", strokeLinecap);
-        if (stroke != null) {
-            line.setAttribute("stroke", stroke);
-        }
-        if (classes?.stroke != null) {
-            line.classList.add(`stroke-${classes.stroke}`);
-        }
+        applySvgAttributes(line, {
+            x1,
+            y1,
+            x2,
+            y2,
+            "stroke-width": strokeWidth,
+            "stroke-linecap": strokeLinecap,
+            stroke,
+        });
+        applyClasses(line, classes);
         return line;
     },
     rect: ([x1, y1], [x2, y2], { fill, stroke, classes, } = {}) => {
         const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-        rect.setAttribute("x", `${x1}`);
-        rect.setAttribute("y", `${y1}`);
-        rect.setAttribute("width", `${x2 - x1}`);
-        rect.setAttribute("height", `${y2 - y1}`);
-        if (fill != null) {
-            rect.setAttribute("fill", fill);
-        }
-        if (stroke != null) {
-            rect.setAttribute("stroke", stroke);
-        }
-        if (classes?.fill != null) {
-            rect.classList.add(`fill-${classes.fill}`);
-        }
+        applySvgAttributes(rect, {
+            x: x1,
+            y: y1,
+            width: x2 - x1,
+            height: y2 - y1,
+            fill,
+            stroke,
+        });
+        applyClasses(rect, classes);
         return rect;
     },
     g: (...children) => {
@@ -540,34 +541,32 @@ const svg = {
     },
     pattern: ({ viewBox, x = 0, y = 0, width, height, preserveAspectRatio, patternTransform, }, ...children) => {
         const pattern = document.createElementNS("http://www.w3.org/2000/svg", "pattern");
-        // Make sure that the coordinate system is the same as the referent, rather than some kind of
-        // scaling. This is what we always want in this project.
-        pattern.setAttribute("patternUnits", "userSpaceOnUse");
-        pattern.setAttribute("viewBox", `${viewBox[0][0]} ${viewBox[0][1]} ${viewBox[1][0]} ${viewBox[1][1]}`);
-        // W/H offsets so that we start in the top-left corner.
-        pattern.setAttribute("x", x.toString());
-        pattern.setAttribute("y", y.toString());
-        // Tiling size.
-        pattern.setAttribute("width", width.toString());
-        pattern.setAttribute("height", height.toString());
-        if (preserveAspectRatio != null) {
-            pattern.setAttribute("preserveAspectRatio", preserveAspectRatio);
-        }
-        if (patternTransform != null) {
-            pattern.setAttribute("patternTransform", Transforms.toString(patternTransform));
-        }
+        applySvgAttributes(pattern, {
+            // Make sure that the coordinate system is the same as the referent, rather than some kind of
+            // scaling. This is what we always want in this project.
+            patternUnits: "userSpaceOnUse",
+            viewBox: `${viewBox[0][0]} ${viewBox[0][1]} ${viewBox[1][0]} ${viewBox[1][1]}`,
+            // W/H offsets so that we start in the top-left corner.
+            x,
+            y,
+            // Tiling size.
+            width,
+            height,
+            preserveAspectRatio,
+            patternTransform: patternTransform == null
+                ? undefined
+                : Transforms.toString(patternTransform),
+        });
         pattern.append(...children);
         return pattern;
     },
     polygon: ({ points, fill, stroke, }) => {
         const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-        polygon.setAttribute("points", points.map(([x, y]) => `${x},${y}`).join(" "));
-        if (fill != null) {
-            polygon.setAttribute("fill", fill);
-        }
-        if (stroke != null) {
-            polygon.setAttribute("stroke", stroke);
-        }
+        applySvgAttributes(polygon, {
+            points: points.map(([x, y]) => `${x},${y}`).join(" "),
+            fill,
+            stroke,
+        });
         return polygon;
     },
     mask: ({ id }, ...children) => {
@@ -583,14 +582,15 @@ const complexSvgCache = {};
 async function fetchComplexSvg(kind, variant) {
     const key = variant ? `${kind}-${variant}` : kind;
     if (!(key in complexSvgCache)) {
-        const response = await fetch(`/assets/blazonry/svg/${key}.svg`);
-        const root = new DOMParser().parseFromString(await response.text(), "image/svg+xml").documentElement;
-        const wrapper = svg.g();
-        wrapper.classList.add(kind);
-        for (const c of root.children) {
-            wrapper.appendChild(c);
-        }
-        complexSvgCache[key] = wrapper;
+        complexSvgCache[key] = fetch(`/assets/blazonry/svg/${key}.svg`).then(async (response) => {
+            const root = new DOMParser().parseFromString(await response.text(), "image/svg+xml").documentElement;
+            const wrapper = svg.g();
+            wrapper.classList.add(kind);
+            for (const c of root.children) {
+                wrapper.appendChild(c);
+            }
+            return wrapper;
+        });
     }
     return complexSvgCache[key];
 }
