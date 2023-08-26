@@ -3159,6 +3159,10 @@ const TINCTURES = [
   "vert",
 ];
 const TINCTURE_REGEX = new RegExp(`\\b(${TINCTURES.join("|")})\\b`, "g");
+const TINCTURE_PAIR_REGEX = new RegExp(
+  `\\b(${TINCTURES.join("|")}) and (${TINCTURES.join("|")})\\b`,
+  "g"
+);
 const TINCTURE_ONLY_SKIP_RATIO = 0.8;
 const INESCUTCHEON_SKIP_RATIO = 0.6;
 function generateRandomBlazon() {
@@ -3177,6 +3181,12 @@ function generateRandomBlazon() {
           /\bcounterchanged\b/g,
           () => TINCTURES[Math.floor(Math.random() * TINCTURES.length)]
         )
+        .replaceAll(TINCTURE_PAIR_REGEX, (_, first, second) => {
+          while (first === second) {
+            second = TINCTURES[Math.floor(Math.random() * TINCTURES.length)];
+          }
+          return `${first} and ${second}`;
+        })
         .replaceAll(
           TINCTURE_REGEX,
           // Gross and duplicative, but the entire grammar is written in lowercase and I don't want to
