@@ -5,13 +5,8 @@ TODO
 - Placement -- at least in the case of chevron and saltire, they are rotated to match
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
-- still see artifacts from parting when there is a thing on top
-  - Party per pale embattled-counter-embattled Gules and Azure a cross wavy Argent.
-  - instead of rendering twice and modifying the tincture high-level, pass the mask/clip path (it
-    will probably have to all become masks) down, along with a pair of colors, so any counterchanged
-    element knows how to clip itself
-  - alternately, what if this just switched to masks instead of clip paths? would it just work?
 - allow multiple charges in party-per
+- DRY up SVG element rendering
 */
 /*
 FUTURE WORK and KNOWN ISSUES
@@ -486,13 +481,16 @@ function roundToPrecision(n, precision = 0) {
     return Math.round(n * magnitude) / magnitude;
 }
 const svg = {
-    path: (d, { stroke, strokeWidth = 1, strokeLinecap = "butt", classes, } = {}) => {
+    path: (d, { stroke, strokeWidth = 1, strokeLinecap = "butt", fill, classes, } = {}) => {
         const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
         path.setAttribute("d", PathCommand.toDString(d));
         path.setAttribute("stroke-width", strokeWidth.toString());
         path.setAttribute("stroke-linecap", strokeLinecap);
         if (stroke != null) {
             path.setAttribute("stroke", stroke);
+        }
+        if (fill != null) {
+            path.setAttribute("fill", fill);
         }
         if (classes?.fill != null) {
             path.classList.add(`fill-${classes.fill}`);
@@ -1902,14 +1900,13 @@ async function complexContent(content) {
         const { party } = ORDINARIES[content.party];
         // This should be prevented in grammar, so this should never fire.
         assert(party !== UNSUPPORTED, `cannot use 'party' with this ordinary`);
-        const g1 = svg.g();
-        const g2 = svg.g();
-        // TODO: This should probably be a mask instead.
-        g1.style.clipPath = `path("${PathCommand.toDString(party(content.treatment))}")`;
-        g1.appendChild(field(content.first));
-        g2.appendChild(field(content.second));
-        // Add g2 first so that it's underneath g1, which has the only clip path.
-        const children = [g2, g1];
+        const id = uniqueId("parted-mask-");
+        const mask = svg.mask({ id }, svg.path(party(content.treatment), { fill: "white" }));
+        const g1 = svg.g(field(content.first));
+        g1.setAttribute("mask", `url(#${id})`);
+        const g2 = svg.g(field(content.second));
+        // Add g2 first so that it's underneath g1, which is the masked one.
+        const children = [mask, g2, g1];
         if (content.content != null) {
             const counterchangedFirst = overwriteCounterchangedTincture(content.content, content.first);
             // This branch is not just a perf/DOM optimization, but prevents visual artifacts. If we
@@ -1983,7 +1980,7 @@ async function complexContent(content) {
         g1.appendChild(field(content.first));
         g2.appendChild(field(content.second));
         // TODO: Deduplicate this with party-per, if possible, or at least make them consistent.
-        const id = uniqueId("pattern");
+        const id = uniqueId("variation-pattern-");
         const pattern = VARIATIONS[content.variation.type](content.variation.count);
         pattern.id = id;
         const mask = svg.mask({ id: `${id}-mask` }, 
@@ -2179,25 +2176,43 @@ const TINCTURES = [
     "sable",
     "vert",
 ];
-// Gross and duplicative, but the entire grammar is written in lowercase and I don't want to
-// sprinkle case-insensitive markers EVERYWHERE just so the tinctures can be generated with typical
-// casing by the unparser.
 const TINCTURE_REGEX = new RegExp(`\\b(${TINCTURES.join("|")})\\b`, "g");
+const TINCTURE_ONLY_SKIP_RATIO = 0.8;
+const INESCUTCHEON_SKIP_RATIO = 0.6;
+function generateRandomBlazon() {
+    function generate() {
+        return (
+        // 20 chosen empirically. Seems nice. Gets lions, where 12 does not.
+        Unparser(grammar, grammar.ParserStart, 20)
+            // This is restatement of the regex rule for acceptable whitespace.
+            .replaceAll(/[ \t\n\v\f,;:]+/g, " ")
+            .trim()
+            .replace(/ ?\.?$/, ".")
+            .replaceAll(
+        // It's REALLY hard to generate a random blazon where counterchanged makes sense, since the
+        // grammar does not express a relationship between the context ("party per") and the tincture.
+        // Since it's 1/8th of the colors, just ban it to reduce nonsense blazons by a lot.
+        /\bcounterchanged\b/g, () => TINCTURES[Math.floor(Math.random() * TINCTURES.length)])
+            .replaceAll(TINCTURE_REGEX, 
+        // Gross and duplicative, but the entire grammar is written in lowercase and I don't want to
+        // sprinkle case-insensitive markers EVERYWHERE just so the tinctures can be generated with
+        // typical casing by the unparser.
+        (tincture) => `${tincture[0].toUpperCase()}${tincture.slice(1)}`)
+            .replaceAll(/^.|\. ./g, (l) => l.toUpperCase()));
+    }
+    let blazon;
+    do {
+        blazon = generate();
+        const inescutcheonIndex = blazon.indexOf(" An inescutcheon");
+        if (inescutcheonIndex !== -1 && Math.random() <= INESCUTCHEON_SKIP_RATIO) {
+            blazon = blazon.slice(0, inescutcheonIndex);
+        }
+    } while (blazon.match(/^[A-Za-z]+\.$/) &&
+        Math.random() <= TINCTURE_ONLY_SKIP_RATIO);
+    return blazon;
+}
 random.addEventListener("click", async () => {
-    // 20 chosen empirically. Seems nice. Gets lions, where 12 does not.
-    const blazon = Unparser(grammar, grammar.ParserStart, 20)
-        // This is restatement of the regex rule for acceptable whitespace.
-        .replaceAll(/[ \t\n\v\f,;:]+/g, " ")
-        .trim()
-        .replace(/ ?\.?$/, ".")
-        .replaceAll(
-    // It's REALLY hard to generate a random blazon where counterchanged makes sense, since the
-    // grammar does not express a relationship between the context ("party per") and the tincture.
-    // Since it's 1/8th of the colors, just ban it to reduce nonsense blazons by a lot.
-    /\bcounterchanged\b/g, () => TINCTURES[Math.floor(Math.random() * TINCTURES.length)])
-        .replaceAll(TINCTURE_REGEX, (tincture) => `${tincture[0].toUpperCase()}${tincture.slice(1)}`)
-        .replaceAll(/^.|\. ./g, (l) => l.toUpperCase());
-    input.value = blazon;
+    input.value = generateRandomBlazon();
     await parseAndRenderBlazon();
 });
 for (const example of document.querySelectorAll("[data-example]")) {

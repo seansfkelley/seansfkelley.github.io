@@ -112,9 +112,13 @@
   margin-top: 10px;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 #ambiguous > * {
   margin: 0 3px;
+}
+#ambiguous #ambiguous-count {
+  white-space: nowrap;
 }
 
 .center {
