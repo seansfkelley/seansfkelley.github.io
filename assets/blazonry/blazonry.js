@@ -4,7 +4,6 @@ TODO
 -------------------------------------------------------------------------------
 - Placement -- at least in the case of chevron and saltire, they are rotated to match
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
-- textbox with word wrap so you can read it better
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
 - still see artifacts from parting when there is a thing on top
   - Party per pale embattled-counter-embattled Gules and Azure a cross wavy Argent.
@@ -13,6 +12,7 @@ TODO
     element knows how to clip itself
   - alternately, what if this just switched to masks instead of clip paths? would it just work?
 - allow multiple charges in party-per
+- remove `path`
 */
 /*
 FUTURE WORK and KNOWN ISSUES
@@ -64,18 +64,24 @@ const H = 120;
 const H_2 = H / 2;
 const W = 100;
 const W_2 = W / 2;
-const ESCUTCHEON_PATH = path `
-  M -${W_2} -${H_2}
-  L  ${W_2} -${H_2}
-  L  ${W_2}  ${H_2 / 3}
-  C  ${W_2}           ${H_2 * (2 / 3)}
-     ${W_2 * (3 / 5)} ${H_2 * (5 / 6)}
-     0                ${H_2}
-  C -${W_2 * (3 / 5)} ${H_2 * (5 / 6)}
-     ${-W_2}          ${H_2 * (2 / 3)}
-     ${-W_2}          ${H_2 / 3}
-  Z
-`;
+const ESCUTCHEON_PATH = [
+    { type: "M", loc: [-W_2, -H_2] },
+    { type: "L", loc: [W_2, -H_2] },
+    { type: "L", loc: [W_2, H_2 / 3] },
+    {
+        type: "C",
+        c1: [W_2, H_2 * (2 / 3)],
+        c2: [W_2 * (3 / 5), H_2 * (5 / 6)],
+        end: [0, H_2],
+    },
+    {
+        type: "C",
+        c1: [-W_2 * (3 / 5), H_2 * (5 / 6)],
+        c2: [-W_2, H_2 * (2 / 3)],
+        end: [-W_2, H_2 / 3],
+    },
+    { type: "Z" },
+];
 const UNSUPPORTED = Symbol("unsupported");
 const Posture = {
     toRadians: (posture) => {
@@ -164,6 +170,7 @@ var PathCommand;
         m: (e) => [e.loc],
         M: (e) => [e.loc],
         c: (e) => [e.c1, e.c2, e.end],
+        C: (e) => [e.c1, e.c2, e.end],
         z: () => [],
         Z: () => [],
     };
@@ -484,10 +491,7 @@ function roundToPrecision(n, precision = 0) {
 const svg = {
     path: (d, { stroke, strokeWidth = 1, strokeLinecap = "butt", classes, } = {}) => {
         const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        if (Array.isArray(d)) {
-            d = PathCommand.toDString(d);
-        }
-        path.setAttribute("d", d);
+        path.setAttribute("d", PathCommand.toDString(d));
         path.setAttribute("stroke-width", strokeWidth.toString());
         path.setAttribute("stroke-linecap", strokeLinecap);
         if (stroke != null) {
@@ -580,14 +584,6 @@ const svg = {
         return mask;
     },
 };
-function path(strings, ...values) {
-    const parts = [];
-    for (let i = 0; i < values.length; ++i) {
-        parts.push(strings[i], values[i]);
-    }
-    parts.push(strings.at(-1));
-    return parts.join("").trim().replaceAll("\n", "").replaceAll(/ +/g, " ");
-}
 const complexSvgCache = {};
 async function fetchComplexSvg(kind, variant) {
     const key = variant ? `${kind}-${variant}` : kind;
@@ -1240,9 +1236,20 @@ function rondel({ tincture }) {
     return circle;
 }
 function mullet({ tincture }) {
-    return svg.path(
-    // These awkward numbers keep the proportions nice while just filling out a 40x40 square.
-    "M 0 -18.8 L 5 -4.6 L 20 -4.6 L 8.4 4.5 L 12.5 18.8 L 0 10.4 L -12.5 18.8 L -8.4 4.5 L -20 -4.6 L -5 -4.6 Z", { classes: { fill: tincture } });
+    return svg.path([
+        // These awkward numbers keep the proportions nice while just filling out a 40x40 square.
+        { type: "M", loc: [0, -18.8] },
+        { type: "L", loc: [5, -4.6] },
+        { type: "L", loc: [20, -4.6] },
+        { type: "L", loc: [8.4, 4.5] },
+        { type: "L", loc: [12.5, 18.8] },
+        { type: "L", loc: [0, 10.4] },
+        { type: "L", loc: [-12.5, 18.8] },
+        { type: "L", loc: [-8.4, 4.5] },
+        { type: "L", loc: [-20, -4.6] },
+        { type: "L", loc: [-5, -4.6] },
+        { type: "Z" },
+    ], { classes: { fill: tincture } });
 }
 const FRET_WIDTH = 40;
 function fret({ tincture }) {
@@ -1260,22 +1267,22 @@ function fret({ tincture }) {
     }), svg.line([-halfWidth, -halfWidth], [halfWidth, halfWidth], {
         strokeWidth,
         classes: { stroke: tincture },
-    }), svg.path(`
-      M ${-thirdWidth} 0
-      L 0 ${-thirdWidth}
-      L ${thirdWidth} 0
-      L 0 ${thirdWidth}
-      Z
-      `, {
+    }), svg.path([
+        { type: "M", loc: [-thirdWidth, 0] },
+        { type: "L", loc: [0, -thirdWidth] },
+        { type: "L", loc: [thirdWidth, 0] },
+        { type: "L", loc: [0, thirdWidth] },
+        { type: "Z" },
+    ], {
         strokeWidth: strokeWidth + outlineWidth * 2,
         classes: { stroke: "sable" },
-    }), svg.path(`
-      M ${-thirdWidth} 0
-      L 0 ${-thirdWidth}
-      L ${thirdWidth} 0
-      L 0 ${thirdWidth}
-      Z
-      `, { strokeWidth: strokeWidth, classes: { stroke: tincture } }), svg.line([-halfWidth - outlineWidth, halfWidth + outlineWidth], [halfWidth + outlineWidth, -halfWidth - outlineWidth], {
+    }), svg.path([
+        { type: "M", loc: [-thirdWidth, 0] },
+        { type: "L", loc: [0, -thirdWidth] },
+        { type: "L", loc: [thirdWidth, 0] },
+        { type: "L", loc: [0, thirdWidth] },
+        { type: "Z" },
+    ], { strokeWidth: strokeWidth, classes: { stroke: tincture } }), svg.line([-halfWidth - outlineWidth, halfWidth + outlineWidth], [halfWidth + outlineWidth, -halfWidth - outlineWidth], {
         strokeWidth: strokeWidth + outlineWidth * 2,
         classes: { stroke: "sable" },
     }), svg.line([-halfWidth, halfWidth], [halfWidth, -halfWidth], {
@@ -1316,7 +1323,7 @@ async function lion({ tincture, armed, langued, attitude }) {
 }
 async function escutcheon({ content }) {
     const escutcheon = svg.g(field("argent"), ...(await complexContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
-    escutcheon.setAttribute("clip-path", `path("${ESCUTCHEON_PATH}")`);
+    escutcheon.setAttribute("clip-path", `path("${PathCommand.toDString(ESCUTCHEON_PATH)}")`);
     Transforms.apply(escutcheon, {
         scale: 0.35,
     });
@@ -1790,18 +1797,18 @@ const CANTON_SCALE_FACTOR = 1 / 3;
 // Note that this clips the bottom of the area. Combined with proportional scaling, this permits us
 // to render _most_ things pretty sanely, at the risk of them being slightly off-center or clipped
 // since they expect to be rendered in a taller-than-wide rectangle by default.
-const CANTON_PATH = path `
-  M -${W_2} ${-H_2}
-  L  ${W_2} ${-H_2}
-  L  ${W_2} ${-H_2 + W}
-  L -${W_2} ${-H_2 + W}
-  Z
-`;
+const CANTON_PATH = [
+    { type: "M", loc: [-W_2, -H_2] },
+    { type: "L", loc: [W_2, -H_2] },
+    { type: "L", loc: [W_2, -H_2 + W] },
+    { type: "L", loc: [-W_2, -H_2 + W] },
+    { type: "Z" },
+];
 async function simpleContent(element) {
     if ("canton" in element) {
         const g = svg.g();
         Transforms.apply(g, { origin: [-W_2, -H_2], scale: CANTON_SCALE_FACTOR });
-        g.style.clipPath = `path("${CANTON_PATH}")`;
+        g.style.clipPath = `path("${PathCommand.toDString(CANTON_PATH)}")`;
         g.appendChild(svg.path(CANTON_PATH, { classes: { fill: element.canton } }));
         g.classList.add(`fill-${element.canton}`);
         for (const c of element.content ?? []) {
@@ -1937,13 +1944,13 @@ async function complexContent(content) {
         for (const [i_, { translate, height }] of Object.entries(QUARTERINGS)) {
             const i = +i_;
             Transforms.apply(quartered[i], { translate, scale: 0.5 });
-            quartered[i].style.clipPath = path `path("
-        M -${W_2} -${H_2}
-        l  ${W}    0
-        l  0       ${height}
-        l -${W}    0
-        Z
-      ")`;
+            quartered[i].style.clipPath = `path("${PathCommand.toDString([
+                { type: "M", loc: [-W_2, -H_2] },
+                { type: "l", loc: [W, 0] },
+                { type: "l", loc: [0, height] },
+                { type: "l", loc: [-W, 0] },
+                { type: "Z" },
+            ])}")`;
         }
         for (const quartering of content.quarters) {
             for (const quarter of quartering.quarters) {
@@ -2048,7 +2055,7 @@ async function on({ on, surround, charge }) {
 }
 async function inescutcheon(parent, { location, content }) {
     const escutcheon = svg.g(field("argent"), ...(await complexContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
-    escutcheon.setAttribute("clip-path", `path("${ESCUTCHEON_PATH}")`);
+    escutcheon.setAttribute("clip-path", `path("${PathCommand.toDString(ESCUTCHEON_PATH)}")`);
     Transforms.apply(escutcheon, {
         scale: 0.25,
         translate: Location_.toOffset(location),
@@ -2089,7 +2096,7 @@ async function parseAndRenderBlazon() {
         }));
         // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
         const container = svg.g();
-        container.style.clipPath = `path("${ESCUTCHEON_PATH}")`;
+        container.style.clipPath = `path("${PathCommand.toDString(ESCUTCHEON_PATH)}")`;
         rendered.appendChild(container);
         // Make sure there's always a default background.
         container.appendChild(field("argent"));
@@ -2153,6 +2160,11 @@ const ambiguous = document.querySelector("#ambiguous");
 const ambiguousPrev = document.querySelector("#ambiguous-previous");
 const ambiguousNext = document.querySelector("#ambiguous-next");
 const ambiguousCount = document.querySelector("#ambiguous-count");
+input.addEventListener("keydown", async (e) => {
+    if (e.code === "Enter" && (e.metaKey || e.shiftKey || e.ctrlKey)) {
+        await parseAndRenderBlazon();
+    }
+});
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
     await parseAndRenderBlazon();
