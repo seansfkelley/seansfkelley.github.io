@@ -17,16 +17,16 @@ SIMPLE_CHARGE[S, P] ->
       count: d[0], posture: d[3], tincture: d[5], placement: d[6]
     }) %}
 
-Enter ->
+Blazon ->
   ComplexContent (
       _ "." __ Inescutcheon _ ".":? {% nth(3) %}
     | (_ "."):?                     {% nop %}
   ) {% $({ main: 0, inescutcheon: 1 }) %}
 
 ComplexContent ->
-    SimpleField   {% id %}
-  | PartyPerField {% id %}
-  | Quarterly     {% id %}
+    SimpleField {% id %}
+  | Partitioned {% id %}
+  | Quartered   {% id %}
 
 SimpleField ->
     Tincture (__ SimpleContent {% nth(1) %}):*                                {% $({
@@ -39,16 +39,12 @@ SimpleField ->
 Variation ->
   VariationName (__ "of" __ Plural {% nth(3) %}):? {% $({ type: 0, count: 1 }) %}
 
-PartyPerField ->
-  (Party __):? "per" __ Direction (__ Treatment {% nth(1) %}):? __ Tincture __ "and" __ Tincture (__ SimpleContent {% nth(1) %}):? {% $({
-    party: 3, treatment: 4, first: 6, second: 10, content: 11
+Partitioned ->
+  (("party" | "parted") __):? "per" __ Direction (__ Treatment {% nth(1) %}):? __ Tincture __ "and" __ Tincture (__ SimpleContent {% nth(1) %}):? {% $({
+    partition: 3, treatment: 4, first: 6, second: 10, content: 11
   }) %}
 
-Party ->
-    "party"  {% nop %}
-  | "parted" {% nop %}
-
-Quarterly ->
+Quartered ->
   "quarterly" __ Quartering (__ Quartering {% nth(1) %}):* (__ "overall" __ SimpleContent {% nth(3) %}):? {% (d) => ({
     quarters: [d[2], ...d[3]], overall: d[4]
   }) %}
@@ -159,11 +155,11 @@ Plural ->
   | "thirteen" {% literal(13) %}
 
 Direction ->
-    "pale"          {% id %}
-  | "fess"          {% id %}
+    "bend"          {% id %}
   | "bend sinister" {% id %}
-  | "bend"          {% id %}
   | "chevron"       {% id %}
+  | "fess"          {% id %}
+  | "pale"          {% id %}
   | "saltire"       {% id %}
 
 Placement ->
@@ -181,24 +177,24 @@ QuarterName ->
   | ("fourth" | "4th" | "(4)") {% literal(4) %}
 
 Posture ->
-    "palewise"          {% id %}
-  | "fesswise"          {% id %}
+    "bendwise"          {% id %}
   | "bendwise sinister" {% id %}
-  | "bendwise"          {% id %}
+  | "fesswise"          {% id %}
+  | "palewise"          {% id %}
 
 Tincture ->
-    "azure"          {% id %}
-  | "or"             {% id %}
-  | "argent"         {% id %}
+    "argent"         {% id %}
+  | "azure"          {% id %}
   | "gules"          {% id %}
-  | "vert"           {% id %}
-  | "sable"          {% id %}
+  | "or"             {% id %}
   | "purpure"        {% id %}
+  | "sable"          {% id %}
+  | "vert"           {% id %}
   | "counterchanged" {% id %}
 
 OrdinaryName ->
-    "bend sinister" {% id %}
-  | "bend"          {% id %}
+    "bend"          {% id %}
+  | "bend sinister" {% id %}
   | "fess"          {% id %}
   | "cross"         {% id %}
   | "chevron"       {% id %}
@@ -207,22 +203,22 @@ OrdinaryName ->
   | "chief"         {% id %}
 
 VariationName ->
-    "barry bendy"      {% id %}
-  | "barry"            {% id %}
-  | "bendy sinister"   {% id %}
+    "barry"            {% id %}
+  | "barry bendy"      {% id %}
   | "bendy"            {% id %}
+  | "bendy sinister"   {% id %}
   | "checky"           {% id %}
   | "chequey"          {% literal("checky") %}
   | "chevronny"        {% id %}
-  | "lozengy"          {% id %}
+  | "fusilly"          {% id %}
   # It's unclear if any other variation can get modified in this way, so I didn't generalize it.
   | "fusilly in bends" {% id %}
-  | "fusilly"          {% id %}
+  | "lozengy"          {% id %}
   | "paly"             {% id %}
 
 Treatment ->
-    "embattled-counter-embattled" {% id %}
-  | "embattled"                   {% id %}
+    "embattled"                   {% id %}
+  | "embattled-counter-embattled" {% id %}
   | "engrailed"                   {% id %}
   | "indented"                    {% id %}
   | "wavy"                        {% id %}

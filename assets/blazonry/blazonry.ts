@@ -183,10 +183,11 @@ const Location_ = {
 
 interface Blazon {
   main: ComplexContent;
+  // This should be _any_ augmentation, but we only support inescutcheons at the moment.
   inescutcheon?: Inescutcheon;
 }
 
-type ComplexContent = SimpleField | PartyPerField | Quarterly;
+type ComplexContent = SimpleField | Partitioned | Quartered;
 type SimpleContent = Ordinary | Charge | Canton | On;
 
 type SimpleField =
@@ -206,15 +207,15 @@ interface Variation {
   count?: number;
 }
 
-interface PartyPerField {
-  party: Direction;
+interface Partitioned {
+  partition: Direction;
   first: Tincture;
   second: Tincture;
   content?: SimpleContent;
   treatment?: Treatment;
 }
 
-interface Quarterly {
+interface Quartered {
   quarters: Quartering[];
   overall?: SimpleContent;
 }
@@ -279,7 +280,7 @@ interface OrdinaryRenderer {
   between: ParametricLocator;
   // I'd use non-?-optional `undefined` to mean unsupported, but the compiler complains about
   // implicit `any` if I try that.
-  party:
+  partition:
     | ((treatment: Treatment | undefined) => PathCommand.Any[])
     | Unsupported;
 }
@@ -1099,7 +1100,7 @@ bend.between = new AlternatingReflectiveLocator(
   [W_2, -H_2 + W]
 );
 
-bend.party = (treatment: Treatment | undefined): PathCommand.Any[] => {
+bend.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
   const topLeft: Coordinate = [-W_2, -H_2];
   const topRight: Coordinate = [W_2, -H_2];
   const bottomRight = Coordinate.add(topLeft, [BEND_LENGTH, BEND_LENGTH]);
@@ -1141,8 +1142,10 @@ bendSinister.on = new ReflectiveLocator(bend.on, [0, -H_2], [0, H_2]);
 
 bendSinister.between = new ReflectiveLocator(bend.between, [0, -H_2], [0, H_2]);
 
-bendSinister.party = (treatment: Treatment | undefined): PathCommand.Any[] => {
-  const commands = bend.party(treatment);
+bendSinister.partition = (
+  treatment: Treatment | undefined
+): PathCommand.Any[] => {
+  const commands = bend.partition(treatment);
   commands.forEach(PathCommand.negateX);
   return commands;
 };
@@ -1200,7 +1203,7 @@ chief.on = new LineSegmentLocator(
 
 chief.between = new NullLocator();
 
-chief.party = UNSUPPORTED;
+chief.partition = UNSUPPORTED;
 
 const CHEVRON_WIDTH = W / 4;
 
@@ -1341,7 +1344,7 @@ chevron.between = new ExhaustiveLocator(
   [0.5, 0.5, 0.5, 0.5]
 );
 
-chevron.party = (treatment: Treatment | undefined): PathCommand.Any[] => {
+chevron.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
   const [topLeft, midLeft, mid, midRight, topRight] = [
     [-W_2, -H_2],
     // See the main renderer for how these values are picked.
@@ -1542,7 +1545,7 @@ cross.between = new SequenceLocator(
 
 // Technically this is synonymous with "quarterly", but the code architecture makes it annoying to
 // do that without breaking the abstraction. It'll just be unsupported instead.
-cross.party = UNSUPPORTED;
+cross.partition = UNSUPPORTED;
 
 const FESS_WIDTH = W / 3;
 const FESS_VERTICAL_OFFSET = -H_2 + FESS_WIDTH * (3 / 2);
@@ -1617,7 +1620,7 @@ fess.between = new AlternatingReflectiveLocator(
   [W_2, FESS_VERTICAL_OFFSET]
 );
 
-fess.party = (treatment: Treatment | undefined): PathCommand.Any[] => {
+fess.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
   const [topLeft, midLeft, midRight, topRight] = [
     { type: "M", loc: [-W_2, -H_2] },
     { type: "L", loc: [-W_2, -H / 10] },
@@ -1713,7 +1716,7 @@ pale.between = new AlternatingReflectiveLocator(
   [0, H_2]
 );
 
-pale.party = (treatment: Treatment | undefined): PathCommand.Any[] => {
+pale.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
   const [topLeft, topMid, bottomMid, bottomLeft] = [
     { type: "M", loc: [-W_2, -H_2] },
     { type: "L", loc: [0, -H_2] },
@@ -1876,7 +1879,7 @@ saltire.between = new SequenceLocator(
   }
 );
 
-saltire.party = (treatment: Treatment | undefined): PathCommand.Any[] => {
+saltire.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
   const [topLeft, topRight, bottomLeft, bottomRight] = [
     { type: "L", loc: [-W_2, -H_2] },
     { type: "L", loc: [W_2, -H_2] },
@@ -2805,15 +2808,15 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
     }
   }
 
-  if ("party" in content) {
-    const { party } = ORDINARIES[content.party];
+  if ("partition" in content) {
+    const { partition } = ORDINARIES[content.partition];
     // This should be prevented in grammar, so this should never fire.
-    assert(party !== UNSUPPORTED, `cannot use 'party' with this ordinary`);
+    assert(partition !== UNSUPPORTED, `cannot partition with this ordinary`);
 
     const id = uniqueId("parted-mask-");
     const mask = svg.mask(
       { id },
-      svg.path(party(content.treatment), { fill: "white" })
+      svg.path(partition(content.treatment), { fill: "white" })
     );
 
     const g1 = svg.g(field(content.first));
