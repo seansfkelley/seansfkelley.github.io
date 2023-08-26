@@ -188,18 +188,18 @@ interface Blazon {
 }
 
 type ComplexContent = SimpleField | Partitioned | Quartered;
-type SimpleContent = Ordinary | Charge | Canton | On;
+type Charge = Ordinary | NonOrdinaryCharge | Canton | On;
 
 type SimpleField =
   | {
       tincture: Tincture;
-      content?: SimpleContent[];
+      content?: Charge[];
     }
   | {
       variation: Variation;
       first: Tincture;
       second: Tincture;
-      content?: SimpleContent[];
+      content?: Charge[];
     };
 
 interface Variation {
@@ -211,13 +211,13 @@ interface Partitioned {
   partition: Direction;
   first: Tincture;
   second: Tincture;
-  content?: SimpleContent;
+  content?: Charge;
   treatment?: Treatment;
 }
 
 interface Quartered {
   quarters: Quartering[];
-  overall?: SimpleContent;
+  overall?: Charge;
 }
 
 interface Quartering {
@@ -256,17 +256,17 @@ interface EscutcheonCharge extends BaseCharge {
   content: ComplexContent;
 }
 
-type Charge = SimpleCharge | LionCharge | EscutcheonCharge;
+type NonOrdinaryCharge = SimpleCharge | LionCharge | EscutcheonCharge;
 
 interface Canton {
   canton: Tincture;
-  content?: SimpleContent[];
+  content?: Charge[];
 }
 
 interface On {
   on: Ordinary;
-  surround?: Charge;
-  charge?: Charge;
+  surround?: NonOrdinaryCharge;
+  charge?: NonOrdinaryCharge;
 }
 
 interface Inescutcheon {
@@ -285,7 +285,7 @@ interface OrdinaryRenderer {
     | Unsupported;
 }
 
-interface ChargeRenderer<T extends Charge> {
+interface ChargeRenderer<T extends NonOrdinaryCharge> {
   (charge: T): SVGElement | Promise<SVGElement>;
 }
 
@@ -2119,14 +2119,14 @@ const CHARGE_LOCATORS: Record<Placement | "none", ParametricLocator> = {
 
 const SIMPLE_CHARGES: {
   [K in SimpleCharge["charge"]]: ChargeRenderer<
-    DiscriminateUnion<Charge, "charge", K>
+    DiscriminateUnion<NonOrdinaryCharge, "charge", K>
   >;
 } = { rondel, mullet, fret, escallop, "fleur-de-lys": fleurDeLys };
 
 // A little unfortunate this dispatching wrapper is necessary, but it's the only way to type-safety
 // render based on the string. Throwing all charges, simple and otherwise, into a constant mapping
 // together means the inferred type of the function has `never` as the first argument. :(
-async function renderCharge(charge: Charge): Promise<SVGElement> {
+async function renderCharge(charge: NonOrdinaryCharge): Promise<SVGElement> {
   switch (charge.charge) {
     case "rondel":
     case "mullet":
@@ -2708,7 +2708,7 @@ const CANTON_PATH: PathCommand.Any[] = [
   { type: "Z" },
 ];
 
-async function simpleContent(element: SimpleContent): Promise<SVGElement[]> {
+async function simpleContent(element: Charge): Promise<SVGElement[]> {
   if ("canton" in element) {
     const g = svg.g();
     Transforms.apply(g, { origin: [-W_2, -H_2], scale: CANTON_SCALE_FACTOR });
@@ -2746,9 +2746,9 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
   // charge counterchanged", both will receive the _same_ patterning, even though the charge is on
   // top of the ordinary (and could justifiably be re-reversed, matching the background variation).
   function overwriteCounterchangedTincture(
-    element: SimpleContent,
+    element: Charge,
     tincture: Tincture
-  ): SimpleContent {
+  ): Charge {
     function counterchangeTincture<T extends Tincture | undefined>(t: T): T {
       return (t === "counterchanged" ? tincture : t) as T;
     }
@@ -2761,7 +2761,9 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
       };
     }
 
-    function counterchangeCharge<T extends Charge | undefined>(charge: T): T {
+    function counterchangeCharge<T extends NonOrdinaryCharge | undefined>(
+      charge: T
+    ): T {
       if (charge == null) {
         return undefined as T;
       }
