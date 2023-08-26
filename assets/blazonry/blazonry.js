@@ -2023,7 +2023,9 @@ async function complexContent(content) {
 async function on({ on, surround, charge }) {
     const children = [ORDINARIES[on.ordinary](on)];
     if (charge != null) {
-        assert(charge.placement == null, 'cannot specify a placement for charges in "on"');
+        if (charge.placement != null) {
+            console.warn('cannot specify a placement for charges in "on"');
+        }
         const locator = ORDINARIES[on.ordinary].on;
         for (const [translate, scale] of locator.forCount(charge.count)) {
             const c = await renderCharge(charge);
@@ -2036,7 +2038,9 @@ async function on({ on, surround, charge }) {
         }
     }
     if (surround != null) {
-        assert(surround.placement == null, 'cannot specify a placement for charges in "between"');
+        if (surround.placement != null) {
+            console.warn('cannot specify a placement for charges in "between"');
+        }
         const locator = ORDINARIES[on.ordinary].between;
         for (const [translate, scale] of locator.forCount(surround.count)) {
             const c = await renderCharge(surround);
@@ -2180,8 +2184,8 @@ const TINCTURES = [
 // casing by the unparser.
 const TINCTURE_REGEX = new RegExp(`\\b(${TINCTURES.join("|")})\\b`, "g");
 random.addEventListener("click", async () => {
-    // 15 chosen empirically. Seems nice. Gets lions, where 12 does not.
-    const blazon = Unparser(grammar, grammar.ParserStart, 15)
+    // 20 chosen empirically. Seems nice. Gets lions, where 12 does not.
+    const blazon = Unparser(grammar, grammar.ParserStart, 20)
         // This is restatement of the regex rule for acceptable whitespace.
         .replaceAll(/[ \t\n\v\f,;:]+/g, " ")
         .trim()
