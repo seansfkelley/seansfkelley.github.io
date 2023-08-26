@@ -3,8 +3,11 @@ TODO
 -------------------------------------------------------------------------------
 - Placement -- at least in the case of chevron and saltire, they are rotated to match
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
+  - argent a chevron embattled sable
+  - argent a cross embattled-counter-embattled sable
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
 - allow multiple charges in party-per
+- rename "party" to eitherp parted, division, or partition
 */
 
 /*
