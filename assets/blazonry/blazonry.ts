@@ -6,8 +6,7 @@ TODO
   - argent a chevron embattled sable
   - argent a cross embattled-counter-embattled sable
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
-- allow multiple charges in party-per
-- rename "party" to eitherp parted, division, or partition
+- deduplicate rendering for partitioned and variation
 */
 
 /*
@@ -183,40 +182,46 @@ const Location_ = {
 
 interface Blazon {
   main: ComplexContent;
+  // This should be _any_ augmentation, but we only support inescutcheons at the moment.
   inescutcheon?: Inescutcheon;
 }
 
-type ComplexContent = SimpleField | PartyPerField | Quarterly;
-type SimpleContent = Ordinary | Charge | Canton | On;
+type ComplexContent =
+  | SimpleField
+  | VariationField
+  | PartitionedField
+  | Quartered;
 
-type SimpleField =
-  | {
-      tincture: Tincture;
-      content?: SimpleContent[];
-    }
-  | {
-      variation: Variation;
-      first: Tincture;
-      second: Tincture;
-      content?: SimpleContent[];
-    };
+type Charge = Ordinary | NonOrdinaryCharge | Canton | On;
+
+interface SimpleField {
+  tincture: Tincture;
+  charges?: Charge[];
+}
+
+interface VariationField {
+  variation: Variation;
+  first: Tincture;
+  second: Tincture;
+  charges?: Charge[];
+}
 
 interface Variation {
   type: VariationName;
   count?: number;
 }
 
-interface PartyPerField {
-  party: Direction;
+interface PartitionedField {
+  partition: Direction;
   first: Tincture;
   second: Tincture;
-  content?: SimpleContent;
+  charges?: Charge[];
   treatment?: Treatment;
 }
 
-interface Quarterly {
+interface Quartered {
   quarters: Quartering[];
-  overall?: SimpleContent;
+  overall?: Charge;
 }
 
 interface Quartering {
@@ -255,17 +260,17 @@ interface EscutcheonCharge extends BaseCharge {
   content: ComplexContent;
 }
 
-type Charge = SimpleCharge | LionCharge | EscutcheonCharge;
+type NonOrdinaryCharge = SimpleCharge | LionCharge | EscutcheonCharge;
 
 interface Canton {
   canton: Tincture;
-  content?: SimpleContent[];
+  charges?: Charge[];
 }
 
 interface On {
   on: Ordinary;
-  surround?: Charge;
-  charge?: Charge;
+  surround?: NonOrdinaryCharge;
+  charge?: NonOrdinaryCharge;
 }
 
 interface Inescutcheon {
@@ -279,12 +284,12 @@ interface OrdinaryRenderer {
   between: ParametricLocator;
   // I'd use non-?-optional `undefined` to mean unsupported, but the compiler complains about
   // implicit `any` if I try that.
-  party:
+  partition:
     | ((treatment: Treatment | undefined) => PathCommand.Any[])
     | Unsupported;
 }
 
-interface ChargeRenderer<T extends Charge> {
+interface NonOrdinaryChargeRenderer<T extends NonOrdinaryCharge> {
   (charge: T): SVGElement | Promise<SVGElement>;
 }
 
@@ -1099,7 +1104,7 @@ bend.between = new AlternatingReflectiveLocator(
   [W_2, -H_2 + W]
 );
 
-bend.party = (treatment: Treatment | undefined): PathCommand.Any[] => {
+bend.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
   const topLeft: Coordinate = [-W_2, -H_2];
   const topRight: Coordinate = [W_2, -H_2];
   const bottomRight = Coordinate.add(topLeft, [BEND_LENGTH, BEND_LENGTH]);
@@ -1141,8 +1146,10 @@ bendSinister.on = new ReflectiveLocator(bend.on, [0, -H_2], [0, H_2]);
 
 bendSinister.between = new ReflectiveLocator(bend.between, [0, -H_2], [0, H_2]);
 
-bendSinister.party = (treatment: Treatment | undefined): PathCommand.Any[] => {
-  const commands = bend.party(treatment);
+bendSinister.partition = (
+  treatment: Treatment | undefined
+): PathCommand.Any[] => {
+  const commands = bend.partition(treatment);
   commands.forEach(PathCommand.negateX);
   return commands;
 };
@@ -1200,7 +1207,7 @@ chief.on = new LineSegmentLocator(
 
 chief.between = new NullLocator();
 
-chief.party = UNSUPPORTED;
+chief.partition = UNSUPPORTED;
 
 const CHEVRON_WIDTH = W / 4;
 
@@ -1341,7 +1348,7 @@ chevron.between = new ExhaustiveLocator(
   [0.5, 0.5, 0.5, 0.5]
 );
 
-chevron.party = (treatment: Treatment | undefined): PathCommand.Any[] => {
+chevron.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
   const [topLeft, midLeft, mid, midRight, topRight] = [
     [-W_2, -H_2],
     // See the main renderer for how these values are picked.
@@ -1542,7 +1549,7 @@ cross.between = new SequenceLocator(
 
 // Technically this is synonymous with "quarterly", but the code architecture makes it annoying to
 // do that without breaking the abstraction. It'll just be unsupported instead.
-cross.party = UNSUPPORTED;
+cross.partition = UNSUPPORTED;
 
 const FESS_WIDTH = W / 3;
 const FESS_VERTICAL_OFFSET = -H_2 + FESS_WIDTH * (3 / 2);
@@ -1617,7 +1624,7 @@ fess.between = new AlternatingReflectiveLocator(
   [W_2, FESS_VERTICAL_OFFSET]
 );
 
-fess.party = (treatment: Treatment | undefined): PathCommand.Any[] => {
+fess.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
   const [topLeft, midLeft, midRight, topRight] = [
     { type: "M", loc: [-W_2, -H_2] },
     { type: "L", loc: [-W_2, -H / 10] },
@@ -1713,7 +1720,7 @@ pale.between = new AlternatingReflectiveLocator(
   [0, H_2]
 );
 
-pale.party = (treatment: Treatment | undefined): PathCommand.Any[] => {
+pale.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
   const [topLeft, topMid, bottomMid, bottomLeft] = [
     { type: "M", loc: [-W_2, -H_2] },
     { type: "L", loc: [0, -H_2] },
@@ -1876,7 +1883,7 @@ saltire.between = new SequenceLocator(
   }
 );
 
-saltire.party = (treatment: Treatment | undefined): PathCommand.Any[] => {
+saltire.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
   const [topLeft, topRight, bottomLeft, bottomRight] = [
     { type: "L", loc: [-W_2, -H_2] },
     { type: "L", loc: [W_2, -H_2] },
@@ -2115,15 +2122,15 @@ const CHARGE_LOCATORS: Record<Placement | "none", ParametricLocator> = {
 };
 
 const SIMPLE_CHARGES: {
-  [K in SimpleCharge["charge"]]: ChargeRenderer<
-    DiscriminateUnion<Charge, "charge", K>
+  [K in SimpleCharge["charge"]]: NonOrdinaryChargeRenderer<
+    DiscriminateUnion<NonOrdinaryCharge, "charge", K>
   >;
 } = { rondel, mullet, fret, escallop, "fleur-de-lys": fleurDeLys };
 
 // A little unfortunate this dispatching wrapper is necessary, but it's the only way to type-safety
 // render based on the string. Throwing all charges, simple and otherwise, into a constant mapping
 // together means the inferred type of the function has `never` as the first argument. :(
-async function renderCharge(charge: Charge): Promise<SVGElement> {
+async function renderCharge(charge: NonOrdinaryCharge): Promise<SVGElement> {
   switch (charge.charge) {
     case "rondel":
     case "mullet":
@@ -2705,14 +2712,14 @@ const CANTON_PATH: PathCommand.Any[] = [
   { type: "Z" },
 ];
 
-async function simpleContent(element: SimpleContent): Promise<SVGElement[]> {
+async function simpleContent(element: Charge): Promise<SVGElement[]> {
   if ("canton" in element) {
     const g = svg.g();
     Transforms.apply(g, { origin: [-W_2, -H_2], scale: CANTON_SCALE_FACTOR });
     g.style.clipPath = `path("${PathCommand.toDString(CANTON_PATH)}")`;
     g.appendChild(svg.path(CANTON_PATH, { classes: { fill: element.canton } }));
     g.classList.add(`fill-${element.canton}`);
-    for (const c of element.content ?? []) {
+    for (const c of element.charges ?? []) {
       g.append(...(await simpleContent(c)));
     }
     return [g];
@@ -2743,9 +2750,9 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
   // charge counterchanged", both will receive the _same_ patterning, even though the charge is on
   // top of the ordinary (and could justifiably be re-reversed, matching the background variation).
   function overwriteCounterchangedTincture(
-    element: SimpleContent,
+    element: Charge,
     tincture: Tincture
-  ): SimpleContent {
+  ): Charge {
     function counterchangeTincture<T extends Tincture | undefined>(t: T): T {
       return (t === "counterchanged" ? tincture : t) as T;
     }
@@ -2758,7 +2765,9 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
       };
     }
 
-    function counterchangeCharge<T extends Charge | undefined>(charge: T): T {
+    function counterchangeCharge<T extends NonOrdinaryCharge | undefined>(
+      charge: T
+    ): T {
       if (charge == null) {
         return undefined as T;
       }
@@ -2785,7 +2794,7 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
       return {
         ...element,
         canton: counterchangeTincture(element.canton),
-        content: element.content?.map((c) =>
+        charges: element.charges?.map((c) =>
           overwriteCounterchangedTincture(c, tincture)
         ),
       };
@@ -2805,15 +2814,15 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
     }
   }
 
-  if ("party" in content) {
-    const { party } = ORDINARIES[content.party];
+  if ("partition" in content) {
+    const { partition } = ORDINARIES[content.partition];
     // This should be prevented in grammar, so this should never fire.
-    assert(party !== UNSUPPORTED, `cannot use 'party' with this ordinary`);
+    assert(partition !== UNSUPPORTED, `cannot partition with this ordinary`);
 
     const id = uniqueId("parted-mask-");
     const mask = svg.mask(
       { id },
-      svg.path(party(content.treatment), { fill: "white" })
+      svg.path(partition(content.treatment), { fill: "white" })
     );
 
     const g1 = svg.g(field(content.first));
@@ -2822,10 +2831,9 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
 
     // Add g2 first so that it's underneath g1, which is the masked one.
     const children: SVGElement[] = [mask, g2, g1];
-    if (content.content != null) {
-      const counterchangedFirst = overwriteCounterchangedTincture(
-        content.content,
-        content.first
+    if (content.charges != null) {
+      const counterchangedFirst = content.charges.map((c) =>
+        overwriteCounterchangedTincture(c, content.first)
       );
       // This branch is not just a perf/DOM optimization, but prevents visual artifacts. If we
       // unconditionally do the counterchanged thing, even when not necessary, the line of division
@@ -2835,15 +2843,20 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
       // This does not fix the artifact in the case where we do actually need to render something
       // counterchanged. A fuller fix would involve a lot more fiddling and masking to ensure we
       // always render a single ordinary, which I am not willing to do at the moment.
-      if (!deepEqual(content.content, counterchangedFirst)) {
-        const counterchangedSecond = overwriteCounterchangedTincture(
-          content.content,
-          content.second
+      if (!deepEqual(content.charges, counterchangedFirst)) {
+        const counterchangedSecond = content.charges.map((c) =>
+          overwriteCounterchangedTincture(c, content.second)
         );
-        g1.append(...(await simpleContent(counterchangedSecond)));
-        g2.append(...(await simpleContent(counterchangedFirst)));
+        for (const c of counterchangedSecond) {
+          g1.append(...(await simpleContent(c)));
+        }
+        for (const c of counterchangedFirst) {
+          g2.append(...(await simpleContent(c)));
+        }
       } else {
-        children.push(...(await simpleContent(content.content)));
+        for (const c of content.charges) {
+          children.push(...(await simpleContent(c)));
+        }
       }
     }
     return children;
@@ -2921,13 +2934,13 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
     g2.setAttribute("mask", `url(#${id}-mask)`);
 
     const children: SVGElement[] = [pattern, mask, g1, g2];
-    if (content.content != null) {
-      const counterchangedFirst = content.content.map((c) =>
+    if (content.charges != null) {
+      const counterchangedFirst = content.charges.map((c) =>
         overwriteCounterchangedTincture(c, content.first)
       );
       // See the party-per branch for why this check is here. I do not like it.
-      if (!deepEqual(content.content, counterchangedFirst)) {
-        const counterchangedSecond = content.content.map((c) =>
+      if (!deepEqual(content.charges, counterchangedFirst)) {
+        const counterchangedSecond = content.charges.map((c) =>
           overwriteCounterchangedTincture(c, content.second)
         );
         for (const c of counterchangedSecond) {
@@ -2937,7 +2950,7 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
           g2.append(...(await simpleContent(c)));
         }
       } else {
-        for (const c of content.content) {
+        for (const c of content.charges) {
           children.push(...(await simpleContent(c)));
         }
       }
@@ -2945,7 +2958,7 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
     return children;
   } else {
     const children: SVGElement[] = [field(content.tincture)];
-    for (const c of content.content ?? []) {
+    for (const c of content.charges ?? []) {
       children.push(...(await simpleContent(c)));
     }
     return children;
@@ -3151,6 +3164,10 @@ const TINCTURES = [
   "vert",
 ];
 const TINCTURE_REGEX = new RegExp(`\\b(${TINCTURES.join("|")})\\b`, "g");
+const TINCTURE_PAIR_REGEX = new RegExp(
+  `\\b(${TINCTURES.join("|")}) and (${TINCTURES.join("|")})\\b`,
+  "g"
+);
 const TINCTURE_ONLY_SKIP_RATIO = 0.8;
 const INESCUTCHEON_SKIP_RATIO = 0.6;
 function generateRandomBlazon() {
@@ -3169,6 +3186,12 @@ function generateRandomBlazon() {
           /\bcounterchanged\b/g,
           () => TINCTURES[Math.floor(Math.random() * TINCTURES.length)]
         )
+        .replaceAll(TINCTURE_PAIR_REGEX, (_, first, second) => {
+          while (first === second) {
+            second = TINCTURES[Math.floor(Math.random() * TINCTURES.length)];
+          }
+          return `${first} and ${second}`;
+        })
         .replaceAll(
           TINCTURE_REGEX,
           // Gross and duplicative, but the entire grammar is written in lowercase and I don't want to

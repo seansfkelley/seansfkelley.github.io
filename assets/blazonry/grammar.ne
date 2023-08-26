@@ -17,49 +17,48 @@ SIMPLE_CHARGE[S, P] ->
       count: d[0], posture: d[3], tincture: d[5], placement: d[6]
     }) %}
 
-Enter ->
+Blazon ->
   ComplexContent (
       _ "." __ Inescutcheon _ ".":? {% nth(3) %}
     | (_ "."):?                     {% nop %}
   ) {% $({ main: 0, inescutcheon: 1 }) %}
 
 ComplexContent ->
-    SimpleField   {% id %}
-  | PartyPerField {% id %}
-  | Quarterly     {% id %}
+    SimpleField      {% id %}
+  | VariationField   {% id %}
+  | PartitionedField {% id %}
+  | Quartered        {% id %}
 
 SimpleField ->
-    Tincture (__ SimpleContent {% nth(1) %}):*                                {% $({
-      tincture: 0, content: 1
-    }) %}
-  | Variation __ Tincture __ "and" __ Tincture (__ SimpleContent {% nth(1) %}):* {% $({
-      variation: 0, first: 2, second: 6, content: 7
-    }) %}
+  Tincture (__ Charge {% nth(1) %}):* {% $({
+    tincture: 0, charges: 1
+  }) %}
+
+VariationField ->
+  Variation __ Tincture __ "and" __ Tincture (__ Charge {% nth(1) %}):* {% $({
+    variation: 0, first: 2, second: 6, charges: 7
+  }) %}
 
 Variation ->
   VariationName (__ "of" __ Plural {% nth(3) %}):? {% $({ type: 0, count: 1 }) %}
 
-PartyPerField ->
-  (Party __):? "per" __ Direction (__ Treatment {% nth(1) %}):? __ Tincture __ "and" __ Tincture (__ SimpleContent {% nth(1) %}):? {% $({
-    party: 3, treatment: 4, first: 6, second: 10, content: 11
+PartitionedField ->
+  (("party" | "parted") __):? "per" __ Direction (__ Treatment {% nth(1) %}):? __ Tincture __ "and" __ Tincture (__ Charge {% nth(1) %}):* {% $({
+    partition: 3, treatment: 4, first: 6, second: 10, charges: 11
   }) %}
 
-Party ->
-    "party"  {% nop %}
-  | "parted" {% nop %}
-
-Quarterly ->
-  "quarterly" __ Quartering (__ Quartering {% nth(1) %}):* (__ "overall" __ SimpleContent {% nth(3) %}):? {% (d) => ({
+Quartered ->
+  "quarterly" __ Quartering (__ Quartering {% nth(1) %}):* (__ "overall" __ Charge {% nth(3) %}):? {% (d) => ({
     quarters: [d[2], ...d[3]], overall: d[4]
   }) %}
 
-SimpleContent ->
-    Ordinary __ "between" __ Charge                   {% $({ on: 0, surround: 4 }) %}
-  | "on" __ Ordinary __ Charge                        {% $({ on: 2, charge: 4 }) %}
-  | "on" __ Ordinary __ "between" __ Charge __ Charge {% $({ on: 2, surround: 6, charge: 8 }) %}
-  | Ordinary                                          {% id %}
-  | Charge                                            {% id %}
-  | Canton                                            {% id %}
+Charge ->
+    Ordinary __ "between" __ NonOrdinaryCharge                              {% $({ on: 0, surround: 4 }) %}
+  | "on" __ Ordinary __ NonOrdinaryCharge                                   {% $({ on: 2, charge: 4 }) %}
+  | "on" __ Ordinary __ "between" __ NonOrdinaryCharge __ NonOrdinaryCharge {% $({ on: 2, surround: 6, charge: 8 }) %}
+  | Ordinary                                                                {% id %}
+  | NonOrdinaryCharge                                                       {% id %}
+  | Canton                                                                  {% id %}
 
 Quartering ->
   (
@@ -68,7 +67,7 @@ Quartering ->
 
 Canton ->
     "a" __ "canton" __ Tincture                                           {% $({ canton: 4 }) %}
-  | "on" __ "a" __ "canton" __ Tincture (__ SimpleContent {% nth(1) %}):+ {% $({ canton: 6, content: 7 }) %}
+  | "on" __ "a" __ "canton" __ Tincture (__ Charge {% nth(1) %}):+ {% $({ canton: 6, charges: 7 }) %}
 
 Ordinary ->
     Singular __ OrdinaryName (__ Treatment {% nth(1) %}):? (__ Tincture {% nth(1) %}):? __ "cotised" __ Tincture {% (d) => ({
@@ -78,7 +77,7 @@ Ordinary ->
       ordinary: 2, treatment: 3, tincture : 5
     }) %}
 
-Charge ->
+NonOrdinaryCharge ->
     SIMPLE_CHARGE[("rondel" | "roundel"), ("rondels" | "roundels")]                       {% spread({ charge: 'rondel' }) %}
   | SIMPLE_CHARGE["mullet", "mullets"]                                                    {% spread({ charge: 'mullet' }) %}
   | SIMPLE_CHARGE["fret", "frets"]                                                        {% spread({ charge: 'fret' }) %}
@@ -159,11 +158,11 @@ Plural ->
   | "thirteen" {% literal(13) %}
 
 Direction ->
-    "pale"          {% id %}
-  | "fess"          {% id %}
+    "bend"          {% id %}
   | "bend sinister" {% id %}
-  | "bend"          {% id %}
   | "chevron"       {% id %}
+  | "fess"          {% id %}
+  | "pale"          {% id %}
   | "saltire"       {% id %}
 
 Placement ->
@@ -181,24 +180,24 @@ QuarterName ->
   | ("fourth" | "4th" | "(4)") {% literal(4) %}
 
 Posture ->
-    "palewise"          {% id %}
-  | "fesswise"          {% id %}
+    "bendwise"          {% id %}
   | "bendwise sinister" {% id %}
-  | "bendwise"          {% id %}
+  | "fesswise"          {% id %}
+  | "palewise"          {% id %}
 
 Tincture ->
-    "azure"          {% id %}
-  | "or"             {% id %}
-  | "argent"         {% id %}
+    "argent"         {% id %}
+  | "azure"          {% id %}
   | "gules"          {% id %}
-  | "vert"           {% id %}
-  | "sable"          {% id %}
+  | "or"             {% id %}
   | "purpure"        {% id %}
+  | "sable"          {% id %}
+  | "vert"           {% id %}
   | "counterchanged" {% id %}
 
 OrdinaryName ->
-    "bend sinister" {% id %}
-  | "bend"          {% id %}
+    "bend"          {% id %}
+  | "bend sinister" {% id %}
   | "fess"          {% id %}
   | "cross"         {% id %}
   | "chevron"       {% id %}
@@ -207,22 +206,22 @@ OrdinaryName ->
   | "chief"         {% id %}
 
 VariationName ->
-    "barry bendy"      {% id %}
-  | "barry"            {% id %}
-  | "bendy sinister"   {% id %}
+    "barry"            {% id %}
+  | "barry bendy"      {% id %}
   | "bendy"            {% id %}
+  | "bendy sinister"   {% id %}
   | "checky"           {% id %}
   | "chequey"          {% literal("checky") %}
   | "chevronny"        {% id %}
-  | "lozengy"          {% id %}
+  | "fusilly"          {% id %}
   # It's unclear if any other variation can get modified in this way, so I didn't generalize it.
   | "fusilly in bends" {% id %}
-  | "fusilly"          {% id %}
+  | "lozengy"          {% id %}
   | "paly"             {% id %}
 
 Treatment ->
-    "embattled-counter-embattled" {% id %}
-  | "embattled"                   {% id %}
+    "embattled"                   {% id %}
+  | "embattled-counter-embattled" {% id %}
   | "engrailed"                   {% id %}
   | "indented"                    {% id %}
   | "wavy"                        {% id %}

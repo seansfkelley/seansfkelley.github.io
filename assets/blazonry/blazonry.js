@@ -7,8 +7,7 @@ TODO
   - argent a chevron embattled sable
   - argent a cross embattled-counter-embattled sable
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
-- allow multiple charges in party-per
-- rename "party" to eitherp parted, division, or partition
+- deduplicate rendering for partitioned and variation
 */
 /*
 FUTURE WORK and KNOWN ISSUES
@@ -650,7 +649,7 @@ bend.between = new AlternatingReflectiveLocator(new ExhaustiveLocator([
         [W_2 - 15, -H_2 + 35],
     ],
 ], [0.7, 0.5, 0.4]), [-W_2, -H_2], [W_2, -H_2 + W]);
-bend.party = (treatment) => {
+bend.partition = (treatment) => {
     const topLeft = [-W_2, -H_2];
     const topRight = [W_2, -H_2];
     const bottomRight = Coordinate.add(topLeft, [BEND_LENGTH, BEND_LENGTH]);
@@ -684,8 +683,8 @@ function bendSinister(ordinary) {
 }
 bendSinister.on = new ReflectiveLocator(bend.on, [0, -H_2], [0, H_2]);
 bendSinister.between = new ReflectiveLocator(bend.between, [0, -H_2], [0, H_2]);
-bendSinister.party = (treatment) => {
-    const commands = bend.party(treatment);
+bendSinister.partition = (treatment) => {
+    const commands = bend.partition(treatment);
     commands.forEach(PathCommand.negateX);
     return commands;
 };
@@ -715,7 +714,7 @@ function chief({ tincture, cotised, treatment }) {
 }
 chief.on = new LineSegmentLocator([-W_2, -H_2 + H_2 / 3], [W_2, -H_2 + H_2 / 3], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
 chief.between = new NullLocator();
-chief.party = UNSUPPORTED;
+chief.partition = UNSUPPORTED;
 const CHEVRON_WIDTH = W / 4;
 function chevron({ tincture, cotised, treatment }) {
     const left = [-W_2, -H_2 + W];
@@ -811,7 +810,7 @@ chevron.between = new ExhaustiveLocator([
         [30, -H_2 + 30],
     ],
 ], [0.5, 0.5, 0.5, 0.5]);
-chevron.party = (treatment) => {
+chevron.partition = (treatment) => {
     const [topLeft, midLeft, mid, midRight, topRight] = [
         [-W_2, -H_2],
         // See the main renderer for how these values are picked.
@@ -954,7 +953,7 @@ cross.between = new SequenceLocator([
 });
 // Technically this is synonymous with "quarterly", but the code architecture makes it annoying to
 // do that without breaking the abstraction. It'll just be unsupported instead.
-cross.party = UNSUPPORTED;
+cross.partition = UNSUPPORTED;
 const FESS_WIDTH = W / 3;
 const FESS_VERTICAL_OFFSET = -H_2 + FESS_WIDTH * (3 / 2);
 function fess({ tincture, cotised, treatment }) {
@@ -987,7 +986,7 @@ function fess({ tincture, cotised, treatment }) {
 }
 fess.on = new LineSegmentLocator([-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET], [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]);
 fess.between = new AlternatingReflectiveLocator(new LineSegmentLocator([-W_2, -H_2 + FESS_WIDTH / 2], [W_2, -H_2 + FESS_WIDTH / 2], [0.6, 0.5, 0.4, 0.4]), [-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET]);
-fess.party = (treatment) => {
+fess.partition = (treatment) => {
     const [topLeft, midLeft, midRight, topRight] = [
         { type: "M", loc: [-W_2, -H_2] },
         { type: "L", loc: [-W_2, -H / 10] },
@@ -1046,7 +1045,7 @@ function pale({ tincture, cotised, treatment }) {
 }
 pale.on = new LineSegmentLocator([0, -H_2], [0, H_2], [0.6, 0.6, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2]);
 pale.between = new AlternatingReflectiveLocator(new LineSegmentLocator([-W_2 + PALE_WIDTH / 2, -H_2], [-W_2 + PALE_WIDTH / 2, H_2], [0.6, 0.5, 0.4, 0.4]), [0, -H_2], [0, H_2]);
-pale.party = (treatment) => {
+pale.partition = (treatment) => {
     const [topLeft, topMid, bottomMid, bottomLeft] = [
         { type: "M", loc: [-W_2, -H_2] },
         { type: "L", loc: [0, -H_2] },
@@ -1166,7 +1165,7 @@ saltire.between = new SequenceLocator([
 ], [0.5, 0.5, 0.5, 0.5], {
     1: SequenceLocator.EMPTY,
 });
-saltire.party = (treatment) => {
+saltire.partition = (treatment) => {
     const [topLeft, topRight, bottomLeft, bottomRight] = [
         { type: "L", loc: [-W_2, -H_2] },
         { type: "L", loc: [W_2, -H_2] },
@@ -1809,7 +1808,7 @@ async function simpleContent(element) {
         g.style.clipPath = `path("${PathCommand.toDString(CANTON_PATH)}")`;
         g.appendChild(svg.path(CANTON_PATH, { classes: { fill: element.canton } }));
         g.classList.add(`fill-${element.canton}`);
-        for (const c of element.content ?? []) {
+        for (const c of element.charges ?? []) {
             g.append(...(await simpleContent(c)));
         }
         return [g];
@@ -1878,7 +1877,7 @@ async function complexContent(content) {
             return {
                 ...element,
                 canton: counterchangeTincture(element.canton),
-                content: element.content?.map((c) => overwriteCounterchangedTincture(c, tincture)),
+                charges: element.charges?.map((c) => overwriteCounterchangedTincture(c, tincture)),
             };
         }
         else if ("on" in element) {
@@ -1899,19 +1898,19 @@ async function complexContent(content) {
             assertNever(element);
         }
     }
-    if ("party" in content) {
-        const { party } = ORDINARIES[content.party];
+    if ("partition" in content) {
+        const { partition } = ORDINARIES[content.partition];
         // This should be prevented in grammar, so this should never fire.
-        assert(party !== UNSUPPORTED, `cannot use 'party' with this ordinary`);
+        assert(partition !== UNSUPPORTED, `cannot partition with this ordinary`);
         const id = uniqueId("parted-mask-");
-        const mask = svg.mask({ id }, svg.path(party(content.treatment), { fill: "white" }));
+        const mask = svg.mask({ id }, svg.path(partition(content.treatment), { fill: "white" }));
         const g1 = svg.g(field(content.first));
         g1.setAttribute("mask", `url(#${id})`);
         const g2 = svg.g(field(content.second));
         // Add g2 first so that it's underneath g1, which is the masked one.
         const children = [mask, g2, g1];
-        if (content.content != null) {
-            const counterchangedFirst = overwriteCounterchangedTincture(content.content, content.first);
+        if (content.charges != null) {
+            const counterchangedFirst = content.charges.map((c) => overwriteCounterchangedTincture(c, content.first));
             // This branch is not just a perf/DOM optimization, but prevents visual artifacts. If we
             // unconditionally do the counterchanged thing, even when not necessary, the line of division
             // often leaks through any superimposed ordinaries as a thin line of off-color pixels since
@@ -1920,13 +1919,19 @@ async function complexContent(content) {
             // This does not fix the artifact in the case where we do actually need to render something
             // counterchanged. A fuller fix would involve a lot more fiddling and masking to ensure we
             // always render a single ordinary, which I am not willing to do at the moment.
-            if (!deepEqual(content.content, counterchangedFirst)) {
-                const counterchangedSecond = overwriteCounterchangedTincture(content.content, content.second);
-                g1.append(...(await simpleContent(counterchangedSecond)));
-                g2.append(...(await simpleContent(counterchangedFirst)));
+            if (!deepEqual(content.charges, counterchangedFirst)) {
+                const counterchangedSecond = content.charges.map((c) => overwriteCounterchangedTincture(c, content.second));
+                for (const c of counterchangedSecond) {
+                    g1.append(...(await simpleContent(c)));
+                }
+                for (const c of counterchangedFirst) {
+                    g2.append(...(await simpleContent(c)));
+                }
             }
             else {
-                children.push(...(await simpleContent(content.content)));
+                for (const c of content.charges) {
+                    children.push(...(await simpleContent(c)));
+                }
             }
         }
         return children;
@@ -1992,11 +1997,11 @@ async function complexContent(content) {
         svg.rect([-W_2, -H_2], [W_2, H_2], { fill: `url(#${id})` }));
         g2.setAttribute("mask", `url(#${id}-mask)`);
         const children = [pattern, mask, g1, g2];
-        if (content.content != null) {
-            const counterchangedFirst = content.content.map((c) => overwriteCounterchangedTincture(c, content.first));
+        if (content.charges != null) {
+            const counterchangedFirst = content.charges.map((c) => overwriteCounterchangedTincture(c, content.first));
             // See the party-per branch for why this check is here. I do not like it.
-            if (!deepEqual(content.content, counterchangedFirst)) {
-                const counterchangedSecond = content.content.map((c) => overwriteCounterchangedTincture(c, content.second));
+            if (!deepEqual(content.charges, counterchangedFirst)) {
+                const counterchangedSecond = content.charges.map((c) => overwriteCounterchangedTincture(c, content.second));
                 for (const c of counterchangedSecond) {
                     g1.append(...(await simpleContent(c)));
                 }
@@ -2005,7 +2010,7 @@ async function complexContent(content) {
                 }
             }
             else {
-                for (const c of content.content) {
+                for (const c of content.charges) {
                     children.push(...(await simpleContent(c)));
                 }
             }
@@ -2014,7 +2019,7 @@ async function complexContent(content) {
     }
     else {
         const children = [field(content.tincture)];
-        for (const c of content.content ?? []) {
+        for (const c of content.charges ?? []) {
             children.push(...(await simpleContent(c)));
         }
         return children;
@@ -2180,6 +2185,7 @@ const TINCTURES = [
     "vert",
 ];
 const TINCTURE_REGEX = new RegExp(`\\b(${TINCTURES.join("|")})\\b`, "g");
+const TINCTURE_PAIR_REGEX = new RegExp(`\\b(${TINCTURES.join("|")}) and (${TINCTURES.join("|")})\\b`, "g");
 const TINCTURE_ONLY_SKIP_RATIO = 0.8;
 const INESCUTCHEON_SKIP_RATIO = 0.6;
 function generateRandomBlazon() {
@@ -2196,6 +2202,12 @@ function generateRandomBlazon() {
         // grammar does not express a relationship between the context ("party per") and the tincture.
         // Since it's 1/8th of the colors, just ban it to reduce nonsense blazons by a lot.
         /\bcounterchanged\b/g, () => TINCTURES[Math.floor(Math.random() * TINCTURES.length)])
+            .replaceAll(TINCTURE_PAIR_REGEX, (_, first, second) => {
+            while (first === second) {
+                second = TINCTURES[Math.floor(Math.random() * TINCTURES.length)];
+            }
+            return `${first} and ${second}`;
+        })
             .replaceAll(TINCTURE_REGEX, 
         // Gross and duplicative, but the entire grammar is written in lowercase and I don't want to
         // sprinkle case-insensitive markers EVERYWHERE just so the tinctures can be generated with
