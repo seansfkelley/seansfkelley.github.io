@@ -24,17 +24,20 @@ Blazon ->
   ) {% $({ main: 0, inescutcheon: 1 }) %}
 
 ComplexContent ->
-    SimpleField {% id %}
-  | Partitioned {% id %}
-  | Quartered   {% id %}
+    SimpleField    {% id %}
+  | VariationField {% id %}
+  | Partitioned    {% id %}
+  | Quartered      {% id %}
 
 SimpleField ->
-    Tincture (__ Charge {% nth(1) %}):*                                {% $({
-      tincture: 0, charges: 1
-    }) %}
-  | Variation __ Tincture __ "and" __ Tincture (__ Charge {% nth(1) %}):* {% $({
-      variation: 0, first: 2, second: 6, charges: 7
-    }) %}
+  Tincture (__ Charge {% nth(1) %}):* {% $({
+    tincture: 0, charges: 1
+  }) %}
+
+VariationField ->
+  Variation __ Tincture __ "and" __ Tincture (__ Charge {% nth(1) %}):* {% $({
+    variation: 0, first: 2, second: 6, charges: 7
+  }) %}
 
 Variation ->
   VariationName (__ "of" __ Plural {% nth(3) %}):? {% $({ type: 0, count: 1 }) %}
@@ -60,7 +63,7 @@ Charge ->
 Quartering ->
   (
     (QuarterName __ {% nth(0) %}):+ "and" __ {% nth(0) %}
-  ):? QuarterName __ ComplexContent {% (d) => ({ quarters: [...(d[0] ?? []), d[1]], charges: d[3] }) %}
+  ):? QuarterName __ ComplexContent {% (d) => ({ quarters: [...(d[0] ?? []), d[1]], content: d[3] }) %}
 
 Canton ->
     "a" __ "canton" __ Tincture                                           {% $({ canton: 4 }) %}
@@ -128,13 +131,13 @@ Escutcheon ->
   ) __ ComplexContent (__ Posture {% nth(1) %}):? (__ Placement {% nth(1) %}):? {% (d) => ({
     charge: "escutcheon",
     count: d[0],
-    charges: d[2],
+    content: d[2],
     posture: d[3],
     placement: d[4],
   }) %}
 
 Inescutcheon ->
-  "an" __ "inescutcheon" (__ Location {% nth(1) %}):? __ ComplexContent {% $({ location: 3, charges: 5 }) %}
+  "an" __ "inescutcheon" (__ Location {% nth(1) %}):? __ ComplexContent {% $({ location: 3, content: 5 }) %}
 
 Singular ->
     "a"  {% nop %}

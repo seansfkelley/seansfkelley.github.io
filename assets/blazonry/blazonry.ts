@@ -186,20 +186,20 @@ interface Blazon {
   inescutcheon?: Inescutcheon;
 }
 
-type ComplexContent = SimpleField | Partitioned | Quartered;
+type ComplexContent = SimpleField | VariationField | Partitioned | Quartered;
 type Charge = Ordinary | NonOrdinaryCharge | Canton | On;
 
-type SimpleField =
-  | {
-      tincture: Tincture;
-      charges?: Charge[];
-    }
-  | {
-      variation: Variation;
-      first: Tincture;
-      second: Tincture;
-      charges?: Charge[];
-    };
+interface SimpleField {
+  tincture: Tincture;
+  charges?: Charge[];
+}
+
+interface VariationField {
+  variation: Variation;
+  first: Tincture;
+  second: Tincture;
+  charges?: Charge[];
+}
 
 interface Variation {
   type: VariationName;
