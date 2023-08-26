@@ -6,8 +6,7 @@ TODO
   - argent a chevron embattled sable
   - argent a cross embattled-counter-embattled sable
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
-- allow multiple charges in party-per
-- rename "party" to eitherp parted, division, or partition
+- deduplicate rendering for partitioned and variation
 */
 
 /*
@@ -193,13 +192,13 @@ type Charge = Ordinary | NonOrdinaryCharge | Canton | On;
 type SimpleField =
   | {
       tincture: Tincture;
-      content?: Charge[];
+      charges?: Charge[];
     }
   | {
       variation: Variation;
       first: Tincture;
       second: Tincture;
-      content?: Charge[];
+      charges?: Charge[];
     };
 
 interface Variation {
@@ -211,7 +210,7 @@ interface Partitioned {
   partition: Direction;
   first: Tincture;
   second: Tincture;
-  content?: Charge;
+  charges?: Charge[];
   treatment?: Treatment;
 }
 
@@ -260,7 +259,7 @@ type NonOrdinaryCharge = SimpleCharge | LionCharge | EscutcheonCharge;
 
 interface Canton {
   canton: Tincture;
-  content?: Charge[];
+  charges?: Charge[];
 }
 
 interface On {
@@ -285,7 +284,7 @@ interface OrdinaryRenderer {
     | Unsupported;
 }
 
-interface ChargeRenderer<T extends NonOrdinaryCharge> {
+interface NonOrdinaryChargeRenderer<T extends NonOrdinaryCharge> {
   (charge: T): SVGElement | Promise<SVGElement>;
 }
 
@@ -2118,7 +2117,7 @@ const CHARGE_LOCATORS: Record<Placement | "none", ParametricLocator> = {
 };
 
 const SIMPLE_CHARGES: {
-  [K in SimpleCharge["charge"]]: ChargeRenderer<
+  [K in SimpleCharge["charge"]]: NonOrdinaryChargeRenderer<
     DiscriminateUnion<NonOrdinaryCharge, "charge", K>
   >;
 } = { rondel, mullet, fret, escallop, "fleur-de-lys": fleurDeLys };
@@ -2715,7 +2714,7 @@ async function simpleContent(element: Charge): Promise<SVGElement[]> {
     g.style.clipPath = `path("${PathCommand.toDString(CANTON_PATH)}")`;
     g.appendChild(svg.path(CANTON_PATH, { classes: { fill: element.canton } }));
     g.classList.add(`fill-${element.canton}`);
-    for (const c of element.content ?? []) {
+    for (const c of element.charges ?? []) {
       g.append(...(await simpleContent(c)));
     }
     return [g];
@@ -2790,7 +2789,7 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
       return {
         ...element,
         canton: counterchangeTincture(element.canton),
-        content: element.content?.map((c) =>
+        charges: element.charges?.map((c) =>
           overwriteCounterchangedTincture(c, tincture)
         ),
       };
@@ -2827,10 +2826,9 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
 
     // Add g2 first so that it's underneath g1, which is the masked one.
     const children: SVGElement[] = [mask, g2, g1];
-    if (content.content != null) {
-      const counterchangedFirst = overwriteCounterchangedTincture(
-        content.content,
-        content.first
+    if (content.charges != null) {
+      const counterchangedFirst = content.charges.map((c) =>
+        overwriteCounterchangedTincture(c, content.first)
       );
       // This branch is not just a perf/DOM optimization, but prevents visual artifacts. If we
       // unconditionally do the counterchanged thing, even when not necessary, the line of division
@@ -2840,15 +2838,20 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
       // This does not fix the artifact in the case where we do actually need to render something
       // counterchanged. A fuller fix would involve a lot more fiddling and masking to ensure we
       // always render a single ordinary, which I am not willing to do at the moment.
-      if (!deepEqual(content.content, counterchangedFirst)) {
-        const counterchangedSecond = overwriteCounterchangedTincture(
-          content.content,
-          content.second
+      if (!deepEqual(content.charges, counterchangedFirst)) {
+        const counterchangedSecond = content.charges.map((c) =>
+          overwriteCounterchangedTincture(c, content.second)
         );
-        g1.append(...(await simpleContent(counterchangedSecond)));
-        g2.append(...(await simpleContent(counterchangedFirst)));
+        for (const c of counterchangedSecond) {
+          g1.append(...(await simpleContent(c)));
+        }
+        for (const c of counterchangedFirst) {
+          g2.append(...(await simpleContent(c)));
+        }
       } else {
-        children.push(...(await simpleContent(content.content)));
+        for (const c of content.charges) {
+          children.push(...(await simpleContent(c)));
+        }
       }
     }
     return children;
@@ -2926,13 +2929,13 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
     g2.setAttribute("mask", `url(#${id}-mask)`);
 
     const children: SVGElement[] = [pattern, mask, g1, g2];
-    if (content.content != null) {
-      const counterchangedFirst = content.content.map((c) =>
+    if (content.charges != null) {
+      const counterchangedFirst = content.charges.map((c) =>
         overwriteCounterchangedTincture(c, content.first)
       );
       // See the party-per branch for why this check is here. I do not like it.
-      if (!deepEqual(content.content, counterchangedFirst)) {
-        const counterchangedSecond = content.content.map((c) =>
+      if (!deepEqual(content.charges, counterchangedFirst)) {
+        const counterchangedSecond = content.charges.map((c) =>
           overwriteCounterchangedTincture(c, content.second)
         );
         for (const c of counterchangedSecond) {
@@ -2942,7 +2945,7 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
           g2.append(...(await simpleContent(c)));
         }
       } else {
-        for (const c of content.content) {
+        for (const c of content.charges) {
           children.push(...(await simpleContent(c)));
         }
       }
@@ -2950,7 +2953,7 @@ async function complexContent(content: ComplexContent): Promise<SVGElement[]> {
     return children;
   } else {
     const children: SVGElement[] = [field(content.tincture)];
-    for (const c of content.content ?? []) {
+    for (const c of content.charges ?? []) {
       children.push(...(await simpleContent(c)));
     }
     return children;

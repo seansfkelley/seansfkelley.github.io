@@ -30,18 +30,18 @@ ComplexContent ->
 
 SimpleField ->
     Tincture (__ Charge {% nth(1) %}):*                                {% $({
-      tincture: 0, content: 1
+      tincture: 0, charges: 1
     }) %}
   | Variation __ Tincture __ "and" __ Tincture (__ Charge {% nth(1) %}):* {% $({
-      variation: 0, first: 2, second: 6, content: 7
+      variation: 0, first: 2, second: 6, charges: 7
     }) %}
 
 Variation ->
   VariationName (__ "of" __ Plural {% nth(3) %}):? {% $({ type: 0, count: 1 }) %}
 
 Partitioned ->
-  (("party" | "parted") __):? "per" __ Direction (__ Treatment {% nth(1) %}):? __ Tincture __ "and" __ Tincture (__ Charge {% nth(1) %}):? {% $({
-    partition: 3, treatment: 4, first: 6, second: 10, content: 11
+  (("party" | "parted") __):? "per" __ Direction (__ Treatment {% nth(1) %}):? __ Tincture __ "and" __ Tincture (__ Charge {% nth(1) %}):* {% $({
+    partition: 3, treatment: 4, first: 6, second: 10, charges: 11
   }) %}
 
 Quartered ->
@@ -60,11 +60,11 @@ Charge ->
 Quartering ->
   (
     (QuarterName __ {% nth(0) %}):+ "and" __ {% nth(0) %}
-  ):? QuarterName __ ComplexContent {% (d) => ({ quarters: [...(d[0] ?? []), d[1]], content: d[3] }) %}
+  ):? QuarterName __ ComplexContent {% (d) => ({ quarters: [...(d[0] ?? []), d[1]], charges: d[3] }) %}
 
 Canton ->
     "a" __ "canton" __ Tincture                                           {% $({ canton: 4 }) %}
-  | "on" __ "a" __ "canton" __ Tincture (__ Charge {% nth(1) %}):+ {% $({ canton: 6, content: 7 }) %}
+  | "on" __ "a" __ "canton" __ Tincture (__ Charge {% nth(1) %}):+ {% $({ canton: 6, charges: 7 }) %}
 
 Ordinary ->
     Singular __ OrdinaryName (__ Treatment {% nth(1) %}):? (__ Tincture {% nth(1) %}):? __ "cotised" __ Tincture {% (d) => ({
@@ -128,13 +128,13 @@ Escutcheon ->
   ) __ ComplexContent (__ Posture {% nth(1) %}):? (__ Placement {% nth(1) %}):? {% (d) => ({
     charge: "escutcheon",
     count: d[0],
-    content: d[2],
+    charges: d[2],
     posture: d[3],
     placement: d[4],
   }) %}
 
 Inescutcheon ->
-  "an" __ "inescutcheon" (__ Location {% nth(1) %}):? __ ComplexContent {% $({ location: 3, content: 5 }) %}
+  "an" __ "inescutcheon" (__ Location {% nth(1) %}):? __ ComplexContent {% $({ location: 3, charges: 5 }) %}
 
 Singular ->
     "a"  {% nop %}
