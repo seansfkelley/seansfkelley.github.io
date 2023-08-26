@@ -3150,30 +3150,52 @@ const TINCTURES = [
   "sable",
   "vert",
 ];
-// Gross and duplicative, but the entire grammar is written in lowercase and I don't want to
-// sprinkle case-insensitive markers EVERYWHERE just so the tinctures can be generated with typical
-// casing by the unparser.
 const TINCTURE_REGEX = new RegExp(`\\b(${TINCTURES.join("|")})\\b`, "g");
+const TINCTURE_ONLY_SKIP_RATIO = 0.8;
+const INESCUTCHEON_SKIP_RATIO = 0.6;
+function generateRandomBlazon() {
+  function generate() {
+    return (
+      // 20 chosen empirically. Seems nice. Gets lions, where 12 does not.
+      Unparser(grammar, grammar.ParserStart, 20)
+        // This is restatement of the regex rule for acceptable whitespace.
+        .replaceAll(/[ \t\n\v\f,;:]+/g, " ")
+        .trim()
+        .replace(/ ?\.?$/, ".")
+        .replaceAll(
+          // It's REALLY hard to generate a random blazon where counterchanged makes sense, since the
+          // grammar does not express a relationship between the context ("party per") and the tincture.
+          // Since it's 1/8th of the colors, just ban it to reduce nonsense blazons by a lot.
+          /\bcounterchanged\b/g,
+          () => TINCTURES[Math.floor(Math.random() * TINCTURES.length)]
+        )
+        .replaceAll(
+          TINCTURE_REGEX,
+          // Gross and duplicative, but the entire grammar is written in lowercase and I don't want to
+          // sprinkle case-insensitive markers EVERYWHERE just so the tinctures can be generated with
+          // typical casing by the unparser.
+          (tincture) => `${tincture[0].toUpperCase()}${tincture.slice(1)}`
+        )
+        .replaceAll(/^.|\. ./g, (l) => l.toUpperCase())
+    );
+  }
+
+  let blazon: string;
+  do {
+    blazon = generate();
+    const inescutcheonIndex = blazon.indexOf(" An inescutcheon");
+    if (inescutcheonIndex !== -1 && Math.random() <= INESCUTCHEON_SKIP_RATIO) {
+      blazon = blazon.slice(0, inescutcheonIndex);
+    }
+  } while (
+    blazon.match(/^[A-Za-z]+\.$/) &&
+    Math.random() <= TINCTURE_ONLY_SKIP_RATIO
+  );
+  return blazon;
+}
+
 random.addEventListener("click", async () => {
-  // 20 chosen empirically. Seems nice. Gets lions, where 12 does not.
-  const blazon = Unparser(grammar, grammar.ParserStart, 20)
-    // This is restatement of the regex rule for acceptable whitespace.
-    .replaceAll(/[ \t\n\v\f,;:]+/g, " ")
-    .trim()
-    .replace(/ ?\.?$/, ".")
-    .replaceAll(
-      // It's REALLY hard to generate a random blazon where counterchanged makes sense, since the
-      // grammar does not express a relationship between the context ("party per") and the tincture.
-      // Since it's 1/8th of the colors, just ban it to reduce nonsense blazons by a lot.
-      /\bcounterchanged\b/g,
-      () => TINCTURES[Math.floor(Math.random() * TINCTURES.length)]
-    )
-    .replaceAll(
-      TINCTURE_REGEX,
-      (tincture) => `${tincture[0].toUpperCase()}${tincture.slice(1)}`
-    )
-    .replaceAll(/^.|\. ./g, (l) => l.toUpperCase());
-  input.value = blazon;
+  input.value = generateRandomBlazon();
   await parseAndRenderBlazon();
 });
 
