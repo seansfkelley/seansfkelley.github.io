@@ -31,7 +31,7 @@ Try these:
 - <a href="#" data-example="Quarterly: (1) Sable, a lion rampant Or, armed and langued Gules; (2) per fess indented Gules and Argent; (3) Argent, a lion rampant Azure, armed Or and langued Gules; (4) Or, three lions passant Sable, armed and langued Gules in pale. An inescutcheon fusilly in bends Argent and Azure.">Quarterly: (1) Sable, a lion rampant Or, armed and langued Gules...</a>[^1] — [arms of Bavaria](https://en.wikipedia.org/wiki/Coat_of_arms_of_Bavaria), which you may have seen on [Weihenstephan beers](https://www.weihenstephaner.com/our-brewery)
 - <a href="#" data-example="Quarterly 1st and 4th Sable a lion rampant Argent on a canton Argent a cross Gules; 2nd and 3rd quarterly 1st and 4th Argent 2nd and 3rd Gules a fret Or overall on a bend Sable three escallops bendwise Argent. An inescutcheon in chief Argent a cross Gules an escutcheon Azure three fleurs-de-lis Or.">Quarterly 1st and 4th Sable a lion rampant on a canton Argent a cross Gules...</a>[^2] — [arms of Winston Churchill](https://winstonchurchill.org/resources/reference/the-armorial-bearings-of-sir-winston-churchill/)
 
-Mix and match, or hit the random button! Just note that the very long tail of charges and unusual phrasing isn't always supported. Check [the formal grammar](/assets/blazonry/grammar.txt) for details.
+Write your own, mix and match, or hit the random button! Just note that the very long tail of charges and unusual phrasing isn't always supported. Check [the formal grammar](/assets/blazonry/grammar.txt) for details.
 
 {% include alert.html
 kind="danger"
