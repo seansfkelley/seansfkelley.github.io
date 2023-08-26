@@ -12,7 +12,6 @@ TODO
     element knows how to clip itself
   - alternately, what if this just switched to masks instead of clip paths? would it just work?
 - allow multiple charges in party-per
-- remove `path`
 */
 /*
 FUTURE WORK and KNOWN ISSUES
@@ -50,9 +49,7 @@ NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
 - I did not want _any_ dependencies except the parser, so I re-rolled some things that probably have
   good library implementations, like SVG element factories and SVG paths.
-- There are several eras of implementation represented here. This surfaces as, in particular:
-  - a mix of hardcoded values and values mathemetically derived from the fields width/height
-  - a mix of string-y things like `path` and object-y things like `PathCommand`
+- There are a number of hardcoded values still present in some of the older graphics.
 - An SVG path editor/debugger is an essential tool. I used https://yqnn.github.io/svg-path-editor/.
 */
 // Do this first thing so there's something to see ASAP!
