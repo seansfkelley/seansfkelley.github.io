@@ -186,7 +186,12 @@ interface Blazon {
   inescutcheon?: Inescutcheon;
 }
 
-type ComplexContent = SimpleField | VariationField | Partitioned | Quartered;
+type ComplexContent =
+  | SimpleField
+  | VariationField
+  | PartitionedField
+  | Quartered;
+
 type Charge = Ordinary | NonOrdinaryCharge | Canton | On;
 
 interface SimpleField {
@@ -206,7 +211,7 @@ interface Variation {
   count?: number;
 }
 
-interface Partitioned {
+interface PartitionedField {
   partition: Direction;
   first: Tincture;
   second: Tincture;

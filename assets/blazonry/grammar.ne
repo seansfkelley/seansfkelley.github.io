@@ -24,10 +24,10 @@ Blazon ->
   ) {% $({ main: 0, inescutcheon: 1 }) %}
 
 ComplexContent ->
-    SimpleField    {% id %}
-  | VariationField {% id %}
-  | Partitioned    {% id %}
-  | Quartered      {% id %}
+    SimpleField      {% id %}
+  | VariationField   {% id %}
+  | PartitionedField {% id %}
+  | Quartered        {% id %}
 
 SimpleField ->
   Tincture (__ Charge {% nth(1) %}):* {% $({
@@ -42,7 +42,7 @@ VariationField ->
 Variation ->
   VariationName (__ "of" __ Plural {% nth(3) %}):? {% $({ type: 0, count: 1 }) %}
 
-Partitioned ->
+PartitionedField ->
   (("party" | "parted") __):? "per" __ Direction (__ Treatment {% nth(1) %}):? __ Tincture __ "and" __ Tincture (__ Charge {% nth(1) %}):* {% $({
     partition: 3, treatment: 4, first: 6, second: 10, charges: 11
   }) %}
