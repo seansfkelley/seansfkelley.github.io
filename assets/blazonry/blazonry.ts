@@ -982,24 +982,27 @@ const svg = {
   },
 };
 
-const complexSvgCache: Record<string, SVGElement> = {};
+const complexSvgCache: Record<string, Promise<SVGElement>> = {};
 async function fetchComplexSvg(
   kind: string,
   variant?: string
 ): Promise<SVGElement> {
   const key = variant ? `${kind}-${variant}` : kind;
   if (!(key in complexSvgCache)) {
-    const response = await fetch(`/assets/blazonry/svg/${key}.svg`);
-    const root = new DOMParser().parseFromString(
-      await response.text(),
-      "image/svg+xml"
-    ).documentElement as any as SVGElement;
-    const wrapper = svg.g();
-    wrapper.classList.add(kind);
-    for (const c of root.children) {
-      wrapper.appendChild(c);
-    }
-    complexSvgCache[key] = wrapper;
+    complexSvgCache[key] = fetch(`/assets/blazonry/svg/${key}.svg`).then(
+      async (response) => {
+        const root = new DOMParser().parseFromString(
+          await response.text(),
+          "image/svg+xml"
+        ).documentElement as any as SVGElement;
+        const wrapper = svg.g();
+        wrapper.classList.add(kind);
+        for (const c of root.children) {
+          wrapper.appendChild(c);
+        }
+        return wrapper;
+      }
+    );
   }
 
   return complexSvgCache[key];
