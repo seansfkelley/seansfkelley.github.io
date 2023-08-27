@@ -1,7 +1,6 @@
 /*
 TODO
 -------------------------------------------------------------------------------
-- Placement -- at least in the case of chevron and saltire, they are rotated to match
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
   - argent a chevron embattled sable
   - argent a cross embattled-counter-embattled sable
@@ -34,6 +33,8 @@ FUTURE WORK and KNOWN ISSUES
 - When several charges in a row have the same tincture, it is idiomatically only specified once at
   the end. The parser does not support that, instead requiring every charge to have a tincture
   specified.
+- Some currently-unsupported charges get special layout behavior, for instance, swords on a chevron
+  or saltire should be rotated according to their position on the ordinary, rather than always up.
 - It's unclear what to do with nested counterchanges. If you have "on a canton counterchanged a
   rondel counterchanged" on a variated background, does the rondel match the background variation,
   or does it become invisible because it matches the canton's counterchanging?
@@ -3188,12 +3189,14 @@ const INESCUTCHEON_SKIP_RATIO = 0.6;
 function generateRandomBlazon() {
   function generate() {
     return (
-      // 20 chosen empirically. Seems nice. Gets lions, where 12 does not.
+      // 20 chosen empirally.
       Unparser(grammar, grammar.ParserStart, 20)
         // This is restatement of the regex rule for acceptable whitespace.
         .replaceAll(/[ \t\n\v\f,;:]+/g, " ")
         .trim()
-        .replace(/ ?\.?$/, ".")
+        // Periods are the only punctuation of significance; they separate the main blazon from
+        // augmentations.
+        .replaceAll(/ ?\./g, ".")
         .replaceAll(
           // It's REALLY hard to generate a random blazon where counterchanged makes sense, since the
           // grammar does not express a relationship between the context ("party per") and the tincture.
@@ -3215,6 +3218,8 @@ function generateRandomBlazon() {
           (tincture) => `${tincture[0].toUpperCase()}${tincture.slice(1)}`
         )
         .replaceAll(/^.|\. ./g, (l) => l.toUpperCase())
+        // Periods are optional when there isn't an inescutcheon, so make sure there's always one.
+        .replace(/\.?$/, ".")
     );
   }
 
