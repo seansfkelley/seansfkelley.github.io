@@ -15,15 +15,70 @@ custom-css-list:
 
 > In heraldry and heraldic vexillology, a **blazon** is a formal description of a coat of arms, flag or similar emblem, from which the reader can reconstruct the appropriate image.
 
-Blazonry jargon is highly structured, which makes it a good match for the same sorts of parsers used to implement programming languages. So I took one of those and taught it to parse and render blazons.
-
 <!-- TODO: I would like the simple inline examples to be real blazons, but I don't know how to easily find ones. -->
 
-Blazons have many composable components, from <a href="#" data-example="Gules.">simple colors</a> ("field", and by the way, these links will set the preview, below) and <a href="#" data-example="Argent, a fess Sable.">geometric shapes</a> ("ordinary"), through iconography both <a href="#" data-example="Argent, six mullets Sable.">simple</a> and <a href="#" data-example="Sable, a lion rampant Gules armed and langued Or.">complex</a> ("charge"), into <a href="#" data-example="Barry bendy of eight Azure and Argent.">patterned backgrounds</a> ("variation") and <a href="#" data-example="Party per pale Argent and Gules, three rondels counterchanged.">subdivisions</a> ("partition").
+Blazons have many composable components, from <a href="#" data-example="Gules.">simple colors</a> ("tinctures", and by the way, these links will set the preview, below) and <a href="#" data-example="Argent, a fess Sable.">geometric shapes</a> ("ordinary"), through iconography both <a href="#" data-example="Argent, six mullets Sable.">simple</a> and <a href="#" data-example="Sable, a lion rampant Gules armed and langued Or.">complex</a> ("charge"), into <a href="#" data-example="Barry bendy of eight Azure and Argent.">patterned backgrounds</a> ("variation") and <a href="#" data-example="Party per pale Argent and Gules, three rondels counterchanged.">subdivisions</a> ("partition").
 
-Blazons (and the coats of arms they represent) can get [enormously complicated](https://en.wikipedia.org/wiki/Richard_Temple-Nugent-Brydges-Chandos-Grenville,_2nd_Duke_of_Buckingham_and_Chandos#/media/File:Stowe_Armorial.jpg).
+{% include alert.html
+kind="danger"
+id="no-javascript-alert"
+title="JavaScript Required"
+content="This page is interactive, and only works with JavaScript enabled!"
+%}
 
-Try these:
+<div class="center hidden" id="interactive">
+  <svg
+    id="rendered"
+    width="300"
+    height="360"
+    viewBox="-52 -62 104 124"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  ></svg>
+
+  <div id="ambiguous" class="hidden alert alert-warning">
+    <span>Ambiguous blazon! Navigate variations:</span>
+    <button id="ambiguous-previous">⇦</button>
+    <span id="ambiguous-count"></span>
+    <button id="ambiguous-next">⇨</button>
+  </div>
+
+  <pre id="error" class="hidden"></pre>
+
+  <form id="form">
+    <textarea id="blazon-input" rows="3" placeholder="Enter blazon..." spellcheck="false">Paly of thirteen Argent and Gules, a chief Azure.</textarea>
+    <div>
+      <button id="random-blazon" type="button">
+      Generate Hideous Random Blazon
+      </button>
+      <button type="submit">
+      Render It!
+      </button>
+    </div>
+  </form>
+
+  <details id="ast-wrapper">
+  <summary>View parsed syntax tree</summary>
+  <pre id="ast"></pre>
+  </details>
+</div>
+
+Try writing your own! Here's a very non-exhaustive listing of the components:
+
+- tinctures: five colors (<a href="#" data-example="Azure.">azure</a>, <a href="#" data-example="Gules.">gules</a>, <a href="#" data-example="Purpure.">purpure</a>, <a href="#" data-example="Sable.">sable</a>, <a href="#" data-example="Vert.">vert</a>) and two metals (<a href="#" data-example="Argent.">argent</a>, <a href="#" data-example="Or.">or</a>)
+- ordinaries: <a href="#" data-example="Argent, a bend Sable.">bend</a> (or <a href="#" data-example="Argent, a bend sinister Sable.">bend sinister</a>), <a href="#" data-example="Argent, a fess Sable.">fess</a>, <a href="#" data-example="Argent, a pale Sable.">pale</a>, <a href="#" data-example="Argent, a chief Sable.">chief</a>, <a href="#" data-example="Argent, a cross Sable.">cross</a>, <a href="#" data-example="Argent, a chevron Sable.">chevron</a>, <a href="#" data-example="Argent, a saltire Sable.">saltire</a>
+- charges: <a href="#" data-example="Argent, a rondel Sable.">rondel</a>, <a href="#" data-example="Argent, a mullet Sable.">mullet</a>, <a href="#" data-example="Gules, a fret Or.">fret</a>, <a href="#" data-example="Sable, an escallop Argent.">escallop</a>, <a href="#" data-example="Sable, a fleur-de-lys Or.">fleur-de-lys</a>, <a href="#" data-example="Sable, a lion Or.">lion</a>, <a href="#" data-example="Argent, an escutcheon Azure.">escutcheon</a>
+- variations: <a href="#" data-example="Barry Gules and Argent.">barry</a>, <a href="#" data-example="Bendy Gules and Argent.">bendy</a>, <a href="#" data-example="Barry bendy Gules and Argent.">barry bendy</a>, <a href="#" data-example="Checky Gules and Argent.">checky</a>, <a href="#" data-example="Lozengy Gules and Argent.">lozengy</a>, <a href="#" data-example="Chevronny Gules and Argent.">chevronny</a>
+- partitions: <a href="#" data-example="Per pale Gules and Or.">per pale</a>, <a href="#" data-example="Per fess Argent and Vert.">per fess</a>, <a href="#" data-example="Per bend Vert and Gules.">per bend</a>, <a href="#" data-example="Per chevron Argent and Azure.">per chevron</a>, <a href="#" data-example="Per saltire Argent and Sable.">per saltire</a>, <a href="#" data-example="Quarterly first and fourth Sable, second and third Gules.">quarterly</a>
+
+And a very non-exhaustive listing of how you can combine them:
+
+- charges and ordinaries: <a href="#" data-example="Argent a bend Sable between four mullets Sable.">between</a>, <a href="#" data-example="Argent on a bend Sable four mullets Argent.">on top</a>, <a href="#" data-example="Argent on a bend Sable between four mullets Sable four mullets Argent.">both</a> or just <a href="#" data-example="Argent four mullets Sable in bend.">in the shape of</a>
+- multiples: <a href="#" data-example="Argent, ten rondels Vert.">of the same charge</a>, <a href="#" data-example="Argent a cross Gules a lion Or.">charges and ordinaries</a>, or variations both <a href="#" data-example="Chevronny of six, Argent and Azure.">sparse</a> and <a href="#" data-example="Chevronny of twelve, Argent and Azure.">dense</a>
+- ornamentation: for <a href="#" data-example="Argent, a cross engrailed Sable cotised Gules.">ordinaries</a>, <a href="#" data-example="Per bend embattled Vert and Gules.">partitions</a> and even <a href="#" data-example="Sable, a lion passant reguardant Gules armed and langued Or.">some charges</a>
+- blazons in blazons: in <a href="#" data-example="Sable, on a canton Argent a cross Gules between four mullets Gules.">cantons</a>, <a href="#" data-example="Quarterly, first and fourth Sable a lion Or, second and third lozengy Argent and Azure.">quarters</a>, or <a href="#" data-example="Argent, an escutcheon Azure a bend Or.">escutcheons</a>
+
+Note that there are a _lot_ of charges in real blazons, along with slightly variations in phrasing, which aren't all supported. Check [the formal grammar](/assets/blazonry/grammar.txt) if you want specifics. Here's some real ones you can try out, too:
 
 - <a href="#" data-example>Azure, a bend Or.</a>
     <br>
@@ -47,56 +102,12 @@ Try these:
     <br>
     &nbsp;&nbsp;[arms of Winston Churchill](https://winstonchurchill.org/resources/reference/the-armorial-bearings-of-sir-winston-churchill/)
 
-Write your own below, mix and match, or hit the random button! Just note that the very long tail of charges and unusual phrasing isn't always supported. Check [the formal grammar](/assets/blazonry/grammar.txt) for details.
-
-{% include alert.html
-kind="danger"
-id="no-javascript-alert"
-title="JavaScript Required"
-content="This page is interactive, and only works with JavaScript enabled!"
-%}
-
-<div class="center hidden" id="interactive">
-  <form id="form">
-    <textarea id="blazon-input" rows="3" placeholder="Enter blazon..." spellcheck="false">Paly of thirteen Argent and Gules, a chief Azure.</textarea>
-    <div>
-      <button id="random-blazon" type="button">
-      Generate Hideous Random Blazon
-      </button>
-      <button type="submit">
-      Render It!
-      </button>
-    </div>
-  </form>
-
-  <div id="ambiguous" class="hidden alert alert-warning">
-    <span>Ambiguous blazon! Navigate variations:</span>
-    <button id="ambiguous-previous">⇦</button>
-    <span id="ambiguous-count"></span>
-    <button id="ambiguous-next">⇨</button>
-  </div>
-
-  <pre id="error" class="hidden"></pre>
-
-  <svg
-    id="rendered"
-    width="300"
-    height="360"
-    viewBox="-52 -62 104 124"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  ></svg>
-
-  <details id="ast-wrapper">
-  <summary>View parsed syntax tree</summary>
-  <pre id="ast"></pre>
-  </details>
-</div>
+Some blazons (and the coats of arms they represent) can get [enormously complicated](https://en.wikipedia.org/wiki/Richard_Temple-Nugent-Brydges-Chandos-Grenville,_2nd_Duke_of_Buckingham_and_Chandos#/media/File:Stowe_Armorial.jpg).
 
 References and introductions for blazonry terminology and structure:
 
 - [International Heraldry & Heralds](https://www.internationalheraldry.com/)
-- [A Grammar of Balzonry – Society for Creative Anachronism](http://heraldry.sca.org/armory/bruce.html)
+- [A Grammar of Blazonry – Society for Creative Anachronism](http://heraldry.sca.org/armory/bruce.html)
 - [Basics of Blazonry – "Lord Eldred Ælfwald, Gordian Knot Herald"](http://dragon_azure.tripod.com/UoA/BasicBlazon.html)
 - [A Guide to Basic Blazonry – The Royal Heraldry Society of Canada](https://www.heraldry.ca/resources/BLAZONRY_GUIDE_10.pdf)
 - [Heraldry and Blazon – U. Chicago](https://penelope.uchicago.edu/~grout/encyclopaedia_romana/britannia/anglo-saxon/flowers/heraldry.html)
