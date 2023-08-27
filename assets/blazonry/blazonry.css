@@ -132,6 +132,7 @@ a[data-example] {
 }
 
 .lion {
+  fill: none;
   stroke-width: 1 !important;
 }
 .lion .outline {
@@ -221,6 +222,9 @@ a[data-example] {
   fill: blueviolet !important;
 }
 
+.escallop {
+  fill: none;
+}
 .escallop .outline {
   stroke: black;
   stroke-opacity: 0.3;
@@ -269,6 +273,9 @@ a[data-example] {
   fill: #701ac0;
 }
 
+.fleur-de-lys {
+  fill: none;
+}
 .fleur-de-lys .outline {
   stroke: black;
   stroke-opacity: 0.3;
