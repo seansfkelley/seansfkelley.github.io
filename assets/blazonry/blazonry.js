@@ -1,13 +1,10 @@
 "use strict";
 /*
-TODO
+WELCOME TO THE MACHINE
 -------------------------------------------------------------------------------
-- embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
-  - argent a chevron embattled sable
-  - argent a cross embattled-counter-embattled sable
-- lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
-*/
-/*
+I hope you enjoy it. I don't normally write 3000-line files, but I didn't want to set up a whole
+deployment pipeline, and it's not _that_ many different concepts. The types help too, right?
+
 FUTURE WORK and KNOWN ISSUES
 -------------------------------------------------------------------------------
 - In general, more vocabulary (charges, ordinaries, postures, treatments, etc.) is always welcome.
@@ -40,6 +37,9 @@ FUTURE WORK and KNOWN ISSUES
   or does it become invisible because it matches the canton's counterchanging?
 - Specialized charges that imply tinctures (or other attributes) like "bezant" (meaning "rondel or")
   are not supported.
+- Embattled(-counter-embattled) treatments can leave visual artifacts due to a bit of a hack... try:
+  - argent a chevron embattled sable
+  - argent a cross embattled-counter-embattled sable
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
@@ -1325,12 +1325,25 @@ async function fleurDeLys({ tincture }) {
 // In the future, they should probably be aggressively deduplicated -- whoever made the heads and
 // bodies did a good job reusing the same elements across the different images, but at the moment
 // we just hardcode each one individually instead of combining N heads * M bodies.
-async function lion({ tincture, armed, langued, attitude }) {
+const HORIZONTALLY_STRETCHED_ATTITUDES = new Set([
+    "passant",
+    "passant-guardant",
+    "passant-reguardant",
+]);
+async function lion({ tincture, armed, langued, attitude, placement, }) {
     const lion = (await fetchComplexSvg("lion", attitude)).cloneNode(true);
     lion.classList.add(tincture);
     lion.classList.add(`armed-${armed}`);
     lion.classList.add(`langued-${langued}`);
-    return lion;
+    if (placement === "pale" && HORIZONTALLY_STRETCHED_ATTITUDES.has(attitude)) {
+        // This is a bit of a hack! But it makes the Bavarian arms look a little less stupid overall.
+        // Really, the passant variants should be naturally wider, as that is how they are typically shown.
+        Transforms.apply(lion, { scale: [2, 1] });
+        return svg.g(lion);
+    }
+    else {
+        return lion;
+    }
 }
 async function escutcheon({ content }) {
     const escutcheon = svg.g(field("argent"), ...(await escutcheonContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
@@ -1357,7 +1370,7 @@ const SIMPLE_CHARGES = { rondel, mullet, fret, escallop, "fleur-de-lys": fleurDe
 // A little unfortunate this dispatching wrapper is necessary, but it's the only way to type-safety
 // render based on the string. Throwing all charges, simple and otherwise, into a constant mapping
 // together means the inferred type of the function has `never` as the first argument. :(
-async function renderCharge(charge) {
+async function nonOrdinaryCharge(charge) {
     switch (charge.charge) {
         case "rondel":
         case "mullet":
@@ -1837,7 +1850,7 @@ async function simpleContent(element) {
         const children = [];
         const locator = CHARGE_LOCATORS[element.placement ?? "none"];
         for (const [translate, scale] of locator.forCount(element.count)) {
-            const rendered = await renderCharge(element);
+            const rendered = await nonOrdinaryCharge(element);
             Transforms.apply(rendered, {
                 translate,
                 scale,
@@ -2047,7 +2060,7 @@ async function on({ on, surround, charge }) {
         }
         const locator = ORDINARIES[on.ordinary].on;
         for (const [translate, scale] of locator.forCount(charge.count)) {
-            const c = await renderCharge(charge);
+            const c = await nonOrdinaryCharge(charge);
             Transforms.apply(c, {
                 translate,
                 scale,
@@ -2062,7 +2075,7 @@ async function on({ on, surround, charge }) {
         }
         const locator = ORDINARIES[on.ordinary].between;
         for (const [translate, scale] of locator.forCount(surround.count)) {
-            const c = await renderCharge(surround);
+            const c = await nonOrdinaryCharge(surround);
             Transforms.apply(c, {
                 translate,
                 scale,
