@@ -18,12 +18,12 @@ SIMPLE_CHARGE[S, P] ->
     }) %}
 
 Blazon ->
-  ComplexContent (
+  EscutcheonContent (
       _ "." __ Inescutcheon _ ".":? {% nth(3) %}
     | (_ "."):?                     {% nop %}
   ) {% $({ main: 0, inescutcheon: 1 }) %}
 
-ComplexContent ->
+EscutcheonContent ->
     SimpleField      {% id %}
   | VariationField   {% id %}
   | PartitionedField {% id %}
@@ -63,7 +63,7 @@ Charge ->
 Quartering ->
   (
     (QuarterName __ {% nth(0) %}):+ "and" __ {% nth(0) %}
-  ):? QuarterName __ ComplexContent {% (d) => ({ quarters: [...(d[0] ?? []), d[1]], content: d[3] }) %}
+  ):? QuarterName __ EscutcheonContent {% (d) => ({ quarters: [...(d[0] ?? []), d[1]], content: d[3] }) %}
 
 Canton ->
     "a" __ "canton" __ Tincture                                           {% $({ canton: 4 }) %}
@@ -128,7 +128,7 @@ Escutcheon ->
     # Don't bother to restrict to "an" as singular, this makes it easier to play with different charges.
       Singular __ "escutcheon" {% literal(1) %}
     | Plural __ "escutcheons"  {% nth(0) %}
-  ) __ ComplexContent (__ Posture {% nth(1) %}):? (__ Placement {% nth(1) %}):? {% (d) => ({
+  ) __ EscutcheonContent (__ Posture {% nth(1) %}):? (__ Placement {% nth(1) %}):? {% (d) => ({
     charge: "escutcheon",
     count: d[0],
     content: d[2],
@@ -137,7 +137,7 @@ Escutcheon ->
   }) %}
 
 Inescutcheon ->
-  "an" __ "inescutcheon" (__ Location {% nth(1) %}):? __ ComplexContent {% $({ location: 3, content: 5 }) %}
+  "an" __ "inescutcheon" (__ Location {% nth(1) %}):? __ EscutcheonContent {% $({ location: 3, content: 5 }) %}
 
 Singular ->
     "a"  {% nop %}

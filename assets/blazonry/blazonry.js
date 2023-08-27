@@ -7,7 +7,6 @@ TODO
   - argent a chevron embattled sable
   - argent a cross embattled-counter-embattled sable
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
-- deduplicate rendering for partitioned and variation
 */
 /*
 FUTURE WORK and KNOWN ISSUES
@@ -47,6 +46,20 @@ NOTES ON THE IMPLEMENTATION
   good library implementations, like SVG element factories and SVG paths.
 - There are a number of hardcoded values still present in some of the older graphics.
 - An SVG path editor/debugger is an essential tool. I used https://yqnn.github.io/svg-path-editor/.
+- The main interfaces are in an awkward relationship that does not reflect the concepts from
+  heraldry, but makes _some_ operations easier. I would like to both DRY them up and map them more
+  closely. To wit:
+  - The various `*Field` types should be combined into a `Field` union and have `charges` pulled
+    out to a containing class (`BlazonContent`?) unioned with `Quartered`. Thus, rendering of the
+    field would be centralized in `field` rather than smeared across a few places.
+  - `On` is not a real thing. Shouldn't `Ordinary` have `between` and `on` charges?
+  - Aren't cantons a charge? Why do they get top-level treatment, when escutcheons don't?
+  - `PartitionedField` and `VariationField` are highly duplicative, but probably shouldn't be.
+  - `Quartered` should be a version of `PartitionedField`... right?
+  - The major open question preventing this change is: are there blazons that reuse a partition to
+    put charges in the dexter/sinister/chief/base locations? Or would `PartitionedField.charges`
+    always be treated the same, location-wise, as `SimpleField.charges`? If so, DRYing up fields
+    would mean un-DRYing charge locations in the case of partitioned fields.
 */
 // Do this first thing so there's something to see ASAP!
 document.querySelector("#no-javascript-alert").remove();
@@ -1319,7 +1332,7 @@ async function lion({ tincture, armed, langued, attitude }) {
     return lion;
 }
 async function escutcheon({ content }) {
-    const escutcheon = svg.g(field("argent"), ...(await complexContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
+    const escutcheon = svg.g(field("argent"), ...(await escutcheonContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
     escutcheon.setAttribute("clip-path", `path("${PathCommand.toDString(ESCUTCHEON_PATH)}")`);
     Transforms.apply(escutcheon, {
         scale: 0.35,
@@ -1837,7 +1850,7 @@ async function simpleContent(element) {
         assertNever(element);
     }
 }
-async function complexContent(content) {
+async function escutcheonContent(content) {
     // Note that counterchanging happens shallowly. If you have e.g. "on an ordinary counterchange a
     // charge counterchanged", both will receive the _same_ patterning, even though the charge is on
     // top of the ordinary (and could justifiably be re-reversed, matching the background variation).
@@ -1956,7 +1969,7 @@ async function complexContent(content) {
         }
         for (const quartering of content.quarters) {
             for (const quarter of quartering.quarters) {
-                quartered[quarter].append(...(await complexContent(quartering.content)));
+                quartered[quarter].append(...(await escutcheonContent(quartering.content)));
             }
         }
         for (const e of Object.values(quartered)) {
@@ -2060,7 +2073,7 @@ async function on({ on, surround, charge }) {
     return children;
 }
 async function inescutcheon(parent, { location, content }) {
-    const escutcheon = svg.g(field("argent"), ...(await complexContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
+    const escutcheon = svg.g(field("argent"), ...(await escutcheonContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
     escutcheon.setAttribute("clip-path", `path("${PathCommand.toDString(ESCUTCHEON_PATH)}")`);
     Transforms.apply(escutcheon, {
         scale: 0.25,
@@ -2106,7 +2119,7 @@ async function parseAndRenderBlazon() {
         rendered.appendChild(container);
         // Make sure there's always a default background.
         container.appendChild(field("argent"));
-        container.append(...(await complexContent(blazon.main)));
+        container.append(...(await escutcheonContent(blazon.main)));
         if (blazon.inescutcheon != null) {
             await inescutcheon(container, blazon.inescutcheon);
         }
