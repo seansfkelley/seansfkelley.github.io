@@ -36,6 +36,13 @@ input {
   }
 }
 
+textarea {
+  color: var(--text-color);
+  background-color: var(--input-background-color);
+  border-radius: $input-border-radius;
+  border: 1px solid var(--input-border-color);
+}
+
 body,
 h1,
 h2,
