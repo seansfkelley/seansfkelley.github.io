@@ -1,11 +1,5 @@
 /*
-TODO
--------------------------------------------------------------------------------
-- lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
-*/
-
-/*
-WELCOME TO THE CODE
+WELCOME TO THE MACHINE
 -------------------------------------------------------------------------------
 I hope you enjoy it. I don't normally write 3000-line files, but I didn't want to set up a whole
 deployment pipeline, and it's not _that_ many different concepts. The types help too, right?
@@ -271,7 +265,13 @@ interface LionCharge extends BaseCharge {
   tincture: Tincture;
   armed: Tincture;
   langued: Tincture;
-  attitude: string;
+  attitude:
+    | "rampant"
+    | "rampant-guardant"
+    | "rampant-reguardant"
+    | "passant"
+    | "passant-guardant"
+    | "passant-reguardant";
 }
 
 interface EscutcheonCharge extends BaseCharge {
@@ -2102,12 +2102,30 @@ async function fleurDeLys({ tincture }: SimpleCharge) {
 // In the future, they should probably be aggressively deduplicated -- whoever made the heads and
 // bodies did a good job reusing the same elements across the different images, but at the moment
 // we just hardcode each one individually instead of combining N heads * M bodies.
-async function lion({ tincture, armed, langued, attitude }: LionCharge) {
+const HORIZONTALLY_STRETCHED_ATTITUDES: Set<LionCharge["attitude"]> = new Set([
+  "passant",
+  "passant-guardant",
+  "passant-reguardant",
+]);
+async function lion({
+  tincture,
+  armed,
+  langued,
+  attitude,
+  placement,
+}: LionCharge) {
   const lion = (await fetchComplexSvg("lion", attitude)).cloneNode(true);
   lion.classList.add(tincture);
   lion.classList.add(`armed-${armed}`);
   lion.classList.add(`langued-${langued}`);
-  return lion;
+  if (placement === "pale" && HORIZONTALLY_STRETCHED_ATTITUDES.has(attitude)) {
+    // This is a bit of a hack! But it makes the Bavarian arms look a little less stupid overall.
+    // Really, the passant variants should be naturally wider, as that is how they are typically shown.
+    Transforms.apply(lion, { scale: [2, 1] });
+    return svg.g(lion);
+  } else {
+    return lion;
+  }
 }
 
 async function escutcheon({ content }: EscutcheonCharge) {
@@ -2149,7 +2167,9 @@ const SIMPLE_CHARGES: {
 // A little unfortunate this dispatching wrapper is necessary, but it's the only way to type-safety
 // render based on the string. Throwing all charges, simple and otherwise, into a constant mapping
 // together means the inferred type of the function has `never` as the first argument. :(
-async function renderCharge(charge: NonOrdinaryCharge): Promise<SVGElement> {
+async function nonOrdinaryCharge(
+  charge: NonOrdinaryCharge
+): Promise<SVGElement> {
   switch (charge.charge) {
     case "rondel":
     case "mullet":
@@ -2750,7 +2770,7 @@ async function simpleContent(element: Charge): Promise<SVGElement[]> {
     const children: SVGElement[] = [];
     const locator = CHARGE_LOCATORS[element.placement ?? "none"];
     for (const [translate, scale] of locator.forCount(element.count)) {
-      const rendered = await renderCharge(element);
+      const rendered = await nonOrdinaryCharge(element);
       Transforms.apply(rendered, {
         translate,
         scale,
@@ -2996,7 +3016,7 @@ async function on({ on, surround, charge }: On): Promise<SVGElement[]> {
 
     const locator = ORDINARIES[on.ordinary].on;
     for (const [translate, scale] of locator.forCount(charge.count)) {
-      const c = await renderCharge(charge);
+      const c = await nonOrdinaryCharge(charge);
       Transforms.apply(c, {
         translate,
         scale,
@@ -3013,7 +3033,7 @@ async function on({ on, surround, charge }: On): Promise<SVGElement[]> {
 
     const locator = ORDINARIES[on.ordinary].between;
     for (const [translate, scale] of locator.forCount(surround.count)) {
-      const c = await renderCharge(surround);
+      const c = await nonOrdinaryCharge(surround);
       Transforms.apply(c, {
         translate,
         scale,
