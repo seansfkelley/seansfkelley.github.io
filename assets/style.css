@@ -273,6 +273,13 @@ input[type=button]:hover:not(:disabled) {
   background-color: var(--input-hover-color);
 }
 
+textarea {
+  color: var(--text-color);
+  background-color: var(--input-background-color);
+  border-radius: 2px;
+  border: 1px solid var(--input-border-color);
+}
+
 body,
 h1,
 h2,

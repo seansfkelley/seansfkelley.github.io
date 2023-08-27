@@ -2,6 +2,10 @@
   display: none !important;
 }
 
+a[data-example] {
+  color: darkcyan;
+}
+
 .fill-argent {
   fill: whitesmoke;
 }
