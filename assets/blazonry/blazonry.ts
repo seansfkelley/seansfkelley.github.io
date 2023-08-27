@@ -1,13 +1,15 @@
 /*
 TODO
 -------------------------------------------------------------------------------
-- embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
-  - argent a chevron embattled sable
-  - argent a cross embattled-counter-embattled sable
 - lion passant probably should be a lot wiiiiider -- should charges be able to define special treatment for different counts?
 */
 
 /*
+WELCOME TO THE CODE
+-------------------------------------------------------------------------------
+I hope you enjoy it. I don't normally write 3000-line files, but I didn't want to set up a whole
+deployment pipeline, and it's not _that_ many different concepts. The types help too, right?
+
 FUTURE WORK and KNOWN ISSUES
 -------------------------------------------------------------------------------
 - In general, more vocabulary (charges, ordinaries, postures, treatments, etc.) is always welcome.
@@ -40,6 +42,9 @@ FUTURE WORK and KNOWN ISSUES
   or does it become invisible because it matches the canton's counterchanging?
 - Specialized charges that imply tinctures (or other attributes) like "bezant" (meaning "rondel or")
   are not supported.
+- Embattled(-counter-embattled) treatments can leave visual artifacts due to a bit of a hack... try:
+  - argent a chevron embattled sable
+  - argent a cross embattled-counter-embattled sable
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
