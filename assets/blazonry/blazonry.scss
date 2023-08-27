@@ -16,6 +16,10 @@ $colors: (
   display: none !important;
 }
 
+a[data-example] {
+  color: darkcyan;
+}
+
 @each $key, $val in $colors {
   .fill-#{"" + $key} {
     fill: $val;

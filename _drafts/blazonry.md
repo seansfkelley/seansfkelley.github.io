@@ -17,7 +17,7 @@ custom-css-list:
 
 Blazonry jargon is highly structured, which makes it a good match for the same sorts of parsers used to implement programming languages. So I took one of those and taught it to parse and render blazons.
 
-Blazons have many composable components, from <a href="#" data-example="Gules.">simple colors</a> ("field") and <a href="#" data-example="Argent, a fess Sable.">geometric shapes</a> ("ordinary"), through iconography both <a href="#" data-example="Argent, six mullets Sable.">simple</a> and <a href="#" data-example="Sable, a lion rampant Gules armed and langued Or.">complex</a> ("charge"), into <a href="#" data-example="Barry bendy of eight Azure and Argent.">patterned backgrounds</a> ("varied") and <a href="#" data-example="Party per pale Argent and Gules, three rondels counterchanged.">subdivisions</a> ("party").
+Blazons have many composable components, from <a href="#" data-example="Gules.">simple colors</a> ("field", and by the way, these links will set the preview, below) and <a href="#" data-example="Argent, a fess Sable.">geometric shapes</a> ("ordinary"), through iconography both <a href="#" data-example="Argent, six mullets Sable.">simple</a> and <a href="#" data-example="Sable, a lion rampant Gules armed and langued Or.">complex</a> ("charge"), into <a href="#" data-example="Barry bendy of eight Azure and Argent.">patterned backgrounds</a> ("varied") and <a href="#" data-example="Party per pale Argent and Gules, three rondels counterchanged.">subdivisions</a> ("party").
 
 Blazons (and the coats of arms they represent) can get [enormously complicated](https://en.wikipedia.org/wiki/Richard_Temple-Nugent-Brydges-Chandos-Grenville,_2nd_Duke_of_Buckingham_and_Chandos#/media/File:Stowe_Armorial.jpg).
 
@@ -45,7 +45,7 @@ Try these:
     <br>
     &nbsp;&nbsp;[arms of Winston Churchill](https://winstonchurchill.org/resources/reference/the-armorial-bearings-of-sir-winston-churchill/)
 
-Write your own, mix and match, or hit the random button! Just note that the very long tail of charges and unusual phrasing isn't always supported. Check [the formal grammar](/assets/blazonry/grammar.txt) for details.
+Write your own below, mix and match, or hit the random button! Just note that the very long tail of charges and unusual phrasing isn't always supported. Check [the formal grammar](/assets/blazonry/grammar.txt) for details.
 
 {% include alert.html
 kind="danger"
