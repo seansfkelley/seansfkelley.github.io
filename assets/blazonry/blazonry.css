@@ -90,6 +90,7 @@ a[data-example] {
 #ast-wrapper {
   width: 100%;
   box-sizing: border-box;
+  margin-top: 6px;
   margin-bottom: 12px;
 }
 
@@ -104,8 +105,10 @@ a[data-example] {
   resize: vertical;
 }
 #form > div {
+  width: 100%;
   margin-top: 6px;
-  float: right;
+  display: flex;
+  justify-content: space-between;
 }
 #form > div button {
   margin: 0;
@@ -113,7 +116,7 @@ a[data-example] {
 
 #ambiguous {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -138,10 +141,13 @@ a[data-example] {
 .lion .outline {
   stroke: black;
 }
-.lion .teeth, .lion .white {
+.lion .teeth,
+.lion .white {
   fill: white;
 }
-.lion .ear, .lion .pupil, .lion .medial-sulcus {
+.lion .ear,
+.lion .pupil,
+.lion .medial-sulcus {
   fill: black;
 }
 .lion.argent .body,
