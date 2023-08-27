@@ -17,6 +17,8 @@ custom-css-list:
 
 Blazonry jargon is highly structured, which makes it a good match for the same sorts of parsers used to implement programming languages. So I took one of those and taught it to parse and render blazons.
 
+<!-- TODO: I would like the simple inline examples to be real blazons, but I don't know how to easily find ones. -->
+
 Blazons have many composable components, from <a href="#" data-example="Gules.">simple colors</a> ("field", and by the way, these links will set the preview, below) and <a href="#" data-example="Argent, a fess Sable.">geometric shapes</a> ("ordinary"), through iconography both <a href="#" data-example="Argent, six mullets Sable.">simple</a> and <a href="#" data-example="Sable, a lion rampant Gules armed and langued Or.">complex</a> ("charge"), into <a href="#" data-example="Barry bendy of eight Azure and Argent.">patterned backgrounds</a> ("variation") and <a href="#" data-example="Party per pale Argent and Gules, three rondels counterchanged.">subdivisions</a> ("partition").
 
 Blazons (and the coats of arms they represent) can get [enormously complicated](https://en.wikipedia.org/wiki/Richard_Temple-Nugent-Brydges-Chandos-Grenville,_2nd_Duke_of_Buckingham_and_Chandos#/media/File:Stowe_Armorial.jpg).
@@ -91,9 +93,11 @@ content="This page is interactive, and only works with JavaScript enabled!"
   </details>
 </div>
 
-References for blazon terminology and structure:
+References and introductions for blazonry terminology and structure:
 
+- [International Heraldry & Heralds](https://www.internationalheraldry.com/)
 - [A Grammar of Balzonry – Society for Creative Anachronism](http://heraldry.sca.org/armory/bruce.html)
+- [Basics of Blazonry – "Lord Eldred Ælfwald, Gordian Knot Herald"](http://dragon_azure.tripod.com/UoA/BasicBlazon.html)
 - [A Guide to Basic Blazonry – The Royal Heraldry Society of Canada](https://www.heraldry.ca/resources/BLAZONRY_GUIDE_10.pdf)
 - [Heraldry and Blazon – U. Chicago](https://penelope.uchicago.edu/~grout/encyclopaedia_romana/britannia/anglo-saxon/flowers/heraldry.html)
 - [DrawShield](https://drawshield.net/index.html) (turns out someone already made a blazon renderer...!)
