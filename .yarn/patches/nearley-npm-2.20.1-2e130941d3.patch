@@ -1,5 +1,5 @@
 diff --git a/lib/unparse.js b/lib/unparse.js
-index 51194102043079b6e2cc9add125e02e5340788dd..0d9acd17176a38b3b9056d389ec8918dff5bc4a4 100644
+index 51194102043079b6e2cc9add125e02e5340788dd..9c370d2f9d21b908f86249a151a85e51878c2c89 100644
 --- a/lib/unparse.js
 +++ b/lib/unparse.js
 @@ -1,12 +1,10 @@
@@ -18,12 +18,17 @@ index 51194102043079b6e2cc9add125e02e5340788dd..0d9acd17176a38b3b9056d389ec8918d
  
      function genRandom(grammar, start) {
          // The first-generation generator. It just spews out stuff randomly, and is
-@@ -54,13 +52,15 @@
+@@ -53,14 +51,19 @@
+         // predicate, into something that counts the number of trees of depth d).
  
          var rules = grammar.rules;
-         var min_depths_rule = [];
+-        var min_depths_rule = [];
++        var precomputed_min_depths = [];
++
++        var min_depth_rule_cache = [];
 +        for (var i=0; i<rules.length; i++) {
-+            min_depth_rule(i, []);
++            min_depth_rule_cache = [];
++            precomputed_min_depths[i] = min_depth_rule(i, []);
 +        }
  
          function synth_nt(name, depth) {
@@ -32,7 +37,25 @@ index 51194102043079b6e2cc9add125e02e5340788dd..0d9acd17176a38b3b9056d389ec8918d
              for (var i=0; i<rules.length; i++) {
 -                min_depths_rule = [];
 -                var size = min_depth_rule(i, []);
-+                var size = min_depths_rule[i];
++                var size = precomputed_min_depths[i];
                  if (rules[i].name === name) {
                      min_min_depth = Math.min(min_min_depth, size);
                      if (size < depth) {
+@@ -104,7 +107,7 @@
+             return d;
+         }
+         function min_depth_rule(idx, visited) {
+-            if (min_depths_rule[idx] !== undefined) return min_depths_rule[idx];
++            if (min_depth_rule_cache[idx] !== undefined) return min_depth_rule_cache[idx];
+ 
+             var d = 1;
+             for (var i=0; i<rules[idx].symbols.length; i++) {
+@@ -113,7 +116,7 @@
+                     d = Math.max(d, 1+min_depth_nt(tok, visited));
+                 }
+             }
+-            min_depths_rule[idx] = d;
++            min_depth_rule_cache[idx] = d;
+             return d;
+         }
+ 
