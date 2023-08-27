@@ -35,6 +35,7 @@ FUTURE WORK and KNOWN ISSUES
 - It's unclear what to do with nested counterchanges. If you have "on a canton counterchanged a
   rondel counterchanged" on a variated background, does the rondel match the background variation,
   or does it become invisible because it matches the canton's counterchanging?
+- Ermine and other furs are not supported.
 - Specialized charges that imply tinctures (or other attributes) like "bezant" (meaning "rondel or")
   are not supported.
 - Embattled(-counter-embattled) treatments can leave visual artifacts due to a bit of a hack... try:
