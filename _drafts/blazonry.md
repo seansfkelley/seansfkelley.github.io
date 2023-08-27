@@ -23,13 +23,27 @@ Blazons (and the coats of arms they represent) can get [enormously complicated](
 
 Try these:
 
-- <a href="#" data-example>Azure, a bend Or.</a> — as made famous in the medieval times by [_Scrope v. Grosvenor_](https://en.wikipedia.org/wiki/Scrope_v_Grosvenor)
-- <a href="#" data-example>Argent, a cross Gules.</a> — the [Cross of St. George](https://en.wikipedia.org/wiki/Saint_George's_Cross)
-- <a href="#" data-example>Per pale Sable and Argent, a fess embattled counterchanged.</a> — arms of [Muri bei Bern, Switzerland](https://en.wikipedia.org/wiki/Muri_bei_Bern)
-- <a href="#" data-example>Paly of six Or and Sable, a bend counterchanged.</a> — arms of the [1st Baron Baltimore](https://en.wikipedia.org/wiki/George_Calvert,_1st_Baron_Baltimore), yes, [that Baltimore](https://en.wikipedia.org/wiki/Flag_of_Baltimore)
-- <a href="#" data-example>Azure, a bend Argent cotised Or between six lions rampant Or.</a> — [Bohun family arms](https://en.wikipedia.org/wiki/Bohun_family), to which Henry IV and Henry V are related
-- <a href="#" data-example="Quarterly: (1) Sable, a lion rampant Or, armed and langued Gules; (2) per fess indented Gules and Argent; (3) Argent, a lion rampant Azure, armed Or and langued Gules; (4) Or, three lions passant Sable, armed and langued Gules in pale. An inescutcheon fusilly in bends Argent and Azure.">Quarterly: (1) Sable, a lion rampant Or, armed and langued Gules...</a>[^1] — [arms of Bavaria](https://en.wikipedia.org/wiki/Coat_of_arms_of_Bavaria), which you may have seen on [Weihenstephan beers](https://www.weihenstephaner.com/our-brewery)
-- <a href="#" data-example="Quarterly 1st and 4th Sable a lion rampant Argent on a canton Argent a cross Gules; 2nd and 3rd quarterly 1st and 4th Argent 2nd and 3rd Gules a fret Or overall on a bend Sable three escallops bendwise Argent. An inescutcheon in chief Argent a cross Gules an escutcheon Azure three fleurs-de-lis Or.">Quarterly 1st and 4th Sable a lion rampant on a canton Argent a cross Gules...</a>[^2] — [arms of Winston Churchill](https://winstonchurchill.org/resources/reference/the-armorial-bearings-of-sir-winston-churchill/)
+- <a href="#" data-example>Azure, a bend Or.</a>
+    <br>
+    &nbsp;&nbsp;as made famous in the medieval times by [_Scrope v. Grosvenor_](https://en.wikipedia.org/wiki/Scrope_v_Grosvenor)
+- <a href="#" data-example>Argent, a cross Gules.</a>
+    <br>
+    &nbsp;&nbsp;the [Cross of St. George](https://en.wikipedia.org/wiki/Saint_George's_Cross)
+- <a href="#" data-example>Per pale Sable and Argent, a fess embattled counterchanged.</a>
+    <br>
+    &nbsp;&nbsp;arms of [Muri bei Bern, Switzerland](https://en.wikipedia.org/wiki/Muri_bei_Bern)
+- <a href="#" data-example>Paly of six Or and Sable, a bend counterchanged.</a>
+    <br>
+    &nbsp;&nbsp;arms of the [1st Baron Baltimore](https://en.wikipedia.org/wiki/George_Calvert,_1st_Baron_Baltimore), yes, [that Baltimore](https://en.wikipedia.org/wiki/Flag_of_Baltimore)
+- <a href="#" data-example>Azure, a bend Argent cotised Or between six lions rampant Or.</a>
+    <br>
+    &nbsp;&nbsp;[Bohun family arms](https://en.wikipedia.org/wiki/Bohun_family), to which Henry IV and Henry V are related
+- <a href="#" data-example="Quarterly: (1) Sable, a lion rampant Or, armed and langued Gules; (2) per fess indented Gules and Argent; (3) Argent, a lion rampant Azure, armed Or and langued Gules; (4) Or, three lions passant Sable, armed and langued Gules in pale. An inescutcheon fusilly in bends Argent and Azure.">Quarterly: (1) Sable, a lion rampant Or, armed and langued Gules...</a>&nbsp;[^1]
+    <br>
+    &nbsp;&nbsp;[arms of Bavaria](https://en.wikipedia.org/wiki/Coat_of_arms_of_Bavaria), which you may have seen on [Weihenstephan beers](https://www.weihenstephaner.com/our-brewery)
+- <a href="#" data-example="Quarterly 1st and 4th Sable a lion rampant Argent on a canton Argent a cross Gules; 2nd and 3rd quarterly 1st and 4th Argent 2nd and 3rd Gules a fret Or overall on a bend Sable three escallops bendwise Argent. An inescutcheon in chief Argent a cross Gules an escutcheon Azure three fleurs-de-lis Or.">Quarterly 1st and 4th Sable a lion rampant on a canton Argent a cross Gules...</a>&nbsp;[^2]
+    <br>
+    &nbsp;&nbsp;[arms of Winston Churchill](https://winstonchurchill.org/resources/reference/the-armorial-bearings-of-sir-winston-churchill/)
 
 Write your own, mix and match, or hit the random button! Just note that the very long tail of charges and unusual phrasing isn't always supported. Check [the formal grammar](/assets/blazonry/grammar.txt) for details.
 

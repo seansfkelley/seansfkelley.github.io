@@ -3189,12 +3189,14 @@ const INESCUTCHEON_SKIP_RATIO = 0.6;
 function generateRandomBlazon() {
   function generate() {
     return (
-      // 20 chosen empirically. Seems nice. Gets lions, where 12 does not.
+      // 20 chosen empirally.
       Unparser(grammar, grammar.ParserStart, 20)
         // This is restatement of the regex rule for acceptable whitespace.
         .replaceAll(/[ \t\n\v\f,;:]+/g, " ")
         .trim()
-        .replace(/ ?\.?$/, ".")
+        // Periods are the only punctuation of significance; they separate the main blazon from
+        // augmentations.
+        .replaceAll(/ ?\./g, ".")
         .replaceAll(
           // It's REALLY hard to generate a random blazon where counterchanged makes sense, since the
           // grammar does not express a relationship between the context ("party per") and the tincture.
@@ -3216,6 +3218,8 @@ function generateRandomBlazon() {
           (tincture) => `${tincture[0].toUpperCase()}${tincture.slice(1)}`
         )
         .replaceAll(/^.|\. ./g, (l) => l.toUpperCase())
+        // Periods are optional when there isn't an inescutcheon, so make sure there's always one.
+        .replace(/\.?$/, ".")
     );
   }
 
