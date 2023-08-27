@@ -1,7 +1,6 @@
 /*
 TODO
 -------------------------------------------------------------------------------
-- Placement -- at least in the case of chevron and saltire, they are rotated to match
 - embattled ordinaries (chevron, cross counter-embattled) have visible little blips due to the commented-on hack
   - argent a chevron embattled sable
   - argent a cross embattled-counter-embattled sable
@@ -34,6 +33,8 @@ FUTURE WORK and KNOWN ISSUES
 - When several charges in a row have the same tincture, it is idiomatically only specified once at
   the end. The parser does not support that, instead requiring every charge to have a tincture
   specified.
+- Some currently-unsupported charges get special layout behavior, for instance, swords on a chevron
+  or saltire should be rotated according to their position on the ordinary, rather than always up.
 - It's unclear what to do with nested counterchanges. If you have "on a canton counterchanged a
   rondel counterchanged" on a variated background, does the rondel match the background variation,
   or does it become invisible because it matches the canton's counterchanging?
