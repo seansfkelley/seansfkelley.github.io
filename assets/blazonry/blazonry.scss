@@ -58,6 +58,7 @@ a[data-example] {
 #ast-wrapper {
   width: 100%;
   box-sizing: border-box;
+  margin-top: 6px;
   margin-bottom: 12px;
 }
 
@@ -73,8 +74,10 @@ a[data-example] {
   }
 
   > div {
+    width: 100%;
     margin-top: 6px;
-    float: right;
+    display: flex;
+    justify-content: space-between;
 
     button {
       margin: 0;
@@ -84,7 +87,7 @@ a[data-example] {
 
 #ambiguous {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 6px;
 
   display: flex;
   justify-content: center;
@@ -113,11 +116,15 @@ a[data-example] {
     stroke: black;
   }
 
-  .teeth, .white { // white, as in, whites of the eyes
+  .teeth,
+  .white {
+    // white, as in, whites of the eyes
     fill: white;
   }
 
-  .ear, .pupil, .medial-sulcus {
+  .ear,
+  .pupil,
+  .medial-sulcus {
     fill: black;
   }
 

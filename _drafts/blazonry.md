@@ -36,15 +36,6 @@ content="This page is interactive, and only works with JavaScript enabled!"
     xmlns="http://www.w3.org/2000/svg"
   ></svg>
 
-  <div id="ambiguous" class="hidden alert alert-warning">
-    <span>Ambiguous blazon! Navigate variations:</span>
-    <button id="ambiguous-previous">⇦</button>
-    <span id="ambiguous-count"></span>
-    <button id="ambiguous-next">⇨</button>
-  </div>
-
-  <pre id="error" class="hidden"></pre>
-
   <form id="form">
     <textarea id="blazon-input" rows="3" placeholder="Enter blazon..." spellcheck="false">Paly of thirteen Argent and Gules, a chief Azure.</textarea>
     <div>
@@ -56,6 +47,15 @@ content="This page is interactive, and only works with JavaScript enabled!"
       </button>
     </div>
   </form>
+
+  <div id="ambiguous" class="hidden alert alert-warning">
+    <span>Ambiguous blazon! Navigate variations:</span>
+    <button id="ambiguous-previous">⇦</button>
+    <span id="ambiguous-count"></span>
+    <button id="ambiguous-next">⇨</button>
+  </div>
+
+  <pre id="error" class="hidden"></pre>
 
   <details id="ast-wrapper">
   <summary>View parsed syntax tree</summary>
@@ -69,7 +69,7 @@ Try writing your own! Here's a very non-exhaustive listing of the components:
 - ordinaries: <a href="#" data-example="Argent, a bend Sable.">bend</a> (or <a href="#" data-example="Argent, a bend sinister Sable.">bend sinister</a>), <a href="#" data-example="Argent, a fess Sable.">fess</a>, <a href="#" data-example="Argent, a pale Sable.">pale</a>, <a href="#" data-example="Argent, a chief Sable.">chief</a>, <a href="#" data-example="Argent, a cross Sable.">cross</a>, <a href="#" data-example="Argent, a chevron Sable.">chevron</a>, <a href="#" data-example="Argent, a saltire Sable.">saltire</a>
 - charges: <a href="#" data-example="Argent, a roundel Sable.">roundel</a>, <a href="#" data-example="Argent, a mullet Sable.">mullet</a>, <a href="#" data-example="Argent, a fret Sable.">fret</a>, <a href="#" data-example="Sable, an escallop Argent.">escallop</a>, <a href="#" data-example="Sable, a fleur-de-lys Argent.">fleur-de-lys</a>, <a href="#" data-example="Sable, a lion Argent armed and langued Argent.">lion</a>, <a href="#" data-example="Argent, an escutcheon Sable.">escutcheon</a>
 - variations: <a href="#" data-example="Barry Argent and Sable.">barry</a>, <a href="#" data-example="Bendy Argent and Sable.">bendy</a>, <a href="#" data-example="Barry bendy Argent and Sable.">barry bendy</a>, <a href="#" data-example="Checky Argent and Sable.">checky</a>, <a href="#" data-example="Lozengy Argent and Sable.">lozengy</a>, <a href="#" data-example="Chevronny Argent and Sable.">chevronny</a>
-- partitions: <a href="#" data-example="Per pale Argent and Sable.">per pale</a>, <a href="#" data-example="Per fess Argent and Sable.">per fess</a>, <a href="#" data-example="Per bend Argent and Sable.">per bend</a>, <a href="#" data-example="Per chevron Argent and Sable.">per chevron</a>, <a href="#" data-example="Per saltire Argent and Sable.">per saltire</a>, <a href="#" data-example="Quarterly first and fourth Sable, second and third Argent.">quarterly</a>
+- partitions: <a href="#" data-example="Per pale Argent and Sable.">per pale</a>, <a href="#" data-example="Per fess Argent and Sable.">per fess</a>, <a href="#" data-example="Per bend Argent and Sable.">per bend</a>, <a href="#" data-example="Per chevron Argent and Sable.">per chevron</a>, <a href="#" data-example="Per saltire Argent and Sable.">per saltire</a>, <a href="#" data-example="Quarterly first and fourth Argent, second and third Sable.">quarterly</a>
 
 And a very non-exhaustive listing of how you can combine them:
 
@@ -77,6 +77,8 @@ And a very non-exhaustive listing of how you can combine them:
 - layout: charges <a href="#" data-example="Argent, a bend Sable between four mullets Sable.">between</a> and <a href="#" data-example="Argent, on a bend Sable four mullets Argent.">on top</a> of ordinaries (or <a href="#" data-example="Argent, on a bend Sable between four mullets Sable four mullets Argent.">both</a>) or just <a href="#" data-example="Argent, four mullets Sable in bend.">in the shape of ordinaries</a>
 - ornamentation: for <a href="#" data-example="Argent, a cross engrailed Sable cotised Gules.">ordinaries</a>, <a href="#" data-example="Per bend embattled Vert and Gules.">partitions</a> and even <a href="#" data-example="Sable, a lion passant reguardant Gules armed and langued Or.">some charges</a>
 - blazons in blazons: in <a href="#" data-example="Sable, on a canton Argent a cross Gules between four mullets Gules.">cantons</a>, <a href="#" data-example="Quarterly, first and fourth Sable a lion Or, second and third lozengy Argent and Azure.">quarters</a>, or <a href="#" data-example="Argent, an escutcheon Azure a bend Or.">escutcheons</a>
+
+<!-- TODO: Not being able to see these change the preview, since they're so far down the page, is a bummer.-->
 
 Note that there are a _lot_ of ordinaries and charges in real blazons, along with many slight variations in phrasing, which aren't all supported. Check [the formal grammar](/assets/blazonry/grammar.txt) if you want specifics. Here's some real ones you can try out, too:
 
