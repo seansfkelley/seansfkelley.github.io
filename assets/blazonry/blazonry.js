@@ -7,6 +7,8 @@ deployment pipeline, and it's not _that_ many different concepts. The types help
 
 FUTURE WORK and KNOWN ISSUES
 -------------------------------------------------------------------------------
+- Chrome and Safari don't support SVG clipping correctly. A switch to using masks might allow me to
+  remove the commented-upon hack, and even get Churchill's arms looking correct in Safari.
 - In general, more vocabulary (charges, ordinaries, postures, treatments, etc.) is always welcome.
 - Tincture references ("of the first", "of the field", etc.) are not supported. Apparently they are
   generally disliked for introducing complexity and ambiguity.
@@ -193,7 +195,7 @@ var PathCommand;
     PathCommand.rotate = rotate;
 })(PathCommand || (PathCommand = {}));
 function toClipPath(commands) {
-    // Chrome's shitty SVG support needs special treatment, but because they're crushed the browser
+    // Chrome's shitty SVG support needs special treatment, but because they've crushed the browser
     // market, it's more reliable to actually check for Firefox and _don't_ fuck things up if we're
     // running in Firefox. Google is garbage.
     //
