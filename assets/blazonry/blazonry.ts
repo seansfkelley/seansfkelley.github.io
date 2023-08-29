@@ -210,14 +210,14 @@ type Charge = Ordinary | NonOrdinaryCharge | Canton | On;
 
 interface SimpleField {
   tincture: Tincture;
-  charges?: Charge[];
+  charges: Charge[];
 }
 
 interface VariationField {
   variation: Variation;
   first: Tincture;
   second: Tincture;
-  charges?: Charge[];
+  charges: Charge[];
 }
 
 interface Variation {
@@ -229,7 +229,7 @@ interface PartitionedField {
   partition: Direction;
   first: Tincture;
   second: Tincture;
-  charges?: Charge[];
+  charges: Charge[];
   treatment?: Treatment;
 }
 
@@ -284,7 +284,7 @@ type NonOrdinaryCharge = SimpleCharge | LionCharge | EscutcheonCharge;
 
 interface Canton {
   canton: Tincture;
-  charges?: Charge[];
+  charges: Charge[];
 }
 
 interface On {

@@ -1,4 +1,144 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2023-08-27T07:58:10+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Sourdough Loaf (and Recipe Planner)</title><link href="https://blog.sea.nkelley.me/2023/08/06/literate-sourdough/" rel="alternate" type="text/html" title="Sourdough Loaf (and Recipe Planner)" /><published>2023-08-06T00:00:00+00:00</published><updated>2023-08-06T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/08/06/literate-sourdough</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/08/06/literate-sourdough/">&lt;p&gt;This recipe is my transcription and adaptation of &lt;a href=&quot;https://www.youtube.com/watch?v=APEavQg8rMw&quot;&gt;A Non-Baker’s Guide To Making Sourdough Bread&lt;/a&gt;, written in a style loosely inspired by &lt;a href=&quot;https://en.wikipedia.org/wiki/Literate_programming&quot;&gt;literate programming&lt;/a&gt;. A bit more background on what this “literate recipe” thing is at &lt;a href=&quot;/2021/05/17/literate-focaccia/&quot;&gt;my focaccia recipe&lt;/a&gt;.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2023-08-29T05:09:06+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Blazonry</title><link href="https://blog.sea.nkelley.me/2023/08/28/blazonry/" rel="alternate" type="text/html" title="Blazonry" /><published>2023-08-28T00:00:00+00:00</published><updated>2023-08-28T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/08/28/blazonry</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/08/28/blazonry/">&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Blazon&quot;&gt;Wikipedia&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;In heraldry and heraldic vexillology, a &lt;strong&gt;blazon&lt;/strong&gt; is a formal description of a coat of arms, flag or similar emblem, from which the reader can reconstruct the appropriate image.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!-- TODO: I would like the simple inline examples to be real blazons, but I don&apos;t know how to easily find ones. --&gt;
+
+&lt;p&gt;Blazons have many composable components, from &lt;a href=&quot;#&quot; data-example=&quot;Gules.&quot;&gt;simple colors&lt;/a&gt; (“tinctures”, and by the way, these links will set the preview, below) and &lt;a href=&quot;#&quot; data-example=&quot;Argent, a fess Sable.&quot;&gt;geometric shapes&lt;/a&gt; (“ordinary”), through iconography both &lt;a href=&quot;#&quot; data-example=&quot;Argent, six mullets Sable.&quot;&gt;simple&lt;/a&gt; and &lt;a href=&quot;#&quot; data-example=&quot;Sable, a lion rampant Gules armed and langued Or.&quot;&gt;complex&lt;/a&gt; (“charge”), into &lt;a href=&quot;#&quot; data-example=&quot;Barry bendy of eight Azure and Argent.&quot;&gt;patterned backgrounds&lt;/a&gt; (“variation”) and &lt;a href=&quot;#&quot; data-example=&quot;Party per pale Argent and Gules, three roundels counterchanged.&quot;&gt;subdivisions&lt;/a&gt; (“partition”).&lt;/p&gt;
+
+&lt;p class=&quot;alert alert-danger &quot; id=&quot;no-javascript-alert&quot;&gt;&lt;span class=&quot;alert-title&quot;&gt;JavaScript Required&lt;/span&gt;
+    &lt;br /&gt;This page is interactive, and only works with JavaScript enabled!
+&lt;/p&gt;
+
+&lt;div class=&quot;center hidden&quot; id=&quot;interactive&quot;&gt;
+  &lt;svg id=&quot;rendered&quot; width=&quot;300&quot; height=&quot;360&quot; viewBox=&quot;-52 -62 104 124&quot; fill=&quot;none&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;/svg&gt;
+
+  &lt;form id=&quot;form&quot;&gt;
+    &lt;textarea id=&quot;blazon-input&quot; rows=&quot;3&quot; placeholder=&quot;Enter blazon...&quot; spellcheck=&quot;false&quot;&gt;Paly of thirteen Argent and Gules, a chief Azure.&lt;/textarea&gt;
+    &lt;div&gt;
+      &lt;button id=&quot;random-blazon&quot; type=&quot;button&quot;&gt;
+      Generate Hideous Random Blazon
+      &lt;/button&gt;
+      &lt;button type=&quot;submit&quot;&gt;
+      Render It!
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+
+  &lt;div id=&quot;ambiguous&quot; class=&quot;hidden alert alert-warning&quot;&gt;
+    &lt;span&gt;Ambiguous blazon! Navigate variations:&lt;/span&gt;
+    &lt;button id=&quot;ambiguous-previous&quot;&gt;⇦&lt;/button&gt;
+    &lt;span id=&quot;ambiguous-count&quot;&gt;&lt;/span&gt;
+    &lt;button id=&quot;ambiguous-next&quot;&gt;⇨&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;pre id=&quot;error&quot; class=&quot;hidden&quot;&gt;&lt;/pre&gt;
+
+  &lt;details id=&quot;ast-wrapper&quot;&gt;
+  &lt;summary&gt;View parsed syntax tree&lt;/summary&gt;
+  &lt;pre id=&quot;ast&quot;&gt;&lt;/pre&gt;
+  &lt;/details&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Try writing your own! Here’s a very non-exhaustive listing of the components:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;tinctures: five colors (&lt;a href=&quot;#&quot; data-example=&quot;Azure.&quot;&gt;azure&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Gules.&quot;&gt;gules&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Purpure.&quot;&gt;purpure&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Sable.&quot;&gt;sable&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Vert.&quot;&gt;vert&lt;/a&gt;) and two metals (&lt;a href=&quot;#&quot; data-example=&quot;Argent.&quot;&gt;argent&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Or.&quot;&gt;or&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;ordinaries: &lt;a href=&quot;#&quot; data-example=&quot;Argent, a bend Sable.&quot;&gt;bend&lt;/a&gt; (or &lt;a href=&quot;#&quot; data-example=&quot;Argent, a bend sinister Sable.&quot;&gt;bend sinister&lt;/a&gt;), &lt;a href=&quot;#&quot; data-example=&quot;Argent, a fess Sable.&quot;&gt;fess&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Argent, a pale Sable.&quot;&gt;pale&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Argent, a chief Sable.&quot;&gt;chief&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Argent, a cross Sable.&quot;&gt;cross&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Argent, a chevron Sable.&quot;&gt;chevron&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Argent, a saltire Sable.&quot;&gt;saltire&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;charges: &lt;a href=&quot;#&quot; data-example=&quot;Argent, a roundel Sable.&quot;&gt;roundel&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Argent, a mullet Sable.&quot;&gt;mullet&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Argent, a fret Sable.&quot;&gt;fret&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Sable, an escallop Argent.&quot;&gt;escallop&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Sable, a fleur-de-lys Argent.&quot;&gt;fleur-de-lys&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Sable, a lion Argent armed and langued Argent.&quot;&gt;lion&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Argent, an escutcheon Sable.&quot;&gt;escutcheon&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;variations: &lt;a href=&quot;#&quot; data-example=&quot;Barry Argent and Sable.&quot;&gt;barry&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Bendy Argent and Sable.&quot;&gt;bendy&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Barry bendy Argent and Sable.&quot;&gt;barry bendy&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Checky Argent and Sable.&quot;&gt;checky&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Lozengy Argent and Sable.&quot;&gt;lozengy&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Chevronny Argent and Sable.&quot;&gt;chevronny&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;partitions: &lt;a href=&quot;#&quot; data-example=&quot;Per pale Argent and Sable.&quot;&gt;per pale&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Per fess Argent and Sable.&quot;&gt;per fess&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Per bend Argent and Sable.&quot;&gt;per bend&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Per chevron Argent and Sable.&quot;&gt;per chevron&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Per saltire Argent and Sable.&quot;&gt;per saltire&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Quarterly first and fourth Argent, second and third Sable.&quot;&gt;quarterly&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;And a very non-exhaustive listing of how you can combine them:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;multiples: &lt;a href=&quot;#&quot; data-example=&quot;Argent, ten roundels Vert.&quot;&gt;of the same charge&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Argent, a cross Gules a lion Or.&quot;&gt;mixing charges and ordinaries&lt;/a&gt;, or variations both &lt;a href=&quot;#&quot; data-example=&quot;Chevronny of six, Argent and Azure.&quot;&gt;sparse&lt;/a&gt; and &lt;a href=&quot;#&quot; data-example=&quot;Chevronny of twelve, Argent and Azure.&quot;&gt;dense&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;layout: charges &lt;a href=&quot;#&quot; data-example=&quot;Argent, a bend Sable between four mullets Sable.&quot;&gt;between&lt;/a&gt; and &lt;a href=&quot;#&quot; data-example=&quot;Argent, on a bend Sable four mullets Argent.&quot;&gt;on top&lt;/a&gt; of ordinaries (or &lt;a href=&quot;#&quot; data-example=&quot;Argent, on a bend Sable between four mullets Sable four mullets Argent.&quot;&gt;both&lt;/a&gt;) or just &lt;a href=&quot;#&quot; data-example=&quot;Argent, four mullets Sable in bend.&quot;&gt;in the shape of ordinaries&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;ornamentation: for &lt;a href=&quot;#&quot; data-example=&quot;Argent, a cross engrailed Sable cotised Gules.&quot;&gt;ordinaries&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Per bend embattled Vert and Gules.&quot;&gt;partitions&lt;/a&gt; and even &lt;a href=&quot;#&quot; data-example=&quot;Sable, a lion passant reguardant Gules armed and langued Or.&quot;&gt;some charges&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;blazons in blazons: in &lt;a href=&quot;#&quot; data-example=&quot;Sable, on a canton Argent a cross Gules between four mullets Gules.&quot;&gt;cantons&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Quarterly, first and fourth Sable a lion Or, second and third lozengy Argent and Azure.&quot;&gt;quarters&lt;/a&gt;, or &lt;a href=&quot;#&quot; data-example=&quot;Argent, an escutcheon Azure a bend Or.&quot;&gt;escutcheons&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- TODO: Not being able to see these change the preview, since they&apos;re so far down the page, is a bummer.--&gt;
+
+&lt;p&gt;Note that there are a &lt;em&gt;lot&lt;/em&gt; of ordinaries and charges in real blazons, along with many slight variations in phrasing, which aren’t all supported. Check &lt;a href=&quot;/assets/blazonry/grammar.txt&quot;&gt;the formal grammar&lt;/a&gt; if you want specifics. Here’s some real ones you can try out, too:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot; data-example=&quot;&quot;&gt;Azure, a bend Or.&lt;/a&gt;
+  &lt;br /&gt;
+    as made famous in the medieval times by &lt;a href=&quot;https://en.wikipedia.org/wiki/Scrope_v_Grosvenor&quot;&gt;&lt;em&gt;Scrope v. Grosvenor&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot; data-example=&quot;&quot;&gt;Argent, a cross Gules.&lt;/a&gt;
+  &lt;br /&gt;
+    the &lt;a href=&quot;https://en.wikipedia.org/wiki/Saint_George&apos;s_Cross&quot;&gt;Cross of St. George&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot; data-example=&quot;&quot;&gt;Per pale Sable and Argent, a fess embattled counterchanged.&lt;/a&gt;
+  &lt;br /&gt;
+    arms of &lt;a href=&quot;https://en.wikipedia.org/wiki/Muri_bei_Bern&quot;&gt;Muri bei Bern, Switzerland&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot; data-example=&quot;&quot;&gt;Paly of six Or and Sable, a bend counterchanged.&lt;/a&gt;
+  &lt;br /&gt;
+    arms of the &lt;a href=&quot;https://en.wikipedia.org/wiki/George_Calvert,_1st_Baron_Baltimore&quot;&gt;1st Baron Baltimore&lt;/a&gt;, yes, &lt;a href=&quot;https://en.wikipedia.org/wiki/Flag_of_Baltimore&quot;&gt;that Baltimore&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot; data-example=&quot;&quot;&gt;Azure, a bend Argent cotised Or between six lions rampant Or.&lt;/a&gt;
+  &lt;br /&gt;
+    &lt;a href=&quot;https://en.wikipedia.org/wiki/Bohun_family&quot;&gt;Bohun family arms&lt;/a&gt;, to which Henry IV and Henry V are related&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot; data-example=&quot;Quarterly: (1) Sable, a lion rampant Or, armed and langued Gules; (2) per fess indented Gules and Argent; (3) Argent, a lion rampant Azure, armed Or and langued Gules; (4) Or, three lions passant Sable, armed and langued Gules in pale. An inescutcheon fusilly in bends Argent and Azure.&quot;&gt;Quarterly: (1) Sable, a lion rampant Or, armed and langued Gules…&lt;/a&gt; &lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;
+  &lt;br /&gt;
+    &lt;a href=&quot;https://en.wikipedia.org/wiki/Coat_of_arms_of_Bavaria&quot;&gt;arms of Bavaria&lt;/a&gt;, which you may have seen on &lt;a href=&quot;https://www.weihenstephaner.com/our-brewery&quot;&gt;Weihenstephan beers&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot; data-example=&quot;Quarterly 1st and 4th Sable a lion rampant Argent on a canton Argent a cross Gules; 2nd and 3rd quarterly 1st and 4th Argent 2nd and 3rd Gules a fret Or overall on a bend Sable three escallops bendwise Argent. An inescutcheon in chief Argent a cross Gules an escutcheon Azure three fleurs-de-lis Or.&quot;&gt;Quarterly 1st and 4th Sable a lion rampant on a canton Argent a cross Gules…&lt;/a&gt; &lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;
+  &lt;br /&gt;
+    &lt;a href=&quot;https://winstonchurchill.org/resources/reference/the-armorial-bearings-of-sir-winston-churchill/&quot;&gt;arms of Winston Churchill&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Some blazons (and the coats of arms they represent) can get &lt;a href=&quot;https://en.wikipedia.org/wiki/Richard_Temple-Nugent-Brydges-Chandos-Grenville,_2nd_Duke_of_Buckingham_and_Chandos#/media/File:Stowe_Armorial.jpg&quot;&gt;enormously complicated&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;References and introductions for blazonry terminology and structure:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.internationalheraldry.com/&quot;&gt;International Heraldry &amp;amp; Heralds&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://heraldry.sca.org/armory/bruce.html&quot;&gt;A Grammar of Blazonry – Society for Creative Anachronism&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://dragon_azure.tripod.com/UoA/BasicBlazon.html&quot;&gt;Basics of Blazonry – “Lord Eldred Ælfwald, Gordian Knot Herald”&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.heraldry.ca/resources/BLAZONRY_GUIDE_10.pdf&quot;&gt;A Guide to Basic Blazonry – The Royal Heraldry Society of Canada&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://penelope.uchicago.edu/~grout/encyclopaedia_romana/britannia/anglo-saxon/flowers/heraldry.html&quot;&gt;Heraldry and Blazon – U. Chicago&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://drawshield.net/index.html&quot;&gt;DrawShield&lt;/a&gt; (turns out someone already made a blazon renderer…!)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Collections of arms and blazons:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.heraldry-wiki.com/heraldrywiki/index.php&quot;&gt;Heraldry of the World&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.twentytrees.co.uk/History/General/Thing/Heraldry.html?Armorials&quot;&gt;Armorials – Twenty Trees&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://usheraldicregistry.com/index.php?n=Main.Contents&quot;&gt;Roll of Arms – U.S. Heraldic Registry&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;section class=&quot;next-previous&quot;&gt;
+  
+  &lt;a href=&quot;/2023/08/06/literate-sourdough/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: Sourdough Loaf (and Recipe Planner)&quot;&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;Sourdough Loaf (and Recipe Planner)&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+  
+  
+  &lt;div class=&quot;next-previous-placeholder&quot;&gt;&lt;/div&gt;
+  
+&lt;/section&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Not &lt;em&gt;exactly&lt;/em&gt;; I subbed the panther for a lion because I couldn’t find a good panther graphic. Sorry! &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Like the Bavarian arms, some changes had to be made to the official blazoning. I don’t support phrasings like “of the first” (dispreferred &lt;a href=&quot;https://heraldry.sca.org/armory/bruce.html&quot;&gt;“Victorianisms”&lt;/a&gt; ctrl-f “victorian”), the million different ways of specifying quarterings, or the underspecified “as augmentation” phrasing for inescutcheons. But it looks pretty close to correct! &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">Wikipedia:</summary></entry><entry><title type="html">Sourdough Loaf (and Recipe Planner)</title><link href="https://blog.sea.nkelley.me/2023/08/06/literate-sourdough/" rel="alternate" type="text/html" title="Sourdough Loaf (and Recipe Planner)" /><published>2023-08-06T00:00:00+00:00</published><updated>2023-08-06T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/08/06/literate-sourdough</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/08/06/literate-sourdough/">&lt;p&gt;This recipe is my transcription and adaptation of &lt;a href=&quot;https://www.youtube.com/watch?v=APEavQg8rMw&quot;&gt;A Non-Baker’s Guide To Making Sourdough Bread&lt;/a&gt;, written in a style loosely inspired by &lt;a href=&quot;https://en.wikipedia.org/wiki/Literate_programming&quot;&gt;literate programming&lt;/a&gt;. A bit more background on what this “literate recipe” thing is at &lt;a href=&quot;/2021/05/17/literate-focaccia/&quot;&gt;my focaccia recipe&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;This recipe is intended as a terse reference for those already familiar with the recipe, or sourdough breads in general. If you aren’t very experienced, you can watch the full video recipe linked above (also great as a visual reference), follow &lt;a href=&quot;https://tartinebakery.com/stories/country-bread&quot;&gt;Tartine’s Country Bread&lt;/a&gt; recipe, and/or check out &lt;a href=&quot;/2021/04/28/sourdough-starter/&quot;&gt;my advice on maintaining a starter&lt;/a&gt;.&lt;/p&gt;
 
@@ -203,7 +343,13 @@
   &lt;/a&gt;
   
   
-  &lt;div class=&quot;next-previous-placeholder&quot;&gt;&lt;/div&gt;
+  &lt;a href=&quot;/2023/08/28/blazonry/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: Blazonry&quot;&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;Blazonry&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
+  &lt;/a&gt;
   
 &lt;/section&gt;
 
@@ -1314,59 +1460,4 @@
       &lt;p&gt;How long do those big ones take to discharge? &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name></name></author><summary type="html">Years ago, my family’s iMac died a sudden and ignoble death, crashing the head of the hard drive and taking years of pictures with it. This was the beginning of the era of personal backups, and we didn’t yet have one. It’s still a sore spot, and the offending hard drive is still sitting around somewhere, waiting for someone to transfer the platters to another housing to recover the data. The cause was a blown capacitor, presumably part of the great capacitor plague of the early 2000s.</summary></entry><entry><title type="html">A Brief Rant About the TSA</title><link href="https://blog.sea.nkelley.me/2020/12/03/tsa-rant/" rel="alternate" type="text/html" title="A Brief Rant About the TSA" /><published>2020-12-03T00:00:00+00:00</published><updated>2020-12-03T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2020/12/03/tsa-rant</id><content type="html" xml:base="https://blog.sea.nkelley.me/2020/12/03/tsa-rant/">&lt;p&gt;&lt;em&gt;&lt;strong&gt;tl;dr&lt;/strong&gt;: I took a flight, and my belongings ended up crushed, dented, opened, wrinkled and dirty in a bag that I was locked out of. Fuck the TSA. We can do better than this.&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;I found out the hard way that the TSA mistook a number of my belongings for, I guess, explosives.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Wrist rests for a keyboard&lt;/strong&gt;: the wrists rests are solid rubber, so I guess almost by definition they look like blocks of plastic explosives. I had actually left these accessible, guessing that this might happen.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Textbook&lt;/strong&gt;: a TSA agent once pulled a thick deck of cards out from my carry-on, and when I asked why, explained that they have a similar density to plastic explosives (are you noticing a theme yet?). I guess I should have made the leap to textbooks, but also, can they seriously not tell the difference on their machines? Do they have to rip open every single bag that has a book in it?&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Hard plastic case for glasses&lt;/strong&gt;: this one is more amusing and telling than it is annoying. They’d unscrewed the top of the case, but were too stupid or lazy to put it back on and just left it in the suitcase unattached. Here I’m imagining the TSA interview process: can you figure out if this peg goes into the round or square hole? That’s okay, you’re hired anyway.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Glass jar of delicious chocolate spread&lt;/strong&gt;: they took this jar out of its protective coccoon made of my socks and moved it halfway across the suitcase, unpadded and against the outside. Score one for the hard-sided suitcase, I guess, because the lid ended up with a serious dent but the glass didn’t break.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;iPad&lt;/strong&gt;: this had been packed with other flat things like the textbook, like any sane person would do, and ended up jammed in on the diagonal with its center resting on the corner of the aforementioned textbook. It’s fortunate the corner of the book didn’t end up punching a nice dent into the screen.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Chocolate bars&lt;/strong&gt;: they opened my bars of chocolate, I guess to judge my taste in candy. This reminds me of a time that they once asked me to take my brown-bagged sandwich off the X-ray conveyor and open it myself to prove it wasn’t, I don’t know, a ham-based explosive?&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Empty wooden box&lt;/strong&gt;: I brought a neat little wooden box to put presents in, which had been wrapped in a sweater to prevent scratches and dents and to keep the corners from punching holes in other items. I guess it also looks like plastic explosives.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Leather boots&lt;/strong&gt;: I brought some boots whose dirty bottoms I had tucked against the edge of the suitcase to keep them away from my clothes. After taking the sweater off of the wooden box they wrapped the sweater around one, only one, of the dirty boots. Who the hell pads shoes? More importantly, who pads only &lt;em&gt;one&lt;/em&gt; shoe?&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Other casualities&lt;/strong&gt;: there was miscellaneous other damage and inconvenience, like half my clothes ending up wrinkled and a board game box being crushed because they pack suitcases like impatient raccoons rather than human adults with normally-developed spatial reasoning skills.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;The kicker&lt;/strong&gt;: the suitcase handle had an old, unused TSA-compatible lock dangling off the handle. It was unused because I don’t have the key because these locks are useless and offensive to my principles&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; and I had inherited the suitcase from someone else. They helpfully locked me out of my own suitcase so that on arrival after midnight I had to ask my hosts to go find a hacksaw somewhere so I could break into my own luggage.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;section class=&quot;next-previous&quot;&gt;
-  
-  &lt;a href=&quot;/2020/10/19/oculus-teardown/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: Oculus Rift CV1 Teardown&quot;&gt;
-    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
-    &lt;div class=&quot;next-previous-name&quot;&gt;
-      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
-      &lt;div class=&quot;next-previous-title&quot;&gt;Oculus Rift CV1 Teardown&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/a&gt;
-  
-  
-  &lt;a href=&quot;/2021/01/07/resurrecting-the-imac/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: Resurrecting an Old iMac for $27&quot;&gt;
-    &lt;div class=&quot;next-previous-name&quot;&gt;
-      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
-      &lt;div class=&quot;next-previous-title&quot;&gt;Resurrecting an Old iMac for $27&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
-  &lt;/a&gt;
-  
-&lt;/section&gt;
-
-&lt;hr /&gt;
-
-&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Seriously, what a stupid idea. These locks are &lt;em&gt;intended&lt;/em&gt; to be opened by the people you “voluntarily” give your luggage to. The rest of your luggage you shouldn’t leave unattended anyway, even if there weren’t terrorists hiding around every corner. So what are they preventing? &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;</content><author><name></name></author><summary type="html">tl;dr: I took a flight, and my belongings ended up crushed, dented, opened, wrinkled and dirty in a bag that I was locked out of. Fuck the TSA. We can do better than this.</summary></entry></feed>
+&lt;/div&gt;</content><author><name></name></author><summary type="html">Years ago, my family’s iMac died a sudden and ignoble death, crashing the head of the hard drive and taking years of pictures with it. This was the beginning of the era of personal backups, and we didn’t yet have one. It’s still a sore spot, and the offending hard drive is still sitting around somewhere, waiting for someone to transfer the platters to another housing to recover the data. The cause was a blown capacitor, presumably part of the great capacitor plague of the early 2000s.</summary></entry></feed>

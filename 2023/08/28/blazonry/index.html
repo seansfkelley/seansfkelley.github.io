@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Blazonry | fiddlybits</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Blazonry" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Wikipedia:" />
+<meta property="og:description" content="Wikipedia:" />
+<link rel="canonical" href="https://blog.sea.nkelley.me/2023/08/28/blazonry/" />
+<meta property="og:url" content="https://blog.sea.nkelley.me/2023/08/28/blazonry/" />
+<meta property="og:site_name" content="fiddlybits" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-08-28T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Blazonry" />
+<script type="application/ld+json">
+{"url":"https://blog.sea.nkelley.me/2023/08/28/blazonry/","@type":"BlogPosting","headline":"Blazonry","dateModified":"2023-08-28T00:00:00+00:00","datePublished":"2023-08-28T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.sea.nkelley.me/2023/08/28/blazonry/"},"description":"Wikipedia:","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/style.css">
+  
+  <link rel="stylesheet" href="/assets/blazonry/blazonry.css">
+  <link type="application/atom+xml" rel="alternate" href="https://blog.sea.nkelley.me/feed.xml" title="fiddlybits" /></head>
+<body data-theme="auto"><header class="site-header">
+  <div class="centering-wrapper">
+    <a class="site-title" href="/">fiddlybits</a>
+    <span>
+      <a href="https://github.com/seansfkelley">github</a>
+      &nbsp;•&nbsp;
+      <a href="/feed.xml">rss</a>
+      <!-- Only show theme switcher if js is enabled: hide by default. -->
+      <span id="theme-switcher-wrapper" style="display: none;">
+        &nbsp;•&nbsp;
+        <a href="#" id="theme-switcher"></a>
+      </span>
+    </span>
+  </div>
+</header>
+<main class="centering-wrapper">
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Blazonry</h1>
+    <h3 class="post-subtitle"></h3>
+    <p class="post-date">
+      <time  datetime="2023-08-28T00:00:00+00:00" itemprop="datePublished">
+        2023-08-28
+      </time></p>
+  </header>
+  <p><a href="https://en.wikipedia.org/wiki/Blazon">Wikipedia</a>:</p>
+
+<blockquote>
+  <p>In heraldry and heraldic vexillology, a <strong>blazon</strong> is a formal description of a coat of arms, flag or similar emblem, from which the reader can reconstruct the appropriate image.</p>
+</blockquote>
+
+<!-- TODO: I would like the simple inline examples to be real blazons, but I don't know how to easily find ones. -->
+
+<p>Blazons have many composable components, from <a href="#" data-example="Gules.">simple colors</a> (“tinctures”, and by the way, these links will set the preview, below) and <a href="#" data-example="Argent, a fess Sable.">geometric shapes</a> (“ordinary”), through iconography both <a href="#" data-example="Argent, six mullets Sable.">simple</a> and <a href="#" data-example="Sable, a lion rampant Gules armed and langued Or.">complex</a> (“charge”), into <a href="#" data-example="Barry bendy of eight Azure and Argent.">patterned backgrounds</a> (“variation”) and <a href="#" data-example="Party per pale Argent and Gules, three roundels counterchanged.">subdivisions</a> (“partition”).</p>
+
+<p class="alert alert-danger " id="no-javascript-alert"><span class="alert-title">JavaScript Required</span>
+    <br />This page is interactive, and only works with JavaScript enabled!
+</p>
+
+<div class="center hidden" id="interactive">
+  <svg id="rendered" width="300" height="360" viewBox="-52 -62 104 124" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
+
+  <form id="form">
+    <textarea id="blazon-input" rows="3" placeholder="Enter blazon..." spellcheck="false">Paly of thirteen Argent and Gules, a chief Azure.</textarea>
+    <div>
+      <button id="random-blazon" type="button">
+      Generate Hideous Random Blazon
+      </button>
+      <button type="submit">
+      Render It!
+      </button>
+    </div>
+  </form>
+
+  <div id="ambiguous" class="hidden alert alert-warning">
+    <span>Ambiguous blazon! Navigate variations:</span>
+    <button id="ambiguous-previous">⇦</button>
+    <span id="ambiguous-count"></span>
+    <button id="ambiguous-next">⇨</button>
+  </div>
+
+  <pre id="error" class="hidden"></pre>
+
+  <details id="ast-wrapper">
+  <summary>View parsed syntax tree</summary>
+  <pre id="ast"></pre>
+  </details>
+</div>
+
+<p>Try writing your own! Here’s a very non-exhaustive listing of the components:</p>
+
+<ul>
+  <li>tinctures: five colors (<a href="#" data-example="Azure.">azure</a>, <a href="#" data-example="Gules.">gules</a>, <a href="#" data-example="Purpure.">purpure</a>, <a href="#" data-example="Sable.">sable</a>, <a href="#" data-example="Vert.">vert</a>) and two metals (<a href="#" data-example="Argent.">argent</a>, <a href="#" data-example="Or.">or</a>)</li>
+  <li>ordinaries: <a href="#" data-example="Argent, a bend Sable.">bend</a> (or <a href="#" data-example="Argent, a bend sinister Sable.">bend sinister</a>), <a href="#" data-example="Argent, a fess Sable.">fess</a>, <a href="#" data-example="Argent, a pale Sable.">pale</a>, <a href="#" data-example="Argent, a chief Sable.">chief</a>, <a href="#" data-example="Argent, a cross Sable.">cross</a>, <a href="#" data-example="Argent, a chevron Sable.">chevron</a>, <a href="#" data-example="Argent, a saltire Sable.">saltire</a></li>
+  <li>charges: <a href="#" data-example="Argent, a roundel Sable.">roundel</a>, <a href="#" data-example="Argent, a mullet Sable.">mullet</a>, <a href="#" data-example="Argent, a fret Sable.">fret</a>, <a href="#" data-example="Sable, an escallop Argent.">escallop</a>, <a href="#" data-example="Sable, a fleur-de-lys Argent.">fleur-de-lys</a>, <a href="#" data-example="Sable, a lion Argent armed and langued Argent.">lion</a>, <a href="#" data-example="Argent, an escutcheon Sable.">escutcheon</a></li>
+  <li>variations: <a href="#" data-example="Barry Argent and Sable.">barry</a>, <a href="#" data-example="Bendy Argent and Sable.">bendy</a>, <a href="#" data-example="Barry bendy Argent and Sable.">barry bendy</a>, <a href="#" data-example="Checky Argent and Sable.">checky</a>, <a href="#" data-example="Lozengy Argent and Sable.">lozengy</a>, <a href="#" data-example="Chevronny Argent and Sable.">chevronny</a></li>
+  <li>partitions: <a href="#" data-example="Per pale Argent and Sable.">per pale</a>, <a href="#" data-example="Per fess Argent and Sable.">per fess</a>, <a href="#" data-example="Per bend Argent and Sable.">per bend</a>, <a href="#" data-example="Per chevron Argent and Sable.">per chevron</a>, <a href="#" data-example="Per saltire Argent and Sable.">per saltire</a>, <a href="#" data-example="Quarterly first and fourth Argent, second and third Sable.">quarterly</a></li>
+</ul>
+
+<p>And a very non-exhaustive listing of how you can combine them:</p>
+
+<ul>
+  <li>multiples: <a href="#" data-example="Argent, ten roundels Vert.">of the same charge</a>, <a href="#" data-example="Argent, a cross Gules a lion Or.">mixing charges and ordinaries</a>, or variations both <a href="#" data-example="Chevronny of six, Argent and Azure.">sparse</a> and <a href="#" data-example="Chevronny of twelve, Argent and Azure.">dense</a></li>
+  <li>layout: charges <a href="#" data-example="Argent, a bend Sable between four mullets Sable.">between</a> and <a href="#" data-example="Argent, on a bend Sable four mullets Argent.">on top</a> of ordinaries (or <a href="#" data-example="Argent, on a bend Sable between four mullets Sable four mullets Argent.">both</a>) or just <a href="#" data-example="Argent, four mullets Sable in bend.">in the shape of ordinaries</a></li>
+  <li>ornamentation: for <a href="#" data-example="Argent, a cross engrailed Sable cotised Gules.">ordinaries</a>, <a href="#" data-example="Per bend embattled Vert and Gules.">partitions</a> and even <a href="#" data-example="Sable, a lion passant reguardant Gules armed and langued Or.">some charges</a></li>
+  <li>blazons in blazons: in <a href="#" data-example="Sable, on a canton Argent a cross Gules between four mullets Gules.">cantons</a>, <a href="#" data-example="Quarterly, first and fourth Sable a lion Or, second and third lozengy Argent and Azure.">quarters</a>, or <a href="#" data-example="Argent, an escutcheon Azure a bend Or.">escutcheons</a></li>
+</ul>
+
+<!-- TODO: Not being able to see these change the preview, since they're so far down the page, is a bummer.-->
+
+<p>Note that there are a <em>lot</em> of ordinaries and charges in real blazons, along with many slight variations in phrasing, which aren’t all supported. Check <a href="/assets/blazonry/grammar.txt">the formal grammar</a> if you want specifics. Here’s some real ones you can try out, too:</p>
+
+<ul>
+  <li><a href="#" data-example="">Azure, a bend Or.</a>
+  <br />
+    as made famous in the medieval times by <a href="https://en.wikipedia.org/wiki/Scrope_v_Grosvenor"><em>Scrope v. Grosvenor</em></a></li>
+  <li><a href="#" data-example="">Argent, a cross Gules.</a>
+  <br />
+    the <a href="https://en.wikipedia.org/wiki/Saint_George's_Cross">Cross of St. George</a></li>
+  <li><a href="#" data-example="">Per pale Sable and Argent, a fess embattled counterchanged.</a>
+  <br />
+    arms of <a href="https://en.wikipedia.org/wiki/Muri_bei_Bern">Muri bei Bern, Switzerland</a></li>
+  <li><a href="#" data-example="">Paly of six Or and Sable, a bend counterchanged.</a>
+  <br />
+    arms of the <a href="https://en.wikipedia.org/wiki/George_Calvert,_1st_Baron_Baltimore">1st Baron Baltimore</a>, yes, <a href="https://en.wikipedia.org/wiki/Flag_of_Baltimore">that Baltimore</a></li>
+  <li><a href="#" data-example="">Azure, a bend Argent cotised Or between six lions rampant Or.</a>
+  <br />
+    <a href="https://en.wikipedia.org/wiki/Bohun_family">Bohun family arms</a>, to which Henry IV and Henry V are related</li>
+  <li><a href="#" data-example="Quarterly: (1) Sable, a lion rampant Or, armed and langued Gules; (2) per fess indented Gules and Argent; (3) Argent, a lion rampant Azure, armed Or and langued Gules; (4) Or, three lions passant Sable, armed and langued Gules in pale. An inescutcheon fusilly in bends Argent and Azure.">Quarterly: (1) Sable, a lion rampant Or, armed and langued Gules…</a> <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>
+  <br />
+    <a href="https://en.wikipedia.org/wiki/Coat_of_arms_of_Bavaria">arms of Bavaria</a>, which you may have seen on <a href="https://www.weihenstephaner.com/our-brewery">Weihenstephan beers</a></li>
+  <li><a href="#" data-example="Quarterly 1st and 4th Sable a lion rampant Argent on a canton Argent a cross Gules; 2nd and 3rd quarterly 1st and 4th Argent 2nd and 3rd Gules a fret Or overall on a bend Sable three escallops bendwise Argent. An inescutcheon in chief Argent a cross Gules an escutcheon Azure three fleurs-de-lis Or.">Quarterly 1st and 4th Sable a lion rampant on a canton Argent a cross Gules…</a> <sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>
+  <br />
+    <a href="https://winstonchurchill.org/resources/reference/the-armorial-bearings-of-sir-winston-churchill/">arms of Winston Churchill</a></li>
+</ul>
+
+<p>Some blazons (and the coats of arms they represent) can get <a href="https://en.wikipedia.org/wiki/Richard_Temple-Nugent-Brydges-Chandos-Grenville,_2nd_Duke_of_Buckingham_and_Chandos#/media/File:Stowe_Armorial.jpg">enormously complicated</a>.</p>
+
+<p>References and introductions for blazonry terminology and structure:</p>
+
+<ul>
+  <li><a href="https://www.internationalheraldry.com/">International Heraldry &amp; Heralds</a></li>
+  <li><a href="http://heraldry.sca.org/armory/bruce.html">A Grammar of Blazonry – Society for Creative Anachronism</a></li>
+  <li><a href="http://dragon_azure.tripod.com/UoA/BasicBlazon.html">Basics of Blazonry – “Lord Eldred Ælfwald, Gordian Knot Herald”</a></li>
+  <li><a href="https://www.heraldry.ca/resources/BLAZONRY_GUIDE_10.pdf">A Guide to Basic Blazonry – The Royal Heraldry Society of Canada</a></li>
+  <li><a href="https://penelope.uchicago.edu/~grout/encyclopaedia_romana/britannia/anglo-saxon/flowers/heraldry.html">Heraldry and Blazon – U. Chicago</a></li>
+  <li><a href="https://drawshield.net/index.html">DrawShield</a> (turns out someone already made a blazon renderer…!)</li>
+</ul>
+
+<p>Collections of arms and blazons:</p>
+
+<ul>
+  <li><a href="https://www.heraldry-wiki.com/heraldrywiki/index.php">Heraldry of the World</a></li>
+  <li><a href="https://www.twentytrees.co.uk/History/General/Thing/Heraldry.html?Armorials">Armorials – Twenty Trees</a></li>
+  <li><a href="http://usheraldicregistry.com/index.php?n=Main.Contents">Roll of Arms – U.S. Heraldic Registry</a></li>
+</ul>
+
+<hr />
+
+<section class="next-previous">
+  
+  <a href="/2023/08/06/literate-sourdough/" class="next-previous-link next-previous-left" title="Previous Post: Sourdough Loaf (and Recipe Planner)">
+    <span class="next-previous-icon">←</span>
+    <div class="next-previous-name">
+      <div class="next-previous-label">Previous Post</div>
+      <div class="next-previous-title">Sourdough Loaf (and Recipe Planner)</div>
+    </div>
+  </a>
+  
+  
+  <div class="next-previous-placeholder"></div>
+  
+</section>
+
+<hr />
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>Not <em>exactly</em>; I subbed the panther for a lion because I couldn’t find a good panther graphic. Sorry! <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>Like the Bavarian arms, some changes had to be made to the official blazoning. I don’t support phrasings like “of the first” (dispreferred <a href="https://heraldry.sca.org/armory/bruce.html">“Victorianisms”</a> ctrl-f “victorian”), the million different ways of specifying quarterings, or the underspecified “as augmentation” phrasing for inescutcheons. But it looks pretty close to correct! <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</article>
+
+      <!--
+        This filthy trick makes sure that the content always weakly tries to expand to the full
+        width available, but allows for linebreaks if the viewport is too small. It produces a
+        better result than, say, width: 100%; or width: some-fixed-pixel-amount; and doesn't require
+        rewriting everything to flexbox (which would mess with the <html>-level scroll behavior and
+        sticky header) or adding extra DOM (which I'm trying to minimize to make myself feel good).
+      -->
+      <div class="horizontal-expander" aria-hidden="true">
+        Throughout human history, we have been dependent on machines to survive. Fate, it seems, is not without a sense of irony.
+      </div>
+    </main>
+  </body>
+  <script src="/assets/js/theme-switcher.js"></script>
+  
+  <script src="/assets/blazonry/nearley.js"></script>
+  
+  <script src="/assets/blazonry/randexp.min.js"></script>
+  
+  <script src="/assets/blazonry/nearley-unparse.js"></script>
+  
+  <script src="/assets/blazonry/grammar.js"></script>
+  
+  <script src="/assets/blazonry/blazonry.js"></script>
+  
+</html>
