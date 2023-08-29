@@ -7,8 +7,6 @@ deployment pipeline, and it's not _that_ many different concepts. The types help
 
 FUTURE WORK and KNOWN ISSUES
 -------------------------------------------------------------------------------
-- Chrome and Safari don't support SVG clipping correctly. A switch to using masks might allow me to
-  remove the commented-upon hack, and even get Churchill's arms looking correct in Safari.
 - In general, more vocabulary (charges, ordinaries, postures, treatments, etc.) is always welcome.
 - Tincture references ("of the first", "of the field", etc.) are not supported. Apparently they are
   generally disliked for introducing complexity and ambiguity.
@@ -68,6 +66,9 @@ NOTES ON THE IMPLEMENTATION
 // Do this first thing so there's something to see ASAP!
 document.querySelector("#no-javascript-alert").remove();
 document.querySelector("#interactive").classList.remove("hidden");
+if (!navigator.userAgent.includes("Firefox/")) {
+    document.querySelector("#chrome-sucks-alert").classList.remove("hidden");
+}
 // #region LAYOUT
 // TODO: Make _everything_ a function of these proportions.
 const H = 120;
@@ -194,20 +195,6 @@ var PathCommand;
     }
     PathCommand.rotate = rotate;
 })(PathCommand || (PathCommand = {}));
-function toClipPath(commands) {
-    // Chrome's shitty SVG support needs special treatment, but because they've crushed the browser
-    // market, it's more reliable to actually check for Firefox and _don't_ fuck things up if we're
-    // running in Firefox. Google is garbage.
-    //
-    // https://stackoverflow.com/q/76997685/3736239
-    if (navigator.userAgent.includes("Firefox/")) {
-        return commands;
-    }
-    else {
-        const [, ...rest] = commands;
-        return [{ type: "M", loc: [0, 0] }, ...rest];
-    }
-}
 // #endregion
 // #region LOCATORS
 // ----------------------------------------------------------------------------
@@ -1346,7 +1333,7 @@ async function lion({ tincture, armed, langued, attitude, placement, }) {
 }
 async function escutcheon({ content }) {
     const escutcheon = svg.g(field("argent"), ...(await escutcheonContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
-    escutcheon.setAttribute("clip-path", `path("${PathCommand.toDString(toClipPath(ESCUTCHEON_PATH))}")`);
+    escutcheon.setAttribute("clip-path", `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`);
     Transforms.apply(escutcheon, {
         scale: 0.35,
     });
@@ -1849,7 +1836,7 @@ async function simpleContent(element) {
     if ("canton" in element) {
         const g = svg.g();
         Transforms.apply(g, { origin: [-W_2, -H_2], scale: CANTON_SCALE_FACTOR });
-        g.style.clipPath = `path("${PathCommand.toDString(toClipPath(CANTON_PATH))}")`;
+        g.style.clipPath = `path("${PathCommand.toDString(CANTON_PATH)}") view-box`;
         g.appendChild(svg.path(CANTON_PATH, { classes: { fill: element.canton } }));
         g.classList.add(`fill-${element.canton}`);
         for (const c of element.charges ?? []) {
@@ -1990,13 +1977,13 @@ async function escutcheonContent(content) {
         for (const [i_, { translate, height }] of Object.entries(QUARTERINGS)) {
             const i = +i_;
             Transforms.apply(quartered[i], { translate, scale: 0.5 });
-            quartered[i].style.clipPath = `path("${PathCommand.toDString(toClipPath([
+            quartered[i].style.clipPath = `path("${PathCommand.toDString([
                 { type: "M", loc: [-W_2, -H_2] },
                 { type: "l", loc: [W, 0] },
                 { type: "l", loc: [0, height] },
                 { type: "l", loc: [-W, 0] },
                 { type: "z" },
-            ]))}")`;
+            ])}") view-box`;
         }
         for (const quartering of content.quarters) {
             for (const quarter of quartering.quarters) {
@@ -2105,7 +2092,7 @@ async function on({ on, surround, charge }) {
 }
 async function inescutcheon(parent, { location, content }) {
     const escutcheon = svg.g(field("argent"), ...(await escutcheonContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
-    escutcheon.setAttribute("clip-path", `path("${PathCommand.toDString(toClipPath(ESCUTCHEON_PATH))}")`);
+    escutcheon.setAttribute("clip-path", `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`);
     Transforms.apply(escutcheon, {
         scale: 0.25,
         translate: Location_.toOffset(location),
@@ -2146,7 +2133,7 @@ async function parseAndRenderBlazon() {
         }));
         // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
         const container = svg.g();
-        container.style.clipPath = `path("${PathCommand.toDString(toClipPath(ESCUTCHEON_PATH))}")`;
+        container.style.clipPath = `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`;
         rendered.appendChild(container);
         // Make sure there's always a default background.
         container.appendChild(field("argent"));

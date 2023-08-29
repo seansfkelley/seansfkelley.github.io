@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2023-08-29T06:28:25+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Blazonry</title><link href="https://blog.sea.nkelley.me/2023/08/28/blazonry/" rel="alternate" type="text/html" title="Blazonry" /><published>2023-08-28T00:00:00+00:00</published><updated>2023-08-28T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/08/28/blazonry</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/08/28/blazonry/">&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Blazon&quot;&gt;Wikipedia&lt;/a&gt;:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2023-08-29T07:04:23+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Blazonry</title><link href="https://blog.sea.nkelley.me/2023/08/28/blazonry/" rel="alternate" type="text/html" title="Blazonry" /><published>2023-08-28T00:00:00+00:00</published><updated>2023-08-28T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/08/28/blazonry</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/08/28/blazonry/">&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Blazon&quot;&gt;Wikipedia&lt;/a&gt;:&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;In heraldry and heraldic vexillology, a &lt;strong&gt;blazon&lt;/strong&gt; is a formal description of a coat of arms, flag or similar emblem, from which the reader can reconstruct the appropriate image.&lt;/p&gt;
@@ -10,6 +10,10 @@
 
 &lt;p class=&quot;alert alert-danger &quot; id=&quot;no-javascript-alert&quot;&gt;&lt;span class=&quot;alert-title&quot;&gt;JavaScript Required&lt;/span&gt;
     &lt;br /&gt;This page is interactive, and only works with JavaScript enabled!
+&lt;/p&gt;
+
+&lt;p class=&quot;alert alert-danger hidden&quot; id=&quot;chrome-sucks-alert&quot;&gt;&lt;span class=&quot;alert-title&quot;&gt;Unsupported Browser&lt;/span&gt;
+    &lt;br /&gt;I hate to be that guy, but the interactive portion doesn&apos;t work quite right on non-Firefox browsers. If you use Chrome, you can upgrade to 118+ and enable the browser setting at &lt;code&gt;chrome://flags/#enable-experimental-web-platform-features&lt;/code&gt;.
 &lt;/p&gt;
 
 &lt;div class=&quot;center hidden&quot; id=&quot;interactive&quot;&gt;
