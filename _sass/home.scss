@@ -6,6 +6,9 @@
 
   .post-heading {
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
   }
 
   .post-link {
@@ -17,6 +20,30 @@
   .post-date {
     font-size: $font-size-small;
     color: var(--text-color-faded);
+
+    &.desktop-only {
+      display: none;
+    }
+
+    &.mobile-only {
+      margin-left: auto;
+    }
+  }
+
+  @media screen and (min-width: $width-mobile) {
+    .post-heading {
+      width: unset;
+    }
+
+    .post-date {
+      &.desktop-only {
+        display: block;
+      }
+
+      &.mobile-only {
+        display: none;
+      }
+    }
   }
 
   > li {

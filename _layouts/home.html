@@ -8,12 +8,19 @@ layout: base
   {%- for post in site.posts -%}
   <li>
     <h3 class="post-heading">
+      <time
+        class="post-date mobile-only"
+        datetime="{{ post.date | date_to_xmlschema }}"
+        itemprop="datePublished"
+      >
+        {{ post.date | date: site.date_format }}
+      </time>
       <a class="post-link" href="{{ post.url | relative_url }}">
         {{ post.title | escape }}
       </a>
     </h3>
     <time
-      class="post-date"
+      class="post-date desktop-only"
       datetime="{{ post.date | date_to_xmlschema }}"
       itemprop="datePublished"
     >
