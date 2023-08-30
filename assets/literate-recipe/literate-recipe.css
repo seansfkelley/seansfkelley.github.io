@@ -117,20 +117,26 @@ body[data-theme=dark] {
   --sol-mono01: var(--sol-base1);
 }
 
-header.recipe-step h3 {
+header.recipe-step h4 {
   display: flex;
   align-items: center;
+  text-transform: uppercase;
 }
-header.recipe-step h3 hr {
+header.recipe-step h4 hr {
   flex: 1;
 }
-header.recipe-step[data-wait=overnight] h3 hr {
+header.recipe-step[data-wait=overnight] h4 hr {
   border-color: var(--brand-color-dark);
   border-width: 2px;
 }
 header.recipe-step .metadata {
   display: flex;
   align-items: center;
+  font-size: 0.9em;
+}
+header.recipe-step .metadata .duration {
+  text-transform: uppercase;
+  color: var(--text-color-faded);
 }
 header.recipe-step .metadata input {
   -webkit-appearance: none;
