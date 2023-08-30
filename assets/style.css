@@ -469,25 +469,53 @@ body[data-theme=light] #theme-switcher:after {
 .post-list {
   margin-left: 0;
   padding-left: 0;
+  margin: 10px 0;
   list-style: none;
 }
-.post-list > li {
-  margin-bottom: 12px;
-}
-
-.post-date {
-  font-size: 14px;
-  color: var(--brand-color);
-}
-
-.post-heading {
+.post-list .post-heading {
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
-
-.post-link {
+.post-list .post-link {
   display: block;
   font-weight: 300;
   font-size: 1.5rem;
+}
+.post-list .post-date {
+  font-size: 14px;
+  color: var(--text-color-faded);
+}
+.post-list .post-date.desktop-only {
+  display: none;
+}
+.post-list .post-date.mobile-only {
+  margin-left: auto;
+}
+@media screen and (min-width: 600px) {
+  .post-list .post-heading {
+    width: unset;
+  }
+  .post-list .post-date.desktop-only {
+    display: block;
+  }
+  .post-list .post-date.mobile-only {
+    display: none;
+  }
+}
+.post-list > li {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.post .post-date {
+  font-size: 14px;
+  color: var(--brand-color);
+  text-align: center;
+  margin: 20px 0;
 }
 
 .post {
