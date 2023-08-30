@@ -141,7 +141,7 @@ header.recipe-step .metadata input[type=button] {
   transition: opacity 100ms;
 }
 header.recipe-step .metadata input[type=time] {
-  margin-left: 4px;
+  margin: 0 4px;
 }
 header.recipe-step:hover .metadata input[type=button] {
   opacity: 1;
