@@ -7,14 +7,18 @@ layout: base
 <ul class="post-list">
   {%- for post in site.posts -%}
   <li>
-    <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">
-      {{ post.date | date: site.date_format }}
-    </time>
     <h3 class="post-heading">
       <a class="post-link" href="{{ post.url | relative_url }}">
         {{ post.title | escape }}
       </a>
     </h3>
+    <time
+      class="post-date"
+      datetime="{{ post.date | date_to_xmlschema }}"
+      itemprop="datePublished"
+    >
+      {{ post.date | date: site.date_format }}
+    </time>
   </li>
   {%- endfor -%}
 </ul>
