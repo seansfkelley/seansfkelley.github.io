@@ -95,11 +95,11 @@ class LiterateRecipeStepTag < Liquid::Tag
         data-duration="#{duration}"
         data-wait="#{wait}"
       >
-        <h3>
+        <h4>
           <hr />
             #{title}
           <hr />
-        </h3>
+        </h4>
         <h4 class="metadata">
           <span class="duration">
             #{self.print_duration_longform(duration)} of work
