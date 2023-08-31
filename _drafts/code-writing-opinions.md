@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Code Writing and Review Opinions
+anchor_headings: true
 ---
 
 ## Table of Contents
@@ -166,6 +167,10 @@ Designing your code in order to reduce the complexity introduced by these three 
 
 Reduce the number of possible paths control can take through a given piece of code (the [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity)). Ideally, this means eliminating branches entirely.
 
+### Always Match `if` with `else` When Possible
+
+TODO: `if` blocks represent a choice point and control, either implicitly or explicitly, all code that comes after them. Prefer using explicit `else` even when it's not strictly necessary: it both provides a visual cue via indentation that the code in question is controlled by the `if` block and also that it _should_ be controlled by that block (rather than, say, sloppy programming leading to an accidental early-abort).
+
 ### Controlling Branching Technique 1: Combine (and Eliminate) Cases
 
 All techniques for eliminating branches boil down to identifying cases which appear distinct, but are not. Essentially distinct things cannot be combined, and thus must be handled independently.
@@ -217,9 +222,6 @@ TODO
 - declare variables requiring complex control flow in blocks or dedicated functions
 - eliminate variables that can be derived from another
 
-# If Block Matching
-
-`if` blocks represent a choice point and control, either implicitly or explicitly, all code that comes after them. Prefer using explicit `else` even when it's not strictly necessary: it both provides a visual cue via indentation that the code in question is controlled by the `if` block and also that it _should_ be controlled by that block (rather than, say, sloppy programming leading to an accidental early-abort).
 
 # Inlining v. Factoring Out
 

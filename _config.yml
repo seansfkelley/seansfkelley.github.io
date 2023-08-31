@@ -12,3 +12,5 @@ sass:
   sourcemap: never
 kramdown:
   show_warnings: true
+default_anchor_headings:
+  anchor_body: "#"

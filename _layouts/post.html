@@ -7,7 +7,19 @@ layout: base
     <h1 class="post-title">{{ page.title | escape }}</h1>
     <h3 class="post-subtitle">{{ page.subtitle | escape }}</h3>
   </header>
-  {{ content }}
+  {%- if page.anchor_headings == true -%}
+    {% assign anchor_headings = site.default_anchor_headings %}
+  {%- else -%}
+    {% assign anchor_headings = page.anchor_headings %}
+  {%- endif -%}
+  {%- if anchor_headings -%}
+    {% include anchor_headings.html 
+      html=content 
+      anchorBody=anchor_headings.anchor_body
+    %}
+  {%- else -%}
+    {{ content }}
+  {%- endif -%}
   <footer>
     <hr />
     <p class="post-date">
