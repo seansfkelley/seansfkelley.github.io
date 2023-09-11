@@ -12,7 +12,7 @@ anchor_headings: true
 
 # How to Read This
 
-I titled this post "opinions" on purpose. Nothing here is objectively correct, but these opinions and styles are the main pillars which support my code writing and as such are the things I look for in code reviews.
+I titled this post "opinions" on purpose. Nothing here is objectively correct, but these opinions and styles are the main pillars which support my code writing and as such are the things I look for in code reviews. Yes, it is very dry.
 
 Unless otherwise specified, none of these opinions are hard and fast. They overlap and sometimes trade off. Ultimately, code needs to serve an end, and sometimes that requires compromising on principles. Not often, though. :wink:
 
@@ -26,7 +26,7 @@ The philosophical points below are idealistic and can't always be achieved withi
 
 > Show me your flowcharts [algorithms] and conceal your tables [data model], and I shall continue to be mystified. Show me your tables, and I won’t usually need your flowcharts; they’ll be obvious.
 >
-> - Fred Brooks, Mythical Man Month
+> – Fred Brooks, Mythical Man Month
 
 If you don't know what values you're operating with, you can't do anything with them. The names of values, the types of values, and the relationships between values based on their types should be the primary driver for how code is structured.
 
@@ -34,7 +34,7 @@ If you don't know what values you're operating with, you can't do anything with 
 
 > If you haven't automated your last-year self out of a job, you aren't learning.
 >
-> - An ex-manager of mine
+> – An ex-manager of mine
 
 Don't do manually what can be done automatically. Put the work in now to find, configure or build the right tool for the job, then never think of that problem again. Documentation is no replacement for automation.
 
@@ -49,6 +49,8 @@ This a umbrella term, broader than the oft-cited "don't be clever". Removing or 
 Spend the time now to save the time later.
 
 If I sent you this page, you aren't the first employee of an underfunded startup in do-or-die mode. Every corner you cut will be paid for dozens of times over with every reader of your code. Bike shed your names before you merge. Your prototype will end up in production.
+
+## Solve Problems Once
 
 # Basic Code Style
 
@@ -230,3 +232,11 @@ TODO
 A blog post once used the phrase “type system maximalist”. I am a type system maximalist, to the degree that our languages are able to express it.
 
 # Enumerations v. Booleans
+
+# Version Control
+
+## Squash v. True Merge
+
+## Merge v. Rebase
+
+## Force-pushing
