@@ -39,7 +39,7 @@ Starters are very resilient. It should only take a couple days to get back to be
 
 Definitely _do not_ mix in the hooch when feeding the starter. You'd be drowning the yeast in its own waste product. Which is, incidentally, ethanol. Don't drink it either.
 
-If you feed the starter more often (say, 12 hour cycles), it'll get sweeter. Less often, more sour (36 hours). Use this to adjust bread flavor. Also, the longer you proof your bread, the more sour it gets.[^2] Colder proofing, or storing your starter in a cold place, also encourages sourness.
+If you feed the starter more often (say, 18 hour cycles), it'll get sweeter. Less often, more sour (30 hours). Use this to adjust bread flavor. Also, the longer you proof your bread, the more sour it gets.[^2] Colder proofing, or storing your starter in a cold place, also encourages sourness.
 
 If you aren't sure that your starter is ready to bake with, do the float test: if a dollop floats in water, it's good to go. You'll be able to do it by eye pretty quick, though. Smell, too: look for "yogurt sour, not vinegar sour", as a bagel lady told me once.
 
@@ -55,5 +55,5 @@ Fun fact: if you got your starter from me (and if you're reading this, you proba
 
 -------------------------------------------------------------------------------
 
-[^1]: In my experience this schedule would be optimal for and 18-20 hour cycle, but 24 hours is well within the zone of acceptability.
-[^2]: Starters are actually [symbiotic cultures of bacteria and yeast](https://en.wikipedia.org/wiki/SCOBY), not just yeast. The yeast responds to feedings quickly and products a sweeter taste; the bacteria comes in later and produces the sour taste.
+[^1]: In my experience this schedule would be optimal for an 18-20 hour cycle, but 24 hours is well within the zone of acceptability.
+[^2]: Starters are actually [symbiotic cultures of bacteria and yeast](https://en.wikipedia.org/wiki/SCOBY), not just yeast. The yeast responds to feedings quickly and produces a sweeter taste; the bacteria comes in later and produces the sour taste.
