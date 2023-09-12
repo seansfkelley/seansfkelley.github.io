@@ -1,30 +1,53 @@
 ---
 layout: post
-title: "World's Easiest Pet: Caring for Sourdough Starter"
+title: "World's Easiest Pet: How to Sourdough Starter"
 redirect_from:
   - /starter
   - /sourdough-starter
+last_modified_at: 2023-09-10
 ---
 
-Sourdough starters are the easiest pet you can have. Easier than plants or cats. They have a feeding cycle, but once they’re alive and strong, they’re resilient to your inevitable negligence. If you got a starter from me, know that it's almost old enough to vote at this point (the person I got it from said it was from 2005-ish). I've also definitely forgotten it in the fridge for longer than I'm willing to admit, and it's doing just fine.
+Sourdough starters are the easiest pet you can have. Easier than plants or even cats. I also have a [sourdough bread recipe]({% post_url 2023-08-06-literate-sourdough %})!
 
-I like keeping starters at 100% hydration, which means it's half water and half flour. That makes it a “liquid” starter (as opposed a “stiff” starter). You can tweak the balance all you want once you know what you’re doing; there is nothing magical about any numbers you’ll see here except for convenience.
+**Basic feeding schedule for starter:**
 
-A typical feeding for my starter:
+1. Put 10g starter in a bowl. Discard the rest.
+2. Add 50g water and 50g all-purpose flour.
+3. Mix thoroughly, cover with a plate, leave it on the counter.
+4. Come back in 24 hours and do it again. Or, if you put it in the fridge, a week.*
 
-1. Put 20g starter in a bowl. Discard or [bake](https://cooking.nytimes.com/recipes/1016277-tartines-country-bread) with the rest.[^1]
-2. Add 100g water and 100g all-purpose flour.
-3. Mix thoroughly, cover with a plate, leave it on the counter, and come back tomorrow.
+I like these proportions because they are easy to remember and work well enough with a 24-hour cycle.[^1] Plus, a lot of bread recipes call for about 150-200g of starter, which you can get by simply doubling all the numbers. Lastly, the 100% [hydration ratio](https://www.kingarthurbaking.com/blog/2023/01/11/bread-hydration) makes it easy to do math should you need to adjust for your chosen recipe. There is nothing magical about these numbers other than their convenience!
 
-The (relative) 10:1 proportions of starter to flour/water mixture get pretty close to a 24-hour cycle and are easy to remember. The (absolute) amount of 220g works nicely with a lot of recipes, which generally call for about 200g of starter. The 100% hydration makes it easy to do math with when you’re converting a dry yeast recipe to one with starter.
+\* If you keep it in the fridge regularly, you should give it a few hours on the counter after mixing to ensure it has time to get started a bit before putting it in the cold box again.
 
-If you feed your starter more often, it’ll become less sour. 12-hour cycles instead of 24-hour ones are enough to make a difference; any more frequent than that and you aren’t letting the starter eat all the food. The sourness comes from acetic acid produced by bacteria, not yeast, but the yeast generally outcompete the bacteria right after a feeding and mellow the starter out. Longer fermentation times while baking will also make your doughs more sour.
+**To store your starter for an extended period of time (one, even two months):**
 
-You can leave your starter unattended for about a week on the counter or 1-2 months in the fridge. It’s not great and try to avoid doing that regularly, but in a pinch or for long-term storage it’s fine. When you want to wake it back up, be sure to pour off any liquid on top (that’s "hooch", i.e. ethanol, i.e. yeast poison, so don’t believe anybody who tells you it’s okay to mix it in) before doing your feeding. You’ll likely need to feed it a couple cycles before it looks normal again, so plan ahead if you need to.
+1. Feed it.
+2. Put it in the fridge in a jar, lid on finger-tight.
 
-When using your starter, you can use the float test to determine if it’s ready for baking: if a dollop of it floats in water, it’s good to go. After a while, you’ll be able to tell by eye and by smell (smell for “yogurt sour, not vinegar sour”, as a bagel lady told me once).
+It's not rocket science. When you come back from your vacation, however, it might look kinda sad and gross.
 
-I find you can ignore anything on the internet you find about feeding your starter exactly this often, or not using stainless steel, or demanding fancy flour instead of regular all-purpose, or other such commandments. Those people are either referring to new starters (which are indeed fragile), but are usually just misinformed. It’s a colony of billions of highly successful organisms: they aren’t going to spontaneously die because you used the wrong utensil. That said, I just use my finger, because why dirty another utensil?
+**To revive your starter:**
+
+1. Pour off the clear liquid ("hooch"), if present.
+2. Scrape off any dry or discolored top layer, if present.
+3. Feed it as normal 2-3 days in a row.
+
+Starters are very resilient. It should only take a couple days to get back to being happy and robust! Yeast colonies have survived for billions of years; you aren't going to be the first to try to kill it.
+
+**Lastly, a few miscellaneous pointers in no particular order:**
+
+Definitely _do not_ mix in the hooch when feeding the starter. You'd be drowning the yeast in its own waste product. Which is, incidentally, ethanol. Don't drink it either.
+
+If you feed the starter more often (say, 12 hour cycles), it'll get sweeter. Less often, more sour (36 hours). Use this to adjust bread flavor. Also, the longer you proof your bread, the more sour it gets.[^2] Colder proofing, or storing your starter in a cold place, also encourages sourness.
+
+If you aren't sure that your starter is ready to bake with, do the float test: if a dollop floats in water, it's good to go. You'll be able to do it by eye pretty quick, though. Smell, too: look for "yogurt sour, not vinegar sour", as a bagel lady told me once.
+
+You can use cheap all-purpose flour. If you'd like, use fancy flour for the last feeding before you use it for a recipe, so you only have a tiny, tiny fraction of the cheap flour in the final product.
+
+You can use stainless steel. I don't know why some people say you can't. Commercial bakeries do it all the time.
+
+Fun fact: if you got your starter from me (and if you're reading this, you probably did), you should know it's old enough to vote at this point. The person I got it with told me it was from 2005-ish!
 
 -------------------------------------------------------------------------------
 
@@ -32,4 +55,5 @@ I find you can ignore anything on the internet you find about feeding your start
 
 -------------------------------------------------------------------------------
 
-[^1]: I'm still looking for a good sourdough-starter-discard cracker recipe... will hopefully remember to update this if/when I find one!
+[^1]: In my experience this schedule would be optimal for and 18-20 hour cycle, but 24 hours is well within the zone of acceptability.
+[^2]: Starters are actually [symbiotic cultures of bacteria and yeast](https://en.wikipedia.org/wiki/SCOBY), not just yeast. The yeast responds to feedings quickly and products a sweeter taste; the bacteria comes in later and produces the sour taste.
