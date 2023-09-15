@@ -1,22 +1,26 @@
 ---
 layout: post
-title: Code Writing and Review Opinions
+title: My Code Style
 anchor_headings: true
 ---
 
-## Table of Contents
+### Jump to Section
 {:.no_toc}
 
 * TOC
 {:toc}
 
-# How to Read This
+# What This Is
 
-I titled this post "opinions" on purpose. There is no objectively correct answer to code style, but this document outlines the main pillars of mine. As such, they are also the things I look for in code reviews. And yes, this document is very dry.
+This is my code style. Style in the sense of concepts represented in code, and how they are placed relative to each other and explained to the reader, not in the sense of where I put the curly brackets.
 
-None of these opinions are hard and fast. They overlap and sometimes trade off. Ultimately, code needs to serve an end, and sometimes that requires compromising on principles.
+There is no objectively correct answer for this kind code style, but this document outlines the main pillars of mine. As such, they are also the things I look for in code reviews. I refer to this document when doing code reviews (which is probably why you're here).
 
-# But First: The Underlying Philosophy
+Yes, this document is very dry.
+
+None of these points on style are hard and fast. They overlap and sometimes trade off. Ultimately, code needs to serve an end, and sometimes that requires compromising on principles.
+
+# The Underlying Philosophy
 
 Before wading into the crossfire on when and how to write comments, I want to outline some more abstract concepts that are reflected in the more-specific opinions that follow.
 
@@ -50,7 +54,7 @@ Spend the time now to save the time later.
 
 If I sent you this page, you aren't the first employee of an underfunded startup in do-or-die mode. Every corner you cut will be paid for dozens of times over with every reader of your code. Bike shed your names before you merge. Your prototype will end up in production.
 
-# Basic Code Style
+# Superficial Code Style
 
 ## Automated Formatters
 
