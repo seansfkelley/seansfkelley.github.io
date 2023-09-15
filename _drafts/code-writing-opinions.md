@@ -12,9 +12,9 @@ anchor_headings: true
 
 # How to Read This
 
-I titled this post "opinions" on purpose. Nothing here is objectively correct, but these opinions and styles are the main pillars which support my code writing and as such are the things I look for in code reviews. Yes, it is very dry.
+I titled this post "opinions" on purpose. There is no objectively correct answer to code style, but this document outlines the main pillars of mine. As such, they are also the things I look for in code reviews. And yes, this document is very dry.
 
-Unless otherwise specified, none of these opinions are hard and fast. They overlap and sometimes trade off. Ultimately, code needs to serve an end, and sometimes that requires compromising on principles. Not often, though. :wink:
+None of these opinions are hard and fast. They overlap and sometimes trade off. Ultimately, code needs to serve an end, and sometimes that requires compromising on principles.
 
 # But First: The Underlying Philosophy
 
@@ -28,15 +28,15 @@ The philosophical points below are idealistic and can't always be achieved withi
 >
 > – Fred Brooks, Mythical Man Month
 
-If you don't know what values you're operating with, you can't do anything with them. The names of values, the types of values, and the relationships between values based on their types should be the primary driver for how code is structured.
+If you don't know what values you're operating with, you can't do anything with them. The names, types and lifetimes of values, as well as the interaction between them, should be the primary driver for how code is structured. Programs are ultimately machines for processing inputs into outputs, so build around those inputs and outputs and any necessary intermediates.
 
-## Tools, Not Process
+## Tools, Not Process (or: Solve Problems Once)
 
 > If you haven't automated your last-year self out of a job, you aren't learning.
 >
 > – An ex-manager of mine
 
-Don't do manually what can be done automatically. Put the work in now to find, configure or build the right tool for the job, then never think of that problem again. Documentation is no replacement for automation.
+Don't do manually what can be done automatically. Put the work in now to find, configure or build the right tool for the job, then never think of that problem again. Don't make anyone else have to think about the problem, either, if you can avoid it: documentation is no replacement for automation.
 
 ## Strive to Explain Intent
 
@@ -50,21 +50,15 @@ Spend the time now to save the time later.
 
 If I sent you this page, you aren't the first employee of an underfunded startup in do-or-die mode. Every corner you cut will be paid for dozens of times over with every reader of your code. Bike shed your names before you merge. Your prototype will end up in production.
 
-## Solve Problems Once
-
 # Basic Code Style
 
 ## Automated Formatters
 
-Automated formatters like Prettier and Black are to be considered correct, _even in weird edge cases_. When there is a conflict on style, the automated formatter is correct.
+Automated formatters like Prettier and Black are to be considered correct, _even in weird edge cases_. When there is a conflict on style, the automated formatter is correct. Modern bikesheds come pre-painted.
 
-Whoever said "consistency is the hobgoblin of little minds" never had to work in a multi-million line codebase. Consistency is how I stay sane.
+Whoever said "consistency is the hobgoblin of little minds" never had to work in a multi-million line codebase. Consistency enables quick and dirty regexes when you can't rely on types to find usages. Consistency is how you can do massive code reviews (which do happen in the real world) and not trip over every line. Consistency is how I stay sane.
 
-## Do Not Use Formatting Lint Rules
-
-You'll inevitably end up fighting with the automated formatter. The point of the automated formatter is that they did the bikeshedding for you, and every code sample you'll come across looks the same. This is a good thing. Put the paint down.
-
-## Formatting Exception 1: Multi-line Regexes
+## Exception: Multi-line Regexes
 
 Regexes are always hard to read. Unfortunately, long regexes are sometimes necessary. In the case where you cannot comment on a long nasty regex by pointing to some documentation (e.g. the classic [email regex StackOverflow question](https://stackoverflow.com/questions/201323/how-to-validate-an-email-address-using-a-regular-expression)), it's probably a good idea to break your regex up onto multiple lines and explain what each piece is doing.
 
@@ -107,35 +101,37 @@ Common cases where comments are used and shouldn't be:
 
 # Naming
 
-Good names go a long way towards pre-empting comments. Following certain conventions make the code-reading experience smoother by not surprising your reader. They can even speed up code-writing by making you think "What exactly am I trying to express here?" rather than reaching for the first thing that comes to mind.
+Good names go a long way towards pre-empting comments. Following certain conventions make the code-reading experience smoother by not surprising your reader. They can even speed up code-writing by making you think _"What exactly am I trying to express here?"_ rather than barging ahead into a dead end with the first thing that comes to mind.
 
 ## Names Should Be At Least Two Words
 
-The clarity of any given name goes _way_ up from one word to two. When in doubt, overshare. That said, this is a guideline, not a hard rule; sometimes just `data` is the only suitable name.
+The clarity of any given name goes _way_ up from one word to two. Look around you: how many tables, chairs, windows, devices, utensils, tools, vehicles or people can you uniquely identify by adding just one adjective or locator to, well, "table", "chair", "window", etc.? When in doubt, overshare.
 
-**Exception:** in certain inline contexts, shorter names can improve clarity by reducing repetitive noise, such as in e.g. `all_entries.filter(e => e.enabled)`.
+**Exception:** in highly-generic contexts, you might not be able to come up with a better name than `row` or `data`.
+
+**Exception:** in inline contexts, shorter names can improve clarity by reducing repetitive noise, such as in e.g. `all_entries.filter(e => e.enabled)`.
 
 ## Use Standard Vocabulary
 
-Prefer well-known words like "get" rather than synonyms like "obtain".
-
-Use boring, clear names almost all the time. Your code should require neither a dictionary nor a thesaurus.
+Prefer well-known words like "get" rather than synonyms like "obtain". Use boring, clear names almost all the time. While fun, your code should require neither a dictionary nor a thesaurus. Unusual names suggest unusual behavior, so don't be misleading.
 
 **Exception:** don't be afraid to use jargon when it's suitable. If you're overloading the subtraction operator, it's okay, even preferred, to say "subtrahend".
 
-**Exception:** if you want to define something new with _very particular and maybe unusual_ semantics, it can be useful to choose a word that doesn't have baggage and define it to mean what you want.
+**Exception:** if you want to define something new with _very particular and maybe unusual_ semantics, it can be useful to choose a word that doesn't have baggage and define it to mean what you want. Consider leaving a comment.
 
 ## Avoid Most Abbreviations
 
-Your editor has autocomplete and it takes very little time to read "long" words.
+Your editor has autocomplete and your ability to parse streams of letters is not the bottleneck to your understanding. Don't be afraid of _authentication_, _rasterization_ or even _canonicalization_.\* It's better to spend the extra milliseconds now and avoid ambiguity and confusion later.
 
-If you really want to, only do it if they are at least one of:
+If you really want to abbreviate things, only do it if they are at least one of:
   - _common in English_, such as "appt" for "appointment"
   - _obvious in context_, such as referring to the `mag` of a `Vector3`
 
+\* I tried to come up with non _-tion_ words, but those nounified verbs come up all the time!
+
 ## Initialisms are Words
 
-Treat initialisms and acronyms as words for the purposes of casing. Write `OwaspVpnHttpHandler` instead of `OWASPVPNHTTPHandler`. (I hope this example is self-explanatory.)
+Treat initialisms and acronyms as words for the purposes of casing. Don't write `OWASPVPNHTTPHandler`; write `OwaspVpnHttpHandler`. I hope this example is self-explanatory.
 
 As a bonus, some tools (e.g. IntelliJ) have built-in fuzzy-search behavior that returns higher-quality results when initialisms are capitalized as words.
 
