@@ -241,13 +241,15 @@ TODO
 - declare variables requiring complex control flow in blocks or dedicated functions
 - eliminate variables that can be derived from another
 
-# Something About Assertions
-
 # Inlining v. Factoring Out
 
 # Lean on the Type System
 
-A blog post once used the phrase “type system maximalist”. I am a type system maximalist, to the degree that our languages are able to express it.
+A blog post once used the phrase "type system maximalist". I am a type system maximalist, to the degree that our languages are able to express it.
+
+https://brooker.co.za/blog/2020/06/23/code.html
+
+## Something About Assertions
 
 # Enumerations v. Booleans
 
