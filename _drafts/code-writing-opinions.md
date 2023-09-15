@@ -40,7 +40,7 @@ Don't do manually what can be done automatically. Put the work in now to find, c
 
 ## Strive to Explain Intent
 
-Code is an unambiguous, precise specification of behavior, so treat it like one. Computers don't need to have code explained to them, but people do. Write your code so it's clear what you intend to have happen, so that when it inevitably doesn't, someone can understand what you were trying to do.
+Code is an unambiguous, precise specification of behavior, so treat it like one. Computers don't need to have code explained to them, but people do. Write your code so it's clear what you intend to have happen, so that when it inevitably doesn't, someone can understand what you were trying to do. You might not be there to explain what you meant.
 
 This a umbrella term, broader than the oft-cited "don't be clever". Removing or avoiding cleverness is often a consequence of striving to explain intent.
 
@@ -151,7 +151,7 @@ Empirically, boolean functions and values benefit from some special consideratio
 
 Consider [replacing boolean values by a two-state enumeration](#enumerations-v-booleans).
 
-# Control Flow, Variable Scope and Mutation
+# State Management
 
 In most run-of-the-mill programming, the complexity you and your reader have to deal with comes from having to track three things:
 
@@ -159,31 +159,38 @@ In most run-of-the-mill programming, the complexity you and your reader have to 
 - **variable scopes**, in order to understand what values are currently in play and could interact with each other
 - **mutations** made to a value after it is initially declared, changing how it may interact with other values or control flow constructs
 
-Designing your code in order to reduce the complexity introduced by these three things can significantly reduce the surface area for bugs and make the code easier to both read and write.
+Designing your code in order to reduce the size of the state space introduced by these three things can significantly reduce the surface area for bugs and make the code easier to both read and write.
 
 ## Control Flow
 
 Reduce the number of possible paths control can take through a given piece of code (the [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity)). Ideally, this means eliminating branches entirely.
 
-### Always Match `if` with `else` When Possible
+### Match `if` with `else` Whenever Possible
 
-TODO: `if` blocks represent a choice point and control, either implicitly or explicitly, all code that comes after them. Prefer using explicit `else` even when it's not strictly necessary: it both provides a visual cue via indentation that the code in question is controlled by the `if` block and also that it _should_ be controlled by that block (rather than, say, sloppy programming leading to an accidental early-abort).
+`if` blocks without `else`s often look like a mistake. The entire rest of the scope is still controlled by the `if`, but now implicitly. If you must use a standalone `if`, spend the space saying `else { /* noop */ }` so there is no doubt. Fall-through in `switch` is widely disliked and usually only permitted with an explanation or at least acknowledgement; this is little different.
 
-### Controlling Branching Technique 1: Combine (and Eliminate) Cases
+As a special case, many `if`s-without-`else`s are early returns, and can almost always be:
 
-All techniques for eliminating branches boil down to identifying cases which appear distinct, but are not. Essentially distinct things cannot be combined, and thus must be handled independently.
+- reframed as an assertion, which unlike a corresponding `if`-then-`throw`/`raise` will be phrased both positively and declaratively
+- rolled into one of the existing edge or common cases you already handle, such as not giving special treatment to empty collection types
+
+Avoiding lone `if`s has the added benefit of being able to more reliably use indentation as a reminder and emphasis for which statements are subject to which control flow.
+
+### Combine (and Eliminate) Cases
+
+All techniques for eliminating branches boil down to identifying cases which appear distinct, but are not. Essentially distinct things often manifest as distinct types, and cannot be handled the same way. If you have multiple cases handling values of the same type, look closer: the cases may be more similar than they first appear. Finding a way to combine them might reveal and underlying truth and more correspondingly more elegant solution.
 
 A very common case of unnecessarily distinct cases is nullable collection types. Is a null array a meaningfully distinct thing from an empty one? Usually, not: in both cases, you are going to do zero iterations. Use an empty array, and unconditionally iterate, instead of null checking.
 
-### Controlling Branching Technique 2: Explicit Alternatives
+### Explicit Alternatives
 
 If one branch being hit means that other branches cannot be, represent that explicitly.
 
-For instance, a series of three independent `if`s in a row doing is-instance checks will not all trigger for a given value, but at a skim (and perhaps without strong compiler support) this may not be obvious. Three `if`s represent 8 possible paths. By chaining `if`s into `else if`s, you can reduce the number of paths in this example to 3 or 4 (depending on if the last case is a catch-all or not).
+A series of three independent `if`s in a row doing is-instance checks will not all trigger for a given value, but at a skim (and perhaps without strong compiler support) this may not be obvious. Three `if`s represent 8 possible paths. By chaining `if`s into `else if`s, you can reduce the number of paths in this example to 3 or 4 (depending on if the last case is a catch-all or not).
 
 This technique can often be used to great effect inside loop bodies that would otherwise have to be written with `break` or `continue`.
 
-### Controlling Branching Technique 3: Branch in the Right Place
+### Branch in the Right Place
 
 Moving a branch higher or lower in the control flow can make a huge difference.
 
@@ -220,6 +227,7 @@ TODO
 - declare variables requiring complex control flow in blocks or dedicated functions
 - eliminate variables that can be derived from another
 
+# Something About Assertions
 
 # Inlining v. Factoring Out
 
