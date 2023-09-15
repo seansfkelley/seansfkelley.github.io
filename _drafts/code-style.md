@@ -208,17 +208,27 @@ In both cases, the goal is to find that crossover point that minimizes both the 
 
 Try to reduce the number of ways variables could potentially interact with each other. Ideally, this means eliminating a variable entirely.
 
-Every declared variable is another item for you and your reader to keep track of. The larger the scope of the variable, the longer one has to remember what the value is for and what changes, if any, the value has undergone since its declaration. Longer-lived variables also overlap with more other variables, increasing the number of possible interactions an unfamiliar reader has to potentially consider.
+Every declared variable is another item to keep track of. The larger the scope of the variable, the longer one has to remember what the value is for and what changes, if any, the value has undergone since its declaration. Longer-lived variables also overlap with more other variables, increasing the number of possible interactions an unfamiliar reader has to consider.
 
-### Techniques
+### Don't Store Derived Values
 
-TODO
+Storing values derived from other values requires careful management of the derived value to ensure it is consistent with the inputs. This is a form of cache invalidation, which is a known [hard thing](https://martinfowler.com/bliki/TwoHardThings.html).
 
-- on-the-fly derivations (e.g. @property in Python, thunks in JavaScript)
-- deferred declaration
-- break up functions (since functions are usually also scope boundaries)
+Instead, compute them on the fly when needed by the end consumer. Many languages have good, idiomatic ways to do this, like JavaScript closure-thunks, Java getters, and Python properties.
 
-## Side Effects
+### Defer Declarations as Late as Possible
+
+A variable declaration is a statement to your reader: "here is something you have to keep track of". If you declare everything up front in your scope, you have maximized the number of possible interactions to consider. If you declare a variable without initializing it, you have most likely put your program into a temporarily-invalid state (that you intend to resolve immediately, it's true).
+
+Declaring variables closer to where they are used reduces possible interactions and likely gives you the opportunity to provide a useful initialization value.
+
+### Shorten Lifetimes with Blocks (or One-use Functions)
+
+Anonymous scoping blocks (if your language supports it) or one-use functions (otherwise) can be used to move the end of a variable's lifetime earlier. This complements moving the declaration later to minimize possible interactions with other variables. In cases where several intermediate values are juggled to produce some other value, an anonymous block can ensure those intermediate values can be forgotten about by the reader as soon as the block ends, rather than hang over their head through the rest of the function.
+
+Some languages make this more ergonomic than others. Languages with blocks-as-values are best; languages whose only scope control is functions are acceptable, but one has to get used to the idea of breaking out single-use functions.
+
+## Mutation and Side Effects
 
 Try to reduce the number of possible states your program can be in. Ideally, values can be initialized onces and never changed.
 
