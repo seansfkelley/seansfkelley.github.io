@@ -2222,8 +2222,9 @@ const INESCUTCHEON_SKIP_RATIO = 0.6;
 function generateRandomBlazon() {
     function generate() {
         return (
-        // 20 chosen empirally.
-        Unparser(grammar, grammar.ParserStart, 20)
+        // 16 chosen empirally. It gets lions, where 12 does not. It produces some kinda bizarre and
+        // ugly things, but 20 makes some REALLY ugly things.
+        Unparser(grammar, grammar.ParserStart, 16)
             // This is restatement of the regex rule for acceptable whitespace.
             .replaceAll(/[ \t\n\v\f,;:]+/g, " ")
             .trim()
@@ -2257,8 +2258,9 @@ function generateRandomBlazon() {
         if (inescutcheonIndex !== -1 && Math.random() <= INESCUTCHEON_SKIP_RATIO) {
             blazon = blazon.slice(0, inescutcheonIndex);
         }
-    } while (blazon.match(/^[A-Za-z]+\.$/) &&
-        Math.random() <= TINCTURE_ONLY_SKIP_RATIO);
+    } while ((blazon.match(/^[A-Za-z]+\.$/) &&
+        Math.random() <= TINCTURE_ONLY_SKIP_RATIO) ||
+        blazon.match(/[Qq]uarterly/));
     return blazon;
 }
 random.addEventListener("click", async () => {
