@@ -67,7 +67,16 @@ NOTES ON THE IMPLEMENTATION
 document.querySelector("#no-javascript-alert")!.remove();
 document.querySelector("#interactive")!.classList.remove("hidden");
 
-if (!navigator.userAgent.includes("Firefox/")) {
+if (
+  !(
+    // Per https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent/Firefox, this is the
+    // preferred way to sniff Gecko-based browsers.
+    (
+      navigator.userAgent.includes("Gecko") &&
+      navigator.userAgent.includes("rv:")
+    )
+  )
+) {
   document.querySelector("#chrome-sucks-alert")!.classList.remove("hidden");
 }
 
@@ -3127,7 +3136,7 @@ async function parseAndRenderBlazon() {
     const clonedRendered = rendered.cloneNode(true);
     clonedRendered.setAttribute("width", "100");
     clonedRendered.setAttribute("height", "120");
-    clonedRendered.id = "";
+    clonedRendered.removeAttribute("id");
     renderedPreviewContainer.appendChild(clonedRendered);
   }
 
