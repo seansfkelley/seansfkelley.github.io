@@ -1,5 +1,14 @@
 html {
   font-size: $font-size-base;
+
+  // I guess Sass doesn't evaluate in CSS declarations, so interpolate explicitly.
+  --post-width: #{$width-mobile};
+  --post-inset: #{$spacing};
+
+  @media screen and (min-width: $width-mobile) {
+    --post-width: #{$width-desktop};
+    --post-inset: #{$spacing * 4};
+  }
 }
 
 body {
@@ -174,17 +183,11 @@ hr {
 }
 
 .centering-wrapper {
-  max-width: $post-max-width;
+  max-width: calc(var(--post-width) - 2 * var(--post-inset));
   margin-right: auto;
   margin-left: auto;
-  padding-right: $spacing;
-  padding-left: $spacing;
-
-  @media screen and (min-width: $width-mobile) {
-    max-width: $width-desktop - ($spacing * 8);
-    padding-right: $spacing * 4;
-    padding-left: $spacing * 4;
-  }
+  padding-right: var(--post-inset);
+  padding-left: var(--post-inset);
 }
 
 .horizontal-expander {

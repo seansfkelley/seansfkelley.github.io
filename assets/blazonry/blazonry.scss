@@ -108,18 +108,25 @@ a[data-example] {
   opacity: 0;
   transition: opacity 500ms;
   position: fixed;
-  right: 12px;
-  bottom: 12px;
+  right: var(--post-inset);
+  bottom: var(--post-inset);
   width: 100px;
   height: 120px;
 
-  @media screen and (min-width: $width-mobile) {
-    top: calc(50% - 60px);
-    bottom: unset;
-  }
-
   &.visible {
     opacity: 1;
+  }
+
+  @media screen and (min-width: $width-mobile) {
+    // TODO: height/width isn't respected because it's set in JS
+    // TODO: not sure if I like the placement here on desktop; there's a lot of whitespace on the right side that it's adrift in
+    // TODO: add a drop shadow, perhaps?
+    // TODO: can it be made to disappear, or sticky-bottom, when it hits the footer?
+    // TODO: when there's enough whitespace outside the article bounds, should it flip around to be over there instead?
+    width: 200px;
+    height: 240px;
+    right: inherit;
+    left: calc(50% - 150px + var(--post-width) / 2);
   }
 }
 
