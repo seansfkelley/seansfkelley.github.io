@@ -10,6 +10,7 @@ $spacing:                   12px !default;
 $width-mobile:              600px !default;
 $width-desktop:             800px !default;
 $input-border-radius:       2px;
+$post-max-width:            $width-mobile - ($spacing * 2);
 
 // Syntax highlighting. Lifted from minima's Solarized port.
 :root {

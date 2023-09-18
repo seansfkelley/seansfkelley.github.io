@@ -3122,6 +3122,13 @@ async function parseAndRenderBlazon() {
     if (blazon.inescutcheon != null) {
       await inescutcheon(container, blazon.inescutcheon);
     }
+
+    renderedPreviewContainer.innerHTML = "";
+    const clonedRendered = rendered.cloneNode(true);
+    clonedRendered.setAttribute("width", "100");
+    clonedRendered.setAttribute("height", "120");
+    clonedRendered.id = "";
+    renderedPreviewContainer.appendChild(clonedRendered);
   }
 
   let results: Blazon[];
@@ -3178,6 +3185,9 @@ const input: HTMLTextAreaElement = document.querySelector("#blazon-input")!;
 const random: HTMLButtonElement = document.querySelector("#random-blazon")!;
 const form: HTMLFormElement = document.querySelector("#form")!;
 const rendered: SVGSVGElement = document.querySelector("#rendered")!;
+const renderedPreviewContainer: HTMLDivElement = document.querySelector(
+  "#rendered-preview-container"
+)!;
 const error: HTMLPreElement = document.querySelector("#error")!;
 const ast: HTMLPreElement = document.querySelector("#ast")!;
 const ambiguous: HTMLDivElement = document.querySelector("#ambiguous")!;
@@ -3286,5 +3296,17 @@ for (const example of document.querySelectorAll<HTMLAnchorElement>(
 }
 
 parseAndRenderBlazon();
+
+new IntersectionObserver(
+  ([{ isIntersecting, boundingClientRect }]) => {
+    // > 0 ensures that we don't show the preview if you're scrolled _above_ the main display.
+    if (isIntersecting || boundingClientRect.top > 0) {
+      renderedPreviewContainer.classList.remove("visible");
+    } else {
+      renderedPreviewContainer.classList.add("visible");
+    }
+  },
+  { threshold: 1 }
+).observe(rendered);
 
 // #endregion
