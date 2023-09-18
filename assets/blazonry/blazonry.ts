@@ -3102,6 +3102,38 @@ function recursivelyOmitNullish<T>(value: T): T {
   }
 }
 
+function initializePreview() {
+  let isBelowMainSvg = false;
+  let isAboveFooter = true;
+
+  function update() {
+    renderedPreviewContainer.classList.toggle(
+      "visible",
+      isBelowMainSvg && isAboveFooter
+    );
+  }
+
+  new IntersectionObserver(
+    ([{ isIntersecting, boundingClientRect }]) => {
+      // > 0 ensures that we don't show the preview if you're scrolled _above_ the main display.
+      isBelowMainSvg = !isIntersecting && boundingClientRect.top < 0;
+      update();
+    },
+    // threshold: 1 doesn't work properly if the viewport is smaller than the height of the shield.
+    // But this won't happen on any real device.
+    { threshold: 1 }
+  ).observe(rendered);
+
+  new IntersectionObserver(
+    ([{ boundingClientRect }]) => {
+      isAboveFooter =
+        boundingClientRect.top > document.documentElement.clientHeight;
+      update();
+    },
+    { threshold: 0 }
+  ).observe(document.querySelector(".next-previous")!);
+}
+
 let previousPrevEventHandler;
 let previousNextEventHandler;
 async function parseAndRenderBlazon() {
@@ -3304,18 +3336,8 @@ for (const example of document.querySelectorAll<HTMLAnchorElement>(
   });
 }
 
-parseAndRenderBlazon();
+initializePreview();
 
-new IntersectionObserver(
-  ([{ isIntersecting, boundingClientRect }]) => {
-    // > 0 ensures that we don't show the preview if you're scrolled _above_ the main display.
-    if (isIntersecting || boundingClientRect.top > 0) {
-      renderedPreviewContainer.classList.remove("visible");
-    } else {
-      renderedPreviewContainer.classList.add("visible");
-    }
-  },
-  { threshold: 1 }
-).observe(rendered);
+parseAndRenderBlazon();
 
 // #endregion
