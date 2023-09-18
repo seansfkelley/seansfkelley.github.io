@@ -3104,12 +3104,12 @@ function recursivelyOmitNullish<T>(value: T): T {
 
 function initializePreview() {
   let isBelowMainSvg = false;
-  let isAboveFooter = true;
+  let isAboveFootnotes = true;
 
   function update() {
     renderedPreviewContainer.classList.toggle(
       "visible",
-      isBelowMainSvg && isAboveFooter
+      isBelowMainSvg && isAboveFootnotes
     );
   }
 
@@ -3126,12 +3126,12 @@ function initializePreview() {
 
   new IntersectionObserver(
     ([{ boundingClientRect }]) => {
-      isAboveFooter =
+      isAboveFootnotes =
         boundingClientRect.top > document.documentElement.clientHeight;
       update();
     },
     { threshold: 0 }
-  ).observe(document.querySelector(".next-previous")!);
+  ).observe(document.querySelector(".footnotes")!);
 }
 
 let previousPrevEventHandler;
