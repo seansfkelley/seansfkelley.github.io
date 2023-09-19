@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2023-09-17T21:04:38+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Blazonry</title><link href="https://blog.sea.nkelley.me/2023/08/28/blazonry/" rel="alternate" type="text/html" title="Blazonry" /><published>2023-08-28T00:00:00+00:00</published><updated>2023-08-28T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/08/28/blazonry</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/08/28/blazonry/">&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Blazon&quot;&gt;Wikipedia&lt;/a&gt;:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2023-09-19T04:13:46+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Blazonry</title><link href="https://blog.sea.nkelley.me/2023/08/28/blazonry/" rel="alternate" type="text/html" title="Blazonry" /><published>2023-08-28T00:00:00+00:00</published><updated>2023-08-28T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/08/28/blazonry</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/08/28/blazonry/">&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Blazon&quot;&gt;Wikipedia&lt;/a&gt;:&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;In heraldry and heraldic vexillology, a &lt;strong&gt;blazon&lt;/strong&gt; is a formal description of a coat of arms, flag or similar emblem, from which the reader can reconstruct the appropriate image.&lt;/p&gt;
@@ -17,7 +17,7 @@
 &lt;/p&gt;
 
 &lt;div class=&quot;center hidden&quot; id=&quot;interactive&quot;&gt;
-  &lt;svg id=&quot;rendered&quot; width=&quot;300&quot; height=&quot;360&quot; viewBox=&quot;-52 -62 104 124&quot; fill=&quot;none&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;/svg&gt;
+  &lt;svg id=&quot;rendered&quot; viewBox=&quot;-52 -62 104 124&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;/svg&gt;
 
   &lt;form id=&quot;form&quot;&gt;
     &lt;textarea id=&quot;blazon-input&quot; rows=&quot;3&quot; placeholder=&quot;Enter blazon...&quot; spellcheck=&quot;false&quot;&gt;Paly of thirteen Argent and Gules, a chief Azure.&lt;/textarea&gt;
@@ -46,6 +46,8 @@
   &lt;/details&gt;
 &lt;/div&gt;
 
+&lt;div id=&quot;rendered-preview-container&quot;&gt;&lt;/div&gt;
+
 &lt;p&gt;Try writing your own! Here’s a very non-exhaustive listing of the components:&lt;/p&gt;
 
 &lt;ul&gt;
@@ -64,8 +66,6 @@
   &lt;li&gt;ornamentation: for &lt;a href=&quot;#&quot; data-example=&quot;Argent, a cross engrailed Sable cotised Gules.&quot;&gt;ordinaries&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Per bend embattled Vert and Gules.&quot;&gt;partitions&lt;/a&gt; and even &lt;a href=&quot;#&quot; data-example=&quot;Sable, a lion passant reguardant Gules armed and langued Or.&quot;&gt;some charges&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;blazons in blazons: in &lt;a href=&quot;#&quot; data-example=&quot;Sable, on a canton Argent a cross Gules between four mullets Gules.&quot;&gt;cantons&lt;/a&gt;, &lt;a href=&quot;#&quot; data-example=&quot;Quarterly, first and fourth Sable a lion Or, second and third lozengy Argent and Azure.&quot;&gt;quarters&lt;/a&gt;, or &lt;a href=&quot;#&quot; data-example=&quot;Argent, an escutcheon Azure a bend Or.&quot;&gt;escutcheons&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;!-- TODO: Not being able to see these change the preview, since they&apos;re so far down the page, is a bummer.--&gt;
 
 &lt;p&gt;Note that there are a &lt;em&gt;lot&lt;/em&gt; of ordinaries and charges in real blazons, along with many slight variations in phrasing, which aren’t all supported. Check &lt;a href=&quot;/assets/blazonry/grammar.txt&quot;&gt;the formal grammar&lt;/a&gt; if you want specifics. Here’s some real ones you can try out, too:&lt;/p&gt;
 

@@ -240,6 +240,14 @@ body[data-theme=dark] {
 }
 html {
   font-size: 16px;
+  --post-width: 600px;
+  --post-inset: 12px;
+}
+@media screen and (min-width: 600px) {
+  html {
+    --post-width: 800px;
+    --post-inset: 48px;
+  }
 }
 
 body {
@@ -405,18 +413,11 @@ hr {
 }
 
 .centering-wrapper {
-  max-width: 576px;
+  max-width: calc(var(--post-width) - 2 * var(--post-inset));
   margin-right: auto;
   margin-left: auto;
-  padding-right: 12px;
-  padding-left: 12px;
-}
-@media screen and (min-width: 600px) {
-  .centering-wrapper {
-    max-width: 704px;
-    padding-right: 48px;
-    padding-left: 48px;
-  }
+  padding-right: var(--post-inset);
+  padding-left: var(--post-inset);
 }
 
 .horizontal-expander {

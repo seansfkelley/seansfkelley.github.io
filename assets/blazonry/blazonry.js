@@ -66,7 +66,11 @@ NOTES ON THE IMPLEMENTATION
 // Do this first thing so there's something to see ASAP!
 document.querySelector("#no-javascript-alert").remove();
 document.querySelector("#interactive").classList.remove("hidden");
-if (!navigator.userAgent.includes("Firefox/")) {
+if (!(
+// Per https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent/Firefox, this is the
+// preferred way to sniff Gecko-based browsers.
+(navigator.userAgent.includes("Gecko") &&
+    navigator.userAgent.includes("rv:")))) {
     document.querySelector("#chrome-sucks-alert").classList.remove("hidden");
 }
 // #region LAYOUT
@@ -2120,6 +2124,26 @@ function recursivelyOmitNullish(value) {
         return value;
     }
 }
+function initializePreview() {
+    let isBelowMainSvg = false;
+    let isAboveFootnotes = true;
+    function update() {
+        renderedPreviewContainer.classList.toggle("visible", isBelowMainSvg && isAboveFootnotes);
+    }
+    new IntersectionObserver(([{ isIntersecting, boundingClientRect }]) => {
+        // > 0 ensures that we don't show the preview if you're scrolled _above_ the main display.
+        isBelowMainSvg = !isIntersecting && boundingClientRect.top < 0;
+        update();
+    }, 
+    // threshold: 1 doesn't work properly if the viewport is smaller than the height of the shield.
+    // But this won't happen on any real device.
+    { threshold: 1 }).observe(rendered);
+    new IntersectionObserver(([{ boundingClientRect }]) => {
+        isAboveFootnotes =
+            boundingClientRect.top > document.documentElement.clientHeight;
+        update();
+    }, { threshold: 0 }).observe(document.querySelector(".footnotes"));
+}
 let previousPrevEventHandler;
 let previousNextEventHandler;
 async function parseAndRenderBlazon() {
@@ -2141,6 +2165,10 @@ async function parseAndRenderBlazon() {
         if (blazon.inescutcheon != null) {
             await inescutcheon(container, blazon.inescutcheon);
         }
+        renderedPreviewContainer.innerHTML = "";
+        const clonedRendered = rendered.cloneNode(true);
+        clonedRendered.removeAttribute("id");
+        renderedPreviewContainer.appendChild(clonedRendered);
     }
     let results;
     try {
@@ -2191,6 +2219,7 @@ const input = document.querySelector("#blazon-input");
 const random = document.querySelector("#random-blazon");
 const form = document.querySelector("#form");
 const rendered = document.querySelector("#rendered");
+const renderedPreviewContainer = document.querySelector("#rendered-preview-container");
 const error = document.querySelector("#error");
 const ast = document.querySelector("#ast");
 const ambiguous = document.querySelector("#ambiguous");
@@ -2275,6 +2304,7 @@ for (const example of document.querySelectorAll("[data-example]")) {
         await parseAndRenderBlazon();
     });
 }
+initializePreview();
 parseAndRenderBlazon();
 // #endregion
 //# sourceMappingURL=blazonry.js.map
