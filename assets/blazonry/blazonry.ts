@@ -3166,8 +3166,6 @@ async function parseAndRenderBlazon() {
 
     renderedPreviewContainer.innerHTML = "";
     const clonedRendered = rendered.cloneNode(true);
-    clonedRendered.setAttribute("width", "100");
-    clonedRendered.setAttribute("height", "120");
     clonedRendered.removeAttribute("id");
     renderedPreviewContainer.appendChild(clonedRendered);
   }
