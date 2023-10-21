@@ -8,7 +8,7 @@ Two well-known facts:
 - New Yorkers are assholes.
 - Anyone, put behind the wheel of a car, becomes a monster.
 
-The unholy combination of these things yields some of the most effortful douchebaggery you'll find anywhere in the world. Take, for instance, Halloween 2022: literally hundreds of children and their parents milling around combined with a partial street closure created some bad traffic on my block, which some jackass in a minivan decided to keep everyone within earshot informed about by leaning of his horn for ten straight minutes _uninterrupted_. (That's not an exaggeration. Time it: ~600 seconds of honking without pause.)
+The unholy combination of these things yields some of the most effortful douchebaggery you'll find anywhere in the world. Take, for instance, my Halloween 2022: literally hundreds of children and their parents milling around combined with a partial street closure created some bad traffic on the block, which some jackass in a minivan decided to keep everyone within earshot informed about by leaning on his horn for ten straight minutes _uninterrupted_. (That's not an exaggeration. Time it: ~600 seconds of honking without pause.)
 
 While utterly unnecessary and excessive honking is one of the more salient examples, New York provides triggers for any pet peeve imaginable: bad parking jobs, standing in doorways, blocking the sidewalk, blasting music, bright flashing lights, yelling at 4 AM, name-calling, walking too slowly, entering while people are exiting, cutting lines, video advertisements, not holding doors... the list goes on. If it's obnoxious and in public, New York has it in spades.
 
