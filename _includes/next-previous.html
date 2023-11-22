@@ -32,3 +32,11 @@
   {% endif %}
 </section>
 <hr />
+{% if page.tags %}
+<section class="tag-list">
+  <i class="tag-label">tags:</i>
+  {% for t in page.tags %}
+    <a class="tag-link" href="/tag/{{ t }}">{{ t }}</a>
+  {% endfor %}
+</section>
+{% endif %}
