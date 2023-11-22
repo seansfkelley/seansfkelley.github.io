@@ -18,18 +18,20 @@
   align-items: center;
   flex: 1;
 
-  .next-previous-label, .next-previous-icon {
+  .next-previous-label,
+  .next-previous-icon {
     color: var(--text-color);
   }
 
-  &:hover  {
+  &:hover {
     text-decoration: none;
 
     .next-previous-title {
       text-decoration: underline;
     }
 
-    .next-previous-label, .next-previous-icon {
+    .next-previous-label,
+    .next-previous-icon {
       color: var(--text-color);
     }
   }
@@ -76,7 +78,7 @@
 
 .tag-list {
   .tag-link:not(:last-child):after {
-    content: ', ';
+    content: ", ";
   }
 
   margin-bottom: $spacing * 2;
