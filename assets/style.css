@@ -591,6 +591,11 @@ sup {
   vertical-align: top;
 }
 
+.tag-page .post-date {
+  font-size: 14px;
+  color: var(--text-color-faded);
+}
+
 .alert {
   background-color: var(--intent-default-background-color);
   padding: 12px;
@@ -891,4 +896,7 @@ sup {
   .next-previous-right:hover .next-previous-icon {
     transform: translateX(6px);
   }
+}
+.tag-list .tag-link:not(:last-child):after {
+  content: ", ";
 }
