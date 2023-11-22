@@ -897,6 +897,9 @@ sup {
     transform: translateX(6px);
   }
 }
+.tag-list {
+  margin-bottom: 24px;
+}
 .tag-list .tag-link:not(:last-child):after {
   content: ", ";
 }
