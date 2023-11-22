@@ -8,6 +8,8 @@ exclude:
   - TODO.md
   - README.md
   - .yarn/
+include:
+  - tag/
 sass:
   sourcemap: never
 kramdown:

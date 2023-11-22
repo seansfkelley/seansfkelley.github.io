@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "World's Easiest Pet: How to Sourdough Starter"
+tag: recipe
 redirect_from:
   - /starter
   - /sourdough-starter

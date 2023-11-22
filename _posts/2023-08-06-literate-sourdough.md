@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Sourdough Loaf (and Recipe Planner)
+tag: recipe
 custom-js-list:
   - /assets/literate-recipe/literate-recipe.js
 custom-css-list:
