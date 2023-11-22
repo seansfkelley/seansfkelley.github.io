@@ -88,11 +88,7 @@ So what's the point of all this complexity? To encourage and reward risk-taking:
 
 And of course, there is a _whole lot_ of tweaking you can do around the timing and margins to squeeze out extra value, which is why you hire a tax professional and don't blindly trust the internet for financial advice.
 
--------------------------------------------------------------------------------
-
 {% include next-previous.html %}
-
--------------------------------------------------------------------------------
 
 [^1]: I don't have any familiarity with employee stock purchase plans, which, according to the IRS, are the third category of stock options.
 [^2]: For private companies, substitute the 409A-defined fair market value instead of the public market price.

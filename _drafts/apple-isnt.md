@@ -24,11 +24,7 @@ Here's a list of things I think they have executed really well on:
 - stylus and accompanying tablet
 - smart watch
 
--------------------------------------------------------------------------------
-
 {% include next-previous.html %}
-
--------------------------------------------------------------------------------
 
 [^1]: Via [MacRumors](https://www.macrumors.com/2014/01/09/7-years-ago-jobs-iphone/).
 [^2]: A sampling as of the time of writing from the link: "Apple unveils new iPad mini with breakthrough performance in stunning new design" (2021-09-14); ...more of these...

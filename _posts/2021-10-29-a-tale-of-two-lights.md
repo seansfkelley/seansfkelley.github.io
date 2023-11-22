@@ -113,11 +113,7 @@ Since this is the downstairs light, and the only switch downstairs is D, you bet
 
 Or you can just mash the switches and hope for the best.
 
--------------------------------------------------------------------------------
-
 {% include next-previous.html %}
-
--------------------------------------------------------------------------------
 
 [^1]: Excuse the tiny, tiny negation bars. I couldn't figure out why the proper combining overline `&#773;` wouldn't work.
 [^2]: One could come up with many different representations that don't have overlapping rectangles, up to and including one that has a term for each 1. That would be equivalent to the original, lengthy boolean algebra expression I started with, which defeats the point of Karnaugh maps. This expression has fewer terms, and simpler terms, than any other representation that doesn't have overlapping terms.

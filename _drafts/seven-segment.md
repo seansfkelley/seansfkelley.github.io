@@ -21,10 +21,7 @@ These were made according to a few simple (and somewhat arbitrary) rules derived
 
 If you're curious, I wrote a [little Python script](/assets/seven-segment/generate.py) to enumerate every possible shape, then prune ones violating the above rules.
 
--------------------------------------------------------------------------------
-
 {% include next-previous.html %}
 
--------------------------------------------------------------------------------
-
 [^1]: According to the infallible Wikipedia, 7-segment displays were invented decades before the Nixie tube, but were not practical until LEDs were invented decades _after_ the Nixie tube. It's also worth noting that the Nixie tube is a more flexible design, should you need to display a wider or different range of characters.
+

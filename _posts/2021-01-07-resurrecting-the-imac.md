@@ -52,11 +52,7 @@ As a little bonus discovery, something caught my eye while putting the case back
 
 It's a hidden window behind which sits the infrared sensor for those infrared remotes they used to sell. I'd always vaguely wondered how they made it so you could just point the remote in the general direction of the computer and it always worked. I was so used to seeing shiny little black dots ruining TV bezels that it had never occured to me that they could hide it behind the logo. Elegant!
 
--------------------------------------------------------------------------------
-
 {% include next-previous.html %}
-
--------------------------------------------------------------------------------
 
 [^1]: I don't know if this is standard in digital electronics, but here I learned that the ground pin is sometimes marked with a little dot. In this case, there was a small, circular solder speck by pin 1, and I confirmed with a diagram I later found that this was indeed the ground pin.
 [^2]: How long do those big ones take to discharge?

@@ -24,11 +24,7 @@ These interactions happen everywhere. What's unique about New York in my experie
 
 I think you get the analogy,[^2], but I want to put a finer point on that last part: that the culture of assholery in New York emerges not necessarily from something inherent about New Yorkers, but from both the sheer quantity of people and their density, compounded over years and years. It arises from the blast radius of inconsideracy, from the inevitable negative interactions flinging their negativity at everyone with the misfortune of being nearby.
 
--------------------------------------------------------------------------------
-
 {% include next-previous.html %}
-
--------------------------------------------------------------------------------
 
 [^1]: I also call this the "blast radius of assholery", which gets the point across better, but makes it harder to discuss is more-polite company. So I use the polite name for consistency.
 [^2]: Find-and-replace, if you'd like: "it's not enough to have angry people spreading negativity, you also need enough people crammed into a small enough space that bad interactions are frequent enough to keep the whole thing going, and in fact, you can start such a self-sustaining culture simply by piling enough people into one place _without_ any explicit inciting event."

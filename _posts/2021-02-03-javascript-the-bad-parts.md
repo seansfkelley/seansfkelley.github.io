@@ -155,11 +155,7 @@ Arrays continue be useful, but they've always been less weird than objects, so i
 
 As for `===` and dynamic `this`, well, I have linters and more brainspace to dedicate now that I'm not thinking about the pitfalls of objects all the time.
 
--------------------------------------------------------------------------------
-
 {% include next-previous.html %}
-
--------------------------------------------------------------------------------
 
 [^1]: Objective-C is an extensively flawed and weird language in its own right, but let's not get into that here.
 [^2]: Inflation and the pervasiveness of software mean that this cost is definitely _well_ above a billion at this point. But I don't fault C.A.R. Hoare, the null reference was inevitable and entirely reasonable. Optional types are big in imperative languages now, anyway.

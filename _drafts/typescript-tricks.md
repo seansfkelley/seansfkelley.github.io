@@ -333,11 +333,7 @@ I recently came across [TSpell](https://github.com/kkuchta/TSpell) and I just ha
 
 Somewhat more practically, [type-challenges](https://github.com/type-challenges/type-challenges) is a good way to exercise some of the more esoteric aspects of the type system.
 
--------------------------------------------------------------------------------
-
 {% include next-previous.html %}
-
--------------------------------------------------------------------------------
 
 [^1]: Here is the part where I mention the [Fred Brooks quote](https://en.wikiquote.org/wiki/Fred_Brooks) about flowcharts and tables.
 [^2]: Since [type-only imports](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-8.html#type-only-imports-and-export) were added, you can now separate the type from its const namespace if you so desire.

@@ -33,11 +33,7 @@ And now, the mandatory xkcd:
 
 // someone is wrong on the internet
 
--------------------------------------------------------------------------------
-
 {% include next-previous.html %}
-
--------------------------------------------------------------------------------
 
 [^1]: On a laptop/desktop, I like blocking in `/etc/hosts`. It's easy to do, but annoying enough to undo that I won't. On iOS, the best option I've found is to enable "Limit Adult Websites" buried deep in Settings, which permits you to specify never-allowed sites. It's clunky, and sometimes triggers false positives when a site has sexy-sounding or sexy-adjacent text/images, but that's rare enough that I deal. It'd be nice if Apple let me block sites _without_ that, but they know best, and doing so would require (\*gasp\*) a fourth option.
 [^2]: To be clear, like any well-adjusted person, I hate clickbait headlines. They  are the touchstone for everything that is awful about written media on the internet: advertising-packed regurgitations of shallow, snarky social media comments, repackaged and delivered on once-respectable letterhead (wrong word).

@@ -42,11 +42,7 @@ And you're done! If you find any errors in these steps, please let me know or co
 
 If you're curious to verify the files, you can use `atomicparsley <file path> -t` and it'll dump a list of all the tags.
 
--------------------------------------------------------------------------------
-
 {% include next-previous.html %}
-
--------------------------------------------------------------------------------
 
 [^1]: I briefly considered updating this to be shell to remove the need for Python, since it's a little silly that the script halfway implements globbing and basically just shells out repeatedly, but it works and I hate writing shell, so I left it as Python.
 [^2]: I guess they're trying to blur the line between what's on your local machine versus what's credited to your account. I suppose that makes sense for your average person, but I'm not a big believer in streaming services and have, on more than one occasion, been the only provider of music because there was no cell signal. Take that, Spotify!

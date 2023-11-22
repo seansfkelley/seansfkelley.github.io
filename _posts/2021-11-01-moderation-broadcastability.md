@@ -59,11 +59,7 @@ If you'd like to read more like this, check out:
 
 _Updated 2022-01-07: added another link to the reading list._
 
--------------------------------------------------------------------------------
-
 {% include next-previous.html %}
-
--------------------------------------------------------------------------------
 
 [^1]: I was drafting this post in the weeks leading up to The Announcement. I don't think the name Facebook is going any any time soon, and I don't think a regulation-dodging rename makes any of these observations less relevant. So I'll continue to use the name Facebook.
 [^2]: Since at least [{{ "2021-01-06" | date: site.date_format }}](https://en.wikipedia.org/wiki/2021_United_States_Capitol_attack), if not [{{ "2018-03-17" | date: site.date_format }}](https://en.wikipedia.org/wiki/Facebook%E2%80%93Cambridge_Analytica_data_scandal).

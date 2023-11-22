@@ -43,11 +43,7 @@ The biggest missing thing is obviously collaboration features. I don't know what
 
 I still use a lot of things from Apple.
 
--------------------------------------------------------------------------------
-
 {% include next-previous.html %}
-
--------------------------------------------------------------------------------
 
 [^1]: I've actually got a post on this planned for the future... I just have to collect some browsing data on myself first.
 [^2]: My threat model does not include someone going to the effort to correlate things like IPs and time of access to figure out that my multiple Google accounts are actually the same physical person. I want to not be okay with that, but I think I am.
