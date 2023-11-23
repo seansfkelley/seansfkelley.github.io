@@ -1,0 +1,24 @@
+---
+# why do I have to put this nonsense header in and break my syntax highlighter
+---
+
+@import "variables";
+
+.seven-segment {
+  polygon {
+    fill-rule: evenodd;
+    stroke-width: 0.25;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    fill: none;
+  }
+
+  @each $segment in a, b, c, d, e, f, g {
+    &[data-segments*="#{$segment}"] {
+      polygon.#{$segment} {
+        stroke: black;
+        fill: var(--sol-red);
+      }
+    }
+  }
+}
