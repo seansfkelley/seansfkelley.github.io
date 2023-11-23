@@ -37,7 +37,7 @@ def is_connected(s):
   # note: x & -x computes the lowest bit, which we use here to pick "any arbitrary bit"
   # https://stackoverflow.com/questions/18806481/how-can-i-get-the-value-of-the-least-significant-bit-in-a-number
 
-  # this is a bitwise DFS, hence the names
+  # this is a bitwise BFS, hence the names
   current = s & -s
   visited = current
   queue = current
