@@ -102,11 +102,7 @@ def display(s):
   p(D, ' ‾‾‾ ')
 
 def to_pattern(s):
-  pattern = ''
-  for (letter, value) in zip('abcdefg', (A, B, C, D, E, F, G)):
-    if s & value:
-      pattern += letter
-  return pattern
+  return ''.join(letter for (letter, value) in zip('abcdefg', (A, B, C, D, E, F, G)) if s & value)
 
 VERBOSE = '--verbose' in sys.argv or '-v' in sys.argv
 
