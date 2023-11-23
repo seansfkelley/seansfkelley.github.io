@@ -1,6 +1,5 @@
 #!/usr/bin/env python3.10
 
-from enum import IntFlag
 import sys
 
 # https://en.wikipedia.org/wiki/Seven-segment_display_character_representations
