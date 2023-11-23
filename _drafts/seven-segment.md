@@ -19,7 +19,7 @@ These were made according to a few simple (and somewhat arbitrary) rules derived
 - connected into a single glyph (no floating "dots" or bars)
 - novel (obviously)
 
-If you're curious, I wrote a [little Python script](/assets/seven-segment/generate.py) to enumerate every possible shape, then prune ones violating the above rules.
+If you're curious, I wrote a [little Python script](/assets/seven-segment/generate.txt) to enumerate every possible shape, then prune ones violating the above rules.
 
 {% include next-previous.html %}
 
