@@ -86,12 +86,15 @@ KNOWN_PATTERNS = {
 def is_novel(s):
   return s not in KNOWN_PATTERNS
 
-def display(s):
+def to_ascii_art(s):
+  string = ''
+
   def p(segment, text, end='\n'):
+    nonlocal string
     if s & segment:
-      print(text, end=end)
+      string += text + end
     else:
-      print(' ' * len(text), end=end)
+      string += (' ' * len(text)) + end
 
   p(A, ' ___ ')
   p(F, '|   ', end='')
@@ -101,12 +104,10 @@ def display(s):
   p(C,     '|')
   p(D, ' ‾‾‾ ')
 
+  return string
+
 def to_pattern(s):
-  pattern = ''
-  for (letter, value) in zip('abcdefg', (A, B, C, D, E, F, G)):
-    if s & value:
-      pattern += letter
-  return pattern
+  return ''.join(letter for (letter, value) in zip('abcdefg', (A, B, C, D, E, F, G)) if s & value)
 
 VERBOSE = '--verbose' in sys.argv or '-v' in sys.argv
 
@@ -116,7 +117,7 @@ for s in range(128):
     pattern = to_pattern(s)
     if VERBOSE:
       print(f'bit pattern: {s:07b} ; text pattern: {pattern}')
-      display(s)
+      print(to_ascii_art(s))
     patterns.append(pattern)
 
 if VERBOSE:
