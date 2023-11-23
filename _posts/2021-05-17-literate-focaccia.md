@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Ligurian Focaccia (and Recipe Planner)
+tags: recipe
 custom-js-list:
   - /assets/literate-recipe/literate-recipe.js
 custom-css-list:
