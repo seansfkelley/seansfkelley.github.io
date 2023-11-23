@@ -32,7 +32,7 @@
   {% endif %}
 </section>
 <hr />
-{% if page.tags %}
+{% if page.tags.size != 0 %}
 <section class="tag-list">
   <i class="tag-label">tags:</i>
   {% for t in page.tags %}
