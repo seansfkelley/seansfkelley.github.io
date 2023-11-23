@@ -114,10 +114,11 @@ VERBOSE = '--verbose' in sys.argv or '-v' in sys.argv
 patterns = []
 for s in range(128):
   if is_full_height(s) and is_connected(s) and is_novel(s):
+    pattern = to_pattern(s)
     if VERBOSE:
-      print(f'bit pattern: {s:07b}')
+      print(f'bit pattern: {s:07b} ; text pattern: {pattern}')
       display(s)
-    patterns.append(to_pattern(s))
+    patterns.append(pattern)
 
 if VERBOSE:
   print(f'total: {len(patterns)}')
