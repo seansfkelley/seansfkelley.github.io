@@ -12,4 +12,4 @@ cp ../../node_modules/nearley/lib/nearley.js nearley.js
 cp ../../node_modules/nearley/lib/unparse.js nearley-unparse.js
 # note that randexp is committed directly because it doesn't publish a browser build
 
-echo "successfully built blazonry"
+echo "successfully built $(dirname "$0")"

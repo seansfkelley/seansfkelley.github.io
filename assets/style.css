@@ -850,7 +850,8 @@ sup {
   align-items: center;
   flex: 1;
 }
-.next-previous-link .next-previous-label, .next-previous-link .next-previous-icon {
+.next-previous-link .next-previous-label,
+.next-previous-link .next-previous-icon {
   color: var(--text-color);
 }
 .next-previous-link:hover {
@@ -859,7 +860,8 @@ sup {
 .next-previous-link:hover .next-previous-title {
   text-decoration: underline;
 }
-.next-previous-link:hover .next-previous-label, .next-previous-link:hover .next-previous-icon {
+.next-previous-link:hover .next-previous-label,
+.next-previous-link:hover .next-previous-icon {
   color: var(--text-color);
 }
 
