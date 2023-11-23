@@ -1,6 +1,5 @@
 #!/usr/bin/env python3.10
 
-from enum import IntFlag
 import sys
 
 # https://en.wikipedia.org/wiki/Seven-segment_display_character_representations
@@ -37,7 +36,7 @@ def is_connected(s):
   # note: x & -x computes the lowest bit, which we use here to pick "any arbitrary bit"
   # https://stackoverflow.com/questions/18806481/how-can-i-get-the-value-of-the-least-significant-bit-in-a-number
 
-  # this is a bitwise DFS, hence the names
+  # this is a bitwise BFS, hence the names
   current = s & -s
   visited = current
   queue = current
@@ -114,10 +113,11 @@ VERBOSE = '--verbose' in sys.argv or '-v' in sys.argv
 patterns = []
 for s in range(128):
   if is_full_height(s) and is_connected(s) and is_novel(s):
+    pattern = to_pattern(s)
     if VERBOSE:
-      print(f'bit pattern: {s:07b}')
+      print(f'bit pattern: {s:07b} ; text pattern: {pattern}')
       display(s)
-    patterns.append(to_pattern(s))
+    patterns.append(pattern)
 
 if VERBOSE:
   print(f'total: {len(patterns)}')
