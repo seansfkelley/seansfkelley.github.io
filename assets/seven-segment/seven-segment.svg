@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- adapted from https://upload.wikimedia.org/wikipedia/commons/7/7a/7-segment_abcdfg.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment">
+  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2"/>
+  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2"/>
+  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10"/>
+  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16"/>
+  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16"/>
+  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8"/>
+  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10"/>
+</svg>
