@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.10
 
 from enum import IntFlag
 
@@ -33,10 +33,20 @@ NEIGHBORS = {
 }
 
 def is_connected(s):
-  for segment in (A, B, C, D, E, F, G):
-    if s & segment and not (s & NEIGHBORS[segment]):
-      return False
-  return True
+  # note: x & -x computes the lowest bit, which we use here to pick "any arbitrary bit"
+  # https://stackoverflow.com/questions/18806481/how-can-i-get-the-value-of-the-least-significant-bit-in-a-number
+
+  # this is a bitwise DFS, hence the names
+  current = s & -s
+  visited = current
+  queue = current
+  while queue:
+    current = queue & -queue
+    queue &= ~current
+    unvisited_neighbors = NEIGHBORS[current] & ~visited & s
+    queue |= unvisited_neighbors
+    visited |= unvisited_neighbors
+  return visited == s
 
 KNOWN_PATTERNS = {
   A | B | C | D | E | F,     # 0
@@ -77,7 +87,7 @@ count = 0
 for s in range(128):
   if is_full_height(s) and is_connected(s) and is_novel(s):
     count += 1
-    print(f'bit pattern: {s}')
+    print(f'bit pattern: {s:07b}')
     display(s)
     print()
 
