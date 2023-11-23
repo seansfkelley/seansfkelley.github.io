@@ -5,6 +5,14 @@
 @import "variables";
 
 .seven-segment {
+  &[data-inline] {
+    display: inline;
+    height: 1em;
+    line-height: 1em;
+    vertical-align: bottom;
+    margin: 0 -0.25em 0.25em;
+  }
+
   polygon {
     fill-rule: evenodd;
     stroke-width: 0.25;

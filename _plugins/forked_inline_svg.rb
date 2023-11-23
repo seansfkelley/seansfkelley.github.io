@@ -1,15 +1,5 @@
 require "nokogiri"
-require 'svg_optimizer'
 require 'jekyll/liquid_extensions'
-
-PLUGINS_BLACKLIST = [
-  SvgOptimizer::Plugins::CleanupId,
-]
-
-PLUGINS = SvgOptimizer::DEFAULT_PLUGINS.delete_if {|plugin|
-  PLUGINS_BLACKLIST.include? plugin
-}
-
 
 module Jekyll
   module Tags
@@ -87,19 +77,6 @@ module Jekyll
         r = params.to_a.select{|v| v[1] != ""}.map {|v| %!#{v[0]}="#{v[1]}"!}
         r.join(" ")
       end
-      def create_plugin(params)
-        mod = Class.new(SvgOptimizer::Plugins::Base) do
-          def self.set (p)
-            @@params = p
-          end
-          def process
-            @@params.each {|key,val| xml.root.set_attribute(key,val)}
-            return xml
-          end
-        end
-        mod.set(params)
-        return mod
-      end
       def add_file_to_dependency(site, path, context)
         if context.registers[:page] && context.registers[:page].key?("path")
           site.regenerator.add_dependency(
@@ -125,14 +102,12 @@ module Jekyll
         #params = @params
         file = File.open(svg_file, "rb").read
         conf = lookup_variable(context,"site.svg")
-        if conf["optimize"] == true
-          xml = SvgOptimizer.optimize(file, [create_plugin(params)] + PLUGINS)
-        else
-          xml = Nokogiri::XML(file)
-          params.each {|key,val| xml.root.set_attribute(key,val)}
-          xml = xml.root.to_xml.gsub("\n", '')
-        end
-  	    return xml
+        xml = Nokogiri::XML(file)
+        params.each {|key,val| xml.root.set_attribute(key,val)}
+        # note the gsub here prevents Kramdown from misinterpreting a multiline SVG when it's not
+        # in its own block/on its own line -- before, it would mangle SVGs that were part of
+        # paragraphs because it would close the <p> right after the opening <svg>
+        xml.root.to_xml.gsub("\n", '')
       end
     end
   end
