@@ -133,29 +133,29 @@ body[data-theme=dark] {
 }
 .seven-segment[data-segments*=a] polygon.a {
   stroke: black;
-  fill: var(--sol-red);
+  fill: #dc322f;
 }
 .seven-segment[data-segments*=b] polygon.b {
   stroke: black;
-  fill: var(--sol-red);
+  fill: #dc322f;
 }
 .seven-segment[data-segments*=c] polygon.c {
   stroke: black;
-  fill: var(--sol-red);
+  fill: #dc322f;
 }
 .seven-segment[data-segments*=d] polygon.d {
   stroke: black;
-  fill: var(--sol-red);
+  fill: #dc322f;
 }
 .seven-segment[data-segments*=e] polygon.e {
   stroke: black;
-  fill: var(--sol-red);
+  fill: #dc322f;
 }
 .seven-segment[data-segments*=f] polygon.f {
   stroke: black;
-  fill: var(--sol-red);
+  fill: #dc322f;
 }
 .seven-segment[data-segments*=g] polygon.g {
   stroke: black;
-  fill: var(--sol-red);
+  fill: #dc322f;
 }

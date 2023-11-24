@@ -22,6 +22,7 @@ BOT_ROW = C | E
 def is_full_height(s):
   return s & TOP_ROW and s & BOT_ROW
 
+# yes, I get the irony of using a full Python dict to store 7 bytes indexed (effectively) by [0, 6]
 NEIGHBORS = {
   A: B | F,
   B: A | C | G,
@@ -36,23 +37,24 @@ def is_connected(s):
   # note: x & -x computes the lowest bit, which we use here to pick "any arbitrary bit"
   # https://stackoverflow.com/questions/18806481/how-can-i-get-the-value-of-the-least-significant-bit-in-a-number
 
-  # this is a bitwise BFS, hence the names
+  # this is a bitwise graph traversal. it's almost BFS, but since we always choose the lowest order
+  # bit as the next item, it uses an unordered set rather than a queue to hold the unvisited items.
   current = s & -s
   visited = current
-  queue = current
-  while queue:
-    current = queue & -queue
-    queue &= ~current
+  pending = current
+  while pending:
+    current = pending & -pending
+    pending &= ~current
     unvisited_neighbors = NEIGHBORS[current] & ~visited & s
-    queue |= unvisited_neighbors
+    pending |= unvisited_neighbors
     visited |= unvisited_neighbors
   return visited == s
 
 KNOWN_PATTERNS = {
-  A | B | C | D | E | F,     # 0, O
+  A | B | C | D | E | F,     # 0, O, o
   B | C,                     # 1, l
   F | E,                     # 1, l (alt)
-  A | B | G | E | D,         # 2
+  A | B | G | E | D,         # 2, Z, z
   A | B | G | C | D,         # 3
   F | G | B | C,             # 4
   A | F | G | C | D,         # 5, S
@@ -62,7 +64,7 @@ KNOWN_PATTERNS = {
   F | A | B | C,             # 7 (alt)
   A | B | C | D | E | F | G, # 8, B
   G | F | A | B | C | D,     # 9
-  G | F | A | B | C,         # 9 (alt)
+  G | F | A | B | C,         # 9 (alt), q
   E | F | A | B | C | G,     # A
   A | B | C | D | E | G,     # a
   F | E | D | C | G,         # b

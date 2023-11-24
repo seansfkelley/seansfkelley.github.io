@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Making Up New Numbers With 7-Segment Displays | fiddlybits</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Making Up New Numbers With 7-Segment Displays" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="The ubiquitous 7-segment display is a pretty clever little piece of design, able to display all 10 digits in a flat plane with only (you guessed it) 7 segments. Compare the predecessor1 Nixie tube, which is also cool for different reasons, but needs 10 elements to display all 10 digits. (14-segment displays can do all 26 letters and 10 numbers.) According to the infallible Wikipedia, 7-segment displays were invented decades before the Nixie tube, but were not practical until LEDs were invented decades after the Nixie tube. It’s also worth noting that the Nixie tube is a more flexible design, should you need to display a wider or different range of characters. &#8617;" />
+<meta property="og:description" content="The ubiquitous 7-segment display is a pretty clever little piece of design, able to display all 10 digits in a flat plane with only (you guessed it) 7 segments. Compare the predecessor1 Nixie tube, which is also cool for different reasons, but needs 10 elements to display all 10 digits. (14-segment displays can do all 26 letters and 10 numbers.) According to the infallible Wikipedia, 7-segment displays were invented decades before the Nixie tube, but were not practical until LEDs were invented decades after the Nixie tube. It’s also worth noting that the Nixie tube is a more flexible design, should you need to display a wider or different range of characters. &#8617;" />
+<link rel="canonical" href="https://blog.sea.nkelley.me/2023/11/24/seven-segment/" />
+<meta property="og:url" content="https://blog.sea.nkelley.me/2023/11/24/seven-segment/" />
+<meta property="og:site_name" content="fiddlybits" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-11-24T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Making Up New Numbers With 7-Segment Displays" />
+<script type="application/ld+json">
+{"dateModified":"2023-11-24T00:00:00+00:00","datePublished":"2023-11-24T00:00:00+00:00","headline":"Making Up New Numbers With 7-Segment Displays","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.sea.nkelley.me/2023/11/24/seven-segment/"},"url":"https://blog.sea.nkelley.me/2023/11/24/seven-segment/","@type":"BlogPosting","description":"The ubiquitous 7-segment display is a pretty clever little piece of design, able to display all 10 digits in a flat plane with only (you guessed it) 7 segments. Compare the predecessor1 Nixie tube, which is also cool for different reasons, but needs 10 elements to display all 10 digits. (14-segment displays can do all 26 letters and 10 numbers.) According to the infallible Wikipedia, 7-segment displays were invented decades before the Nixie tube, but were not practical until LEDs were invented decades after the Nixie tube. It’s also worth noting that the Nixie tube is a more flexible design, should you need to display a wider or different range of characters. &#8617;","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/style.css">
+  
+  <link rel="stylesheet" href="/assets/seven-segment/seven-segment.css">
+  <link type="application/atom+xml" rel="alternate" href="https://blog.sea.nkelley.me/feed.xml" title="fiddlybits" /></head>
+<body data-theme="auto"><header class="site-header">
+  <div class="centering-wrapper">
+    <a class="site-title" href="/">fiddlybits</a>
+    <span>
+      <a href="https://github.com/seansfkelley">github</a>
+      &nbsp;•&nbsp;
+      <a href="/feed.xml">rss</a>
+      <!-- Only show theme switcher if js is enabled: hide by default. -->
+      <span id="theme-switcher-wrapper" style="display: none;">
+        &nbsp;•&nbsp;
+        <a href="#" id="theme-switcher"></a>
+      </span>
+    </span>
+  </div>
+</header>
+<main class="centering-wrapper">
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Making Up New Numbers With 7-Segment Displays</h1>
+    <h3 class="post-subtitle"></h3>
+  </header><p>The ubiquitous <a href="https://en.wikipedia.org/wiki/Seven-segment_display">7-segment display</a> is a pretty clever little piece of design, able to display all 10 digits in a flat plane with only (you guessed it) 7 segments. Compare the predecessor<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> <a href="https://en.wikipedia.org/wiki/Nixie_tube">Nixie tube</a>, which is also cool for different reasons, but needs 10 elements to display all 10 digits. (<a href="https://en.wikipedia.org/wiki/Fourteen-segment_display">14-segment displays</a> can do all 26 letters and 10 numbers.)</p>
+
+<p>Unlike with a Nixie tube, numbers have to be hammered into slightly awkward shapes to fit into a 7-segment display. But we can turn this constraint on its head to find something new! By enumerating all the alphanumeric-like shapes that aren’t already claimed, we might be able to make up some new alphanumeric shapes that feel familiar, but aren’t.</p>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="efg">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="cfg">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="cdfg">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="cdef">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="beg">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="befg">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="bdeg">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="bdefg">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="bcg">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="bceg">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="bcdg">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="bcdefg">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="aef">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="acfg">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="acefg">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="abeg">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="abef">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="abdef">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="abcg">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="abceg">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="abcef">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="abcd">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="abcdf">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="abcde">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2" />  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2" />  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10" />  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16" />  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16" />  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8" />  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10" /></svg>
+
+<p>These were made using a <a href="/assets/seven-segment/generate.txt">Python script</a> according to a few simple (and somewhat arbitrary) rules derived from observing the standard 10 digit patterns. They must be:</p>
+
+<ul>
+  <li>full height</li>
+  <li>connected into a single glyph (no floating “dots” or bars)</li>
+  <li>not already a number or letter (obviously)</li>
+</ul>
+
+<p>As an aside, something interesting I notice is that my brain is really good at reinterpreting the “backwards” shapes: for instance, I have a hard time not parsing <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="fegb" data-inline="">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2"></polygon>  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2"></polygon>  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10"></polygon>  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16"></polygon>  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16"></polygon>  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8"></polygon>  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10"></polygon></svg> as 4.</p>
+
+<p>Anyway, here is me riffing on the 7-segment shapes to see what more-natural shapes come out in handwriting.</p>
+
+<p><img src="/assets/seven-segment/handwritten.jpg" alt="handwritten" /></p>
+
+<p>I was surprised to find that many of these shapes, written at speed, are near indifferentiable from existing characters (e.g. <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="abge" data-inline="">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2"></polygon>  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2"></polygon>  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10"></polygon>  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16"></polygon>  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16"></polygon>  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8"></polygon>  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10"></polygon></svg> is a question mark), Greek/Cyrillic ones (<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="efgb" data-inline="">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2"></polygon>  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2"></polygon>  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10"></polygon>  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16"></polygon>  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16"></polygon>  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8"></polygon>  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10"></polygon></svg> <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="afe" data-inline="">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2"></polygon>  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2"></polygon>  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10"></polygon>  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16"></polygon>  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16"></polygon>  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8"></polygon>  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10"></polygon></svg> <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="abcge" data-inline="">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2"></polygon>  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2"></polygon>  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10"></polygon>  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16"></polygon>  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16"></polygon>  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8"></polygon>  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10"></polygon></svg> <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="efabc" data-inline="">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2"></polygon>  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2"></polygon>  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10"></polygon>  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16"></polygon>  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16"></polygon>  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8"></polygon>  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10"></polygon></svg> are μ Γ λ Π) or even multiple distinct characters (e.g. <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="40px" viewBox="-1 -1 12 20" class="seven-segment" data-segments="fgcd" data-inline="">  <polygon class="a" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2"></polygon>  <polygon class="b" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2"></polygon>  <polygon class="c" points=" 9, 9 10,10 10,16  9,17  8,16  8,10"></polygon>  <polygon class="d" points=" 9,17  8,18  2,18  1,17  2,16  8,16"></polygon>  <polygon class="e" points=" 1,17  0,16  0,10  1, 9  2,10  2,16"></polygon>  <polygon class="f" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8"></polygon>  <polygon class="g" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10"></polygon></svg> could be an uppercase S or lowercase b). Have we already mostly exhausted the space of Latin/Greek-like characters?</p>
+
+<hr />
+
+<section class="next-previous">
+  
+  <a href="/2023/11/22/pie-dough/" class="next-previous-link next-previous-left" title="Previous Post: Pie (Pastry) Dough Recipe">
+    <span class="next-previous-icon">←</span>
+    <div class="next-previous-name">
+      <div class="next-previous-label">Previous Post</div>
+      <div class="next-previous-title">Pie (Pastry) Dough Recipe</div>
+    </div>
+  </a>
+  
+  
+  <div class="next-previous-placeholder"></div>
+  
+</section>
+<hr />
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>According to the infallible Wikipedia, 7-segment displays were invented decades before the Nixie tube, but were not practical until LEDs were invented decades <em>after</em> the Nixie tube. It’s also worth noting that the Nixie tube is a more flexible design, should you need to display a wider or different range of characters. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+<footer>
+    <p class="post-date">
+      ~
+      <time
+        datetime="2023-11-24T00:00:00+00:00"
+        itemprop="datePublished"
+      >
+        2023-11-24
+      </time>~
+    </p>
+  </footer>
+</article>
+
+      <!--
+        This filthy trick makes sure that the content always weakly tries to expand to the full
+        width available, but allows for linebreaks if the viewport is too small. It produces a
+        better result than, say, width: 100%; or width: some-fixed-pixel-amount; and doesn't require
+        rewriting everything to flexbox (which would mess with the <html>-level scroll behavior and
+        sticky header) or adding extra DOM (which I'm trying to minimize to make myself feel good).
+      -->
+      <div class="horizontal-expander" aria-hidden="true">
+        Throughout human history, we have been dependent on machines to survive. Fate, it seems, is not without a sense of irony.
+      </div>
+    </main>
+  </body>
+  <script src="/assets/js/theme-switcher.js"></script>
+  
+</html>
