@@ -107,7 +107,7 @@ module Jekyll
         # note the gsub here prevents Kramdown from misinterpreting a multiline SVG when it's not
         # in its own block/on its own line -- before, it would mangle SVGs that were part of
         # paragraphs because it would close the <p> right after the opening <svg>
-        xml.root.to_xml.gsub("\n", '')
+        xml.root.to_xml.gsub(/\s*\n/, '')
       end
     end
   end

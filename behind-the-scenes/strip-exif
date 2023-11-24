@@ -1,0 +1,37 @@
+#!/bin/zsh
+
+set -euo pipefail
+
+usage() {
+  echo "$0 [--in-place] FILE..."
+}
+
+declare -a files
+files=()
+
+while [ "$#" -gt 0 ] ; do
+  case $1 in
+  -h|--help)
+    usage
+    exit 0
+    ;;
+  --in-place)
+    in_place=yah
+    shift
+    ;;
+  --)
+    shift
+    files+=("$@")
+    break
+    ;;
+  *)
+    files+=("$1")
+    shift
+    ;;
+  esac
+done
+
+# note that the in_place expansion is not quoted so that it disappears if it's unset
+# -all= means to set all to empty
+echo exiftool -all= ${in_place:+-overwrite_original_in_place} -- "${files[@]}"
+

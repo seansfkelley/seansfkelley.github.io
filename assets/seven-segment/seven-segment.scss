@@ -25,7 +25,7 @@
     &[data-segments*="#{$segment}"] {
       polygon.#{$segment} {
         stroke: black;
-        fill: var(--sol-red);
+        fill: #dc322f; // var(--sol-red), but I don't want to couple this to the site theme
       }
     }
   }
