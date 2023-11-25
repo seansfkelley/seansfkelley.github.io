@@ -122,7 +122,7 @@ body[data-theme=dark] {
   height: 1em;
   line-height: 1em;
   vertical-align: bottom;
-  margin: 0 -0.25em 0.25em;
+  margin: 0 -0.4em 0.25em;
 }
 .seven-segment polygon {
   fill-rule: evenodd;
@@ -130,6 +130,10 @@ body[data-theme=dark] {
   stroke-linecap: butt;
   stroke-linejoin: miter;
   fill: none;
+}
+.seven-segment[data-interactive] polygon {
+  stroke: black;
+  fill: transparent;
 }
 .seven-segment[data-segments*=a] polygon.a {
   stroke: black;
@@ -158,4 +162,14 @@ body[data-theme=dark] {
 .seven-segment[data-segments*=g] polygon.g {
   stroke: black;
   fill: #dc322f;
+}
+
+.hidden {
+  display: none;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
