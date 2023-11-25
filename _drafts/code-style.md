@@ -4,7 +4,6 @@ title: My Code Style
 anchor_headings: true
 ---
 
-### Jump to Section
 {:.no_toc}
 
 * TOC
@@ -34,11 +33,13 @@ The philosophical points below are idealistic and can't always be achieved withi
 
 If you don't know what values you're operating with, you can't do anything with them. The names, types and lifetimes of values, as well as the interaction between them, should be the primary driver for how code is structured. Programs are ultimately machines for processing inputs into outputs, so build around those inputs and outputs and any necessary intermediates.
 
-## Tools, Not Process (or: Solve Problems Once)
+## Tools, Not Process
+
+_a.k.a._ **Solve Problems Once**
 
 > If you haven't automated your last-year self out of a job, you aren't learning.
 >
-> – An ex-manager of mine
+> – An ex-manager of mine (paraphrased)
 
 Don't do manually what can be done automatically. Put the work in now to find, configure or build the right tool for the job, then never think of that problem again. Don't make anyone else have to think about the problem, either, if you can avoid it: documentation is no replacement for automation.
 
@@ -46,27 +47,49 @@ Don't do manually what can be done automatically. Put the work in now to find, c
 
 Code is an unambiguous, precise specification of behavior, so treat it like one. Computers don't need to have code explained to them, but people do. Write your code so it's clear what you intend to have happen, so that when it inevitably doesn't, someone can understand what you were trying to do. You might not be there to explain what you meant.
 
-This a umbrella term, broader than the oft-cited "don't be clever". Removing or avoiding cleverness is often a consequence of striving to explain intent.
+This is an umbrella term, broader than the oft-cited "don't be clever". Removing or avoiding cleverness is often a consequence of striving to explain intent.
 
 ## Write Quality Code the First Time
 
 Spend the time now to save the time later.
 
-If I sent you this page, you aren't the first employee of an underfunded startup in do-or-die mode. Every corner you cut will be paid for dozens of times over with every reader of your code. Bike shed your names before you merge. Your prototype will end up in production.
+If I sent you this page, you aren't the first employee of an underfunded startup in do-or-die mode. Every corner you cut will be paid for dozens of times over with every reader of your code. Bike shed your names before you merge. Your prototype _will_ end up in production, so give it a little more thought.
+
+## Perfect is the Enemy of Good
+
+You've probably heard this before, stated as "don't let perfect be the enemy of good". I like the more assertive phrasing because _you are in control_. Misguidedly seeking perfection isn't happening _to_ you.
+
+What's usually missed when this is cited is that (1) it takes a lot experience to learn where the line is and (2) where you draw the line is probably not exactly where I do. Keep that in mind and learn to be a little flexible without compromising on the principles that truly make a difference.
 
 # Superficial Code Style
+
+## Consistency
+
+Whoever said "consistency is the hobgoblin of little minds" never had to work in a multi-million line codebase. Counterintuitively, it is a tool of the practitioner, rather than a fetish of the theoretician.
+
+Consistency enables quick and dirty regexes when you can't rely on types to find usages.
+
+Consistency is how you can do massive code reviews and not trip over every line (such reviews _do_ happen: sorry idealists).
+
+Consistency is why I can use inconsistency to draw attention where necessary.
+
+Consistency is how I stay sane.
 
 ## Automated Formatters
 
 Automated formatters like Prettier and Black are to be considered correct, _even in weird edge cases_. When there is a conflict on style, the automated formatter is correct. Modern bikesheds come pre-painted.
 
-Whoever said "consistency is the hobgoblin of little minds" never had to work in a multi-million line codebase. Consistency enables quick and dirty regexes when you can't rely on types to find usages. Consistency is how you can do massive code reviews (which do happen in the real world) and not trip over every line. Consistency is how I stay sane.
-
-## Exception: Multi-line Regexes
+### Exception: Multi-line Regexes
 
 Regexes are always hard to read. Unfortunately, long regexes are sometimes necessary. In the case where you cannot comment on a long nasty regex by pointing to some documentation (e.g. the classic [email regex StackOverflow question](https://stackoverflow.com/questions/201323/how-to-validate-an-email-address-using-a-regular-expression)), it's probably a good idea to break your regex up onto multiple lines and explain what each piece is doing.
 
 In this case, automated formatters are likely to wreck your significant indentation or inline sections that were separated for clarity and should therefore be disabled if they do not understand your multi-line regex.
+
+### Exception: Cross-language, Byte-identical Find-replace
+
+Some languages have syntactic overlap, but often have differing formatting rules. In the _exceptionally rare_\* circumstances where it's valuable to have the same sequence of characters across two languages, disable the formatter for that block.
+
+\* This has happened exactly once in my programming life (both professional and personal), but I want this document to be complete, so here it is. In particular, I wanted to find exact matches across JavaScript and JSON files, but JSON only permits double-quotes while JavaScript's Prettier formatter was configured for single quotes. Notably, this linting tool was later rewritten to something simpler and more expressive such that maintaining formatting consistency became irrelevant (and impossible), which is the ideal outcome.
 
 # Comments
 
@@ -130,6 +153,7 @@ Your editor has autocomplete and your ability to parse streams of letters is not
 If you really want to abbreviate things, only do it if they are at least one of:
   - _common in English_, such as "appt" for "appointment"
   - _obvious in context_, such as referring to the `mag` of a `Vector3`
+  - _idiomatic_, such as looping with `i` and `j`
 
 \* I tried to come up with non _-tion_ words, but those nounified verbs come up all the time!
 
@@ -253,7 +277,9 @@ https://brooker.co.za/blog/2020/06/23/code.html
 
 # Enumerations v. Booleans
 
-# Version Control
+A common place I've seen this distinction sneak up on people is when boolean user settings have defaults. Do you support a "don't care, always use the default" option? This is often represented as a nullable boolean value. A nullable boolean value has 3 states. Doesn't sound much like a boolean anymore, and as code changes accumulate over time and the team changes, it can be hard to understand if these nullable booleans were intentional or an oversight (perhaps because your SQL dialect defaults columns to being nullable and you didn't know). If you store a 3-value enumeration, all ambiguity is removed at lowest level and source of truth.
+
+# Git and Version Control
 
 ## Squash v. True Merge
 
