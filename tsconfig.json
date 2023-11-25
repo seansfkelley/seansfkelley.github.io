@@ -1,8 +1,0 @@
-{
-  "compilerOptions": {
-    "strict": true,
-    "target": "ESNext",
-    "sourceMap": true
-  },
-  "include": ["assets/blazonry/blazonry.ts", "assets/literate-recipe/literate-recipe.ts"]
-}
