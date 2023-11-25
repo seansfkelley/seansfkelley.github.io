@@ -3,6 +3,8 @@ layout: post
 title: Making Up New Numbers With 7-Segment Displays
 custom-css-list:
   - /assets/seven-segment/seven-segment.css
+custom-js-list:
+  - /assets/seven-segment/seven-segment.js
 patterns:
   - efg
   - cfg
@@ -44,13 +46,22 @@ These were made using a [Python script](/assets/seven-segment/generate.txt) acco
 - connected into a single glyph (no floating "dots" or bars)
 - not already a number or letter (obviously)
 
-As an aside, something interesting I notice is that my brain is really good at reinterpreting the "backwards" shapes: for instance, I have a hard time not parsing {% svg "/assets/seven-segment/seven-segment.svg" data-segments="fegb" data-inline="" %} as 4.
+As an aside, something interesting I notice is that my brain is really good at reinterpreting the "backwards" or "broken" shapes: for instance, it really wants to read {% svg "/assets/seven-segment/seven-segment.svg" data-segments="fegb" data-inline="" %} as 4 and {% svg "/assets/seven-segment/seven-segment.svg" data-segments="abcge" data-inline="" %} as A.
 
 Anyway, here is me riffing on the 7-segment shapes to see what more-natural shapes come out in handwriting.
 
 ![handwritten](/assets/seven-segment/handwritten.jpg)
 
-I was surprised to find that many of these shapes, written at speed, are near indifferentiable from existing characters (e.g. {% svg "/assets/seven-segment/seven-segment.svg" data-segments="abge" data-inline="" %} is a question mark), Greek/Cyrillic ones ({% svg "/assets/seven-segment/seven-segment.svg" data-segments="efgb" data-inline="" %} {% svg "/assets/seven-segment/seven-segment.svg" data-segments="afe" data-inline="" %} {% svg "/assets/seven-segment/seven-segment.svg" data-segments="abcge" data-inline="" %} {% svg "/assets/seven-segment/seven-segment.svg" data-segments="efabc" data-inline="" %} are &mu; &Gamma; &lambda; &Pi;) or even multiple distinct characters (e.g. {% svg "/assets/seven-segment/seven-segment.svg" data-segments="fgcd" data-inline="" %} could be an uppercase S or lowercase b). Have we already mostly exhausted the space of Latin/Greek-like characters?
+I was surprised to find that many of these shapes, written at speed, are near indifferentiable from existing characters (e.g. {% svg "/assets/seven-segment/seven-segment.svg" data-segments="abge" data-inline="" %} as question mark) or even multiple distinct characters (e.g. {% svg "/assets/seven-segment/seven-segment.svg" data-segments="fgcd" data-inline="" %} as either uppercase S or lowercase b). There's also now-obvious Greek/Cyrillic ones that I didn't eliminate up front: {% svg "/assets/seven-segment/seven-segment.svg" data-segments="efgb" data-inline="" %} {% svg "/assets/seven-segment/seven-segment.svg" data-segments="afe" data-inline="" %} {% svg "/assets/seven-segment/seven-segment.svg" data-segments="abcge" data-inline="" %} {% svg "/assets/seven-segment/seven-segment.svg" data-segments="efabc" data-inline="" %} are, respectively, &mu; &Gamma; &lambda; &Pi;. My favorite handwritten shape is {% svg "/assets/seven-segment/seven-segment.svg" data-segments="bcdg" data-inline="" %}, interpreted as a capital J with a crossbar.
+
+<div class="hidden" id="interactive">
+  Here's an interactive 7-segment you can click on to noodle around if you'd like.
+
+  <!--We have to wrap instead of set it on the SVG because we don't want to center the text, and the inliner can only overwrite classes anyway. -->
+  <div class="center">
+    {% svg "/assets/seven-segment/seven-segment.svg" width="60%" height="100%" data-interactive="" %}
+  </div>
+</div>
 
 {% include next-previous.html %}
 
