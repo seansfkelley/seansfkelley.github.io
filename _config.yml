@@ -8,6 +8,7 @@ exclude:
   - .yarn/
   - TODO.md
   - README.md
+  - build.sh
   - package.json
   - tsconfig.json
   - yarn.lock

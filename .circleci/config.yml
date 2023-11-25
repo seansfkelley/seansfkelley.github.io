@@ -26,8 +26,8 @@ jobs:
           pkg-manager: yarn-berry
           cache-version: v2
       - run:
-          name: Node build
-          command: yarn run build
+          name: Build assets
+          command: ./build.sh
       - ruby/install-deps
       - run:
           name: Jekyll build
