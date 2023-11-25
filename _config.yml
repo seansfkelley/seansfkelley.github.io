@@ -5,11 +5,12 @@ permalink: pretty
 exclude:
   - behind-the-scenes/
   - hooks/
+  - .yarn/
   - TODO.md
   - README.md
-  - .yarn/
-include:
-  - tag/
+  - package.json
+  - tsconfig.json
+  - yarn.lock
 sass:
   sourcemap: never
 kramdown:
