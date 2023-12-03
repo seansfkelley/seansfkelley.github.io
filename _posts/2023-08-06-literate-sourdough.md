@@ -28,11 +28,11 @@ Let it grow overnight until it peaks.
 
 In a large bowl, mix
 
-- 200 grams starter[^2]
 - 400 grams water
+- 200 grams starter[^2]
 - 600 grams bread or all-purpose flour
 
-in that order, being sure to get out most of the lumps.
+one at a time, in that order, being sure to get out most of the lumps.
 
 Rest, covered, for 30 minutes.
 
