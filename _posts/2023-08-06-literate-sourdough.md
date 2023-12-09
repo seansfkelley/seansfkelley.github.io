@@ -15,16 +15,18 @@ This recipe is intended as a terse reference for those already familiar with the
 
 Onto the recipe!
 
-{% literate_recipe_step kind="multiday" duration="5m" %}
+{% literate_recipe_step kind="multiday" duration="5m" total_duration="5m" %}
 
 Feed your starter with
 
 - 100 grams lukewarm water
 - 100 grams bread or all-purpose flour[^1]
 
-Let it grow overnight until it peaks.
+Let it grow several hours or overnight until it peaks.
 
-{% literate_recipe_step wait="overnight" duration="10m" %}
+{% literate_recipe_step intermission="4-12 hours" %}
+
+{% literate_recipe_step wait="overnight" duration="10m" total_duration="6h" %}
 
 In a large bowl, add
 
@@ -64,7 +66,9 @@ Dust a proofing basket with flour and transfer the dough to it, seam side up. (I
 
 Dust with flour, cover with towel, and place in fridge overnight.
 
-{% literate_recipe_step wait="overnight" duration="1m" %}
+{% literate_recipe_step intermission="8-16 hours" %}
+
+{% literate_recipe_step wait="overnight" duration="1m" total_duration="3h" %}
 
 Take the dough out of the fridge 2 hours before baking to bring it to room temperature.
 

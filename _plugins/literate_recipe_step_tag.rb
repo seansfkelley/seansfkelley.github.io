@@ -53,6 +53,21 @@ class LiterateRecipeStepTag < Liquid::Tag
     page = context.registers[:page]
 
     params = self.parse_params(context)
+
+    if params["intermission"]
+      return <<~END
+        <header class="intermission">
+          <h4>
+            <hr />
+            <span class="prefix">flexible wait</span>
+            &nbsp;
+            <span class="duration">(#{params["intermission"]})</span>
+            <hr />
+          </h4>
+        </header>
+      END
+    end
+
     kind = params["kind"]
 
     if kind
@@ -76,20 +91,29 @@ class LiterateRecipeStepTag < Liquid::Tag
 
     title = \
       if kind == "multiday"
-        "day 1"
+        "part 1"
       elsif kind == "default"
         "to begin"
       else
-        "#{self.print_duration_longform(
+        self.print_duration_longform(
           wait,
-          overnight_text: "day #{page[:step_groups].length}",
+          overnight_text: "part #{page[:step_groups].length}",
           non_overnight_suffix: " later"
-        )}"
+        )
+      end
+
+    total_duration = \
+      if params["total_duration"]
+        "(#{self.print_duration_longform(
+          self.parse_duration(params["total_duration"]),
+        )} total)"
+      else
+        ""
       end
 
     <<~END
       <header
-        class="recipe-step"
+        class="recipe-step #{"first-of-part" if wait == :overnight}"
         data-step-group="#{page[:step_groups].length - 1}"
         data-step-index="#{page[:step_groups].last.length - 1}"
         data-duration="#{duration}"
@@ -97,7 +121,9 @@ class LiterateRecipeStepTag < Liquid::Tag
       >
         <h4>
           <hr />
-            #{title}
+          <span class="title">#{title}</span>
+          &nbsp;
+          <span class="duration">#{total_duration}</span>
           <hr />
         </h4>
         <h4 class="metadata">
@@ -125,7 +151,7 @@ class LiterateRecipeStepTag < Liquid::Tag
 
   def print_duration_longform(duration, overnight_text: nil, non_overnight_suffix: nil)
     if duration == :overnight
-      return overnight_text || "the next day"
+      return overnight_text || "next part"
     end
 
     hours = duration / 60
