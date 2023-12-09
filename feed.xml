@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2023-12-09T21:23:51+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Making Up New Numbers With 7-Segment Displays</title><link href="https://blog.sea.nkelley.me/2023/11/24/seven-segment/" rel="alternate" type="text/html" title="Making Up New Numbers With 7-Segment Displays" /><published>2023-11-24T00:00:00+00:00</published><updated>2023-11-24T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/11/24/seven-segment</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/11/24/seven-segment/">&lt;p&gt;The ubiquitous &lt;a href=&quot;https://en.wikipedia.org/wiki/Seven-segment_display&quot;&gt;7-segment display&lt;/a&gt; is a pretty clever little piece of design, able to display all 10 digits in a flat plane with only (you guessed it) 7 segments. Compare the predecessor&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; &lt;a href=&quot;https://en.wikipedia.org/wiki/Nixie_tube&quot;&gt;Nixie tube&lt;/a&gt;, which is also cool for different reasons, but needs 10 elements to display all 10 digits. (&lt;a href=&quot;https://en.wikipedia.org/wiki/Fourteen-segment_display&quot;&gt;14-segment displays&lt;/a&gt; can do all 26 letters and 10 numbers.)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2023-12-09T23:17:57+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Making Up New Numbers With 7-Segment Displays</title><link href="https://blog.sea.nkelley.me/2023/11/24/seven-segment/" rel="alternate" type="text/html" title="Making Up New Numbers With 7-Segment Displays" /><published>2023-11-24T00:00:00+00:00</published><updated>2023-11-24T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/11/24/seven-segment</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/11/24/seven-segment/">&lt;p&gt;The ubiquitous &lt;a href=&quot;https://en.wikipedia.org/wiki/Seven-segment_display&quot;&gt;7-segment display&lt;/a&gt; is a pretty clever little piece of design, able to display all 10 digits in a flat plane with only (you guessed it) 7 segments. Compare the predecessor&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; &lt;a href=&quot;https://en.wikipedia.org/wiki/Nixie_tube&quot;&gt;Nixie tube&lt;/a&gt;, which is also cool for different reasons, but needs 10 elements to display all 10 digits. (&lt;a href=&quot;https://en.wikipedia.org/wiki/Fourteen-segment_display&quot;&gt;14-segment displays&lt;/a&gt; can do all 26 letters and 10 numbers.)&lt;/p&gt;
 
 &lt;p&gt;Unlike with a Nixie tube, numbers have to be hammered into slightly awkward shapes to fit into a 7-segment display. But we can turn this constraint on its head to find something new! By enumerating all the alphanumeric-like shapes that aren’t already claimed, we might be able to make up some new alphanumeric shapes that feel familiar, but aren’t.&lt;/p&gt;
 
@@ -392,10 +392,12 @@
 
 &lt;p&gt;Onto the recipe!&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;0&quot; data-step-index=&quot;0&quot; data-duration=&quot;5&quot; data-wait=&quot;overnight&quot;&gt;
+&lt;header class=&quot;recipe-step first-of-part&quot; data-step-group=&quot;0&quot; data-step-index=&quot;0&quot; data-duration=&quot;5&quot; data-wait=&quot;overnight&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      day 1
+    &lt;span class=&quot;title&quot;&gt;part 1&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;(5 minutes total)&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -412,12 +414,24 @@
   &lt;li&gt;100 grams bread or all-purpose flour&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Let it grow overnight until it peaks.&lt;/p&gt;
+&lt;p&gt;Let it grow several hours or overnight until it peaks.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;0&quot; data-duration=&quot;10&quot; data-wait=&quot;overnight&quot;&gt;
+&lt;header class=&quot;intermission&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      day 2
+    &lt;span class=&quot;prefix&quot;&gt;flexible wait&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;(4-12 hours)&lt;/span&gt;
+    &lt;hr /&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
+
+&lt;header class=&quot;recipe-step first-of-part&quot; data-step-group=&quot;1&quot; data-step-index=&quot;0&quot; data-duration=&quot;10&quot; data-wait=&quot;overnight&quot;&gt;
+  &lt;h4&gt;
+    &lt;hr /&gt;
+    &lt;span class=&quot;title&quot;&gt;part 2&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;(6 hours total)&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -444,10 +458,12 @@
 
 &lt;p&gt;Rest, covered, for 30 minutes.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;1&quot; data-duration=&quot;15&quot; data-wait=&quot;30&quot;&gt;
+&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;1&quot; data-step-index=&quot;1&quot; data-duration=&quot;15&quot; data-wait=&quot;30&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      30 minutes later
+    &lt;span class=&quot;title&quot;&gt;30 minutes later&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -464,14 +480,16 @@
   &lt;li&gt;splash of water&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;and mix. Scoop dough out onto hard, non-porous, unfloured surface.&lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; Knead: grab, pull, smash, roll, turn. Repeat for 10 minutes. You want dough that is smooth, elastic and tacky (but not sticky).&lt;/p&gt;
+&lt;p&gt;and mix. Scoop dough out onto hard, non-porous, unfloured surface.&lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; Knead: grab, pull, smash, roll, turn. &lt;strong&gt;Don’t pull too hard.&lt;/strong&gt; Doing so tears the out layers of the dough and makes the whole thing a sticky mess again. Repeat for about 10 minutes. You want dough that is smooth, elastic and tacky (but not sticky).&lt;/p&gt;
 
 &lt;p&gt;Cover bowl and proof for 4 hours in a warm environment.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;2&quot; data-duration=&quot;5&quot; data-wait=&quot;240&quot;&gt;
+&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;1&quot; data-step-index=&quot;2&quot; data-duration=&quot;5&quot; data-wait=&quot;240&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      4 hours later
+    &lt;span class=&quot;title&quot;&gt;4 hours later&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -485,10 +503,12 @@
 
 &lt;p&gt;Rest for 30 minutes.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;3&quot; data-duration=&quot;10&quot; data-wait=&quot;30&quot;&gt;
+&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;1&quot; data-step-index=&quot;3&quot; data-duration=&quot;10&quot; data-wait=&quot;30&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      30 minutes later
+    &lt;span class=&quot;title&quot;&gt;30 minutes later&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -504,10 +524,22 @@
 
 &lt;p&gt;Dust with flour, cover with towel, and place in fridge overnight.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;2&quot; data-step-index=&quot;0&quot; data-duration=&quot;1&quot; data-wait=&quot;overnight&quot;&gt;
+&lt;header class=&quot;intermission&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      day 3
+    &lt;span class=&quot;prefix&quot;&gt;flexible wait&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;(8-16 hours)&lt;/span&gt;
+    &lt;hr /&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
+
+&lt;header class=&quot;recipe-step first-of-part&quot; data-step-group=&quot;2&quot; data-step-index=&quot;0&quot; data-duration=&quot;1&quot; data-wait=&quot;overnight&quot;&gt;
+  &lt;h4&gt;
+    &lt;hr /&gt;
+    &lt;span class=&quot;title&quot;&gt;part 3&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;(3 hours total)&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -519,10 +551,12 @@
 
 &lt;p&gt;Take the dough out of the fridge 2 hours before baking to bring it to room temperature.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;2&quot; data-step-index=&quot;1&quot; data-duration=&quot;1&quot; data-wait=&quot;90&quot;&gt;
+&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;2&quot; data-step-index=&quot;1&quot; data-duration=&quot;1&quot; data-wait=&quot;90&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      1 hour, 30 minutes later
+    &lt;span class=&quot;title&quot;&gt;1 hour, 30 minutes later&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -534,10 +568,12 @@
 
 &lt;p&gt;Preheat oven to 475°F (245°C). Put in a dutch oven, with lid, to preheat with the oven.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;2&quot; data-step-index=&quot;2&quot; data-duration=&quot;5&quot; data-wait=&quot;30&quot;&gt;
+&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;2&quot; data-step-index=&quot;2&quot; data-duration=&quot;5&quot; data-wait=&quot;30&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      30 minutes later
+    &lt;span class=&quot;title&quot;&gt;30 minutes later&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -551,10 +587,12 @@
 
 &lt;p&gt;Score it, spritz several times with water, and cover. Place into oven and lower temperature to 425°F (220°C).&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;2&quot; data-step-index=&quot;3&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
+&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;2&quot; data-step-index=&quot;3&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      25 minutes later
+    &lt;span class=&quot;title&quot;&gt;25 minutes later&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -566,10 +604,12 @@
 
 &lt;p&gt;Take the lid of the dutch oven off to allow the loaf to brown.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;2&quot; data-step-index=&quot;4&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
+&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;2&quot; data-step-index=&quot;4&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      25 minutes later
+    &lt;span class=&quot;title&quot;&gt;25 minutes later&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -1087,10 +1127,12 @@
 
 &lt;p&gt;Enjoy!&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;0&quot; data-step-index=&quot;0&quot; data-duration=&quot;10&quot; data-wait=&quot;overnight&quot;&gt;
+&lt;header class=&quot;recipe-step first-of-part&quot; data-step-group=&quot;0&quot; data-step-index=&quot;0&quot; data-duration=&quot;10&quot; data-wait=&quot;overnight&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      day 1
+    &lt;span class=&quot;title&quot;&gt;part 1&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;(10 minutes total)&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -1125,10 +1167,22 @@
 
 &lt;p&gt;to flour mixture. Stir with a rubber spatula until just incorporated, then scrape the sides of the bowl clean and cover with plastic wrap. Leave out at room temperature to ferment for 12 to 14 hours until at least doubled in volume.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;0&quot; data-duration=&quot;5&quot; data-wait=&quot;overnight&quot;&gt;
+&lt;header class=&quot;intermission&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      day 2
+    &lt;span class=&quot;prefix&quot;&gt;flexible wait&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;(12-14 hours)&lt;/span&gt;
+    &lt;hr /&gt;
+  &lt;/h4&gt;
+&lt;/header&gt;
+
+&lt;header class=&quot;recipe-step first-of-part&quot; data-step-group=&quot;1&quot; data-step-index=&quot;0&quot; data-duration=&quot;5&quot; data-wait=&quot;overnight&quot;&gt;
+  &lt;h4&gt;
+    &lt;hr /&gt;
+    &lt;span class=&quot;title&quot;&gt;part 2&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;(2 hours total)&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -1152,10 +1206,12 @@
 
 &lt;p&gt;over dough and gently spread across. Gently stretch the dough to the edge of the sheet by placing your hands underneath and pulling outward. The dough will shrink a bit, so rest it for 15 minutes, then repeat stretching.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;1&quot; data-duration=&quot;1&quot; data-wait=&quot;15&quot;&gt;
+&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;1&quot; data-step-index=&quot;1&quot; data-duration=&quot;1&quot; data-wait=&quot;15&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      15 minutes later
+    &lt;span class=&quot;title&quot;&gt;15 minutes later&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -1167,10 +1223,12 @@
 
 &lt;p&gt;Repeat gentle stretching of dough. Rest another 15 minutes.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;2&quot; data-duration=&quot;5&quot; data-wait=&quot;15&quot;&gt;
+&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;1&quot; data-step-index=&quot;2&quot; data-duration=&quot;5&quot; data-wait=&quot;15&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      15 minutes later
+    &lt;span class=&quot;title&quot;&gt;15 minutes later&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -1189,10 +1247,12 @@
 
 &lt;p&gt;until salt is dissolved. Pour the brine over the dough to fill dimples. Proof focaccia until light and bubbly, about 45 minutes.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;3&quot; data-duration=&quot;1&quot; data-wait=&quot;30&quot;&gt;
+&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;1&quot; data-step-index=&quot;3&quot; data-duration=&quot;1&quot; data-wait=&quot;30&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      30 minutes later
+    &lt;span class=&quot;title&quot;&gt;30 minutes later&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -1208,10 +1268,12 @@
 
 &lt;p&gt;Preheat oven to 450°F (235°C).&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;4&quot; data-duration=&quot;1&quot; data-wait=&quot;15&quot;&gt;
+&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;1&quot; data-step-index=&quot;4&quot; data-duration=&quot;1&quot; data-wait=&quot;15&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      15 minutes later
+    &lt;span class=&quot;title&quot;&gt;15 minutes later&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -1229,10 +1291,12 @@
 
 &lt;p&gt;Bake for 25 to 30 minutes directly on top of stone or inverted pan (if using) until bottom crust is crisp and golden brown when checked with a metal spatula.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;5&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
+&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;1&quot; data-step-index=&quot;5&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      25 minutes later
+    &lt;span class=&quot;title&quot;&gt;25 minutes later&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -1244,10 +1308,12 @@
 
 &lt;p&gt;To finish browning top crust, place focaccia on upper rack and bake for 5 to 7 minutes more.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;6&quot; data-duration=&quot;5&quot; data-wait=&quot;5&quot;&gt;
+&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;1&quot; data-step-index=&quot;6&quot; data-duration=&quot;5&quot; data-wait=&quot;5&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      5 minutes later
+    &lt;span class=&quot;title&quot;&gt;5 minutes later&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -1265,10 +1331,12 @@
 
 &lt;p&gt;over the whole surface (don’t worry if the olive pools in pockets, it will absorb as it sits). Let cool for 5 minutes.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step&quot; data-step-group=&quot;1&quot; data-step-index=&quot;7&quot; data-duration=&quot;1&quot; data-wait=&quot;5&quot;&gt;
+&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;1&quot; data-step-index=&quot;7&quot; data-duration=&quot;1&quot; data-wait=&quot;5&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
-      5 minutes later
+    &lt;span class=&quot;title&quot;&gt;5 minutes later&lt;/span&gt;
+    &amp;nbsp;
+    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;

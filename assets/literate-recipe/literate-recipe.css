@@ -117,18 +117,23 @@ body[data-theme=dark] {
   --sol-mono01: var(--sol-base1);
 }
 
-header.recipe-step h4 {
+header.recipe-step h4, header.intermission h4 {
   display: flex;
   align-items: center;
   text-transform: uppercase;
 }
-header.recipe-step h4 hr {
+header.recipe-step h4 hr, header.intermission h4 hr {
   flex: 1;
 }
-header.recipe-step[data-wait=overnight] h4 hr {
+header.recipe-step h4 .duration, header.intermission h4 .duration {
+  color: var(--text-color-faded);
+  font-size: 0.9em;
+}
+header.recipe-step.first-of-part h4 hr, header.intermission.first-of-part h4 hr {
   border-color: var(--brand-color-dark);
   border-width: 2px;
 }
+
 header.recipe-step .metadata {
   display: flex;
   align-items: center;
