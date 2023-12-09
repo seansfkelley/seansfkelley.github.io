@@ -46,7 +46,7 @@ Add
 - 12 grams salt
 - splash of water
 
-and mix. Scoop dough out onto hard, non-porous, unfloured surface.[^3] Knead: grab, pull, smash, roll, turn. Repeat for 10 minutes. You want dough that is smooth, elastic and tacky (but not sticky).
+and mix. Scoop dough out onto hard, non-porous, unfloured surface.[^3] Knead: grab, pull, smash, roll, turn. **Don't pull too hard.** Doing so tears the out layers of the dough and makes the whole thing a sticky mess again. Repeat for about 10 minutes. You want dough that is smooth, elastic and tacky (but not sticky).
 
 Cover bowl and proof for 4 hours in a warm environment.
 
