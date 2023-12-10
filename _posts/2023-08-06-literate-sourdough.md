@@ -48,7 +48,7 @@ Add
 - 12 grams salt
 - splash of water
 
-and mix. Scoop dough out onto hard, non-porous, unfloured surface.[^3] Knead: grab, pull, smash, roll, turn. **Don't pull too hard.** Doing so tears the out layers of the dough and makes the whole thing a sticky mess again. Repeat for about 10 minutes. You want dough that is smooth, elastic and tacky (but not sticky).
+and mix. Scoop dough out onto hard, non-porous, unfloured surface.[^3] Knead: grab, pull, smash, roll, turn. **Don't pull too hard.** Doing so tears the outer layers of the dough and makes the whole thing a sticky mess again. Repeat for about 10 minutes. You want dough that is smooth, elastic and tacky (but not sticky).
 
 Cover bowl and proof for 4 hours in a warm environment.
 
@@ -62,7 +62,7 @@ Rest for 30 minutes.
 
 Sprinkle with flour and flip. Fold all four edges to their opposite sides. Shape into a ball, then with the dough scraper, firmly push the dough in all directions to roll across the surface and build tension.
 
-Dust a proofing basket with flour and transfer the dough to it, seam side up. (If you do not have a proofing basket, you can put a dry kitchen towel in a bowl.)
+Dust a proofing basket with flour and transfer the dough to it, seam side up. (If you do not have a proofing basket, you can put a dry kitchen towel, dusted _liberally_ with flour, in a large bowl.)
 
 Dust with flour, cover with towel, and place in fridge overnight.
 
@@ -84,17 +84,19 @@ Score it, spritz several times with water, and cover. Place into oven and lower 
 
 {% literate_recipe_step wait="25m" duration="1m" %}
 
-Take the lid of the dutch oven off to allow the loaf to brown.
+Take the lid off the dutch oven to allow the loaf to brown.
+
+The remaining baking time is to your preference. The longer you leave it, the darker, thicker, crispier and more bitter (in a good way!) the crust will become. It's almost impossible to overcook the inside, but it _is_ possible to burn the bottom, so place an empty baking sheet on a rack just below the dutch oven if you plan to go longer than 30 minutes on this step. (I have gone 60 minutes on this step before.)
 
 {% literate_recipe_step wait="25m" duration="1m" %}
 
 Take the bread out of the oven and place on a wire rack.
 
-Let cool completely before slicing. Yeah, it's difficult.
+Let cool completely before slicing. The inside is still cooking! (Yeah, it's difficult.)
 
 {% include next-previous.html %}
 
 [^1]: All-purpose flour _does_ work, it's just less forgiving and the texture is slightly different (but still good!). Bread flour is just high-protein flour, usually about 13%. Some flours state the protein percentage on their package; others mention it on their site. [King Arthur's bread flour](https://shop.kingarthurbaking.com/items/bread-flour) is 12.7%. Trader Joe's all purpose was, [in 2014](https://www.pizzamaking.com/forum/index.php?topic=30417.msg305351#msg305351), 11.8%.
 [^2]: Don't forget to save some to feed it again!
 [^3]: If you don't have a stone countertop, you can use a baking sheet, though they tend to slide around a lot. You can flour a wooden surface if you really want, but the non-porous surface really does make a big difference.
-[^4]: Techniques I have seen: dropping the basket into the dutch oven then palming the top to take it out; flipping the dough onto a plate then picking it up with both hands underneath; inverting the bowl-with-towel above the dutch oven and hoping your aim is good.
+[^4]: Techniques I have seen: dropping the basket into the dutch oven then palming the top to take it out (my preference); flipping the dough onto a plate then picking it up with both hands underneath; inverting the bowl-with-towel above the dutch oven and hoping your aim is good.
