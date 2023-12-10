@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2023-12-09T23:17:57+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Making Up New Numbers With 7-Segment Displays</title><link href="https://blog.sea.nkelley.me/2023/11/24/seven-segment/" rel="alternate" type="text/html" title="Making Up New Numbers With 7-Segment Displays" /><published>2023-11-24T00:00:00+00:00</published><updated>2023-11-24T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/11/24/seven-segment</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/11/24/seven-segment/">&lt;p&gt;The ubiquitous &lt;a href=&quot;https://en.wikipedia.org/wiki/Seven-segment_display&quot;&gt;7-segment display&lt;/a&gt; is a pretty clever little piece of design, able to display all 10 digits in a flat plane with only (you guessed it) 7 segments. Compare the predecessor&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; &lt;a href=&quot;https://en.wikipedia.org/wiki/Nixie_tube&quot;&gt;Nixie tube&lt;/a&gt;, which is also cool for different reasons, but needs 10 elements to display all 10 digits. (&lt;a href=&quot;https://en.wikipedia.org/wiki/Fourteen-segment_display&quot;&gt;14-segment displays&lt;/a&gt; can do all 26 letters and 10 numbers.)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2023-12-10T17:25:10+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Making Up New Numbers With 7-Segment Displays</title><link href="https://blog.sea.nkelley.me/2023/11/24/seven-segment/" rel="alternate" type="text/html" title="Making Up New Numbers With 7-Segment Displays" /><published>2023-11-24T00:00:00+00:00</published><updated>2023-11-24T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/11/24/seven-segment</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/11/24/seven-segment/">&lt;p&gt;The ubiquitous &lt;a href=&quot;https://en.wikipedia.org/wiki/Seven-segment_display&quot;&gt;7-segment display&lt;/a&gt; is a pretty clever little piece of design, able to display all 10 digits in a flat plane with only (you guessed it) 7 segments. Compare the predecessor&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; &lt;a href=&quot;https://en.wikipedia.org/wiki/Nixie_tube&quot;&gt;Nixie tube&lt;/a&gt;, which is also cool for different reasons, but needs 10 elements to display all 10 digits. (&lt;a href=&quot;https://en.wikipedia.org/wiki/Fourteen-segment_display&quot;&gt;14-segment displays&lt;/a&gt; can do all 26 letters and 10 numbers.)&lt;/p&gt;
 
 &lt;p&gt;Unlike with a Nixie tube, numbers have to be hammered into slightly awkward shapes to fit into a 7-segment display. But we can turn this constraint on its head to find something new! By enumerating all the alphanumeric-like shapes that aren’t already claimed, we might be able to make up some new alphanumeric shapes that feel familiar, but aren’t.&lt;/p&gt;
 
@@ -480,7 +480,7 @@
   &lt;li&gt;splash of water&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;and mix. Scoop dough out onto hard, non-porous, unfloured surface.&lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; Knead: grab, pull, smash, roll, turn. &lt;strong&gt;Don’t pull too hard.&lt;/strong&gt; Doing so tears the out layers of the dough and makes the whole thing a sticky mess again. Repeat for about 10 minutes. You want dough that is smooth, elastic and tacky (but not sticky).&lt;/p&gt;
+&lt;p&gt;and mix. Scoop dough out onto hard, non-porous, unfloured surface.&lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; Knead: grab, pull, smash, roll, turn. &lt;strong&gt;Don’t pull too hard.&lt;/strong&gt; Doing so tears the outer layers of the dough and makes the whole thing a sticky mess again. Repeat for about 10 minutes. You want dough that is smooth, elastic and tacky (but not sticky).&lt;/p&gt;
 
 &lt;p&gt;Cover bowl and proof for 4 hours in a warm environment.&lt;/p&gt;
 
@@ -520,7 +520,7 @@
 
 &lt;p&gt;Sprinkle with flour and flip. Fold all four edges to their opposite sides. Shape into a ball, then with the dough scraper, firmly push the dough in all directions to roll across the surface and build tension.&lt;/p&gt;
 
-&lt;p&gt;Dust a proofing basket with flour and transfer the dough to it, seam side up. (If you do not have a proofing basket, you can put a dry kitchen towel in a bowl.)&lt;/p&gt;
+&lt;p&gt;Dust a proofing basket with flour and transfer the dough to it, seam side up. (If you do not have a proofing basket, you can put a dry kitchen towel, dusted &lt;em&gt;liberally&lt;/em&gt; with flour, in a large bowl.)&lt;/p&gt;
 
 &lt;p&gt;Dust with flour, cover with towel, and place in fridge overnight.&lt;/p&gt;
 
@@ -602,7 +602,9 @@
   &lt;/h4&gt;
 &lt;/header&gt;
 
-&lt;p&gt;Take the lid of the dutch oven off to allow the loaf to brown.&lt;/p&gt;
+&lt;p&gt;Take the lid off the dutch oven to allow the loaf to brown.&lt;/p&gt;
+
+&lt;p&gt;The remaining baking time is to your preference. The longer you leave it, the darker, thicker, crispier and more bitter (in a good way!) the crust will become. It’s almost impossible to overcook the inside, but it &lt;em&gt;is&lt;/em&gt; possible to burn the bottom, so place an empty baking sheet on a rack just below the dutch oven if you plan to go longer than 30 minutes on this step. (I have gone 60 minutes on this step before.)&lt;/p&gt;
 
 &lt;header class=&quot;recipe-step &quot; data-step-group=&quot;2&quot; data-step-index=&quot;4&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
   &lt;h4&gt;
@@ -621,7 +623,7 @@
 
 &lt;p&gt;Take the bread out of the oven and place on a wire rack.&lt;/p&gt;
 
-&lt;p&gt;Let cool completely before slicing. Yeah, it’s difficult.&lt;/p&gt;
+&lt;p&gt;Let cool completely before slicing. The inside is still cooking! (Yeah, it’s difficult.)&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -666,7 +668,7 @@
       &lt;p&gt;If you don’t have a stone countertop, you can use a baking sheet, though they tend to slide around a lot. You can flour a wooden surface if you really want, but the non-porous surface really does make a big difference. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:4&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Techniques I have seen: dropping the basket into the dutch oven then palming the top to take it out; flipping the dough onto a plate then picking it up with both hands underneath; inverting the bowl-with-towel above the dutch oven and hoping your aim is good. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;Techniques I have seen: dropping the basket into the dutch oven then palming the top to take it out (my preference); flipping the dough onto a plate then picking it up with both hands underneath; inverting the bowl-with-towel above the dutch oven and hoping your aim is good. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;</content><author><name></name></author><category term="recipe" /><summary type="html">This recipe is my transcription and adaptation of A Non-Baker’s Guide To Making Sourdough Bread, written in a style loosely inspired by literate programming. A bit more background on what this “literate recipe” thing is at my focaccia recipe.</summary></entry><entry><title type="html">Facebook is Too Big to Exist</title><link href="https://blog.sea.nkelley.me/2021/11/01/moderation-broadcastability/" rel="alternate" type="text/html" title="Facebook is Too Big to Exist" /><published>2021-11-01T00:00:00+00:00</published><updated>2023-10-07T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2021/11/01/moderation-broadcastability</id><content type="html" xml:base="https://blog.sea.nkelley.me/2021/11/01/moderation-broadcastability/">&lt;figure&gt;
