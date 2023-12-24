@@ -1,4 +1,64 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2023-12-10T17:25:10+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Making Up New Numbers With 7-Segment Displays</title><link href="https://blog.sea.nkelley.me/2023/11/24/seven-segment/" rel="alternate" type="text/html" title="Making Up New Numbers With 7-Segment Displays" /><published>2023-11-24T00:00:00+00:00</published><updated>2023-11-24T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/11/24/seven-segment</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/11/24/seven-segment/">&lt;p&gt;The ubiquitous &lt;a href=&quot;https://en.wikipedia.org/wiki/Seven-segment_display&quot;&gt;7-segment display&lt;/a&gt; is a pretty clever little piece of design, able to display all 10 digits in a flat plane with only (you guessed it) 7 segments. Compare the predecessor&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; &lt;a href=&quot;https://en.wikipedia.org/wiki/Nixie_tube&quot;&gt;Nixie tube&lt;/a&gt;, which is also cool for different reasons, but needs 10 elements to display all 10 digits. (&lt;a href=&quot;https://en.wikipedia.org/wiki/Fourteen-segment_display&quot;&gt;14-segment displays&lt;/a&gt; can do all 26 letters and 10 numbers.)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2023-12-24T16:16:24+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Cornmeal Pancake Recipe</title><link href="https://blog.sea.nkelley.me/2023/12/24/cornmeal-pancakes/" rel="alternate" type="text/html" title="Cornmeal Pancake Recipe" /><published>2023-12-24T00:00:00+00:00</published><updated>2023-12-24T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/12/24/cornmeal-pancakes</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/12/24/cornmeal-pancakes/">&lt;p&gt;Makes about a dozen 4”-5” pancakes.&lt;/p&gt;
+
+&lt;p&gt;Preheat a non-stick or well-seasoned griddle or small pan to medium-low. Pancakes are very sensitive to uneven heating, so use multiple small pans instead of one large one if you need more space. (This will allow centering the pancakes over the burners.) Pancakes are more like baking than cooking, so having an evenly heated surface ready to go will make it much easier to dial in the temperature as you cook. Don’t butter or oil the pan, as this will cause the pancakes end up splotchy.&lt;/p&gt;
+
+&lt;p&gt;In a large bowl, mix:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;1 cup flour&lt;/li&gt;
+  &lt;li&gt;1 cup yellow cornmeal&lt;/li&gt;
+  &lt;li&gt;½ cup sugar&lt;/li&gt;
+  &lt;li&gt;½ tsp salt&lt;/li&gt;
+  &lt;li&gt;1 tbsp baking powder&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In a small bowl, mix:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;2 eggs&lt;/li&gt;
+  &lt;li&gt;¼ cup vegetable oil&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Pour the wet ingredients into the dry ones and combine throughly. Add:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;milk&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;until you have a smooth, thick and just-barely-evenly-pourable batter. When in doubt, err on the side of thicker: you can always add more milk.&lt;/p&gt;
+
+&lt;p&gt;To make a pancake, put about ¼ cup batter into the center of the pan. (The batter is thick, so you can use a ⅓ cup measure to pour quickly without having to scrape down the sides.)&lt;/p&gt;
+
+&lt;p&gt;Cook a couple minutes, checking the bottom with a spatula and flipping when it’s an even, deep golden brown. The top should be bubbling lightly, but without the bubbles bursting.&lt;/p&gt;
+
+&lt;p&gt;Cook until the other side has golden brown patches. (This side will be unavoidably splotchy.)&lt;/p&gt;
+
+&lt;p&gt;Serve face up.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;section class=&quot;next-previous&quot;&gt;
+  
+  &lt;a href=&quot;/2023/11/24/seven-segment/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: Making Up New Numbers With 7-Segment Displays&quot;&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;Making Up New Numbers With 7-Segment Displays&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+  
+  
+  &lt;div class=&quot;next-previous-placeholder&quot;&gt;&lt;/div&gt;
+  
+&lt;/section&gt;
+&lt;hr /&gt;
+
+&lt;section class=&quot;tag-list&quot;&gt;
+  &lt;i class=&quot;tag-label&quot;&gt;tags:&lt;/i&gt;
+  
+    &lt;a class=&quot;tag-link&quot; href=&quot;/tag/recipe&quot;&gt;recipe&lt;/a&gt;
+  
+&lt;/section&gt;</content><author><name></name></author><category term="recipe" /><summary type="html">Makes about a dozen 4”-5” pancakes.</summary></entry><entry><title type="html">Making Up New Numbers With 7-Segment Displays</title><link href="https://blog.sea.nkelley.me/2023/11/24/seven-segment/" rel="alternate" type="text/html" title="Making Up New Numbers With 7-Segment Displays" /><published>2023-11-24T00:00:00+00:00</published><updated>2023-11-24T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/11/24/seven-segment</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/11/24/seven-segment/">&lt;p&gt;The ubiquitous &lt;a href=&quot;https://en.wikipedia.org/wiki/Seven-segment_display&quot;&gt;7-segment display&lt;/a&gt; is a pretty clever little piece of design, able to display all 10 digits in a flat plane with only (you guessed it) 7 segments. Compare the predecessor&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; &lt;a href=&quot;https://en.wikipedia.org/wiki/Nixie_tube&quot;&gt;Nixie tube&lt;/a&gt;, which is also cool for different reasons, but needs 10 elements to display all 10 digits. (&lt;a href=&quot;https://en.wikipedia.org/wiki/Fourteen-segment_display&quot;&gt;14-segment displays&lt;/a&gt; can do all 26 letters and 10 numbers.)&lt;/p&gt;
 
 &lt;p&gt;Unlike with a Nixie tube, numbers have to be hammered into slightly awkward shapes to fit into a 7-segment display. But we can turn this constraint on its head to find something new! By enumerating all the alphanumeric-like shapes that aren’t already claimed, we might be able to make up some new alphanumeric shapes that feel familiar, but aren’t.&lt;/p&gt;
 
@@ -88,7 +148,13 @@
   &lt;/a&gt;
   
   
-  &lt;div class=&quot;next-previous-placeholder&quot;&gt;&lt;/div&gt;
+  &lt;a href=&quot;/2023/12/24/cornmeal-pancakes/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: Cornmeal Pancake Recipe&quot;&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;Cornmeal Pancake Recipe&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
+  &lt;/a&gt;
   
 &lt;/section&gt;
 &lt;hr /&gt;
@@ -119,7 +185,7 @@
 &lt;p&gt;then add the butter chunks and sprinkle in&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;¼ cup (4 tbsp) ice-cold water&lt;/li&gt;
+  &lt;li&gt;¼ cup ice-cold water&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Pulse several times for ~15 seconds until it resembles a coarse meal. Add up to 4 tbsp more cold water if that doesn’t happen. (I like to look for when, after stopping a pulse, the coarse meal sticks together into just a few ½”-sized loose chunks and falls off the side into the middle.)&lt;/p&gt;
@@ -1469,53 +1535,4 @@
       &lt;p&gt;Starters are actually &lt;a href=&quot;https://en.wikipedia.org/wiki/SCOBY&quot;&gt;symbiotic cultures of bacteria and yeast&lt;/a&gt;, not just yeast. The yeast responds to feedings quickly and produces a sweeter taste; the bacteria comes in later and produces the sour taste. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name></name></author><category term="recipe" /><summary type="html">Sourdough starters are the easiest pet you can have. Easier than plants or even cats. I also have a sourdough bread recipe!</summary></entry><entry><title type="html">Wiping Corrupt Drives with dd: The Nuclear Option</title><link href="https://blog.sea.nkelley.me/2021/04/12/wiping-drives-with-dd/" rel="alternate" type="text/html" title="Wiping Corrupt Drives with dd: The Nuclear Option" /><published>2021-04-12T00:00:00+00:00</published><updated>2021-04-12T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2021/04/12/wiping-drives-with-dd</id><content type="html" xml:base="https://blog.sea.nkelley.me/2021/04/12/wiping-drives-with-dd/">&lt;p&gt;Until a couple months ago, I had never actually damaged a drive by unplugging it while it was busy. But boy, when you pull the plug at the wrong time, do things go wrong fast. I bricked a drive so completely that it would not appear in Disk Utility at all, and trying to poke at it with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;diskutil&lt;/code&gt; (including the full range of mount/unmount/repair/verify/partition/erase subcommands) would only ever respond with “resource busy”. It was also impossible to eject and would leave zombie copies of itself around in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;diskutil list&lt;/code&gt;. Fun!&lt;/p&gt;
-
-&lt;p&gt;After some sleuthing around the internet and asking people who know more than me, I landed on the following script.&lt;/p&gt;
-
-&lt;p class=&quot;alert alert-danger &quot;&gt;&lt;span class=&quot;alert-title&quot;&gt;Don&apos;t Try This at Home!&lt;/span&gt;
-    &lt;br /&gt;Don&apos;t run this script without knowing what you&apos;re doing. If you destroy your drive/data, it&apos;s not my fault.
-&lt;/p&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; 1 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do
-  &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo dd &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/zero &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/disk6 &lt;span class=&quot;nv&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1000000 &lt;span class=&quot;nv&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1000
-&lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;This script loops forever, writing 1000000 * 1000 = 1000000000 bytes (a gigabyte, in the true sense) of zeroes to the beginning of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/dev/disk6&lt;/code&gt;. Since partition tables are located near the beginning of the disk, this will trash them and effectively “factory reset” the drive.&lt;/p&gt;
-
-&lt;p&gt;To run this script, first determine what disk identifier the corrupted disk will have when you plug it in. I did this by plugging and unplugging it a few times to verify it always got assigned the same identifier (well, when it wasn’t leaving zombie disks behind). Put that identifier into the script in place of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/dev/disk6&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Run the modified script before the disk is plugged in. That’ll prompt for the first &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo&lt;/code&gt;, then start looping (and failing) forever. Plug in the corrupted disk and wait. A successful run will be a lot quieter than the wall of errors you get while the disk isn’t plugged in, and when it finishes, you can kill the script.&lt;/p&gt;
-
-&lt;p&gt;After running this, then unplugging and replugging the drive, Disk Utility found an empty disk and was happy to partition it for me.&lt;/p&gt;
-
-&lt;p&gt;A couple notes on the implementation.&lt;/p&gt;
-
-&lt;p&gt;First, the infinite loop is used to grab the disk before the higher-level parts of the operating system can. The lower-level parts are demonstrably working (hence the presence of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/dev/disk6&lt;/code&gt;), but the higher-level parts get stuck forever trying to mount it (or something of the sort), failing, and trying again, thus preventing anything else from accessing the disk.&lt;/p&gt;
-
-&lt;p&gt;Second, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dd&lt;/code&gt; is being used because the disk is unmountable and we specifically want to wipe the entire thing, partition tables included. This is a different, much harsher version of wiping a disk than what one normally does.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;section class=&quot;next-previous&quot;&gt;
-  
-  &lt;a href=&quot;/2021/02/03/javascript-the-bad-parts/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: Javascript: The Bad Parts&quot;&gt;
-    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
-    &lt;div class=&quot;next-previous-name&quot;&gt;
-      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
-      &lt;div class=&quot;next-previous-title&quot;&gt;Javascript: The Bad Parts&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/a&gt;
-  
-  
-  &lt;a href=&quot;/2021/04/28/sourdough-starter/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: World&apos;s Easiest Pet: How to Sourdough Starter&quot;&gt;
-    &lt;div class=&quot;next-previous-name&quot;&gt;
-      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
-      &lt;div class=&quot;next-previous-title&quot;&gt;World&apos;s Easiest Pet: How to Sourdough Starter&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
-  &lt;/a&gt;
-  
-&lt;/section&gt;
-&lt;hr /&gt;</content><author><name></name></author><summary type="html">Until a couple months ago, I had never actually damaged a drive by unplugging it while it was busy. But boy, when you pull the plug at the wrong time, do things go wrong fast. I bricked a drive so completely that it would not appear in Disk Utility at all, and trying to poke at it with diskutil (including the full range of mount/unmount/repair/verify/partition/erase subcommands) would only ever respond with “resource busy”. It was also impossible to eject and would leave zombie copies of itself around in diskutil list. Fun!</summary></entry></feed>
+&lt;/div&gt;</content><author><name></name></author><category term="recipe" /><summary type="html">Sourdough starters are the easiest pet you can have. Easier than plants or even cats. I also have a sourdough bread recipe!</summary></entry></feed>
