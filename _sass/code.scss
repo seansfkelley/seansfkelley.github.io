@@ -22,16 +22,38 @@ pre code {
 pre {
   position: relative;
 
-  // This is also shamelessly stolen from yihui.org since it doesn't require any SVG assets or whatever.
   .copy-button {
     position: absolute;
     display: none;
     cursor: pointer;
     inset: 5px 5px auto auto;
-    width: 0.8em;
-    height: 0.8em;
-    border: 1px solid;
-    box-shadow: -3px 3px #999;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: $input-border-radius;
+    padding: 2px;
+
+    svg {
+      fill: var(--text-color);
+    }
+
+    &:hover {
+      // TODO: Pick something that makes more sense.
+      background-color: var(--background-color);
+    }
+
+    .checkmark {
+      display: none;
+    }
+
+    &.copied {
+      .checkmark {
+        display: block;
+      }
+
+      .clipboard {
+        display: none;
+      }
+    }
   }
 
   &:hover .copy-button {
