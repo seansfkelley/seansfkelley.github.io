@@ -1,0 +1,40 @@
+// begin unfucking code styling
+// from https://yihui.org/en/2023/08/css-scrollbar/
+// note that this is ordering-sensitive due to the specificity of the selector inside the media query
+pre,
+pre:hover {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+pre code {
+  display: block;
+  overflow-x: auto;
+}
+
+@media only screen and (min-width: $width-mobile) {
+  pre {
+    white-space: pre;
+  }
+}
+// end unfucking code styling
+
+pre {
+  position: relative;
+
+  // This is also shamelessly stolen from yihui.org since it doesn't require any SVG assets or whatever.
+  .copy-button {
+    position: absolute;
+    display: none;
+    cursor: pointer;
+    inset: 5px 5px auto auto;
+    width: 0.8em;
+    height: 0.8em;
+    border: 1px solid;
+    box-shadow: -3px 3px #999;
+  }
+
+  &:hover .copy-button {
+    display: inline-block;
+  }
+}
