@@ -383,7 +383,6 @@ code {
 
 pre {
   padding: 8px 12px;
-  white-space: pre-wrap;
 }
 pre > code {
   border: 0;
@@ -904,4 +903,52 @@ sup {
 }
 .tag-list .tag-link:not(:last-child):after {
   content: ", ";
+}
+
+pre,
+pre:hover {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+pre code {
+  display: block;
+  overflow-x: auto;
+}
+
+@media only screen and (min-width: 600px) {
+  pre {
+    white-space: pre;
+  }
+}
+pre {
+  position: relative;
+}
+pre .copy-button {
+  position: absolute;
+  display: none;
+  cursor: pointer;
+  inset: 5px 5px auto auto;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 2px;
+  padding: 2px;
+}
+pre .copy-button svg {
+  fill: var(--text-color);
+}
+pre .copy-button:hover {
+  background-color: var(--background-color);
+}
+pre .copy-button .checkmark {
+  display: none;
+}
+pre .copy-button.copied .checkmark {
+  display: block;
+}
+pre .copy-button.copied .clipboard {
+  display: none;
+}
+pre:hover .copy-button {
+  display: inline-block;
 }
