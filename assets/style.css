@@ -933,6 +933,7 @@ pre .copy-button {
   height: 1.5em;
   border-radius: 2px;
   padding: 2px;
+  background-color: var(--code-background-color);
 }
 pre .copy-button svg {
   fill: var(--text-color);
