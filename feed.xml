@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2023-12-28T17:49:04+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">kathack</title><link href="https://blog.sea.nkelley.me/2023/12/27/kathack/" rel="alternate" type="text/html" title="kathack" /><published>2023-12-27T00:00:00+00:00</published><updated>2023-12-27T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/12/27/kathack</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/12/27/kathack/">&lt;p&gt;I was recently reminded of &lt;a href=&quot;http://kathack.com&quot;&gt;kathack.com&lt;/a&gt;: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2023-12-29T17:36:14+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">kathack</title><link href="https://blog.sea.nkelley.me/2023/12/27/kathack/" rel="alternate" type="text/html" title="kathack" /><published>2023-12-27T00:00:00+00:00</published><updated>2023-12-27T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/12/27/kathack</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/12/27/kathack/">&lt;p&gt;I was recently reminded of &lt;a href=&quot;http://kathack.com&quot;&gt;kathack.com&lt;/a&gt;: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.&lt;/p&gt;
 
 &lt;p&gt;So anyway, I rewrote out the jQuery and found a way to serve the script indirectly via GitHub, no dedicated site required. You can paste this into your browser console&lt;/p&gt;
 
@@ -586,7 +586,9 @@
   &lt;li&gt;splash of water&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;and mix. Scoop dough out onto hard, non-porous, unfloured surface.&lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; Knead: grab, pull, smash, roll, turn. &lt;strong&gt;Don’t pull too hard.&lt;/strong&gt; Doing so tears the outer layers of the dough and makes the whole thing a sticky mess again. Repeat for about 10 minutes. You want dough that is smooth, elastic and tacky (but not sticky).&lt;/p&gt;
+&lt;p&gt;and mix.&lt;/p&gt;
+
+&lt;p&gt;Scoop dough out onto hard, non-porous, unfloured surface.&lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; Knead: grab, pull, smash, roll, turn (reference: &lt;a href=&quot;https://www.youtube.com/watch?v=APEavQg8rMw&amp;amp;t=200s&quot;&gt;original video at 3:20&lt;/a&gt;). &lt;strong&gt;Don’t pull too hard.&lt;/strong&gt; Doing so tears the outer layers of the dough and makes the whole thing a sticky mess again. Repeat for about 10 minutes. You want dough that is smooth, elastic and tacky (but not sticky).&lt;/p&gt;
 
 &lt;p&gt;Cover bowl and proof for 4 hours in a warm environment.&lt;/p&gt;
 
@@ -645,24 +647,7 @@
     &lt;hr /&gt;
     &lt;span class=&quot;title&quot;&gt;part 3&lt;/span&gt;
     &amp;nbsp;
-    &lt;span class=&quot;duration&quot;&gt;(3 hours total)&lt;/span&gt;
-    &lt;hr /&gt;
-  &lt;/h4&gt;
-  &lt;h4 class=&quot;metadata&quot;&gt;
-    &lt;span class=&quot;duration&quot;&gt;
-      1 minute of work
-    &lt;/span&gt;
-  &lt;/h4&gt;
-&lt;/header&gt;
-
-&lt;p&gt;Take the dough out of the fridge 2 hours before baking to bring it to room temperature.&lt;/p&gt;
-
-&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;2&quot; data-step-index=&quot;1&quot; data-duration=&quot;1&quot; data-wait=&quot;90&quot;&gt;
-  &lt;h4&gt;
-    &lt;hr /&gt;
-    &lt;span class=&quot;title&quot;&gt;1 hour, 30 minutes later&lt;/span&gt;
-    &amp;nbsp;
-    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
+    &lt;span class=&quot;duration&quot;&gt;(1 hour, 20 minutes total)&lt;/span&gt;
     &lt;hr /&gt;
   &lt;/h4&gt;
   &lt;h4 class=&quot;metadata&quot;&gt;
@@ -674,7 +659,9 @@
 
 &lt;p&gt;Preheat oven to 475°F (245°C). Put in a dutch oven, with lid, to preheat with the oven.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;2&quot; data-step-index=&quot;2&quot; data-duration=&quot;5&quot; data-wait=&quot;30&quot;&gt;
+&lt;p&gt;When preheated, wait a little extra time to ensure the oven and dutch oven are heated throughout.&lt;/p&gt;
+
+&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;2&quot; data-step-index=&quot;1&quot; data-duration=&quot;5&quot; data-wait=&quot;30&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
     &lt;span class=&quot;title&quot;&gt;30 minutes later&lt;/span&gt;
@@ -689,11 +676,13 @@
   &lt;/h4&gt;
 &lt;/header&gt;
 
-&lt;p&gt;Flip the dough into the dutch oven using your preferred technique.&lt;sup id=&quot;fnref:4&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;Remove loaf from fridge, score it, and place into the dutch oven using your preferred technique.&lt;sup id=&quot;fnref:4&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
-&lt;p&gt;Score it, spritz several times with water, and cover. Place into oven and lower temperature to 425°F (220°C).&lt;/p&gt;
+&lt;p&gt;Optionally, spritz with water to encourage a bubbly, golden crust.&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;2&quot; data-step-index=&quot;3&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
+&lt;p&gt;Place into oven and lower temperature to 425°F (220°C).&lt;/p&gt;
+
+&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;2&quot; data-step-index=&quot;2&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
     &lt;span class=&quot;title&quot;&gt;25 minutes later&lt;/span&gt;
@@ -712,7 +701,7 @@
 
 &lt;p&gt;The remaining baking time is to your preference. The longer you leave it, the darker, thicker, crispier and more bitter (in a good way!) the crust will become. It’s almost impossible to overcook the inside, but it &lt;em&gt;is&lt;/em&gt; possible to burn the bottom, so place an empty baking sheet on a rack just below the dutch oven if you plan to go longer than 30 minutes on this step. (I have gone 60 minutes on this step before.)&lt;/p&gt;
 
-&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;2&quot; data-step-index=&quot;4&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
+&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;2&quot; data-step-index=&quot;3&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
   &lt;h4&gt;
     &lt;hr /&gt;
     &lt;span class=&quot;title&quot;&gt;25 minutes later&lt;/span&gt;
@@ -774,7 +763,7 @@
       &lt;p&gt;If you don’t have a stone countertop, you can use a baking sheet, though they tend to slide around a lot. You can flour a wooden surface if you really want, but the non-porous surface really does make a big difference. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:4&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Techniques I have seen: dropping the basket into the dutch oven then palming the top to take it out (my preference); flipping the dough onto a plate then picking it up with both hands underneath; inverting the bowl-with-towel above the dutch oven and hoping your aim is good. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;The standard is to place it on a large piece of parchment paper on a cutting board, score it, and lift it by the paper into the dutch oven. If the scoring is simple, you can also just drop the proofing basket right into the dutch oven and palm it back out, but make sure that you drop it forcefully and without hesitation to encourage a clean separation of the dough. If you used the kitchen-towel-in-bowl technique, I would very much not recommend trying to aim the loaf right into the dutch oven. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;</content><author><name></name></author><category term="recipe" /><summary type="html">This recipe is my transcription and adaptation of A Non-Baker’s Guide To Making Sourdough Bread, written in a style loosely inspired by literate programming. A bit more background on what this “literate recipe” thing is at my focaccia recipe.</summary></entry><entry><title type="html">Facebook is Too Big to Exist</title><link href="https://blog.sea.nkelley.me/2021/11/01/moderation-broadcastability/" rel="alternate" type="text/html" title="Facebook is Too Big to Exist" /><published>2021-11-01T00:00:00+00:00</published><updated>2023-10-07T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2021/11/01/moderation-broadcastability</id><content type="html" xml:base="https://blog.sea.nkelley.me/2021/11/01/moderation-broadcastability/">&lt;figure&gt;
