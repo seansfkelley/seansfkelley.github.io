@@ -48,7 +48,7 @@ Add
 - 12 grams salt
 - splash of water
 
-and mix. Scoop dough out onto hard, non-porous, unfloured surface.[^3] Knead: grab, pull, smash, roll, turn. **Don't pull too hard.** Doing so tears the outer layers of the dough and makes the whole thing a sticky mess again. Repeat for about 10 minutes. You want dough that is smooth, elastic and tacky (but not sticky).
+and mix. Scoop dough out onto hard, non-porous, unfloured surface.[^3] Knead: grab, pull, smash, roll, turn (reference: [original video at 3:20](https://www.youtube.com/watch?v=APEavQg8rMw&t=200s)). **Don't pull too hard.** Doing so tears the outer layers of the dough and makes the whole thing a sticky mess again. Repeat for about 10 minutes. You want dough that is smooth, elastic and tacky (but not sticky).
 
 Cover bowl and proof for 4 hours in a warm environment.
 
@@ -78,9 +78,11 @@ Preheat oven to 475°F (245°C). Put in a dutch oven, with lid, to preheat with 
 
 {% literate_recipe_step wait="30m" duration="5m" %}
 
-Flip the dough into the dutch oven using your preferred technique.[^4]
+Score loaf and place into the dutch oven using your preferred technique.[^4]
 
-Score it, spritz several times with water, and cover. Place into oven and lower temperature to 425°F (220°C).
+Optionally, spritz with water to encourage a bubbly, golden crust.
+
+Place into oven and lower temperature to 425°F (220°C).
 
 {% literate_recipe_step wait="25m" duration="1m" %}
 
@@ -99,4 +101,4 @@ Let cool completely before slicing. The inside is still cooking! (Yeah, it's dif
 [^1]: All-purpose flour _does_ work, it's just less forgiving and the texture is slightly different (but still good!). Bread flour is just high-protein flour, usually about 13%. Some flours state the protein percentage on their package; others mention it on their site. [King Arthur's bread flour](https://shop.kingarthurbaking.com/items/bread-flour) is 12.7%. Trader Joe's all purpose was, [in 2014](https://www.pizzamaking.com/forum/index.php?topic=30417.msg305351#msg305351), 11.8%.
 [^2]: Don't forget to save some to feed it again!
 [^3]: If you don't have a stone countertop, you can use a baking sheet, though they tend to slide around a lot. You can flour a wooden surface if you really want, but the non-porous surface really does make a big difference.
-[^4]: Techniques I have seen: dropping the basket into the dutch oven then palming the top to take it out (my preference); flipping the dough onto a plate then picking it up with both hands underneath; inverting the bowl-with-towel above the dutch oven and hoping your aim is good.
+[^4]: The standard is to place it on a large piece of parchment paper on a cutting board, score it, and lift it by the paper into the dutch oven. If the scoring is simple, you can also just drop the proofing basket right into the dutch oven and palm it back out, but make sure that you drop it forcefully and without hesitation to encourage a clean separation of the dough. If you used the kitchen-towel-in-bowl technique, I would very much not recommend trying to aim the loaf right into the dutch oven.
