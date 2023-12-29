@@ -48,7 +48,9 @@ Add
 - 12 grams salt
 - splash of water
 
-and mix. Scoop dough out onto hard, non-porous, unfloured surface.[^3] Knead: grab, pull, smash, roll, turn (reference: [original video at 3:20](https://www.youtube.com/watch?v=APEavQg8rMw&t=200s)). **Don't pull too hard.** Doing so tears the outer layers of the dough and makes the whole thing a sticky mess again. Repeat for about 10 minutes. You want dough that is smooth, elastic and tacky (but not sticky).
+and mix.
+
+Scoop dough out onto hard, non-porous, unfloured surface.[^3] Knead: grab, pull, smash, roll, turn (reference: [original video at 3:20](https://www.youtube.com/watch?v=APEavQg8rMw&t=200s)). **Don't pull too hard.** Doing so tears the outer layers of the dough and makes the whole thing a sticky mess again. Repeat for about 10 minutes. You want dough that is smooth, elastic and tacky (but not sticky).
 
 Cover bowl and proof for 4 hours in a warm environment.
 
@@ -68,17 +70,15 @@ Dust with flour, cover with towel, and place in fridge overnight.
 
 {% literate_recipe_step intermission="8-16 hours" %}
 
-{% literate_recipe_step wait="overnight" duration="1m" total_duration="3h" %}
-
-Take the dough out of the fridge 2 hours before baking to bring it to room temperature.
-
-{% literate_recipe_step wait="1h30m" duration="1m" %}
+{% literate_recipe_step wait="overnight" duration="1m" total_duration="1h20m" %}
 
 Preheat oven to 475°F (245°C). Put in a dutch oven, with lid, to preheat with the oven.
 
+When preheated, wait a little extra time to ensure the oven and dutch oven are heated throughout.
+
 {% literate_recipe_step wait="30m" duration="5m" %}
 
-Score loaf and place into the dutch oven using your preferred technique.[^4]
+Remove loaf from fridge, score it, and place into the dutch oven using your preferred technique.[^4]
 
 Optionally, spritz with water to encourage a bubbly, golden crust.
 
