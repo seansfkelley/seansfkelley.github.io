@@ -64,7 +64,7 @@ ATOMS_TO_REMOVE=(
 
 ATOMICPARSLEY_ARGS=()
 for atom in "${ATOMS_TO_REMOVE[@]}" ; do
-  ATOMICPARSLEY_ARGS+=("--manualAtomRemove" "'moov.udta.meta.ilst.$atom'")
+  ATOMICPARSLEY_ARGS+=("--manualAtomRemove" "moov.udta.meta.ilst.$atom")
 done
 
 if [ -n "$ARTWORK" ] && [ ! -e "$ARTWORK" ] ; then
@@ -97,7 +97,7 @@ for file in "${FILES[@]}" ; do
   if [ -z "$OVERWRITE" ] ; then
     mkdir -p "$(dirname "$file")/stripped"
     output="$(dirname "$file")/stripped/$(basename "$file")"
-    atomicparsley "${args[@]}" -o "$output" 1>/dev/null
+    atomicparsley "${args[@]}" --output "$output" 1>/dev/null
     echo "stripped $file -> $output"
   else
     atomicparsley "${args[@]}" --overWrite 1>/dev/null
