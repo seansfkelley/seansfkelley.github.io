@@ -1,4 +1,41 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-02-18T01:25:19+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">kathack</title><link href="https://blog.sea.nkelley.me/2023/12/27/kathack/" rel="alternate" type="text/html" title="kathack" /><published>2023-12-27T00:00:00+00:00</published><updated>2023-12-27T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/12/27/kathack</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/12/27/kathack/">&lt;p&gt;I was recently reminded of &lt;a href=&quot;http://kathack.com&quot;&gt;kathack.com&lt;/a&gt;: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-03-01T06:29:07+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">WPA Eight-ball Rules (Abridged)</title><link href="https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules/" rel="alternate" type="text/html" title="WPA Eight-ball Rules (Abridged)" /><published>2024-02-29T00:00:00+00:00</published><updated>2024-02-29T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules/">&lt;p&gt;This is an abridged summary of the &lt;a href=&quot;https://wpapool.com/rules/&quot;&gt;official WPA eight-ball rules&lt;/a&gt;. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].&lt;/p&gt;
+
+&lt;h3 id=&quot;racking-and-the-break&quot;&gt;Racking and the Break&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Rack with the 1 ball at the apex, the 8 ball in the middle, one solid and one stripe in each of the other corners, and the rest randomly. The 1 is placed on the foot spot. [3.2]&lt;/li&gt;
+  &lt;li&gt;Lag to determine order of play. Winner chooses to break or have opponent break. [1.2] [3.1]&lt;/li&gt;
+  &lt;li&gt;Table remains open even if a ball is pocketed. [3.3]&lt;/li&gt;
+  &lt;li&gt;Fouls on the break are opponent’s choice: [3.3]
+    &lt;ul&gt;
+      &lt;li&gt;Accept the balls in position.&lt;/li&gt;
+      &lt;li&gt;Ball-in-hand, behind the head string.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;play-and-winning&quot;&gt;Play and Winning&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The intended ball and pocket must be called if they are not obvious. [1.6] [3.6]&lt;/li&gt;
+  &lt;li&gt;The shooter continues as long as they pocket shots as called and do not foul. Pocketing additional balls is not a foul and does not end the turn. [3.5]&lt;/li&gt;
+  &lt;li&gt;The shooter may call “safety”, in which case the turn changes even if they pocket a ball legally. [8.17] [3.6]&lt;/li&gt;
+  &lt;li&gt;Fouling while pocketing the 8 ball is a loss. [3.8]&lt;/li&gt;
+  &lt;li&gt;Fouling on an 8 ball attempt without pocketing the 8 ball is treated as a normal foul. (My clarification; implied but not stated explicitly in the rules.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;fouls&quot;&gt;Fouls&lt;/h3&gt;
+
+&lt;p&gt;All fouls are ball in hand without restriction, except as noted during the break.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Scratch (pocketed cue). [6.1]&lt;/li&gt;
+  &lt;li&gt;Wrong first ball. [6.2]&lt;/li&gt;
+  &lt;li&gt;No contact. [6.3]&lt;/li&gt;
+  &lt;li&gt;No rail after contact. [6.3]&lt;/li&gt;
+  &lt;li&gt;Bad play from behind the head string. [6.11]&lt;/li&gt;
+  &lt;li&gt;Jump shots by “scooping”. [8.16]&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">This is an abridged summary of the official WPA eight-ball rules. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].</summary></entry><entry><title type="html">kathack</title><link href="https://blog.sea.nkelley.me/2023/12/27/kathack/" rel="alternate" type="text/html" title="kathack" /><published>2023-12-27T00:00:00+00:00</published><updated>2023-12-27T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/12/27/kathack</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/12/27/kathack/">&lt;p&gt;I was recently reminded of &lt;a href=&quot;http://kathack.com&quot;&gt;kathack.com&lt;/a&gt;: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.&lt;/p&gt;
 
 &lt;p&gt;So anyway, I rewrote out the jQuery and found a way to serve the script indirectly via GitHub, no dedicated site required. You can paste this into your browser console&lt;/p&gt;
 
@@ -29,7 +66,13 @@
   &lt;/a&gt;
   
   
-  &lt;div class=&quot;next-previous-placeholder&quot;&gt;&lt;/div&gt;
+  &lt;a href=&quot;/2024/02/29/abridged-pool-rules/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: WPA Eight-ball Rules (Abridged)&quot;&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;WPA Eight-ball Rules (Abridged)&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
+  &lt;/a&gt;
   
 &lt;/section&gt;
 &lt;hr /&gt;</content><author><name></name></author><summary type="html">I was recently reminded of kathack.com: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.</summary></entry><entry><title type="html">Cornmeal Pancake Recipe</title><link href="https://blog.sea.nkelley.me/2023/12/24/cornmeal-pancakes/" rel="alternate" type="text/html" title="Cornmeal Pancake Recipe" /><published>2023-12-24T00:00:00+00:00</published><updated>2023-12-24T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/12/24/cornmeal-pancakes</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/12/24/cornmeal-pancakes/">&lt;p&gt;Makes about a dozen 4”-5” pancakes.&lt;/p&gt;
@@ -1212,268 +1255,4 @@
       &lt;p&gt;The interpretation of the control scheme for the top light is left as an exercise to the reader. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name></name></author><summary type="html">I’m at an Airbnb. There is a stairwell that has a light at the bottom and a light at the top (the latter of which is also the hallway light). One desires to control both these lights from both ends so that you can always turn the light off after you, or turn the light on before you, regardless of which direction you’re going. There are indeed four light switches, but they don’t work like that. If they did, I wouldn’t have had to write this.</summary></entry><entry><title type="html">Ligurian Focaccia (and Recipe Planner)</title><link href="https://blog.sea.nkelley.me/2021/05/17/literate-focaccia/" rel="alternate" type="text/html" title="Ligurian Focaccia (and Recipe Planner)" /><published>2021-05-17T00:00:00+00:00</published><updated>2021-05-28T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2021/05/17/literate-focaccia</id><content type="html" xml:base="https://blog.sea.nkelley.me/2021/05/17/literate-focaccia/">&lt;p&gt;This recipe is my adaptation of &lt;a href=&quot;https://www.saltfatacidheat.com/fat/ligurian-focaccia&quot;&gt;Samin Nosrat’s Ligurian Focaccia&lt;/a&gt;, rewritten in a style loosely inspired by &lt;a href=&quot;https://en.wikipedia.org/wiki/Literate_programming&quot;&gt;literate programming&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Why rearrange it so? I know how to make this recipe and I know I have all the ingredients, but I always forget the timings and orderings. Here, the timing is the most prominent organizing principle (as opposed to, say, the ingredients list) so that you can at-a-glance see how much work needs to be done when, thereby making it easier to both plan around it and jump back into it when your timer goes off.&lt;/p&gt;
-
-&lt;p&gt;In addition to organizing the whole recipe around the timings, I’ve also replaced an up-front ingredient list with prominent per-step lists (for a recipe that takes this long, it doesn’t always make sense to pull everything out at the beginning), streamlined some of the content (by removing some volume measurements and changing text related to timing) and added my own tweaks (like how to make it soft-bottomed).&lt;/p&gt;
-
-&lt;p&gt;As always with any recipe, you should read the entire thing before starting. While the steps as written are spaced precisely (5 minutes here, 15 minutes there), some gaps between steps are actually ranges and are noted as such in the step’s text. For organizing, I use the lower end of the range so that you don’t accidentally overshoot, but it also means that the time estimates provided are not exact.&lt;/p&gt;
-
-&lt;p&gt;Lastly, the times shown in each step are all linked to one another and you can adjust any of them to see how all the steps can fit around your meetings or chores. That is, assuming you aren’t reading this in an RSS reader or a browser from 1994, in which case you’ll see no times at all (sorry!).&lt;/p&gt;
-
-&lt;p&gt;Enjoy!&lt;/p&gt;
-
-&lt;header class=&quot;recipe-step first-of-part&quot; data-step-group=&quot;0&quot; data-step-index=&quot;0&quot; data-duration=&quot;10&quot; data-wait=&quot;overnight&quot;&gt;
-  &lt;h4&gt;
-    &lt;hr /&gt;
-    &lt;span class=&quot;title&quot;&gt;part 1&lt;/span&gt;
-    &amp;nbsp;
-    &lt;span class=&quot;duration&quot;&gt;(10 minutes total)&lt;/span&gt;
-    &lt;hr /&gt;
-  &lt;/h4&gt;
-  &lt;h4 class=&quot;metadata&quot;&gt;
-    &lt;span class=&quot;duration&quot;&gt;
-      10 minutes of work
-    &lt;/span&gt;
-  &lt;/h4&gt;
-&lt;/header&gt;
-
-&lt;p&gt;In a medium bowl, stir together&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;600 grams lukewarm water&lt;/li&gt;
-  &lt;li&gt;½ teaspoon dry yeast&lt;/li&gt;
-  &lt;li&gt;15 grams honey&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;until dissolved.&lt;/p&gt;
-
-&lt;p&gt;In a very large bowl, whisk together&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;800 grams all-purpose flour&lt;/li&gt;
-  &lt;li&gt;18 grams salt&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Add yeast mixture and&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;50 grams olive oil&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;to flour mixture. Stir with a rubber spatula until just incorporated, then scrape the sides of the bowl clean and cover with plastic wrap. Leave out at room temperature to ferment for 12 to 14 hours until at least doubled in volume.&lt;/p&gt;
-
-&lt;header class=&quot;intermission&quot;&gt;
-  &lt;h4&gt;
-    &lt;hr /&gt;
-    &lt;span class=&quot;prefix&quot;&gt;flexible wait&lt;/span&gt;
-    &amp;nbsp;
-    &lt;span class=&quot;duration&quot;&gt;(12-14 hours)&lt;/span&gt;
-    &lt;hr /&gt;
-  &lt;/h4&gt;
-&lt;/header&gt;
-
-&lt;header class=&quot;recipe-step first-of-part&quot; data-step-group=&quot;1&quot; data-step-index=&quot;0&quot; data-duration=&quot;5&quot; data-wait=&quot;overnight&quot;&gt;
-  &lt;h4&gt;
-    &lt;hr /&gt;
-    &lt;span class=&quot;title&quot;&gt;part 2&lt;/span&gt;
-    &amp;nbsp;
-    &lt;span class=&quot;duration&quot;&gt;(2 hours total)&lt;/span&gt;
-    &lt;hr /&gt;
-  &lt;/h4&gt;
-  &lt;h4 class=&quot;metadata&quot;&gt;
-    &lt;span class=&quot;duration&quot;&gt;
-      5 minutes of work
-    &lt;/span&gt;
-  &lt;/h4&gt;
-&lt;/header&gt;
-
-&lt;p&gt;Spread&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;2 to 3 tablespoons olive oil&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;evenly onto a 18-by-13 inch (46-by-33 cm) rimmed baking sheet. Use a spatula or your hand to release it from the sides of the bowl and pour out onto pan. Pour an additional&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;2 tablespoons olive oil&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;over dough and gently spread across. Gently stretch the dough to the edge of the sheet by placing your hands underneath and pulling outward. The dough will shrink a bit, so rest it for 15 minutes, then repeat stretching.&lt;/p&gt;
-
-&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;1&quot; data-step-index=&quot;1&quot; data-duration=&quot;1&quot; data-wait=&quot;15&quot;&gt;
-  &lt;h4&gt;
-    &lt;hr /&gt;
-    &lt;span class=&quot;title&quot;&gt;15 minutes later&lt;/span&gt;
-    &amp;nbsp;
-    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
-    &lt;hr /&gt;
-  &lt;/h4&gt;
-  &lt;h4 class=&quot;metadata&quot;&gt;
-    &lt;span class=&quot;duration&quot;&gt;
-      1 minute of work
-    &lt;/span&gt;
-  &lt;/h4&gt;
-&lt;/header&gt;
-
-&lt;p&gt;Repeat gentle stretching of dough. Rest another 15 minutes.&lt;/p&gt;
-
-&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;1&quot; data-step-index=&quot;2&quot; data-duration=&quot;5&quot; data-wait=&quot;15&quot;&gt;
-  &lt;h4&gt;
-    &lt;hr /&gt;
-    &lt;span class=&quot;title&quot;&gt;15 minutes later&lt;/span&gt;
-    &amp;nbsp;
-    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
-    &lt;hr /&gt;
-  &lt;/h4&gt;
-  &lt;h4 class=&quot;metadata&quot;&gt;
-    &lt;span class=&quot;duration&quot;&gt;
-      5 minutes of work
-    &lt;/span&gt;
-  &lt;/h4&gt;
-&lt;/header&gt;
-
-&lt;p&gt;Dimple the dough by pressing the pads of your first three fingers in at an angle. Make the brine by stirring together&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;80 grams lukewarm water&lt;/li&gt;
-  &lt;li&gt;5 grams salt&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;until salt is dissolved. Pour the brine over the dough to fill dimples. Proof focaccia until light and bubbly, about 45 minutes.&lt;/p&gt;
-
-&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;1&quot; data-step-index=&quot;3&quot; data-duration=&quot;1&quot; data-wait=&quot;30&quot;&gt;
-  &lt;h4&gt;
-    &lt;hr /&gt;
-    &lt;span class=&quot;title&quot;&gt;30 minutes later&lt;/span&gt;
-    &amp;nbsp;
-    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
-    &lt;hr /&gt;
-  &lt;/h4&gt;
-  &lt;h4 class=&quot;metadata&quot;&gt;
-    &lt;span class=&quot;duration&quot;&gt;
-      1 minute of work
-    &lt;/span&gt;
-  &lt;/h4&gt;
-&lt;/header&gt;
-
-&lt;p&gt;Adjust oven rack to center position.&lt;/p&gt;
-
-&lt;p&gt;If you prefer a crispy bottom, place a baking stone or inverted, sturdy baking sheet on the rack and allow it to preheat with the oven until very hot. If you prefer a soft bottom, place another rack below the first and put an empty baking sheet on it to insulate the upper rack from the heat source below.&lt;/p&gt;
-
-&lt;p&gt;Preheat oven to 450°F (235°C).&lt;/p&gt;
-
-&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;1&quot; data-step-index=&quot;4&quot; data-duration=&quot;1&quot; data-wait=&quot;15&quot;&gt;
-  &lt;h4&gt;
-    &lt;hr /&gt;
-    &lt;span class=&quot;title&quot;&gt;15 minutes later&lt;/span&gt;
-    &amp;nbsp;
-    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
-    &lt;hr /&gt;
-  &lt;/h4&gt;
-  &lt;h4 class=&quot;metadata&quot;&gt;
-    &lt;span class=&quot;duration&quot;&gt;
-      1 minute of work
-    &lt;/span&gt;
-  &lt;/h4&gt;
-&lt;/header&gt;
-
-&lt;p&gt;Sprinkle focaccia with&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;flaky salt&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Bake for 25 to 30 minutes directly on top of stone or inverted pan (if using) until bottom crust is crisp and golden brown when checked with a metal spatula.&lt;/p&gt;
-
-&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;1&quot; data-step-index=&quot;5&quot; data-duration=&quot;1&quot; data-wait=&quot;25&quot;&gt;
-  &lt;h4&gt;
-    &lt;hr /&gt;
-    &lt;span class=&quot;title&quot;&gt;25 minutes later&lt;/span&gt;
-    &amp;nbsp;
-    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
-    &lt;hr /&gt;
-  &lt;/h4&gt;
-  &lt;h4 class=&quot;metadata&quot;&gt;
-    &lt;span class=&quot;duration&quot;&gt;
-      1 minute of work
-    &lt;/span&gt;
-  &lt;/h4&gt;
-&lt;/header&gt;
-
-&lt;p&gt;To finish browning top crust, place focaccia on upper rack and bake for 5 to 7 minutes more.&lt;/p&gt;
-
-&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;1&quot; data-step-index=&quot;6&quot; data-duration=&quot;5&quot; data-wait=&quot;5&quot;&gt;
-  &lt;h4&gt;
-    &lt;hr /&gt;
-    &lt;span class=&quot;title&quot;&gt;5 minutes later&lt;/span&gt;
-    &amp;nbsp;
-    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
-    &lt;hr /&gt;
-  &lt;/h4&gt;
-  &lt;h4 class=&quot;metadata&quot;&gt;
-    &lt;span class=&quot;duration&quot;&gt;
-      5 minutes of work
-    &lt;/span&gt;
-  &lt;/h4&gt;
-&lt;/header&gt;
-
-&lt;p&gt;Remove from oven and brush or douse with&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;2 to 3 tablespoons olive oil&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;over the whole surface (don’t worry if the olive pools in pockets, it will absorb as it sits). Let cool for 5 minutes.&lt;/p&gt;
-
-&lt;header class=&quot;recipe-step &quot; data-step-group=&quot;1&quot; data-step-index=&quot;7&quot; data-duration=&quot;1&quot; data-wait=&quot;5&quot;&gt;
-  &lt;h4&gt;
-    &lt;hr /&gt;
-    &lt;span class=&quot;title&quot;&gt;5 minutes later&lt;/span&gt;
-    &amp;nbsp;
-    &lt;span class=&quot;duration&quot;&gt;&lt;/span&gt;
-    &lt;hr /&gt;
-  &lt;/h4&gt;
-  &lt;h4 class=&quot;metadata&quot;&gt;
-    &lt;span class=&quot;duration&quot;&gt;
-      1 minute of work
-    &lt;/span&gt;
-  &lt;/h4&gt;
-&lt;/header&gt;
-
-&lt;p&gt;Release focaccia from pan with metal spatula and transfer to a cooling rack to cool completely.&lt;/p&gt;
-
-&lt;p&gt;Store on the counter wrapped in wax paper.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;section class=&quot;next-previous&quot;&gt;
-  
-  &lt;a href=&quot;/2021/04/28/sourdough-starter/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: World&apos;s Easiest Pet: How to Sourdough Starter&quot;&gt;
-    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
-    &lt;div class=&quot;next-previous-name&quot;&gt;
-      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
-      &lt;div class=&quot;next-previous-title&quot;&gt;World&apos;s Easiest Pet: How to Sourdough Starter&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/a&gt;
-  
-  
-  &lt;a href=&quot;/2021/10/29/a-tale-of-two-lights/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: A Tale of Two Lights&quot;&gt;
-    &lt;div class=&quot;next-previous-name&quot;&gt;
-      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
-      &lt;div class=&quot;next-previous-title&quot;&gt;A Tale of Two Lights&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
-  &lt;/a&gt;
-  
-&lt;/section&gt;
-&lt;hr /&gt;
-
-&lt;section class=&quot;tag-list&quot;&gt;
-  &lt;i class=&quot;tag-label&quot;&gt;tags:&lt;/i&gt;
-  
-    &lt;a class=&quot;tag-link&quot; href=&quot;/tag/recipe&quot;&gt;recipe&lt;/a&gt;
-  
-&lt;/section&gt;</content><author><name></name></author><category term="recipe" /><summary type="html">This recipe is my adaptation of Samin Nosrat’s Ligurian Focaccia, rewritten in a style loosely inspired by literate programming.</summary></entry></feed>
+&lt;/div&gt;</content><author><name></name></author><summary type="html">I’m at an Airbnb. There is a stairwell that has a light at the bottom and a light at the top (the latter of which is also the hallway light). One desires to control both these lights from both ends so that you can always turn the light off after you, or turn the light on before you, regardless of which direction you’re going. There are indeed four light switches, but they don’t work like that. If they did, I wouldn’t have had to write this.</summary></entry></feed>
