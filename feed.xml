@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-03-01T06:29:07+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">WPA Eight-ball Rules (Abridged)</title><link href="https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules/" rel="alternate" type="text/html" title="WPA Eight-ball Rules (Abridged)" /><published>2024-02-29T00:00:00+00:00</published><updated>2024-02-29T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules/">&lt;p&gt;This is an abridged summary of the &lt;a href=&quot;https://wpapool.com/rules/&quot;&gt;official WPA eight-ball rules&lt;/a&gt;. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-03-02T20:13:45+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">WPA Eight-ball Rules (Abridged)</title><link href="https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules/" rel="alternate" type="text/html" title="WPA Eight-ball Rules (Abridged)" /><published>2024-02-29T00:00:00+00:00</published><updated>2024-02-29T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules/">&lt;p&gt;This is an abridged summary of the &lt;a href=&quot;https://wpapool.com/rules/&quot;&gt;official WPA eight-ball rules&lt;/a&gt;. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].&lt;/p&gt;
 
 &lt;h3 id=&quot;racking-and-the-break&quot;&gt;Racking and the Break&lt;/h3&gt;
 
@@ -35,7 +35,25 @@
   &lt;li&gt;No rail after contact. [6.3]&lt;/li&gt;
   &lt;li&gt;Bad play from behind the head string. [6.11]&lt;/li&gt;
   &lt;li&gt;Jump shots by “scooping”. [8.16]&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">This is an abridged summary of the official WPA eight-ball rules. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].</summary></entry><entry><title type="html">kathack</title><link href="https://blog.sea.nkelley.me/2023/12/27/kathack/" rel="alternate" type="text/html" title="kathack" /><published>2023-12-27T00:00:00+00:00</published><updated>2023-12-27T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/12/27/kathack</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/12/27/kathack/">&lt;p&gt;I was recently reminded of &lt;a href=&quot;http://kathack.com&quot;&gt;kathack.com&lt;/a&gt;: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.&lt;/p&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;section class=&quot;next-previous&quot;&gt;
+  
+  &lt;a href=&quot;/2023/12/27/kathack/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: kathack&quot;&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;kathack&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+  
+  
+  &lt;div class=&quot;next-previous-placeholder&quot;&gt;&lt;/div&gt;
+  
+&lt;/section&gt;
+&lt;hr /&gt;</content><author><name></name></author><summary type="html">This is an abridged summary of the official WPA eight-ball rules. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].</summary></entry><entry><title type="html">kathack</title><link href="https://blog.sea.nkelley.me/2023/12/27/kathack/" rel="alternate" type="text/html" title="kathack" /><published>2023-12-27T00:00:00+00:00</published><updated>2023-12-27T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/12/27/kathack</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/12/27/kathack/">&lt;p&gt;I was recently reminded of &lt;a href=&quot;http://kathack.com&quot;&gt;kathack.com&lt;/a&gt;: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.&lt;/p&gt;
 
 &lt;p&gt;So anyway, I rewrote out the jQuery and found a way to serve the script indirectly via GitHub, no dedicated site required. You can paste this into your browser console&lt;/p&gt;
 
