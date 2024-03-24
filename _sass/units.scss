@@ -1,0 +1,19 @@
+body[data-unit="imperial"] {
+  #unit-switcher-imperial {
+    font-weight: bold;
+  }
+
+  .unit.metric {
+    display: none;
+  }
+}
+
+body[data-unit="metric"] {
+  #unit-switcher-metric {
+    font-weight: bold;
+  }
+
+  .unit.imperial {
+    display: none;
+  }
+}

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   {%- include head.html -%}
-  <body data-theme="auto">
+  <body data-theme="auto" data-unit="imperial">
     {%- include header.html -%}
     <main class="centering-wrapper">
       {{ content }}
@@ -13,12 +13,14 @@
         sticky header) or adding extra DOM (which I'm trying to minimize to make myself feel good).
       -->
       <div class="horizontal-expander" aria-hidden="true">
-        Throughout human history, we have been dependent on machines to survive. Fate, it seems, is not without a sense of irony.
+        Throughout human history, we have been dependent on machines to survive.
+        Fate, it seems, is not without a sense of irony.
       </div>
     </main>
   </body>
   <script src="/assets/js/theme-switcher.js"></script>
   <script src="/assets/js/copy-code-block.js"></script>
+  <script src="/assets/js/unit-switcher.js"></script>
   {% for path in page.custom-js-list %}
   <script src="{{ path | relative_url }}"></script>
   {% endfor %}
