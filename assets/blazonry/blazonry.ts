@@ -165,7 +165,13 @@ const Posture = {
   },
 };
 
-type Direction = "pale" | "fess" | "bend" | "chevron" | "saltire";
+type Direction =
+  | "pale"
+  | "fess"
+  | "bend"
+  | "bend sinister"
+  | "chevron"
+  | "saltire";
 type Placement = Direction | "cross";
 type Quarter = 1 | 2 | 3 | 4;
 
@@ -2148,6 +2154,7 @@ const CHARGE_LOCATORS: Record<Placement | "none", ParametricLocator> = {
   fess: fess.on,
   pale: pale.on,
   bend: bend.on,
+  "bend sinister": bendSinister.on,
   chevron: chevron.on,
   saltire: saltire.on,
   cross: cross.on,
