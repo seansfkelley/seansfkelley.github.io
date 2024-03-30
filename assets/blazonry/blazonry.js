@@ -1352,6 +1352,7 @@ const CHARGE_LOCATORS = {
     fess: fess.on,
     pale: pale.on,
     bend: bend.on,
+    "bend sinister": bendSinister.on,
     chevron: chevron.on,
     saltire: saltire.on,
     cross: cross.on,
