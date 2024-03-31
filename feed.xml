@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-03-30T18:25:07+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">WPA Eight-ball Rules (Abridged)</title><link href="https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules/" rel="alternate" type="text/html" title="WPA Eight-ball Rules (Abridged)" /><published>2024-02-29T00:00:00+00:00</published><updated>2024-02-29T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules/">&lt;p&gt;This is an abridged summary of the &lt;a href=&quot;https://wpapool.com/rules/&quot;&gt;official WPA eight-ball rules&lt;/a&gt;. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-03-31T00:15:45+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">WPA Eight-ball Rules (Abridged)</title><link href="https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules/" rel="alternate" type="text/html" title="WPA Eight-ball Rules (Abridged)" /><published>2024-02-29T00:00:00+00:00</published><updated>2024-02-29T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules/">&lt;p&gt;This is an abridged summary of the &lt;a href=&quot;https://wpapool.com/rules/&quot;&gt;official WPA eight-ball rules&lt;/a&gt;. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].&lt;/p&gt;
 
 &lt;h3 id=&quot;racking-and-the-break&quot;&gt;Racking and the Break&lt;/h3&gt;
 
@@ -324,21 +324,29 @@
   
     &lt;a class=&quot;tag-link&quot; href=&quot;/tag/recipe&quot;&gt;recipe&lt;/a&gt;
   
-&lt;/section&gt;</content><author><name></name></author><category term="recipe" /><summary type="html">Makes sufficient dough for one 9” pie (no top).</summary></entry><entry><title type="html">Granola Recipe</title><link href="https://blog.sea.nkelley.me/2023/10/07/granola/" rel="alternate" type="text/html" title="Granola Recipe" /><published>2023-10-07T00:00:00+00:00</published><updated>2023-10-07T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/10/07/granola</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/10/07/granola/">&lt;p&gt;Preheat the oven to 325°F.&lt;/p&gt;
+&lt;/section&gt;</content><author><name></name></author><category term="recipe" /><summary type="html">Makes sufficient dough for one 9” pie (no top).</summary></entry><entry><title type="html">Granola Recipe</title><link href="https://blog.sea.nkelley.me/2023/10/07/granola/" rel="alternate" type="text/html" title="Granola Recipe" /><published>2023-10-07T00:00:00+00:00</published><updated>2023-10-07T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/10/07/granola</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/10/07/granola/">&lt;!-- Only show unit switcher if js is enabled: hide by default. --&gt;
+&lt;p&gt;&lt;span id=&quot;unit-switcher-wrapper&quot; style=&quot;display: none&quot;&gt;
+  Units: 
+  &lt;a href=&quot;#&quot; id=&quot;unit-switcher-metric&quot;&gt;metric&lt;/a&gt;
+   • 
+  &lt;a href=&quot;#&quot; id=&quot;unit-switcher-imperial&quot;&gt;stupid&lt;/a&gt;
+&lt;/span&gt;&lt;/p&gt;
 
-&lt;p&gt;Prepare the dry ingredients. In a large bowl, mix ½ to ¾ cup each of any seeds and nuts you’d like. I usually use:&lt;/p&gt;
+&lt;p&gt;Preheat the oven to &lt;span class=&quot;unit metric&quot;&gt;160°C&lt;/span&gt;&lt;span class=&quot;unit imperial&quot;&gt;325°F&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;Prepare the dry ingredients. In a large bowl, mix &lt;span class=&quot;unit metric&quot;&gt;75-150g&lt;/span&gt;&lt;span class=&quot;unit imperial&quot;&gt;½ to ¾ cup&lt;/span&gt; each of any seeds and nuts you’d like. I usually use:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;½ cup pumpkin seeds (salted, roasted)&lt;/li&gt;
-  &lt;li&gt;½ cup sunflower seeds&lt;/li&gt;
-  &lt;li&gt;½ cup sliced almonds&lt;/li&gt;
-  &lt;li&gt;¾ cup whole almonds (salted, roasted)&lt;/li&gt;
+  &lt;li&gt;&lt;span class=&quot;unit metric&quot;&gt;80g&lt;/span&gt;&lt;span class=&quot;unit imperial&quot;&gt;½ cup&lt;/span&gt; pumpkin seeds (salted, roasted)&lt;/li&gt;
+  &lt;li&gt;&lt;span class=&quot;unit metric&quot;&gt;80g&lt;/span&gt;&lt;span class=&quot;unit imperial&quot;&gt;½ cup&lt;/span&gt; sunflower seeds&lt;/li&gt;
+  &lt;li&gt;&lt;span class=&quot;unit metric&quot;&gt;80g&lt;/span&gt;&lt;span class=&quot;unit imperial&quot;&gt;½ cup&lt;/span&gt; sliced almonds&lt;/li&gt;
+  &lt;li&gt;&lt;span class=&quot;unit metric&quot;&gt;140g&lt;/span&gt;&lt;span class=&quot;unit imperial&quot;&gt;¾ cup&lt;/span&gt; whole almonds (salted, roasted)&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Mix briefly with your hands, then add&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;2 lb. rolled oats&lt;/li&gt;
+  &lt;li&gt;&lt;span class=&quot;unit metric&quot;&gt;1kg&lt;/span&gt;&lt;span class=&quot;unit imperial&quot;&gt;2 lb.&lt;/span&gt; rolled oats&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;and again mix briefly with your hands.&lt;/p&gt;
@@ -346,22 +354,22 @@
 &lt;p&gt;Then create the syrupy sauce business. In a sauce pan, combine&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;½ cup brown sugar&lt;/li&gt;
-  &lt;li&gt;¾ cup vegetable oil&lt;/li&gt;
-  &lt;li&gt;½ cup honey&lt;/li&gt;
+  &lt;li&gt;&lt;span class=&quot;unit metric&quot;&gt;140g&lt;/span&gt;&lt;span class=&quot;unit imperial&quot;&gt;½ cup&lt;/span&gt; brown sugar&lt;/li&gt;
+  &lt;li&gt;&lt;span class=&quot;unit metric&quot;&gt;170g&lt;/span&gt;&lt;span class=&quot;unit imperial&quot;&gt;¾ cup&lt;/span&gt; vegetable oil&lt;/li&gt;
+  &lt;li&gt;&lt;span class=&quot;unit metric&quot;&gt;200g&lt;/span&gt;&lt;span class=&quot;unit imperial&quot;&gt;½ cup&lt;/span&gt; honey&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;in that order (to minimize sticking to your measuring device), and cook over medium heat until the bubbles mostly subside.&lt;/p&gt;
+&lt;p&gt;&lt;span class=&quot;unit metric&quot;&gt;&lt;/span&gt;&lt;span class=&quot;unit imperial&quot;&gt;in that order (to minimize sticking to your measuring device),&lt;/span&gt; and cook over medium heat until the bubbles mostly subside.&lt;/p&gt;
 
-&lt;p&gt;Create a small well in the oat nut mixture and pour the sauce into it. (The well prevents the sugar magma from contacting the bowl immediately, in case your bowl is not very heat-safe.) Mix with a large spoon until there are no more dry spots. Pro tip: start soaking the sauce pan and spoon now to clean them faster.&lt;/p&gt;
+&lt;p&gt;Create a small well in the oat-nut mixture and pour the sauce into it. (The well prevents the sugar magma from contacting the bowl immediately, in case your bowl is not very heat-safe.) Mix with a large spoon until there are no more dry spots. Pro tip: start soaking the sauce pan and spoon now to clean them faster.&lt;/p&gt;
 
-&lt;p&gt;Coat two 18” by 13” rimmed baking sheets with&lt;/p&gt;
+&lt;p&gt;Coat each of &lt;span class=&quot;unit metric&quot;&gt;two 40 cm by 30 cm&lt;/span&gt;&lt;span class=&quot;unit imperial&quot;&gt;two 18” by 13”&lt;/span&gt; rimmed baking sheets with&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;1-2 tbsp vegetable oil&lt;/li&gt;
+  &lt;li&gt;1 tbsp vegetable oil&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Spread the granola mixture evenly across them and, for extra credit, leave a ½” buffer around the edge to prevent overcooking. (If you don’t have two sheets, you can do two batches. The raw granola is about 3½ lb. all together.)&lt;/p&gt;
+&lt;p&gt;Spread the granola mixture evenly across them about &lt;span class=&quot;unit metric&quot;&gt;1.5 cm&lt;/span&gt;&lt;span class=&quot;unit imperial&quot;&gt;½”&lt;/span&gt; deep and, for extra credit, leave a &lt;span class=&quot;unit metric&quot;&gt;1 cm&lt;/span&gt;&lt;span class=&quot;unit imperial&quot;&gt;½”&lt;/span&gt; buffer around the edge to prevent overcooking. (If you need to do batches: the raw granola is about &lt;span class=&quot;unit metric&quot;&gt;1900g&lt;/span&gt;&lt;span class=&quot;unit imperial&quot;&gt;3½ lb.&lt;/span&gt; all together.)&lt;/p&gt;
 
 &lt;p&gt;Bake for 25-35 minutes, rotating and switching racks halfway through for even cooking.&lt;/p&gt;
 
@@ -398,7 +406,7 @@
   
     &lt;a class=&quot;tag-link&quot; href=&quot;/tag/recipe&quot;&gt;recipe&lt;/a&gt;
   
-&lt;/section&gt;</content><author><name></name></author><category term="recipe" /><summary type="html">Preheat the oven to 325°F.</summary></entry><entry><title type="html">Blazonry</title><link href="https://blog.sea.nkelley.me/2023/08/28/blazonry/" rel="alternate" type="text/html" title="Blazonry" /><published>2023-08-28T00:00:00+00:00</published><updated>2023-08-28T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/08/28/blazonry</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/08/28/blazonry/">&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Blazon&quot;&gt;Wikipedia&lt;/a&gt;:&lt;/p&gt;
+&lt;/section&gt;</content><author><name></name></author><category term="recipe" /><summary type="html">Units:  metric  •  stupid</summary></entry><entry><title type="html">Blazonry</title><link href="https://blog.sea.nkelley.me/2023/08/28/blazonry/" rel="alternate" type="text/html" title="Blazonry" /><published>2023-08-28T00:00:00+00:00</published><updated>2023-08-28T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/08/28/blazonry</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/08/28/blazonry/">&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Blazon&quot;&gt;Wikipedia&lt;/a&gt;:&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;In heraldry and heraldic vexillology, a &lt;strong&gt;blazon&lt;/strong&gt; is a formal description of a coat of arms, flag or similar emblem, from which the reader can reconstruct the appropriate image.&lt;/p&gt;

@@ -953,3 +953,17 @@ pre .copy-button.copied .clipboard {
 pre:hover .copy-button {
   display: inline-block;
 }
+
+body[data-unit=imperial] #unit-switcher-imperial {
+  font-weight: bold;
+}
+body[data-unit=imperial] .unit.metric {
+  display: none;
+}
+
+body[data-unit=metric] #unit-switcher-metric {
+  font-weight: bold;
+}
+body[data-unit=metric] .unit.imperial {
+  display: none;
+}
