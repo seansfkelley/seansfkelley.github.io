@@ -1,0 +1,81 @@
+---
+# why do I have to put this nonsense header in and break my syntax highlighter
+---
+
+@import "variables";
+
+.entry {
+  margin-bottom: 1em;
+
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h3 {
+      margin-top: $spacing;
+      margin-bottom: $spacing;
+    }
+
+    a[href^="#"] {
+      display: none;
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+
+    .poster {
+      margin-bottom: 1em;
+      align-self: center;
+      min-width: 200px;
+      width: 200px;
+    }
+
+    .watched {
+      font-size: $font-size-small;
+    }
+  }
+}
+
+@media screen and (min-width: $width-mobile) {
+  .entry {
+    .title {
+      justify-content: space-between;
+
+      a[href^="#"] {
+        display: initial;
+        margin-left: auto;
+        text-transform: uppercase;
+        font-size: $font-size-small;
+        margin-left: $spacing;
+      }
+    }
+
+    .content {
+      flex-direction: row;
+
+      .text {
+        margin-left: 1.5em;
+      }
+
+      .poster {
+        align-self: initial;
+        margin-bottom: initial;
+      }
+    }
+  }
+}
+
+.spoiler {
+  transition: filter 200ms ease-in;
+
+  &:not(:hover) {
+    filter: blur(5px);
+  }
+}
+
+img.spoiler:not(:hover) {
+  filter: blur(10px);
+}
