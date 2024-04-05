@@ -1,0 +1,92 @@
+#!/bin/zsh
+
+set -euo pipefail
+
+cd "$(git rev-parse --show-toplevel)"
+
+usage() {
+  echo "$1 <title> <year>"
+}
+
+if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ] ; then
+  usage "$0"
+  exit 0
+fi
+
+if [ "$#" -ne 2 ] ; then
+  usage "$0"
+  exit 0
+fi
+
+title="$1"
+year="$2"
+
+if ! command -v hxselect > /dev/null ; then
+  echo 'hxselect not installed; please run:'
+  echo '  brew install html-xml-utils'
+  exit 1
+fi
+
+USER_AGENT_HEADER='User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:123.0) Gecko/20100101 Firefox/123.0'
+MAXIMUM_FILE_SIZE=204800 # 200KB; arbitrary
+TARGET_WIDTH=600
+
+movie_id="$(curl "https://www.imdb.com/find/?q=$(echo "$title" | tr ' ' '+')+$year"  --compressed -s -H "$USER_AGENT_HEADER" \
+  | hxnormalize -x \
+  | hxselect -s '\n' '.ipc-metadata-list-summary-item__t::attr(href)' \
+  | sed -E 's|.*title/(tt[[:digit:]]+)/.*|\1|g' \
+  | head -n1)"
+movie_url="https://www.imdb.com/title/$movie_id/"
+echo "movie URL: $movie_url"
+
+poster_viewer_id="$(curl "$movie_url" --compressed -s -H "$USER_AGENT_HEADER" \
+  | hxnormalize -x \
+  | hxselect -s '\n' '.ipc-poster a.ipc-lockup-overlay::attr(href)' \
+  | sed -E 's|.*mediaviewer/(rm[[:digit:]]+)/.*|\1|g' \
+  | head -n1)"
+poster_url="https://www.imdb.com/title/$movie_id/mediaviewer/$poster_viewer_id/"
+echo "poster viewer URL: $poster_url"
+
+image_url="$(curl "$poster_url" --compressed -s -H "$USER_AGENT_HEADER" \
+  | hxnormalize -x \
+  | hxselect -s '\n' 'img[data-image-id]:not(.peek)::attr(src)' \
+  | sed -E 's|src="([^"]+)"|\1|g' \
+  | head -n1)"
+echo "poster image URL: $image_url"
+
+# this is some garbage bash-ism
+extension="${image_url##*.}"
+# note that this script cd's into the repo root
+output_path="assets/movies/$(echo "$title" | tr ' ' '-' | tr '[:upper:]' '[:lower:]')-$year.$extension"
+
+curl "$image_url" -s > "$output_path"
+
+if [ "$(stat -f %z "$output_path")" -gt "$MAXIMUM_FILE_SIZE" ] ; then
+  if [ "$(identify -ping -format '%w' "$output_path")" -lt "$TARGET_WIDTH" ] ; then
+    echo 'image is too large on disk, but under maximum width, so not resizing'
+  else
+    echo 'image too large; resizing'
+    # per docs, a single number is assumed to be width and the height calculated to preserve aspect ratio
+    convert "$output_path" -resize "$TARGET_WIDTH" /tmp/resized
+    mv /tmp/resized "$output_path"
+
+    if [ "$(stat -f %z "$output_path")" -gt "$MAXIMUM_FILE_SIZE" ] ; then
+      echo 'image is still too large after resizing; what gives?'
+    fi
+  fi
+fi
+
+behind-the-scenes/strip-exif "$output_path"
+rm "${output_path}_original"
+
+open "$output_path"
+echo "file at $output_path"
+
+yaml="- title: $title
+  year: $year
+  link: $movie_url
+  poster: $(basename "$output_path")
+  watched: $(date "+%Y-%m-%d")"
+
+echo "$yaml" | pbcopy
+echo "stub YAML copied to clipboard"
