@@ -33,5 +33,5 @@ done
 
 # note that the in_place expansion is not quoted so that it disappears if it's unset
 # -all= means to set all to empty
-echo exiftool -all= ${in_place:+-overwrite_original_in_place} -- "${files[@]}"
+exiftool -all= ${in_place:+-overwrite_original_in_place} -- "${files[@]}"
 
