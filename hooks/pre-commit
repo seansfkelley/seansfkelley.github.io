@@ -7,7 +7,8 @@ for f in $(git diff --cached --name-only --diff-filter=d) ; do
     output="$(identify -verbose "$f" | grep -i exif)" || true
     if [ -n "$output" ] ; then
       echo "Failing commit: $f has EXIF data!"
-      echo "$output"
+      echo "  $output"
+      echo "Reminder: use strip-exif script on it if appropriate."
       exit 1
     fi
   fi
