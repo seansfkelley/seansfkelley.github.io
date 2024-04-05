@@ -5,7 +5,7 @@ set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 
 usage() {
-  echo "$1 <title> <year>"
+  echo "$1 <title> [year]"
 }
 
 if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ] ; then
@@ -13,13 +13,13 @@ if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ] ; then
   exit 0
 fi
 
-if [ "$#" -ne 2 ] ; then
+if [ "$#" -eq 0 ] || [ "$#" -gt 2 ] ; then
   usage "$0"
   exit 0
 fi
 
 title="$1"
-year="$2"
+year="${2:-}"
 
 if ! command -v hxselect > /dev/null ; then
   echo 'hxselect not installed; please run:'
@@ -39,7 +39,23 @@ movie_id="$(curl "https://www.imdb.com/find/?q=$(echo "$title" | tr ' ' '+')+$ye
 movie_url="https://www.imdb.com/title/$movie_id/"
 echo "movie URL: $movie_url"
 
-poster_viewer_id="$(curl "$movie_url" --compressed -s -H "$USER_AGENT_HEADER" \
+curl "$movie_url" --compressed -s -H "$USER_AGENT_HEADER" > /tmp/movie_page.html
+inferred_year="$(cat /tmp/movie_page.html \
+  | hxnormalize -x \
+  | hxselect -s '\n' "a[href^='/title/$movie_id/releaseinfo']" \
+  | tr -d '\n' \
+  | tr -d ' ' \
+  | sed -E 's|.*>([[:digit:]]{4})<.*|\1|g')"
+
+if [ -z "$year" ] ; then
+  year="$inferred_year"
+  echo "inferred year as $year"
+elif [ "$year" -ne "$inferred_year" ] ; then
+  echo "inferred year is different from given; we probably have the wrong movie"
+  exit 1
+fi
+
+poster_viewer_id="$(cat /tmp/movie_page.html \
   | hxnormalize -x \
   | hxselect -s '\n' '.ipc-poster a.ipc-lockup-overlay::attr(href)' \
   | sed -E 's|.*mediaviewer/(rm[[:digit:]]+)/.*|\1|g' \
@@ -61,17 +77,21 @@ output_path="assets/movies/$(echo "$title" | tr ' ' '-' | tr '[:upper:]' '[:lowe
 
 curl "$image_url" -s > "$output_path"
 
-if [ "$(stat -f %z "$output_path")" -gt "$MAXIMUM_FILE_SIZE" ] ; then
+image_size="$(stat -f %z "$output_path")"
+if [ "$image_size" -gt "$MAXIMUM_FILE_SIZE" ] ; then
   if [ "$(identify -ping -format '%w' "$output_path")" -lt "$TARGET_WIDTH" ] ; then
     echo 'image is too large on disk, but under maximum width, so not resizing'
   else
-    echo 'image too large; resizing'
+    echo "image too large ($image_size bytes); resizing"
     # per docs, a single number is assumed to be width and the height calculated to preserve aspect ratio
     convert "$output_path" -resize "$TARGET_WIDTH" /tmp/resized
     mv /tmp/resized "$output_path"
 
-    if [ "$(stat -f %z "$output_path")" -gt "$MAXIMUM_FILE_SIZE" ] ; then
-      echo 'image is still too large after resizing; what gives?'
+    image_size="$(stat -f %z "$output_path")"
+    if [ "$image_size" -gt "$MAXIMUM_FILE_SIZE" ] ; then
+      echo "image is still too large after resizing ($image_size bytes); continuing anyway"
+    else
+      echo "image resized to $image_size bytes"
     fi
   fi
 fi
@@ -86,7 +106,12 @@ yaml="- title: $title
   year: $year
   link: $movie_url
   poster: $(basename "$output_path")
-  watched: $(date "+%Y-%m-%d")"
+  watched: $(date "+%Y-%m-%d")
+  watch-this-if:
+  dont-watch-this-because:
+  more-thoughts: |
+    "
 
-echo "$yaml" | pbcopy
-echo "stub YAML copied to clipboard"
+printf "$yaml" | pbcopy
+echo "stub YAML copied to clipboard:"
+echo "$yaml"
