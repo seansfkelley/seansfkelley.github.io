@@ -18,13 +18,13 @@ svg {
       fill: none;
       stroke-width: 2px;
       stroke-linejoin: round;
-      stroke: black;
+      stroke: var(--text-color-faded);
     }
   }
 
   &.silhouette {
     polygon {
-      fill: black;
+      fill: var(--text-color-faded);
       stroke: none;
     }
   }

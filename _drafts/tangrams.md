@@ -5,6 +5,10 @@ custom-css-list:
   - /assets/tangrams/tangrams.css
 ---
 
+TODO: Mobile layout.
+
+TODO: Color-code each half. Draw the stroke inside the bounds of each shape a la https://stackoverflow.com/a/7273346. This makes the reveal about the black and white silhouette more surprising.
+
 Remember [tangrams](https://en.wikipedia.org/wiki/Tangram)? Remember how they would mess with your intuition, that the [silhouettes they drew seemed to lie](https://en.wikipedia.org/wiki/Tangram#Paradoxes)?
 
 I'm working on a large refactor that is composed of two primary layers. Imagine two similar tiles.
@@ -36,9 +40,9 @@ I'm working on a large refactor that is composed of two primary layers. Imagine 
   </svg>
 </p>
 
-Call the left one "layer 1" and the right one "layer 2". As the name implies, in my case, layer 1 is the foundation for layer 2. Note that it's smaller.
+Call the left one "layer 1" and the right one "layer 2". In my case, layer 1 is the foundation for layer 2. Note that it's smaller.
 
-You can arrange these in a variety of ways, some more appealing or simple than others.
+You can arrange these in a variety of ways, some more appealing or easily described than others.
 
 <p class="svg-container">
   <svg
@@ -98,9 +102,7 @@ You can arrange these in a variety of ways, some more appealing or simple than o
   </svg>
 </p>
 
-I think of the tiles themselves as the major components of some architected piece of software, and the silhouette as how the whole architecture appears holistically.
-
-Thus it was that I found myself with a software architecture resembling the first configuration...
+And so it was that I found myself with a software architecture resembling the first configuration...
 
 <p class="svg-container">
   <svg
@@ -124,9 +126,9 @@ Thus it was that I found myself with a software architecture resembling the firs
   </svg>
 </p>
 
-The foundational layer 1, on the bottom, is smaller and simpler, which creates a top-heavy design. The system has some sharp edges, and there are bits that stick out awkwardly, yet are tightly coupled to the larger layer 2.
+The foundational layer 1, on the bottom, is smaller and simpler, which creates a top-heavy design. The system has some sharp edges, and there are bits that stick out awkwardly, yet are tightly coupled and can't be moved independently. Layer 2 reaches too far down, sometimes even past the foundation to what's below.
 
-Through years of organic software expansion, the shapes had grown into this configuration. Even trying to move the tiles around to be bottom-heavy, or to stick out awkwardly in another direction that would at least allow it to sit flat, were pretty significant undertakings. I guess could sand off the pointy bits and hope for the best.
+Through years of organic software growth, the shapes had grown into this configuration. Even trying to move the tiles around to be bottom-heavy instead, or to stick out awkwardly in another direction that would at least allow it to sit flat, were pretty significant undertakings. I figured I could sand off the pointy bits and hope for the best with the irregular remainders.
 
 Then I saw the silhouette.
 
@@ -144,7 +146,7 @@ Then I saw the silhouette.
   </svg>
 </p>
 
-Can't we make something the same shape like this?
+You can construct that with these pieces instead.
 
 <p class="svg-container">
   <svg
@@ -164,9 +166,9 @@ Can't we make something the same shape like this?
   </svg>
 </p>
 
-The silhouette is still a little awkward, but the relationship of the silhouette to the constituent tiles is _much less surprising_! And all we had to do to get here is to redraw the lines. Most of the stuff stayed where it was. And by merely redrawing the lines, we have rearchitected the system away from a two-layer system to one mostly-coherent whole, admittedly with some hacks (most likely) bolted onto the side. Ah, software in the real world.
+Still a little awkward, yes, but the relationship of the silhouette to the constituent tiles is _much less surprising_! And all we had to do to get here is to redraw the lines. Most of the stuff stayed where it was. And by merely redrawing the lines, we have rearchitected the system away from a two-layer system to one largely-consistent whole, with some hacks (most likely) bolted onto the side. Ah, software in the real world.
 
-Now, should we want to, it's a lot easier to move the awkward triangle around and change the silhouette, since it has relatively little connection to the rectangle. If we want to make a change to the silhouette for some reason (that is, the system, holistically), we can do it with less effort and more certainty.
+Now, should we want to, it's a lot easier to move the awkward triangle around and change the silhouette, since it has relatively little connection to the rectangle. If we want to make a change to the silhouette for some reason (that is, the system, holistically), we can do it with less effort and more flexibility.
 
 <p class="svg-container">
   <svg
@@ -187,6 +189,10 @@ Now, should we want to, it's a lot easier to move the awkward triangle around an
 </p>
 
 Now it lies flat.
+
+TODO: Make the triangle a hat.
+
+Now it lies flat _and_ is symmetrical (though some of it is loosely coupled).
 
 Let's rewind a bit. What if we _did_ put in the effort to move the original tiles around a bit?
 
@@ -245,5 +251,5 @@ You might be able to see where this is going.
   </svg>
 </p>
 
-A different architecture! Like the other one, it's not really a two-layer architecture anymore. The precence of the square is an improvement, since squares are even simpler to describe than rectangles. There's still a triangle sticking out the side, but being larger and matching the side length of the square is a big improvement in the sense that it's less bolted-on.
+A different architecture! Like the other one, it's not really a two-layer architecture anymore. The precence of the square is an improvement, since squares are even simpler to describe than rectangles. There's still a triangle sticking out the side, but it matches the side of the square perfectly: a good abstraction boundary, perhaps, or a minimally-but-fully-expressive API?
 
