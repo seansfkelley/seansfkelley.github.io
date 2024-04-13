@@ -21,7 +21,7 @@ I'm working on a large refactor that is composed of two similarly-sized and simi
   </svg>
 </p>
 
-You can arrange these in a variety of ways, some more appealing or easily described than others.
+You can arrange these in a variety of ways, some more aesthetically appealing or easily described than others.
 
 <p class="svg-container">
   <svg width="{{ scale | times: 1.5 | round }}px" height="{{ scale }}px" viewBox="0 0 1.5 1">
@@ -49,11 +49,29 @@ And so it was that I found myself with a software architecture resembling this c
 
 The smaller shape represents underlying framework for the whole system. Call it the <span class="one">foundation</span>. The larger one is where all the domain logic lives. Call it the <span class="two">specialization</span>.
 
-In this analogy, the <span class="one">foundation</span> sort-of supports the <span class="two">specialization</span> in that it's mostly on the bottom, but parts of it end up pretty high up and the <span class="two">specialization</span> actually ends up bypassing the <span class="one">foundation</span> in some places -- that's where it sticks out awkwardly on the bottom.
+In this analogy, the <span class="one">foundation</span> sort-of supports the <span class="two">specialization</span> in that it's mostly on the bottom, but parts of it end up pretty high up where it probably shouldn't be. The pointy bit that sticks out on the bottom is where <span class="two">specialization</span> bypasses the <span class="one">foundation</span> entirely. The entire system is top-heavy and doesn't sit flat, which makes it unstable.
 
-Through years of organic software growth, this system had grown into this stable but effectively unchangeable configuration. Even trying to move the tiles around to be bottom-heavy instead, or to stick out awkwardly in another direction that would at least allow it to sit flat, were pretty significant undertakings that required moving the entire subsystem and making the entire thing unstable in the process.
+Through years of organic software growth, these two systems had grown together into this un-elegant configuration that was difficult to change without risking even more instability.
 
-I figured the best I could do was to sand off the pointy bits and deal with the remaining, irregularly-shaped pieces that still got too close to the tops and bottoms, where they shouldn't.
+Trying to shift the <span class="two">specialization</span> higher up without fundamentally changing it, so that the <span class="one">foundation</span> could at least actually serve as the base layer and the whole thing could sit flat, was a lot of work against gravity (if you'll permit the mixed metaphors) that still ends up with pointy bits sticking out.
+
+<p class="svg-container">
+  <svg width="{{ scale }}px" height="{{ scale }}px" viewBox="0 0 1 1">
+    {% include tangram-piece.html class="one" points="0,1 0.707,1 0.707,0.292" %}
+    {% include tangram-piece.html class="two" points="0,0 0,1 1,0" %}
+  </svg>
+</p>
+
+Moving entire pieces from one side to the other, like the first images I showed you, would be a lot of effort for little gain. So I thought outside the box a bit: I could shift responsibilty from the <span class="two">specialization</span> to the <span class="one">foundation</span> to make the entire system bottom-heavy again. This would still require moving a lot of mass around, even if it isn't going very far. And it isn't even clear if this is an improvement.
+
+<p class="svg-container">
+  <svg width="{{ scale }}px" height="{{ scale }}px" viewBox="0 0 1 1">
+    {% include tangram-piece.html class="one" points="0,1 1,1 1,0" %}
+    {% include tangram-piece.html class="two" points="0,1 0,0.292 0.707,0.292" %}
+  </svg>
+</p>
+
+After some more aborted out-of-the-box ideas, I decided the best course of action would be to sand off the pointy bits and deal with the remaining, irregularly-shaped pieces that still got too close to the tops and bottoms, where they shouldn't. At least it would be a box that sits flat.
 
 <p class="svg-container">
   <svg width="{{ scale }}px" height="{{ scale | times: 0.707 | round}}px" viewBox="0 0 1 0.707">
@@ -62,7 +80,7 @@ I figured the best I could do was to sand off the pointy bits and deal with the 
   </svg>
 </p>
 
-Then I saw the silhouette.
+That rectangle sparked an idea. Consider the silhouette -- the view from the outside -- of the entire system.
 
 <p class="svg-container">
   <svg width="{{ scale }}px" height="{{ scale }}px" viewBox="0 0 1 1">
@@ -70,7 +88,7 @@ Then I saw the silhouette.
   </svg>
 </p>
 
-You can construct that with these pieces instead.
+Hey... you can construct that with these pieces instead!
 
 <p class="svg-container">
   <svg width="{{ scale }}px" height="{{ scale }}px" viewBox="0 0 1 1">
@@ -79,9 +97,9 @@ You can construct that with these pieces instead.
   </svg>
 </p>
 
-This layout is still a little awkward, but the the relationship of the silhouette to the constituent tiles is _much less surprising_! And all we had to do to get here is to redraw the lines between the shapes. All the mass stayed where it was. We have rearchitected the system away from one with two badly-interacting "layers" to one with a single <span class="three">main body</span> and <span class="four">hacks</span> (most likely) bolted onto the side. (Ah, software in the real world.)
+This layout is still a little awkward, but the the relationship of the silhouette to the parts that make it up is _much less surprising_! And all we had to do to get here is to redraw the lines between the shapes. All the mass stayed where it was. We have rearchitected the system away from one where everything was slightly unpleasant to one where the <span class="three">core</span> is highly regular and it just has some <span class="four">hacks</span> bolted onto it. (Ah, software in the real world.)
 
-Should we want to, it's now a lot easier to move the <span class="four">hacks</span> around and change the silhouette, since it has relatively little connection to the <span class="three">main body</span>. If we want to make a change to the silhouette for some reason (that is: the system, holistically, as it appears from the outside), we can do it with less effort and more flexibility.
+It's now a lot easier to move the <span class="four">hacks</span> around and change the silhouette, since it has relatively little connection to the <span class="three">core</span>. If we want to make a change to the silhouette for some reason (that is: the system, holistically, as seen from the outside), we can do it with less effort and more flexibility.
 
 <p class="svg-container">
   <svg width="{{ scale | times: 1.584 | round }}px" height="{{ scale | times: 0.707 | round }}px" viewBox="-0.292 0 1.584 0.707">
@@ -99,7 +117,15 @@ Now it lies flat.
   </svg>
 </p>
 
-Now it lies flat _and_ is symmetrical (though some of it is loosely coupled, in the sense that there's nothing that's snapping the alignment of the <span class="four">hacks</span> to the center line).
+Now it lies flat _and_ is symmetrical, so the <span class="four">hacks</span> don't grate quite as much. The possibilities are endless, and with some effort, we could even restructure the <span class="three">core</span> to elegantly subsume all the mass from the <span class="four">hacks</span> -- there isn't that much of it!
+
+<p class="svg-container">
+  <svg width="{{ scale | times: 1.060 | round }}px" height="{{ scale | times: 0.707 | round }}px" viewBox="0 0 1.060 0.707">
+    {% include tangram-piece.html class="three" points="0,0 1.060,0 1.060,0.707 0,0.707" %}
+  </svg>
+</p>
+
+(Yes: it is ever so slightly wider. Conservation of mass, and all that.)
 
 Let's rewind a bit. What if we _did_ put in the effort to move the original tiles around a bit?
 
@@ -127,7 +153,9 @@ You might be able to see where this is going.
   </svg>
 </p>
 
-A different architecture! Like the other one, it's not really a two-layer architecture anymore. The precence of the <span class="six">square</span> is an improvement, since squares are have even less variance to worry about than rectangles. There's still a <span class="five">triangle</span> sticking out the side, but it matches the side of the <span class="six">square</span> perfectly: a good abstraction boundary, perhaps? Or: a minimally-but-fully-expressive API that is used mostly at a high level, but doesn't prevent consumers from using the low-level parts?
+A different architecture! Like the other one, it's not really a two-layer architecture anymore. The precence of the <span class="five">square</span> is an improvement, since squares are have even less variance to worry about than rectangles. There's still a <span class="six">triangle</span> sticking out the side, but it matches the side of the <span class="five">square</span> perfectly: a good abstraction boundary, perhaps? Or: a minimally-but-fully-expressive API that is used mostly at a high level, but doesn't prevent consumers from using the low-level parts?
+
+The refactor isn't done yet, but at least now I have a plan that is realistic, relatively less effort, and has a long-term path towards something halfway decent. Thanks, tangrams.
 
 {% include next-previous.html %}
 
