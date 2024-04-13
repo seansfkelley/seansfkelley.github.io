@@ -1,4 +1,315 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-04-13T21:47:14+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">The Movie List</title><link href="https://blog.sea.nkelley.me/2024/04/01/movies/" rel="alternate" type="text/html" title="The Movie List" /><published>2024-04-01T00:00:00+00:00</published><updated>2024-04-01T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/04/01/movies</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/04/01/movies/">&lt;p&gt;A reverse-chronological list of movies I have seen, including non-spoiler one-liner recommendations and longer, usually-spoiler-filled thoughts – the blurred out bits. Hover or (on mobile) long-press to reveal those. Some of the posters are blurred too because they include spoiling details. 😒&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-04-13T22:38:36+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Refactoring with Tangrams</title><link href="https://blog.sea.nkelley.me/2024/04/13/tangrams/" rel="alternate" type="text/html" title="Refactoring with Tangrams" /><published>2024-04-13T00:00:00+00:00</published><updated>2024-04-13T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/04/13/tangrams</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/04/13/tangrams/">&lt;p&gt;Remember &lt;a href=&quot;https://en.wikipedia.org/wiki/Tangram&quot;&gt;tangrams&lt;/a&gt;? Remember how they would mess with your intuition, that the &lt;a href=&quot;https://en.wikipedia.org/wiki/Tangram#Paradoxes&quot;&gt;silhouettes they drew seemed to lie&lt;/a&gt;?&lt;/p&gt;
+
+&lt;p&gt;I’m working on a large refactor that is composed of two similarly-sized and similarly-structured systems. Imagine two similar tiles.&lt;/p&gt;
+
+&lt;p class=&quot;svg-container&quot;&gt;
+  &lt;svg width=&quot;71px&quot; height=&quot;71px&quot; viewBox=&quot;0 0 0.707 0.707&quot;&gt;
+    0
+&lt;polygon id=&quot;1&quot; class=&quot;one&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0.707 0.707,0.707 0.707,0&quot; clip-path=&quot;url(#clip-1)&quot; /&gt;
+&lt;clipPath id=&quot;clip-1&quot;&gt;
+  &lt;use href=&quot;#1&quot; /&gt;
+&lt;/clipPath&gt;
+
+  &lt;/svg&gt;
+
+  &lt;svg width=&quot;100px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 1 1&quot;&gt;
+    1
+&lt;polygon id=&quot;2&quot; class=&quot;two&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,1 1,1 1,0&quot; clip-path=&quot;url(#clip-2)&quot; /&gt;
+&lt;clipPath id=&quot;clip-2&quot;&gt;
+  &lt;use href=&quot;#2&quot; /&gt;
+&lt;/clipPath&gt;
+
+  &lt;/svg&gt;
+&lt;/p&gt;
+
+&lt;p&gt;You can arrange these in a variety of ways, some more aesthetically appealing or easily described than others.&lt;/p&gt;
+
+&lt;p class=&quot;svg-container&quot;&gt;
+  &lt;svg width=&quot;150px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 1.5 1&quot;&gt;
+    2
+&lt;polygon id=&quot;3&quot; class=&quot;one&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;1,0 1,1 1.5 0.5&quot; clip-path=&quot;url(#clip-3)&quot; /&gt;
+&lt;clipPath id=&quot;clip-3&quot;&gt;
+  &lt;use href=&quot;#3&quot; /&gt;
+&lt;/clipPath&gt;
+
+    3
+&lt;polygon id=&quot;4&quot; class=&quot;two&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 1,0 1,1&quot; clip-path=&quot;url(#clip-4)&quot; /&gt;
+&lt;clipPath id=&quot;clip-4&quot;&gt;
+  &lt;use href=&quot;#4&quot; /&gt;
+&lt;/clipPath&gt;
+
+  &lt;/svg&gt;
+  &lt;svg width=&quot;171px&quot; height=&quot;100px&quot; viewBox=&quot;-0.707 0 1.707 1&quot;&gt;
+    4
+&lt;polygon id=&quot;5&quot; class=&quot;one&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,1 -0.707,1 0,0.292&quot; clip-path=&quot;url(#clip-5)&quot; /&gt;
+&lt;clipPath id=&quot;clip-5&quot;&gt;
+  &lt;use href=&quot;#5&quot; /&gt;
+&lt;/clipPath&gt;
+
+    5
+&lt;polygon id=&quot;6&quot; class=&quot;two&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 0,1 1,1&quot; clip-path=&quot;url(#clip-6)&quot; /&gt;
+&lt;clipPath id=&quot;clip-6&quot;&gt;
+  &lt;use href=&quot;#6&quot; /&gt;
+&lt;/clipPath&gt;
+
+  &lt;/svg&gt;
+  &lt;svg width=&quot;141px&quot; height=&quot;121px&quot; viewBox=&quot;-0.707 -0.707 1.414 1.207&quot;&gt;
+    6
+&lt;polygon id=&quot;7&quot; class=&quot;one&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;-0.5,0 0.5,0 0,0.5&quot; clip-path=&quot;url(#clip-7)&quot; /&gt;
+&lt;clipPath id=&quot;clip-7&quot;&gt;
+  &lt;use href=&quot;#7&quot; /&gt;
+&lt;/clipPath&gt;
+
+    7
+&lt;polygon id=&quot;8&quot; class=&quot;two&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;-0.707,0 0.707,0 0,-0.707&quot; clip-path=&quot;url(#clip-8)&quot; /&gt;
+&lt;clipPath id=&quot;clip-8&quot;&gt;
+  &lt;use href=&quot;#8&quot; /&gt;
+&lt;/clipPath&gt;
+
+  &lt;/svg&gt;
+&lt;/p&gt;
+
+&lt;p&gt;And so it was that I found myself with a software architecture resembling this configuration…&lt;/p&gt;
+
+&lt;p class=&quot;svg-container&quot;&gt;
+  &lt;svg width=&quot;100px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 1 1&quot;&gt;
+    8
+&lt;polygon id=&quot;9&quot; class=&quot;one&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;1,0 1,0.707 0.292,0.707&quot; clip-path=&quot;url(#clip-9)&quot; /&gt;
+&lt;clipPath id=&quot;clip-9&quot;&gt;
+  &lt;use href=&quot;#9&quot; /&gt;
+&lt;/clipPath&gt;
+
+    9
+&lt;polygon id=&quot;10&quot; class=&quot;two&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,1 0,0 1,0&quot; clip-path=&quot;url(#clip-10)&quot; /&gt;
+&lt;clipPath id=&quot;clip-10&quot;&gt;
+  &lt;use href=&quot;#10&quot; /&gt;
+&lt;/clipPath&gt;
+
+  &lt;/svg&gt;
+&lt;/p&gt;
+
+&lt;p&gt;The smaller shape represents the underlying framework for the whole system. Call it the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt;. The larger one is where all the domain logic lives. Call it the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;In this analogy, the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt; sort-of supports the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt; in that it’s mostly on the bottom, but parts of it end up pretty high up where it probably shouldn’t be. The pointy bit that sticks out on the bottom is where the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt; bypasses the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt; completely. The entire system is top-heavy and doesn’t sit flat, which makes it unstable.&lt;/p&gt;
+
+&lt;p&gt;Through years of organic software growth, these two systems had grown together into this un-elegant configuration that was difficult to change without risking even more instability.&lt;/p&gt;
+
+&lt;p&gt;Trying to shift the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt; higher up without fundamentally changing it, so that the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt; could at least actually serve as the base and the whole thing could sit flat, was a lot of work against gravity (if you’ll permit the mixed metaphors) and still ends up with pointy bits sticking out.&lt;/p&gt;
+
+&lt;p class=&quot;svg-container&quot;&gt;
+  &lt;svg width=&quot;100px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 1 1&quot;&gt;
+    10
+&lt;polygon id=&quot;11&quot; class=&quot;one&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,1 0.707,1 0.707,0.292&quot; clip-path=&quot;url(#clip-11)&quot; /&gt;
+&lt;clipPath id=&quot;clip-11&quot;&gt;
+  &lt;use href=&quot;#11&quot; /&gt;
+&lt;/clipPath&gt;
+
+    11
+&lt;polygon id=&quot;12&quot; class=&quot;two&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 0,1 1,0&quot; clip-path=&quot;url(#clip-12)&quot; /&gt;
+&lt;clipPath id=&quot;clip-12&quot;&gt;
+  &lt;use href=&quot;#12&quot; /&gt;
+&lt;/clipPath&gt;
+
+  &lt;/svg&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Moving entire pieces from one side to the other, like the first images I showed you, would be a lot of effort for little gain. So I thought outside the box a bit: I could shift responsibilty from the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt; to the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt; to make the entire system bottom-heavy again. This would still require moving a lot of mass around, even if it isn’t going very far. And it isn’t even clear if this is an improvement.&lt;/p&gt;
+
+&lt;p class=&quot;svg-container&quot;&gt;
+  &lt;svg width=&quot;100px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 1 1&quot;&gt;
+    12
+&lt;polygon id=&quot;13&quot; class=&quot;one&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,1 1,1 1,0&quot; clip-path=&quot;url(#clip-13)&quot; /&gt;
+&lt;clipPath id=&quot;clip-13&quot;&gt;
+  &lt;use href=&quot;#13&quot; /&gt;
+&lt;/clipPath&gt;
+
+    13
+&lt;polygon id=&quot;14&quot; class=&quot;two&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,1 0,0.292 0.707,0.292&quot; clip-path=&quot;url(#clip-14)&quot; /&gt;
+&lt;clipPath id=&quot;clip-14&quot;&gt;
+  &lt;use href=&quot;#14&quot; /&gt;
+&lt;/clipPath&gt;
+
+  &lt;/svg&gt;
+&lt;/p&gt;
+
+&lt;p&gt;After some more aborted out-of-the-box ideas, I decided the best course of action would be to sand off the pointy bits and deal with the remaining, irregularly-shaped pieces that still got too close to the tops and bottoms where they shouldn’t. At least it would be a rectangle that sits flat.&lt;/p&gt;
+
+&lt;p class=&quot;svg-container&quot;&gt;
+  &lt;svg width=&quot;100px&quot; height=&quot;71px&quot; viewBox=&quot;0 0 1 0.707&quot;&gt;
+    14
+&lt;polygon id=&quot;15&quot; class=&quot;one&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;1,0 1,0.707 0.292,0.707&quot; clip-path=&quot;url(#clip-15)&quot; /&gt;
+&lt;clipPath id=&quot;clip-15&quot;&gt;
+  &lt;use href=&quot;#15&quot; /&gt;
+&lt;/clipPath&gt;
+
+    15
+&lt;polygon id=&quot;16&quot; class=&quot;two&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0.707 0,0 1,0 0.292,0.707&quot; clip-path=&quot;url(#clip-16)&quot; /&gt;
+&lt;clipPath id=&quot;clip-16&quot;&gt;
+  &lt;use href=&quot;#16&quot; /&gt;
+&lt;/clipPath&gt;
+
+  &lt;/svg&gt;
+&lt;/p&gt;
+
+&lt;p&gt;That rectangle sparked an idea. Consider the silhouette – the view from the outside – of the entire system.&lt;/p&gt;
+
+&lt;p class=&quot;svg-container&quot;&gt;
+  &lt;svg width=&quot;100px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 1 1&quot;&gt;
+    16
+&lt;polygon id=&quot;17&quot; class=&quot;silhouette&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 1,0 1,0.707 0.292,0.707 0,1&quot; clip-path=&quot;url(#clip-17)&quot; /&gt;
+&lt;clipPath id=&quot;clip-17&quot;&gt;
+  &lt;use href=&quot;#17&quot; /&gt;
+&lt;/clipPath&gt;
+
+  &lt;/svg&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Hey… you can construct that with these pieces instead!&lt;/p&gt;
+
+&lt;p class=&quot;svg-container&quot;&gt;
+  &lt;svg width=&quot;100px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 1 1&quot;&gt;
+    17
+&lt;polygon id=&quot;18&quot; class=&quot;three&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 1,0 1,0.707 0,0.707&quot; clip-path=&quot;url(#clip-18)&quot; /&gt;
+&lt;clipPath id=&quot;clip-18&quot;&gt;
+  &lt;use href=&quot;#18&quot; /&gt;
+&lt;/clipPath&gt;
+
+    18
+&lt;polygon id=&quot;19&quot; class=&quot;four&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0.707 0.292,0.707 0,1&quot; clip-path=&quot;url(#clip-19)&quot; /&gt;
+&lt;clipPath id=&quot;clip-19&quot;&gt;
+  &lt;use href=&quot;#19&quot; /&gt;
+&lt;/clipPath&gt;
+
+  &lt;/svg&gt;
+&lt;/p&gt;
+
+&lt;p&gt;This layout is still a little awkward, but the relationship of the silhouette to the parts that make it up is &lt;em&gt;much less surprising&lt;/em&gt;! And all we had to do to get here is to redraw the lines between the shapes. All the mass stayed where it was. We have rearchitected the system away from one where everything was just a little bit wrong to one where the &lt;span class=&quot;three&quot;&gt;core&lt;/span&gt; is highly regular and it just has some &lt;span class=&quot;four&quot;&gt;hacks&lt;/span&gt; bolted onto it. (Ah, software in the real world.)&lt;/p&gt;
+
+&lt;p&gt;It’s now a lot easier to move the &lt;span class=&quot;four&quot;&gt;hacks&lt;/span&gt; around and change the silhouette, since it has relatively little connection to the &lt;span class=&quot;three&quot;&gt;core&lt;/span&gt;. If we want to make a change to the silhouette for some reason (that is: the system, holistically, as seen from the outside), we can do it with less effort and more flexibility.&lt;/p&gt;
+
+&lt;p class=&quot;svg-container&quot;&gt;
+  &lt;svg width=&quot;158px&quot; height=&quot;71px&quot; viewBox=&quot;-0.292 0 1.584 0.707&quot;&gt;
+    19
+&lt;polygon id=&quot;20&quot; class=&quot;three&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 1,0 1,0.707 0,0.707&quot; clip-path=&quot;url(#clip-20)&quot; /&gt;
+&lt;clipPath id=&quot;clip-20&quot;&gt;
+  &lt;use href=&quot;#20&quot; /&gt;
+&lt;/clipPath&gt;
+
+    20
+&lt;polygon id=&quot;21&quot; class=&quot;four&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;1,0.707 1.292,0.707 1,0.414&quot; clip-path=&quot;url(#clip-21)&quot; /&gt;
+&lt;clipPath id=&quot;clip-21&quot;&gt;
+  &lt;use href=&quot;#21&quot; /&gt;
+&lt;/clipPath&gt;
+
+  &lt;/svg&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Now it lies flat.&lt;/p&gt;
+
+&lt;p class=&quot;svg-container&quot;&gt;
+  &lt;svg width=&quot;100px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 1 1&quot;&gt;
+    21
+&lt;polygon id=&quot;22&quot; class=&quot;three&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,1 1,1 1,0.292 0,0.292&quot; clip-path=&quot;url(#clip-22)&quot; /&gt;
+&lt;clipPath id=&quot;clip-22&quot;&gt;
+  &lt;use href=&quot;#22&quot; /&gt;
+&lt;/clipPath&gt;
+
+    22
+&lt;polygon id=&quot;23&quot; class=&quot;four&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0.292,0.292 0.707,0.292 0.5,0.094&quot; clip-path=&quot;url(#clip-23)&quot; /&gt;
+&lt;clipPath id=&quot;clip-23&quot;&gt;
+  &lt;use href=&quot;#23&quot; /&gt;
+&lt;/clipPath&gt;
+
+  &lt;/svg&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Now it lies flat &lt;em&gt;and&lt;/em&gt; is symmetrical, so the &lt;span class=&quot;four&quot;&gt;hacks&lt;/span&gt; don’t grate quite as much. The possibilities are endless, and with some effort, we could even restructure the &lt;span class=&quot;three&quot;&gt;core&lt;/span&gt; to elegantly subsume all the mass from the &lt;span class=&quot;four&quot;&gt;hacks&lt;/span&gt; – there isn’t that much of it!&lt;/p&gt;
+
+&lt;p class=&quot;svg-container&quot;&gt;
+  &lt;svg width=&quot;106px&quot; height=&quot;71px&quot; viewBox=&quot;0 0 1.060 0.707&quot;&gt;
+    23
+&lt;polygon id=&quot;24&quot; class=&quot;three&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 1.060,0 1.060,0.707 0,0.707&quot; clip-path=&quot;url(#clip-24)&quot; /&gt;
+&lt;clipPath id=&quot;clip-24&quot;&gt;
+  &lt;use href=&quot;#24&quot; /&gt;
+&lt;/clipPath&gt;
+
+  &lt;/svg&gt;
+&lt;/p&gt;
+
+&lt;p&gt;(Yes: it is ever so slightly wider. Conservation of mass, and all that.)&lt;/p&gt;
+
+&lt;p&gt;Let’s rewind a bit. What if we &lt;em&gt;did&lt;/em&gt; put in the effort to move the original tiles around without redrawing the lines or moving mass between them?&lt;/p&gt;
+
+&lt;p class=&quot;svg-container&quot;&gt;
+  &lt;svg width=&quot;141px&quot; height=&quot;71px&quot; viewBox=&quot;0 0 1.414 0.707&quot;&gt;
+    24
+&lt;polygon id=&quot;25&quot; class=&quot;one&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0.707,0.707 1.414,0 1.414,0.707&quot; clip-path=&quot;url(#clip-25)&quot; /&gt;
+&lt;clipPath id=&quot;clip-25&quot;&gt;
+  &lt;use href=&quot;#25&quot; /&gt;
+&lt;/clipPath&gt;
+
+    25
+&lt;polygon id=&quot;26&quot; class=&quot;two&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 0.707,0.707 1.414,0&quot; clip-path=&quot;url(#clip-26)&quot; /&gt;
+&lt;clipPath id=&quot;clip-26&quot;&gt;
+  &lt;use href=&quot;#26&quot; /&gt;
+&lt;/clipPath&gt;
+
+  &lt;/svg&gt;
+&lt;/p&gt;
+
+&lt;p&gt;In a silhouette, that looks like this.&lt;/p&gt;
+
+&lt;p class=&quot;svg-container&quot;&gt;
+  &lt;svg width=&quot;141px&quot; height=&quot;71px&quot; viewBox=&quot;0 0 1.414 0.707&quot;&gt;
+    26
+&lt;polygon id=&quot;27&quot; class=&quot;silhouette&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 1.414,0 1.414,0.707 0.707,0.707&quot; clip-path=&quot;url(#clip-27)&quot; /&gt;
+&lt;clipPath id=&quot;clip-27&quot;&gt;
+  &lt;use href=&quot;#27&quot; /&gt;
+&lt;/clipPath&gt;
+
+  &lt;/svg&gt;
+&lt;/p&gt;
+
+&lt;p&gt;You might be able to see where this is going.&lt;/p&gt;
+
+&lt;p class=&quot;svg-container&quot;&gt;
+  &lt;svg width=&quot;141px&quot; height=&quot;71px&quot; viewBox=&quot;0 0 1.414 0.707&quot;&gt;
+    27
+&lt;polygon id=&quot;28&quot; class=&quot;five&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0.707,0 1.414,0 1.414,0.707 0.707,0.707&quot; clip-path=&quot;url(#clip-28)&quot; /&gt;
+&lt;clipPath id=&quot;clip-28&quot;&gt;
+  &lt;use href=&quot;#28&quot; /&gt;
+&lt;/clipPath&gt;
+
+    28
+&lt;polygon id=&quot;29&quot; class=&quot;six&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 0.707,0 0.707,0.707&quot; clip-path=&quot;url(#clip-29)&quot; /&gt;
+&lt;clipPath id=&quot;clip-29&quot;&gt;
+  &lt;use href=&quot;#29&quot; /&gt;
+&lt;/clipPath&gt;
+
+  &lt;/svg&gt;
+&lt;/p&gt;
+
+&lt;p&gt;A different architecture! Like the other one, it’s not really a two-layer architecture anymore. The precence of the &lt;span class=&quot;five&quot;&gt;square&lt;/span&gt; is an improvement, since squares have even less variability to consider than rectangles. There’s still a &lt;span class=&quot;six&quot;&gt;triangle&lt;/span&gt; sticking out the side, but it matches the side of the &lt;span class=&quot;five&quot;&gt;square&lt;/span&gt; perfectly: a good abstraction boundary, perhaps? Say: a minimal but fully-expressive API that is used mostly at a high level, but doesn’t prevent consumers from using the low-level parts when necessary. That sounds like a practial design to me.&lt;/p&gt;
+
+&lt;p&gt;The refactor isn’t done yet, but at least now I have a plan that is realistic, relatively less effort, and has a long-term path towards something halfway decent. Thanks, tangrams.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;section class=&quot;next-previous&quot;&gt;
+  
+  &lt;a href=&quot;/2024/04/01/movies/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: The Movie List&quot;&gt;
+    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
+    &lt;div class=&quot;next-previous-name&quot;&gt;
+      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
+      &lt;div class=&quot;next-previous-title&quot;&gt;The Movie List&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+  
+  
+  &lt;div class=&quot;next-previous-placeholder&quot;&gt;&lt;/div&gt;
+  
+&lt;/section&gt;
+&lt;hr /&gt;</content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">The Movie List</title><link href="https://blog.sea.nkelley.me/2024/04/01/movies/" rel="alternate" type="text/html" title="The Movie List" /><published>2024-04-01T00:00:00+00:00</published><updated>2024-04-01T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/04/01/movies</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/04/01/movies/">&lt;p&gt;A reverse-chronological list of movies I have seen, including non-spoiler one-liner recommendations and longer, usually-spoiler-filled thoughts – the blurred out bits. Hover or (on mobile) long-press to reveal those. Some of the posters are blurred too because they include spoiling details. 😒&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;In general, I don’t recommend watching trailers for any movies.&lt;/strong&gt; If you’re here for my recommendations, try to triangulate if you’ll like it from my one-liners or the &lt;a href=&quot;https://en.wikipedia.org/wiki/Log_line&quot;&gt;log line&lt;/a&gt; on IMDb. It’s always more fun to go in without expectations (and without spoilers).&lt;/p&gt;
 
@@ -1565,114 +1876,4 @@
       &lt;p&gt;The standard is to place it on a large piece of parchment paper on a cutting board, score it, and lift it by the paper into the dutch oven. If the scoring is simple, you can also just drop the proofing basket right into the dutch oven and palm it back out, but make sure that you drop it forcefully and without hesitation to encourage a clean separation of the dough. If you used the kitchen-towel-in-bowl technique, I would very much not recommend trying to aim the loaf right into the dutch oven. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name></name></author><category term="recipe" /><summary type="html">This recipe is my transcription and adaptation of A Non-Baker’s Guide To Making Sourdough Bread, written in a style loosely inspired by literate programming. A bit more background on what this “literate recipe” thing is at my focaccia recipe.</summary></entry><entry><title type="html">Facebook is Too Big to Exist</title><link href="https://blog.sea.nkelley.me/2021/11/01/moderation-broadcastability/" rel="alternate" type="text/html" title="Facebook is Too Big to Exist" /><published>2021-11-01T00:00:00+00:00</published><updated>2023-10-07T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2021/11/01/moderation-broadcastability</id><content type="html" xml:base="https://blog.sea.nkelley.me/2021/11/01/moderation-broadcastability/">&lt;figure&gt;
-&lt;!-- I wanted to call this post facebook-moderation-broadcastability but then uBlock Origin saw `facebook` in the URL and blocked it. :( --&gt;
-&lt;img src=&quot;/assets/moderation-broadcastability/street-art.jpg&quot; alt=&quot;Street art showing Facebook logo as a cigarette.&quot; /&gt;
-&lt;figcaption&gt;
-    &lt;p&gt;In an excellent happenstance, I found this on the street while drafting this post. It’s now gone, but maybe there’s something equally optionated there instead. &lt;a href=&quot;https://www.google.com/maps/@51.5202684,-0.0699052,2a,75y,205.43h,81.72t,0.49r/data=!3m6!1e1!3m4!1sYtB3iBiH61iUjZhV3V7fbQ!2e0!7i13312!8i6656?entry=ttu&quot;&gt;51° 31’ 12.89” N, 0° 4’ 11.65” W&lt;/a&gt;&lt;/p&gt;
-  &lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;The stream of bad press for &lt;del&gt;Facebook&lt;/del&gt; &lt;del&gt;Meta&lt;/del&gt; Facebook&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; has been going steady for a while now.&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; As someone who finally deleted my Facebook account some time around or after the Cambridge Analytica scandal, I’d say: deservedly so.&lt;/p&gt;
-
-&lt;p&gt;To the extent that I continue to think about Facebook, I’ve been trying on-and-off to find a succinct and satisfying explanation for why Facebook, in particular, has become so influential and so toxic. To be sure, it’s not alone – &lt;del&gt;Twitter&lt;/del&gt; &lt;del&gt;X&lt;/del&gt; Twitter comes to mind – but it seems like the worst offender. What did/does it do that made it so different and so much more problematic than its competitors and predecessors?&lt;/p&gt;
-
-&lt;p&gt;The problem, as I see it, is that Facebook is the first to simultaneously enable, on the truly ridiculous scale of its user base, both:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;em&gt;non-moderation&lt;/em&gt;, or, the ability to say whatever you want&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;broadcastability&lt;/em&gt;, or, the ability to send what you say to a huge audience&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;That Facebook enables these together is hopefully obvious, their &lt;a href=&quot;https://apnews.com/article/myanmar-business-d55600bf3f683d863682c0480a298a0a&quot;&gt;weak attempts at “moderation”&lt;/a&gt; notwithstanding. Perhaps less obvious is that a functional separation between these two has historically existed, but I think that is the case.&lt;/p&gt;
-
-&lt;p&gt;(Non-)moderation and broadcastability are both a spectrum, and they are largely inverses. As one builds a big idea from a kitchen table conversation, though self-published flyers and town paper letters-to-the-editor up to national TV news interviews, one is subject to increasing moderation. To be granted access to the TV audience is to have your idea vetted as “something worth saying”, for some definition of “worth” that (used to) exclude the kind of stuff on Facebook that is prompting this national conversation.&lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;p&gt;The mixing of non-moderation and broadcastability on Facebook plays out mostly in the blurrily public/private zones of Groups, Timeline and perhaps Events. An incendiary post from your weird uncle gets reshared by your other weird uncle on the other side. They know each other, sure, but it’s not the kind of thing they would have brought up casually at the next family gathering. Even if they had, the passive audience would be significantly smaller. Timeline is “private” enough that they feel comfortable sharing, but public enough that hundreds or thousands of bystanders are caught in the blast radius of negativity – all with the effort of a single click on “Reshare”.&lt;/p&gt;
-
-&lt;p&gt;Such interactions are the lifeblood of Facebook – engagement translates directly to revenue – hence the endless tweaking of the ever-inscrutable Algorithm to encourage them. Leading up to the 2020 election, we all learned for the first time of something that a lot of us suspected: Facebook knowingly exercises &lt;a href=&quot;https://usatoday.com/story/tech/2020/11/05/facebook-election-misinformation-crackdown-emergency-measures-trump/6182001002/&quot;&gt;direct control&lt;/a&gt; over the degree of both moderation and broadcast of posts, dampening them only in emergencies.&lt;/p&gt;
-
-&lt;p&gt;Facebook isn’t the only entity that exercises such malicious, or at least, spectacularly tone-deaf control over the audience they have cultivated. Yelp’s questionable “editorial” processes frequently get them criticized as abusive, to the degree that they have a &lt;a href=&quot;https://www.yelp-support.com/article/Does-Yelp-extort-small-businesses&quot;&gt;support page&lt;/a&gt; describing how they supposedly &lt;em&gt;don’t&lt;/em&gt; extort businesses. Even a misguided or rogue moderator in an enthusiasts’ forum can single-handedly derail it.&lt;/p&gt;
-
-&lt;p&gt;These sites, and countless others like them, exist because of and are protected by the now (in?)famous Section 230:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;No provider or user of an interactive computer service shall be treated as the publisher or speaker of any information provided by another information content provider.&lt;sup id=&quot;fnref:4&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;That’s the full text of Section 230(c)(1), and is the heart of the Communications Decency Act of 1996.&lt;/p&gt;
-
-&lt;p&gt;As it stands, Facebook, Yelp and all the others are still well within their (current) rights to manipulate content on their platforms.&lt;sup id=&quot;fnref:5&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:5&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt; I would go so far as to say that Section 230 all but invites their creation and consequent manipulative behavior. After all, if you aren’t responsible for moderating what your users post and you can cherry-pick what should be broadcast, why &lt;em&gt;wouldn’t&lt;/em&gt; a for-profit ad-driven company steer towards maximum engagement?&lt;/p&gt;
-
-&lt;p&gt;It’s clear, then, that the only way out of this predicament is with a change to Section 230.&lt;sup id=&quot;fnref:6&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:6&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;6&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;p&gt;Some of those who benefit from the Section 230-protected intertubes have been advocating for full repeal, which is throwing the baby out with the bathwater. My blissfully Facebook-free internet life would be much the worse if almost every other site I frequented were forced to choose between taking on liability for their users or simply shutting down. Instead, I’d like to see a sliding scale of sorts that allows the small-time sites to stay unencumbered but mandates some degree of responsibility to ones with a larger blast radius.&lt;/p&gt;
-
-&lt;p&gt;Others say the problem can be solved by spinning off, say, Instagram. In the absence of regulatory changes, an AT&amp;amp;T-style breakup (regardless of whether it’s along horizontal or vertical lines) would merely waste everyone’s time. Without a paying user base&lt;sup id=&quot;fnref:7&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:7&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;7&lt;/a&gt;&lt;/sup&gt; or significant physical infrastructure to induce drag, the reconsolidation would be swift. Instead, I’d like to see some kind of forced decentralization of Timeline, Groups and their ilk, which is where the damage is really done. Prying those apart is unlikely to happen in such a breakup, however.&lt;/p&gt;
-
-&lt;p&gt;We’ve been trained to expect non-moderation and broadcastability almost as an inherent right of using the internet, but this is a destructive aberration. A combination of forced decentralization (to control broadcastability) and transference of responsibility back to the platforms (to encourage non-negligible moderation) will be messy, painful and awkward. Our collective Facebook-trained expectations may make it politically difficult. But I find it hard to believe that the cure could be worse than the disease, and the disease is not going away by itself – in fact, it’s Metastasizing.&lt;sup id=&quot;fnref:8&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:8&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;8&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;If you’d like to read more like this, check out:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://anildash.com/2011/07/20/if_your_websites_full_of_assholes_its_your_fault-2/&quot;&gt;If your website’s full of assholes, it’s your fault&lt;/a&gt; – Anil Dash&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.theatlantic.com/technology/archive/2021/10/fix-facebook-making-it-more-like-google/620456/&quot;&gt;People Aren’t Meant to Talk This Much&lt;/a&gt; – The Atlantic (and at times eerily similar to this post)&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.theatlantic.com/magazine/archive/2021/11/facebook-authoritarian-hostile-foreign-power/620168/&quot;&gt;The Largest Autocracy on Earth&lt;/a&gt; – The Atlantic (originally published as &lt;em&gt;Facebookland&lt;/em&gt;, and yes, I like the Atlantic)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;em&gt;Updated 2022-01-07: added another link to the reading list.&lt;/em&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;section class=&quot;next-previous&quot;&gt;
-  
-  &lt;a href=&quot;/2021/10/29/a-tale-of-two-lights/&quot; class=&quot;next-previous-link next-previous-left&quot; title=&quot;Previous Post: A Tale of Two Lights&quot;&gt;
-    &lt;span class=&quot;next-previous-icon&quot;&gt;←&lt;/span&gt;
-    &lt;div class=&quot;next-previous-name&quot;&gt;
-      &lt;div class=&quot;next-previous-label&quot;&gt;Previous Post&lt;/div&gt;
-      &lt;div class=&quot;next-previous-title&quot;&gt;A Tale of Two Lights&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/a&gt;
-  
-  
-  &lt;a href=&quot;/2023/08/06/literate-sourdough/&quot; class=&quot;next-previous-link next-previous-right&quot; title=&quot;Next Post: Sourdough Loaf (and Recipe Planner)&quot;&gt;
-    &lt;div class=&quot;next-previous-name&quot;&gt;
-      &lt;div class=&quot;next-previous-label&quot;&gt;Next Post&lt;/div&gt;
-      &lt;div class=&quot;next-previous-title&quot;&gt;Sourdough Loaf (and Recipe Planner)&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;span class=&quot;next-previous-icon&quot;&gt;→&lt;/span&gt;
-  &lt;/a&gt;
-  
-&lt;/section&gt;
-&lt;hr /&gt;
-
-&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;I was drafting this post in the weeks leading up to The Announcement. I don’t think the name Facebook is going any any time soon, and I don’t think a regulation-dodging rename makes any of these observations less relevant. So I’ll continue to use the name Facebook. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Since at least &lt;a href=&quot;https://en.wikipedia.org/wiki/2021_United_States_Capitol_attack&quot;&gt;2021-01-06&lt;/a&gt;, if not &lt;a href=&quot;https://en.wikipedia.org/wiki/Facebook%E2%80%93Cambridge_Analytica_data_scandal&quot;&gt;2018-03-17&lt;/a&gt;. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:3&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;I realize there are other problems with old-school mass-media gatekeeping, but let’s stay on topic for now. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:4&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Via &lt;a href=&quot;https://www.law.cornell.edu/uscode/text/47/230&quot;&gt;Cornell Law School&lt;/a&gt;. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:5&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;There isn’t, by the way, &lt;a href=&quot;https://www.eff.org/deeplinks/2020/12/publisher-or-platform-it-doesnt-matter&quot;&gt;a platform-publisher distinction&lt;/a&gt; or any &lt;a href=&quot;https://www.eff.org/deeplinks/2018/04/no-section-230-does-not-require-platforms-be-neutral&quot;&gt;requirement of neutrality towards content&lt;/a&gt;, as is sometimes claimed. &lt;a href=&quot;#fnref:5&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:6&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;This is probably the only time I’ll say this in my entire life, but, to Mark Zuckerberg’s credit, he has &lt;a href=&quot;https://www.huffingtonpost.com/entry/mark-zuckerberg-facebook-regulation_n_5ab400dae4b054d118e0eac5&quot;&gt;asked for regulation&lt;/a&gt; in the past. &lt;a href=&quot;#fnref:6&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:7&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Advertisers are the &lt;em&gt;customers&lt;/em&gt;, but regular people are the &lt;em&gt;users&lt;/em&gt;. &lt;a href=&quot;#fnref:7&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:8&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;I’m only a little sorry. &lt;a href=&quot;#fnref:8&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;</content><author><name></name></author></entry></feed>
+&lt;/div&gt;</content><author><name></name></author><category term="recipe" /><summary type="html">This recipe is my transcription and adaptation of A Non-Baker’s Guide To Making Sourdough Bread, written in a style loosely inspired by literate programming. A bit more background on what this “literate recipe” thing is at my focaccia recipe.</summary></entry></feed>

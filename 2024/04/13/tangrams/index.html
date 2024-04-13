@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Refactoring with Tangrams | fiddlybits</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Refactoring with Tangrams" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://blog.sea.nkelley.me/2024/04/13/tangrams/" />
+<meta property="og:url" content="https://blog.sea.nkelley.me/2024/04/13/tangrams/" />
+<meta property="og:site_name" content="fiddlybits" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-04-13T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Refactoring with Tangrams" />
+<script type="application/ld+json">
+{"headline":"Refactoring with Tangrams","dateModified":"2024-04-13T00:00:00+00:00","datePublished":"2024-04-13T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.sea.nkelley.me/2024/04/13/tangrams/"},"url":"https://blog.sea.nkelley.me/2024/04/13/tangrams/","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/style.css">
+  
+  <link rel="stylesheet" href="/assets/tangrams/tangrams.css">
+  <link type="application/atom+xml" rel="alternate" href="https://blog.sea.nkelley.me/feed.xml" title="fiddlybits" /></head>
+<body data-theme="auto" data-unit="imperial"><header class="site-header">
+  <div class="centering-wrapper">
+    <a class="site-title" href="/">fiddlybits</a>
+    <span>
+      <a href="https://github.com/seansfkelley">github</a>
+      &nbsp;•&nbsp;
+      <a href="/feed.xml">rss</a>
+      <!-- Only show theme switcher if js is enabled: hide by default. -->
+      <span id="theme-switcher-wrapper" style="display: none;">
+        &nbsp;•&nbsp;
+        <a href="#" id="theme-switcher"></a>
+      </span>
+    </span>
+  </div>
+</header>
+<main class="centering-wrapper">
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Refactoring with Tangrams</h1>
+    <h3 class="post-subtitle"></h3>
+  </header>
+<p>Remember <a href="https://en.wikipedia.org/wiki/Tangram">tangrams</a>? Remember how they would mess with your intuition, that the <a href="https://en.wikipedia.org/wiki/Tangram#Paradoxes">silhouettes they drew seemed to lie</a>?</p>
+
+<p>I’m working on a large refactor that is composed of two similarly-sized and similarly-structured systems. Imagine two similar tiles.</p>
+
+<p class="svg-container">
+  <svg width="71px" height="71px" viewBox="0 0 0.707 0.707">
+    0
+<polygon id="1" class="one" vector-effect="non-scaling-stroke" points="0,0.707 0.707,0.707 0.707,0" clip-path="url(#clip-1)" />
+<clipPath id="clip-1">
+  <use href="#1" />
+</clipPath>
+
+  </svg>
+
+  <svg width="100px" height="100px" viewBox="0 0 1 1">
+    1
+<polygon id="2" class="two" vector-effect="non-scaling-stroke" points="0,1 1,1 1,0" clip-path="url(#clip-2)" />
+<clipPath id="clip-2">
+  <use href="#2" />
+</clipPath>
+
+  </svg>
+</p>
+
+<p>You can arrange these in a variety of ways, some more aesthetically appealing or easily described than others.</p>
+
+<p class="svg-container">
+  <svg width="150px" height="100px" viewBox="0 0 1.5 1">
+    2
+<polygon id="3" class="one" vector-effect="non-scaling-stroke" points="1,0 1,1 1.5 0.5" clip-path="url(#clip-3)" />
+<clipPath id="clip-3">
+  <use href="#3" />
+</clipPath>
+
+    3
+<polygon id="4" class="two" vector-effect="non-scaling-stroke" points="0,0 1,0 1,1" clip-path="url(#clip-4)" />
+<clipPath id="clip-4">
+  <use href="#4" />
+</clipPath>
+
+  </svg>
+  <svg width="171px" height="100px" viewBox="-0.707 0 1.707 1">
+    4
+<polygon id="5" class="one" vector-effect="non-scaling-stroke" points="0,1 -0.707,1 0,0.292" clip-path="url(#clip-5)" />
+<clipPath id="clip-5">
+  <use href="#5" />
+</clipPath>
+
+    5
+<polygon id="6" class="two" vector-effect="non-scaling-stroke" points="0,0 0,1 1,1" clip-path="url(#clip-6)" />
+<clipPath id="clip-6">
+  <use href="#6" />
+</clipPath>
+
+  </svg>
+  <svg width="141px" height="121px" viewBox="-0.707 -0.707 1.414 1.207">
+    6
+<polygon id="7" class="one" vector-effect="non-scaling-stroke" points="-0.5,0 0.5,0 0,0.5" clip-path="url(#clip-7)" />
+<clipPath id="clip-7">
+  <use href="#7" />
+</clipPath>
+
+    7
+<polygon id="8" class="two" vector-effect="non-scaling-stroke" points="-0.707,0 0.707,0 0,-0.707" clip-path="url(#clip-8)" />
+<clipPath id="clip-8">
+  <use href="#8" />
+</clipPath>
+
+  </svg>
+</p>
+
+<p>And so it was that I found myself with a software architecture resembling this configuration…</p>
+
+<p class="svg-container">
+  <svg width="100px" height="100px" viewBox="0 0 1 1">
+    8
+<polygon id="9" class="one" vector-effect="non-scaling-stroke" points="1,0 1,0.707 0.292,0.707" clip-path="url(#clip-9)" />
+<clipPath id="clip-9">
+  <use href="#9" />
+</clipPath>
+
+    9
+<polygon id="10" class="two" vector-effect="non-scaling-stroke" points="0,1 0,0 1,0" clip-path="url(#clip-10)" />
+<clipPath id="clip-10">
+  <use href="#10" />
+</clipPath>
+
+  </svg>
+</p>
+
+<p>The smaller shape represents the underlying framework for the whole system. Call it the <span class="one">foundation</span>. The larger one is where all the domain logic lives. Call it the <span class="two">specialization</span>.</p>
+
+<p>In this analogy, the <span class="one">foundation</span> sort-of supports the <span class="two">specialization</span> in that it’s mostly on the bottom, but parts of it end up pretty high up where it probably shouldn’t be. The pointy bit that sticks out on the bottom is where the <span class="two">specialization</span> bypasses the <span class="one">foundation</span> completely. The entire system is top-heavy and doesn’t sit flat, which makes it unstable.</p>
+
+<p>Through years of organic software growth, these two systems had grown together into this un-elegant configuration that was difficult to change without risking even more instability.</p>
+
+<p>Trying to shift the <span class="two">specialization</span> higher up without fundamentally changing it, so that the <span class="one">foundation</span> could at least actually serve as the base and the whole thing could sit flat, was a lot of work against gravity (if you’ll permit the mixed metaphors) and still ends up with pointy bits sticking out.</p>
+
+<p class="svg-container">
+  <svg width="100px" height="100px" viewBox="0 0 1 1">
+    10
+<polygon id="11" class="one" vector-effect="non-scaling-stroke" points="0,1 0.707,1 0.707,0.292" clip-path="url(#clip-11)" />
+<clipPath id="clip-11">
+  <use href="#11" />
+</clipPath>
+
+    11
+<polygon id="12" class="two" vector-effect="non-scaling-stroke" points="0,0 0,1 1,0" clip-path="url(#clip-12)" />
+<clipPath id="clip-12">
+  <use href="#12" />
+</clipPath>
+
+  </svg>
+</p>
+
+<p>Moving entire pieces from one side to the other, like the first images I showed you, would be a lot of effort for little gain. So I thought outside the box a bit: I could shift responsibilty from the <span class="two">specialization</span> to the <span class="one">foundation</span> to make the entire system bottom-heavy again. This would still require moving a lot of mass around, even if it isn’t going very far. And it isn’t even clear if this is an improvement.</p>
+
+<p class="svg-container">
+  <svg width="100px" height="100px" viewBox="0 0 1 1">
+    12
+<polygon id="13" class="one" vector-effect="non-scaling-stroke" points="0,1 1,1 1,0" clip-path="url(#clip-13)" />
+<clipPath id="clip-13">
+  <use href="#13" />
+</clipPath>
+
+    13
+<polygon id="14" class="two" vector-effect="non-scaling-stroke" points="0,1 0,0.292 0.707,0.292" clip-path="url(#clip-14)" />
+<clipPath id="clip-14">
+  <use href="#14" />
+</clipPath>
+
+  </svg>
+</p>
+
+<p>After some more aborted out-of-the-box ideas, I decided the best course of action would be to sand off the pointy bits and deal with the remaining, irregularly-shaped pieces that still got too close to the tops and bottoms where they shouldn’t. At least it would be a rectangle that sits flat.</p>
+
+<p class="svg-container">
+  <svg width="100px" height="71px" viewBox="0 0 1 0.707">
+    14
+<polygon id="15" class="one" vector-effect="non-scaling-stroke" points="1,0 1,0.707 0.292,0.707" clip-path="url(#clip-15)" />
+<clipPath id="clip-15">
+  <use href="#15" />
+</clipPath>
+
+    15
+<polygon id="16" class="two" vector-effect="non-scaling-stroke" points="0,0.707 0,0 1,0 0.292,0.707" clip-path="url(#clip-16)" />
+<clipPath id="clip-16">
+  <use href="#16" />
+</clipPath>
+
+  </svg>
+</p>
+
+<p>That rectangle sparked an idea. Consider the silhouette – the view from the outside – of the entire system.</p>
+
+<p class="svg-container">
+  <svg width="100px" height="100px" viewBox="0 0 1 1">
+    16
+<polygon id="17" class="silhouette" vector-effect="non-scaling-stroke" points="0,0 1,0 1,0.707 0.292,0.707 0,1" clip-path="url(#clip-17)" />
+<clipPath id="clip-17">
+  <use href="#17" />
+</clipPath>
+
+  </svg>
+</p>
+
+<p>Hey… you can construct that with these pieces instead!</p>
+
+<p class="svg-container">
+  <svg width="100px" height="100px" viewBox="0 0 1 1">
+    17
+<polygon id="18" class="three" vector-effect="non-scaling-stroke" points="0,0 1,0 1,0.707 0,0.707" clip-path="url(#clip-18)" />
+<clipPath id="clip-18">
+  <use href="#18" />
+</clipPath>
+
+    18
+<polygon id="19" class="four" vector-effect="non-scaling-stroke" points="0,0.707 0.292,0.707 0,1" clip-path="url(#clip-19)" />
+<clipPath id="clip-19">
+  <use href="#19" />
+</clipPath>
+
+  </svg>
+</p>
+
+<p>This layout is still a little awkward, but the relationship of the silhouette to the parts that make it up is <em>much less surprising</em>! And all we had to do to get here is to redraw the lines between the shapes. All the mass stayed where it was. We have rearchitected the system away from one where everything was just a little bit wrong to one where the <span class="three">core</span> is highly regular and it just has some <span class="four">hacks</span> bolted onto it. (Ah, software in the real world.)</p>
+
+<p>It’s now a lot easier to move the <span class="four">hacks</span> around and change the silhouette, since it has relatively little connection to the <span class="three">core</span>. If we want to make a change to the silhouette for some reason (that is: the system, holistically, as seen from the outside), we can do it with less effort and more flexibility.</p>
+
+<p class="svg-container">
+  <svg width="158px" height="71px" viewBox="-0.292 0 1.584 0.707">
+    19
+<polygon id="20" class="three" vector-effect="non-scaling-stroke" points="0,0 1,0 1,0.707 0,0.707" clip-path="url(#clip-20)" />
+<clipPath id="clip-20">
+  <use href="#20" />
+</clipPath>
+
+    20
+<polygon id="21" class="four" vector-effect="non-scaling-stroke" points="1,0.707 1.292,0.707 1,0.414" clip-path="url(#clip-21)" />
+<clipPath id="clip-21">
+  <use href="#21" />
+</clipPath>
+
+  </svg>
+</p>
+
+<p>Now it lies flat.</p>
+
+<p class="svg-container">
+  <svg width="100px" height="100px" viewBox="0 0 1 1">
+    21
+<polygon id="22" class="three" vector-effect="non-scaling-stroke" points="0,1 1,1 1,0.292 0,0.292" clip-path="url(#clip-22)" />
+<clipPath id="clip-22">
+  <use href="#22" />
+</clipPath>
+
+    22
+<polygon id="23" class="four" vector-effect="non-scaling-stroke" points="0.292,0.292 0.707,0.292 0.5,0.094" clip-path="url(#clip-23)" />
+<clipPath id="clip-23">
+  <use href="#23" />
+</clipPath>
+
+  </svg>
+</p>
+
+<p>Now it lies flat <em>and</em> is symmetrical, so the <span class="four">hacks</span> don’t grate quite as much. The possibilities are endless, and with some effort, we could even restructure the <span class="three">core</span> to elegantly subsume all the mass from the <span class="four">hacks</span> – there isn’t that much of it!</p>
+
+<p class="svg-container">
+  <svg width="106px" height="71px" viewBox="0 0 1.060 0.707">
+    23
+<polygon id="24" class="three" vector-effect="non-scaling-stroke" points="0,0 1.060,0 1.060,0.707 0,0.707" clip-path="url(#clip-24)" />
+<clipPath id="clip-24">
+  <use href="#24" />
+</clipPath>
+
+  </svg>
+</p>
+
+<p>(Yes: it is ever so slightly wider. Conservation of mass, and all that.)</p>
+
+<p>Let’s rewind a bit. What if we <em>did</em> put in the effort to move the original tiles around without redrawing the lines or moving mass between them?</p>
+
+<p class="svg-container">
+  <svg width="141px" height="71px" viewBox="0 0 1.414 0.707">
+    24
+<polygon id="25" class="one" vector-effect="non-scaling-stroke" points="0.707,0.707 1.414,0 1.414,0.707" clip-path="url(#clip-25)" />
+<clipPath id="clip-25">
+  <use href="#25" />
+</clipPath>
+
+    25
+<polygon id="26" class="two" vector-effect="non-scaling-stroke" points="0,0 0.707,0.707 1.414,0" clip-path="url(#clip-26)" />
+<clipPath id="clip-26">
+  <use href="#26" />
+</clipPath>
+
+  </svg>
+</p>
+
+<p>In a silhouette, that looks like this.</p>
+
+<p class="svg-container">
+  <svg width="141px" height="71px" viewBox="0 0 1.414 0.707">
+    26
+<polygon id="27" class="silhouette" vector-effect="non-scaling-stroke" points="0,0 1.414,0 1.414,0.707 0.707,0.707" clip-path="url(#clip-27)" />
+<clipPath id="clip-27">
+  <use href="#27" />
+</clipPath>
+
+  </svg>
+</p>
+
+<p>You might be able to see where this is going.</p>
+
+<p class="svg-container">
+  <svg width="141px" height="71px" viewBox="0 0 1.414 0.707">
+    27
+<polygon id="28" class="five" vector-effect="non-scaling-stroke" points="0.707,0 1.414,0 1.414,0.707 0.707,0.707" clip-path="url(#clip-28)" />
+<clipPath id="clip-28">
+  <use href="#28" />
+</clipPath>
+
+    28
+<polygon id="29" class="six" vector-effect="non-scaling-stroke" points="0,0 0.707,0 0.707,0.707" clip-path="url(#clip-29)" />
+<clipPath id="clip-29">
+  <use href="#29" />
+</clipPath>
+
+  </svg>
+</p>
+
+<p>A different architecture! Like the other one, it’s not really a two-layer architecture anymore. The precence of the <span class="five">square</span> is an improvement, since squares have even less variability to consider than rectangles. There’s still a <span class="six">triangle</span> sticking out the side, but it matches the side of the <span class="five">square</span> perfectly: a good abstraction boundary, perhaps? Say: a minimal but fully-expressive API that is used mostly at a high level, but doesn’t prevent consumers from using the low-level parts when necessary. That sounds like a practial design to me.</p>
+
+<p>The refactor isn’t done yet, but at least now I have a plan that is realistic, relatively less effort, and has a long-term path towards something halfway decent. Thanks, tangrams.</p>
+
+<hr />
+
+<section class="next-previous">
+  
+  <a href="/2024/04/01/movies/" class="next-previous-link next-previous-left" title="Previous Post: The Movie List">
+    <span class="next-previous-icon">←</span>
+    <div class="next-previous-name">
+      <div class="next-previous-label">Previous Post</div>
+      <div class="next-previous-title">The Movie List</div>
+    </div>
+  </a>
+  
+  
+  <div class="next-previous-placeholder"></div>
+  
+</section>
+<hr />
+
+<footer>
+    <p class="post-date">
+      ~
+      <time
+        datetime="2024-04-13T00:00:00+00:00"
+        itemprop="datePublished"
+      >
+        2024-04-13
+      </time>~
+    </p>
+  </footer>
+</article>
+
+      <!--
+        This filthy trick makes sure that the content always weakly tries to expand to the full
+        width available, but allows for linebreaks if the viewport is too small. It produces a
+        better result than, say, width: 100%; or width: some-fixed-pixel-amount; and doesn't require
+        rewriting everything to flexbox (which would mess with the <html>-level scroll behavior and
+        sticky header) or adding extra DOM (which I'm trying to minimize to make myself feel good).
+      -->
+      <div class="horizontal-expander" aria-hidden="true">
+        Throughout human history, we have been dependent on machines to survive.
+        Fate, it seems, is not without a sense of irony.
+      </div>
+    </main>
+  </body>
+  <script src="/assets/js/theme-switcher.js"></script>
+  <script src="/assets/js/copy-code-block.js"></script>
+  <script src="/assets/js/unit-switcher.js"></script>
+  
+</html>
