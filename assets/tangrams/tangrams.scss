@@ -10,32 +10,40 @@
   justify-content: space-around;
 }
 
+.one {
+  --layer-color: var(--sol-orange);
+}
+
+.two {
+  --layer-color: var(--sol-cyan);
+}
+
+.three {
+  --layer-color: var(--sol-violet);
+}
+
+.four {
+  --layer-color: var(--sol-magenta);
+}
+
+span.one,
+span.two,
+span.three,
+span.four {
+  color: var(--layer-color);
+}
+
 svg {
   .one,
   .two,
   .three,
   .four {
-    stroke-width: 6px;
+    stroke-width: 8px;
+    stroke: var(--layer-color);
     fill: transparent;
   }
 
-  .one {
-    stroke: red;
-  }
-
-  .two {
-    stroke: green;
-  }
-
-  .three {
-    stroke: blue;
-  }
-
-  .four {
-    stroke: yellow;
-  }
-
   .silhouette {
-    fill: grey;
+    fill: var(--text-color-faded);
   }
 }
