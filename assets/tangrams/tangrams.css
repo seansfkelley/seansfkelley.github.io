@@ -145,17 +145,3 @@ svg .four {
 svg .silhouette {
   fill: grey;
 }
-
-svg {
-  overflow: visible;
-}
-svg.outline polygon {
-  fill: none;
-  stroke-width: 2px;
-  stroke-linejoin: round;
-  stroke: var(--text-color-faded);
-}
-svg.silhouette polygon {
-  fill: var(--text-color-faded);
-  stroke: none;
-}
