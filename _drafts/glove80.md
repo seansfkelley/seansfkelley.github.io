@@ -5,11 +5,11 @@ title: Glove80 Keyboard Review
 
 I bought myself one of [these](https://www.moergo.com/):
 
-// picture
+![Glove80](/assets/glove80/glove80.jpg)
 
 I previously used (and adored) one of [these](https://ergodox-ez.com/):
 
-// picture
+![ErgoDox](/assets/glove80/ergodox.jpg)
 
 Most of the thoughts I have below will be on the relative differences between these two.
 
