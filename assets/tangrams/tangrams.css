@@ -139,17 +139,29 @@ body[data-theme=dark] {
   --layer-color: var(--sol-magenta);
 }
 
+.five {
+  --layer-color: var(--sol-violet);
+}
+
+.six {
+  --layer-color: var(--sol-magenta);
+}
+
 span.one,
 span.two,
 span.three,
-span.four {
+span.four,
+span.five,
+span.six {
   color: var(--layer-color);
 }
 
 svg .one,
 svg .two,
 svg .three,
-svg .four {
+svg .four,
+svg .five,
+svg .six {
   stroke-width: 8px;
   stroke: var(--layer-color);
   fill: transparent;
