@@ -123,25 +123,37 @@ body[data-theme=dark] {
   justify-content: space-around;
 }
 
+.one {
+  --layer-color: var(--sol-orange);
+}
+
+.two {
+  --layer-color: var(--sol-cyan);
+}
+
+.three {
+  --layer-color: var(--sol-violet);
+}
+
+.four {
+  --layer-color: var(--sol-magenta);
+}
+
+span.one,
+span.two,
+span.three,
+span.four {
+  color: var(--layer-color);
+}
+
 svg .one,
 svg .two,
 svg .three,
 svg .four {
-  stroke-width: 6px;
+  stroke-width: 8px;
+  stroke: var(--layer-color);
   fill: transparent;
 }
-svg .one {
-  stroke: red;
-}
-svg .two {
-  stroke: green;
-}
-svg .three {
-  stroke: blue;
-}
-svg .four {
-  stroke: yellow;
-}
 svg .silhouette {
-  fill: grey;
+  fill: var(--text-color-faded);
 }
