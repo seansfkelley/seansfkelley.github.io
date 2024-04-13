@@ -46,20 +46,14 @@ Remember [tangrams](https://en.wikipedia.org/wiki/Tangram)? Remember how they wo
 I'm working on a large refactor that is composed of two primary layers. Imagine two similar tiles.
 
 {% assign scale = 100 %}
-{% assign rt2 = 1.414 %}
-{% assign invRt2 = 0.707 %}
-{% comment %}
-n.b. that rt2/2 is the same as 1/rt2, though
-{% endcomment %}
 
 <p class="svg-container">
   <svg width="{{ scale }}px" height="{{ scale }}px" viewBox="0 0 1 1">
-    {% capture points %}{{ -1 | divided_by: rt2 | plus: 1 | round: 3 }},1 1,1 1,{{ 1 - (1.0/rt2) }}{% endcapture %}
-    {% include_relative tangram/piece.html id="1-1" class="one" points=points %}
+    {% include_relative tangram/piece.html id="1-1" class="one" points="0.292,1 1,1 1,0.292" %}
   </svg>
 
   <svg width="{{ scale }}px" height="{{ scale }}px" viewBox="0 0 1 1">
-    <use class="two" href="#triangle-large" clip-path="url(#clip-large)"/>
+    {% include_relative tangram/piece.html id="2-1" class="two" points="0,1 1,1 1,0" %}
   </svg>
 </p>
 
@@ -69,20 +63,16 @@ You can arrange these in a variety of ways, some more appealing or easily descri
 
 <p class="svg-container">
   <svg width="{{ scale }}px" height="{{ scale }}px" viewBox="0 0 1 1">
-    {% include_relative tangram/piece.html id="1-1" class="one" points="0,1 1,1 1,0" %}
-    {% include_relative tangram/piece.html id="1-2" class="two" points="0,1 1,1 1,0" %}
+    {% include_relative tangram/piece.html id="3-1" class="one" points="1,0 1,0.707 0.292,0.707" %}
+    {% include_relative tangram/piece.html id="3-2" class="two" points="0,1 0,0 1,0" %}
   </svg>
-  <svg width="200px" height="{{ scale }}px" viewBox="0 0 2 1">
-    <use class="one" href="#triangle-small" clip-path="url(#clip-small)"/>
-    <use class="two" href="#triangle-large" clip-path="url(#clip-large)" transform-origin="1 1" transform="rotate(90)"/>
+  <svg width="{{ scale | times: 2 }}px" height="{{ scale }}px" viewBox="-1 0 2 1">
+    {% include_relative tangram/piece.html id="4-1" class="one" points="0,1 -0.707,1 0,0.292" %}
+    {% include_relative tangram/piece.html id="4-2" class="two" points="0,0 0,1 1,1" %}
   </svg>
-  <svg width="141px" height="141px" viewBox="0 0 1.41 1.41" transform="rotate(-135)">
-    <!-- Use a <g> so that the translation isn't also scaled. -->
-    <g transform="translate(0.205, 0.205)">
-      <!-- It's easier to move this to be flush with the big one by starting with a big one and re-scaling, then moving the already-scaled small one around.  -->
-      <use class="one" href="#triangle-large" clip-path="url(#clip-large)" transform-origin="0.5 0.5" transform="rotate(180) scale(0.707, 0.707)"/>
-    </g>
-    <use class="two" href="#triangle-large" clip-path="url(#clip-large)" transform="translate(0.205, 0.205)"/>
+  <svg width="{{ scale | times: 1.41 | round }}px" height="{{ scale | times: 1.41 | round }}px" viewBox="-0.707 -0.707 1.41 1.41">
+    {% include_relative tangram/piece.html id="5-1" class="one" points="-0.5,0 0.5,0 0,0.5" %}
+    {% include_relative tangram/piece.html id="5-2" class="two" points="-0.707,0 0.707,0 0,-0.707" %}
   </svg>
 </p>
 
@@ -92,8 +82,8 @@ And so it was that I found myself with a software architecture resembling the fi
 
 <p class="svg-container">
   <svg width="{{ scale }}px" height="{{ scale }}px" viewBox="0 0 1 1">
-    <use class="one" href="#triangle-small" clip-path="url(#clip-small)" transform="translate(0 -0.292893)"/>
-    <use class="two" href="#triangle-large" clip-path="url(#clip-large)" transform-origin="0.5 0.5" transform="rotate(180)"/>
+    {% include_relative tangram/piece.html id="6-1" class="one" points="1,0 1,0.707 0.292,0.707" %}
+    {% include_relative tangram/piece.html id="6-2" class="two" points="0,1 0,0 1,0" %}
   </svg>
 </p>
 
@@ -105,10 +95,7 @@ Then I saw the silhouette.
 
 <p class="svg-container">
   <svg width="{{ scale }}px" height="{{ scale }}px" viewBox="0 0 1 1">
-    <polygon
-      class="silhouette"
-      points="0,0 1,0 1,0.707 0.292,0.707 0,1"
-    />
+    {% include_relative tangram/piece.html id="7-1" class="silhouette" points="0,0 1,0 1,0.707 0.292,0.707 0,1" %}
   </svg>
 </p>
 
@@ -116,12 +103,8 @@ You can construct that with these pieces instead.
 
 <p class="svg-container">
   <svg width="{{ scale }}px" height="{{ scale }}px" viewBox="0 0 1 1">
-    <use class="three" href="#rectangle" clip-path="url(#clip-rectangle)"/>
-    <g transform="translate(0, 0.707)">
-      <g transform="scale(0.292, 0.292)">
-        <use class="four" href="#triangle-large" clip-path="url(#clip-large)" transform-origin="0.5 0.5" transform="rotate(180)"/>
-      </g>
-    </g>
+    {% include_relative tangram/piece.html id="8-1" class="three" points="0,0 1,0 1,0.707 0,0.707" %}
+    {% include_relative tangram/piece.html id="8-2" class="four" points="0,0.707 0.292,0.707 0,1" %}
   </svg>
 </p>
 
@@ -130,13 +113,9 @@ Still a little awkward, yes, but the relationship of the silhouette to the const
 Now, should we want to, it's a lot easier to move the <span class="four">hacks</span> around and change the silhouette, since it has relatively little connection to the <span class="three">main body</span>. If we want to make a change to the silhouette for some reason (that is, the system, holistically), we can do it with less effort and more flexibility.
 
 <p class="svg-container">
-  <svg width="158px" height="70px" viewBox="-0.292 0 1.584 0.707">
-    <use class="three" href="#rectangle" clip-path="url(#clip-rectangle)"/>
-    <g transform="translate(1, 0.414)">
-      <g transform="scale(0.292, 0.292)">
-        <use class="four" href="#triangle-large" clip-path="url(#clip-large)" transform-origin="0.5 0.5" transform="rotate(90)"/>
-      </g>
-    </g>
+  <svg width="{{ scale | times: 1.584 | round }}px" height="{{ scale | times: 0.707 | round }}px" viewBox="-0.292 0 1.584 0.707">
+    {% include_relative tangram/piece.html id="9-1" class="three" points="0,0 1,0 1,0.707 0,0.707" %}
+    {% include_relative tangram/piece.html id="9-2" class="four" points="1,0.707 1.292,0.707 1,0.414" %}
   </svg>
 </p>
 
@@ -144,10 +123,8 @@ Now it lies flat.
 
 <p class="svg-container">
   <svg width="{{ scale }}px" height="{{ scale }}px" viewBox="0 0 1 1">
-    <use class="three" href="#rectangle" clip-path="url(#clip-rectangle)" transform="translate(0, 0.292)"/>
-    <g transform="translate(0, -0.207)">
-      <use class="four" href="#triangle-large" clip-path="url(#clip-large)" transform-origin="0.5 0.5" transform="scale(0.292, 0.292) rotate(-135)"/>
-    </g>
+    {% include_relative tangram/piece.html id="10-1" class="three" points="0,1 1,1 1,0.292 0,0.292" %}
+    {% include_relative tangram/piece.html id="10-2" class="four" points="0.292,0.292 0.707,0.292 0.5,0.094" %}
   </svg>
 </p>
 
@@ -156,50 +133,28 @@ Now it lies flat _and_ is symmetrical (though some of it is loosely coupled, in 
 Let's rewind a bit. What if we _did_ put in the effort to move the original tiles around a bit?
 
 <p class="svg-container">
-  <svg width="141px" height="70px" viewBox="0 0 1.414 0.707">
-    <use class="one" href="#triangle-small" clip-path="url(#clip-small)" transform="translate(0.414, -0.292)"/>
-    <g transform="translate(1, -0.5)">
-      <use class="two" href="#triangle-large" clip-path="url(#clip-large)" transform="rotate(45)">
-    </g>
+  <svg width="{{ scale | times: 1.414 | round }}px" height="{{ scale | times: 0.707 | round }}px" viewBox="0 0 1.414 0.707">
+    {% include_relative tangram/piece.html id="11-1" class="one" points="0.707,0.707 1.414,0 1.414,0.707" %}
+    {% include_relative tangram/piece.html id="11-2" class="two" points="0,0 0.707,0.707 1.414,0" %}
   </svg>
 </p>
 
 In a silhouette, that looks like this.
 
 <p class="svg-container">
-  <svg
-    class="silhouette"
-    width="141px"
-    height="70px"
-    viewBox="0 0 1.414 0.707"
-  >
-    <polygon
-      vector-effect="non-scaling-stroke"
-      points="0,0 1.414,0 1.414,0.707 0.707,0.707"
-    />
+  <svg width="{{ scale | times: 1.414 | round }}px" height="{{ scale | times: 0.707 | round }}px" viewBox="0 0 1.414 0.707">
+    {% include_relative tangram/piece.html id="12-1" class="silhouette" points="0,0 1.414,0 1.414,0.707 0.707,0.707" %}
   </svg>
 </p>
 
 You might be able to see where this is going.
 
 <p class="svg-container">
-  <svg
-    class="outline"
-    width="141px"
-    height="70px"
-    viewBox="0 0 1.414 0.707"
-  >
-    <polygon
-      vector-effect="non-scaling-stroke"
-      points="0,0 0.707,0 0.707,0.707"
-    />
-    <polygon
-      vector-effect="non-scaling-stroke"
-      points="0,0 0.707,0, 0.707,0.707, 0,0.707"
-      transform="translate(0.707, 0)"
-    />
+  <svg width="{{ scale | times: 1.414 | round }}px" height="{{ scale | times: 0.707 | round }}px" viewBox="0 0 1.414 0.707">
+    {% include_relative tangram/piece.html id="13-1" class="five" points="0.707,0 1.414,0 1.414,0.707 0.707,0.707" %}
+    {% include_relative tangram/piece.html id="13-2" class="six" points="0,0 0.707,0 0.707,0.707" %}
   </svg>
 </p>
 
-A different architecture! Like the other one, it's not really a two-layer architecture anymore. The precence of the square is an improvement, since squares are even simpler to describe than rectangles. There's still a triangle sticking out the side, but it matches the side of the square perfectly: a good abstraction boundary, perhaps, or a minimally-but-fully-expressive API?
+A different architecture! Like the other one, it's not really a two-layer architecture anymore. The precence of the <span class="six">square</span> is an improvement, since squares are even simpler to describe than rectangles. There's still a <span class="five">triangle</span> sticking out the side, but it matches the side of the <span class="six">square</span> perfectly: a good abstraction boundary, perhaps, or a minimally-but-fully-expressive API?
 
