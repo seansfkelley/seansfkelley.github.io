@@ -123,6 +123,29 @@ body[data-theme=dark] {
   justify-content: space-around;
 }
 
+svg .one,
+svg .two,
+svg .three,
+svg .four {
+  stroke-width: 6px;
+  fill: transparent;
+}
+svg .one {
+  stroke: red;
+}
+svg .two {
+  stroke: green;
+}
+svg .three {
+  stroke: blue;
+}
+svg .four {
+  stroke: yellow;
+}
+svg .silhouette {
+  fill: grey;
+}
+
 svg {
   overflow: visible;
 }
