@@ -119,10 +119,24 @@ body[data-theme=dark] {
 
 .svg-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  margin: 24px 0;
+}
+.svg-container svg:not(:last-child) {
+  margin-bottom: 24px;
 }
 
+@media screen and (min-width: 600px) {
+  .svg-container {
+    flex-direction: row;
+  }
+  .svg-container svg:not(:last-child) {
+    margin-bottom: 0;
+    margin-right: 36px;
+  }
+}
 .one {
   --layer-color: var(--sol-orange);
 }
