@@ -45,12 +45,20 @@ Remember [tangrams](https://en.wikipedia.org/wiki/Tangram)? Remember how they wo
 
 I'm working on a large refactor that is composed of two primary layers. Imagine two similar tiles.
 
+{% assign scale = 100 %}
+{% assign rt2 = 1.414 %}
+{% assign invRt2 = 0.707 %}
+{% comment %}
+n.b. that rt2/2 is the same as 1/rt2, though
+{% endcomment %}
+
 <p class="svg-container">
-  <svg width="100px" height="100px" viewBox="0 0 1 1">
-    <use class="one" href="#triangle-small" clip-path="url(#clip-small)"/>
+  <svg width="{{ scale }}px" height="{{ scale }}px" viewBox="0 0 1 1">
+    {% capture points %}{{ -1 | divided_by: rt2 | plus: 1 | round: 3 }},1 1,1 1,{{ 1 - (1.0/rt2) }}{% endcapture %}
+    {% include_relative tangram/piece.html id="1-1" class="one" points=points %}
   </svg>
 
-  <svg width="100px" height="100px" viewBox="0 0 1 1">
+  <svg width="{{ scale }}px" height="{{ scale }}px" viewBox="0 0 1 1">
     <use class="two" href="#triangle-large" clip-path="url(#clip-large)"/>
   </svg>
 </p>
@@ -60,11 +68,11 @@ Call the left one <span class="one">layer 1</span> and the right one <span class
 You can arrange these in a variety of ways, some more appealing or easily described than others.
 
 <p class="svg-container">
-  <svg width="100px" height="100px" viewBox="0 0 1 1">
-    <use class="one" href="#triangle-small" clip-path="url(#clip-small)" transform="translate(0 -0.292893)"/>
-    <use class="two" href="#triangle-large" clip-path="url(#clip-large)" transform-origin="0.5 0.5" transform="rotate(180)"/>
+  <svg width="{{ scale }}px" height="{{ scale }}px" viewBox="0 0 1 1">
+    {% include_relative tangram/piece.html id="1-1" class="one" points="0,1 1,1 1,0" %}
+    {% include_relative tangram/piece.html id="1-2" class="two" points="0,1 1,1 1,0" %}
   </svg>
-  <svg width="200px" height="100px" viewBox="0 0 2 1">
+  <svg width="200px" height="{{ scale }}px" viewBox="0 0 2 1">
     <use class="one" href="#triangle-small" clip-path="url(#clip-small)"/>
     <use class="two" href="#triangle-large" clip-path="url(#clip-large)" transform-origin="1 1" transform="rotate(90)"/>
   </svg>
@@ -83,7 +91,7 @@ In my case, <span class="one">layer 1</span> is the foundation for <span class="
 And so it was that I found myself with a software architecture resembling the first configuration...
 
 <p class="svg-container">
-  <svg width="100px" height="100px" viewBox="0 0 1 1">
+  <svg width="{{ scale }}px" height="{{ scale }}px" viewBox="0 0 1 1">
     <use class="one" href="#triangle-small" clip-path="url(#clip-small)" transform="translate(0 -0.292893)"/>
     <use class="two" href="#triangle-large" clip-path="url(#clip-large)" transform-origin="0.5 0.5" transform="rotate(180)"/>
   </svg>
@@ -96,7 +104,7 @@ Through years of organic software growth, the shapes had grown into this configu
 Then I saw the silhouette.
 
 <p class="svg-container">
-  <svg width="100px" height="100px" viewBox="0 0 1 1">
+  <svg width="{{ scale }}px" height="{{ scale }}px" viewBox="0 0 1 1">
     <polygon
       class="silhouette"
       points="0,0 1,0 1,0.707 0.292,0.707 0,1"
@@ -107,7 +115,7 @@ Then I saw the silhouette.
 You can construct that with these pieces instead.
 
 <p class="svg-container">
-  <svg width="100px" height="100px" viewBox="0 0 1 1">
+  <svg width="{{ scale }}px" height="{{ scale }}px" viewBox="0 0 1 1">
     <use class="three" href="#rectangle" clip-path="url(#clip-rectangle)"/>
     <g transform="translate(0, 0.707)">
       <g transform="scale(0.292, 0.292)">
@@ -135,7 +143,7 @@ Now, should we want to, it's a lot easier to move the <span class="four">hacks</
 Now it lies flat.
 
 <p class="svg-container">
-  <svg width="100px" height="100px" viewBox="0 0 1 1">
+  <svg width="{{ scale }}px" height="{{ scale }}px" viewBox="0 0 1 1">
     <use class="three" href="#rectangle" clip-path="url(#clip-rectangle)" transform="translate(0, 0.292)"/>
     <g transform="translate(0, -0.207)">
       <use class="four" href="#triangle-large" clip-path="url(#clip-large)" transform-origin="0.5 0.5" transform="scale(0.292, 0.292) rotate(-135)"/>
@@ -148,20 +156,11 @@ Now it lies flat _and_ is symmetrical (though some of it is loosely coupled, in 
 Let's rewind a bit. What if we _did_ put in the effort to move the original tiles around a bit?
 
 <p class="svg-container">
-  <svg
-    class="outline"
-    width="141px"
-    height="70px"
-    viewBox="0 0 1.414 0.707"
-  >
-    <polygon
-      vector-effect="non-scaling-stroke"
-      points="0,0 1.414,0 0.707,0.707"
-    />
-    <polygon
-      vector-effect="non-scaling-stroke"
-      points="1.414,0 0.707,0.707 1.414,0.707"
-    />
+  <svg width="141px" height="70px" viewBox="0 0 1.414 0.707">
+    <use class="one" href="#triangle-small" clip-path="url(#clip-small)" transform="translate(0.414, -0.292)"/>
+    <g transform="translate(1, -0.5)">
+      <use class="two" href="#triangle-large" clip-path="url(#clip-large)" transform="rotate(45)">
+    </g>
   </svg>
 </p>
 
