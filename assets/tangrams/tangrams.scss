@@ -11,21 +11,31 @@
 }
 
 svg {
-  overflow: visible;
-
-  &.outline {
-    polygon {
-      fill: none;
-      stroke-width: 2px;
-      stroke-linejoin: round;
-      stroke: var(--text-color-faded);
-    }
+  .one,
+  .two,
+  .three,
+  .four {
+    stroke-width: 6px;
+    fill: transparent;
   }
 
-  &.silhouette {
-    polygon {
-      fill: var(--text-color-faded);
-      stroke: none;
-    }
+  .one {
+    stroke: red;
+  }
+
+  .two {
+    stroke: green;
+  }
+
+  .three {
+    stroke: blue;
+  }
+
+  .four {
+    stroke: yellow;
+  }
+
+  .silhouette {
+    fill: grey;
   }
 }
