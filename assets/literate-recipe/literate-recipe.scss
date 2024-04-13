@@ -46,7 +46,6 @@ header.recipe-step {
 
     input[type="button"] {
       margin-left: auto;
-      opacity: 0;
       transition: opacity 100ms;
     }
 
@@ -59,9 +58,9 @@ header.recipe-step {
     opacity: 1;
   }
 
-  @media screen and (max-width: $width-mobile) {
+  @media screen and (min-width: $width-mobile) {
     .metadata input[type="button"] {
-      opacity: 1;
+      opacity: 0;
     }
   }
 }

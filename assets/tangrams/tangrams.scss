@@ -6,8 +6,25 @@
 
 .svg-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  margin: ($spacing * 2) 0;
+
+  svg:not(:last-child) {
+    margin-bottom: $spacing * 2;
+  }
+}
+
+@media screen and (min-width: $width-mobile) {
+  .svg-container {
+    flex-direction: row;
+
+    svg:not(:last-child) {
+      margin-bottom: 0;
+      margin-right: $spacing * 3;
+    }
+  }
 }
 
 .one {
