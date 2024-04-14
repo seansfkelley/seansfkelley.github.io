@@ -3,6 +3,8 @@ layout: post
 title: Let's Use Hardware Subscriptions for Good
 ---
 
+TODO: random honking sounds (with mute button)
+
 One early morning in NYC I saw someone honk for some time at apparently nothing, and it got me thinking: this driver is cocooned in their brand new Mercedes station wagon and in total control of when and where to blast their negativity outwards, but the people that live on that street likely have to suffer small offenses to their sanity and sound environment on a daily basis through no fault of their own. It's a mental health hit-and-run, perpetrated one honk at a time.
 
 In all my life I can think of precisely one situation in which I have seen honking used for its purported safety benefits, namely, warning people coming around blind curves. Those don't exist in NYC.
