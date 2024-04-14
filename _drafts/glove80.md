@@ -15,17 +15,19 @@ Most of the thoughts I have below will be on the relative differences between th
 
 ### Feel
 
-The keyboard halves are very light, and you can feel it even when they're on the table. When I switch back to the ErgoDox, the key travel, bottoming out and general heft is considerably more satisfying and stable. The Glove80's low profile switches and keykaps rattle slightly when you move the keyboard around, and when you go back to a heavier keyboard you realize that the it doesn't dampen the vibrations from tapping at all.
+**The keyboard halves are very light, and you can feel it even when they're on the table.** When you go back to a heavier keyboard you realize that the Glove80 doesn't dampen the vibrations from tapping at all.
 
-The low profile keys do not bottom out in the same way that full-size keycaps do. This is obvious in retrospect, but I've never had them before. My ErgoDox has [Cherry MX Browns](https://www.cherry-world.com/mx2a-brown) because the bottoming out makes them a nice amount of clacky without being too obnoxious. The [Kailh Choc v1 Browns](https://chosfox.com/products/kailh-chocs?variant=42514647646402)[^1] I have on the Glove80 are almost completely silent, which is more practical but also a bummer. I would have considered the clicky Blues to make up for it had I known this.
+**The low profile switches and keycaps rattle slightly when you move the keyboard around.**
+
+**The low profile keys do not bottom out in the same way that full-size keycaps do.** When I switch back to the ErgoDox, the key travel, bottoming out and general heft is considerably more satisfying and stable. This is obvious in retrospect, but I've never had a low profile keyboard before. My ErgoDox has [Cherry MX Browns](https://www.cherry-world.com/mx2a-brown) because the bottoming out makes them a nice amount of clacky without being too obnoxious. The [Kailh Choc v1 Browns](https://chosfox.com/products/kailh-chocs?variant=42514647646402)[^1] I have on the Glove80 are almost completely silent, which is more practical but also a bummer. I would have considered the clicky Blues to make up for it had I known this.
 
 [^1]: I'm guessing from the "v1" that this is an older model. They aren't listed on the Kailh site at all and I only found a few places online that sold them.
 
 ### Build Quality
 
-The build does feel a bit cheap given the cost. I accidentally dropped one half a couple inches onto the desk and now there are permanently dulled corners with obvious damage. Why didn't they just bevel it like the ErgoDox edges? Pieces of the case aren't completely flush with one another, though that's on the bottom side so you never actually see it.
+**The build does feel a bit cheap given the cost.** I accidentally dropped one half a couple inches onto the desk and now there are permanently dulled corners with obvious damage. Why didn't they just bevel it like the ErgoDox edges? Pieces of the case aren't completely flush with one another, though that's on the bottom side so you never actually see it.
 
-The case that it comes with is very nice, if bulky. The two halves fit very snugly into their molded holders and there's a little room to spare for replacement parts and the relevant tools (like the keycap puller).
+**The case that it comes with is very nice, if bulky.** The two halves fit very snugly into their molded holders and there's a little room to spare for replacement parts and the relevant tools (like the keycap puller).
 
 ### Durability
 
@@ -37,13 +39,13 @@ I would think twice before putting the keyboard directly in a backpack or duffel
 
 I really like that it's only exactly as large as needed to pack in all the keys. Whenever I switch back to the ErgoDox, it feels like an ungainly behemoth -- does it really need an extra inch all th way around all the edges? The small size does make travel more tempting, despite the durability question. It also makes the case feel even more ridiculously large.
 
-I have large hands, and the integration wrist rests are too small. I actually usually use the ErgoDox big rubber bricks so I can place them just where I need to. The rubber is also grippier, which matters as soon as your hands start sweating even a little bit and sliding off the smooth integrated wrist rests that come with it.
+I have large hands, and the integrated wrist rests are too small. I actually usually use the ErgoDox big rubber bricks so I can place them just where I need to. The rubber is also grippier, which matters as soon as your hands start sweating even a little bit and sliding off the smooth integrated wrist rests that come with it.
 
 ### Layout
 
 This is the first concave keyboard I've owned. I think I like it, but even after a few weeks I'm still not sure. I still often hit adjacent keys because they are unexpectedly close to each other, though more often when programming and using symbol keys heavily, so it could be my keymap at fault. I never miss a key on the ErgoDox.
 
-The thumb clusters are for sure a major improvement, though they still don't solve the problem completely. On the ErgoDox, you functionally have three thumb keys. The farther three are so distant that I honestly don't know why they even exist -- you have to lift your hand considerably to even reach them, so they're very slow and easy to miss. Compare the Glove80: the top three keys are reachable with a slight lift so can be used for uncommon keys that you still don't want to put on a layer, like Escape. But you still have to plan your keymap around only three thumb keys in frequent use.
+The thumb clusters are for sure a major improvement, though they still don't solve the problems from the ErgoDox completely. On the ErgoDox, you functionally have three thumb keys. The farther three are so distant that I honestly don't know why they even exist -- you have to lift your hand considerably to even reach them, so they're very slow and easy to miss. Compare the Glove80: the top three keys are reachable with a slight lift so can be used for uncommon keys that you still don't want to put on a layer, like Escape. But you still have to plan your keymap around only three thumb keys in frequent use.
 
 At first I missed the extra column on the inside edge of the ErgoDox, but I've come to appreciate the symmetry that comes with having only one extra column on each edge. I only had a couple bindings in that column and they were inconvenient enough that I only used one of them regularly. I feel the same way about the top row: it requires too much of a stretch, so I haven't bound anything there.
 

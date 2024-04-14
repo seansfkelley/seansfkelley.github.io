@@ -7,7 +7,7 @@ Years ago, I broke my social media habits almost completely. The one allowance I
 
 I'd been souring on it recently for a combination of reasons, but this morning I saw [a comment](link) that finally broke the camel's back. The comment was rightfully flagged and made hidden by default, so here's a screenshot.
 
-[include link to the article in question]
+https://www.vulture.com/2017/10/why-is-blade-runner-the-title-of-blade-runner.html
 
 [screenshot]
 

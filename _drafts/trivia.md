@@ -3,20 +3,58 @@ layout: post
 title: What Makes Good Trivia?
 ---
 
-I spent several years developing a trivia habit. Or rather, it took several years of me trying out different bar trivias to find the one I want. But I can't go to that one anymore, so I was recently forced to try a new one out. It was perhaps the most un-fun trivia experience I can remember, but the difference between what I had come to love and what I just experienced was large enough that it spurred some thoughts.
+I spent several years developing a trivia habit. Or rather, it took several years of me trying out different bar trivias to find one I really like. When I'm out of town I'll try out the local trivia, or even when I'm not, I'll sometimes go see what other bars are putting on near where I live.
 
-In no particular order, here are some opinions on what makes good trivia.
+And so: I went to one recently that was so un-fun I left part way through. It really helped put into focus what it is about my local place that I like. These are my observations about what makes good bar trivia, in no particular order.
 
-**Scoring entire rounds at once.** This trivia scored (and announced the answer to) each question individually. This meant that there was constant time pressure to keep the trivia on track, which turned it from a semi-structured shit-shooting activity with friends into a full-on exam. It also cut off entirely the opportunity to really, really get into those obtuse questions and guess at each other until you jog your memory finally and get the right answer.
+An important disclaimer: while I like winning and I like being right, I also go to trivia to see my friends. Trivia leagues are... fine. Some are done better than others. Many of the observations here can apply equally well to casual as well as serious trivia.
 
-**Asking locally-relevant versions of questions.** I was onced asked a question about something that had happened to Steph Curry a week or so before. I had no idea what it was because I don't follow basketball, but it was definitely my fault because I was in San Francisco and Steph Curry is an important part of the culture.
+### Score entire rounds at once.
 
-At this new trivia, I was asked a question about who took Brett Favre's place in a game in 2007. Not only was that 14 years out of date, but it was for a team thousands of miles away. I didn't consider the fact that I got it wrong my fault,even though every football fan considers it obvious.
+Like a good crossword puzzle, a good trivia round may not be solveable top-to-bottom on the first try. Ask 10 questions, write 10 answers, score 10 answers. Scoring every question as you go introduces a lot of time pressure and sucks out a lot of the fun of rooting around in your subconscious for the answer. It feels like an exam, except that even exams don't do this.
+
+Scoring-as-you-go also eliminates the possibility of being able to figure out a round's theme (if present), and then go back and cross-check your answers against the theme. This makes theme rounds more of a chore and less of a reward.
+
+### Ask locally-relevant versions of questions.
+
+I was onced asked a question about something that had happened to Steph Curry a week or so before. I had no idea what it was because I don't follow basketball, but it was definitely my fault because I was in San Francisco.
+
+At the un-fun trivia, I was asked a question about who took Brett Favre's place in a game in 2007. Not only was that 17 years out of date, but it was for a team thousands of miles away. I didn't consider the fact that I got it wrong my fault, even though every football fan considers it obvious.
 
 The distinction I'm trying to make here is that the Steph Curry question isn't purely a sports question. It's also asking "do you pay attention to things that are important to people around you, even if they aren't important to you?" The Brett Favre question, by contrast, is a curt "do you watch football?". The former is both much more engaging in its flavor and delivery, and gives a glimmer of hope to those who aren't basketball fans.
 
-**Proving context, or, jogging your memory versus straight recall.** The three-part questions, for example. They also give you something to latch onto if you don't immediately know the answer.
+(Yes, I understand these are different sports, but in trivia, all sports are generally considered to be a single category together. Kind of like all history is one category.)
 
-**Paper, not phone.** If I'm on my phone, I'm not with my friends. I could even do the trivia from home. Less is very much more in this case.
+### Provide context instead of just stating the question outright.
+
+Given an answer, there are are million versions of a trivia question that can get there. So instead of choosing something short and dry -- "Who played the title role in the 1992 movie Bram Stoker's Dracula?" -- give people who aren't simply encyclopedias something to latch onto to feel like they have a fighting chance of deducing the answer indirectly: "Born in 1958, which English actor often described as a chameleon played the title role in 1992's Bram Stoker's Dracula?"
+
+(That would be Gary Oldman, by the way. My go-to example of a chameleon of an actor.)
+
+### Use paper, not a phone.
+
+I'm here to hang out at a bar and participate in a group activity. Don't make me look at my own phone, which is part of what I'm trying to avoid by being out of the house and around other people. If I can do it on my phone, why am I even here? Let's just do trivia alone at home.
+
+Less is more, in this case. Plus, scoring paper forces a natural lull, so the trivia isn't an endless assault of questions where you're afraid to even leave to go to the bathroom. (You could do that with phone-based trivia too, but it seems like the temptation to accelerate is usually given into.)
+
+### Don't make the spelling count.
+
+It's trivia, not a spelling bee. What if you know the answer, but have never seen it written down, like some famous person's unusual name? Penalizing that is not fun, it's just hostile.
+
+If we're talking Serious Business trivia, there is an argument to be made that the correct spelling is an easily-drawn, non-controversial line for where the points are awarded and where they are not. To which I say: if a question's answer's spelling is not excruciatingly obvious (i.e. common English words) _and_ isn't well-known enough in its written form such that knowing the fact is knowing the spelling, it's a bad question. Not every question with a clear answer can be a trivia question.
+
+### Most rounds should have a bare minimum of theme.
+
+Trivia that is constantly swinging violently between pop culture, history, geography, science, etc., gets tiring. Everyone is on high alert all the time, and you rob people of the opportunity to get in the groove because the theme happens to be something they know a bit about.
+
+It doesn't have to be a strong theme. "Current events" is a fine theme. It means: I read the news relatively recently, and now I should focus on dredging up all the stuff I remember seeing in the last couple weeks. It gives a light sense of focus without excluding most participants.
+
+Note also the "most". It's okay to have a general round or two. Put it between stronger theme rounds as a break, or at the beginning as a warmup. The point is to work with the round-based structure of trivia instead of having a wall of undifferentiated questions that are arbitrarily grouped into sets of 8 or 10 or 12 with no rhyme or reason.
+
+### Mix up the question formats.
+
+Continuing on the topic of avoiding an undifferentiated mass of questions: mix up the formats. It doesn't need to be wild, out-of-the-box multimedia nonense, but switching out the picture round for a matching round, or asking categories questions, or having indirect, weird themes can all go a long way towards freshening up the trivia
+
+### something something summary
 
 Taken together, one might say that these are a variety of ways to say "trivia is fun when it's easier". To some degree, that's true -- it's less fun to lose, but it's really anti-fun to lose by a lot or even to feel like you never had a chance. And anyway, what is the point of _hard_ trivia? I see only two: to make the winners feel better, and to clearly separate the winners from the losers. To the first point: who cares. To the second point: this can be done in a way that is more flavorful and engaging for the losers, such as by sprinkling only a couple really hard questions in among the regular ones. You also don't need huge margins to separate the winner. And to remember that bar trivia's first goal is to be fun, not to find the best team.
