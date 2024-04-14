@@ -84,11 +84,13 @@
 
 <p>The smaller shape represents the underlying domain-agnostic framework for the whole system. Call it the <span class="one">foundation</span>. The larger one is where all the business rules and domain logic lives. Call it the <span class="two">specialization</span>.</p>
 
-<p>In this analogy, the <span class="one">foundation</span> sort-of supports the <span class="two">specialization</span> in that it’s mostly on the bottom, but parts of it end up pretty high up where it probably shouldn’t be. The pointy bit that sticks out on the bottom is where the <span class="two">specialization</span> bypasses the <span class="one">foundation</span> completely. The entire system is top-heavy and doesn’t sit flat, which makes it unstable.</p>
+<p>This shape looks unstable and un-elegant. In this analogy, the <span class="one">foundation</span> sort-of supports the <span class="two">specialization</span> in that it’s mostly on the bottom, but parts of it end up pretty high up where a “<span class="one">foundation</span>” probably shouldn’t reach. On the other end, the pointy bit that sticks out on the bottom is where the <span class="two">specialization</span> bypasses the <span class="one">foundation</span> completely, which suggests the <span class="one">foundation</span> isn’t providing what the <span class="two">specialization</span> needs. Plus, the entire system doesn’t sit flat.</p>
 
-<p>Through years of organic software growth, these two systems had grown together into this un-elegant configuration that was difficult to change without risking even more instability.</p>
+<p>Through years of organic software growth, these two systems had grown together into this configuration that was difficult to change without risking even more instability.</p>
 
-<p>Trying to shift the <span class="two">specialization</span> higher up without fundamentally changing it, so that the <span class="one">foundation</span> could at least actually serve as the base and the whole thing could sit flat, was a lot of work against gravity (if you’ll permit the mixed metaphors) and still ends up with pointy bits sticking out.</p>
+<p>I considered a few methods to rearrange the shapes that could resolve the instability and awkwardness.</p>
+
+<p>Trying to shift the <span class="two">specialization</span> higher up without fundamentally changing its shape, so that the <span class="one">foundation</span> could at least actually serve as the base and the whole thing could sit flat, was a lot of work against gravity (if you’ll permit the mixed metaphors) and still ends up with pointy bits sticking out, just elsewhere.</p>
 
 <p class="svg-container">
   <svg width="100px" height="100px" viewBox="0 0 1 1">
@@ -97,7 +99,16 @@
   </svg>
 </p>
 
-<p>Moving entire pieces from one side to the other, like the first images I showed you, would be a lot of effort for little gain. So I thought outside the box a bit: I could shift responsibility from the <span class="two">specialization</span> to the <span class="one">foundation</span> to make the entire system bottom-heavy again. This would still require moving a lot of mass around, even if it isn’t going very far. And it isn’t even clear if this is an improvement.</p>
+<p>Moving entire pieces from one side to the other, like this example from earlier, would be a lot of effort for little gain.</p>
+
+<p class="svg-container">
+  <svg width="171px" height="100px" viewBox="-0.707 0 1.707 1">
+    <polygon class="one" points="0,1 -0.707,1 0,0.292" />
+    <polygon class="two" points="0,0 0,1 1,1" />
+  </svg>
+</p>
+
+<p>I tried to think outside the box a bit: I could shift responsibility from the <span class="two">specialization</span> to the <span class="one">foundation</span> to make the entire system bottom-heavy again. This would still require moving a lot of mass around, even if it isn’t going very far. And it isn’t even clear if this is a meaningful improvement.</p>
 
 <p class="svg-container">
   <svg width="100px" height="100px" viewBox="0 0 1 1">

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-04-14T03:17:39+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Refactoring with Tangrams</title><link href="https://blog.sea.nkelley.me/2024/04/13/tangrams/" rel="alternate" type="text/html" title="Refactoring with Tangrams" /><published>2024-04-13T00:00:00+00:00</published><updated>2024-04-13T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/04/13/tangrams</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/04/13/tangrams/">&lt;p&gt;Remember &lt;a href=&quot;https://en.wikipedia.org/wiki/Tangram&quot;&gt;tangrams&lt;/a&gt;? Remember how they would mess with your intuition, that the &lt;a href=&quot;https://en.wikipedia.org/wiki/Tangram#Paradoxes&quot;&gt;silhouettes they drew seemed to lie&lt;/a&gt;?&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-04-14T05:16:30+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Refactoring with Tangrams</title><link href="https://blog.sea.nkelley.me/2024/04/13/tangrams/" rel="alternate" type="text/html" title="Refactoring with Tangrams" /><published>2024-04-13T00:00:00+00:00</published><updated>2024-04-13T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/04/13/tangrams</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/04/13/tangrams/">&lt;p&gt;Remember &lt;a href=&quot;https://en.wikipedia.org/wiki/Tangram&quot;&gt;tangrams&lt;/a&gt;? Remember how they would mess with your intuition, that the &lt;a href=&quot;https://en.wikipedia.org/wiki/Tangram#Paradoxes&quot;&gt;silhouettes they drew seemed to lie&lt;/a&gt;?&lt;/p&gt;
 
 &lt;p&gt;I’m working on a large refactor that is composed of two similarly-sized and similarly-structured systems. Let’s imagine these systems as two similar tangram tiles.&lt;/p&gt;
 
@@ -40,11 +40,13 @@
 
 &lt;p&gt;The smaller shape represents the underlying domain-agnostic framework for the whole system. Call it the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt;. The larger one is where all the business rules and domain logic lives. Call it the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt;.&lt;/p&gt;
 
-&lt;p&gt;In this analogy, the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt; sort-of supports the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt; in that it’s mostly on the bottom, but parts of it end up pretty high up where it probably shouldn’t be. The pointy bit that sticks out on the bottom is where the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt; bypasses the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt; completely. The entire system is top-heavy and doesn’t sit flat, which makes it unstable.&lt;/p&gt;
+&lt;p&gt;This shape looks unstable and un-elegant. In this analogy, the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt; sort-of supports the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt; in that it’s mostly on the bottom, but parts of it end up pretty high up where a “&lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt;” probably shouldn’t reach. On the other end, the pointy bit that sticks out on the bottom is where the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt; bypasses the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt; completely, which suggests the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt; isn’t providing what the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt; needs. Plus, the entire system doesn’t sit flat.&lt;/p&gt;
 
-&lt;p&gt;Through years of organic software growth, these two systems had grown together into this un-elegant configuration that was difficult to change without risking even more instability.&lt;/p&gt;
+&lt;p&gt;Through years of organic software growth, these two systems had grown together into this configuration that was difficult to change without risking even more instability.&lt;/p&gt;
 
-&lt;p&gt;Trying to shift the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt; higher up without fundamentally changing it, so that the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt; could at least actually serve as the base and the whole thing could sit flat, was a lot of work against gravity (if you’ll permit the mixed metaphors) and still ends up with pointy bits sticking out.&lt;/p&gt;
+&lt;p&gt;I considered a few methods to rearrange the shapes that could resolve the instability and awkwardness.&lt;/p&gt;
+
+&lt;p&gt;Trying to shift the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt; higher up without fundamentally changing its shape, so that the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt; could at least actually serve as the base and the whole thing could sit flat, was a lot of work against gravity (if you’ll permit the mixed metaphors) and still ends up with pointy bits sticking out, just elsewhere.&lt;/p&gt;
 
 &lt;p class=&quot;svg-container&quot;&gt;
   &lt;svg width=&quot;100px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 1 1&quot;&gt;
@@ -53,7 +55,16 @@
   &lt;/svg&gt;
 &lt;/p&gt;
 
-&lt;p&gt;Moving entire pieces from one side to the other, like the first images I showed you, would be a lot of effort for little gain. So I thought outside the box a bit: I could shift responsibility from the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt; to the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt; to make the entire system bottom-heavy again. This would still require moving a lot of mass around, even if it isn’t going very far. And it isn’t even clear if this is an improvement.&lt;/p&gt;
+&lt;p&gt;Moving entire pieces from one side to the other, like this example from earlier, would be a lot of effort for little gain.&lt;/p&gt;
+
+&lt;p class=&quot;svg-container&quot;&gt;
+  &lt;svg width=&quot;171px&quot; height=&quot;100px&quot; viewBox=&quot;-0.707 0 1.707 1&quot;&gt;
+    &lt;polygon class=&quot;one&quot; points=&quot;0,1 -0.707,1 0,0.292&quot; /&gt;
+    &lt;polygon class=&quot;two&quot; points=&quot;0,0 0,1 1,1&quot; /&gt;
+  &lt;/svg&gt;
+&lt;/p&gt;
+
+&lt;p&gt;I tried to think outside the box a bit: I could shift responsibility from the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt; to the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt; to make the entire system bottom-heavy again. This would still require moving a lot of mass around, even if it isn’t going very far. And it isn’t even clear if this is a meaningful improvement.&lt;/p&gt;
 
 &lt;p class=&quot;svg-container&quot;&gt;
   &lt;svg width=&quot;100px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 1 1&quot;&gt;
