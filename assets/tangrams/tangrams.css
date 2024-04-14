@@ -161,25 +161,14 @@ body[data-theme=dark] {
   --layer-color: var(--sol-red);
 }
 
-span.one,
-span.two,
-span.three,
-span.four,
-span.five,
-span.six {
+.silhouette {
+  --layer-color: var(--text-color-faded);
+}
+
+span {
   color: var(--layer-color);
 }
 
-svg .one,
-svg .two,
-svg .three,
-svg .four,
-svg .five,
-svg .six {
-  stroke-width: 8px;
-  stroke: var(--layer-color);
-  fill: transparent;
-}
-svg .silhouette {
-  fill: var(--text-color-faded);
+svg polygon {
+  fill: var(--layer-color);
 }

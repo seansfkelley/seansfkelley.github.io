@@ -1,24 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-04-13T22:38:36+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Refactoring with Tangrams</title><link href="https://blog.sea.nkelley.me/2024/04/13/tangrams/" rel="alternate" type="text/html" title="Refactoring with Tangrams" /><published>2024-04-13T00:00:00+00:00</published><updated>2024-04-13T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/04/13/tangrams</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/04/13/tangrams/">&lt;p&gt;Remember &lt;a href=&quot;https://en.wikipedia.org/wiki/Tangram&quot;&gt;tangrams&lt;/a&gt;? Remember how they would mess with your intuition, that the &lt;a href=&quot;https://en.wikipedia.org/wiki/Tangram#Paradoxes&quot;&gt;silhouettes they drew seemed to lie&lt;/a&gt;?&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-04-14T03:17:39+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Refactoring with Tangrams</title><link href="https://blog.sea.nkelley.me/2024/04/13/tangrams/" rel="alternate" type="text/html" title="Refactoring with Tangrams" /><published>2024-04-13T00:00:00+00:00</published><updated>2024-04-13T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/04/13/tangrams</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/04/13/tangrams/">&lt;p&gt;Remember &lt;a href=&quot;https://en.wikipedia.org/wiki/Tangram&quot;&gt;tangrams&lt;/a&gt;? Remember how they would mess with your intuition, that the &lt;a href=&quot;https://en.wikipedia.org/wiki/Tangram#Paradoxes&quot;&gt;silhouettes they drew seemed to lie&lt;/a&gt;?&lt;/p&gt;
 
-&lt;p&gt;I’m working on a large refactor that is composed of two similarly-sized and similarly-structured systems. Imagine two similar tiles.&lt;/p&gt;
+&lt;p&gt;I’m working on a large refactor that is composed of two similarly-sized and similarly-structured systems. Let’s imagine these systems as two similar tangram tiles.&lt;/p&gt;
 
 &lt;p class=&quot;svg-container&quot;&gt;
   &lt;svg width=&quot;71px&quot; height=&quot;71px&quot; viewBox=&quot;0 0 0.707 0.707&quot;&gt;
-    0
-&lt;polygon id=&quot;1&quot; class=&quot;one&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0.707 0.707,0.707 0.707,0&quot; clip-path=&quot;url(#clip-1)&quot; /&gt;
-&lt;clipPath id=&quot;clip-1&quot;&gt;
-  &lt;use href=&quot;#1&quot; /&gt;
-&lt;/clipPath&gt;
-
+    &lt;polygon class=&quot;one&quot; points=&quot;0,0.707 0.707,0.707 0.707,0&quot; /&gt;
   &lt;/svg&gt;
 
   &lt;svg width=&quot;100px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 1 1&quot;&gt;
-    1
-&lt;polygon id=&quot;2&quot; class=&quot;two&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,1 1,1 1,0&quot; clip-path=&quot;url(#clip-2)&quot; /&gt;
-&lt;clipPath id=&quot;clip-2&quot;&gt;
-  &lt;use href=&quot;#2&quot; /&gt;
-&lt;/clipPath&gt;
-
+    &lt;polygon class=&quot;two&quot; points=&quot;0,1 1,1 1,0&quot; /&gt;
   &lt;/svg&gt;
 &lt;/p&gt;
 
@@ -26,46 +16,16 @@
 
 &lt;p class=&quot;svg-container&quot;&gt;
   &lt;svg width=&quot;150px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 1.5 1&quot;&gt;
-    2
-&lt;polygon id=&quot;3&quot; class=&quot;one&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;1,0 1,1 1.5 0.5&quot; clip-path=&quot;url(#clip-3)&quot; /&gt;
-&lt;clipPath id=&quot;clip-3&quot;&gt;
-  &lt;use href=&quot;#3&quot; /&gt;
-&lt;/clipPath&gt;
-
-    3
-&lt;polygon id=&quot;4&quot; class=&quot;two&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 1,0 1,1&quot; clip-path=&quot;url(#clip-4)&quot; /&gt;
-&lt;clipPath id=&quot;clip-4&quot;&gt;
-  &lt;use href=&quot;#4&quot; /&gt;
-&lt;/clipPath&gt;
-
+    &lt;polygon class=&quot;one&quot; points=&quot;1,0 1,1 1.5 0.5&quot; /&gt;
+    &lt;polygon class=&quot;two&quot; points=&quot;0,0 1,0 1,1&quot; /&gt;
   &lt;/svg&gt;
   &lt;svg width=&quot;171px&quot; height=&quot;100px&quot; viewBox=&quot;-0.707 0 1.707 1&quot;&gt;
-    4
-&lt;polygon id=&quot;5&quot; class=&quot;one&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,1 -0.707,1 0,0.292&quot; clip-path=&quot;url(#clip-5)&quot; /&gt;
-&lt;clipPath id=&quot;clip-5&quot;&gt;
-  &lt;use href=&quot;#5&quot; /&gt;
-&lt;/clipPath&gt;
-
-    5
-&lt;polygon id=&quot;6&quot; class=&quot;two&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 0,1 1,1&quot; clip-path=&quot;url(#clip-6)&quot; /&gt;
-&lt;clipPath id=&quot;clip-6&quot;&gt;
-  &lt;use href=&quot;#6&quot; /&gt;
-&lt;/clipPath&gt;
-
+    &lt;polygon class=&quot;one&quot; points=&quot;0,1 -0.707,1 0,0.292&quot; /&gt;
+    &lt;polygon class=&quot;two&quot; points=&quot;0,0 0,1 1,1&quot; /&gt;
   &lt;/svg&gt;
   &lt;svg width=&quot;141px&quot; height=&quot;121px&quot; viewBox=&quot;-0.707 -0.707 1.414 1.207&quot;&gt;
-    6
-&lt;polygon id=&quot;7&quot; class=&quot;one&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;-0.5,0 0.5,0 0,0.5&quot; clip-path=&quot;url(#clip-7)&quot; /&gt;
-&lt;clipPath id=&quot;clip-7&quot;&gt;
-  &lt;use href=&quot;#7&quot; /&gt;
-&lt;/clipPath&gt;
-
-    7
-&lt;polygon id=&quot;8&quot; class=&quot;two&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;-0.707,0 0.707,0 0,-0.707&quot; clip-path=&quot;url(#clip-8)&quot; /&gt;
-&lt;clipPath id=&quot;clip-8&quot;&gt;
-  &lt;use href=&quot;#8&quot; /&gt;
-&lt;/clipPath&gt;
-
+    &lt;polygon class=&quot;one&quot; points=&quot;-0.5,0 0.5,0 0,0.5&quot; /&gt;
+    &lt;polygon class=&quot;two&quot; points=&quot;-0.707,0 0.707,0 0,-0.707&quot; /&gt;
   &lt;/svg&gt;
 &lt;/p&gt;
 
@@ -73,22 +33,12 @@
 
 &lt;p class=&quot;svg-container&quot;&gt;
   &lt;svg width=&quot;100px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 1 1&quot;&gt;
-    8
-&lt;polygon id=&quot;9&quot; class=&quot;one&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;1,0 1,0.707 0.292,0.707&quot; clip-path=&quot;url(#clip-9)&quot; /&gt;
-&lt;clipPath id=&quot;clip-9&quot;&gt;
-  &lt;use href=&quot;#9&quot; /&gt;
-&lt;/clipPath&gt;
-
-    9
-&lt;polygon id=&quot;10&quot; class=&quot;two&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,1 0,0 1,0&quot; clip-path=&quot;url(#clip-10)&quot; /&gt;
-&lt;clipPath id=&quot;clip-10&quot;&gt;
-  &lt;use href=&quot;#10&quot; /&gt;
-&lt;/clipPath&gt;
-
+    &lt;polygon class=&quot;one&quot; points=&quot;1,0 1,0.707 0.292,0.707&quot; /&gt;
+    &lt;polygon class=&quot;two&quot; points=&quot;0,1 0,0 1,0&quot; /&gt;
   &lt;/svg&gt;
 &lt;/p&gt;
 
-&lt;p&gt;The smaller shape represents the underlying framework for the whole system. Call it the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt;. The larger one is where all the domain logic lives. Call it the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;The smaller shape represents the underlying domain-agnostic framework for the whole system. Call it the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt;. The larger one is where all the business rules and domain logic lives. Call it the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt;.&lt;/p&gt;
 
 &lt;p&gt;In this analogy, the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt; sort-of supports the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt; in that it’s mostly on the bottom, but parts of it end up pretty high up where it probably shouldn’t be. The pointy bit that sticks out on the bottom is where the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt; bypasses the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt; completely. The entire system is top-heavy and doesn’t sit flat, which makes it unstable.&lt;/p&gt;
 
@@ -98,37 +48,17 @@
 
 &lt;p class=&quot;svg-container&quot;&gt;
   &lt;svg width=&quot;100px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 1 1&quot;&gt;
-    10
-&lt;polygon id=&quot;11&quot; class=&quot;one&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,1 0.707,1 0.707,0.292&quot; clip-path=&quot;url(#clip-11)&quot; /&gt;
-&lt;clipPath id=&quot;clip-11&quot;&gt;
-  &lt;use href=&quot;#11&quot; /&gt;
-&lt;/clipPath&gt;
-
-    11
-&lt;polygon id=&quot;12&quot; class=&quot;two&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 0,1 1,0&quot; clip-path=&quot;url(#clip-12)&quot; /&gt;
-&lt;clipPath id=&quot;clip-12&quot;&gt;
-  &lt;use href=&quot;#12&quot; /&gt;
-&lt;/clipPath&gt;
-
+    &lt;polygon class=&quot;one&quot; points=&quot;0,1 0.707,1 0.707,0.292&quot; /&gt;
+    &lt;polygon class=&quot;two&quot; points=&quot;0,0 0,1 1,0&quot; /&gt;
   &lt;/svg&gt;
 &lt;/p&gt;
 
-&lt;p&gt;Moving entire pieces from one side to the other, like the first images I showed you, would be a lot of effort for little gain. So I thought outside the box a bit: I could shift responsibilty from the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt; to the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt; to make the entire system bottom-heavy again. This would still require moving a lot of mass around, even if it isn’t going very far. And it isn’t even clear if this is an improvement.&lt;/p&gt;
+&lt;p&gt;Moving entire pieces from one side to the other, like the first images I showed you, would be a lot of effort for little gain. So I thought outside the box a bit: I could shift responsibility from the &lt;span class=&quot;two&quot;&gt;specialization&lt;/span&gt; to the &lt;span class=&quot;one&quot;&gt;foundation&lt;/span&gt; to make the entire system bottom-heavy again. This would still require moving a lot of mass around, even if it isn’t going very far. And it isn’t even clear if this is an improvement.&lt;/p&gt;
 
 &lt;p class=&quot;svg-container&quot;&gt;
   &lt;svg width=&quot;100px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 1 1&quot;&gt;
-    12
-&lt;polygon id=&quot;13&quot; class=&quot;one&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,1 1,1 1,0&quot; clip-path=&quot;url(#clip-13)&quot; /&gt;
-&lt;clipPath id=&quot;clip-13&quot;&gt;
-  &lt;use href=&quot;#13&quot; /&gt;
-&lt;/clipPath&gt;
-
-    13
-&lt;polygon id=&quot;14&quot; class=&quot;two&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,1 0,0.292 0.707,0.292&quot; clip-path=&quot;url(#clip-14)&quot; /&gt;
-&lt;clipPath id=&quot;clip-14&quot;&gt;
-  &lt;use href=&quot;#14&quot; /&gt;
-&lt;/clipPath&gt;
-
+    &lt;polygon class=&quot;one&quot; points=&quot;0,1 1,1 1,0&quot; /&gt;
+    &lt;polygon class=&quot;two&quot; points=&quot;0,1 0,0.292 0.707,0.292&quot; /&gt;
   &lt;/svg&gt;
 &lt;/p&gt;
 
@@ -136,18 +66,8 @@
 
 &lt;p class=&quot;svg-container&quot;&gt;
   &lt;svg width=&quot;100px&quot; height=&quot;71px&quot; viewBox=&quot;0 0 1 0.707&quot;&gt;
-    14
-&lt;polygon id=&quot;15&quot; class=&quot;one&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;1,0 1,0.707 0.292,0.707&quot; clip-path=&quot;url(#clip-15)&quot; /&gt;
-&lt;clipPath id=&quot;clip-15&quot;&gt;
-  &lt;use href=&quot;#15&quot; /&gt;
-&lt;/clipPath&gt;
-
-    15
-&lt;polygon id=&quot;16&quot; class=&quot;two&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0.707 0,0 1,0 0.292,0.707&quot; clip-path=&quot;url(#clip-16)&quot; /&gt;
-&lt;clipPath id=&quot;clip-16&quot;&gt;
-  &lt;use href=&quot;#16&quot; /&gt;
-&lt;/clipPath&gt;
-
+    &lt;polygon class=&quot;one&quot; points=&quot;1,0 1,0.707 0.292,0.707&quot; /&gt;
+    &lt;polygon class=&quot;two&quot; points=&quot;0,0.707 0,0 1,0 0.292,0.707&quot; /&gt;
   &lt;/svg&gt;
 &lt;/p&gt;
 
@@ -155,12 +75,7 @@
 
 &lt;p class=&quot;svg-container&quot;&gt;
   &lt;svg width=&quot;100px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 1 1&quot;&gt;
-    16
-&lt;polygon id=&quot;17&quot; class=&quot;silhouette&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 1,0 1,0.707 0.292,0.707 0,1&quot; clip-path=&quot;url(#clip-17)&quot; /&gt;
-&lt;clipPath id=&quot;clip-17&quot;&gt;
-  &lt;use href=&quot;#17&quot; /&gt;
-&lt;/clipPath&gt;
-
+    &lt;polygon class=&quot;silhouette&quot; points=&quot;0,0 1,0 1,0.707 0.292,0.707 0,1&quot; /&gt;
   &lt;/svg&gt;
 &lt;/p&gt;
 
@@ -168,18 +83,8 @@
 
 &lt;p class=&quot;svg-container&quot;&gt;
   &lt;svg width=&quot;100px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 1 1&quot;&gt;
-    17
-&lt;polygon id=&quot;18&quot; class=&quot;three&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 1,0 1,0.707 0,0.707&quot; clip-path=&quot;url(#clip-18)&quot; /&gt;
-&lt;clipPath id=&quot;clip-18&quot;&gt;
-  &lt;use href=&quot;#18&quot; /&gt;
-&lt;/clipPath&gt;
-
-    18
-&lt;polygon id=&quot;19&quot; class=&quot;four&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0.707 0.292,0.707 0,1&quot; clip-path=&quot;url(#clip-19)&quot; /&gt;
-&lt;clipPath id=&quot;clip-19&quot;&gt;
-  &lt;use href=&quot;#19&quot; /&gt;
-&lt;/clipPath&gt;
-
+    &lt;polygon class=&quot;three&quot; points=&quot;0,0 1,0 1,0.707 0,0.707&quot; /&gt;
+    &lt;polygon class=&quot;four&quot; points=&quot;0,0.707 0.292,0.707 0,1&quot; /&gt;
   &lt;/svg&gt;
 &lt;/p&gt;
 
@@ -189,18 +94,8 @@
 
 &lt;p class=&quot;svg-container&quot;&gt;
   &lt;svg width=&quot;158px&quot; height=&quot;71px&quot; viewBox=&quot;-0.292 0 1.584 0.707&quot;&gt;
-    19
-&lt;polygon id=&quot;20&quot; class=&quot;three&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 1,0 1,0.707 0,0.707&quot; clip-path=&quot;url(#clip-20)&quot; /&gt;
-&lt;clipPath id=&quot;clip-20&quot;&gt;
-  &lt;use href=&quot;#20&quot; /&gt;
-&lt;/clipPath&gt;
-
-    20
-&lt;polygon id=&quot;21&quot; class=&quot;four&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;1,0.707 1.292,0.707 1,0.414&quot; clip-path=&quot;url(#clip-21)&quot; /&gt;
-&lt;clipPath id=&quot;clip-21&quot;&gt;
-  &lt;use href=&quot;#21&quot; /&gt;
-&lt;/clipPath&gt;
-
+    &lt;polygon class=&quot;three&quot; points=&quot;0,0 1,0 1,0.707 0,0.707&quot; /&gt;
+    &lt;polygon class=&quot;four&quot; points=&quot;1,0.707 1.292,0.707 1,0.414&quot; /&gt;
   &lt;/svg&gt;
 &lt;/p&gt;
 
@@ -208,18 +103,8 @@
 
 &lt;p class=&quot;svg-container&quot;&gt;
   &lt;svg width=&quot;100px&quot; height=&quot;100px&quot; viewBox=&quot;0 0 1 1&quot;&gt;
-    21
-&lt;polygon id=&quot;22&quot; class=&quot;three&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,1 1,1 1,0.292 0,0.292&quot; clip-path=&quot;url(#clip-22)&quot; /&gt;
-&lt;clipPath id=&quot;clip-22&quot;&gt;
-  &lt;use href=&quot;#22&quot; /&gt;
-&lt;/clipPath&gt;
-
-    22
-&lt;polygon id=&quot;23&quot; class=&quot;four&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0.292,0.292 0.707,0.292 0.5,0.094&quot; clip-path=&quot;url(#clip-23)&quot; /&gt;
-&lt;clipPath id=&quot;clip-23&quot;&gt;
-  &lt;use href=&quot;#23&quot; /&gt;
-&lt;/clipPath&gt;
-
+    &lt;polygon class=&quot;three&quot; points=&quot;0,1 1,1 1,0.292 0,0.292&quot; /&gt;
+    &lt;polygon class=&quot;four&quot; points=&quot;0.292,0.292 0.707,0.292 0.5,0.094&quot; /&gt;
   &lt;/svg&gt;
 &lt;/p&gt;
 
@@ -227,12 +112,7 @@
 
 &lt;p class=&quot;svg-container&quot;&gt;
   &lt;svg width=&quot;106px&quot; height=&quot;71px&quot; viewBox=&quot;0 0 1.060 0.707&quot;&gt;
-    23
-&lt;polygon id=&quot;24&quot; class=&quot;three&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 1.060,0 1.060,0.707 0,0.707&quot; clip-path=&quot;url(#clip-24)&quot; /&gt;
-&lt;clipPath id=&quot;clip-24&quot;&gt;
-  &lt;use href=&quot;#24&quot; /&gt;
-&lt;/clipPath&gt;
-
+    &lt;polygon class=&quot;three&quot; points=&quot;0,0 1.060,0 1.060,0.707 0,0.707&quot; /&gt;
   &lt;/svg&gt;
 &lt;/p&gt;
 
@@ -242,18 +122,8 @@
 
 &lt;p class=&quot;svg-container&quot;&gt;
   &lt;svg width=&quot;141px&quot; height=&quot;71px&quot; viewBox=&quot;0 0 1.414 0.707&quot;&gt;
-    24
-&lt;polygon id=&quot;25&quot; class=&quot;one&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0.707,0.707 1.414,0 1.414,0.707&quot; clip-path=&quot;url(#clip-25)&quot; /&gt;
-&lt;clipPath id=&quot;clip-25&quot;&gt;
-  &lt;use href=&quot;#25&quot; /&gt;
-&lt;/clipPath&gt;
-
-    25
-&lt;polygon id=&quot;26&quot; class=&quot;two&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 0.707,0.707 1.414,0&quot; clip-path=&quot;url(#clip-26)&quot; /&gt;
-&lt;clipPath id=&quot;clip-26&quot;&gt;
-  &lt;use href=&quot;#26&quot; /&gt;
-&lt;/clipPath&gt;
-
+    &lt;polygon class=&quot;one&quot; points=&quot;0.707,0.707 1.414,0 1.414,0.707&quot; /&gt;
+    &lt;polygon class=&quot;two&quot; points=&quot;0,0 0.707,0.707 1.414,0&quot; /&gt;
   &lt;/svg&gt;
 &lt;/p&gt;
 
@@ -261,12 +131,7 @@
 
 &lt;p class=&quot;svg-container&quot;&gt;
   &lt;svg width=&quot;141px&quot; height=&quot;71px&quot; viewBox=&quot;0 0 1.414 0.707&quot;&gt;
-    26
-&lt;polygon id=&quot;27&quot; class=&quot;silhouette&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 1.414,0 1.414,0.707 0.707,0.707&quot; clip-path=&quot;url(#clip-27)&quot; /&gt;
-&lt;clipPath id=&quot;clip-27&quot;&gt;
-  &lt;use href=&quot;#27&quot; /&gt;
-&lt;/clipPath&gt;
-
+    &lt;polygon class=&quot;silhouette&quot; points=&quot;0,0 1.414,0 1.414,0.707 0.707,0.707&quot; /&gt;
   &lt;/svg&gt;
 &lt;/p&gt;
 
@@ -274,18 +139,8 @@
 
 &lt;p class=&quot;svg-container&quot;&gt;
   &lt;svg width=&quot;141px&quot; height=&quot;71px&quot; viewBox=&quot;0 0 1.414 0.707&quot;&gt;
-    27
-&lt;polygon id=&quot;28&quot; class=&quot;five&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0.707,0 1.414,0 1.414,0.707 0.707,0.707&quot; clip-path=&quot;url(#clip-28)&quot; /&gt;
-&lt;clipPath id=&quot;clip-28&quot;&gt;
-  &lt;use href=&quot;#28&quot; /&gt;
-&lt;/clipPath&gt;
-
-    28
-&lt;polygon id=&quot;29&quot; class=&quot;six&quot; vector-effect=&quot;non-scaling-stroke&quot; points=&quot;0,0 0.707,0 0.707,0.707&quot; clip-path=&quot;url(#clip-29)&quot; /&gt;
-&lt;clipPath id=&quot;clip-29&quot;&gt;
-  &lt;use href=&quot;#29&quot; /&gt;
-&lt;/clipPath&gt;
-
+    &lt;polygon class=&quot;five&quot; points=&quot;0.707,0 1.414,0 1.414,0.707 0.707,0.707&quot; /&gt;
+    &lt;polygon class=&quot;six&quot; points=&quot;0,0 0.707,0 0.707,0.707&quot; /&gt;
   &lt;/svg&gt;
 &lt;/p&gt;
 
