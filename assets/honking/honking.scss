@@ -1,0 +1,13 @@
+---
+# why do I have to put this nonsense header in and break my syntax highlighter
+---
+
+@import "variables";
+
+#mute {
+  position: fixed;
+  bottom: $spacing * 2;
+  right: 50%;
+  transform: translateX(50%);
+  filter: drop-shadow(0 0 8px var(--text-color-faded));
+}

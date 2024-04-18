@@ -3,6 +3,8 @@ layout: post
 title: Let's Use Hardware Subscriptions for Good
 custom-js-list:
   - /assets/honking/play.js
+custom-css-list:
+  - /assets/honking/honking.css
 ---
 
 One early morning in NYC I saw someone honk for some time at apparently nothing, and it got me thinking: this driver is cocooned in their brand new Mercedes station wagon and in total control of when and where to blast their negativity outwards, but the people that live on that street likely have to suffer small offenses to their sanity and sound environment on a daily basis through no fault of their own. It's a mental health hit-and-run, perpetrated one honk at a time.
@@ -42,3 +44,7 @@ I know you have questions. I have answered all of them below.
 <audio src="/assets/honking/7.mp3" id="sounds-7"></audio>
 <audio src="/assets/honking/8.mp3" id="sounds-8"></audio>
 <audio src="/assets/honking/9.mp3" id="sounds-9"></audio>
+
+<button id="mute" style="display: none;">shut the fuck up</button>
+
+{% include next-previous.html %}
