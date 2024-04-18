@@ -119,8 +119,9 @@ body[data-theme=dark] {
 
 #mute {
   position: fixed;
-  bottom: 24px;
+  bottom: 2em;
   right: 50%;
   transform: translateX(50%);
   filter: drop-shadow(0 0 8px var(--text-color-faded));
+  font-size: 1em;
 }
