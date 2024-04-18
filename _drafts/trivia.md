@@ -7,7 +7,12 @@ I spent several years developing a trivia habit. Or rather, it took several year
 
 And so: I went to one recently that was so un-fun I left part way through. It really helped put into focus what it is about my local place that I like. These are my observations about what makes good bar trivia, in no particular order.
 
-An important disclaimer: while I like winning and I like being right, I also go to trivia to see my friends. Trivia leagues are... fine. Some are done better than others. Many of the observations here can apply equally well to casual as well as serious trivia.
+An important disclaimer: while I like winning and I like being right, I also go to trivia to see my friends. Trivia leagues are... fine. Some are done better than others. Many (but not all) of the observations here can apply equally well to casual as well as serious trivia.
+
+tl;dr:
+
+* TOC
+{:toc}
 
 ### Score entire rounds at once.
 

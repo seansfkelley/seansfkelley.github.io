@@ -1,9 +1,9 @@
 ---
 layout: post
 title: Let's Use Hardware Subscriptions for Good
+custom-js-list:
+  - /assets/honking/play.js
 ---
-
-TODO: random honking sounds (with mute button)
 
 One early morning in NYC I saw someone honk for some time at apparently nothing, and it got me thinking: this driver is cocooned in their brand new Mercedes station wagon and in total control of when and where to blast their negativity outwards, but the people that live on that street likely have to suffer small offenses to their sanity and sound environment on a daily basis through no fault of their own. It's a mental health hit-and-run, perpetrated one honk at a time.
 
@@ -33,4 +33,12 @@ I know you have questions. I have answered all of them below.
 
 **What about all the bureaucracy this would create?** Maybe the program would pay for itself. It's not exactly intended to be a for-profit endeavour. Alternately: it wouldn't be the first time the government pays out to _stop_ people from doing something. And this way, we would get peace and quiet instead of, uh, less corn, or soybeans, or whatever.
 
-
+<audio src="/assets/honking/1.mp3" id="sounds-1"></audio>
+<audio src="/assets/honking/2.mp3" id="sounds-2"></audio>
+<audio src="/assets/honking/3.mp3" id="sounds-3"></audio>
+<audio src="/assets/honking/4.mp3" id="sounds-4"></audio>
+<audio src="/assets/honking/5.mp3" id="sounds-5"></audio>
+<audio src="/assets/honking/6.mp3" id="sounds-6"></audio>
+<audio src="/assets/honking/7.mp3" id="sounds-7"></audio>
+<audio src="/assets/honking/8.mp3" id="sounds-8"></audio>
+<audio src="/assets/honking/9.mp3" id="sounds-9"></audio>
