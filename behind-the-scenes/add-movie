@@ -102,7 +102,8 @@ rm "${output_path}_original"
 open "$output_path"
 echo "file at $output_path"
 
-yaml="- title: $title
+# weird syntax via https://stackoverflow.com/questions/10587615/unix-command-to-prepend-text-to-a-file#comment74536218_10587615
+<<(echo "- title: $title
   year: $year
   link: $movie_url
   poster: $(basename "$output_path")
@@ -110,8 +111,6 @@ yaml="- title: $title
   watch-this-if:
   dont-watch-this-because:
   more-thoughts: |
-    "
+    ") < _data/movies.yml | sponge _data/movies.yml
 
-printf "$yaml" | pbcopy
-echo "stub YAML copied to clipboard:"
-echo "$yaml"
+echo "added entry to beginning of movies.yml"
