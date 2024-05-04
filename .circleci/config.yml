@@ -5,7 +5,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/ruby:3.1.2-node
+      - image: cimg/ruby:3.3.1-node
     working_directory: ~/repo
     environment:
       - SOURCE_BRANCH: master
@@ -35,7 +35,7 @@ jobs:
           command: bundle exec jekyll build
       - run:
           name: HTMLProofer
-          command: bundle exec htmlproofer ./_site --check-html --disable-external --allow-hash-href
+          command: bundle exec htmlproofer ./_site --disable-external --no-enforce-https
       # check here rather than at the job level cause we still want to run checks on other branches!
       - when:
           condition:
