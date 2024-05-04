@@ -426,9 +426,7 @@ hr {
 }
 
 html {
-  scroll-padding-top: calc(
-    2.25rem + 25px
-  );
+  scroll-padding-top: calc(2.25rem + 25px);
 }
 
 .site-header {
