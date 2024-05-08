@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Making Up New Numbers With 7-Segment Displays
+tags: interactive
 custom-css-list:
   - /assets/seven-segment/seven-segment.css
 custom-js-list:

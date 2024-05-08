@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Stripping iTunes Music Store Metadata from Purchased Music
+tags: reference
 last_modified_at: 2024-02-17
 ---
 

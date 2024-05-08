@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 'Javascript: The Bad Parts'
+tags: programming
 ---
 
 Last week I stumbled upon TC39's [record and tuple proposal](https://github.com/tc39/proposal-record-tuple) for the first time, and was really happy to see the language taking a long-overdue big step forward in safety and usability.

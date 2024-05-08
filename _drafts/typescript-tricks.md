@@ -1,6 +1,7 @@
 ---
 layout: post
 title: TypeScript Tricks for Fun and Profit
+tags: programming
 ---
 
 I've been using TypeScript since about 1.8-ish (released early 2016), and in that time I've adopted a habit of trying to encode as much behavior as possible into the type system. After all, why think about writing code when I can tell TypeScript what kind of code I can write and it'll tell me how to do half of it? A few months ago I saw the phrase "type system maximalist" on either Hacker News or a blog linked from it, and since then I've used that phrase to describe myself.

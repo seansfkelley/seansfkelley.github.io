@@ -1,6 +1,7 @@
 ---
 layout: post
 title: JSC > JSX
+tags: programming
 ---
 
 where does jsx cause problems?

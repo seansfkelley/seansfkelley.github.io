@@ -1,6 +1,7 @@
 ---
 layout: post
 title: WPA Eight-ball Rules (Abridged)
+tags: reference
 redirect_from: /pool-rules
 ---
 

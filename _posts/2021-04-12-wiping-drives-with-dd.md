@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 'Wiping Corrupt Drives with dd: The Nuclear Option'
+tags: reference
 ---
 
 Until a couple months ago, I had never actually damaged a drive by unplugging it while it was busy. But boy, when you pull the plug at the wrong time, do things go wrong fast. I bricked a drive so completely that it would not appear in Disk Utility at all, and trying to poke at it with `diskutil` (including the full range of mount/unmount/repair/verify/partition/erase subcommands) would only ever respond with "resource busy". It was also impossible to eject and would leave zombie copies of itself around in `diskutil list`. Fun!
