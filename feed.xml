@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-05-04T04:00:00+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Let’s Use Hardware Subscriptions for Good</title><link href="https://blog.sea.nkelley.me/2024/04/17/honking/" rel="alternate" type="text/html" title="Let’s Use Hardware Subscriptions for Good" /><published>2024-04-17T00:00:00+00:00</published><updated>2024-04-17T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/04/17/honking</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/04/17/honking/"><![CDATA[<p>One early morning in NYC I saw someone honk for some time at apparently nothing, and it got me thinking: this driver is cocooned in their brand new Mercedes station wagon and in total control of when and where to blast their negativity outwards, but the people that live on that street likely have to suffer small offenses to their sanity and sound environment on a daily basis through no fault of their own. It’s a mental health hit-and-run, perpetrated one honk at a time.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-05-10T15:17:55+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Let’s Use Hardware Subscriptions for Good</title><link href="https://blog.sea.nkelley.me/2024/04/17/honking/" rel="alternate" type="text/html" title="Let’s Use Hardware Subscriptions for Good" /><published>2024-04-17T00:00:00+00:00</published><updated>2024-04-17T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/04/17/honking</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/04/17/honking/"><![CDATA[<p>One early morning in NYC I saw someone honk for some time at apparently nothing, and it got me thinking: this driver is cocooned in their brand new Mercedes station wagon and in total control of when and where to blast their negativity outwards, but the people that live on that street likely have to suffer small offenses to their sanity and sound environment on a daily basis through no fault of their own. It’s a mental health hit-and-run, perpetrated one honk at a time.</p>
 
 <p>Just yesterday I was talking about that utterly ridiculous attempt by BMW to make seat heaters a subscription (which they <a href="https://www.edmunds.com/car-news/bmw-relents-on-heated-seat-subscription.html">cancelled</a>, by the way, so don’t worry).</p>
 
@@ -54,7 +54,14 @@
   <div class="next-previous-placeholder"></div>
   
 </section>
-<hr />]]></content><author><name></name></author><summary type="html"><![CDATA[One early morning in NYC I saw someone honk for some time at apparently nothing, and it got me thinking: this driver is cocooned in their brand new Mercedes station wagon and in total control of when and where to blast their negativity outwards, but the people that live on that street likely have to suffer small offenses to their sanity and sound environment on a daily basis through no fault of their own. It’s a mental health hit-and-run, perpetrated one honk at a time.]]></summary></entry><entry><title type="html">Refactoring with Tangrams</title><link href="https://blog.sea.nkelley.me/2024/04/13/tangrams/" rel="alternate" type="text/html" title="Refactoring with Tangrams" /><published>2024-04-13T00:00:00+00:00</published><updated>2024-04-13T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/04/13/tangrams</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/04/13/tangrams/"><![CDATA[<p>Remember <a href="https://en.wikipedia.org/wiki/Tangram">tangrams</a>? Remember how they would mess with your intuition, that the <a href="https://en.wikipedia.org/wiki/Tangram#Paradoxes">silhouettes they drew seemed to lie</a>?</p>
+<hr />
+
+<section class="tag-list">
+  <i class="tag-label">tags:</i>
+  
+    <a class="tag-link" href="/tag/reference">reference</a>
+  
+</section>]]></content><author><name></name></author><category term="reference" /><summary type="html"><![CDATA[One early morning in NYC I saw someone honk for some time at apparently nothing, and it got me thinking: this driver is cocooned in their brand new Mercedes station wagon and in total control of when and where to blast their negativity outwards, but the people that live on that street likely have to suffer small offenses to their sanity and sound environment on a daily basis through no fault of their own. It’s a mental health hit-and-run, perpetrated one honk at a time.]]></summary></entry><entry><title type="html">Refactoring with Tangrams</title><link href="https://blog.sea.nkelley.me/2024/04/13/tangrams/" rel="alternate" type="text/html" title="Refactoring with Tangrams" /><published>2024-04-13T00:00:00+00:00</published><updated>2024-04-13T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/04/13/tangrams</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/04/13/tangrams/"><![CDATA[<p>Remember <a href="https://en.wikipedia.org/wiki/Tangram">tangrams</a>? Remember how they would mess with your intuition, that the <a href="https://en.wikipedia.org/wiki/Tangram#Paradoxes">silhouettes they drew seemed to lie</a>?</p>
 
 <p>I’m working on a large refactor that is composed of two similarly-sized and similarly-structured systems. Let’s imagine these systems as two similar tangram tiles.</p>
 
@@ -237,7 +244,14 @@
   </a>
   
 </section>
-<hr />]]></content><author><name></name></author><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">The Movie List</title><link href="https://blog.sea.nkelley.me/2024/04/01/movies/" rel="alternate" type="text/html" title="The Movie List" /><published>2024-04-01T00:00:00+00:00</published><updated>2024-04-01T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/04/01/movies</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/04/01/movies/"><![CDATA[<p>A reverse-chronological list of movies I have seen, including non-spoiler one-liner recommendations and longer, usually-spoiler-filled thoughts – the blurred out bits. Hover or (on mobile) long-press to reveal those. Some of the posters are blurred too because they include spoiling details. 😒</p>
+<hr />
+
+<section class="tag-list">
+  <i class="tag-label">tags:</i>
+  
+    <a class="tag-link" href="/tag/programming">programming</a>
+  
+</section>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">The Movie List</title><link href="https://blog.sea.nkelley.me/2024/04/01/movies/" rel="alternate" type="text/html" title="The Movie List" /><published>2024-04-01T00:00:00+00:00</published><updated>2024-04-01T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/04/01/movies</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/04/01/movies/"><![CDATA[<p>A reverse-chronological list of movies I have seen, including non-spoiler one-liner recommendations and longer, usually-spoiler-filled thoughts – the blurred out bits. Hover or (on mobile) long-press to reveal those. Some of the posters are blurred too because they include spoiling details. 😒</p>
 
 <p><strong>In general, I don’t recommend watching trailers for any movies.</strong> If you’re here for my recommendations, try to triangulate if you’ll like it from my one-liners or the <a href="https://en.wikipedia.org/wiki/Log_line">log line</a> on IMDb. It’s always more fun to go in without expectations (and without spoilers).</p>
 
@@ -1076,7 +1090,14 @@
   </a>
   
 </section>
-<hr />]]></content><author><name></name></author><summary type="html"><![CDATA[This is an abridged summary of the official WPA eight-ball rules. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].]]></summary></entry><entry><title type="html">kathack</title><link href="https://blog.sea.nkelley.me/2023/12/27/kathack/" rel="alternate" type="text/html" title="kathack" /><published>2023-12-27T00:00:00+00:00</published><updated>2023-12-27T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/12/27/kathack</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/12/27/kathack/"><![CDATA[<p>I was recently reminded of <a href="http://kathack.com">kathack.com</a>: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.</p>
+<hr />
+
+<section class="tag-list">
+  <i class="tag-label">tags:</i>
+  
+    <a class="tag-link" href="/tag/reference">reference</a>
+  
+</section>]]></content><author><name></name></author><category term="reference" /><summary type="html"><![CDATA[This is an abridged summary of the official WPA eight-ball rules. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].]]></summary></entry><entry><title type="html">kathack</title><link href="https://blog.sea.nkelley.me/2023/12/27/kathack/" rel="alternate" type="text/html" title="kathack" /><published>2023-12-27T00:00:00+00:00</published><updated>2023-12-27T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/12/27/kathack</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/12/27/kathack/"><![CDATA[<p>I was recently reminded of <a href="http://kathack.com">kathack.com</a>: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.</p>
 
 <p>So anyway, I rewrote out the jQuery and found a way to serve the script indirectly via GitHub, no dedicated site required. You can paste this into your browser console</p>
 
@@ -1116,7 +1137,14 @@
   </a>
   
 </section>
-<hr />]]></content><author><name></name></author><summary type="html"><![CDATA[I was recently reminded of kathack.com: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.]]></summary></entry><entry><title type="html">Cornmeal Pancake Recipe</title><link href="https://blog.sea.nkelley.me/2023/12/24/cornmeal-pancakes/" rel="alternate" type="text/html" title="Cornmeal Pancake Recipe" /><published>2023-12-24T00:00:00+00:00</published><updated>2023-12-24T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/12/24/cornmeal-pancakes</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/12/24/cornmeal-pancakes/"><![CDATA[<p>Makes about a dozen 4”-5” pancakes.</p>
+<hr />
+
+<section class="tag-list">
+  <i class="tag-label">tags:</i>
+  
+    <a class="tag-link" href="/tag/interactive">interactive</a>
+  
+</section>]]></content><author><name></name></author><category term="interactive" /><summary type="html"><![CDATA[I was recently reminded of kathack.com: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.]]></summary></entry><entry><title type="html">Cornmeal Pancake Recipe</title><link href="https://blog.sea.nkelley.me/2023/12/24/cornmeal-pancakes/" rel="alternate" type="text/html" title="Cornmeal Pancake Recipe" /><published>2023-12-24T00:00:00+00:00</published><updated>2023-12-24T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/12/24/cornmeal-pancakes</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/12/24/cornmeal-pancakes/"><![CDATA[<p>Makes about a dozen 4”-5” pancakes.</p>
 
 <p>Preheat a non-stick or well-seasoned griddle or small pan to medium-low. Pancakes are very sensitive to uneven heating, so use multiple small pans instead of one large one if you need more space. (This will allow centering the pancakes over the burners.) Pancakes are more like baking than cooking, so having an evenly heated surface ready to go will make it much easier to dial in the temperature as you cook. Don’t butter or oil the pan, as this will cause the pancakes end up splotchy.</p>
 
@@ -1283,13 +1311,20 @@
 </section>
 <hr />
 
+<section class="tag-list">
+  <i class="tag-label">tags:</i>
+  
+    <a class="tag-link" href="/tag/interactive">interactive</a>
+  
+</section>
+
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
       <p>According to the infallible Wikipedia, 7-segment displays were invented decades before the Nixie tube, but were not practical until LEDs were invented decades <em>after</em> the Nixie tube. It’s also worth noting that the Nixie tube is a more flexible design, should you need to display a wider or different range of characters. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
-</div>]]></content><author><name></name></author><summary type="html"><![CDATA[The ubiquitous 7-segment display is a pretty clever little piece of design, able to display all 10 digits in a flat plane with only (you guessed it) 7 segments. Compare the predecessor1 Nixie tube, which is also cool for different reasons, but needs 10 elements to display all 10 digits. (14-segment displays can do all 26 letters and 10 numbers.) According to the infallible Wikipedia, 7-segment displays were invented decades before the Nixie tube, but were not practical until LEDs were invented decades after the Nixie tube. It’s also worth noting that the Nixie tube is a more flexible design, should you need to display a wider or different range of characters. &#8617;]]></summary></entry><entry><title type="html">Pie (Pastry) Dough Recipe</title><link href="https://blog.sea.nkelley.me/2023/11/22/pie-dough/" rel="alternate" type="text/html" title="Pie (Pastry) Dough Recipe" /><published>2023-11-22T00:00:00+00:00</published><updated>2023-11-22T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/11/22/pie-dough</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/11/22/pie-dough/"><![CDATA[<p>Makes sufficient dough for one 9” pie (no top).</p>
+</div>]]></content><author><name></name></author><category term="interactive" /><summary type="html"><![CDATA[The ubiquitous 7-segment display is a pretty clever little piece of design, able to display all 10 digits in a flat plane with only (you guessed it) 7 segments. Compare the predecessor1 Nixie tube, which is also cool for different reasons, but needs 10 elements to display all 10 digits. (14-segment displays can do all 26 letters and 10 numbers.) According to the infallible Wikipedia, 7-segment displays were invented decades before the Nixie tube, but were not practical until LEDs were invented decades after the Nixie tube. It’s also worth noting that the Nixie tube is a more flexible design, should you need to display a wider or different range of characters. &#8617;]]></summary></entry><entry><title type="html">Pie (Pastry) Dough Recipe</title><link href="https://blog.sea.nkelley.me/2023/11/22/pie-dough/" rel="alternate" type="text/html" title="Pie (Pastry) Dough Recipe" /><published>2023-11-22T00:00:00+00:00</published><updated>2023-11-22T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/11/22/pie-dough</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/11/22/pie-dough/"><![CDATA[<p>Makes sufficient dough for one 9” pie (no top).</p>
 
 <p>Cut</p>
 
@@ -1569,6 +1604,13 @@
 </section>
 <hr />
 
+<section class="tag-list">
+  <i class="tag-label">tags:</i>
+  
+    <a class="tag-link" href="/tag/interactive">interactive</a>
+  
+</section>
+
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
@@ -1578,4 +1620,4 @@
       <p>Like the Bavarian arms, some changes had to be made to the official blazoning. I don’t support phrasings like “of the first” (dispreferred <a href="https://heraldry.sca.org/armory/bruce.html">“Victorianisms”</a> ctrl-f “victorian”), the million different ways of specifying quarterings, or the underspecified “as augmentation” phrasing for inescutcheons. But it looks pretty close to correct! <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
-</div>]]></content><author><name></name></author><summary type="html"><![CDATA[Wikipedia:]]></summary></entry></feed>
+</div>]]></content><author><name></name></author><category term="interactive" /><summary type="html"><![CDATA[Wikipedia:]]></summary></entry></feed>
