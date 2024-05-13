@@ -18,7 +18,7 @@ $colors: (
   display: none !important;
 }
 
-a[data-example] {
+a[data-example]:not(:hover) {
   color: darkcyan;
 }
 

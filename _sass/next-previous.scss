@@ -3,6 +3,10 @@
 .next-previous {
   display: flex;
   justify-content: space-between;
+
+  a {
+    text-decoration: none;
+  }
 }
 
 .next-previous-icon {
