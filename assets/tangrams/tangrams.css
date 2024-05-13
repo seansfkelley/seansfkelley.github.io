@@ -31,8 +31,9 @@ body[data-theme=auto], body[data-theme=light] {
   --input-border-color: #dddddd;
   --input-hover-color: #eeeeee;
   --link-color-base: #2a7ae2;
-  --link-color-visited: #1756a9;
+  --link-color-underline: #dddddd;
   --link-color-hover: var(--text-color);
+  --link-color-hover-underline: var(--text-color);
   --text-color-blockquote: var(--text-color-faded);
   --border-color-blockquote: #aaaaaa;
   --intent-default-background-color: rgba(19,124,189,.15);
@@ -65,8 +66,9 @@ body[data-theme=auto], body[data-theme=light] {
     --input-hover-color: #505050;
     --highlight-background-color: #434418;
     --link-color-base: #689fe6;
-    --link-color-visited: #567bac;
+    --link-color-underline: #555555;
     --link-color-hover: var(--text-color);
+    --link-color-hover-underline: var(--text-color);
     --text-color-blockquote: var(--text-color-faded);
     --border-color-blockquote: #808080;
     --intent-default-background-color: rgba(19,124,189,.25);
@@ -98,8 +100,9 @@ body[data-theme=dark] {
   --input-hover-color: #505050;
   --highlight-background-color: #434418;
   --link-color-base: #689fe6;
-  --link-color-visited: #567bac;
+  --link-color-underline: #555555;
   --link-color-hover: var(--text-color);
+  --link-color-hover-underline: var(--text-color);
   --text-color-blockquote: var(--text-color-faded);
   --border-color-blockquote: #808080;
   --intent-default-background-color: rgba(19,124,189,.25);
