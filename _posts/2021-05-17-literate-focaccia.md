@@ -41,9 +41,9 @@ Add yeast mixture and
 
 - 50 grams olive oil
 
-to flour mixture. Stir with a rubber spatula until just incorporated, then scrape the sides of the bowl clean and cover with plastic wrap. Leave out at room temperature to ferment for 12 to 14 hours until at least doubled in volume.
+to flour mixture. Stir with a rubber spatula until just incorporated, then scrape the sides of the bowl clean and cover with plastic wrap. Leave out at room temperature to ferment for 8 to 12 hours until at least doubled in volume.
 
-{% literate_recipe_step intermission="12-14 hours" %}
+{% literate_recipe_step intermission="8-12 hours" %}
 
 {% literate_recipe_step wait="overnight" duration="5m" total_duration="2h" %}
 
@@ -74,7 +74,9 @@ until salt is dissolved. Pour the brine over the dough to fill dimples. Proof fo
 
 Adjust oven rack to center position.
 
-If you prefer a crispy bottom, place a baking stone or inverted, sturdy baking sheet on the rack and allow it to preheat with the oven until very hot. If you prefer a soft bottom, place another rack below the first and put an empty baking sheet on it to insulate the upper rack from the heat source below.
+If you prefer a crispy bottom, place a baking stone or inverted, sturdy baking sheet on the rack and allow it to preheat with the oven until very hot.
+
+If you prefer a soft bottom, place another rack below the first and put an empty baking sheet on it to insulate the upper rack from the heat source below.
 
 Preheat oven to 450°F (235°C).
 

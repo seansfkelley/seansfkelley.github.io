@@ -4,8 +4,6 @@ title: Redux and the Limits of Abstraction
 tags: programming
 ---
 
-TODO: add one more link for horrible types
-
 TODO: add a link to that horrible Vision story about the application to end all applications
 
 I mentioned in a code review for some framework-y code recently that the author should be careful to avoid accidentally reinventing [Redux](https://redux.js.org), which is a library I love to hate. During this review, I was struck by a thought and finally able to articulate why I don't like Redux:
@@ -43,6 +41,6 @@ The skill and artistry is knowing when to stop. If you don't, you end up right w
 
     The towering momuments to abstraction that inevitably emerge when Redux-the-library is used in nontrivial applications ironically end up being as unpleasant to read and write as what you'd have ended up with if you reached for the first thing that comes to mind _without_ Redux-the-pattern, i.e., a massive, mutable global state singleton. Except: the Redux version is smeared across dozens of files and several libraries. Did you know Dan Abramov [never used Redux in any production application](https://www.reddit.com/r/reactjs/comments/dsfio6/comment/f6pmgmj/)? In fact, Dan [really doesn't like Redux anymore](https://www.reddit.com/r/reactjs/comments/dsfio6/comment/f6p4krr/).
 
-    Also, have you ever seen the types for Redux and Redux-adajacent libraries? I mean, [look](https://github.com/reduxjs/redux-toolkit/blob/0246f788ef964a6afb5071f5b9a651d48630f3e0/packages/toolkit/src/configureStore.ts#L118-L126) [at](https://github.com/reduxjs/react-redux/blob/a128c5ebb30bda6e60d597dc37ab97992f8e0d8d/src/types.ts#L110-L124) these. They say so little, with so much.
+    Also, have you ever seen the types for Redux and Redux-adajacent libraries? I mean, [look](https://github.com/reduxjs/redux-toolkit/blob/0246f788ef964a6afb5071f5b9a651d48630f3e0/packages/toolkit/src/configureStore.ts#L118-L126) [at](https://github.com/reduxjs/react-redux/blob/a128c5ebb30bda6e60d597dc37ab97992f8e0d8d/src/types.ts#L110-L124) [these](https://github.com/reduxjs/reselect/blob/1223a1b0997a6b248ccbac3ba4e2a544a7a676d8/src/createSelectorCreator.ts#L80-L104). They say so little, with so much.
 
 {% include next-previous.html %}
