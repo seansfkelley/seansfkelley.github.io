@@ -707,10 +707,8 @@ body[data-theme=light] #theme-switcher:after {
   color: var(--intent-danger-text-color);
 }
 
-.reversefootnote {
+a.reversefootnote {
   font-family: "SourceSansPro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Segoe UI Symbol", Roboto, Helvetica, Arial, sans-serif;
-}
-.reversefootnote:hover {
   text-decoration: none;
 }
 
