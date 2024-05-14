@@ -12,6 +12,7 @@ html {
 }
 
 .site-header {
+  font-family: $font-family-header;
   padding: $header-vertical-spacing 0;
   border-bottom: 1px solid var(--brand-color-light);
   background-color: var(--background-color);
@@ -28,7 +29,6 @@ html {
 }
 
 .site-title {
-  font-family: $font-family-code;
   font-weight: 300;
   font-size: $font-size-site-title;
 
@@ -37,6 +37,10 @@ html {
   &:visited {
     color: var(--site-title-color);
   }
+}
+
+.site-controls {
+  font-weight: 200;
 }
 
 body[data-theme="auto"] #theme-switcher:after {
