@@ -433,7 +433,8 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 400;
+  font-family: "Lufga", Helvetica, Arial, sans-serif;
+  font-weight: 300;
 }
 
 blockquote {
@@ -503,7 +504,6 @@ html {
 }
 
 .site-header {
-  font-family: "Lufga", Helvetica, Arial, sans-serif;
   padding: 12px 0;
   border-bottom: 1px solid var(--brand-color-light);
   background-color: var(--background-color);
@@ -518,6 +518,7 @@ html {
 }
 
 .site-title {
+  font-family: "Lufga", Helvetica, Arial, sans-serif;
   font-weight: 300;
   font-size: 1.5rem;
 }
@@ -526,6 +527,7 @@ html {
 }
 
 .site-controls {
+  font-family: "Lufga", Helvetica, Arial, sans-serif;
   font-weight: 200;
 }
 
@@ -542,7 +544,6 @@ body[data-theme=light] #theme-switcher:after {
 }
 
 .post-list {
-  font-family: "Lufga", Helvetica, Arial, sans-serif;
   margin-left: 0;
   padding-left: 0;
   margin: 10px 0;
@@ -556,8 +557,9 @@ body[data-theme=light] #theme-switcher:after {
 }
 .post-list .post-link {
   display: block;
-  font-weight: 200;
+  font-weight: 300;
   font-size: 1.5rem;
+  margin-right: 12px;
 }
 .post-list .post-date {
   font-size: 14px;
@@ -610,14 +612,6 @@ body[data-theme=light] #theme-switcher:after {
   font-style: italic;
 }
 
-.post h1,
-.post h2,
-.post h3,
-.post h4,
-.post h5,
-.post h6 {
-  font-family: "Lufga", Helvetica, Arial, sans-serif;
-}
 .post h1,
 .post h2,
 .post h3 {
@@ -674,6 +668,12 @@ body[data-theme=light] #theme-switcher:after {
   vertical-align: top;
 }
 
+.tag-page {
+  margin-top: 12px;
+}
+.tag-page h2 .tag {
+  font-weight: 500;
+}
 .tag-page .post-date {
   font-size: 14px;
   color: var(--text-color-faded);
@@ -987,9 +987,6 @@ body[data-theme=light] #theme-switcher:after {
 }
 .tag-list {
   margin-bottom: 24px;
-}
-.tag-list .tag-link:not(:last-child):after {
-  content: ", ";
 }
 
 pre,
