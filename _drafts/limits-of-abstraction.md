@@ -4,7 +4,7 @@ title: Redux and the Limits of Abstraction
 tags: programming
 ---
 
-TODO: add a link to that horrible Vision story about the application to end all applications
+TODO: https://www.red-gate.com/simple-talk/opinion/opinion-pieces/bad-carma/
 
 I mentioned in a code review for some framework-y code recently that the author should be careful to avoid accidentally reinventing [Redux](https://redux.js.org), which is a library I love to hate. During this review, I was struck by a thought and finally able to articulate why I don't like Redux:
 
