@@ -81,9 +81,5 @@
 }
 
 .tag-list {
-  .tag-link:not(:last-child):after {
-    content: ", ";
-  }
-
   margin-bottom: $spacing * 2;
 }

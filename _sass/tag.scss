@@ -1,4 +1,10 @@
 .tag-page {
+  margin-top: $spacing;
+
+  h2 .tag {
+    font-weight: 500;
+  }
+
   .post-date {
     font-size: $font-size-small;
     color: var(--text-color-faded);

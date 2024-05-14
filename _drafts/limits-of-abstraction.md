@@ -4,8 +4,6 @@ title: Redux and the Limits of Abstraction
 tags: programming
 ---
 
-TODO: https://www.red-gate.com/simple-talk/opinion/opinion-pieces/bad-carma/
-
 I mentioned in a code review for some framework-y code recently that the author should be careful to avoid accidentally reinventing [Redux](https://redux.js.org), which is a library I love to hate. During this review, I was struck by a thought and finally able to articulate why I don't like Redux:
 
 Redux is a design pattern, not a library.
@@ -25,11 +23,9 @@ Redux-the-library doesn't actually _do_ anything significant; instead, it merely
 
 It is this misinterpretation of Redux as a library that leads to the overengineered, overabstract boilerplate I associate with the ecosystem of things built upon it. Redux-the-library wraps these expressive language-level constructs into restrictive, supposedly-but-not-really higher-level primitives that other things in the Redux ecosystem attempt to build on. But it doesn't work: there's no _there_ there, and most of them (thunks and middlewares and sagas, oh my) also end up being design patterns in diguise, with all the attendant implementation work for their users.
 
-Let's be clear: there is nothing inherently wrong with a library mandating the use of restrictive primitives to interact with it. But this is a cost, and in the case of Redux-the-library, there is no benefit in exchange for this cost, because Redux-the-pattern is too simple for Redux-the-library to offer meaningful expressivity or code savings. I would even say that Redux-the-library is _competing_ with the host language rather than complementing it, replacing usefully context-aware expression of Redux-the-pattern's ideas with a verbose one-size-fits-all implementation of those ideas.
+Let's be clear: there is nothing inherently wrong with a library mandating the use of restrictive primitives to interact with it. But this is a cost for using it, and in the case of Redux-the-library, there is no benefit in exchange for this cost, because Redux-the-pattern is too simple for Redux-the-library to offer meaningful expressivity or code savings. I would even say that Redux-the-library is _competing_ with the host language rather than complementing it, replacing usefully context-aware expression of Redux-the-pattern's ideas with a verbose one-size-fits-all implementation of those ideas.[^2]
 
-The Redux ecosystem is illustrative of the pitfalls of overeager abstraction,[^2] which is a common impulse in programmers. It's true that if you move your solution one rung higher on the abstraction ladder you can solve a broader swath of related problems. It's also true that your solution then becomes less expressive and ergonomic in the context from which it was born. If you keep going, you end up writing a programming language inside your programming language or [a database that can describe any possible business process with no additional code](TODO). You know what else can solve all manner of problems it wasn't designed with in mind? A programming language.
-
-The skill and artistry is knowing when to stop. If you don't, you end up right where you started: trying to implement some feature in your chosen language/framework/whatever, except you've replaced something (presumably) well-designed and battle-tested with your half-baked non-framework. But it's still the same amount of work, just now in a stilted, foreign language.
+So much of programming is creating abstractions. When you have a hammmer, you have to be careful to not treat everything like a nail. While it's true that moving your solution one rung higher on the abstraction ladder you can solve a broader swath of related problems, it's also true that your solution then becomes less expressive and ergonomic in the context from which it was born. This might be okay; therein lies a lot of the art of programming. But if you pursue abstraction for its own sake, you end up writing a programming language inside your programming language or [a database schema that can represent any other database schema](https://www.red-gate.com/simple-talk/opinion/opinion-pieces/bad-carma/). The abstraction collapses and you end up right where you began, but months later and stuck trying to express anything other than the original problem in your half-baked non-framework.
 
 [^1]: The only core Redux concept missing from this list is selectors, which do not correspond directly to a language-level feature, but "composable memoized pure function implementing a view of a value" is not a novel idea.
 

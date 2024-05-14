@@ -1,5 +1,4 @@
 .post-list {
-  font-family: $font-family-header;
   margin-left: 0;
   padding-left: 0;
   margin: 10px 0;
@@ -14,8 +13,9 @@
 
   .post-link {
     display: block;
-    font-weight: 200;
+    font-weight: 300;
     font-size: 1.5rem;
+    margin-right: $spacing;
   }
 
   .post-date {

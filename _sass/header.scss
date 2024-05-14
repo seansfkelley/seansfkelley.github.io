@@ -12,7 +12,6 @@ html {
 }
 
 .site-header {
-  font-family: $font-family-header;
   padding: $header-vertical-spacing 0;
   border-bottom: 1px solid var(--brand-color-light);
   background-color: var(--background-color);
@@ -29,6 +28,7 @@ html {
 }
 
 .site-title {
+  font-family: $font-family-header;
   font-weight: 300;
   font-size: $font-size-site-title;
 
@@ -40,6 +40,7 @@ html {
 }
 
 .site-controls {
+  font-family: $font-family-header;
   font-weight: 200;
 }
 
