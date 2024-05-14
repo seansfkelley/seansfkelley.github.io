@@ -67,7 +67,7 @@
     margin-left: -($spacing * 2);
 
     &:hover .next-previous-icon {
-      transform: translateX(math.div($spacing, 2));
+      transform: translateX(math.div(-$spacing, 2));
     }
   }
 
