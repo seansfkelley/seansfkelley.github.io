@@ -528,7 +528,7 @@ html {
 
 .site-controls {
   font-family: "Lufga", Helvetica, Arial, sans-serif;
-  font-weight: 200;
+  font-weight: 300;
 }
 
 body[data-theme=auto] #theme-switcher:after {
