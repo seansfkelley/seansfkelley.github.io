@@ -170,6 +170,126 @@ body[data-theme=dark] {
   font-style: normal;
 }
 @font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-ThinItalic.ttf") format("truetype");
+  font-weight: 100;
+  font-style: italic;
+}
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-ExtraLightItalic.ttf") format("truetype");
+  font-weight: 200;
+  font-style: italic;
+}
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-LightItalic.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+}
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-MediumItalic.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+}
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-DemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-DemiBoldItalic.ttf") format("truetype");
+  font-weight: 600;
+  font-style: italic;
+}
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-BoldItalic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+}
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-ExtraBoldItalic.ttf") format("truetype");
+  font-weight: 800;
+  font-style: italic;
+}
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-BlackItalic.ttf") format("truetype");
+  font-weight: 900;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Lufga";
+  src: url("fonts/Lufga-Thin.otf") format("opentype");
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Lufga";
+  src: url("fonts/Lufga-ThinItalic.otf") format("opentype");
+  font-weight: 100;
+  font-style: italic;
+}
+@font-face {
   font-family: "Lufga";
   src: url("fonts/Lufga-ExtraLight.otf") format("opentype");
   font-weight: 200;
@@ -207,6 +327,18 @@ body[data-theme=dark] {
 }
 @font-face {
   font-family: "Lufga";
+  src: url("fonts/Lufga-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Lufga";
+  src: url("fonts/Lufga-MediumItalic.otf") format("opentype");
+  font-weight: 500;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Lufga";
   src: url("fonts/Lufga-SemiBold.otf") format("opentype");
   font-weight: 600;
   font-style: normal;
@@ -231,6 +363,18 @@ body[data-theme=dark] {
 }
 @font-face {
   font-family: "Lufga";
+  src: url("fonts/Lufga-ExtraBold.otf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Lufga";
+  src: url("fonts/Lufga-ExtraBoldItalic.otf") format("opentype");
+  font-weight: 800;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Lufga";
   src: url("fonts/Lufga-Black.otf") format("opentype");
   font-weight: 900;
   font-style: normal;
@@ -241,92 +385,20 @@ body[data-theme=dark] {
   font-weight: 900;
   font-style: italic;
 }
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-ExtraLight.ttf") format("truetype");
-  font-weight: 200;
-  font-style: normal;
-}
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-ExtraLightItalic.ttf") format("truetype");
-  font-weight: 200;
-  font-style: italic;
-}
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-Light.ttf") format("truetype");
-  font-weight: 300;
-  font-style: normal;
-}
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-LightItalic.ttf") format("truetype");
-  font-weight: 300;
-  font-style: italic;
-}
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-Italic.ttf") format("truetype");
-  font-weight: 400;
-  font-style: italic;
-}
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-SemiBold.ttf") format("truetype");
-  font-weight: 600;
-  font-style: normal;
-}
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-SemiBoldItalic.ttf") format("truetype");
-  font-weight: 600;
-  font-style: italic;
-}
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-}
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-BoldItalic.ttf") format("truetype");
-  font-weight: 700;
-  font-style: italic;
-}
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-Black.ttf") format("truetype");
-  font-weight: 900;
-  font-style: normal;
-}
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-BlackItalic.ttf") format("truetype");
-  font-weight: 900;
-  font-style: italic;
-}
 html {
   font-size: 16px;
   --post-width: 600px;
-  --post-inset: 12px;
+  --post-inset: 14px;
 }
 @media screen and (min-width: 600px) {
   html {
     --post-width: 800px;
-    --post-inset: 48px;
+    --post-inset: 56px;
   }
 }
 
 body {
-  font: 400 16px/1.5 "SourceSansPro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Segoe UI Symbol", "Segoe UI Emoji", "Apple Color Emoji", Roboto, Helvetica, Arial, sans-serif;
+  font: 400 16px/1.8 "Interphases", -apple-system, BlinkMacSystemFont, "Segoe UI", "Segoe UI Symbol", "Segoe UI Emoji", "Apple Color Emoji", Roboto, Helvetica, Arial, sans-serif;
   color: var(--text-color);
   background-color: var(--background-color);
   font-kerning: normal;
@@ -396,7 +468,7 @@ ul,
 ol,
 dl,
 figure {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 a {
@@ -411,7 +483,7 @@ a:hover {
 
 ul,
 ol {
-  margin-left: 24px;
+  margin-left: 28px;
 }
 
 li > ul,
@@ -480,7 +552,7 @@ figcaption {
 }
 
 hr {
-  margin: 24px 12px;
+  margin: 28px 14px;
   border: none;
   border-bottom: 1px solid var(--brand-color-light);
 }
@@ -500,11 +572,11 @@ hr {
 }
 
 html {
-  scroll-padding-top: calc(2.25rem + 25px);
+  scroll-padding-top: calc(2.7rem + 29px);
 }
 
 .site-header {
-  padding: 12px 0;
+  padding: 14px 0;
   border-bottom: 1px solid var(--brand-color-light);
   background-color: var(--background-color);
   position: sticky;
@@ -559,7 +631,7 @@ body[data-theme=light] #theme-switcher:after {
   display: block;
   font-weight: 300;
   font-size: 1.5rem;
-  margin-right: 12px;
+  margin-right: 14px;
 }
 .post-list .post-date {
   font-size: 14px;
@@ -583,7 +655,7 @@ body[data-theme=light] #theme-switcher:after {
   }
 }
 .post-list > li {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -597,15 +669,15 @@ body[data-theme=light] #theme-switcher:after {
 }
 
 .post {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .post-header {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 .post-header .post-title,
 .post-header .post-subtitle {
-  margin-top: 12px;
+  margin-top: 14px;
 }
 .post-header .post-subtitle {
   color: var(--text-color-blockquote);
@@ -615,12 +687,12 @@ body[data-theme=light] #theme-switcher:after {
 .post h1,
 .post h2,
 .post h3 {
-  margin-top: 18px;
+  margin-top: 21px;
 }
 .post h4,
 .post h5,
 .post h6 {
-  margin-top: 12px;
+  margin-top: 14px;
 }
 .post h1 {
   font-size: 2rem;
@@ -669,7 +741,7 @@ body[data-theme=light] #theme-switcher:after {
 }
 
 .tag-page {
-  margin-top: 12px;
+  margin-top: 14px;
 }
 .tag-page h2 .tag {
   font-weight: 500;
@@ -681,7 +753,7 @@ body[data-theme=light] #theme-switcher:after {
 
 .alert {
   background-color: var(--intent-default-background-color);
-  padding: 12px;
+  padding: 14px;
   border-radius: 3px;
 }
 .alert .alert-title {
@@ -708,7 +780,7 @@ body[data-theme=light] #theme-switcher:after {
 }
 
 a.reversefootnote {
-  font-family: "SourceSansPro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Segoe UI Symbol", Roboto, Helvetica, Arial, sans-serif;
+  font-family: "Interphases", -apple-system, BlinkMacSystemFont, "Segoe UI", "Segoe UI Symbol", Roboto, Helvetica, Arial, sans-serif;
   text-decoration: none;
 }
 
@@ -922,7 +994,7 @@ a.reversefootnote {
 }
 
 .next-previous-icon {
-  width: 12px;
+  width: 14px;
 }
 
 .next-previous-placeholder {
@@ -950,7 +1022,7 @@ a.reversefootnote {
 }
 
 .next-previous-name {
-  margin: 0 12px;
+  margin: 0 14px;
 }
 
 .next-previous-right {
@@ -971,20 +1043,20 @@ a.reversefootnote {
     transition: transform 100ms ease-in;
   }
   .next-previous-left {
-    margin-left: -24px;
+    margin-left: -28px;
   }
   .next-previous-left:hover .next-previous-icon {
-    transform: translateX(-6px);
+    transform: translateX(-7px);
   }
   .next-previous-right {
-    margin-right: -24px;
+    margin-right: -28px;
   }
   .next-previous-right:hover .next-previous-icon {
-    transform: translateX(6px);
+    transform: translateX(7px);
   }
 }
 .tag-list {
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 pre,

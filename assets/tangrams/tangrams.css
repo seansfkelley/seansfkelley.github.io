@@ -125,10 +125,10 @@ body[data-theme=dark] {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 24px 0;
+  margin: 28px 0;
 }
 .svg-container svg:not(:last-child) {
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 @media screen and (min-width: 600px) {
@@ -137,7 +137,7 @@ body[data-theme=dark] {
   }
   .svg-container svg:not(:last-child) {
     margin-bottom: 0;
-    margin-right: 36px;
+    margin-right: 42px;
   }
 }
 .one {
