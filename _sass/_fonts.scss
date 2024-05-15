@@ -55,6 +55,146 @@
 }
 
 @font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-ThinItalic.ttf") format("truetype");
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-ExtraLightItalic.ttf") format("truetype");
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-LightItalic.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-MediumItalic.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-DemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-DemiBoldItalic.ttf") format("truetype");
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-BoldItalic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-ExtraBoldItalic.ttf") format("truetype");
+  font-weight: 800;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "InterphasesPro";
+  src: url("fonts/InterphasesPro-BlackItalic.ttf") format("truetype");
+  font-weight: 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Lufga";
+  src: url("fonts/Lufga-Thin.otf") format("opentype");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lufga";
+  src: url("fonts/Lufga-ThinItalic.otf") format("opentype");
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
   font-family: "Lufga";
   src: url("fonts/Lufga-ExtraLight.otf") format("opentype");
   font-weight: 200;
@@ -98,6 +238,20 @@
 
 @font-face {
   font-family: "Lufga";
+  src: url("fonts/Lufga-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lufga";
+  src: url("fonts/Lufga-MediumItalic.otf") format("opentype");
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Lufga";
   src: url("fonts/Lufga-SemiBold.otf") format("opentype");
   font-weight: 600;
   font-style: normal;
@@ -126,6 +280,20 @@
 
 @font-face {
   font-family: "Lufga";
+  src: url("fonts/Lufga-ExtraBold.otf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lufga";
+  src: url("fonts/Lufga-ExtraBoldItalic.otf") format("opentype");
+  font-weight: 800;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Lufga";
   src: url("fonts/Lufga-Black.otf") format("opentype");
   font-weight: 900;
   font-style: normal;
@@ -134,90 +302,6 @@
 @font-face {
   font-family: "Lufga";
   src: url("fonts/Lufga-BlackItalic.otf") format("opentype");
-  font-weight: 900;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-ExtraLight.ttf") format("truetype");
-  font-weight: 200;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-ExtraLightItalic.ttf") format("truetype");
-  font-weight: 200;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-Light.ttf") format("truetype");
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-LightItalic.ttf") format("truetype");
-  font-weight: 300;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-Italic.ttf") format("truetype");
-  font-weight: 400;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-SemiBold.ttf") format("truetype");
-  font-weight: 600;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-SemiBoldItalic.ttf") format("truetype");
-  font-weight: 600;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-BoldItalic.ttf") format("truetype");
-  font-weight: 700;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-Black.ttf") format("truetype");
-  font-weight: 900;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "SourceSansPro";
-  src: url("fonts/SourceSansPro-BlackItalic.ttf") format("truetype");
   font-weight: 900;
   font-style: italic;
 }
