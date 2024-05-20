@@ -57,7 +57,7 @@ body[data-theme=auto], body[data-theme=light] {
     --brand-color-light: #424242;
     --brand-color-dark: #e8e8e8;
     --site-title-color: var(--brand-color-dark);
-    --text-color: #d0d0d0;
+    --text-color: #c8c8c8;
     --text-color-faded: #909090;
     --background-color: #202020;
     --code-background-color: #404040;
@@ -91,7 +91,7 @@ body[data-theme=dark] {
   --brand-color-light: #424242;
   --brand-color-dark: #e8e8e8;
   --site-title-color: var(--brand-color-dark);
-  --text-color: #d0d0d0;
+  --text-color: #c8c8c8;
   --text-color-faded: #909090;
   --background-color: #202020;
   --code-background-color: #404040;
@@ -147,6 +147,7 @@ body[data-theme=dark] {
 }
 .entry .content .watched {
   font-size: 14px;
+  color: var(--text-color-faded);
 }
 
 @media screen and (min-width: 600px) {
@@ -180,4 +181,16 @@ body[data-theme=dark] {
 
 img.spoiler:not(:hover) {
   filter: blur(10px);
+}
+
+a.permalink {
+  text-decoration: none;
+}
+a.permalink .underlineable {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 2px;
+}
+a.permalink:not(:hover) .underlineable {
+  text-decoration-color: var(--link-color-underline);
 }

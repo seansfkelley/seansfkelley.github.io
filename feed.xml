@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-05-15T22:36:45+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Redux and the Limits of Abstraction</title><link href="https://blog.sea.nkelley.me/2024/05/14/limits-of-abstraction/" rel="alternate" type="text/html" title="Redux and the Limits of Abstraction" /><published>2024-05-14T00:00:00+00:00</published><updated>2024-05-14T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/05/14/limits-of-abstraction</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/05/14/limits-of-abstraction/"><![CDATA[<p>I mentioned in a code review for some framework-y code recently that the author should be careful to avoid accidentally reinventing <a href="https://redux.js.org">Redux</a>, which is a library I love to hate. During this review, I was struck by a thought and finally able to articulate why I don’t like Redux:</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-05-20T01:04:24+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Redux and the Limits of Abstraction</title><link href="https://blog.sea.nkelley.me/2024/05/14/limits-of-abstraction/" rel="alternate" type="text/html" title="Redux and the Limits of Abstraction" /><published>2024-05-14T00:00:00+00:00</published><updated>2024-05-14T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/05/14/limits-of-abstraction</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/05/14/limits-of-abstraction/"><![CDATA[<p>I mentioned in a code review for some framework-y code recently that the author should be careful to avoid accidentally reinventing <a href="https://redux.js.org">Redux</a>, which is a library I love to hate. During this review, I was struck by a thought and finally able to articulate why I don’t like Redux:</p>
 
 <p>Redux is a design pattern, not a library.</p>
 
@@ -295,11 +295,11 @@
 
 <section class="next-previous">
   
-  <a href="/2024/04/01/movies/" class="next-previous-link next-previous-left" title="Previous Post: The Movie List">
+  <a href="/2024/04/01/movies/" class="next-previous-link next-previous-left" title="Previous Post: The Movie/TV List">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
       <div class="next-previous-label">Previous Post</div>
-      <div class="next-previous-title">The Movie List</div>
+      <div class="next-previous-title">The Movie/TV List</div>
     </div>
   </a>
    
@@ -318,16 +318,44 @@
   <i class="tag-label">tags:</i>
   
   <a class="tag-link" href="/tag/programming">programming</a> 
-</section>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">The Movie List</title><link href="https://blog.sea.nkelley.me/2024/04/01/movies/" rel="alternate" type="text/html" title="The Movie List" /><published>2024-04-01T00:00:00+00:00</published><updated>2024-04-01T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/04/01/movies</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/04/01/movies/"><![CDATA[<p>A reverse-chronological list of movies I have seen, including non-spoiler one-liner recommendations and longer, usually-spoiler-filled thoughts – the blurred out bits. Hover or (on mobile) long-press to reveal those. Some of the posters are blurred too because they include spoiling details. 😒</p>
+</section>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">The Movie/TV List</title><link href="https://blog.sea.nkelley.me/2024/04/01/movies/" rel="alternate" type="text/html" title="The Movie/TV List" /><published>2024-04-01T00:00:00+00:00</published><updated>2024-04-01T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/04/01/movies</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/04/01/movies/"><![CDATA[<p>A reverse-chronological list of movies and TV shows I have seen, including non-spoiler one-liner recommendations and longer, usually-spoiler-filled thoughts – the blurred out bits. Hover or (on mobile) long-press to reveal those. Some of the posters are blurred too because they include spoiling details. 😒</p>
 
 <p><strong>In general, I don’t recommend watching trailers for any movies.</strong> If you’re here for my recommendations, try to triangulate if you’ll like it from my one-liners or the <a href="https://en.wikipedia.org/wiki/Log_line">log line</a> on IMDb. It’s always more fun to go in without expectations (and without spoilers).</p>
 
+<div class="entry" id="shogun-2024">
+    <div class="title">
+      <a href="https://www.imdb.com/title/tt2788316/">
+        <h3>Shogun (2024)</h3>
+      </a>
+      <a class="permalink" href="#shogun-2024">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
+    </div>
+    <div class="content">
+      <a href="#shogun-2024" class="poster">
+        <img class="" src="/assets/movies/shogun-2024.jpg" loading="lazy" alt="Shogun" />
+      </a>
+      <div class="text">
+          <p class="one-liner">👍 <b>Watch this if…</b> you like pretty period pieces that are still compelling enough to send you on Wikipedia binges.</p>
+        
+          <div class="more-thoughts spoiler">
+        <p>Casting was great; on screen chemistry between the two main actors was good. The story would plod at times, but I kept coming back for the aesthetics and because there were many individually good scenes, even in the slower episodes.</p>
+
+        <p>For a modern show about a violent era, I thought it was relatively restrained in the use of sex and violence, the latter in particular well-used as a sharp accent when the story needed it.</p>
+
+        <p>I didn’t like the first episode all that much but was happy to stick with it. I would have preferred more palace intrigue and less romance. I like a show that inspires me to read up on the history of the thing!</p>
+      </div><p class="watched">Watched: early 2024</p>
+      </div>
+    </div>
+  </div>
 <div class="entry" id="blue-ruin-2013">
     <div class="title">
       <a href="https://www.imdb.com/title/tt2359024/">
         <h3>Blue Ruin (2013)</h3>
       </a>
-      <a href="#blue-ruin-2013">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#blue-ruin-2013">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#blue-ruin-2013" class="poster">
@@ -349,7 +377,9 @@
       <a href="https://www.imdb.com/title/tt14230458/">
         <h3>Poor Things (2023)</h3>
       </a>
-      <a href="#poor-things-2023">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#poor-things-2023">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#poor-things-2023" class="poster">
@@ -375,7 +405,9 @@
       <a href="https://www.imdb.com/title/tt2321549/">
         <h3>The Babadook (2014)</h3>
       </a>
-      <a href="#the-babadook-2014">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#the-babadook-2014">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#the-babadook-2014" class="poster">
@@ -399,7 +431,9 @@
       <a href="https://www.imdb.com/title/tt0089881/">
         <h3>Ran (1985)</h3>
       </a>
-      <a href="#ran-1985">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#ran-1985">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#ran-1985" class="poster">
@@ -421,7 +455,9 @@
       <a href="https://www.imdb.com/title/tt0470752/">
         <h3>Ex Machina (2014)</h3>
       </a>
-      <a href="#ex-machina-2014">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#ex-machina-2014">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#ex-machina-2014" class="poster">
@@ -443,7 +479,9 @@
       <a href="https://www.imdb.com/title/tt1922777">
         <h3>Sinister (2012)</h3>
       </a>
-      <a href="#sinister-2012">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#sinister-2012">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#sinister-2012" class="poster">
@@ -465,7 +503,9 @@
       <a href="https://www.imdb.com/title/tt15239678">
         <h3>Dune: Part Two (2024)</h3>
       </a>
-      <a href="#dune-part-two-2024">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#dune-part-two-2024">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#dune-part-two-2024" class="poster">
@@ -487,7 +527,9 @@
       <a href="https://www.imdb.com/title/tt8110652/">
         <h3>Bodies Bodies Bodies (2022)</h3>
       </a>
-      <a href="#bodies-bodies-bodies-2022">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#bodies-bodies-bodies-2022">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#bodies-bodies-bodies-2022" class="poster">
@@ -509,7 +551,9 @@
       <a href="https://www.imdb.com/title/tt0070917">
         <h3>The Wicker Man (1973)</h3>
       </a>
-      <a href="#the-wicker-man-1973">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#the-wicker-man-1973">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#the-wicker-man-1973" class="poster">
@@ -531,7 +575,9 @@
       <a href="https://www.imdb.com/title/tt0190332">
         <h3>Crouching Tiger, Hidden Dragon (2000)</h3>
       </a>
-      <a href="#crouching-tiger-hidden-dragon-2000">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#crouching-tiger-hidden-dragon-2000">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#crouching-tiger-hidden-dragon-2000" class="poster">
@@ -553,7 +599,9 @@
       <a href="https://www.imdb.com/title/tt9764362/">
         <h3>The Menu (2022)</h3>
       </a>
-      <a href="#the-menu-2022">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#the-menu-2022">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#the-menu-2022" class="poster">
@@ -575,7 +623,9 @@
       <a href="https://www.imdb.com/title/tt7914416/">
         <h3>One Cut of the Dead (2017)</h3>
       </a>
-      <a href="#one-cut-of-the-dead-2017">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#one-cut-of-the-dead-2017">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#one-cut-of-the-dead-2017" class="poster">
@@ -597,7 +647,9 @@
       <a href="https://www.imdb.com/title/tt0261983/">
         <h3>Session 9 (2001)</h3>
       </a>
-      <a href="#session-9-2001">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#session-9-2001">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#session-9-2001" class="poster">
@@ -621,7 +673,9 @@
       <a href="https://www.imdb.com/title/tt5215952/">
         <h3>The Wailing (2016)</h3>
       </a>
-      <a href="#the-wailing-2016">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#the-wailing-2016">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#the-wailing-2016" class="poster">
@@ -643,7 +697,9 @@
       <a href="https://www.imdb.com/title/tt0375063/">
         <h3>Sideways (2004)</h3>
       </a>
-      <a href="#sideways-2004">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#sideways-2004">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#sideways-2004" class="poster">
@@ -660,7 +716,9 @@
       <a href="https://www.imdb.com/title/tt7557108/">
         <h3>Saint Maud (2019)</h3>
       </a>
-      <a href="#saint-maud-2019">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#saint-maud-2019">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#saint-maud-2019" class="poster">
@@ -680,7 +738,9 @@
       <a href="https://www.imdb.com/title/tt4062536/">
         <h3>Green Room (2015)</h3>
       </a>
-      <a href="#green-room-2015">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#green-room-2015">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#green-room-2015" class="poster">
@@ -702,7 +762,9 @@
       <a href="https://www.imdb.com/title/tt0319343/">
         <h3>Elf (2003)</h3>
       </a>
-      <a href="#elf-2003">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#elf-2003">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#elf-2003" class="poster">
@@ -719,7 +781,9 @@
       <a href="https://www.imdb.com/title/tt0209958/">
         <h3>The Cell (2000)</h3>
       </a>
-      <a href="#the-cell-2000">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#the-cell-2000">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#the-cell-2000" class="poster">
@@ -739,7 +803,9 @@
       <a href="https://www.imdb.com/title/tt0032553/">
         <h3>The Great Dictator (1940)</h3>
       </a>
-      <a href="#the-great-dictator-1940">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#the-great-dictator-1940">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#the-great-dictator-1940" class="poster">
@@ -761,7 +827,9 @@
       <a href="https://www.imdb.com/title/tt0327056/">
         <h3>Mystic River (2003)</h3>
       </a>
-      <a href="#mystic-river-2003">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#mystic-river-2003">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#mystic-river-2003" class="poster">
@@ -781,7 +849,9 @@
       <a href="https://www.imdb.com/title/tt3235888/">
         <h3>It Follows (2014)</h3>
       </a>
-      <a href="#it-follows-2014">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#it-follows-2014">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#it-follows-2014" class="poster">
@@ -803,7 +873,9 @@
       <a href="https://www.imdb.com/title/tt2388715/">
         <h3>Oculus (2013)</h3>
       </a>
-      <a href="#oculus-2013">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#oculus-2013">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#oculus-2013" class="poster">
@@ -825,7 +897,9 @@
       <a href="https://www.imdb.com/title/tt7984734/">
         <h3>The Lighthouse (2019)</h3>
       </a>
-      <a href="#the-lighthouse-2019">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#the-lighthouse-2019">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#the-lighthouse-2019" class="poster">
@@ -847,7 +921,9 @@
       <a href="https://www.imdb.com/title/tt7784604/">
         <h3>Hereditary (2018)</h3>
       </a>
-      <a href="#hereditary-2018">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#hereditary-2018">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#hereditary-2018" class="poster">
@@ -869,7 +945,9 @@
       <a href="https://www.imdb.com/title/tt2866360/">
         <h3>Coherence (2013)</h3>
       </a>
-      <a href="#coherence-2013">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#coherence-2013">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#coherence-2013" class="poster">
@@ -891,7 +969,9 @@
       <a href="https://www.imdb.com/title/tt4263482/">
         <h3>The Witch (2015)</h3>
       </a>
-      <a href="#the-witch-2015">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#the-witch-2015">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#the-witch-2015" class="poster">
@@ -911,7 +991,9 @@
       <a href="https://www.imdb.com/title/tt0256009/">
         <h3>The Devil's Backbone (2001)</h3>
       </a>
-      <a href="#the-devils-backbone-2001">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#the-devils-backbone-2001">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#the-devils-backbone-2001" class="poster">
@@ -933,7 +1015,9 @@
       <a href="https://www.imdb.com/title/tt10638522/">
         <h3>Talk to Me (2022)</h3>
       </a>
-      <a href="#talk-to-me-2022">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#talk-to-me-2022">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#talk-to-me-2022" class="poster">
@@ -955,7 +1039,9 @@
       <a href="https://www.imdb.com/title/tt8772262/">
         <h3>Midsommar (2019)</h3>
       </a>
-      <a href="#midsommar-2019">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#midsommar-2019">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#midsommar-2019" class="poster">
@@ -975,7 +1061,9 @@
       <a href="https://www.imdb.com/title/tt5700672/">
         <h3>Train to Busan (2016)</h3>
       </a>
-      <a href="#train-to-busan-2016">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#train-to-busan-2016">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#train-to-busan-2016" class="poster">
@@ -992,7 +1080,9 @@
       <a href="https://www.imdb.com/title/tt2400463/">
         <h3>The Invitation (2015)</h3>
       </a>
-      <a href="#the-invitation-2015">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#the-invitation-2015">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#the-invitation-2015" class="poster">
@@ -1014,7 +1104,9 @@
       <a href="https://www.imdb.com/title/tt0180093/">
         <h3>Requiem for a Dream (2000)</h3>
       </a>
-      <a href="#requiem-for-a-dream-2000">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#requiem-for-a-dream-2000">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#requiem-for-a-dream-2000" class="poster">
@@ -1036,7 +1128,9 @@
       <a href="https://www.imdb.com/title/tt10954984/">
         <h3>Nope (2022)</h3>
       </a>
-      <a href="#nope-2022">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#nope-2022">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#nope-2022" class="poster">
@@ -1058,7 +1152,9 @@
       <a href="https://www.imdb.com/title/tt6857112/">
         <h3>Us (2019)</h3>
       </a>
-      <a href="#us-2019">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#us-2019">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#us-2019" class="poster">
@@ -1080,7 +1176,9 @@
       <a href="https://www.imdb.com/title/tt0478160/">
         <h3>Into Great Silence (2005)</h3>
       </a>
-      <a href="#into-great-silence-2005">🔗&nbsp;&nbsp;[permalink]</a>
+      <a class="permalink" href="#into-great-silence-2005">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
     </div>
     <div class="content">
       <a href="#into-great-silence-2005" class="poster">
@@ -1096,7 +1194,7 @@
       </div><p class="watched">Watched: sometime in 2023</p>
       </div>
     </div>
-  </div>]]></content><author><name></name></author><summary type="html"><![CDATA[A reverse-chronological list of movies I have seen, including non-spoiler one-liner recommendations and longer, usually-spoiler-filled thoughts – the blurred out bits. Hover or (on mobile) long-press to reveal those. Some of the posters are blurred too because they include spoiling details. 😒]]></summary></entry><entry><title type="html">WPA Eight-ball Rules (Abridged)</title><link href="https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules/" rel="alternate" type="text/html" title="WPA Eight-ball Rules (Abridged)" /><published>2024-02-29T00:00:00+00:00</published><updated>2024-02-29T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules/"><![CDATA[<p>This is an abridged summary of the <a href="https://wpapool.com/rules/">official WPA eight-ball rules</a>. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].</p>
+  </div>]]></content><author><name></name></author><summary type="html"><![CDATA[A reverse-chronological list of movies and TV shows I have seen, including non-spoiler one-liner recommendations and longer, usually-spoiler-filled thoughts – the blurred out bits. Hover or (on mobile) long-press to reveal those. Some of the posters are blurred too because they include spoiling details. 😒]]></summary></entry><entry><title type="html">WPA Eight-ball Rules (Abridged)</title><link href="https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules/" rel="alternate" type="text/html" title="WPA Eight-ball Rules (Abridged)" /><published>2024-02-29T00:00:00+00:00</published><updated>2024-02-29T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules/"><![CDATA[<p>This is an abridged summary of the <a href="https://wpapool.com/rules/">official WPA eight-ball rules</a>. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].</p>
 
 <h3 id="racking-and-the-break">Racking and the Break</h3>
 
@@ -1147,10 +1245,10 @@
     </div>
   </a>
    
-  <a href="/2024/04/01/movies/" class="next-previous-link next-previous-right" title="Next Post: The Movie List">
+  <a href="/2024/04/01/movies/" class="next-previous-link next-previous-right" title="Next Post: The Movie/TV List">
     <div class="next-previous-name">
       <div class="next-previous-label">Next Post</div>
-      <div class="next-previous-title">The Movie List</div>
+      <div class="next-previous-title">The Movie/TV List</div>
     </div>
     <span class="next-previous-icon">→</span>
   </a>
