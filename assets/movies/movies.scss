@@ -35,6 +35,7 @@
 
     .watched {
       font-size: $font-size-small;
+      color: var(--text-color-faded);
     }
   }
 }
@@ -78,4 +79,21 @@
 
 img.spoiler:not(:hover) {
   filter: blur(10px);
+}
+
+a.permalink {
+  text-decoration: none;
+
+  // The rules below are copy-pasted from post.scss which is unfortunate but I don't really want
+  // to pull this out to a mixin, especially because the way the hover rules are written is not
+  // compatible with how they have to work here because of the nesting in the containing <a>.
+  .underlineable {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 2px;
+  }
+
+  &:not(:hover) .underlineable {
+    text-decoration-color: var(--link-color-underline);
+  }
 }
