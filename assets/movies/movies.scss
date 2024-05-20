@@ -40,6 +40,37 @@
   }
 }
 
+html:after {
+  content: " ";
+  position: fixed;
+  top: 50%;
+  width: 100%;
+  border-top: 1px solid red;
+}
+
+#sidebar {
+  position: fixed;
+  top: 50%;
+  right: 0;
+
+  a {
+    display: block;
+    margin: $spacing;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  img {
+    width: 100px;
+  }
+}
+
 @media screen and (min-width: $width-mobile) {
   .entry {
     .title {
