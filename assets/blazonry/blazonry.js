@@ -2147,8 +2147,8 @@ function initializePreview() {
 }
 let previousPrevEventHandler;
 let previousNextEventHandler;
-async function parseAndRenderBlazon() {
-    async function render(blazon) {
+async function parseAndRenderBlazon(initialAmbiguousIndex = 0) {
+    async function render(blazon, index) {
         blazon = recursivelyOmitNullish(blazon);
         ast.innerHTML = JSON.stringify(blazon, null, 2);
         rendered.innerHTML = "";
@@ -2170,11 +2170,15 @@ async function parseAndRenderBlazon() {
         const clonedRendered = rendered.cloneNode(true);
         clonedRendered.removeAttribute("id");
         renderedPreviewContainer.appendChild(clonedRendered);
+        const url = new URL(window.location.href);
+        url.hash = JSON.stringify({ text, index });
+        history.replaceState(null, "", url);
     }
     let results;
+    const text = input.value.trim();
     try {
         const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
-        parser.feed(input.value.trim().toLowerCase());
+        parser.feed(text.toLowerCase());
         results = parser.results;
     }
     catch (e) {
@@ -2196,11 +2200,12 @@ async function parseAndRenderBlazon() {
     else if (results.length > 1) {
         ambiguousPrev.removeEventListener("click", previousPrevEventHandler);
         ambiguousNext.removeEventListener("click", previousNextEventHandler);
-        let which = 0;
+        let ambiguousIndex = initialAmbiguousIndex;
         async function step(sign) {
-            which = (which + sign + results.length) % results.length;
-            ambiguousCount.innerHTML = `${which + 1} / ${results.length}`;
-            await render(results[which]);
+            ambiguousIndex =
+                (ambiguousIndex + sign + results.length) % results.length;
+            ambiguousCount.innerHTML = `${ambiguousIndex + 1} / ${results.length}`;
+            await render(results[ambiguousIndex], ambiguousIndex);
         }
         previousPrevEventHandler = () => step(-1);
         ambiguousPrev.addEventListener("click", previousPrevEventHandler);
@@ -2213,7 +2218,7 @@ async function parseAndRenderBlazon() {
     else {
         error.classList.add("hidden");
         ambiguous.classList.add("hidden");
-        await render(results[0]);
+        await render(results[0], undefined);
     }
 }
 const input = document.querySelector("#blazon-input");
@@ -2306,6 +2311,21 @@ for (const example of document.querySelectorAll("[data-example]")) {
     });
 }
 initializePreview();
-parseAndRenderBlazon();
+let text;
+let index;
+try {
+    ({ text, index } = JSON.parse(decodeURIComponent(window.location.hash.slice(1))));
+}
+catch (e) {
+    // ignore and do default thing
+}
+if (typeof text === "string" &&
+    (index === undefined || typeof index === "number")) {
+    input.value = text;
+    parseAndRenderBlazon(index);
+}
+else {
+    parseAndRenderBlazon();
+}
 // #endregion
 //# sourceMappingURL=blazonry.js.map

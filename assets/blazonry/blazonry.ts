@@ -3143,8 +3143,11 @@ function initializePreview() {
 
 let previousPrevEventHandler;
 let previousNextEventHandler;
-async function parseAndRenderBlazon() {
-  async function render(blazon: Blazon): Promise<void> {
+async function parseAndRenderBlazon(initialAmbiguousIndex: number = 0) {
+  async function render(
+    blazon: Blazon,
+    index: number | undefined
+  ): Promise<void> {
     blazon = recursivelyOmitNullish(blazon);
 
     ast.innerHTML = JSON.stringify(blazon, null, 2);
@@ -3175,12 +3178,17 @@ async function parseAndRenderBlazon() {
     const clonedRendered = rendered.cloneNode(true);
     clonedRendered.removeAttribute("id");
     renderedPreviewContainer.appendChild(clonedRendered);
+
+    const url = new URL(window.location.href);
+    url.hash = JSON.stringify({ text, index });
+    history.replaceState(null, "", url);
   }
 
   let results: Blazon[];
+  const text = input.value.trim();
   try {
     const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
-    parser.feed(input.value.trim().toLowerCase());
+    parser.feed(text.toLowerCase());
     results = parser.results;
   } catch (e) {
     console.error(e);
@@ -3204,11 +3212,12 @@ async function parseAndRenderBlazon() {
     ambiguousPrev.removeEventListener("click", previousPrevEventHandler!);
     ambiguousNext.removeEventListener("click", previousNextEventHandler!);
 
-    let which = 0;
+    let ambiguousIndex = initialAmbiguousIndex;
     async function step(sign: number) {
-      which = (which + sign + results.length) % results.length;
-      ambiguousCount.innerHTML = `${which + 1} / ${results.length}`;
-      await render(results[which]);
+      ambiguousIndex =
+        (ambiguousIndex + sign + results.length) % results.length;
+      ambiguousCount.innerHTML = `${ambiguousIndex + 1} / ${results.length}`;
+      await render(results[ambiguousIndex], ambiguousIndex);
     }
 
     previousPrevEventHandler = () => step(-1);
@@ -3223,7 +3232,7 @@ async function parseAndRenderBlazon() {
   } else {
     error.classList.add("hidden");
     ambiguous.classList.add("hidden");
-    await render(results[0]);
+    await render(results[0], undefined);
   }
 }
 
@@ -3343,6 +3352,24 @@ for (const example of document.querySelectorAll<HTMLAnchorElement>(
 
 initializePreview();
 
-parseAndRenderBlazon();
+let text: unknown;
+let index: unknown;
+try {
+  ({ text, index } = JSON.parse(
+    decodeURIComponent(window.location.hash.slice(1))
+  ));
+} catch (e) {
+  // ignore and do default thing
+}
+
+if (
+  typeof text === "string" &&
+  (index === undefined || typeof index === "number")
+) {
+  input.value = text;
+  parseAndRenderBlazon(index);
+} else {
+  parseAndRenderBlazon();
+}
 
 // #endregion
