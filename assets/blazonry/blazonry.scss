@@ -121,6 +121,7 @@ a[data-example]:not(:hover) {
   right: var(--post-inset);
   bottom: var(--post-inset);
   filter: drop-shadow(0 0 4px var(--text-color-faded));
+  pointer-events: none;
 
   &.visible {
     opacity: 1;
