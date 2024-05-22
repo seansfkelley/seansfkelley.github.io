@@ -69,9 +69,14 @@ document.querySelector("#interactive").classList.remove("hidden");
 if (!(
 // Per https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent/Firefox, this is the
 // preferred way to sniff Gecko-based browsers.
-(navigator.userAgent.includes("Gecko") &&
-    navigator.userAgent.includes("rv:")))) {
-    document.querySelector("#chrome-sucks-alert").classList.remove("hidden");
+((navigator.userAgent.includes("Gecko") &&
+    navigator.userAgent.includes("rv:")) ||
+    // This is a sloppy way to check for Chrome, but I'm mostly interested in identifying Chrome
+    // without accidentally including Safari, so this works. It doesn't have to be perfect.
+    navigator.userAgent.includes("Chrome/")))) {
+    document
+        .querySelector("#unsupported-browser-alert")
+        .classList.remove("hidden");
 }
 // #region LAYOUT
 // TODO: Make _everything_ a function of these proportions.
