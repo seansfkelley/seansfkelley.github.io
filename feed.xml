@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-05-22T06:16:31+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Redux and the Limits of Abstraction</title><link href="https://blog.sea.nkelley.me/2024/05/14/limits-of-abstraction/" rel="alternate" type="text/html" title="Redux and the Limits of Abstraction" /><published>2024-05-14T00:00:00+00:00</published><updated>2024-05-14T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/05/14/limits-of-abstraction</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/05/14/limits-of-abstraction/"><![CDATA[<p>I mentioned in a code review for some framework-y code recently that the author should be careful to avoid accidentally reinventing <a href="https://redux.js.org">Redux</a>, which is a library I love to hate. During this review, I was struck by a thought and finally able to articulate why I don’t like Redux:</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-05-23T01:43:17+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Redux and the Limits of Abstraction</title><link href="https://blog.sea.nkelley.me/2024/05/14/limits-of-abstraction/" rel="alternate" type="text/html" title="Redux and the Limits of Abstraction" /><published>2024-05-14T00:00:00+00:00</published><updated>2024-05-14T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/05/14/limits-of-abstraction</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/05/14/limits-of-abstraction/"><![CDATA[<p>I mentioned in a code review for some framework-y code recently that the author should be careful to avoid accidentally reinventing <a href="https://redux.js.org">Redux</a>, which is a library I love to hate. During this review, I was struck by a thought and finally able to articulate why I don’t like Redux:</p>
 
 <p>Redux is a design pattern, not a library.</p>
 
@@ -1218,6 +1218,25 @@
 
         <p>But hey, apparently the monks loved it, so good for them!</p>
       </div><p class="watched">Watched: sometime in 2023</p>
+      </div>
+    </div>
+  </div>
+<div class="entry" id="mind-game-2004">
+    <div class="title">
+      <a href="https://www.imdb.com/title/tt0452039/">
+        <h3>Mind Game (2004)</h3>
+      </a>
+      <a class="permalink" href="#mind-game-2004">
+        🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+      </a>
+    </div>
+    <div class="content">
+      <a href="#mind-game-2004" class="poster">
+        <img class="" src="/assets/movies/mind-game-2004.jpg" loading="lazy" alt="Mind Game" />
+      </a>
+      <div class="text">
+          <p class="one-liner">👍 <b>Watch this if…</b> you’d like to be taken on a psychedelic adventure where you have to roll with the punches.</p>
+        <p class="watched">Watched: sometime in 2023</p>
       </div>
     </div>
   </div>]]></content><author><name></name></author><summary type="html"><![CDATA[A reverse-chronological list of movies and TV shows I have seen, including non-spoiler one-liner recommendations and longer, usually-spoiler-filled thoughts – the blurred out bits. Hover or (on mobile) long-press to reveal those. Some of the posters are blurred too because they include spoiling details. 😒]]></summary></entry><entry><title type="html">WPA Eight-ball Rules (Abridged)</title><link href="https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules/" rel="alternate" type="text/html" title="WPA Eight-ball Rules (Abridged)" /><published>2024-02-29T00:00:00+00:00</published><updated>2024-02-29T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules/"><![CDATA[<p>This is an abridged summary of the <a href="https://wpapool.com/rules/">official WPA eight-ball rules</a>. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].</p>
