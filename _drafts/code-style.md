@@ -5,8 +5,6 @@ tags: programming
 anchor_headings: true
 ---
 
-{:.no_toc}
-
 * TOC
 {:toc}
 

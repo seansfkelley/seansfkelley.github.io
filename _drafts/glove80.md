@@ -11,74 +11,124 @@ I previously used (and adored) one of [these](https://ergodox-ez.com/):
 
 ![ErgoDox](/assets/glove80/ergodox.jpg)
 
-Most of the thoughts I have below will be on the relative differences between these two.
+This post is a review of the Glove80 with frequent comparisons to the ErgoDox, since it was my baseline for years.
+
+## Sections
+{:.no_toc}
+
+* TOC
+{:toc}
 
 ### Feel
 
-**The keyboard halves are very light, and you can feel it even when they're on the table.** When you go back to a heavier keyboard you realize that the Glove80 doesn't dampen the vibrations from tapping at all.
+- **The housing is nicely minimalist, with no chin or forehead.**
 
-**The low profile switches and keycaps rattle slightly when you move the keyboard around.**
+    I appreciate this type of minimalism. Large expanses of empty housing like on a regular keyboard, or even the thick (vertically) and slightly wider (horizontally) housing on an ErgoDox makes it feel like an ungainly behemoth in comparison. This does have the unintended side effect of making the carrying case feel even more enormous than it already objectively is. (More on that later.)
 
-**The low profile keys do not bottom out in the same way that full-size keycaps do.** When I switch back to the ErgoDox, the key travel, bottoming out and general heft is considerably more satisfying and stable. This is obvious in retrospect, but I've never had a low profile keyboard before. My ErgoDox has [Cherry MX Browns](https://www.cherry-world.com/mx2a-brown) because the bottoming out makes them a nice amount of clacky without being too obnoxious. The [Kailh Choc v1 Browns](https://chosfox.com/products/kailh-chocs?variant=42514647646402)[^1] I have on the Glove80 are almost completely silent, which is more practical but also a bummer. I would have considered the clicky Blues to make up for it had I known this.
+- **The halves are so light that they don't dampen vibrations very well.**
 
-[^1]: I'm guessing from the "v1" that this is an older model. They aren't listed on the Kailh site at all and I only found a few places online that sold them.
+    This is relative and not terribly noticeable until you switch back to another keyboard that does. It's a bit like being in a room that echoes slightly and not noticing until you go to a room that dampens echoes properly.
+
+- **The low profile keys are quieter and a little mushier than mechnical keyboards with keys that bottom out.**
+
+    The keys are _way_ less satisfying to strike than the heavy bottoming-out you get on more standard mechanical keyboards like the ErgoDox. Since they don't bottom out, using non-clicky switches will make the keyboard almost silent, which is a nice option if you're into that. If you aren't, consider using clicky switches if you're not normally the type to.[^1]
+
+    [^1]: The Glove80 uses Kailh Choc v1 switches, which are surprisingly hard to find. I'm guessing from the "v1" that this is an older model. They aren't listed on the Kailh site at all and I only found a few places online that sold them.
+
+- **The integrated wrist rests are slippery and too small for those with large hands.**
+
+    My palms dangle off the near edge of the wrist rests. This would be tolerable, but not great, except that they're also pretty smooth so I'm constantly aware of my hands' positioning in order to keep them from slipping off the near edge. I actually use the huge rubber brick wrist rests that came with the ErgoDox, which I love, and have disconnected the integrated rests. It's a shame, because having exactly two pieces in total to wrangle would be really nice.
 
 ### Build Quality
 
-**The build does feel a bit cheap given the cost.** I accidentally dropped one half a couple inches onto the desk and now there are permanently dulled corners with obvious damage. Why didn't they just bevel it like the ErgoDox edges? Pieces of the case aren't completely flush with one another, though that's on the bottom side so you never actually see it.
+- **The housing design is prone to damage and seems to be made of relatively soft plastic.**
 
-**The case that it comes with is very nice, if bulky.** The two halves fit very snugly into their molded holders and there's a little room to spare for replacement parts and the relevant tools (like the keycap puller).
+    I accidentally dropped one half a couple inches onto the desk and now there are permanently dulled corners with obvious damage. I don't know why they didn't bevel it like the ErgoDox to avoid this kind of damage. Pieces of the case aren't completely flush with one another, though that's only on the bottom where it's usually out of sight.
 
-### Durability
+- **The low profile switches and keycaps rattle slightly when you move the keyboard around.**
 
-It's easy to break the switches. I broke one within a week by pulling out the keycaps too hard (which, to be fair, they warn you about). The keycaps _really_ grip the switches in not always a good way, and unlike the ErgoDox the switches aren't hot-swappable so it was a two-week-long affair to order replacement switches and then get a friend of a friend to solder one on for me. Lesson learned: buy the extra switches when you buy the keyboard.
+    The rattling only happens when moving it around, not when typing, but every time I pick it up to pack it it reminds me that it feels a little cheap. The ErgoDox does not rattle.
 
-I would think twice before putting the keyboard directly in a backpack or duffel. I have never thought twice about doing the same with the ErgoDox, and it has never been a problem. The bulky case only solves this problem for e.g. going into the office for the day; I don't know that I would dedicate all the space that the keyboard needs when space is limited on longer trips, but the case does mean it can be safely in checked baggage (presumably).
+- **The carrying case that it comes with is very nice, if bulky.**
 
-### Size
+    The two halves fit very snugly into their molded holders and there's a little room to spare for replacement parts and the relevant tools (like the keycap puller). I would not trust the keyboard to survive unprotected in a backpack or duffel, so the case is a welcome addition. On the other hand, the ErgoDox is indestructible and was therefore in some ways easier to travel with, despite all the associated bits.
 
-I really like that it's only exactly as large as needed to pack in all the keys. Whenever I switch back to the ErgoDox, it feels like an ungainly behemoth -- does it really need an extra inch all th way around all the edges? The small size does make travel more tempting, despite the durability question. It also makes the case feel even more ridiculously large.
+- **The switches (and PCB?) are easily broken when replacing keycaps.**
 
-I have large hands, and the integrated wrist rests are too small. I actually usually use the ErgoDox big rubber bricks so I can place them just where I need to. The rubber is also grippier, which matters as soon as your hands start sweating even a little bit and sliding off the smooth integrated wrist rests that come with it.
+    I broke one within a week by pulling out the keycaps too hard (which, to be fair, they warn you about). The keycaps _really_ grip the switches and can jostle the switches around when being replaced, and unlike the ErgoDox the switches aren't hot-swappable. It was a two-week affair to buy replacements and get a friend to solder it on, but it broke again within a month (PCB damage?) so I just stopped using that location. I broke a couple switches on my ErgoDox but never had to change my keymap to compensate since they could be swapped.
 
 ### Layout
 
-This is the first concave keyboard I've owned. I think I like it, but even after a few weeks I'm still not sure. I still often hit adjacent keys because they are unexpectedly close to each other, though more often when programming and using symbol keys heavily, so it could be my keymap at fault. I never miss a key on the ErgoDox.
+- **The concavity takes a while to get used to, but makes _so many keys_ available.**
 
-The thumb clusters are for sure a major improvement, though they still don't solve the problems from the ErgoDox completely. On the ErgoDox, you functionally have three thumb keys. The farther three are so distant that I honestly don't know why they even exist -- you have to lift your hand considerably to even reach them, so they're very slow and easy to miss. Compare the Glove80: the top three keys are reachable with a slight lift so can be used for uncommon keys that you still don't want to put on a layer, like Escape. But you still have to plan your keymap around only three thumb keys in frequent use.
+    This is the first concave keyboard I've owned. It wasn't difficult to get passably efficient, but it took a couple months before I stopped hitting adjacent keys by accident because they were closer than I was used to. In exchange, every finger gets comfortable access to 5 keys (doubled, for the index/pinky, them being on the edge) compared to the 3-4 on the ErgoDox.
 
-At first I missed the extra column on the inside edge of the ErgoDox, but I've come to appreciate the symmetry that comes with having only one extra column on each edge. I only had a couple bindings in that column and they were inconvenient enough that I only used one of them regularly. I feel the same way about the top row: it requires too much of a stretch, so I haven't bound anything there.
+- **The per-finger curvature and offset is _excellent_, excepting the pinky which should be more curved.**
 
-I do miss the 1.5u keys on the inside and outside columns, as well as the thumb keys. I think I tend to miss keys on the non-home columns because I fling my fingers horizontally and hit the nearest keys they find, which is easier to do correctly when they're bigger.
+  For the index/middle/ring fingers, all keys feel equally reachable without any preference for the middle finger (it being longer). The pinky is alright, but the second-from-top row is a stretch. I would have preferred they curve the pinky column more aggressively.
 
-The per-finger offset and curvature is excellent, and really requires and encourages good touch-typing form. My touch-typing improved considerably when I switched to the ErgoDox, which made it easy to adjust to the Glove80, which is finishing the job.
+- **The thumb clusters give only three keys for regular use, but the other three are still comfortable to reach.**
 
-### Customizability
+   The lower row of thumb keys seems to be intended as the primary one. The upper row requires a small shift of your whole hand to strike fully, though you can graze the innermost upper row key without doing that. The top row is still useful, just for less-frequent keys. The three primary keys are as comfortable as those on the ErgoDox.[^2]
 
-At first I was a bit annoyed that the Glove80 used this newfangled ZMK instead of the default option of QMK that every other keyboard uses, but after spending some time with it, I've come to really like it. It has a powerful macro system that makes it easy to combine behaviors and create all manner of custom tweaks whose QMK equivalent requires a dedicated code implementation, which limits your options and makes each subsequent feature more difficult to add. Each constituent behavior is also more clearly delineated and factored, so despite also being in C, I find it much easier to follow and add to.
+   [^2]: I don't understand why the ErgoDox even bothers with more than the three lower keys. The others are so unreachable as to be completely useless and I never bound them to anything, despite experimenting with some options.
 
-The major practical downside of ZMK for me is that it does not support mouse movement keys. There are open pull requests implementing the behavior, which I had to merge into my fork along with some other tweaks and then layer on my own hacky implementation of the mouse-speed behavior from QMK, because there was no equivalent mechanism in ZMK. It works, but it's too gross to upstream and I'm not sure how to make it un-gross.
+- **One fewer column on the inner edge is not a problem.**
 
-I haven't used the graphical configurator for the Glove80 because I stopped using the ErgoDox one months ago when I switched to using mouse keys. I have no idea how well it works.
+  I liked the big 1.5u keys on the inner columns of the ErgoDox because I could lift my hand and slap them without minimal precision. They were useful for symmetric, rare keys like brackets. The Glove80 takes this away, but since many more keys are reachable with the concavity, you can just bind those keys to the bottommost row, which is the most awkward but still way more reachable than those inner columns were.
 
-I haven't done any hardware customizations besides modifying keycaps. The manufacturer sells Apple, Linux, Windows and "nerd" keys, which actually covered enough of my bases that I bothered to put them on instead of doing all blanks like my ErgoDox. I particularly like the Apple-style meta keys and HJKL with arrows on them.
+- **The top row is only useful for rarely-used keys.**
 
-### Bluetooth
-
-The Bluetooth connection is flawless. It can be paired with four computers simultaneously and will switch between them basically instantly with the (default) 2-keystroke combination. It also provides status lights on demand for the connections so you can see which are active/idle/disconnected.
-
-### Battery Life
-
-Battery life is not a problem: weeks for the left (primary) half and months for the right (secondary) half. It's also nice that it's got USB-C: I have no idea why the ErgoDox chose the rare and obnoxious USB mini-B (_not_ micro-B). I had to special-order a mini-B to C cable just for the keyboard to avoid having a permanently attached dongle. Everything in my life has to be USB-C.
+  It's too far, except for maybe the middle finger. That's probably why it defaults to function keys.
 
 ### Convenience
 
-There is a significant degree of convenience and elegance to the integrated wrist rests, such that I'm giving them another try as I write this review on the Glove80. Compare the ErgoDox's six loosely-connected pieces requiring lots of plugging in and out. After going back and forth to the office with only the Glove80, I have to say -- even using it with the ErgoDox's separated wrist rests, it's considerably less annoying to have four blocky things to set up instead of wrangling wires that are too long and have to snake back and forth across the desk and obstruct opening and closing the laptop lid.
+- **The wireless inter-keyboard connection is flawless.**
+
+    In three months of using the keyboard every day, I have only had the two halves unable to communicate with each other once when I made a mistake while flashing firmware. It just works.
+
+- **Having four Bluetooth connections makes it easy to use my keyboard everywhere.**
+
+    I have three computers that I use this keyboard with regularly, so having a dedicated connection for each I can switch between with a single keystroke allows me to use my preferred keyboard with a minimum of fuss. The four-color status indicators are a nice bonus too.
+
+- **Battery life is good but not incredible.**
+
+    I'm used to a wired keyboard, so having a battery life to worry about at all is a downgrade. The battery life is measured in weeks, which is long enough to not be a problem but feels short compared to e.g. my mouse, whose battery life is measured in months. I would have preferred a heavier keyboard for unrelated reasons, so adding that weight with a larger battery would have been a win-win in my mind.
+
+- **USB-C yes please.**
+
+    No proprietary USB A Logitech dongles, no ErgoDox USB mini-B nonsense (that's right: _not_ micro-B; do you even remember mini-B?). Everything in my life must be USB-C.
+
+### Customization
+
+- **ZMK firmware is a big step up from QMK, even though it's missing features.**
+
+    ZMK was significantly easier for me to pick up and run with than QMK. In particular, it's much more composable, with a strong macro system that allows combining a library of "behaviors" in infinite ways. Unfortunately ZMK does not have useful mouse key support, so I had to fork it to pull in some unstable code from other people and pile on my own kinda hacky implementations to match the QMK behaviors that I like.
+
+- **The extra Windows/Linux/Mac/"nerd" keycap sets are a nice touch.**
+
+    The manufacturer sells keycaps with the Mac command symbol, Tux the penguin, Vim-style HJKL, etc. As you can see in the picture at the top, I currently use a mish-mash of symbols from different places, which I like. I don't know how hard it is to find custom keycaps that fit these switches, though the switches themselves seem to be a little hard to find.
+
+- **The switches are soldered, so make the right choice the first time.**
+
+    I think I would have preferred clicky switches, but I can't change them now with resoldering every single key, which sounds like a recipe for breakage. (Well, more than I already broke it by replacing some keycaps.)
+
+- **The manufacturers are cagey about sharing hardware diagrams despite advertising third-party hardware customizations on the site.**
+
+    I wanted to try 3D printing extra-long integrated wrist rests for my large hands, but while I did get a quick response on the manufacturer's Discord[^3] when asking for the necessary measurements to properly line up the screw holes, they clearly did not want to share anything specific nor admit that they didn't want to share anything specific. It quickly became radio silence.
+
+    [^3]: Ugh, I miss regular forums for this type of community.
 
 ### Conclusion
 
-The Glove80 does fix pretty much all the problems of the ErgoDox, but it introduces a few to replace it. It clearly trades off durability and heft in favor of portability and convenience.
+The Glove80 resolves all of the ErgoDox's issues with bulk, layout and accessories while keeping (or providing slight upgrades to!) most of the ErgoDox's comfort and customizability features. It's clearly trying to appeal to both average users and keyboard hackers, which sometimes ends up in tradeoffs favoring the average user, such as portability over big clacky keys. It's noticeably less robust than the ErgoDox, and may not be as comfortable if you have large hands.
 
-If you like having lots of keyboards, this is a worthy addition to your collection. If you don't yet have a programmable ergonomic mechanical keyboard and are thinking of getting one, this is a great one to be your only one. If you already do and don't want extra keyboards, it's not a slam dunk replacement.
+If the Glove80 is under consideration for your first serious ergonomic keyboard, buy it, though note that learning split, concave and ortholinear at the same time is a lot.
+
+If you already have a keyboard collection, this is definitely a worthy addition.
+
+If you're attracted to mechnical clackfests but want something with nonzero ergonomics, you might be better of with the ErgoDox or something in that family.
+
+For some more opinions, check out the [very quantitative RTINGS review](https://www.rtings.com/keyboard/reviews/moergo/glove80). If you're into crazy keymap customization, check out this [extremely detailed walkthrough](https://sunaku.github.io/moergo-glove80-keyboard.html) of someone's keymap.
 
 {% include next-previous.html %}
