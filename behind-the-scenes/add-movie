@@ -45,7 +45,7 @@ inferred_year="$(cat /tmp/movie_page.html \
   | hxselect -s '\n' "a[href^='/title/$movie_id/releaseinfo']" \
   | tr -d '\n' \
   | tr -d ' ' \
-  | sed -E 's|.*>([[:digit:]]{4})<.*|\1|g')"
+  | sed -E 's|.*>([[:digit:]]{4}).?([[:digit:]]{4})?<.*|\1|g')"
 
 if [ -z "$year" ] ; then
   year="$inferred_year"
