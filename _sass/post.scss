@@ -5,6 +5,10 @@
 .post-header {
   margin-bottom: $spacing;
 
+  .post-title {
+    font-weight: 300;
+  }
+
   .post-title,
   .post-subtitle {
     margin-top: $spacing;
