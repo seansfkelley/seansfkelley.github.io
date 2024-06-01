@@ -506,7 +506,7 @@ h4,
 h5,
 h6 {
   font-family: "Lufga", Helvetica, Arial, sans-serif;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 blockquote {
@@ -674,6 +674,9 @@ body[data-theme=light] #theme-switcher:after {
 
 .post-header {
   margin-bottom: 14px;
+}
+.post-header .post-title {
+  font-weight: 300;
 }
 .post-header .post-title,
 .post-header .post-subtitle {
