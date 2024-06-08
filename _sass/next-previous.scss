@@ -2,7 +2,7 @@
 
 .next-previous {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column-reverse;
 
   a {
     text-decoration: none;
@@ -11,16 +11,24 @@
 
 .next-previous-icon {
   width: $spacing;
+  display: none;
+
+  .next-previous-label & {
+    display: initial;
+  }
 }
 
 .next-previous-placeholder {
-  flex: 1;
+  display: none;
 }
 
 .next-previous-link {
   display: flex;
   align-items: center;
   flex: 1;
+
+  // This is first-child because we do column-reverse to make sure next is on top.
+  margin-bottom: $spacing;
 
   .next-previous-label,
   .next-previous-icon {
@@ -41,11 +49,7 @@
   }
 }
 
-.next-previous-name {
-  margin: 0 $spacing;
-}
-
-.next-previous-right {
+.next-previous-next {
   text-align: right;
   justify-content: right;
 }
@@ -59,11 +63,29 @@
 }
 
 @media screen and (min-width: $width-mobile) {
-  .next-previous-icon {
-    transition: transform 100ms ease-in;
+  .next-previous {
+    flex-direction: row;
   }
 
-  .next-previous-left {
+  .next-previous-icon {
+    display: initial;
+    transition: transform 100ms ease-in;
+
+    .next-previous-label & {
+      display: none;
+    }
+  }
+
+  .next-previous-link {
+    flex: auto;
+    margin-bottom: 0;
+  }
+
+  .next-previous-name {
+    margin: 0 $spacing;
+  }
+
+  .next-previous-previous {
     margin-left: -($spacing * 2);
 
     &:hover .next-previous-icon {
@@ -71,7 +93,7 @@
     }
   }
 
-  .next-previous-right {
+  .next-previous-next {
     margin-right: -($spacing * 2);
 
     &:hover .next-previous-icon {
