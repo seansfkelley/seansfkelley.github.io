@@ -552,7 +552,7 @@ figcaption {
 }
 
 hr {
-  margin: 28px 14px;
+  margin: 14px;
   border: none;
   border-bottom: 1px solid var(--brand-color-light);
 }
@@ -990,7 +990,7 @@ a.reversefootnote {
 
 .next-previous {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column-reverse;
 }
 .next-previous a {
   text-decoration: none;
@@ -998,16 +998,21 @@ a.reversefootnote {
 
 .next-previous-icon {
   width: 14px;
+  display: none;
+}
+.next-previous-label .next-previous-icon {
+  display: initial;
 }
 
 .next-previous-placeholder {
-  flex: 1;
+  display: none;
 }
 
 .next-previous-link {
   display: flex;
   align-items: center;
   flex: 1;
+  margin-bottom: 14px;
 }
 .next-previous-link .next-previous-label,
 .next-previous-link .next-previous-icon {
@@ -1024,11 +1029,7 @@ a.reversefootnote {
   color: var(--text-color);
 }
 
-.next-previous-name {
-  margin: 0 14px;
-}
-
-.next-previous-right {
+.next-previous-next {
   text-align: right;
   justify-content: right;
 }
@@ -1042,19 +1043,33 @@ a.reversefootnote {
 }
 
 @media screen and (min-width: 600px) {
+  .next-previous {
+    flex-direction: row;
+  }
   .next-previous-icon {
+    display: initial;
     transition: transform 100ms ease-in;
   }
-  .next-previous-left {
+  .next-previous-label .next-previous-icon {
+    display: none;
+  }
+  .next-previous-link {
+    flex: auto;
+    margin-bottom: 0;
+  }
+  .next-previous-name {
+    margin: 0 14px;
+  }
+  .next-previous-previous {
     margin-left: -28px;
   }
-  .next-previous-left:hover .next-previous-icon {
+  .next-previous-previous:hover .next-previous-icon {
     transform: translateX(-7px);
   }
-  .next-previous-right {
+  .next-previous-next {
     margin-right: -28px;
   }
-  .next-previous-right:hover .next-previous-icon {
+  .next-previous-next:hover .next-previous-icon {
     transform: translateX(7px);
   }
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-06-02T15:13:17+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Glove80 Keyboard Review</title><link href="https://blog.sea.nkelley.me/2024/05/26/glove80/" rel="alternate" type="text/html" title="Glove80 Keyboard Review" /><published>2024-05-26T00:00:00+00:00</published><updated>2024-05-26T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/05/26/glove80</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/05/26/glove80/"><![CDATA[<p>I bought myself one of <a href="https://www.moergo.com/">these</a>:</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-06-08T16:42:25+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Glove80 Keyboard Review</title><link href="https://blog.sea.nkelley.me/2024/05/26/glove80/" rel="alternate" type="text/html" title="Glove80 Keyboard Review" /><published>2024-05-26T00:00:00+00:00</published><updated>2024-05-26T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/05/26/glove80</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/05/26/glove80/"><![CDATA[<p>I bought myself one of <a href="https://www.moergo.com/">these</a>:</p>
 
 <p><img src="/assets/glove80/glove80.jpg" alt="Glove80" /></p>
 
@@ -168,10 +168,12 @@
 
 <section class="next-previous">
   
-  <a href="/2024/05/14/limits-of-abstraction/" class="next-previous-link next-previous-left" title="Previous Post: Redux and the Limits of Abstraction">
+  <a href="/2024/05/14/limits-of-abstraction/" class="next-previous-link next-previous-previous" title="Previous Post: Redux and the Limits of Abstraction">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
-      <div class="next-previous-label">Previous Post</div>
+      <div class="next-previous-label">
+        <span class="next-previous-icon">←</span> Previous Post
+      </div>
       <div class="next-previous-title">Redux and the Limits of Abstraction</div>
     </div>
   </a>
@@ -222,17 +224,21 @@
 
 <section class="next-previous">
   
-  <a href="/2024/04/17/honking/" class="next-previous-link next-previous-left" title="Previous Post: Let's Use Hardware Subscriptions for Good">
+  <a href="/2024/04/17/honking/" class="next-previous-link next-previous-previous" title="Previous Post: Let's Use Hardware Subscriptions for Good">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
-      <div class="next-previous-label">Previous Post</div>
+      <div class="next-previous-label">
+        <span class="next-previous-icon">←</span> Previous Post
+      </div>
       <div class="next-previous-title">Let's Use Hardware Subscriptions for Good</div>
     </div>
   </a>
    
-  <a href="/2024/05/26/glove80/" class="next-previous-link next-previous-right" title="Next Post: Glove80 Keyboard Review">
+  <a href="/2024/05/26/glove80/" class="next-previous-link next-previous-next" title="Next Post: Glove80 Keyboard Review">
     <div class="next-previous-name">
-      <div class="next-previous-label">Next Post</div>
+      <div class="next-previous-label">
+        Next Post <span class="next-previous-icon">→</span>
+      </div>
       <div class="next-previous-title">Glove80 Keyboard Review</div>
     </div>
     <span class="next-previous-icon">→</span>
@@ -308,17 +314,21 @@
 
 <section class="next-previous">
   
-  <a href="/2024/04/13/tangrams/" class="next-previous-link next-previous-left" title="Previous Post: Refactoring with Tangrams">
+  <a href="/2024/04/13/tangrams/" class="next-previous-link next-previous-previous" title="Previous Post: Refactoring with Tangrams">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
-      <div class="next-previous-label">Previous Post</div>
+      <div class="next-previous-label">
+        <span class="next-previous-icon">←</span> Previous Post
+      </div>
       <div class="next-previous-title">Refactoring with Tangrams</div>
     </div>
   </a>
    
-  <a href="/2024/05/14/limits-of-abstraction/" class="next-previous-link next-previous-right" title="Next Post: Redux and the Limits of Abstraction">
+  <a href="/2024/05/14/limits-of-abstraction/" class="next-previous-link next-previous-next" title="Next Post: Redux and the Limits of Abstraction">
     <div class="next-previous-name">
-      <div class="next-previous-label">Next Post</div>
+      <div class="next-previous-label">
+        Next Post <span class="next-previous-icon">→</span>
+      </div>
       <div class="next-previous-title">Redux and the Limits of Abstraction</div>
     </div>
     <span class="next-previous-icon">→</span>
@@ -496,17 +506,21 @@
 
 <section class="next-previous">
   
-  <a href="/2024/04/01/movies/" class="next-previous-link next-previous-left" title="Previous Post: The Movie/TV List">
+  <a href="/2024/04/01/movies/" class="next-previous-link next-previous-previous" title="Previous Post: The Movie/TV List">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
-      <div class="next-previous-label">Previous Post</div>
+      <div class="next-previous-label">
+        <span class="next-previous-icon">←</span> Previous Post
+      </div>
       <div class="next-previous-title">The Movie/TV List</div>
     </div>
   </a>
    
-  <a href="/2024/04/17/honking/" class="next-previous-link next-previous-right" title="Next Post: Let's Use Hardware Subscriptions for Good">
+  <a href="/2024/04/17/honking/" class="next-previous-link next-previous-next" title="Next Post: Let's Use Hardware Subscriptions for Good">
     <div class="next-previous-name">
-      <div class="next-previous-label">Next Post</div>
+      <div class="next-previous-label">
+        Next Post <span class="next-previous-icon">→</span>
+      </div>
       <div class="next-previous-title">Let's Use Hardware Subscriptions for Good</div>
     </div>
     <span class="next-previous-icon">→</span>
@@ -1537,17 +1551,21 @@
 
 <section class="next-previous">
   
-  <a href="/2023/12/27/kathack/" class="next-previous-link next-previous-left" title="Previous Post: kathack">
+  <a href="/2023/12/27/kathack/" class="next-previous-link next-previous-previous" title="Previous Post: kathack">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
-      <div class="next-previous-label">Previous Post</div>
+      <div class="next-previous-label">
+        <span class="next-previous-icon">←</span> Previous Post
+      </div>
       <div class="next-previous-title">kathack</div>
     </div>
   </a>
    
-  <a href="/2024/04/01/movies/" class="next-previous-link next-previous-right" title="Next Post: The Movie/TV List">
+  <a href="/2024/04/01/movies/" class="next-previous-link next-previous-next" title="Next Post: The Movie/TV List">
     <div class="next-previous-name">
-      <div class="next-previous-label">Next Post</div>
+      <div class="next-previous-label">
+        Next Post <span class="next-previous-icon">→</span>
+      </div>
       <div class="next-previous-title">The Movie/TV List</div>
     </div>
     <span class="next-previous-icon">→</span>
@@ -1582,17 +1600,21 @@
 
 <section class="next-previous">
   
-  <a href="/2023/12/24/cornmeal-pancakes/" class="next-previous-link next-previous-left" title="Previous Post: Cornmeal Pancake Recipe">
+  <a href="/2023/12/24/cornmeal-pancakes/" class="next-previous-link next-previous-previous" title="Previous Post: Cornmeal Pancake Recipe">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
-      <div class="next-previous-label">Previous Post</div>
+      <div class="next-previous-label">
+        <span class="next-previous-icon">←</span> Previous Post
+      </div>
       <div class="next-previous-title">Cornmeal Pancake Recipe</div>
     </div>
   </a>
    
-  <a href="/2024/02/29/abridged-pool-rules/" class="next-previous-link next-previous-right" title="Next Post: WPA Eight-ball Rules (Abridged)">
+  <a href="/2024/02/29/abridged-pool-rules/" class="next-previous-link next-previous-next" title="Next Post: WPA Eight-ball Rules (Abridged)">
     <div class="next-previous-name">
-      <div class="next-previous-label">Next Post</div>
+      <div class="next-previous-label">
+        Next Post <span class="next-previous-icon">→</span>
+      </div>
       <div class="next-previous-title">WPA Eight-ball Rules (Abridged)</div>
     </div>
     <span class="next-previous-icon">→</span>
@@ -1646,17 +1668,21 @@
 
 <section class="next-previous">
   
-  <a href="/2023/11/24/seven-segment/" class="next-previous-link next-previous-left" title="Previous Post: Making Up New Numbers With 7-Segment Displays">
+  <a href="/2023/11/24/seven-segment/" class="next-previous-link next-previous-previous" title="Previous Post: Making Up New Numbers With 7-Segment Displays">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
-      <div class="next-previous-label">Previous Post</div>
+      <div class="next-previous-label">
+        <span class="next-previous-icon">←</span> Previous Post
+      </div>
       <div class="next-previous-title">Making Up New Numbers With 7-Segment Displays</div>
     </div>
   </a>
    
-  <a href="/2023/12/27/kathack/" class="next-previous-link next-previous-right" title="Next Post: kathack">
+  <a href="/2023/12/27/kathack/" class="next-previous-link next-previous-next" title="Next Post: kathack">
     <div class="next-previous-name">
-      <div class="next-previous-label">Next Post</div>
+      <div class="next-previous-label">
+        Next Post <span class="next-previous-icon">→</span>
+      </div>
       <div class="next-previous-title">kathack</div>
     </div>
     <span class="next-previous-icon">→</span>
@@ -1750,17 +1776,21 @@
 
 <section class="next-previous">
   
-  <a href="/2023/11/22/pie-dough/" class="next-previous-link next-previous-left" title="Previous Post: Pie (Pastry) Dough Recipe">
+  <a href="/2023/11/22/pie-dough/" class="next-previous-link next-previous-previous" title="Previous Post: Pie (Pastry) Dough Recipe">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
-      <div class="next-previous-label">Previous Post</div>
+      <div class="next-previous-label">
+        <span class="next-previous-icon">←</span> Previous Post
+      </div>
       <div class="next-previous-title">Pie (Pastry) Dough Recipe</div>
     </div>
   </a>
    
-  <a href="/2023/12/24/cornmeal-pancakes/" class="next-previous-link next-previous-right" title="Next Post: Cornmeal Pancake Recipe">
+  <a href="/2023/12/24/cornmeal-pancakes/" class="next-previous-link next-previous-next" title="Next Post: Cornmeal Pancake Recipe">
     <div class="next-previous-name">
-      <div class="next-previous-label">Next Post</div>
+      <div class="next-previous-label">
+        Next Post <span class="next-previous-icon">→</span>
+      </div>
       <div class="next-previous-title">Cornmeal Pancake Recipe</div>
     </div>
     <span class="next-previous-icon">→</span>
@@ -1814,17 +1844,21 @@
 
 <section class="next-previous">
   
-  <a href="/2023/10/07/granola/" class="next-previous-link next-previous-left" title="Previous Post: Granola Recipe">
+  <a href="/2023/10/07/granola/" class="next-previous-link next-previous-previous" title="Previous Post: Granola Recipe">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
-      <div class="next-previous-label">Previous Post</div>
+      <div class="next-previous-label">
+        <span class="next-previous-icon">←</span> Previous Post
+      </div>
       <div class="next-previous-title">Granola Recipe</div>
     </div>
   </a>
    
-  <a href="/2023/11/24/seven-segment/" class="next-previous-link next-previous-right" title="Next Post: Making Up New Numbers With 7-Segment Displays">
+  <a href="/2023/11/24/seven-segment/" class="next-previous-link next-previous-next" title="Next Post: Making Up New Numbers With 7-Segment Displays">
     <div class="next-previous-name">
-      <div class="next-previous-label">Next Post</div>
+      <div class="next-previous-label">
+        Next Post <span class="next-previous-icon">→</span>
+      </div>
       <div class="next-previous-title">Making Up New Numbers With 7-Segment Displays</div>
     </div>
     <span class="next-previous-icon">→</span>
