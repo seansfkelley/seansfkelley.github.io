@@ -47,8 +47,8 @@ function updateSortAndFilter() {
       (direction === "desc" ? -1 : 1);
 
     if (ordering === 0) {
-      // Don't respect direction during the tie break -- always want older ones first.
-      return -first.dataset.title
+      // Don't respect direction during the tie break -- always want to be sorted descending.
+      return first.dataset.title
         .toLowerCase()
         .localeCompare(second.dataset.title.toLowerCase());
     } else {
