@@ -1,13 +1,16 @@
 # - title: The Expanse (Season 1)
 #   year: 2015
+#   kind: tv
 #   link: https://www.imdb.com/title/tt3230854/
 #   poster: the-expanse-2015.jpg
-#   watched: 2024-06-04 to 2024-06-05
+#   watched: 2024-06-05
+#   watched-display: 2024-06-04 to 2024-06-05
 #   watch-this-if:
 #   dont-watch-this-because:
 #   more-thoughts: |
 - title: Station Eleven
   year: 2021
+  kind: tv
   link: https://www.imdb.com/title/tt10574236/
   poster: station-eleven-2021.jpg
   watched: 2024-05-26
@@ -22,6 +25,7 @@
     Watch [The Last of Us](#the-last-of-us-2023) instead.
 - title: Enemy
   year: 2013
+  kind: movie
   link: https://www.imdb.com/title/tt2316411/
   poster: enemy-2013.jpg
   watched: 2024-05-19
@@ -34,9 +38,11 @@
     I didn't really get why the whole movie was foggy and yellow. General mood, I guess?
 - title: Shogun
   year: 2024
+  kind: tv
   link: https://www.imdb.com/title/tt2788316/
   poster: shogun-2024.jpg
-  watched: early 2024
+  watched: 2024-05-08
+  watched-display: early 2024
   watch-this-if: you like pretty period pieces that are still compelling enough to send you on Wikipedia binges.
   more-thoughts: |
     Casting was great; on screen chemistry between the two main actors was good. The story would plod at times, but I kept coming back for the aesthetics and because there were many individually good scenes, even in the slower episodes.
@@ -46,6 +52,7 @@
     I didn't like the first episode all that much but was happy to stick with it. I would have preferred more palace intrigue and less romance. I like a show that inspires me to read up on the history of the thing!
 - title: Blue Ruin
   year: 2013
+  kind: movie
   link: https://www.imdb.com/title/tt2359024/
   poster: blue-ruin-2013.jpg
   watched: 2024-04-22
@@ -56,6 +63,7 @@
     I consider this movie an object lesson in how guns can make mountains out of molehills. (Even though the first murder they showed was a stabbing, the original one, before the movie started, was a shooting too.) And, I suppose, that revenge is fleeting.
 - title: Poor Things
   year: 2023
+  kind: movie
   link: https://www.imdb.com/title/tt14230458/
   poster: poor-things-2023.jpg
   watched: 2024-04-18
@@ -70,6 +78,7 @@
     I really like this movie as a dark, foul-mouthed interpretation of what a Wes Anderson movie could be.
 - title: The Babadook
   year: 2014
+  kind: movie
   link: https://www.imdb.com/title/tt2321549/
   poster: the-babadook-2014.jpg
   watched: 2024-04-04
@@ -82,6 +91,7 @@
     An effect I liked in particular was right after the possession, when the mom is watching TV: the inability to focus and the quick twitches the camera makes are simple but effective.
 - title: Ran
   year: 1985
+  kind: movie
   link: https://www.imdb.com/title/tt0089881/
   poster: ran-1985.jpg
   watched: 2024-03-31
@@ -92,6 +102,7 @@
     The set pieces are absolutely incredible. Lots and lots of horses, yes, but the king wandering out of the burning castle while the armies part to let him pass... yowza. They really built and burned a full-size set for that.
 - title: Ex Machina
   year: 2014
+  kind: movie
   link: https://www.imdb.com/title/tt0470752/
   poster: ex-machina-2014.jpg
   watched: 2024-03-30
@@ -102,6 +113,7 @@
     I don't think the rise of LLMs has changed my thoughts on this movie one way or the other. Ultimately more plausible, perhaps, but they neither undermine nor support the thesis of the movie. That might be a comment more on LLMs themselves than this movie or AI generally.
 - title: Sinister
   year: 2012
+  kind: movie
   link: https://www.imdb.com/title/tt1922777
   poster: sinister-2012.jpg
   poster-class: spoiler
@@ -113,6 +125,7 @@
     It would have been a significantly better movie if they had held the supernatural reveal until the box of movies reappears in the attic right before the end. You would have spent 95% of the movie scared about a murderous and superhumanly stealthly and methodical stalker, and then, twist, it actually _is_ supernatural and the children get Ringu'd into the home movies.
 - title: "Dune: Part Two"
   year: 2024
+  kind: movie
   link: https://www.imdb.com/title/tt15239678
   poster: dune-part-two-2024.jpg
   watched: 2024-03-08
@@ -123,6 +136,7 @@
     This one is a little less exciting for not-already-Dune-fans, and even already-Dune-fans, because it doesn't get to introduce all the wild world-building and main characters, like the first one did. It's still absolutely worth rewatching, though probably as part of a marathon.
 - title: Bodies Bodies Bodies
   year: 2022
+  kind: movie
   link: https://www.imdb.com/title/tt8110652/
   poster: bodies-bodies-bodies-2022.jpg
   watched: 2024-03-02
@@ -133,6 +147,7 @@
     Had I known that the movie did not intend to take itself entirely seriously I would have gone in with different expectations, but I don't think that would have saved it. The few (in retrospect) genuinely funny lines would have registered as such, instead of coming off as the characters continuing to be obnoxious, but the juice just isn't worth the squeeze.
 - title: The Wicker Man
   year: 1973
+  kind: movie
   link: https://www.imdb.com/title/tt0070917
   poster: the-wicker-man-1973.jpg
   watched: 2024-02-26
@@ -143,6 +158,7 @@
     If it didn't invent all the folk-horror tropes, it certainly solidified them. Christopher Lee is fantastic, and in fact, he has said on several occasions that it was his favorite role. Midsommar owes so, so much to this movie. It's a tighter, higher-production-value movie, but The Wicker Man's simpler, more earnest style is a better fit for the "folk" part of "folk-horror".
 - title: Crouching Tiger, Hidden Dragon
   year: 2000
+  kind: movie
   link: https://www.imdb.com/title/tt0190332
   poster: crouching-tiger-hidden-dragon-2000.jpg
   watched: 2024-02-14
@@ -153,6 +169,7 @@
     It was nice to see Michelle Yeoh from her earlier years, now that she's super famous!
 - title: The Menu
   year: 2022
+  kind: movie
   link: https://www.imdb.com/title/tt9764362/
   poster: the-menu-2022.jpg
   watched: 2024-02-12
@@ -163,6 +180,7 @@
     I adored the parodical food-porn glamour shots of each dish and the heavy-handed criticism of haute cuisine and the culture around it, in particular, Ralph Fiennes browbeating the insufferable "foodie" into killing himself from shame. Crazy. Head waiter Elsa was also excellently written and acted.
 - title: One Cut of the Dead
   year: 2017
+  kind: movie
   link: https://www.imdb.com/title/tt7914416/
   poster: one-cut-of-the-dead-2017.jpg
   watched: 2024-01-31
@@ -173,6 +191,7 @@
     I assume in Japanese the name is a little less clunky. Do they have a single-syllable word for "one cut" so the name's cadence is closer to Dawn of the Dead or Day of the Dead or whatever?
 - title: Session 9
   year: 2001
+  kind: movie
   link: https://www.imdb.com/title/tt0261983/
   poster: session-9-2001.jpg
   watched: 2024-01-30
@@ -185,6 +204,7 @@
     [Fuck yooou.](https://www.youtube.com/watch?v=mz5ODQCueP8)
 - title: The Wailing
   year: 2016
+  kind: movie
   link: https://www.imdb.com/title/tt5215952/
   poster: the-wailing-2016.jpg
   watched: 2024-01-22
@@ -195,12 +215,14 @@
     I don't have much else to say -- despite the length it's too intricate to sum up in a small space any more than I already have.
 - title: Sideways
   year: 2004
+  kind: movie
   link: https://www.imdb.com/title/tt0375063/
   poster: sideways-2004.jpg
   watched: 2024-01-14
   watch-this-if: you want an endearing, middle-aged road trip movie.
 - title: Saint Maud
   year: 2019
+  kind: movie
   link: https://www.imdb.com/title/tt7557108/
   poster: saint-maud-2019.jpg
   watched: 2024-01-03
@@ -209,6 +231,7 @@
     The predictability of this movie really is a shame. The polish is evident and there are a few elements I really liked -- using Welsh for speaking in tongues, and especially the visuals in the [last scene of the film](https://www.youtube.com/watch?v=MRU7ni9G3rw) (**warning:** mega spoilers at that link)  -- but it's hard to get invested when the movie is telegraphing fanatical mental illness with all the usual religious iconography.
 - title: Green Room
   year: 2015
+  kind: movie
   link: https://www.imdb.com/title/tt4062536/
   poster: green-room-2015.jpg
   watched: 2023-12-29
@@ -219,12 +242,14 @@
     I'm generally not a fan of body horror, but I thought they hit the mark with enough to contribute to the feeling the movie was going for without accidentally turning the room they were locked inside into Saw Lite.
 - title: Elf
   year: 2003
+  kind: movie
   link: https://www.imdb.com/title/tt0319343/
   poster: elf-2003.webp
   watched: 2023-12-23
   watch-this-if: you have a heart.
 - title: The Cell
   year: 2000
+  kind: movie
   link: https://www.imdb.com/title/tt0209958/
   poster: the-cell-2000.jpg
   watched: 2023-12-22
@@ -233,6 +258,7 @@
     This movie is so pretty, and some of the visual elements would steal the show all by themselves in any other movie. (I'm thinking here of the dangling metal mask that J Lo wears.) The plot is not terribly original, but it is (and should be) considered an entirely visual experience. And it's worth it for that alone.
 - title: The Great Dictator
   year: 1940
+  kind: movie
   link: https://www.imdb.com/title/tt0032553/
   poster: the-great-dictator-1940.jpg
   watched: 2023-12-17
@@ -243,6 +269,7 @@
     Watching this again for the first time in many years, I was very surprised at the complete lack of foley effects. Some of the scenes got very quiet, almost uncomfortably so, though I don't think that was the intent. Different filmmaking standards!
 - title: Mystic River
   year: 2003
+  kind: movie
   link: https://www.imdb.com/title/tt0327056/
   poster: mystic-river-2003.jpg
   watched: 2023-12-15
@@ -251,6 +278,7 @@
     I had literally no idea what this movie was about when I sat down to watch it. It was an enjoyable set piece of sorts; Sean Penn in particular put on a great performance. It's all very Boston.
 - title: It Follows
   year: 2014
+  kind: movie
   link: https://www.imdb.com/title/tt3235888/
   poster: it-follows-2014.jpg
   watched: 2023-12-11
@@ -261,6 +289,7 @@
     But after thinking on it for some time, it's grown on me, specifically _because_ it's such an out-there core concept in such mundane trappings. What a strange choice for a representation of... STDs? Sexual assault? Death? It's chilling how such an innocuous action -- literally, following -- taken to an extreme becomes so unsettling. Plus, I thought that the characters acted pretty reasonably given the insanity they were subjected to.
 - title: Oculus
   year: 2013
+  kind: movie
   link: https://www.imdb.com/title/tt2388715/
   poster: oculus-2013.jpg
   watched: 2023-12-09
@@ -271,6 +300,7 @@
     I really appreciate the cat-and-mouse game between the characters and the mirror itself: you start the movie out thinking that yeah, she's got it in the bag, she's thought of everything from not forgetting to eat to having a dead man's switch. So when the mirror wins, ooh, you feel like it tricked you as well.
 - title: The Lighthouse
   year: 2019
+  kind: movie
   link: https://www.imdb.com/title/tt7984734/
   poster: the-lighthouse-2019.jpg
   watched: 2023-12-08
@@ -281,6 +311,7 @@
     It's a bit of a shame, because I thought that both castings and both performances were excellent.
 - title: Hereditary
   year: 2018
+  kind: movie
   link: https://www.imdb.com/title/tt7784604/
   poster: hereditary-2018.jpg
   watched: 2023-12-04
@@ -291,6 +322,7 @@
     The daughter did remind me a lot of [Border](https://www.imdb.com/title/tt5501104/).
 - title: Coherence
   year: 2013
+  kind: movie
   link: https://www.imdb.com/title/tt2866360/
   poster: coherence-2013.jpg
   watched: 2023-11-30
@@ -301,6 +333,7 @@
     Fun fact: the movie was filmed in a few days in the filmmaker's house, and he only gave each actor their own parts and only the parts they needed for _that day_ of filming. So they're as surprised as you are.
 - title: The Witch
   year: 2015
+  kind: movie
   link: https://www.imdb.com/title/tt4263482/
   poster: the-witch-2015.jpg
   watched: 2023-11-28
@@ -309,6 +342,7 @@
     Is the witch... the good guy? The family members were all pretty terrible to one another, and I can't entire blame Thomasin for deciding it would be better if she really _were_ a witch, if they were going to accuse her of it anyway. Most of them got what they deserved, I suppose.
 - title: The Devil's Backbone
   year: 2001
+  kind: movie
   link: https://www.imdb.com/title/tt0256009/
   poster: the-devils-backbone-2001.jpg
   watched: 2023-11-27
@@ -319,6 +353,7 @@
     I did like some elements and characters of this film, especially the older couple running the orphanage. The child actors are not bad, though the makeup on the ghost boy sure is. I wanted to like it more than I did, and it still feels a little harsh to recommend not watching it, but I'd pick most other horror movies on this list first, for sure.
 - title: Talk to Me
   year: 2022
+  kind: movie
   link: https://www.imdb.com/title/tt10638522/
   poster: talk-to-me-2022.jpg
   watched: 2023-11-26
@@ -329,6 +364,7 @@
     The visual effects struck the perfect balance of creepy without going overboard, and the increasingly-unsubtle audio-visual cues of the possessive underworld woman were a nice touch.
 - title: Midsommar
   year: 2019
+  kind: movie
   link: https://www.imdb.com/title/tt8772262/
   poster: midsommar-2019.jpg
   watched: 2023-11-25
@@ -337,12 +373,14 @@
     I love the self-imposed challenge of making a horror movie in broad daylight. I think folk horror, or at least, this strain of it, is all about the pacing, and Midsommar absolutely nails the pacing. You can't come on too quickly, otherwise you'd scare off the characters/audience who are largely pretty reasonable. Midsommar takes its time, but it never stops: the ramp-up is relentlessly steady; every scene just a little more weird than the last until you realize you're way past your comfort zone and how did we get here?
 - title: Train to Busan
   year: 2016
+  kind: movie
   link: https://www.imdb.com/title/tt5700672/
   poster: train-to-busan-2016.jpg
   watched: 2023-11-24
   watch-this-if: you just want a great, non-parody zombie movie where people aren't morons.
 - title: The Invitation
   year: 2015
+  kind: movie
   link: https://www.imdb.com/title/tt2400463/
   poster: the-invitation-2015.jpg
   watched: 2023-11-22
@@ -353,6 +391,7 @@
     This movie did remind me quite a bit of a small-scale Us, but it's different enough (and that's potentially spoiler-y enough) that I didn't mention it in the one-liner.
 - title: Requiem for a Dream
   year: 2000
+  kind: movie
   link: https://www.imdb.com/title/tt0180093/
   poster: requiem-for-a-dream-2000.jpg
   watched: 2023-11-21
@@ -363,6 +402,7 @@
     The parallel storylines showing four different versions of the same idea, and four different ways they can all go horribly wrong (and worse when they play off of each other), weave together into a surprisingly coherent storyline. At least, as coherent as it can be through the drug haze. I didn't even find the moral of the story too blunt: we all know where this leads, and the movie did all showing and no telling.
 - title: Nope
   year: 2022
+  kind: movie
   link: https://www.imdb.com/title/tt10954984/
   poster: nope-2022.jpg
   watched: 2023-11-20
@@ -373,6 +413,7 @@
     There were some clever storywriting bits in the "heist" section of the movie, for sure, but the rules felt a little arbitrary and the I-guess-horror-related shots of the inside of the UFO-alien felt more gratuitous and irrelevant to the story than anything else.
 - title: Us
   year: 2019
+  kind: movie
   link: https://www.imdb.com/title/tt6857112/
   poster: us-2019.jpg
   watched: 2023-11-19
@@ -383,9 +424,11 @@
     Us is like Jordan Peele's perfect second follow up album to his #1 charting Get Out. It has a very similar feel but otherwise bears no relation. It's got quite a bit of worldbuilding, and the fantastical bent of it permits the more overtly weird aspects -- like the scissors, or the raspy voices -- to blend and contribute rather than stick out as awkward. I really liked the raspy voices in particular: how creepy, that you talk so little that you aren't even sure how to do it properly anymore.
 - title: The Last of Us
   year: 2023
+  kind: tv
   link: https://www.imdb.com/title/tt3581920/
   poster: the-last-of-us-2023.jpg
-  watched: January 2023
+  watched: 2023-03-12
+  watched-display: early 2023
   watch-this-if: you liked the game, or thought the Walking Dead was a good idea, badly executed.
   more-thoughts: |
     I loved that the show stayed true to the game. I wanted to like the game-as-story more than I did, but the uncanny valley was too strong for me. Having it done live action and non-interactively (so the pacing and delivery can be perfected) is definitely what the doctor ordered. The casting is excellent all around.
@@ -395,9 +438,11 @@
     It is worth watching even if you've played the game and didn't have uncnany valley problems with it, if only to relive the game.
 - title: Into Great Silence
   year: 2005
+  kind: movie
   link: https://www.imdb.com/title/tt0478160/
   poster: into-great-silence-2005.jpg
-  watched: sometime in 2023
+  watched: 2023-01-01
+  watched-display: sometime in 2023
   dont-watch-this-because: while it's an interesting gimmick, it's just boring; maybe put it on in the background?
   more-thoughts: |
     Chartreuse the liqueur never appears even once, which I think was a condition of filming as well.
@@ -405,7 +450,9 @@
     But hey, apparently the monks loved it, so good for them!
 - title: Mind Game
   year: 2004
+  kind: movie
   link: https://www.imdb.com/title/tt0452039/
   poster: mind-game-2004.jpg
-  watched: sometime in 2023
+  watched: 2023-01-01
+  watched-display: sometime in 2023
   watch-this-if: you'd like to be taken on a psychedelic adventure where you have to roll with the punches.

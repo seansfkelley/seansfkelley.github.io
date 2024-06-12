@@ -55,6 +55,17 @@ elif [ "$year" -ne "$inferred_year" ] ; then
   exit 1
 fi
 
+if cat /tmp/movie_page.html \
+  | hxnormalize -x \
+  | hxselect -c -s '\n' '[data-testid="hero__pageTitle"] + * > :first-child' \
+  | head -n1 \
+  | grep -q 'TV' ; then
+  kind="tv"
+else
+  kind="movie"
+fi
+echo "media kind: $kind"
+
 poster_viewer_id="$(cat /tmp/movie_page.html \
   | hxnormalize -x \
   | hxselect -s '\n' '.ipc-poster a.ipc-lockup-overlay::attr(href)' \
@@ -105,6 +116,7 @@ echo "file at $output_path"
 # weird syntax via https://stackoverflow.com/questions/10587615/unix-command-to-prepend-text-to-a-file#comment74536218_10587615
 <<(echo "- title: $title
   year: $year
+  kind: $kind
   link: $movie_url
   poster: $(basename "$output_path")
   watched: $(date "+%Y-%m-%d")

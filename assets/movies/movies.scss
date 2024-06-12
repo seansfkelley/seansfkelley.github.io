@@ -4,6 +4,30 @@
 
 @import "variables";
 
+#sort-filter {
+  border: 1px solid var(--input-border-color);
+  border-radius: $input-border-radius;
+
+  fieldset {
+    padding: 0;
+    margin: $spacing;
+    display: flex;
+    flex-direction: column;
+    border: none;
+  }
+}
+
+@media screen and (min-width: $width-mobile) {
+  #sort-filter {
+    display: flex;
+    align-items: center;
+
+    fieldset {
+      flex: auto;
+    }
+  }
+}
+
 .entry {
   margin-bottom: 1em;
 
@@ -96,4 +120,8 @@ a.permalink {
   &:not(:hover) .underlineable {
     text-decoration-color: var(--link-color-underline);
   }
+}
+
+.hidden {
+  display: none;
 }
