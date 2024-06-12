@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-06-12T20:59:38+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Glove80 Keyboard Review</title><link href="https://blog.sea.nkelley.me/2024/05/26/glove80/" rel="alternate" type="text/html" title="Glove80 Keyboard Review" /><published>2024-05-26T00:00:00+00:00</published><updated>2024-05-26T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/05/26/glove80</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/05/26/glove80/"><![CDATA[<p>I bought myself one of <a href="https://www.moergo.com/">these</a>:</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-06-12T22:21:27+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Glove80 Keyboard Review</title><link href="https://blog.sea.nkelley.me/2024/05/26/glove80/" rel="alternate" type="text/html" title="Glove80 Keyboard Review" /><published>2024-05-26T00:00:00+00:00</published><updated>2024-05-26T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/05/26/glove80</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/05/26/glove80/"><![CDATA[<p>I bought myself one of <a href="https://www.moergo.com/">these</a>:</p>
 
 <p><img src="/assets/glove80/glove80.jpg" alt="Glove80" /></p>
 
@@ -549,32 +549,32 @@
     </select>
   </fieldset>
   <fieldset>
-    <div class="radio">
+    <label for="movie">
       <input type="radio" id="movie" value="movie" name="kind" />
-      <label for="movie">movie</label>
-    </div>
-    <div class="radio">
+      movie
+    </label>
+    <label for="tv">
       <input type="radio" id="tv" value="tv" name="kind" />
-      <label for="tv">TV show</label>
-    </div>
-    <div class="radio">
+      TV show
+    </label>
+    <label for="kind-both">
       <input type="radio" id="kind-both" value="both" name="kind" checked="" />
-      <label for="kind-both">both</label>
-    </div>
+      both
+    </label>
   </fieldset>
   <fieldset>
-    <div class="radio">
+    <label for="recommended">
       <input type="radio" id="recommended" value="recommended" name="recommendation" />
-      <label for="recommended">recommended</label>
-    </div>
-    <div class="radio">
+      recommended
+    </label>
+    <label for="not-recommended">
       <input type="radio" id="not-recommended" value="not-recommended" name="recommendation" />
-      <label for="not-recommended">not recommended</label>
-    </div>
-    <div class="radio">
+      not recommended
+    </label>
+    <label for="recommended-both">
       <input type="radio" id="recommended-both" value="both" name="recommendation" checked="" />
-      <label for="recommended-both">both</label>
-    </div>
+      both
+    </label>
   </fieldset>
 </form>
 
