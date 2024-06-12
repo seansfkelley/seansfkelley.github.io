@@ -63,7 +63,7 @@ body[data-theme=auto], body[data-theme=light] {
     --background-color: #202020;
     --code-background-color: #404040;
     --input-background-color: #404040;
-    --input-border-color: transparent;
+    --input-border-color: #555555;
     --input-hover-color: #505050;
     --highlight-background-color: #434418;
     --link-color-base: #689fe6;
@@ -97,7 +97,7 @@ body[data-theme=dark] {
   --background-color: #202020;
   --code-background-color: #404040;
   --input-background-color: #404040;
-  --input-border-color: transparent;
+  --input-border-color: #555555;
   --input-hover-color: #505050;
   --highlight-background-color: #434418;
   --link-color-base: #689fe6;

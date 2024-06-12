@@ -62,7 +62,7 @@ body[data-theme=auto], body[data-theme=light] {
     --background-color: #202020;
     --code-background-color: #404040;
     --input-background-color: #404040;
-    --input-border-color: transparent;
+    --input-border-color: #555555;
     --input-hover-color: #505050;
     --highlight-background-color: #434418;
     --link-color-base: #689fe6;
@@ -96,7 +96,7 @@ body[data-theme=dark] {
   --background-color: #202020;
   --code-background-color: #404040;
   --input-background-color: #404040;
-  --input-border-color: transparent;
+  --input-border-color: #555555;
   --input-hover-color: #505050;
   --highlight-background-color: #434418;
   --link-color-base: #689fe6;
@@ -120,6 +120,27 @@ body[data-theme=dark] {
   --sol-mono01: var(--sol-base1);
 }
 
+#sort-filter {
+  border: 1px solid var(--input-border-color);
+  border-radius: 2px;
+}
+#sort-filter fieldset {
+  padding: 0;
+  margin: 14px;
+  display: flex;
+  flex-direction: column;
+  border: none;
+}
+
+@media screen and (min-width: 600px) {
+  #sort-filter {
+    display: flex;
+    align-items: center;
+  }
+  #sort-filter fieldset {
+    flex: auto;
+  }
+}
 .entry {
   margin-bottom: 1em;
 }
@@ -193,4 +214,8 @@ a.permalink .underlineable {
 }
 a.permalink:not(:hover) .underlineable {
   text-decoration-color: var(--link-color-underline);
+}
+
+.hidden {
+  display: none;
 }
