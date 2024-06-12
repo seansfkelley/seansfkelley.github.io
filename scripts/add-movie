@@ -107,7 +107,7 @@ if [ "$image_size" -gt "$MAXIMUM_FILE_SIZE" ] ; then
   fi
 fi
 
-behind-the-scenes/strip-exif "$output_path"
+scripts/strip-exif "$output_path"
 rm "${output_path}_original"
 
 open "$output_path"
@@ -120,6 +120,7 @@ echo "file at $output_path"
   link: $movie_url
   poster: $(basename "$output_path")
   watched: $(date "+%Y-%m-%d")
+  # watched-display:
   watch-this-if:
   dont-watch-this-because:
   more-thoughts: |

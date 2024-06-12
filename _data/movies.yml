@@ -1,13 +1,15 @@
-# - title: The Expanse (Season 1)
-#   year: 2015
-#   kind: tv
-#   link: https://www.imdb.com/title/tt3230854/
-#   poster: the-expanse-2015.jpg
-#   watched: 2024-06-05
-#   watched-display: 2024-06-04 to 2024-06-05
-#   watch-this-if:
-#   dont-watch-this-because:
-#   more-thoughts: |
+- title: The Expanse (Season 1)
+  year: 2015
+  kind: tv
+  link: https://www.imdb.com/title/tt3230854/
+  poster: the-expanse-2015.jpg
+  watched: 2024-06-05 # for the record: the second of two days
+  watched-display: in two days, June 2024
+  watch-this-if: you want to be swept along in a pretty-fast-paced multi-genre tide of space sci-fi storylines.
+  more-thoughts: |
+    I would have liked a little more worldbuilding, but that didn't stop me from watching 10 episodes in two days! The neo-noir thriller elements blended reasonably well into spacefaring mystery-adventure and the heavy-handed social commentary parts, the latter of which thankfully didn't overbear into preachiness.
+
+    I didn't know that Syfy made original shows with this high of a production value. I always thought it was Battlestar Galactica-level camp (n.b. that's not a Syfy original show).
 - title: Station Eleven
   year: 2021
   kind: tv
