@@ -2563,8 +2563,8 @@ function checky(count: number = 6) {
       x: -W_2,
       y: -H_2,
     },
-    svg.rect([0, 0], [1, 1], { fill: "white" }),
-    svg.rect([1, 1], [2, 2], { fill: "white" })
+    svg.rect([1, 0], [2, 1], { fill: "white" }),
+    svg.rect([0, 1], [1, 2], { fill: "white" })
   );
 }
 
