@@ -249,7 +249,16 @@ interface Quartering {
 }
 
 interface Ordinary {
-  ordinary: string;
+  ordinary:
+    | "base"
+    | "bend"
+    | "bend sinister"
+    | "fess"
+    | "cross"
+    | "chevron"
+    | "pale"
+    | "saltire"
+    | "chief";
   tincture: Tincture;
   cotised?: Tincture;
   treatment?: Treatment;
@@ -1047,6 +1056,62 @@ async function fetchComplexSvg(
 // ----------------------------------------------------------------------------
 
 const COTISED_WIDTH = W_2 / 12;
+
+// TODO: This is currently copy-pasta from chief; adjust the numbers.
+const BASE_WIDTH = H / 3;
+function base({ tincture, cotised, treatment }: Ordinary) {
+  const base = svg.g();
+
+  if (treatment != null) {
+    const [start, main, end] = TREATMENTS[treatment](
+      -W,
+      true,
+      "primary",
+      "center"
+    );
+    base.appendChild(
+      svg.path(
+        [
+          { type: "M", loc: [-W_2, -H_2] },
+          { type: "L", loc: [W_2, -H_2] },
+          { type: "l", loc: Coordinate.add([0, BASE_WIDTH], start.loc) },
+          ...main,
+          { type: "l", loc: Coordinate.add([0, -BASE_WIDTH], end.loc) },
+        ],
+        { classes: { fill: tincture } }
+      )
+    );
+  } else {
+    base.appendChild(
+      svg.line([-W_2, -H_2 + BASE_WIDTH / 2], [W_2, -H_2 + BASE_WIDTH / 2], {
+        strokeWidth: BASE_WIDTH,
+        classes: { stroke: tincture },
+      })
+    );
+  }
+
+  if (cotised != null) {
+    base.append(
+      svg.line(
+        [-W_2, -H_2 + BASE_WIDTH + (COTISED_WIDTH * 3) / 2],
+        [W_2, -H_2 + BASE_WIDTH + (COTISED_WIDTH * 3) / 2],
+        { strokeWidth: COTISED_WIDTH, classes: { stroke: cotised } }
+      )
+    );
+  }
+
+  return base;
+}
+
+base.on = new LineSegmentLocator(
+  [-W_2, -H_2 + H_2 / 3],
+  [W_2, -H_2 + H_2 / 3],
+  [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]
+);
+
+base.between = new NullLocator();
+
+base.partition = UNSUPPORTED;
 
 const BEND_WIDTH = W / 3;
 // Make sure it's long enough to reach diagonally!
@@ -1965,7 +2030,8 @@ saltire.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
   }
 };
 
-const ORDINARIES: Record<string, OrdinaryRenderer> = {
+const ORDINARIES: Record<Ordinary["ordinary"], OrdinaryRenderer> = {
+  base,
   bend,
   "bend sinister": bendSinister,
   chevron,

@@ -196,7 +196,8 @@ Tincture ->
   | "counterchanged" {% id %}
 
 OrdinaryName ->
-    "bend"          {% id %}
+    "base"          {% id %}
+  | "bend"          {% id %}
   | "bend sinister" {% id %}
   | "fess"          {% id %}
   | "cross"         {% id %}
