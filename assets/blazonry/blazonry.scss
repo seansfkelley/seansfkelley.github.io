@@ -125,6 +125,7 @@ a[data-example]:not(:hover) {
 
   &.visible {
     opacity: 1;
+    pointer-events: initial;
   }
 
   svg {
