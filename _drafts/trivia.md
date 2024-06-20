@@ -1,6 +1,6 @@
 ---
 layout: post
-title: What Makes Good Trivia?
+title: The Elements of Good Bar Trivia
 ---
 
 I spent several years developing a trivia habit. Or rather, it took several years of me trying out different bar trivias to find one I really like. When I'm out of town I'll try out the local trivia, or even when I'm not, I'll sometimes go see what other bars are putting on near where I live.
@@ -16,19 +16,9 @@ tl;dr:
 
 ### Score entire rounds at once.
 
-Like a good crossword puzzle, a good trivia round may not be solveable top-to-bottom on the first try. Ask 10 questions, write 10 answers, score 10 answers. Scoring every question as you go introduces a lot of time pressure and sucks out a lot of the fun of rooting around in your subconscious for the answer. It feels like an exam, except that even exams don't do this.
+Like a good crossword puzzle, a good trivia round may not be solveable top-to-bottom on the first try. Ask 10 questions, write 10 answers, score 10 answers. Scoring every question as you go introduces a lot of time pressure and sucks out a lot of the fun of rooting around in your subconscious for the answer that you didn't get immediately. It's worse than a school exam.
 
-Scoring-as-you-go also eliminates the possibility of being able to figure out a round's theme (if present), and then go back and cross-check your answers against the theme. This makes theme rounds more of a chore and less of a reward.
-
-### Ask locally-relevant versions of questions.
-
-I was onced asked a question about something that had happened to Steph Curry a week or so before. I had no idea what it was because I don't follow basketball, but it was definitely my fault because I was in San Francisco.
-
-At the un-fun trivia, I was asked a question about who took Brett Favre's place in a game in 2007. Not only was that 17 years out of date, but it was for a team thousands of miles away. I didn't consider the fact that I got it wrong my fault, even though every football fan considers it obvious.
-
-The distinction I'm trying to make here is that the Steph Curry question isn't purely a sports question. It's also asking "do you pay attention to things that are important to people around you, even if they aren't important to you?" The Brett Favre question, by contrast, is a curt "do you watch football?". The former is both much more engaging in its flavor and delivery, and gives a glimmer of hope to those who aren't basketball fans.
-
-(Yes, I understand these are different sports, but in trivia, all sports are generally considered to be a single category together. Kind of like all history is one category.)
+Score-as-you-go also eliminates the possibility of (1) being able to figure out a round's theme (if present) and cross-checking against previous answers, and (2) any deep or nonobvious references that need thinking. That unnecessarily limits the scope of available questions and encourages a shallow obvious-question-yields-immediate-answer style.
 
 ### Provide context instead of just stating the question outright.
 
@@ -38,7 +28,7 @@ Given an answer, there are are million versions of a trivia question that can ge
 
 ### Use paper, not a phone.
 
-I'm here to hang out at a bar and participate in a group activity. Don't make me look at my own phone, which is part of what I'm trying to avoid by being out of the house and around other people. If I can do it on my phone, why am I even here? Let's just do trivia alone at home.
+I'm here to hang out at a bar and participate in a group activity. Don't make me look at my phone, which is part of what I'm trying to avoid by being out of the house and around other people. If I can do it on my phone, why am I even here? Let's just do trivia alone at home.
 
 Less is more, in this case. Plus, scoring paper forces a natural lull, so the trivia isn't an endless assault of questions where you're afraid to even leave to go to the bathroom. (You could do that with phone-based trivia too, but it seems like the temptation to accelerate is usually given into.)
 
@@ -46,7 +36,7 @@ Less is more, in this case. Plus, scoring paper forces a natural lull, so the tr
 
 It's trivia, not a spelling bee. What if you know the answer, but have never seen it written down, like some famous person's unusual name? Penalizing that is not fun, it's just hostile.
 
-If we're talking Serious Business trivia, there is an argument to be made that the correct spelling is an easily-drawn, non-controversial line for where the points are awarded and where they are not. To which I say: if a question's answer's spelling is not excruciatingly obvious (i.e. common English words) _and_ isn't well-known enough in its written form such that knowing the fact is knowing the spelling, it's a bad question. Not every question with a clear answer can be a trivia question.
+If we're talking Serious Business trivia, there is an argument to be made that the correct spelling is an easily-drawn, non-controversial line for where the points are awarded and where they are not. To which I say: if a question's answer's spelling is not excruciatingly obvious (i.e. it's a common English word) _and_ isn't well-known enough in its written form such that to know the fact is know the spelling, it's a bad question. Not every question with a clear answer can be a trivia question.
 
 ### Most rounds should have a bare minimum of theme.
 
@@ -59,6 +49,14 @@ Note also the "most". It's okay to have a general round or two. Put it between s
 ### Mix up the question formats.
 
 Continuing on the topic of avoiding an undifferentiated mass of questions: mix up the formats. It doesn't need to be wild, out-of-the-box multimedia nonense, but switching out the picture round for a matching round, or asking categories questions, or having indirect, weird themes can all go a long way towards freshening up the trivia
+
+### Ask locally-relevant versions of questions.
+
+I was onced asked a question about something that had happened to Steph Curry a week or so before. I had no idea what it was because I don't follow basketball, but it was definitely my fault because I was in San Francisco.
+
+At the un-fun trivia, I was asked a question about who took Brett Favre's place in a game in 2007. Not only was that 17 years out of date, but it was for a team thousands of miles away. I didn't consider the fact that I got it wrong my fault, even though every football fan considers it obvious.
+
+The distinction I'm trying to make here is that the Steph Curry question isn't purely a sports question. It's also asking "do you pay attention to things that are important to people around you, even if they aren't important to you?" The Brett Favre question, by contrast, is a curt "do you watch football?" The former is both much more engaging in its flavor and delivery, and gives a glimmer of hope to those who aren't basketball fans.
 
 ### something something summary
 
