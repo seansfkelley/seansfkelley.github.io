@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Stripping iTunes Music Store Metadata from Purchased Music | fiddlybits</title>
+<meta name="generator" content="Jekyll v4.3.3" />
+<meta property="og:title" content="Stripping iTunes Music Store Metadata from Purchased Music" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="When Apple announced many years ago that the iTunes Store was going DRM-free, I was ecstatic. This was during the height of DRM controversies, and it was nice to see a company with clout taking a stand against it. (It’s pretty perverse to be rooting for one abusive corporation to stick it to other abusive corporations, but I guess I’ll take what I can get.)" />
+<meta property="og:description" content="When Apple announced many years ago that the iTunes Store was going DRM-free, I was ecstatic. This was during the height of DRM controversies, and it was nice to see a company with clout taking a stand against it. (It’s pretty perverse to be rooting for one abusive corporation to stick it to other abusive corporations, but I guess I’ll take what I can get.)" />
+<link rel="canonical" href="https://blog.sea.nkelley.me/stripping-itunes-metadata" />
+<meta property="og:url" content="https://blog.sea.nkelley.me/stripping-itunes-metadata" />
+<meta property="og:site_name" content="fiddlybits" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-09-22T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Stripping iTunes Music Store Metadata from Purchased Music" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-02-17T00:00:00+00:00","datePublished":"2020-09-22T00:00:00+00:00","description":"When Apple announced many years ago that the iTunes Store was going DRM-free, I was ecstatic. This was during the height of DRM controversies, and it was nice to see a company with clout taking a stand against it. (It’s pretty perverse to be rooting for one abusive corporation to stick it to other abusive corporations, but I guess I’ll take what I can get.)","headline":"Stripping iTunes Music Store Metadata from Purchased Music","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.sea.nkelley.me/stripping-itunes-metadata"},"url":"https://blog.sea.nkelley.me/stripping-itunes-metadata"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/style.css">
+  <link type="application/atom+xml" rel="alternate" href="https://blog.sea.nkelley.me/feed.xml" title="fiddlybits" /></head>
+<body data-theme="auto" data-unit="imperial"><header class="site-header">
+  <div class="centering-wrapper">
+    <a class="site-title" href="/">fiddlybits</a>
+    <span class="site-controls">
+      <a href="https://github.com/seansfkelley">github</a>
+      &nbsp;•&nbsp;
+      <a href="/feed.xml">rss</a>
+      <!-- Only show theme switcher if js is enabled: hide by default. -->
+      <span id="theme-switcher-wrapper" style="display: none;">
+        &nbsp;•&nbsp;
+        <a href="#" id="theme-switcher"></a>
+      </span>
+    </span>
+  </div>
+</header>
+<main class="centering-wrapper">
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Stripping iTunes Music Store Metadata from Purchased Music</h1>
+    <h3 class="post-subtitle"></h3>
+  </header><p>When Apple announced many years ago that the iTunes Store was going DRM-free, I was ecstatic. This was during the height of DRM controversies, and it was nice to see a company with clout taking a stand against it. (It’s pretty perverse to be rooting for one abusive corporation to stick it to other abusive corporations, but I guess I’ll take what I can get.)</p>
+
+<p>That said, iTunes still stuffs a bunch of metadata into the purchased files that it uses to, among other things, try to get you to buy other related music or hook you on Apple Music. I recently got fed up with those annoying grey stars that appear in the Music app on iOS that are, basically, telling me which songs are good and that I should be listening to them. I like listening to whole albums; don’t tell me what I should like and not!</p>
+
+<h2 id="the-fix">The Fix</h2>
+
+<p>To fix this annoyance, I put together a script that strips all the metadata that the Music app uses to drive those features. The script requires only a little familiarity with the terminal, but there’s an unfortunate amount of hoop-jumping to get both the macOS and iOS Music apps to forget the relevant metadata. They seem to cache a lot of it.</p>
+
+<p>Grab <a href="/assets/stripping-itunes-metadata/strip-itunes-metadata.sh">the script</a> and follow the instructions below.</p>
+
+<h2 id="instructions">Instructions</h2>
+
+<ol>
+  <li>
+    <p>Find your files.</p>
+
+    <p>In the Music app, right-click &gt; Show in Finder should suffice for any song in your library.</p>
+  </li>
+  <li>
+    <p>Copy the music files to a working directory anywhere else, such as your desktop.</p>
+  </li>
+  <li>
+    <p>Back in the Music app, delete the songs/albums.</p>
+
+    <p>It will prompt you with a rather confusing dialog saying something to the effect of “you can still play these songs but they’ll be deleted” and asking if you want to “hide” the songs.<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> Yes, hide them. And yes, remove the files.</p>
+  </li>
+  <li>
+    <p>If you also want to make these changes on your iPhone, sync your phone now.</p>
+
+    <p>It’ll ask if you want to sync your purchases off your phone and back to your computer, which you should of course not do. The goal here is to remove them from the phone entirely.</p>
+  </li>
+  <li>
+    <p>Run the script on your files.</p>
+
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c"># for instance</span>
+ path/to/strip-itunes-metadata.sh path/to/media/<span class="k">*</span>.m4a
+ <span class="c"># -&gt; outputs stripped copies to path/to/media/stripped/</span>
+
+ <span class="c"># you can also provide the --artwork argument, since the iTunes store does not</span>
+ <span class="c"># embed the artwork in the file itself and you will be removing the metadata for it</span>
+ path/to/strip-itunes-metadata.sh path/to/media/<span class="k">*</span>.m4a <span class="nt">--artwork</span> path/to/artwork.jpg
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add the stripped files back to the Music app.</p>
+
+    <p>You probably want to make sure you have the “Copy files to Music Media folder when adding to library” option checked in preferences so you don’t have to leave them lying around your desktop or wherever you stashed them.</p>
+  </li>
+  <li>
+    <p>And again if you’re doing this on your phone too: sync your phone now.</p>
+
+    <p>It should have no idea that these songs were originally purchased, and consequently will not show all the stars and copyright and “more like this please sign up for Apple Music” sections.</p>
+  </li>
+</ol>
+
+<p>Done!</p>
+
+<p>If you’re curious to verify the files, you can use <code class="language-plaintext highlighter-rouge">atomicparsley &lt;file path&gt; -t</code> and it’ll dump a list of all the tags.</p>
+
+<hr />
+
+<section class="next-previous">
+  
+  <a href="/intro" class="next-previous-link next-previous-previous" title="Previous Post: Hello, world.">
+    <span class="next-previous-icon">←</span>
+    <div class="next-previous-name">
+      <div class="next-previous-label">
+        <span class="next-previous-icon">←</span> Previous Post
+      </div>
+      <div class="next-previous-title">Hello, world.</div>
+    </div>
+  </a>
+   
+  <a href="/stock-options" class="next-previous-link next-previous-next" title="Next Post: What is the Point of ISOs?">
+    <div class="next-previous-name">
+      <div class="next-previous-label">
+        Next Post <span class="next-previous-icon">→</span>
+      </div>
+      <div class="next-previous-title">What is the Point of ISOs?</div>
+    </div>
+    <span class="next-previous-icon">→</span>
+  </a>
+  
+</section>
+<hr />
+
+<section class="tag-list">
+  <i class="tag-label">tags:</i>
+  
+  <a class="tag-link" href="/tag/reference">reference</a> 
+</section>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>I guess they’re trying to blur the line between what’s on your local machine versus what’s credited to your account. I suppose that makes sense for your average person, but I’m not a big believer in streaming services and have, on more than one occasion, been the only provider of music because there was no cell signal. Take that, Spotify! <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+<footer>
+    <p class="post-date">
+      ~
+      <time
+        datetime="2020-09-22T00:00:00+00:00"
+        itemprop="datePublished"
+      >
+        2020-09-22
+      </time>// updated
+      <time
+        datetime="2024-02-17T00:00:00+00:00"
+        itemprop="dateModified"
+      >
+        2024-02-17
+      </time>~
+    </p>
+  </footer>
+</article>
+
+      <!--
+        This filthy trick makes sure that the content always weakly tries to expand to the full
+        width available, but allows for linebreaks if the viewport is too small. It produces a
+        better result than, say, width: 100%; or width: some-fixed-pixel-amount; and doesn't require
+        rewriting everything to flexbox (which would mess with the <html>-level scroll behavior and
+        sticky header) or adding extra DOM (which I'm trying to minimize to make myself feel good).
+      -->
+      <div class="horizontal-expander" aria-hidden="true">
+        Throughout human history, we have been dependent on machines to survive.
+        Fate, it seems, is not without a sense of irony.
+      </div>
+    </main>
+  </body>
+  <script src="/assets/js/theme-switcher.js"></script>
+  <script src="/assets/js/copy-code-block.js"></script>
+  <script src="/assets/js/unit-switcher.js"></script>
+  
+</html>

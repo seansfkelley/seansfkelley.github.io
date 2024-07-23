@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>kathack | fiddlybits</title>
+<meta name="generator" content="Jekyll v4.3.3" />
+<meta property="og:title" content="kathack" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I was recently reminded of kathack.com: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger." />
+<meta property="og:description" content="I was recently reminded of kathack.com: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger." />
+<link rel="canonical" href="https://blog.sea.nkelley.me/kathack" />
+<meta property="og:url" content="https://blog.sea.nkelley.me/kathack" />
+<meta property="og:site_name" content="fiddlybits" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-12-27T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="kathack" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2023-12-27T00:00:00+00:00","datePublished":"2023-12-27T00:00:00+00:00","description":"I was recently reminded of kathack.com: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.","headline":"kathack","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.sea.nkelley.me/kathack"},"url":"https://blog.sea.nkelley.me/kathack"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/style.css">
+  <link type="application/atom+xml" rel="alternate" href="https://blog.sea.nkelley.me/feed.xml" title="fiddlybits" /></head>
+<body data-theme="auto" data-unit="imperial"><header class="site-header">
+  <div class="centering-wrapper">
+    <a class="site-title" href="/">fiddlybits</a>
+    <span class="site-controls">
+      <a href="https://github.com/seansfkelley">github</a>
+      &nbsp;•&nbsp;
+      <a href="/feed.xml">rss</a>
+      <!-- Only show theme switcher if js is enabled: hide by default. -->
+      <span id="theme-switcher-wrapper" style="display: none;">
+        &nbsp;•&nbsp;
+        <a href="#" id="theme-switcher"></a>
+      </span>
+    </span>
+  </div>
+</header>
+<main class="centering-wrapper">
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">kathack</h1>
+    <h3 class="post-subtitle"></h3>
+  </header><p>I was recently reminded of <a href="http://kathack.com">kathack.com</a>: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.</p>
+
+<p>So anyway, I rewrote out the jQuery and found a way to serve the script indirectly via GitHub, no dedicated site required. You can paste this into your browser console</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">s</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nf">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">script</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">s</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://cdn.jsdelivr.net/gh/seansfkelley/kathack@v1/kh.js</span><span class="dl">'</span><span class="p">;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nf">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>or keep it as a bookmarklet with</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">javascript</span><span class="p">:</span><span class="nx">s</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nf">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">script</span><span class="dl">'</span><span class="p">);</span><span class="nx">s</span><span class="p">.</span><span class="nx">src</span><span class="o">=</span><span class="dl">'</span><span class="s1">https://cdn.jsdelivr.net/gh/seansfkelley/kathack@v1/kh.js</span><span class="dl">'</span><span class="p">;</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nf">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span><span class="k">void</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>or just <a href="javascript:s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/seansfkelley/kathack@v1/kh.js';document.body.appendChild(s);void(0);">click this</a> if you want to try it here.</p>
+
+<p>Have fun!</p>
+
+<hr />
+
+<section class="next-previous">
+  
+  <a href="/cornmeal-pancakes" class="next-previous-link next-previous-previous" title="Previous Post: Cornmeal Pancake Recipe">
+    <span class="next-previous-icon">←</span>
+    <div class="next-previous-name">
+      <div class="next-previous-label">
+        <span class="next-previous-icon">←</span> Previous Post
+      </div>
+      <div class="next-previous-title">Cornmeal Pancake Recipe</div>
+    </div>
+  </a>
+   
+  <a href="/abridged-pool-rules" class="next-previous-link next-previous-next" title="Next Post: WPA Eight-ball Rules (Abridged)">
+    <div class="next-previous-name">
+      <div class="next-previous-label">
+        Next Post <span class="next-previous-icon">→</span>
+      </div>
+      <div class="next-previous-title">WPA Eight-ball Rules (Abridged)</div>
+    </div>
+    <span class="next-previous-icon">→</span>
+  </a>
+  
+</section>
+<hr />
+
+<section class="tag-list">
+  <i class="tag-label">tags:</i>
+  
+  <a class="tag-link" href="/tag/interactive">interactive</a> 
+</section>
+
+<footer>
+    <p class="post-date">
+      ~
+      <time
+        datetime="2023-12-27T00:00:00+00:00"
+        itemprop="datePublished"
+      >
+        2023-12-27
+      </time>~
+    </p>
+  </footer>
+</article>
+
+      <!--
+        This filthy trick makes sure that the content always weakly tries to expand to the full
+        width available, but allows for linebreaks if the viewport is too small. It produces a
+        better result than, say, width: 100%; or width: some-fixed-pixel-amount; and doesn't require
+        rewriting everything to flexbox (which would mess with the <html>-level scroll behavior and
+        sticky header) or adding extra DOM (which I'm trying to minimize to make myself feel good).
+      -->
+      <div class="horizontal-expander" aria-hidden="true">
+        Throughout human history, we have been dependent on machines to survive.
+        Fate, it seems, is not without a sense of irony.
+      </div>
+    </main>
+  </body>
+  <script src="/assets/js/theme-switcher.js"></script>
+  <script src="/assets/js/copy-code-block.js"></script>
+  <script src="/assets/js/unit-switcher.js"></script>
+  
+</html>

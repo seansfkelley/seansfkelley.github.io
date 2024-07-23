@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Wiping Corrupt Drives with dd: The Nuclear Option | fiddlybits</title>
+<meta name="generator" content="Jekyll v4.3.3" />
+<meta property="og:title" content="Wiping Corrupt Drives with dd: The Nuclear Option" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Until a couple months ago, I had never actually damaged a drive by unplugging it while it was busy. But boy, when you pull the plug at the wrong time, do things go wrong fast. I bricked a drive so completely that it would not appear in Disk Utility at all, and trying to poke at it with diskutil (including the full range of mount/unmount/repair/verify/partition/erase subcommands) would only ever respond with “resource busy”. It was also impossible to eject and would leave zombie copies of itself around in diskutil list. Fun!" />
+<meta property="og:description" content="Until a couple months ago, I had never actually damaged a drive by unplugging it while it was busy. But boy, when you pull the plug at the wrong time, do things go wrong fast. I bricked a drive so completely that it would not appear in Disk Utility at all, and trying to poke at it with diskutil (including the full range of mount/unmount/repair/verify/partition/erase subcommands) would only ever respond with “resource busy”. It was also impossible to eject and would leave zombie copies of itself around in diskutil list. Fun!" />
+<link rel="canonical" href="https://blog.sea.nkelley.me/wiping-drives-with-dd" />
+<meta property="og:url" content="https://blog.sea.nkelley.me/wiping-drives-with-dd" />
+<meta property="og:site_name" content="fiddlybits" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-04-12T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Wiping Corrupt Drives with dd: The Nuclear Option" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2021-04-12T00:00:00+00:00","datePublished":"2021-04-12T00:00:00+00:00","description":"Until a couple months ago, I had never actually damaged a drive by unplugging it while it was busy. But boy, when you pull the plug at the wrong time, do things go wrong fast. I bricked a drive so completely that it would not appear in Disk Utility at all, and trying to poke at it with diskutil (including the full range of mount/unmount/repair/verify/partition/erase subcommands) would only ever respond with “resource busy”. It was also impossible to eject and would leave zombie copies of itself around in diskutil list. Fun!","headline":"Wiping Corrupt Drives with dd: The Nuclear Option","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.sea.nkelley.me/wiping-drives-with-dd"},"url":"https://blog.sea.nkelley.me/wiping-drives-with-dd"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/style.css">
+  <link type="application/atom+xml" rel="alternate" href="https://blog.sea.nkelley.me/feed.xml" title="fiddlybits" /></head>
+<body data-theme="auto" data-unit="imperial"><header class="site-header">
+  <div class="centering-wrapper">
+    <a class="site-title" href="/">fiddlybits</a>
+    <span class="site-controls">
+      <a href="https://github.com/seansfkelley">github</a>
+      &nbsp;•&nbsp;
+      <a href="/feed.xml">rss</a>
+      <!-- Only show theme switcher if js is enabled: hide by default. -->
+      <span id="theme-switcher-wrapper" style="display: none;">
+        &nbsp;•&nbsp;
+        <a href="#" id="theme-switcher"></a>
+      </span>
+    </span>
+  </div>
+</header>
+<main class="centering-wrapper">
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Wiping Corrupt Drives with dd: The Nuclear Option</h1>
+    <h3 class="post-subtitle"></h3>
+  </header><p>Until a couple months ago, I had never actually damaged a drive by unplugging it while it was busy. But boy, when you pull the plug at the wrong time, do things go wrong fast. I bricked a drive so completely that it would not appear in Disk Utility at all, and trying to poke at it with <code class="language-plaintext highlighter-rouge">diskutil</code> (including the full range of mount/unmount/repair/verify/partition/erase subcommands) would only ever respond with “resource busy”. It was also impossible to eject and would leave zombie copies of itself around in <code class="language-plaintext highlighter-rouge">diskutil list</code>. Fun!</p>
+
+<p>After some sleuthing around the internet and asking people who know more than me, I landed on the following script.</p>
+
+<p class="alert alert-danger "><span class="alert-title">Don't Try This at Home!</span>
+    <br />Don't run this script without knowing what you're doing. If you destroy your drive/data, it's not my fault.
+</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="o">[</span> 1 <span class="o">]</span><span class="p">;</span> <span class="k">do
+  </span><span class="nb">sudo dd </span><span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/dev/disk6 <span class="nv">bs</span><span class="o">=</span>1000000 <span class="nv">count</span><span class="o">=</span>1000
+<span class="k">done</span>
+</code></pre></div></div>
+
+<p>This script loops forever, writing 1000000 * 1000 = 1000000000 bytes (a gigabyte, in the true sense) of zeroes to the beginning of <code class="language-plaintext highlighter-rouge">/dev/disk6</code>. Since partition tables are located near the beginning of the disk, this will trash them and effectively “factory reset” the drive.</p>
+
+<p>To run this script, first determine what disk identifier the corrupted disk will have when you plug it in. I did this by plugging and unplugging it a few times to verify it always got assigned the same identifier (well, when it wasn’t leaving zombie disks behind). Put that identifier into the script in place of <code class="language-plaintext highlighter-rouge">/dev/disk6</code>.</p>
+
+<p>Run the modified script before the disk is plugged in. That’ll prompt for the first <code class="language-plaintext highlighter-rouge">sudo</code>, then start looping (and failing) forever. Plug in the corrupted disk and wait. A successful run will be a lot quieter than the wall of errors you get while the disk isn’t plugged in, and when it finishes, you can kill the script.</p>
+
+<p>After running this, then unplugging and replugging the drive, Disk Utility found an empty disk and was happy to partition it for me.</p>
+
+<p>A couple notes on the implementation.</p>
+
+<p>First, the infinite loop is used to grab the disk before the higher-level parts of the operating system can. The lower-level parts are demonstrably working (hence the presence of <code class="language-plaintext highlighter-rouge">/dev/disk6</code>), but the higher-level parts get stuck forever trying to mount it (or something of the sort), failing, and trying again, thus preventing anything else from accessing the disk.</p>
+
+<p>Second, <code class="language-plaintext highlighter-rouge">dd</code> is being used because the disk is unmountable and we specifically want to wipe the entire thing, partition tables included. This is a different, much harsher version of wiping a disk than what one normally does.</p>
+
+<hr />
+
+<section class="next-previous">
+  
+  <a href="/javascript-the-bad-parts" class="next-previous-link next-previous-previous" title="Previous Post: Javascript: The Bad Parts">
+    <span class="next-previous-icon">←</span>
+    <div class="next-previous-name">
+      <div class="next-previous-label">
+        <span class="next-previous-icon">←</span> Previous Post
+      </div>
+      <div class="next-previous-title">Javascript: The Bad Parts</div>
+    </div>
+  </a>
+   
+  <a href="/sourdough-starter" class="next-previous-link next-previous-next" title="Next Post: World's Easiest Pet: How to Sourdough Starter">
+    <div class="next-previous-name">
+      <div class="next-previous-label">
+        Next Post <span class="next-previous-icon">→</span>
+      </div>
+      <div class="next-previous-title">World's Easiest Pet: How to Sourdough Starter</div>
+    </div>
+    <span class="next-previous-icon">→</span>
+  </a>
+  
+</section>
+<hr />
+
+<section class="tag-list">
+  <i class="tag-label">tags:</i>
+  
+  <a class="tag-link" href="/tag/reference">reference</a> 
+</section>
+
+<footer>
+    <p class="post-date">
+      ~
+      <time
+        datetime="2021-04-12T00:00:00+00:00"
+        itemprop="datePublished"
+      >
+        2021-04-12
+      </time>~
+    </p>
+  </footer>
+</article>
+
+      <!--
+        This filthy trick makes sure that the content always weakly tries to expand to the full
+        width available, but allows for linebreaks if the viewport is too small. It produces a
+        better result than, say, width: 100%; or width: some-fixed-pixel-amount; and doesn't require
+        rewriting everything to flexbox (which would mess with the <html>-level scroll behavior and
+        sticky header) or adding extra DOM (which I'm trying to minimize to make myself feel good).
+      -->
+      <div class="horizontal-expander" aria-hidden="true">
+        Throughout human history, we have been dependent on machines to survive.
+        Fate, it seems, is not without a sense of irony.
+      </div>
+    </main>
+  </body>
+  <script src="/assets/js/theme-switcher.js"></script>
+  <script src="/assets/js/copy-code-block.js"></script>
+  <script src="/assets/js/unit-switcher.js"></script>
+  
+</html>

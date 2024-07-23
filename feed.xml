@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-06-14T02:36:43+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Glove80 Keyboard Review</title><link href="https://blog.sea.nkelley.me/2024/05/26/glove80/" rel="alternate" type="text/html" title="Glove80 Keyboard Review" /><published>2024-05-26T00:00:00+00:00</published><updated>2024-05-26T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/05/26/glove80</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/05/26/glove80/"><![CDATA[<p>I bought myself one of <a href="https://www.moergo.com/">these</a>:</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-07-23T08:45:03+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Glove80 Keyboard Review</title><link href="https://blog.sea.nkelley.me/glove80" rel="alternate" type="text/html" title="Glove80 Keyboard Review" /><published>2024-05-26T00:00:00+00:00</published><updated>2024-05-26T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/glove80</id><content type="html" xml:base="https://blog.sea.nkelley.me/glove80"><![CDATA[<p>I bought myself one of <a href="https://www.moergo.com/">these</a>:</p>
 
 <p><img src="/assets/glove80/glove80.jpg" alt="Glove80" /></p>
 
@@ -168,7 +168,7 @@
 
 <section class="next-previous">
   
-  <a href="/2024/05/14/limits-of-abstraction/" class="next-previous-link next-previous-previous" title="Previous Post: Redux and the Limits of Abstraction">
+  <a href="/limits-of-abstraction" class="next-previous-link next-previous-previous" title="Previous Post: Redux and the Limits of Abstraction">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
       <div class="next-previous-label">
@@ -195,7 +195,7 @@
       <p>Ugh, I miss regular forums for this type of community. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
-</div>]]></content><author><name></name></author><summary type="html"><![CDATA[I bought myself one of these:]]></summary></entry><entry><title type="html">Redux and the Limits of Abstraction</title><link href="https://blog.sea.nkelley.me/2024/05/14/limits-of-abstraction/" rel="alternate" type="text/html" title="Redux and the Limits of Abstraction" /><published>2024-05-14T00:00:00+00:00</published><updated>2024-05-14T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/05/14/limits-of-abstraction</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/05/14/limits-of-abstraction/"><![CDATA[<p>I mentioned in a code review for some framework-y code recently that the author should be careful to avoid accidentally reinventing <a href="https://redux.js.org">Redux</a>, which is a library I love to hate. During this review, I was struck by a thought and finally able to articulate why I don’t like Redux:</p>
+</div>]]></content><author><name></name></author><summary type="html"><![CDATA[I bought myself one of these:]]></summary></entry><entry><title type="html">Redux and the Limits of Abstraction</title><link href="https://blog.sea.nkelley.me/limits-of-abstraction" rel="alternate" type="text/html" title="Redux and the Limits of Abstraction" /><published>2024-05-14T00:00:00+00:00</published><updated>2024-05-14T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/limits-of-abstraction</id><content type="html" xml:base="https://blog.sea.nkelley.me/limits-of-abstraction"><![CDATA[<p>I mentioned in a code review for some framework-y code recently that the author should be careful to avoid accidentally reinventing <a href="https://redux.js.org">Redux</a>, which is a library I love to hate. During this review, I was struck by a thought and finally able to articulate why I don’t like Redux:</p>
 
 <p>Redux is a design pattern, not a library.</p>
 
@@ -224,7 +224,7 @@
 
 <section class="next-previous">
   
-  <a href="/2024/04/17/honking/" class="next-previous-link next-previous-previous" title="Previous Post: Let's Use Hardware Subscriptions for Good">
+  <a href="/honking" class="next-previous-link next-previous-previous" title="Previous Post: Let's Use Hardware Subscriptions for Good">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
       <div class="next-previous-label">
@@ -234,7 +234,7 @@
     </div>
   </a>
    
-  <a href="/2024/05/26/glove80/" class="next-previous-link next-previous-next" title="Next Post: Glove80 Keyboard Review">
+  <a href="/glove80" class="next-previous-link next-previous-next" title="Next Post: Glove80 Keyboard Review">
     <div class="next-previous-name">
       <div class="next-previous-label">
         Next Post <span class="next-previous-icon">→</span>
@@ -270,7 +270,7 @@
       <p>A little tangentially, have you ever seen the types for Redux and Redux-adajacent libraries? I mean, <a href="https://github.com/reduxjs/redux-toolkit/blob/0246f788ef964a6afb5071f5b9a651d48630f3e0/packages/toolkit/src/configureStore.ts#L118-L126">look</a> <a href="https://github.com/reduxjs/react-redux/blob/a128c5ebb30bda6e60d597dc37ab97992f8e0d8d/src/types.ts#L110-L124">at</a> <a href="https://github.com/reduxjs/reselect/blob/1223a1b0997a6b248ccbac3ba4e2a544a7a676d8/src/createSelectorCreator.ts#L80-L104">these</a>. They say so little, with so much. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
-</div>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[I mentioned in a code review for some framework-y code recently that the author should be careful to avoid accidentally reinventing Redux, which is a library I love to hate. During this review, I was struck by a thought and finally able to articulate why I don’t like Redux:]]></summary></entry><entry><title type="html">Let’s Use Hardware Subscriptions for Good</title><link href="https://blog.sea.nkelley.me/2024/04/17/honking/" rel="alternate" type="text/html" title="Let’s Use Hardware Subscriptions for Good" /><published>2024-04-17T00:00:00+00:00</published><updated>2024-04-17T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/04/17/honking</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/04/17/honking/"><![CDATA[<p>One early morning in NYC I saw someone honk for some time at apparently nothing, and it got me thinking: this driver is cocooned in their brand new Mercedes station wagon and in total control of when and where to blast their negativity outwards, but the people that live on that street likely have to suffer small offenses to their sanity and sound environment on a daily basis through no fault of their own. It’s a mental health hit-and-run, perpetrated one honk at a time.</p>
+</div>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[I mentioned in a code review for some framework-y code recently that the author should be careful to avoid accidentally reinventing Redux, which is a library I love to hate. During this review, I was struck by a thought and finally able to articulate why I don’t like Redux:]]></summary></entry><entry><title type="html">Let’s Use Hardware Subscriptions for Good</title><link href="https://blog.sea.nkelley.me/honking" rel="alternate" type="text/html" title="Let’s Use Hardware Subscriptions for Good" /><published>2024-04-17T00:00:00+00:00</published><updated>2024-04-17T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/honking</id><content type="html" xml:base="https://blog.sea.nkelley.me/honking"><![CDATA[<p>One early morning in NYC I saw someone honk for some time at apparently nothing, and it got me thinking: this driver is cocooned in their brand new Mercedes station wagon and in total control of when and where to blast their negativity outwards, but the people that live on that street likely have to suffer small offenses to their sanity and sound environment on a daily basis through no fault of their own. It’s a mental health hit-and-run, perpetrated one honk at a time.</p>
 
 <p>Just yesterday I was talking about that utterly ridiculous attempt by BMW to make seat heaters a subscription (which they <a href="https://www.edmunds.com/car-news/bmw-relents-on-heated-seat-subscription.html">cancelled</a>, by the way, so don’t worry).</p>
 
@@ -314,7 +314,7 @@
 
 <section class="next-previous">
   
-  <a href="/2024/04/13/tangrams/" class="next-previous-link next-previous-previous" title="Previous Post: Refactoring with Tangrams">
+  <a href="/tangrams" class="next-previous-link next-previous-previous" title="Previous Post: Refactoring with Tangrams">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
       <div class="next-previous-label">
@@ -324,7 +324,7 @@
     </div>
   </a>
    
-  <a href="/2024/05/14/limits-of-abstraction/" class="next-previous-link next-previous-next" title="Next Post: Redux and the Limits of Abstraction">
+  <a href="/limits-of-abstraction" class="next-previous-link next-previous-next" title="Next Post: Redux and the Limits of Abstraction">
     <div class="next-previous-name">
       <div class="next-previous-label">
         Next Post <span class="next-previous-icon">→</span>
@@ -341,7 +341,7 @@
   <i class="tag-label">tags:</i>
   
   <a class="tag-link" href="/tag/reference">reference</a> 
-</section>]]></content><author><name></name></author><category term="reference" /><summary type="html"><![CDATA[One early morning in NYC I saw someone honk for some time at apparently nothing, and it got me thinking: this driver is cocooned in their brand new Mercedes station wagon and in total control of when and where to blast their negativity outwards, but the people that live on that street likely have to suffer small offenses to their sanity and sound environment on a daily basis through no fault of their own. It’s a mental health hit-and-run, perpetrated one honk at a time.]]></summary></entry><entry><title type="html">Refactoring with Tangrams</title><link href="https://blog.sea.nkelley.me/2024/04/13/tangrams/" rel="alternate" type="text/html" title="Refactoring with Tangrams" /><published>2024-04-13T00:00:00+00:00</published><updated>2024-04-13T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/04/13/tangrams</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/04/13/tangrams/"><![CDATA[<p>Remember <a href="https://en.wikipedia.org/wiki/Tangram">tangrams</a>? Remember how they would mess with your intuition, that the <a href="https://en.wikipedia.org/wiki/Tangram#Paradoxes">silhouettes they drew seemed to lie</a>?</p>
+</section>]]></content><author><name></name></author><category term="reference" /><summary type="html"><![CDATA[One early morning in NYC I saw someone honk for some time at apparently nothing, and it got me thinking: this driver is cocooned in their brand new Mercedes station wagon and in total control of when and where to blast their negativity outwards, but the people that live on that street likely have to suffer small offenses to their sanity and sound environment on a daily basis through no fault of their own. It’s a mental health hit-and-run, perpetrated one honk at a time.]]></summary></entry><entry><title type="html">Refactoring with Tangrams</title><link href="https://blog.sea.nkelley.me/tangrams" rel="alternate" type="text/html" title="Refactoring with Tangrams" /><published>2024-04-13T00:00:00+00:00</published><updated>2024-04-13T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/tangrams</id><content type="html" xml:base="https://blog.sea.nkelley.me/tangrams"><![CDATA[<p>Remember <a href="https://en.wikipedia.org/wiki/Tangram">tangrams</a>? Remember how they would mess with your intuition, that the <a href="https://en.wikipedia.org/wiki/Tangram#Paradoxes">silhouettes they drew seemed to lie</a>?</p>
 
 <p>I’m working on a large refactor that is composed of two similarly-sized and similarly-structured systems. Let’s imagine these systems as two similar tangram tiles.</p>
 
@@ -506,7 +506,7 @@
 
 <section class="next-previous">
   
-  <a href="/2024/04/01/movies/" class="next-previous-link next-previous-previous" title="Previous Post: The Movie/TV List">
+  <a href="/movies" class="next-previous-link next-previous-previous" title="Previous Post: The Movie/TV List">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
       <div class="next-previous-label">
@@ -516,7 +516,7 @@
     </div>
   </a>
    
-  <a href="/2024/04/17/honking/" class="next-previous-link next-previous-next" title="Next Post: Let's Use Hardware Subscriptions for Good">
+  <a href="/honking" class="next-previous-link next-previous-next" title="Next Post: Let's Use Hardware Subscriptions for Good">
     <div class="next-previous-name">
       <div class="next-previous-label">
         Next Post <span class="next-previous-icon">→</span>
@@ -533,7 +533,7 @@
   <i class="tag-label">tags:</i>
   
   <a class="tag-link" href="/tag/programming">programming</a> 
-</section>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">The Movie/TV List</title><link href="https://blog.sea.nkelley.me/2024/04/01/movies/" rel="alternate" type="text/html" title="The Movie/TV List" /><published>2024-04-01T00:00:00+00:00</published><updated>2024-04-01T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/04/01/movies</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/04/01/movies/"><![CDATA[<p>A reverse-chronological list of movies and TV shows I have seen, including non-spoiler one-liner recommendations and longer, usually-spoiler-filled thoughts – the blurred out bits. Hover or (on mobile) long-press to reveal those. Some of the posters are blurred too because they include spoiling details. 😒</p>
+</section>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">The Movie/TV List</title><link href="https://blog.sea.nkelley.me/movies" rel="alternate" type="text/html" title="The Movie/TV List" /><published>2024-04-01T00:00:00+00:00</published><updated>2024-04-01T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/movies</id><content type="html" xml:base="https://blog.sea.nkelley.me/movies"><![CDATA[<p>A reverse-chronological list of movies and TV shows I have seen, including non-spoiler one-liner recommendations and longer, usually-spoiler-filled thoughts – the blurred out bits. Hover or (on mobile) long-press to reveal those. Some of the posters are blurred too because they include spoiling details. 😒</p>
 
 <p><strong>In general, I don’t recommend watching trailers for any movies.</strong> If you’re here for my recommendations, try to triangulate if you’ll like it from my one-liners or the <a href="https://en.wikipedia.org/wiki/Log_line">log line</a> on IMDb. It’s always more fun to go in without expectations (and without spoilers).</p>
 
@@ -1660,7 +1660,7 @@
       </div>
     </div>
   
-</div>]]></content><author><name></name></author><summary type="html"><![CDATA[A reverse-chronological list of movies and TV shows I have seen, including non-spoiler one-liner recommendations and longer, usually-spoiler-filled thoughts – the blurred out bits. Hover or (on mobile) long-press to reveal those. Some of the posters are blurred too because they include spoiling details. 😒]]></summary></entry><entry><title type="html">WPA Eight-ball Rules (Abridged)</title><link href="https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules/" rel="alternate" type="text/html" title="WPA Eight-ball Rules (Abridged)" /><published>2024-02-29T00:00:00+00:00</published><updated>2024-02-29T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules</id><content type="html" xml:base="https://blog.sea.nkelley.me/2024/02/29/abridged-pool-rules/"><![CDATA[<p>This is an abridged summary of the <a href="https://wpapool.com/rules/">official WPA eight-ball rules</a>. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].</p>
+</div>]]></content><author><name></name></author><summary type="html"><![CDATA[A reverse-chronological list of movies and TV shows I have seen, including non-spoiler one-liner recommendations and longer, usually-spoiler-filled thoughts – the blurred out bits. Hover or (on mobile) long-press to reveal those. Some of the posters are blurred too because they include spoiling details. 😒]]></summary></entry><entry><title type="html">WPA Eight-ball Rules (Abridged)</title><link href="https://blog.sea.nkelley.me/abridged-pool-rules" rel="alternate" type="text/html" title="WPA Eight-ball Rules (Abridged)" /><published>2024-02-29T00:00:00+00:00</published><updated>2024-02-29T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/abridged-pool-rules</id><content type="html" xml:base="https://blog.sea.nkelley.me/abridged-pool-rules"><![CDATA[<p>This is an abridged summary of the <a href="https://wpapool.com/rules/">official WPA eight-ball rules</a>. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].</p>
 
 <h3 id="racking-and-the-break">Racking and the Break</h3>
 
@@ -1703,7 +1703,7 @@
 
 <section class="next-previous">
   
-  <a href="/2023/12/27/kathack/" class="next-previous-link next-previous-previous" title="Previous Post: kathack">
+  <a href="/kathack" class="next-previous-link next-previous-previous" title="Previous Post: kathack">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
       <div class="next-previous-label">
@@ -1713,7 +1713,7 @@
     </div>
   </a>
    
-  <a href="/2024/04/01/movies/" class="next-previous-link next-previous-next" title="Next Post: The Movie/TV List">
+  <a href="/movies" class="next-previous-link next-previous-next" title="Next Post: The Movie/TV List">
     <div class="next-previous-name">
       <div class="next-previous-label">
         Next Post <span class="next-previous-icon">→</span>
@@ -1730,7 +1730,7 @@
   <i class="tag-label">tags:</i>
   
   <a class="tag-link" href="/tag/reference">reference</a> 
-</section>]]></content><author><name></name></author><category term="reference" /><summary type="html"><![CDATA[This is an abridged summary of the official WPA eight-ball rules. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].]]></summary></entry><entry><title type="html">kathack</title><link href="https://blog.sea.nkelley.me/2023/12/27/kathack/" rel="alternate" type="text/html" title="kathack" /><published>2023-12-27T00:00:00+00:00</published><updated>2023-12-27T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/12/27/kathack</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/12/27/kathack/"><![CDATA[<p>I was recently reminded of <a href="http://kathack.com">kathack.com</a>: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.</p>
+</section>]]></content><author><name></name></author><category term="reference" /><summary type="html"><![CDATA[This is an abridged summary of the official WPA eight-ball rules. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].]]></summary></entry><entry><title type="html">kathack</title><link href="https://blog.sea.nkelley.me/kathack" rel="alternate" type="text/html" title="kathack" /><published>2023-12-27T00:00:00+00:00</published><updated>2023-12-27T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/kathack</id><content type="html" xml:base="https://blog.sea.nkelley.me/kathack"><![CDATA[<p>I was recently reminded of <a href="http://kathack.com">kathack.com</a>: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.</p>
 
 <p>So anyway, I rewrote out the jQuery and found a way to serve the script indirectly via GitHub, no dedicated site required. You can paste this into your browser console</p>
 
@@ -1752,7 +1752,7 @@
 
 <section class="next-previous">
   
-  <a href="/2023/12/24/cornmeal-pancakes/" class="next-previous-link next-previous-previous" title="Previous Post: Cornmeal Pancake Recipe">
+  <a href="/cornmeal-pancakes" class="next-previous-link next-previous-previous" title="Previous Post: Cornmeal Pancake Recipe">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
       <div class="next-previous-label">
@@ -1762,7 +1762,7 @@
     </div>
   </a>
    
-  <a href="/2024/02/29/abridged-pool-rules/" class="next-previous-link next-previous-next" title="Next Post: WPA Eight-ball Rules (Abridged)">
+  <a href="/abridged-pool-rules" class="next-previous-link next-previous-next" title="Next Post: WPA Eight-ball Rules (Abridged)">
     <div class="next-previous-name">
       <div class="next-previous-label">
         Next Post <span class="next-previous-icon">→</span>
@@ -1779,7 +1779,7 @@
   <i class="tag-label">tags:</i>
   
   <a class="tag-link" href="/tag/interactive">interactive</a> 
-</section>]]></content><author><name></name></author><category term="interactive" /><summary type="html"><![CDATA[I was recently reminded of kathack.com: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.]]></summary></entry><entry><title type="html">Cornmeal Pancake Recipe</title><link href="https://blog.sea.nkelley.me/2023/12/24/cornmeal-pancakes/" rel="alternate" type="text/html" title="Cornmeal Pancake Recipe" /><published>2023-12-24T00:00:00+00:00</published><updated>2023-12-24T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/12/24/cornmeal-pancakes</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/12/24/cornmeal-pancakes/"><![CDATA[<p>Makes about a dozen 4”-5” pancakes.</p>
+</section>]]></content><author><name></name></author><category term="interactive" /><summary type="html"><![CDATA[I was recently reminded of kathack.com: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.]]></summary></entry><entry><title type="html">Cornmeal Pancake Recipe</title><link href="https://blog.sea.nkelley.me/cornmeal-pancakes" rel="alternate" type="text/html" title="Cornmeal Pancake Recipe" /><published>2023-12-24T00:00:00+00:00</published><updated>2023-12-24T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/cornmeal-pancakes</id><content type="html" xml:base="https://blog.sea.nkelley.me/cornmeal-pancakes"><![CDATA[<p>Makes about a dozen 4”-5” pancakes.</p>
 
 <p>Preheat a non-stick or well-seasoned griddle or small pan to medium-low. Pancakes are very sensitive to uneven heating, so use multiple small pans instead of one large one if you need more space. (This will allow centering the pancakes over the burners.) Pancakes are more like baking than cooking, so having an evenly heated surface ready to go will make it much easier to dial in the temperature as you cook. Don’t butter or oil the pan, as this will cause the pancakes end up splotchy.</p>
 
@@ -1820,7 +1820,7 @@
 
 <section class="next-previous">
   
-  <a href="/2023/11/24/seven-segment/" class="next-previous-link next-previous-previous" title="Previous Post: Making Up New Numbers With 7-Segment Displays">
+  <a href="/seven-segment" class="next-previous-link next-previous-previous" title="Previous Post: Making Up New Numbers With 7-Segment Displays">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
       <div class="next-previous-label">
@@ -1830,7 +1830,7 @@
     </div>
   </a>
    
-  <a href="/2023/12/27/kathack/" class="next-previous-link next-previous-next" title="Next Post: kathack">
+  <a href="/kathack" class="next-previous-link next-previous-next" title="Next Post: kathack">
     <div class="next-previous-name">
       <div class="next-previous-label">
         Next Post <span class="next-previous-icon">→</span>
@@ -1847,7 +1847,7 @@
   <i class="tag-label">tags:</i>
   
   <a class="tag-link" href="/tag/recipe">recipe</a> 
-</section>]]></content><author><name></name></author><category term="recipe" /><summary type="html"><![CDATA[Makes about a dozen 4”-5” pancakes.]]></summary></entry><entry><title type="html">Making Up New Numbers With 7-Segment Displays</title><link href="https://blog.sea.nkelley.me/2023/11/24/seven-segment/" rel="alternate" type="text/html" title="Making Up New Numbers With 7-Segment Displays" /><published>2023-11-24T00:00:00+00:00</published><updated>2023-11-24T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/11/24/seven-segment</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/11/24/seven-segment/"><![CDATA[<p>The ubiquitous <a href="https://en.wikipedia.org/wiki/Seven-segment_display">7-segment display</a> is a pretty clever little piece of design, able to display all 10 digits in a flat plane with only (you guessed it) 7 segments. Compare the predecessor<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> <a href="https://en.wikipedia.org/wiki/Nixie_tube">Nixie tube</a>, which is also cool for different reasons, but needs 10 elements to display all 10 digits. (<a href="https://en.wikipedia.org/wiki/Fourteen-segment_display">14-segment displays</a> can do all 26 letters and 10 numbers.)</p>
+</section>]]></content><author><name></name></author><category term="recipe" /><summary type="html"><![CDATA[Makes about a dozen 4”-5” pancakes.]]></summary></entry><entry><title type="html">Making Up New Numbers With 7-Segment Displays</title><link href="https://blog.sea.nkelley.me/seven-segment" rel="alternate" type="text/html" title="Making Up New Numbers With 7-Segment Displays" /><published>2023-11-24T00:00:00+00:00</published><updated>2023-11-24T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/seven-segment</id><content type="html" xml:base="https://blog.sea.nkelley.me/seven-segment"><![CDATA[<p>The ubiquitous <a href="https://en.wikipedia.org/wiki/Seven-segment_display">7-segment display</a> is a pretty clever little piece of design, able to display all 10 digits in a flat plane with only (you guessed it) 7 segments. Compare the predecessor<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> <a href="https://en.wikipedia.org/wiki/Nixie_tube">Nixie tube</a>, which is also cool for different reasons, but needs 10 elements to display all 10 digits. (<a href="https://en.wikipedia.org/wiki/Fourteen-segment_display">14-segment displays</a> can do all 26 letters and 10 numbers.)</p>
 
 <p>Unlike with a Nixie tube, numbers have to be hammered into slightly awkward shapes to fit into a 7-segment display. But we can turn this constraint on its head to find something new! By enumerating all the alphanumeric-like shapes that aren’t already claimed, we might be able to make up some new alphanumeric shapes that feel familiar, but aren’t.</p>
 
@@ -1928,7 +1928,7 @@
 
 <section class="next-previous">
   
-  <a href="/2023/11/22/pie-dough/" class="next-previous-link next-previous-previous" title="Previous Post: Pie (Pastry) Dough Recipe">
+  <a href="/pie-dough" class="next-previous-link next-previous-previous" title="Previous Post: Pie (Pastry) Dough Recipe">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
       <div class="next-previous-label">
@@ -1938,7 +1938,7 @@
     </div>
   </a>
    
-  <a href="/2023/12/24/cornmeal-pancakes/" class="next-previous-link next-previous-next" title="Next Post: Cornmeal Pancake Recipe">
+  <a href="/cornmeal-pancakes" class="next-previous-link next-previous-next" title="Next Post: Cornmeal Pancake Recipe">
     <div class="next-previous-name">
       <div class="next-previous-label">
         Next Post <span class="next-previous-icon">→</span>
@@ -1963,7 +1963,7 @@
       <p>According to the infallible Wikipedia, 7-segment displays were invented decades before the Nixie tube, but were not practical until LEDs were invented decades <em>after</em> the Nixie tube. It’s also worth noting that the Nixie tube is a more flexible design, should you need to display a wider or different range of characters. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
-</div>]]></content><author><name></name></author><category term="interactive" /><summary type="html"><![CDATA[The ubiquitous 7-segment display is a pretty clever little piece of design, able to display all 10 digits in a flat plane with only (you guessed it) 7 segments. Compare the predecessor1 Nixie tube, which is also cool for different reasons, but needs 10 elements to display all 10 digits. (14-segment displays can do all 26 letters and 10 numbers.) According to the infallible Wikipedia, 7-segment displays were invented decades before the Nixie tube, but were not practical until LEDs were invented decades after the Nixie tube. It’s also worth noting that the Nixie tube is a more flexible design, should you need to display a wider or different range of characters. &#8617;]]></summary></entry><entry><title type="html">Pie (Pastry) Dough Recipe</title><link href="https://blog.sea.nkelley.me/2023/11/22/pie-dough/" rel="alternate" type="text/html" title="Pie (Pastry) Dough Recipe" /><published>2023-11-22T00:00:00+00:00</published><updated>2023-11-22T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/2023/11/22/pie-dough</id><content type="html" xml:base="https://blog.sea.nkelley.me/2023/11/22/pie-dough/"><![CDATA[<p>Makes sufficient dough for one 9” pie (no top).</p>
+</div>]]></content><author><name></name></author><category term="interactive" /><summary type="html"><![CDATA[The ubiquitous 7-segment display is a pretty clever little piece of design, able to display all 10 digits in a flat plane with only (you guessed it) 7 segments. Compare the predecessor1 Nixie tube, which is also cool for different reasons, but needs 10 elements to display all 10 digits. (14-segment displays can do all 26 letters and 10 numbers.) According to the infallible Wikipedia, 7-segment displays were invented decades before the Nixie tube, but were not practical until LEDs were invented decades after the Nixie tube. It’s also worth noting that the Nixie tube is a more flexible design, should you need to display a wider or different range of characters. &#8617;]]></summary></entry><entry><title type="html">Pie (Pastry) Dough Recipe</title><link href="https://blog.sea.nkelley.me/pie-dough" rel="alternate" type="text/html" title="Pie (Pastry) Dough Recipe" /><published>2023-11-22T00:00:00+00:00</published><updated>2023-11-22T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/pie-dough</id><content type="html" xml:base="https://blog.sea.nkelley.me/pie-dough"><![CDATA[<p>Makes sufficient dough for one 9” pie (no top).</p>
 
 <p>Cut</p>
 
@@ -1996,7 +1996,7 @@
 
 <section class="next-previous">
   
-  <a href="/2023/10/07/granola/" class="next-previous-link next-previous-previous" title="Previous Post: Granola Recipe">
+  <a href="/granola" class="next-previous-link next-previous-previous" title="Previous Post: Granola Recipe">
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
       <div class="next-previous-label">
@@ -2006,7 +2006,7 @@
     </div>
   </a>
    
-  <a href="/2023/11/24/seven-segment/" class="next-previous-link next-previous-next" title="Next Post: Making Up New Numbers With 7-Segment Displays">
+  <a href="/seven-segment" class="next-previous-link next-previous-next" title="Next Post: Making Up New Numbers With 7-Segment Displays">
     <div class="next-previous-name">
       <div class="next-previous-label">
         Next Post <span class="next-previous-icon">→</span>
