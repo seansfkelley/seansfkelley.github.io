@@ -2,8 +2,6 @@
 layout: post
 title: Cheesecake Recipe
 tags: recipe
-redirect_from:
-  - /cheesecake
 ---
 
 

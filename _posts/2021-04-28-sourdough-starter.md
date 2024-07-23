@@ -2,13 +2,10 @@
 layout: post
 title: "World's Easiest Pet: How to Sourdough Starter"
 tag: recipe
-redirect_from:
-  - /starter
-  - /sourdough-starter
 last_modified_at: 2023-09-10
 ---
 
-Sourdough starters are the easiest pet you can have. Easier than plants or even cats. I also have a [sourdough bread recipe]({% post_url 2023-08-06-literate-sourdough %})!
+Sourdough starters are the easiest pet you can have. Easier than plants or even cats. I also have a [sourdough bread recipe]({% post_url 2023-08-06-sourdough %})!
 
 **Basic feeding schedule for starter:**
 

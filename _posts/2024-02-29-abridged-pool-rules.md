@@ -2,7 +2,6 @@
 layout: post
 title: WPA Eight-ball Rules (Abridged)
 tags: reference
-redirect_from: /pool-rules
 ---
 
 This is an abridged summary of the [official WPA eight-ball rules](https://wpapool.com/rules/). I wrote it because I wanted a short reference for the most important rules to play in an "official" style, for those already familiar with the bar rules. The corresponding full rule's number is cited in \[brackets].
