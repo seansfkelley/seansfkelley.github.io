@@ -4,6 +4,8 @@
  * @typedef {"watched-asc" | "watched-desc" | "year-asc" | "year-desc" | "title-asc" | "title-desc"} Sort
  */
 
+const TITLE_IGNORE_REGEX = /^the /i;
+
 /** @type HTMLFormElement */
 const form = document.querySelector("#sort-filter");
 /** @type HTMLElement */
@@ -39,7 +41,9 @@ function updateSortAndFilter() {
    */
   function comparator(first, second) {
     function getNormalizedField(element) {
-      return element.dataset[field].toLowerCase().replace(/the /, "");
+      return element.dataset[field]
+        .toLowerCase()
+        .replace(TITLE_IGNORE_REGEX, "");
     }
 
     const ordering =
@@ -50,7 +54,10 @@ function updateSortAndFilter() {
       // Don't respect direction during the tie break -- always want to be sorted descending.
       return first.dataset.title
         .toLowerCase()
-        .localeCompare(second.dataset.title.toLowerCase());
+        .replace(TITLE_IGNORE_REGEX, "")
+        .localeCompare(
+          second.dataset.title.toLowerCase().replace(TITLE_IGNORE_REGEX, "")
+        );
     } else {
       return ordering;
     }

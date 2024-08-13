@@ -95,7 +95,7 @@ if [ "$image_size" -gt "$MAXIMUM_FILE_SIZE" ] ; then
   else
     echo "image too large ($image_size bytes); resizing"
     # per docs, a single number is assumed to be width and the height calculated to preserve aspect ratio
-    convert "$output_path" -resize "$TARGET_WIDTH" /tmp/resized
+    magick "$output_path" -resize "$TARGET_WIDTH" /tmp/resized
     mv /tmp/resized "$output_path"
 
     image_size="$(stat -f %z "$output_path")"

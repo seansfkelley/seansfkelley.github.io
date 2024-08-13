@@ -1,3 +1,51 @@
+- title: RRR
+  year: 2022
+  kind: movie
+  link: https://www.imdb.com/title/tt8178634/
+  poster: rrr-2022.jpg
+  watched: 2024-08-13
+  watched-display: on a 13-hour flight, August 2024
+  watch-this-if:
+  more-thoughts: |
+    superhuman, martial arts, wuxia, high production value, Tollywood
+- title: Death Proof
+  year: 2007
+  kind: movie
+  link: https://www.imdb.com/title/tt1028528/
+  poster: death-proof-2007.jpg
+  watched: 2024-08-13
+  watched-display: on a 13-hour flight, August 2024
+  watch-this-if:
+  more-thoughts: |
+    Cell phones? Lindsey Lohan? Maybe a bit long.
+- title: The Fall Guy
+  year: 2024
+  kind: movie
+  link: https://www.imdb.com/title/tt1684562/
+  poster: the-fall-guy-2024.jpg
+  watched: 2024-08-13
+  watched-display: on a 13-hour flight, August 2024
+  watch-this-if:
+  more-thoughts: |
+    Irreverent, highly self-referential, almost-fourth-wall-breaking.
+- title: How to Blow Up a Pipeline
+  year: 2022
+  kind: movie
+  link: https://www.imdb.com/title/tt21440780/
+  poster: how-to-blow-up-a-pipeline-2022.jpg
+  watched: 2024-08-13
+  watched-display: on a 13-hour flight, August 2024
+  watch-this-if:
+  more-thoughts: |
+- title: Andor
+  year: 2022
+  kind: tv
+  link: https://www.imdb.com/title/tt9253284/
+  poster: andor-2022.jpg
+  watched: 2024-06-25
+  watched-display: June 2024
+  dont-watch-this-because:
+  more-thoughts: |
 - title: The Expanse (Season 1)
   year: 2015
   kind: tv
