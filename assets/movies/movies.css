@@ -172,7 +172,7 @@ body[data-theme=dark] {
 .entry .content .watched {
   font-size: 14px;
   color: var(--text-color-faded);
-  margin-bottom: 14px;
+  margin-bottom: 7px;
 }
 .entry .content .more-thoughts :last-child {
   margin-bottom: 0;
