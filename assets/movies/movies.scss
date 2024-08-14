@@ -2,6 +2,8 @@
 # why do I have to put this nonsense header in and break my syntax highlighter
 ---
 
+@use "sass:math";
+
 @import "variables";
 
 #sort-filter {
@@ -29,7 +31,7 @@
 }
 
 .entry {
-  margin-bottom: 1em;
+  margin-bottom: $spacing;
 
   .title {
     display: flex;
@@ -50,8 +52,12 @@
     display: flex;
     flex-direction: column;
 
+    .one-liner {
+      margin-bottom: math.div($spacing, 4);
+    }
+
     .poster {
-      margin-bottom: 1em;
+      margin-bottom: $spacing;
       align-self: center;
       min-width: 200px;
       width: 200px;
@@ -60,12 +66,19 @@
     .watched {
       font-size: $font-size-small;
       color: var(--text-color-faded);
+      margin-bottom: math.div($spacing, 2);
+    }
+
+    .more-thoughts :last-child {
+      margin-bottom: 0; // If text is longer than poster is tall, pushes the next entry too far down.
     }
   }
 }
 
 @media screen and (min-width: $width-mobile) {
   .entry {
+    margin-bottom: 0;
+
     .title {
       justify-content: space-between;
 
@@ -87,7 +100,10 @@
 
       .poster {
         align-self: initial;
-        margin-bottom: initial;
+      }
+
+      .more-thoughts :last-child {
+        margin-bottom: $spacing;
       }
     }
   }
