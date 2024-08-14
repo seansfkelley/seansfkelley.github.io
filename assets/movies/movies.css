@@ -142,7 +142,7 @@ body[data-theme=dark] {
   }
 }
 .entry {
-  margin-bottom: 1em;
+  margin-bottom: 14px;
 }
 .entry .title {
   display: flex;
@@ -160,8 +160,11 @@ body[data-theme=dark] {
   display: flex;
   flex-direction: column;
 }
+.entry .content .one-liner {
+  margin-bottom: 3.5px;
+}
 .entry .content .poster {
-  margin-bottom: 1em;
+  margin-bottom: 14px;
   align-self: center;
   min-width: 200px;
   width: 200px;
@@ -169,9 +172,16 @@ body[data-theme=dark] {
 .entry .content .watched {
   font-size: 14px;
   color: var(--text-color-faded);
+  margin-bottom: 14px;
+}
+.entry .content .more-thoughts :last-child {
+  margin-bottom: 0;
 }
 
 @media screen and (min-width: 600px) {
+  .entry {
+    margin-bottom: 0;
+  }
   .entry .title {
     justify-content: space-between;
   }
@@ -190,7 +200,9 @@ body[data-theme=dark] {
   }
   .entry .content .poster {
     align-self: initial;
-    margin-bottom: initial;
+  }
+  .entry .content .more-thoughts :last-child {
+    margin-bottom: 14px;
   }
 }
 .spoiler {
