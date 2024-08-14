@@ -1012,7 +1012,6 @@ a.reversefootnote {
   display: flex;
   align-items: center;
   flex: 1;
-  margin-bottom: 14px;
 }
 .next-previous-link .next-previous-label,
 .next-previous-link .next-previous-icon {
@@ -1032,6 +1031,7 @@ a.reversefootnote {
 .next-previous-next {
   text-align: right;
   justify-content: right;
+  margin-bottom: 14px;
 }
 
 .next-previous-label {
