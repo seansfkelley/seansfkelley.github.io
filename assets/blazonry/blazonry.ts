@@ -128,7 +128,16 @@ type Tincture =
   | "purpure"
   | "sable"
   | "vert"
+  | "ermine"
+  | "ermines"
+  | "erminois"
+  | "pean"
   | "counterchanged";
+
+type ResolvedTincture = string & { __resolvedTincture: unknown };
+const ResolvedTincture = {
+  of: (s: string): ResolvedTincture => s as ResolvedTincture,
+};
 
 type Treatment =
   | "embattled-counter-embattled"
@@ -325,7 +334,7 @@ interface VariationPatternGenerator {
 type RelativeTreatmentPath = [
   PathCommand.m,
   PathCommand.Relative[],
-  PathCommand.m
+  PathCommand.m,
 ];
 
 const RelativeTreatmentPath = {
@@ -562,7 +571,10 @@ class SequenceLocator implements ParametricLocator {
 }
 
 class ExhaustiveLocator implements ParametricLocator {
-  constructor(private sequences: Coordinate[][], private scales: number[]) {
+  constructor(
+    private sequences: Coordinate[][],
+    private scales: number[]
+  ) {
     assert(
       sequences.length === scales.length,
       "must have the same number of sequences as scales"
@@ -805,8 +817,8 @@ const Transforms = {
       typeof scale === "number" && scale !== 1
         ? `scale(${scale})`
         : Array.isArray(scale)
-        ? `scale(${scale[0]}, ${scale[1]})`
-        : undefined,
+          ? `scale(${scale[0]}, ${scale[1]})`
+          : undefined,
       rotate != null ? `rotate(${Radians.toDeg(rotate)})` : undefined,
       // TODO: Unsure if this is the correct location for skew to make it less surprising.
       skewX != null ? `skewX(${Radians.toDeg(skewX)})` : undefined,
@@ -2197,6 +2209,41 @@ async function nonOrdinaryCharge(
 
 // #endregion
 
+// #region TINCTURES
+// ----------------------------------------------------------------------------
+
+async function resolveTincture(
+  tincture: Tincture
+): Promise<Tincture | [Tincture, Tincture, SVGPatternElement]> {
+  if (tincture === "ermine") {
+    const ermine = (await fetchComplexSvg("ermine")).cloneNode(true);
+    const id = uniqueId("tincture-pattern-");
+    const pattern = svg.pattern(
+      {
+        viewBox: [
+          // Hardcoded to match the specifics of this SVG. Calculated with
+          // largest/smallest-running-sum of the path commands making up the pattern. Note that for
+          // doing that calculation, the `c` commands should only user every third coordinate, as
+          // the first two of each triplet are control points.
+          [-4.36616, 0],
+          [14.69366, 23.71317],
+        ],
+        x: -W_2,
+        y: -H_2,
+        width: W,
+        height: H,
+      },
+      ermine
+    );
+    pattern.id = id;
+    return ["sable", "argent", pattern];
+  } else {
+    return tincture;
+  }
+}
+
+// #endregion
+
 // #region TREATMENTS
 // ----------------------------------------------------------------------------
 
@@ -2730,11 +2777,37 @@ const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
 // #region HIGHER-ORDER ELEMENTS
 // ----------------------------------------------------------------------------
 
-function field(tincture: Tincture) {
-  // Expand the height so that when this is rendered on the extra-tall quarter segments it still fills.
-  return svg.rect([-W_2, -H_2], [W_2, H_2 + 2 * (H_2 - W_2)], {
-    classes: { fill: tincture },
-  });
+async function field(tincture: Tincture) {
+  const resolvedTincture = await resolveTincture(tincture);
+
+  if (typeof resolvedTincture !== "string") {
+    const [foreground, background, pattern] = resolvedTincture;
+    const mask = svg.mask(
+      { id: `${pattern.id}-mask` },
+      svg.rect([-W_2, -H_2], [W_2, H_2], {
+        fill: `url(#${pattern.id})`,
+      })
+    );
+    const foregroundRect = svg.rect(
+      [-W_2, -H_2],
+      [W_2, H_2 + 2 * (H_2 - W_2)],
+      { classes: { fill: foreground } }
+    );
+    foregroundRect.setAttribute("mask", `url(#${mask.id})`);
+    return svg.g(
+      pattern,
+      mask,
+      svg.rect([-W_2, -H_2], [W_2, H_2 + 2 * (H_2 - W_2)], {
+        classes: { fill: background },
+      }),
+      foregroundRect
+    );
+  } else {
+    // Expand the height so that when this is rendered on the extra-tall quarter segments it still fills.
+    return svg.rect([-W_2, -H_2], [W_2, H_2 + 2 * (H_2 - W_2)], {
+      classes: { fill: resolvedTincture },
+    });
+  }
 }
 
 const ESCUTCHEON_PATH: PathCommand.Any[] = [
@@ -2894,9 +2967,9 @@ async function escutcheonContent(
       svg.path(partition(content.treatment), { fill: "white" })
     );
 
-    const g1 = svg.g(field(content.first));
+    const g1 = svg.g(await field(content.first));
     g1.setAttribute("mask", `url(#${id})`);
-    const g2 = svg.g(field(content.second));
+    const g2 = svg.g(await field(content.second));
 
     // Add g2 first so that it's underneath g1, which is the masked one.
     const children: SVGElement[] = [mask, g2, g1];
@@ -2959,7 +3032,7 @@ async function escutcheonContent(
 
     for (const e of Object.values(quartered)) {
       if (e.children.length === 0) {
-        e.appendChild(field("argent"));
+        e.appendChild(await field("argent"));
       }
     }
 
@@ -2987,8 +3060,8 @@ async function escutcheonContent(
     const g1 = svg.g();
     const g2 = svg.g();
 
-    g1.appendChild(field(content.first));
-    g2.appendChild(field(content.second));
+    g1.appendChild(await field(content.first));
+    g2.appendChild(await field(content.second));
 
     // TODO: Deduplicate this with party-per, if possible, or at least make them consistent.
     const id = uniqueId("variation-pattern-");
@@ -3026,7 +3099,7 @@ async function escutcheonContent(
     }
     return children;
   } else {
-    const children: SVGElement[] = [field(content.tincture)];
+    const children: SVGElement[] = [await field(content.tincture)];
     for (const c of content.charges ?? []) {
       children.push(...(await simpleContent(c)));
     }
@@ -3079,7 +3152,7 @@ async function inescutcheon(
   { location, content }: Inescutcheon
 ) {
   const escutcheon = svg.g(
-    field("argent"),
+    await field("argent"),
     ...(await escutcheonContent(content)),
     svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } })
   );
@@ -3174,7 +3247,7 @@ async function parseAndRenderBlazon(initialAmbiguousIndex: number = 0) {
     )}") view-box`;
     rendered.appendChild(container);
     // Make sure there's always a default background.
-    container.appendChild(field("argent"));
+    container.appendChild(await field("argent"));
 
     container.append(...(await escutcheonContent(blazon.main)));
     if (blazon.inescutcheon != null) {

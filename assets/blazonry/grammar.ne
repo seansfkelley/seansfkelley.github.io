@@ -193,6 +193,10 @@ Tincture ->
   | "purpure"        {% id %}
   | "sable"          {% id %}
   | "vert"           {% id %}
+  | "ermine"         {% id %}
+  | "ermines"        {% id %}
+  | "erminois"       {% id %}
+  | "pean"           {% id %}
   | "counterchanged" {% id %}
 
 OrdinaryName ->
