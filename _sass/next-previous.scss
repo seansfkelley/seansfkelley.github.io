@@ -27,9 +27,6 @@
   align-items: center;
   flex: 1;
 
-  // This is first-child because we do column-reverse to make sure next is on top.
-  margin-bottom: $spacing;
-
   .next-previous-label,
   .next-previous-icon {
     color: var(--text-color);
@@ -52,6 +49,8 @@
 .next-previous-next {
   text-align: right;
   justify-content: right;
+  // This is first-child because we do column-reverse to make sure next is on top.
+  margin-bottom: $spacing;
 }
 
 .next-previous-label {
