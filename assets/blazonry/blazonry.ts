@@ -2189,7 +2189,7 @@ async function escallop({ tincture }: SimpleCharge) {
   const escallop = await fetchMutableComplexSvg("escallop");
   const resolvedTincture = await resolveTincture(tincture, "fill", escallop);
   if ("classes" in resolvedTincture) {
-    applyClasses(escallop, resolvedTincture.classes);
+    escallop.classList.add(resolvedTincture.classes.fill);
   } else {
     applySvgAttributes(escallop, resolvedTincture);
   }
@@ -2200,7 +2200,7 @@ async function fleurDeLys({ tincture }: SimpleCharge) {
   const fleurDeLys = await fetchMutableComplexSvg("fleur-de-lys");
   const resolvedTincture = await resolveTincture(tincture, "fill", fleurDeLys);
   if ("classes" in resolvedTincture) {
-    applyClasses(fleurDeLys, resolvedTincture.classes);
+    fleurDeLys.classList.add(resolvedTincture.classes.fill);
   } else {
     applySvgAttributes(fleurDeLys, resolvedTincture);
   }
@@ -2226,7 +2226,7 @@ async function lion({
   const lion = await fetchMutableComplexSvg("lion", attitude);
   const resolvedTincture = await resolveTincture(tincture, "fill", lion);
   if ("classes" in resolvedTincture) {
-    applyClasses(lion, resolvedTincture.classes);
+    lion.classList.add(resolvedTincture.classes.fill);
     lion.classList.add(`armed-${armed}`);
     lion.classList.add(`langued-${langued}`);
   } else {
