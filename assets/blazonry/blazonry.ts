@@ -2229,6 +2229,12 @@ async function nonOrdinaryCharge(
 // #region TINCTURES
 // ----------------------------------------------------------------------------
 
+// Hardcoded to match the specifics of this SVG. Calculated with largest/smallest-running-sum of the
+// path commands making up the pattern. Note that for doing that calculation, the `c` commands
+// should only user every third coordinate, as the first two of each triplet are control points.
+const ERMINE_WIDTH = 14.69366;
+const ERMINE_HEIGHT = 23.71317;
+
 async function resolveTincture(
   tincture: Tincture
 ): Promise<TinctureClass | [TinctureClass, TinctureClass, SVGPatternElement]> {
@@ -2236,23 +2242,27 @@ async function resolveTincture(
     foreground: TinctureClass,
     background: TinctureClass
   ): Promise<[TinctureClass, TinctureClass, SVGPatternElement]> {
-    const ermine = (await fetchComplexSvg("ermine")).cloneNode(true);
+    const ermine1 = (await fetchComplexSvg("ermine")).cloneNode(true);
+    const ermine2 = ermine1.cloneNode(true);
+    // TODO: Add a teeny bit of space around/between the ermines so that they don't pack so tightly.
+    Transforms.apply(ermine2, { translate: [14.69366, 23.71317] });
     const pattern = svg.pattern(
       {
         viewBox: [
-          // Hardcoded to match the specifics of this SVG. Calculated with
-          // largest/smallest-running-sum of the path commands making up the pattern. Note that for
-          // doing that calculation, the `c` commands should only user every third coordinate, as
-          // the first two of each triplet are control points.
-          [-4.36616, 0],
-          [14.69366, 23.71317],
+          [0, 0],
+          [2 * ERMINE_WIDTH, 2 * ERMINE_HEIGHT],
         ],
         x: -W_2,
         y: -H_2,
-        width: W,
-        height: H,
+        // 5 arbitrarily chosen to look nice; .5 so that we use half a tile (which has two ermines
+        // in it) so you can't identify the unit of tiling.
+        width: W / 5.5,
+        // We have to scale the pattern repeat number by the width/height ratio, otherwise it ends
+        // up tiling irregularly which exposes gaps between rows/columns of the pattern.
+        height: H / (5.5 * (W / H)),
       },
-      ermine
+      ermine1,
+      ermine2
     );
     pattern.id = uniqueId("tincture-pattern-");
     return [foreground, background, pattern];
