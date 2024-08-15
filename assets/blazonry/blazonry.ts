@@ -120,37 +120,18 @@ type Unsupported = typeof UNSUPPORTED;
 
 type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
-type Tincture =
+type ColorOrMetal =
   | "argent"
   | "azure"
   | "gules"
   | "or"
   | "purpure"
   | "sable"
-  | "vert"
-  | "ermine"
-  | "ermines"
-  | "erminois"
-  | "pean"
-  | "counterchanged";
+  | "vert";
 
-// This is obviously not exhaustive, but the gist of it is that it's anything that can be slapped
-// right into a `fill` or `stroke` rule unmodified.
-type SvgColor = "white" | `url(#${string})`;
+type Fur = "ermine" | "ermines" | "erminois" | "pean";
 
-type TinctureClass =
-  | "argent"
-  | "azure"
-  | "gules"
-  | "or"
-  | "purpure"
-  | "sable"
-  | "vert"
-  | `url(#${string})`;
-const TinctureClass = {
-  toFill: (t: TinctureClass) => (t.startsWith("url(") ? t : `fill-${t}`),
-  toStroke: (t: TinctureClass) => (t.startsWith("url(") ? t : `stroke-${t}`),
-};
+type Tincture = ColorOrMetal | Fur | "counterchanged";
 
 type Treatment =
   | "embattled-counter-embattled"
@@ -803,6 +784,17 @@ function deepEqual<T>(one: T, two: T): boolean {
     return one === two;
   }
 }
+
+// This is obviously not exhaustive, but the gist of it is that it's anything that can be slapped
+// right into a `fill` or `stroke` rule unmodified.
+type SvgColor = "white" | `url(#${string})`;
+
+type TinctureClass = ColorOrMetal | `url(#${string})`;
+
+const TinctureClass = {
+  toFill: (t: TinctureClass) => (t.startsWith("url(") ? t : `fill-${t}`),
+  toStroke: (t: TinctureClass) => (t.startsWith("url(") ? t : `stroke-${t}`),
+};
 
 type Radians = number & { __radians: unknown };
 const Radians = {
@@ -2231,7 +2223,7 @@ async function nonOrdinaryCharge(
 
 // Hardcoded to match the specifics of this SVG. Calculated with largest/smallest-running-sum of the
 // path commands making up the pattern. Note that for doing that calculation, the `c` commands
-// should only user every third coordinate, as the first two of each triplet are control points.
+// should only use every third coordinate, as the first two of each triplet are control points.
 const ERMINE_WIDTH = 14.69366;
 const ERMINE_HEIGHT = 23.71317;
 
@@ -2261,8 +2253,8 @@ async function resolveTincture(
         ],
         x: -W_2,
         y: -H_2,
-        // 4 arbitrarily chosen to look nice; .5 so that we use half a tile (which has two ermines
-        // in it) so you can't identify the unit of tiling.
+        // 4 arbitrarily chosen to look nice; .5 so that we use half a tile (each of which has two
+        // ermines in it) so the unit of tiling isn't obvious and asymmetrical.
         width: W / 4.5,
         // We have to scale the pattern repeat number by the width/height ratio, otherwise it ends
         // up tiling irregularly which exposes gaps between rows/columns of the pattern.
