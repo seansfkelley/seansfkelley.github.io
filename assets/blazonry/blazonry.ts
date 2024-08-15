@@ -134,9 +134,22 @@ type Tincture =
   | "pean"
   | "counterchanged";
 
-type ResolvedTincture = string & { __resolvedTincture: unknown };
-const ResolvedTincture = {
-  of: (s: string): ResolvedTincture => s as ResolvedTincture,
+// This is obviously not exhaustive, but the gist of it is that it's anything that can be slapped
+// right into a `fill` or `stroke` rule unmodified.
+type SvgColor = "white" | `url(#${string})`;
+
+type TinctureClass =
+  | "argent"
+  | "azure"
+  | "gules"
+  | "or"
+  | "purpure"
+  | "sable"
+  | "vert"
+  | `url(#${string})`;
+const TinctureClass = {
+  toFill: (t: TinctureClass) => (t.startsWith("url(") ? t : `fill-${t}`),
+  toStroke: (t: TinctureClass) => (t.startsWith("url(") ? t : `stroke-${t}`),
 };
 
 type Treatment =
@@ -856,13 +869,13 @@ function applySvgAttributes(
 
 function applyClasses(
   element: SVGElement,
-  classes?: { fill?: Tincture; stroke?: Tincture }
+  classes?: { fill?: TinctureClass; stroke?: TinctureClass }
 ): void {
   if (classes?.fill != null) {
-    element.classList.add(`fill-${classes.fill}`);
+    element.classList.add(TinctureClass.toFill(classes.fill));
   }
   if (classes?.stroke != null) {
-    element.classList.add(`stroke-${classes.stroke}`);
+    element.classList.add(TinctureClass.toStroke(classes.stroke));
   }
 }
 
@@ -876,11 +889,11 @@ const svg = {
       fill,
       classes,
     }: {
-      stroke?: string;
+      stroke?: SvgColor;
       strokeWidth?: number;
       strokeLinecap?: "butt" | "round" | "square";
-      fill?: string;
-      classes?: { fill?: Tincture; stroke?: Tincture };
+      fill?: SvgColor;
+      classes?: { fill?: TinctureClass; stroke?: TinctureClass };
     } = {}
   ): SVGPathElement => {
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -907,7 +920,7 @@ const svg = {
       strokeWidth?: number;
       strokeLinecap?: "butt" | "round" | "square";
       classes?: {
-        stroke?: Tincture;
+        stroke?: TinctureClass;
       };
     } = {}
   ): SVGLineElement => {
@@ -931,7 +944,11 @@ const svg = {
       fill,
       stroke,
       classes,
-    }: { fill?: string; stroke?: string; classes?: { fill?: Tincture } } = {}
+    }: {
+      fill?: SvgColor;
+      stroke?: SvgColor;
+      classes?: { fill?: TinctureClass };
+    } = {}
   ): SVGRectElement => {
     const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     applySvgAttributes(rect, {
@@ -1000,8 +1017,8 @@ const svg = {
     stroke,
   }: {
     points: Coordinate[];
-    fill?: string;
-    stroke?: string;
+    fill?: SvgColor;
+    stroke?: SvgColor;
   }): SVGPolygonElement => {
     const polygon = document.createElementNS(
       "http://www.w3.org/2000/svg",
@@ -2150,7 +2167,7 @@ async function lion({
 
 async function escutcheon({ content }: EscutcheonCharge) {
   const escutcheon = svg.g(
-    field("argent"),
+    await field("argent"),
     ...(await escutcheonContent(content)),
     svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } })
   );
@@ -2214,10 +2231,12 @@ async function nonOrdinaryCharge(
 
 async function resolveTincture(
   tincture: Tincture
-): Promise<Tincture | [Tincture, Tincture, SVGPatternElement]> {
-  if (tincture === "ermine") {
+): Promise<TinctureClass | [TinctureClass, TinctureClass, SVGPatternElement]> {
+  async function getErmineBasedPattern(
+    foreground: TinctureClass,
+    background: TinctureClass
+  ): Promise<[TinctureClass, TinctureClass, SVGPatternElement]> {
     const ermine = (await fetchComplexSvg("ermine")).cloneNode(true);
-    const id = uniqueId("tincture-pattern-");
     const pattern = svg.pattern(
       {
         viewBox: [
@@ -2235,10 +2254,27 @@ async function resolveTincture(
       },
       ermine
     );
-    pattern.id = id;
-    return ["sable", "argent", pattern];
-  } else {
-    return tincture;
+    pattern.id = uniqueId("tincture-pattern-");
+    return [foreground, background, pattern];
+  }
+
+  // It has to be rewritten based on the context it's defined in before we attempt to resolve it.
+  assert(
+    tincture != "counterchanged",
+    "cannot resolve a counterchanged tincture"
+  );
+
+  switch (tincture) {
+    case "ermine":
+      return getErmineBasedPattern("sable", "argent");
+    case "ermines":
+      return getErmineBasedPattern("argent", "sable");
+    case "erminois":
+      return getErmineBasedPattern("sable", "or");
+    case "pean":
+      return getErmineBasedPattern("or", "sable");
+    default:
+      return tincture;
   }
 }
 
