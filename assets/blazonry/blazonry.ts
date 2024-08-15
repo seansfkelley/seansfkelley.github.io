@@ -310,7 +310,7 @@ interface Inescutcheon {
 }
 
 interface OrdinaryRenderer {
-  (ordinary: Ordinary): SVGElement;
+  (ordinary: Ordinary): Promise<SVGElement>;
   on: ParametricLocator;
   between: ParametricLocator;
   // I'd use non-?-optional `undefined` to mean unsupported, but the compiler complains about
@@ -873,6 +873,15 @@ function applyClasses(
   }
 }
 
+function safelyAppend(
+  element: SVGElement,
+  child: SVGElement | undefined
+): void {
+  if (child != null) {
+    element.appendChild(child);
+  }
+}
+
 const svg = {
   path: (
     d: PathCommand.Any[],
@@ -956,9 +965,9 @@ const svg = {
     applyClasses(rect, classes);
     return rect;
   },
-  g: (...children: SVGElement[]): SVGGElement => {
+  g: (...children: (SVGElement | undefined)[]): SVGGElement => {
     const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    g.append(...children);
+    g.append(...children.filter((c) => c != null));
     return g;
   },
   pattern: (
@@ -1077,10 +1086,12 @@ const COTISED_WIDTH = W_2 / 12;
 const BEND_WIDTH = W / 3;
 // Make sure it's long enough to reach diagonally!
 const BEND_LENGTH = Math.hypot(W, W) + BEND_WIDTH / 2;
-function bend({ tincture, cotised, treatment }: Ordinary) {
+async function bend({ tincture, cotised, treatment }: Ordinary) {
   const bend = svg.g();
 
   if (treatment != null) {
+    const [resolvedTincture, pattern] = await resolveTincture(tincture, "fill");
+    safelyAppend(bend, pattern);
     bend.appendChild(
       svg.path(
         relativePathsToClosedLoop(
@@ -1091,14 +1102,19 @@ function bend({ tincture, cotised, treatment }: Ordinary) {
           // we traverse around the bend clockwise.
           TREATMENTS[treatment](-BEND_LENGTH, true, "secondary", "end")
         ),
-        { classes: { fill: tincture } }
+        resolvedTincture
       )
     );
   } else {
+    const [resolvedTincture, pattern] = await resolveTincture(
+      tincture,
+      "stroke"
+    );
+    safelyAppend(bend, pattern);
     bend.appendChild(
       svg.line([0, 0], [BEND_LENGTH, 0], {
         strokeWidth: BEND_WIDTH,
-        classes: { stroke: tincture },
+        ...resolvedTincture,
       })
     );
   }
@@ -2273,8 +2289,17 @@ async function getErmineTincture(
 }
 
 async function resolveTincture(
-  tincture: Tincture
-): Promise<[ColorOrMetal, undefined] | [SvgUrlReference, SVGPatternElement]> {
+  tincture: Tincture,
+  which: "fill" | "stroke"
+): Promise<
+  [
+    (
+      | { fill?: SvgColor; stroke?: SvgColor }
+      | { classes: { fill?: ColorOrMetal; stroke?: ColorOrMetal } }
+    ),
+    SVGPatternElement | undefined,
+  ]
+> {
   // It has to be rewritten based on the context it's defined in before we attempt to resolve it.
   assert(
     tincture != "counterchanged",
@@ -2284,9 +2309,9 @@ async function resolveTincture(
   async function getErmineBasedPattern(
     foreground: ColorOrMetal,
     background: ColorOrMetal
-  ): Promise<[SvgUrlReference, SVGPatternElement]> {
+  ): Promise<[{ fill?: SvgColor; stroke?: SvgColor }, SVGPatternElement]> {
     const pattern = await getErmineTincture(foreground, background);
-    return [`url(#${pattern.id})`, pattern];
+    return [{ [which]: `url(#${pattern.id})` }, pattern];
   }
 
   switch (tincture) {
@@ -2299,7 +2324,7 @@ async function resolveTincture(
     case "pean":
       return getErmineBasedPattern("or", "sable");
     default:
-      return [tincture, undefined];
+      return [{ classes: { [which]: tincture } }, undefined];
   }
 }
 
@@ -2838,21 +2863,13 @@ const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
 // #region HIGHER-ORDER ELEMENTS
 // ----------------------------------------------------------------------------
 
-// Expand the height so that when this is rendered on the extra-tall quarter segments it still fills.
-const FIELD_RECT: [Coordinate, Coordinate] = [
-  [-W_2, -H_2],
-  [W_2, H_2 + 2 * (H_2 - W_2)],
-];
-
 async function field(tincture: Tincture) {
-  const [svgTincture, pattern] = await resolveTincture(tincture);
-
-  if (pattern != null) {
-    // TODO: The difference between fill and classes.fill is an anti-pattern; how to fix?
-    return svg.g(pattern, svg.rect(...FIELD_RECT, { fill: svgTincture }));
-  } else {
-    return svg.rect(...FIELD_RECT, { classes: { fill: svgTincture } });
-  }
+  const [resolvedTincture, pattern] = await resolveTincture(tincture, "fill");
+  return svg.g(
+    pattern,
+    // Expand the height so that when this is rendered on the extra-tall quarter segments it still fills.
+    svg.rect([-W_2, -H_2], [W_2, H_2 + 2 * (H_2 - W_2)], resolvedTincture)
+  );
 }
 
 const ESCUTCHEON_PATH: PathCommand.Any[] = [
@@ -2911,7 +2928,7 @@ async function simpleContent(element: Charge): Promise<SVGElement[]> {
   } else if ("on" in element) {
     return on(element);
   } else if ("ordinary" in element) {
-    return [ORDINARIES[element.ordinary](element)];
+    return [await ORDINARIES[element.ordinary](element)];
   } else if ("charge" in element) {
     const children: SVGElement[] = [];
     const locator = CHARGE_LOCATORS[element.placement ?? "none"];
@@ -3153,7 +3170,7 @@ async function escutcheonContent(
 }
 
 async function on({ on, surround, charge }: On): Promise<SVGElement[]> {
-  const children: SVGElement[] = [ORDINARIES[on.ordinary](on)];
+  const children: SVGElement[] = [await ORDINARIES[on.ordinary](on)];
 
   if (charge != null) {
     if (charge.placement != null) {
