@@ -34,7 +34,6 @@ FUTURE WORK and KNOWN ISSUES
 - It's unclear what to do with nested counterchanges. If you have "on a canton counterchanged a
   rondel counterchanged" on a variated background, does the rondel match the background variation,
   or does it become invisible because it matches the canton's counterchanging?
-- Ermine and other furs are not supported.
 - Specialized charges that imply tinctures (or other attributes) like "bezant" (meaning "rondel or")
   are not supported.
 - Embattled(-counter-embattled) treatments can leave visual artifacts due to a bit of a hack... try:
@@ -409,16 +408,20 @@ const Coordinate = {
 };
 
 namespace PathCommand {
-  type SimpleElement<T extends string> = {
-    type: T;
-    loc: Coordinate;
-  };
-
   export interface Z {
     type: "Z";
   }
-  export type L = SimpleElement<"L">;
-  export type M = SimpleElement<"M">;
+
+  export interface L {
+    type: "L";
+    loc: Coordinate;
+  }
+
+  export interface M {
+    type: "M";
+    loc: Coordinate;
+  }
+
   export interface C {
     type: "C";
     c1: Coordinate;
@@ -2221,52 +2224,11 @@ async function nonOrdinaryCharge(
 // #region TINCTURES
 // ----------------------------------------------------------------------------
 
-// Hardcoded to match the specifics of this SVG. Calculated with largest/smallest-running-sum of the
-// path commands making up the pattern. Note that for doing that calculation, the `c` commands
-// should only use every third coordinate, as the first two of each triplet are control points.
-const ERMINE_WIDTH = 14.69366;
-const ERMINE_HEIGHT = 23.71317;
-
 async function resolveTincture(
   tincture: Tincture
 ): Promise<
-  | [TinctureClass, undefined, undefined]
-  | [TinctureClass, TinctureClass, SVGPatternElement]
+  [TinctureClass, undefined, undefined] | [TinctureClass, TinctureClass, string]
 > {
-  async function getErmineBasedPattern(
-    foreground: TinctureClass,
-    background: TinctureClass
-  ): Promise<[TinctureClass, TinctureClass, SVGPatternElement]> {
-    const ermine1 = (await fetchComplexSvg("ermine")).cloneNode(true);
-    const ermine2 = ermine1.cloneNode(true);
-    Transforms.apply(ermine2, {
-      // Additional .5 is to add spacing between adjacent marks.
-      translate: [1.5 * ERMINE_WIDTH, 1.5 * ERMINE_HEIGHT],
-    });
-    const pattern = svg.pattern(
-      {
-        viewBox: [
-          // Additional .25 is to add spacing between adjacent marks.
-          [-0.25 * ERMINE_WIDTH, -0.25 * ERMINE_HEIGHT],
-          // Additional 1 is to compensate for .25 + .5 + .25 added for spacing in each dimension.
-          [3 * ERMINE_WIDTH, 3 * ERMINE_HEIGHT],
-        ],
-        x: -W_2,
-        y: -H_2,
-        // 4 arbitrarily chosen to look nice; .5 so that we use half a tile (each of which has two
-        // ermines in it) so the unit of tiling isn't obvious and asymmetrical.
-        width: W / 4.5,
-        // We have to scale the pattern repeat number by the width/height ratio, otherwise it ends
-        // up tiling irregularly which exposes gaps between rows/columns of the pattern.
-        height: H / (4.5 * (W / H)),
-      },
-      ermine1,
-      ermine2
-    );
-    pattern.id = uniqueId("tincture-pattern-");
-    return [foreground, background, pattern];
-  }
-
   // It has to be rewritten based on the context it's defined in before we attempt to resolve it.
   assert(
     tincture != "counterchanged",
@@ -2275,13 +2237,13 @@ async function resolveTincture(
 
   switch (tincture) {
     case "ermine":
-      return getErmineBasedPattern("sable", "argent");
+      return ["sable", "argent", ERMINE_PATTERN_ID];
     case "ermines":
-      return getErmineBasedPattern("argent", "sable");
+      return ["argent", "sable", ERMINE_PATTERN_ID];
     case "erminois":
-      return getErmineBasedPattern("sable", "or");
+      return ["sable", "or", ERMINE_PATTERN_ID];
     case "pean":
-      return getErmineBasedPattern("or", "sable");
+      return ["or", "sable", ERMINE_PATTERN_ID];
     default:
       return [tincture, undefined, undefined];
   }
@@ -2819,6 +2781,55 @@ const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
 
 // #endregion
 
+// #region CONSTANTS
+// ----------------------------------------------------------------------------
+
+// Hardcoded to match the specifics of this SVG. Calculated with largest/smallest-running-sum of the
+// path commands making up the pattern. Note that for doing that calculation, the `c` commands
+// should only use every third coordinate, as the first two of each triplet are control points.
+const ERMINE_WIDTH = 14.69366;
+const ERMINE_HEIGHT = 23.71317;
+const ERMINE_MASK_ID = uniqueId("constant-ermine");
+
+async function getErmineGlobals(): Promise<SVGElement[]> {
+  const ermine1 = (await fetchComplexSvg("ermine")).cloneNode(true);
+  const ermine2 = ermine1.cloneNode(true);
+  Transforms.apply(ermine2, {
+    // Additional .5 is to add spacing between adjacent marks.
+    translate: [1.5 * ERMINE_WIDTH, 1.5 * ERMINE_HEIGHT],
+  });
+  const pattern = svg.pattern(
+    {
+      viewBox: [
+        // Additional .25 is to add spacing between adjacent marks.
+        [-0.25 * ERMINE_WIDTH, -0.25 * ERMINE_HEIGHT],
+        // Additional 1 is to compensate for .25 + .5 + .25 added for spacing in each dimension.
+        [3 * ERMINE_WIDTH, 3 * ERMINE_HEIGHT],
+      ],
+      x: -W_2,
+      y: -H_2,
+      // 4 arbitrarily chosen to look nice; .5 so that we use half a tile (each of which has two
+      // ermines in it) so the unit of tiling isn't obvious and asymmetrical.
+      width: W / 4.5,
+      // We have to scale the pattern repeat number by the width/height ratio, otherwise it ends
+      // up tiling irregularly which exposes gaps between rows/columns of the pattern.
+      height: H / (4.5 * (W / H)),
+    },
+    ermine1,
+    ermine2
+  );
+  pattern.id = `${ERMINE_MASK_ID}-pattern`;
+  const mask = svg.mask(
+    { id: ERMINE_MASK_ID },
+    svg.rect([-W_2, -H_2], [W_2, H_2], {
+      fill: `url(#${pattern.id})`,
+    })
+  );
+  return [pattern, mask];
+}
+
+// #endregion
+
 // #region HIGHER-ORDER ELEMENTS
 // ----------------------------------------------------------------------------
 
@@ -2826,6 +2837,15 @@ async function field(tincture: Tincture) {
   const [foreground, background, pattern] = await resolveTincture(tincture);
 
   if (pattern != null) {
+    // TODO: the patterns and the masks that underpin the furs can be singletons, I think, which
+    // will make using them significantly easier. Two questions:
+    // - multiple blazons are rendered on the page -- are IDs and #-references scoped per-SVG? can we use a global constant ID?
+    // - what of rotated versions of the patterns, like "a bend ermine"? should we rotate the pattern
+    //   or redefine the ordinary to be draw using rotation? (probably the latter, but things get weird
+    //   with things like chevrons)
+    //   - does this mean all of these will have two branches in the rendering -- one for coloring
+    //     the rendered shapes directly, and another for putting them in a mask and attaching a pattern?
+    //     that might be a DRYable pattern
     const mask = svg.mask(
       { id: `${pattern.id}-mask` },
       svg.rect([-W_2, -H_2], [W_2, H_2], {
@@ -3290,6 +3310,8 @@ async function parseAndRenderBlazon(initialAmbiguousIndex: number = 0) {
       ESCUTCHEON_PATH
     )}") view-box`;
     rendered.appendChild(container);
+    // Globals.
+    rendered.appendChild(await getErmineGlobals());
     // Make sure there's always a default background.
     container.appendChild(await field("argent"));
 
@@ -3397,6 +3419,7 @@ const TINCTURES = [
   "purpure",
   "sable",
   "vert",
+  // TODO: reduce the number of occurences of the furs
 ];
 const TINCTURE_REGEX = new RegExp(`\\b(${TINCTURES.join("|")})\\b`, "g");
 const TINCTURE_PAIR_REGEX = new RegExp(
