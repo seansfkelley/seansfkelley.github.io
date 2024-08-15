@@ -2237,29 +2237,36 @@ const ERMINE_HEIGHT = 23.71317;
 
 async function resolveTincture(
   tincture: Tincture
-): Promise<TinctureClass | [TinctureClass, TinctureClass, SVGPatternElement]> {
+): Promise<
+  | [TinctureClass, undefined, undefined]
+  | [TinctureClass, TinctureClass, SVGPatternElement]
+> {
   async function getErmineBasedPattern(
     foreground: TinctureClass,
     background: TinctureClass
   ): Promise<[TinctureClass, TinctureClass, SVGPatternElement]> {
     const ermine1 = (await fetchComplexSvg("ermine")).cloneNode(true);
     const ermine2 = ermine1.cloneNode(true);
-    // TODO: Add a teeny bit of space around/between the ermines so that they don't pack so tightly.
-    Transforms.apply(ermine2, { translate: [14.69366, 23.71317] });
+    Transforms.apply(ermine2, {
+      // Additional .5 is to add spacing between adjacent marks.
+      translate: [1.5 * ERMINE_WIDTH, 1.5 * ERMINE_HEIGHT],
+    });
     const pattern = svg.pattern(
       {
         viewBox: [
-          [0, 0],
-          [2 * ERMINE_WIDTH, 2 * ERMINE_HEIGHT],
+          // Additional .25 is to add spacing between adjacent marks.
+          [-0.25 * ERMINE_WIDTH, -0.25 * ERMINE_HEIGHT],
+          // Additional 1 is to compensate for .25 + .5 + .25 added for spacing in each dimension.
+          [3 * ERMINE_WIDTH, 3 * ERMINE_HEIGHT],
         ],
         x: -W_2,
         y: -H_2,
-        // 5 arbitrarily chosen to look nice; .5 so that we use half a tile (which has two ermines
+        // 4 arbitrarily chosen to look nice; .5 so that we use half a tile (which has two ermines
         // in it) so you can't identify the unit of tiling.
-        width: W / 5.5,
+        width: W / 4.5,
         // We have to scale the pattern repeat number by the width/height ratio, otherwise it ends
         // up tiling irregularly which exposes gaps between rows/columns of the pattern.
-        height: H / (5.5 * (W / H)),
+        height: H / (4.5 * (W / H)),
       },
       ermine1,
       ermine2
@@ -2284,7 +2291,7 @@ async function resolveTincture(
     case "pean":
       return getErmineBasedPattern("or", "sable");
     default:
-      return tincture;
+      return [tincture, undefined, undefined];
   }
 }
 
@@ -2824,10 +2831,9 @@ const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
 // ----------------------------------------------------------------------------
 
 async function field(tincture: Tincture) {
-  const resolvedTincture = await resolveTincture(tincture);
+  const [foreground, background, pattern] = await resolveTincture(tincture);
 
-  if (typeof resolvedTincture !== "string") {
-    const [foreground, background, pattern] = resolvedTincture;
+  if (pattern != null) {
     const mask = svg.mask(
       { id: `${pattern.id}-mask` },
       svg.rect([-W_2, -H_2], [W_2, H_2], {
@@ -2851,7 +2857,7 @@ async function field(tincture: Tincture) {
   } else {
     // Expand the height so that when this is rendered on the extra-tall quarter segments it still fills.
     return svg.rect([-W_2, -H_2], [W_2, H_2 + 2 * (H_2 - W_2)], {
-      classes: { fill: resolvedTincture },
+      classes: { fill: foreground },
     });
   }
 }
