@@ -40,11 +40,6 @@ a[data-example]:not(:hover) {
   stroke: none;
 }
 
-.ermine {
-  // Ermine is only used as a mask, so set it to the pass-through mask color.
-  fill: white;
-}
-
 #form,
 #error,
 #rendered,

@@ -127,6 +127,10 @@ type ColorOrMetal =
   | "purpure"
   | "sable"
   | "vert";
+const ColorOrMetal = {
+  toFill: (t: ColorOrMetal) => `fill-${t}`,
+  toStroke: (t: ColorOrMetal) => `stroke-${t}`,
+};
 
 type Fur = "ermine" | "ermines" | "erminois" | "pean";
 
@@ -788,16 +792,11 @@ function deepEqual<T>(one: T, two: T): boolean {
   }
 }
 
+type SvgUrlReference = `url(#${string})`;
+
 // This is obviously not exhaustive, but the gist of it is that it's anything that can be slapped
 // right into a `fill` or `stroke` rule unmodified.
-type SvgColor = "white" | `url(#${string})`;
-
-type TinctureClass = ColorOrMetal | `url(#${string})`;
-
-const TinctureClass = {
-  toFill: (t: TinctureClass) => (t.startsWith("url(") ? t : `fill-${t}`),
-  toStroke: (t: TinctureClass) => (t.startsWith("url(") ? t : `stroke-${t}`),
-};
+type SvgColor = "white" | SvgUrlReference;
 
 type Radians = number & { __radians: unknown };
 const Radians = {
@@ -864,13 +863,13 @@ function applySvgAttributes(
 
 function applyClasses(
   element: SVGElement,
-  classes?: { fill?: TinctureClass; stroke?: TinctureClass }
+  classes?: { fill?: ColorOrMetal; stroke?: ColorOrMetal }
 ): void {
   if (classes?.fill != null) {
-    element.classList.add(TinctureClass.toFill(classes.fill));
+    element.classList.add(ColorOrMetal.toFill(classes.fill));
   }
   if (classes?.stroke != null) {
-    element.classList.add(TinctureClass.toStroke(classes.stroke));
+    element.classList.add(ColorOrMetal.toStroke(classes.stroke));
   }
 }
 
@@ -888,7 +887,7 @@ const svg = {
       strokeWidth?: number;
       strokeLinecap?: "butt" | "round" | "square";
       fill?: SvgColor;
-      classes?: { fill?: TinctureClass; stroke?: TinctureClass };
+      classes?: { fill?: ColorOrMetal; stroke?: ColorOrMetal };
     } = {}
   ): SVGPathElement => {
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -915,7 +914,7 @@ const svg = {
       strokeWidth?: number;
       strokeLinecap?: "butt" | "round" | "square";
       classes?: {
-        stroke?: TinctureClass;
+        stroke?: ColorOrMetal;
       };
     } = {}
   ): SVGLineElement => {
@@ -942,7 +941,7 @@ const svg = {
     }: {
       fill?: SvgColor;
       stroke?: SvgColor;
-      classes?: { fill?: TinctureClass };
+      classes?: { fill?: ColorOrMetal };
     } = {}
   ): SVGRectElement => {
     const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
@@ -1040,7 +1039,7 @@ const svg = {
 };
 
 const complexSvgCache: Record<string, Promise<SVGElement>> = {};
-async function fetchComplexSvg(
+async function fetchMutableComplexSvg(
   kind: string,
   variant?: string
 ): Promise<SVGElement> {
@@ -1064,7 +1063,8 @@ async function fetchComplexSvg(
     );
   }
 
-  return complexSvgCache[key];
+  const loadedSvg = await complexSvgCache[key];
+  return loadedSvg.cloneNode(true);
 }
 
 // #endregion
@@ -2119,13 +2119,13 @@ function fret({ tincture }: SimpleCharge) {
 }
 
 async function escallop({ tincture }: SimpleCharge) {
-  const escallop = (await fetchComplexSvg("escallop")).cloneNode(true);
+  const escallop = await fetchMutableComplexSvg("escallop");
   escallop.classList.add(tincture);
   return escallop;
 }
 
 async function fleurDeLys({ tincture }: SimpleCharge) {
-  const fleurDeLys = (await fetchComplexSvg("fleur-de-lys")).cloneNode(true);
+  const fleurDeLys = await fetchMutableComplexSvg("fleur-de-lys");
   fleurDeLys.classList.add(tincture);
   return fleurDeLys;
 }
@@ -2146,7 +2146,7 @@ async function lion({
   attitude,
   placement,
 }: LionCharge) {
-  const lion = (await fetchComplexSvg("lion", attitude)).cloneNode(true);
+  const lion = await fetchMutableComplexSvg("lion", attitude);
   lion.classList.add(tincture);
   lion.classList.add(`armed-${armed}`);
   lion.classList.add(`langued-${langued}`);
@@ -2224,28 +2224,82 @@ async function nonOrdinaryCharge(
 // #region TINCTURES
 // ----------------------------------------------------------------------------
 
+// Hardcoded to match the specifics of this SVG. Calculated with largest/smallest-running-sum of the
+// path commands making up the pattern. Note that for doing that calculation, the `c` commands
+// should only use every third coordinate, as the first two of each triplet are control points.
+const ERMINE_WIDTH = 14.69366;
+const ERMINE_HEIGHT = 23.71317;
+
+async function getErmineTincture(
+  foreground: ColorOrMetal,
+  background: ColorOrMetal
+): Promise<SVGPatternElement> {
+  const ermine1 = await fetchMutableComplexSvg("ermine");
+  // n.b. will be inherited by the copy.
+  applyClasses(ermine1, { fill: foreground });
+
+  const ermine2 = ermine1.cloneNode(true);
+  Transforms.apply(ermine2, {
+    // Additional .5 is to add spacing between adjacent marks.
+    translate: [1.5 * ERMINE_WIDTH, 1.5 * ERMINE_HEIGHT],
+  });
+
+  const pattern = svg.pattern(
+    {
+      viewBox: [
+        // Additional .25 is to add spacing between adjacent marks.
+        [-0.25 * ERMINE_WIDTH, -0.25 * ERMINE_HEIGHT],
+        // Additional 1 is to compensate for .25 + .5 + .25 added for spacing in each dimension.
+        [3 * ERMINE_WIDTH, 3 * ERMINE_HEIGHT],
+      ],
+      x: -W_2,
+      y: -H_2,
+      // 4 arbitrarily chosen to look nice; .5 so that we use half a tile (each of which has two
+      // ermines in it) so the unit of tiling isn't obvious and asymmetrical.
+      width: W / 4.5,
+      height: (W / 4.5) * (ERMINE_HEIGHT / ERMINE_WIDTH),
+    },
+    svg.rect(
+      [-0.25 * ERMINE_WIDTH, -0.25 * ERMINE_HEIGHT],
+      // rect takes x2/y2 not w/h, so inline the math (3 * W - 0.25 * W; same for H)
+      [2.75 * ERMINE_WIDTH, 2.75 * ERMINE_HEIGHT],
+      { classes: { fill: background } }
+    ),
+    ermine1,
+    ermine2
+  );
+  pattern.id = uniqueId("pattern-ermine");
+  return pattern;
+}
+
 async function resolveTincture(
   tincture: Tincture
-): Promise<
-  [TinctureClass, undefined, undefined] | [TinctureClass, TinctureClass, string]
-> {
+): Promise<[ColorOrMetal, undefined] | [SvgUrlReference, SVGPatternElement]> {
   // It has to be rewritten based on the context it's defined in before we attempt to resolve it.
   assert(
     tincture != "counterchanged",
     "cannot resolve a counterchanged tincture"
   );
 
+  async function getErmineBasedPattern(
+    foreground: ColorOrMetal,
+    background: ColorOrMetal
+  ): Promise<[SvgUrlReference, SVGPatternElement]> {
+    const pattern = await getErmineTincture(foreground, background);
+    return [`url(#${pattern.id})`, pattern];
+  }
+
   switch (tincture) {
     case "ermine":
-      return ["sable", "argent", ERMINE_PATTERN_ID];
+      return getErmineBasedPattern("sable", "argent");
     case "ermines":
-      return ["argent", "sable", ERMINE_PATTERN_ID];
+      return getErmineBasedPattern("argent", "sable");
     case "erminois":
-      return ["sable", "or", ERMINE_PATTERN_ID];
+      return getErmineBasedPattern("sable", "or");
     case "pean":
-      return ["or", "sable", ERMINE_PATTERN_ID];
+      return getErmineBasedPattern("or", "sable");
     default:
-      return [tincture, undefined, undefined];
+      return [tincture, undefined];
   }
 }
 
@@ -2781,96 +2835,23 @@ const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
 
 // #endregion
 
-// #region CONSTANTS
-// ----------------------------------------------------------------------------
-
-// Hardcoded to match the specifics of this SVG. Calculated with largest/smallest-running-sum of the
-// path commands making up the pattern. Note that for doing that calculation, the `c` commands
-// should only use every third coordinate, as the first two of each triplet are control points.
-const ERMINE_WIDTH = 14.69366;
-const ERMINE_HEIGHT = 23.71317;
-const ERMINE_MASK_ID = uniqueId("constant-ermine");
-
-async function getErmineGlobals(): Promise<SVGElement[]> {
-  const ermine1 = (await fetchComplexSvg("ermine")).cloneNode(true);
-  const ermine2 = ermine1.cloneNode(true);
-  Transforms.apply(ermine2, {
-    // Additional .5 is to add spacing between adjacent marks.
-    translate: [1.5 * ERMINE_WIDTH, 1.5 * ERMINE_HEIGHT],
-  });
-  const pattern = svg.pattern(
-    {
-      viewBox: [
-        // Additional .25 is to add spacing between adjacent marks.
-        [-0.25 * ERMINE_WIDTH, -0.25 * ERMINE_HEIGHT],
-        // Additional 1 is to compensate for .25 + .5 + .25 added for spacing in each dimension.
-        [3 * ERMINE_WIDTH, 3 * ERMINE_HEIGHT],
-      ],
-      x: -W_2,
-      y: -H_2,
-      // 4 arbitrarily chosen to look nice; .5 so that we use half a tile (each of which has two
-      // ermines in it) so the unit of tiling isn't obvious and asymmetrical.
-      width: W / 4.5,
-      // We have to scale the pattern repeat number by the width/height ratio, otherwise it ends
-      // up tiling irregularly which exposes gaps between rows/columns of the pattern.
-      height: H / (4.5 * (W / H)),
-    },
-    ermine1,
-    ermine2
-  );
-  pattern.id = `${ERMINE_MASK_ID}-pattern`;
-  const mask = svg.mask(
-    { id: ERMINE_MASK_ID },
-    svg.rect([-W_2, -H_2], [W_2, H_2], {
-      fill: `url(#${pattern.id})`,
-    })
-  );
-  return [pattern, mask];
-}
-
-// #endregion
-
 // #region HIGHER-ORDER ELEMENTS
 // ----------------------------------------------------------------------------
 
+// Expand the height so that when this is rendered on the extra-tall quarter segments it still fills.
+const FIELD_RECT: [Coordinate, Coordinate] = [
+  [-W_2, -H_2],
+  [W_2, H_2 + 2 * (H_2 - W_2)],
+];
+
 async function field(tincture: Tincture) {
-  const [foreground, background, pattern] = await resolveTincture(tincture);
+  const [svgTincture, pattern] = await resolveTincture(tincture);
 
   if (pattern != null) {
-    // TODO: the patterns and the masks that underpin the furs can be singletons, I think, which
-    // will make using them significantly easier. Two questions:
-    // - multiple blazons are rendered on the page -- are IDs and #-references scoped per-SVG? can we use a global constant ID?
-    // - what of rotated versions of the patterns, like "a bend ermine"? should we rotate the pattern
-    //   or redefine the ordinary to be draw using rotation? (probably the latter, but things get weird
-    //   with things like chevrons)
-    //   - does this mean all of these will have two branches in the rendering -- one for coloring
-    //     the rendered shapes directly, and another for putting them in a mask and attaching a pattern?
-    //     that might be a DRYable pattern
-    const mask = svg.mask(
-      { id: `${pattern.id}-mask` },
-      svg.rect([-W_2, -H_2], [W_2, H_2], {
-        fill: `url(#${pattern.id})`,
-      })
-    );
-    const foregroundRect = svg.rect(
-      [-W_2, -H_2],
-      [W_2, H_2 + 2 * (H_2 - W_2)],
-      { classes: { fill: foreground } }
-    );
-    foregroundRect.setAttribute("mask", `url(#${mask.id})`);
-    return svg.g(
-      pattern,
-      mask,
-      svg.rect([-W_2, -H_2], [W_2, H_2 + 2 * (H_2 - W_2)], {
-        classes: { fill: background },
-      }),
-      foregroundRect
-    );
+    // TODO: The difference between fill and classes.fill is an anti-pattern; how to fix?
+    return svg.g(pattern, svg.rect(...FIELD_RECT, { fill: svgTincture }));
   } else {
-    // Expand the height so that when this is rendered on the extra-tall quarter segments it still fills.
-    return svg.rect([-W_2, -H_2], [W_2, H_2 + 2 * (H_2 - W_2)], {
-      classes: { fill: foreground },
-    });
+    return svg.rect(...FIELD_RECT, { classes: { fill: svgTincture } });
   }
 }
 
@@ -3310,8 +3291,6 @@ async function parseAndRenderBlazon(initialAmbiguousIndex: number = 0) {
       ESCUTCHEON_PATH
     )}") view-box`;
     rendered.appendChild(container);
-    // Globals.
-    rendered.appendChild(await getErmineGlobals());
     // Make sure there's always a default background.
     container.appendChild(await field("argent"));
 
