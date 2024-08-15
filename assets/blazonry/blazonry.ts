@@ -863,7 +863,7 @@ function applySvgAttributes(
 
 function applyClasses(
   element: SVGElement,
-  classes?: { fill?: ColorOrMetal; stroke?: ColorOrMetal }
+  classes: { fill?: ColorOrMetal; stroke?: ColorOrMetal } | undefined
 ): void {
   if (classes?.fill != null) {
     element.classList.add(ColorOrMetal.toFill(classes.fill));
@@ -873,7 +873,7 @@ function applyClasses(
   }
 }
 
-function safelyAppend(
+function safelyAppendChild(
   element: SVGElement,
   child: SVGElement | undefined
 ): void {
@@ -1091,7 +1091,7 @@ async function bend({ tincture, cotised, treatment }: Ordinary) {
 
   if (treatment != null) {
     const [resolvedTincture, pattern] = await resolveTincture(tincture, "fill");
-    safelyAppend(bend, pattern);
+    safelyAppendChild(bend, pattern);
     bend.appendChild(
       svg.path(
         relativePathsToClosedLoop(
@@ -1110,7 +1110,7 @@ async function bend({ tincture, cotised, treatment }: Ordinary) {
       tincture,
       "stroke"
     );
-    safelyAppend(bend, pattern);
+    safelyAppendChild(bend, pattern);
     bend.appendChild(
       svg.line([0, 0], [BEND_LENGTH, 0], {
         strokeWidth: BEND_WIDTH,
@@ -1201,8 +1201,8 @@ bend.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
   }
 };
 
-function bendSinister(ordinary: Ordinary) {
-  const g = svg.g(bend(ordinary));
+async function bendSinister(ordinary: Ordinary) {
+  const g = svg.g(await bend(ordinary));
   Transforms.apply(g, {
     scale: [-1, 1],
   });
@@ -2914,7 +2914,7 @@ const CANTON_PATH: PathCommand.Any[] = [
   { type: "z" },
 ];
 
-async function simpleContent(element: Charge): Promise<SVGElement[]> {
+async function charge(element: Charge): Promise<SVGElement[]> {
   if ("canton" in element) {
     const g = svg.g();
     Transforms.apply(g, { origin: [-W_2, -H_2], scale: CANTON_SCALE_FACTOR });
@@ -2922,7 +2922,7 @@ async function simpleContent(element: Charge): Promise<SVGElement[]> {
     g.appendChild(svg.path(CANTON_PATH, { classes: { fill: element.canton } }));
     g.classList.add(`fill-${element.canton}`);
     for (const c of element.charges ?? []) {
-      g.append(...(await simpleContent(c)));
+      g.append(...(await charge(c)));
     }
     return [g];
   } else if ("on" in element) {
@@ -3052,14 +3052,14 @@ async function escutcheonContent(
           overwriteCounterchangedTincture(c, content.second)
         );
         for (const c of counterchangedSecond) {
-          g1.append(...(await simpleContent(c)));
+          g1.append(...(await charge(c)));
         }
         for (const c of counterchangedFirst) {
-          g2.append(...(await simpleContent(c)));
+          g2.append(...(await charge(c)));
         }
       } else {
         for (const c of content.charges) {
-          children.push(...(await simpleContent(c)));
+          children.push(...(await charge(c)));
         }
       }
     }
@@ -3114,7 +3114,7 @@ async function escutcheonContent(
     children.push(line);
 
     if (content.overall) {
-      children.push(...(await simpleContent(content.overall)));
+      children.push(...(await charge(content.overall)));
     }
 
     return children;
@@ -3148,14 +3148,14 @@ async function escutcheonContent(
           overwriteCounterchangedTincture(c, content.second)
         );
         for (const c of counterchangedSecond) {
-          g1.append(...(await simpleContent(c)));
+          g1.append(...(await charge(c)));
         }
         for (const c of counterchangedFirst) {
-          g2.append(...(await simpleContent(c)));
+          g2.append(...(await charge(c)));
         }
       } else {
         for (const c of content.charges) {
-          children.push(...(await simpleContent(c)));
+          children.push(...(await charge(c)));
         }
       }
     }
@@ -3163,7 +3163,7 @@ async function escutcheonContent(
   } else {
     const children: SVGElement[] = [await field(content.tincture)];
     for (const c of content.charges ?? []) {
-      children.push(...(await simpleContent(c)));
+      children.push(...(await charge(c)));
     }
     return children;
   }
