@@ -597,7 +597,9 @@ async function fetchComplexSvg(kind, variant) {
             const root = new DOMParser().parseFromString(await response.text(), "image/svg+xml").documentElement;
             const wrapper = svg.g();
             wrapper.classList.add(kind);
-            for (const c of root.children) {
+            // Shallow copy: appendChild also deletes it from the source node, so this is modifying the
+            // collection as we iterate it.
+            for (const c of [...root.children]) {
                 wrapper.appendChild(c);
             }
             return wrapper;
