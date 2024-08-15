@@ -151,7 +151,6 @@ a[data-example]:not(:hover) {
 }
 
 .lion {
-  fill: none;
   stroke-width: 1 !important;
 
   .outline {
@@ -172,6 +171,8 @@ a[data-example]:not(:hover) {
 
   @each $key, $val in $colors {
     &.#{"" + $key} {
+      fill: none;
+
       .body,
       .claw,
       .langue {
@@ -192,8 +193,6 @@ a[data-example]:not(:hover) {
 }
 
 .escallop {
-  fill: none;
-
   .outline {
     stroke: black;
     stroke-opacity: 0.3;
@@ -202,6 +201,8 @@ a[data-example]:not(:hover) {
 
   @each $key, $val in $colors {
     &.#{"" + $key} {
+      fill: none;
+
       .light {
         fill: $val;
       }
@@ -214,8 +215,6 @@ a[data-example]:not(:hover) {
 }
 
 .fleur-de-lys {
-  fill: none;
-
   .outline {
     stroke: black;
     stroke-opacity: 0.3;
@@ -224,6 +223,8 @@ a[data-example]:not(:hover) {
 
   @each $key, $val in $colors {
     &.#{"" + $key} {
+      fill: none;
+
       .main {
         fill: $val;
       }

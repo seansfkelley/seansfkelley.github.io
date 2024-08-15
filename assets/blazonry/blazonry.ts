@@ -36,6 +36,7 @@ FUTURE WORK and KNOWN ISSUES
   or does it become invisible because it matches the canton's counterchanging?
 - Specialized charges that imply tinctures (or other attributes) like "bezant" (meaning "rondel or")
   are not supported.
+- Furs are misaligned for SVG-based charges like escallop.
 - Embattled(-counter-embattled) treatments can leave visual artifacts due to a bit of a hack... try:
   - argent a chevron embattled sable
   - argent a cross embattled-counter-embattled sable
@@ -1053,11 +1054,11 @@ const svg = {
   },
 };
 
-const complexSvgCache: Record<string, Promise<SVGElement>> = {};
+const complexSvgCache: Record<string, Promise<SVGGElement>> = {};
 async function fetchMutableComplexSvg(
   kind: string,
   variant?: string
-): Promise<SVGElement> {
+): Promise<SVGGElement> {
   const key = variant ? `${kind}-${variant}` : kind;
   if (!(key in complexSvgCache)) {
     complexSvgCache[key] = fetch(`/assets/blazonry/svg/${key}.svg`).then(
@@ -2186,13 +2187,23 @@ async function fret({ tincture }: SimpleCharge) {
 
 async function escallop({ tincture }: SimpleCharge) {
   const escallop = await fetchMutableComplexSvg("escallop");
-  escallop.classList.add(tincture);
+  const resolvedTincture = await resolveTincture(tincture, "fill", escallop);
+  if ("classes" in resolvedTincture) {
+    applyClasses(escallop, resolvedTincture.classes);
+  } else {
+    applySvgAttributes(escallop, resolvedTincture);
+  }
   return escallop;
 }
 
 async function fleurDeLys({ tincture }: SimpleCharge) {
   const fleurDeLys = await fetchMutableComplexSvg("fleur-de-lys");
-  fleurDeLys.classList.add(tincture);
+  const resolvedTincture = await resolveTincture(tincture, "fill", fleurDeLys);
+  if ("classes" in resolvedTincture) {
+    applyClasses(fleurDeLys, resolvedTincture.classes);
+  } else {
+    applySvgAttributes(fleurDeLys, resolvedTincture);
+  }
   return fleurDeLys;
 }
 
@@ -2213,9 +2224,16 @@ async function lion({
   placement,
 }: LionCharge) {
   const lion = await fetchMutableComplexSvg("lion", attitude);
-  lion.classList.add(tincture);
-  lion.classList.add(`armed-${armed}`);
-  lion.classList.add(`langued-${langued}`);
+  const resolvedTincture = await resolveTincture(tincture, "fill", lion);
+  if ("classes" in resolvedTincture) {
+    applyClasses(lion, resolvedTincture.classes);
+    lion.classList.add(`armed-${armed}`);
+    lion.classList.add(`langued-${langued}`);
+  } else {
+    applySvgAttributes(lion, resolvedTincture);
+    // TODO: This doesn't support armed/langued for furs. Which is... okay?
+  }
+
   if (placement === "pale" && HORIZONTALLY_STRETCHED_ATTITUDES.has(attitude)) {
     // This is a bit of a hack! But it makes the Bavarian arms look a little less stupid overall.
     // Really, the passant variants should be naturally wider, as that is how they are typically shown.
@@ -2341,6 +2359,16 @@ async function getErmineTincture(
 // Not a huge fan of this signature but without the out parameter, it becomes really tedious to
 // branch and null check before adding a reference to the pattern. Upside: this inteface encourages
 // the use of <g> for every colorable element, which is probably a good idea...?
+async function resolveTincture(
+  tincture: Tincture,
+  which: "fill",
+  container: SVGGElement
+): Promise<{ fill: SvgColor } | { classes: { fill: ColorOrMetal } }>;
+async function resolveTincture(
+  tincture: Tincture,
+  which: "stroke",
+  container: SVGGElement
+): Promise<{ stroke: SvgColor } | { classes: { stroke: ColorOrMetal } }>;
 async function resolveTincture(
   tincture: Tincture,
   which: "fill" | "stroke",
@@ -2976,7 +3004,6 @@ async function charge(element: Charge): Promise<SVGElement[]> {
     Transforms.apply(g, { origin: [-W_2, -H_2], scale: CANTON_SCALE_FACTOR });
     g.style.clipPath = `path("${PathCommand.toDString(CANTON_PATH)}") view-box`;
     g.appendChild(svg.path(CANTON_PATH, resolvedTincture));
-    g.classList.add(`fill-${element.canton}`);
     for (const c of element.charges ?? []) {
       g.append(...(await charge(c)));
     }
