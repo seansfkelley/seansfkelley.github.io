@@ -376,6 +376,7 @@ const Coordinate = {
     coordinates.reduce(([x1, y1], [x2, y2]) => [x1 + x2, y1 + y2]),
   subtract: (...coordinates: Coordinate[]): Coordinate =>
     coordinates.reduce(([x1, y1], [x2, y2]) => [x1 - x2, y1 - y2]),
+  negate: ([x, y]: Coordinate): Coordinate => [-x, -y],
   length: ([x1, y1]: Coordinate, [x2, y2]: Coordinate): number =>
     Math.hypot(x2 - x1, y2 - y1),
   /**
@@ -1306,32 +1307,79 @@ async function chevron({ tincture, cotised, treatment }: Ordinary) {
   const topLength = Coordinate.length(mid, right) + CHEVRON_WIDTH / 2;
   const bottomLength = Coordinate.length(mid, right) - CHEVRON_WIDTH / 2;
 
-  const treatments = [
-    TREATMENTS[treatment ?? "untreated"](topLength, false, "primary", "start"),
-    RelativeTreatmentPath.line([0, CHEVRON_WIDTH]),
-    TREATMENTS[treatment ?? "untreated"](
-      -bottomLength,
-      false,
-      "secondary",
-      "start"
-    ),
-    TREATMENTS[treatment ?? "untreated"](
-      -bottomLength,
-      false,
-      "secondary",
-      "end"
-    ),
-    RelativeTreatmentPath.line([-CHEVRON_WIDTH, 0]),
-    TREATMENTS[treatment ?? "untreated"](topLength, false, "primary", "end"),
-  ];
+  const topLeft = TREATMENTS[treatment ?? "untreated"](
+    topLength,
+    false,
+    "primary",
+    "end"
+  );
+  RelativeTreatmentPath.rotate(topLeft, Radians.NEG_QUARTER_TURN);
+  const topRight = TREATMENTS[treatment ?? "untreated"](
+    topLength,
+    false,
+    "primary",
+    "start"
+  );
+  const bottomLeft = TREATMENTS[treatment ?? "untreated"](
+    -bottomLength,
+    true,
+    "secondary",
+    "start"
+  );
+  RelativeTreatmentPath.rotate(bottomLeft, Radians.NEG_QUARTER_TURN);
+  const bottomRight = TREATMENTS[treatment ?? "untreated"](
+    -bottomLength,
+    true,
+    "secondary",
+    "end"
+  );
 
-  for (const index of [3, 5]) {
-    RelativeTreatmentPath.rotate(treatments[index], Radians.NEG_QUARTER_TURN);
-  }
+  const treatments = [
+    topRight,
+    RelativeTreatmentPath.line([0, CHEVRON_WIDTH]),
+    bottomRight,
+    bottomLeft,
+    RelativeTreatmentPath.line([-CHEVRON_WIDTH, 0]),
+    topLeft,
+  ];
 
   for (const t of treatments) {
     RelativeTreatmentPath.rotate(t, Radians.EIGHTH_TURN);
   }
+
+  // n.b. this depends on `topLeft`, etc., being a shared reference to the same values in `treatments`.
+  {
+    const [start, , end] = topRight;
+    const originalStart: Coordinate = [...start.loc];
+    start.loc = [
+      0,
+      Math.sign(start.loc[1]) * Math.sqrt(2 * start.loc[1] * start.loc[1]),
+    ];
+    end.loc = Coordinate.add(
+      end.loc,
+      originalStart,
+      Coordinate.negate(start.loc)
+    );
+  }
+
+  {
+    const [start, , end] = topLeft;
+    const originalEnd: Coordinate = [...end.loc];
+    end.loc = [
+      0,
+      Math.sign(end.loc[1]) * Math.sqrt(2 * end.loc[1] * end.loc[1]),
+    ];
+    start.loc = Coordinate.add(
+      start.loc,
+      originalEnd,
+      Coordinate.negate(end.loc)
+    );
+  }
+
+  // We don't adjust the endpoints of the bottom edges because due to the vagaries of the way that
+  // treatments are rendered, they actually look fine where they meet at the lower/inner corner.
+  // Embattled-counter-embattled isn't great, but it would look even worse if we tightened it up
+  // like we do to the top side.
 
   chevron.appendChild(
     svg.path(
