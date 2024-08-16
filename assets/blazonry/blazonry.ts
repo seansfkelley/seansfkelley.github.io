@@ -1778,8 +1778,6 @@ async function saltire({ tincture, cotised, treatment }: Ordinary) {
 
   const saltire = svg.g();
 
-  const g = svg.g();
-
   const length = Math.hypot(W_2, W_2);
 
   const treatments = [
@@ -1801,24 +1799,22 @@ async function saltire({ tincture, cotised, treatment }: Ordinary) {
     RelativeTreatmentPath.rotate(treatments[index], -Math.PI / 2);
   }
 
-  const saltirePath = svg.path(
-    relativePathsToClosedLoop(
-      RelativeTreatmentPath.offset([
-        -(length + SALTIRE_WIDTH / 2),
-        -H_2 - SALTIRE_WIDTH / 2 + W_2,
-      ]),
-      ...treatments
-    ),
-    await resolveTincture(tincture, "fill", saltire)
+  for (const t of treatments) {
+    RelativeTreatmentPath.rotate(t, Radians.NEG_EIGHTH_TURN);
+  }
+
+  saltire.appendChild(
+    svg.path(
+      relativePathsToClosedLoop(
+        RelativeTreatmentPath.offset([
+          -W_2 - Math.sqrt((SALTIRE_WIDTH * SALTIRE_WIDTH) / 2),
+          W_2 - (H_2 - W_2),
+        ]),
+        ...treatments
+      ),
+      await resolveTincture(tincture, "fill", saltire)
+    )
   );
-
-  Transforms.apply(g, {
-    rotate: Radians.NEG_EIGHTH_TURN,
-    origin: [0, -H_2 + W_2],
-  });
-
-  g.appendChild(saltirePath);
-  saltire.appendChild(g);
 
   if (cotised != null) {
     // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
@@ -2425,6 +2421,8 @@ function relativePathFor(
 function relativePathsToClosedLoop(
   ...paths: RelativeTreatmentPath[]
 ): PathCommand.Relative[] {
+  assert(paths.length > 0, "must have at least one path to render");
+
   const commands: PathCommand.Relative[] = [
     paths[0][0],
     ...paths[0][1],
@@ -2444,14 +2442,18 @@ function relativePathsToClosedLoop(
   }
   commands.pop();
   commands.push({ type: "z" });
-  return commands.filter(
-    // Remove no-op commands just so that the SVG is easier to read and debug.
-    (c) =>
-      !(
-        (c.type === "l" && c.loc[0] === 0 && c.loc[1] === 0) ||
-        (c.type === "m" && c.loc[0] === 0 && c.loc[1] === 0)
-      )
-  );
+  return [
+    // Always include the first move, which is necessary to make the path valid.
+    commands[0],
+    ...commands.slice(1).filter(
+      // Remove no-op commands just so that the SVG is easier to read and debug.
+      (c) =>
+        !(
+          (c.type === "l" && c.loc[0] === 0 && c.loc[1] === 0) ||
+          (c.type === "m" && c.loc[0] === 0 && c.loc[1] === 0)
+        )
+    ),
+  ];
 }
 
 relativePathsToClosedLoop.debug = (
