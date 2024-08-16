@@ -983,9 +983,9 @@ const svg = {
     applyClasses(rect, classes);
     return rect;
   },
-  g: (...children: (SVGElement | undefined)[]): SVGGElement => {
+  g: (...children: SVGElement[]): SVGGElement => {
     const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    g.append(...children.filter((c) => c != null));
+    g.append(...children);
     return g;
   },
   pattern: (
@@ -1311,15 +1311,15 @@ async function chevron({ tincture, cotised, treatment }: Ordinary) {
     RelativeTreatmentPath.line([0, CHEVRON_WIDTH]),
     TREATMENTS[treatment ?? "untreated"](
       -bottomLength,
-      true,
+      false,
       "secondary",
-      "end"
+      "start"
     ),
     TREATMENTS[treatment ?? "untreated"](
       -bottomLength,
-      true,
+      false,
       "secondary",
-      "start"
+      "end"
     ),
     RelativeTreatmentPath.line([-CHEVRON_WIDTH, 0]),
     TREATMENTS[treatment ?? "untreated"](topLength, false, "primary", "end"),
@@ -1481,13 +1481,13 @@ async function cross({ tincture, cotised, treatment }: Ordinary) {
     // Starting on the bottom right, moving around counter-clockwise.
     TREATMENTS[treatment ?? "untreated"](-vLength, false, "secondary", "end"),
     TREATMENTS[treatment ?? "untreated"](hLength, true, "secondary", "start"),
-    straightLineTreatment(-CROSS_WIDTH),
+    RelativeTreatmentPath.line([-CROSS_WIDTH, 0]),
     TREATMENTS[treatment ?? "untreated"](-hLength, false, "primary", "end"),
     TREATMENTS[treatment ?? "untreated"](-vLength, false, "secondary", "start"),
-    straightLineTreatment(-CROSS_WIDTH),
+    RelativeTreatmentPath.line([-CROSS_WIDTH, 0]),
     TREATMENTS[treatment ?? "untreated"](vLength, true, "secondary", "end"),
     TREATMENTS[treatment ?? "untreated"](-hLength, false, "primary", "start"),
-    straightLineTreatment(CROSS_WIDTH),
+    RelativeTreatmentPath.line([CROSS_WIDTH, 0]),
     TREATMENTS[treatment ?? "untreated"](hLength, true, "secondary", "end"),
     TREATMENTS[treatment ?? "untreated"](vLength, true, "secondary", "start"),
   ];
@@ -1795,13 +1795,13 @@ async function saltire({ tincture, cotised, treatment }: Ordinary) {
     // Starting on the bottom left moving around clockwise.
     TREATMENTS[treatment ?? "untreated"](length, false, "primary", "end"),
     TREATMENTS[treatment ?? "untreated"](length, false, "secondary", "start"),
-    straightLineTreatment(SALTIRE_WIDTH),
+    RelativeTreatmentPath.line([SALTIRE_WIDTH, 0]),
     TREATMENTS[treatment ?? "untreated"](-length, true, "primary", "end"),
     TREATMENTS[treatment ?? "untreated"](length, false, "primary", "start"),
-    straightLineTreatment(-SALTIRE_WIDTH),
+    RelativeTreatmentPath.line([-SALTIRE_WIDTH, 0]),
     TREATMENTS[treatment ?? "untreated"](-length, true, "secondary", "end"),
     TREATMENTS[treatment ?? "untreated"](-length, true, "primary", "start"),
-    straightLineTreatment(-SALTIRE_WIDTH),
+    RelativeTreatmentPath.line([-SALTIRE_WIDTH, 0]),
     TREATMENTS[treatment ?? "untreated"](length, false, "secondary", "end"),
     TREATMENTS[treatment ?? "untreated"](-length, true, "secondary", "start"),
   ];
@@ -2384,7 +2384,7 @@ function wrapSimpleTreatment(
   return (xLength, invertY, side, alignment = "start") => {
     const chosenTreatment =
       side !== "primary" && onlyRenderPrimary
-        ? straightLineTreatment
+        ? (length: number) => RelativeTreatmentPath.line([length, 0])
         : treatment;
 
     const invertX = xLength < 0;
@@ -2460,14 +2460,6 @@ relativePathsToClosedLoop.debug = (
 ): PathCommand.Relative[] => {
   return paths.flat(2).map((c) => (c.type === "m" ? { ...c, type: "l" } : c));
 };
-
-function straightLineTreatment(length: number): RelativeTreatmentPath {
-  return [
-    { type: "m", loc: [0, 0] },
-    [{ type: "l", loc: [length, 0] }],
-    { type: "m", loc: [0, 0] },
-  ];
-}
 
 function embattled(length: number): RelativeTreatmentPath {
   const xStep = W / 12;
@@ -2584,7 +2576,7 @@ const TREATMENTS: Record<Treatment | "untreated", TreatmentPathGenerator> = {
   engrailed: wrapSimpleTreatment(engrailed, false, false),
   indented: wrapSimpleTreatment(indented, true, false),
   wavy: wrapSimpleTreatment(wavy, true, false),
-  untreated: straightLineTreatment,
+  untreated: (length: number) => RelativeTreatmentPath.line([length, 0]),
 };
 
 // #endregion
