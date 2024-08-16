@@ -3490,33 +3490,41 @@ form.addEventListener("submit", async (e) => {
   await parseAndRenderBlazon();
 });
 
-// The probability of keeping any given tincture if it's randomly selected. I don't know enough
-// about statistics to know if this is 100% correct, but assuming a uniform distribution of the
-// candidates, I think this has the desired effect?
-const TINCTURE_PROBABILITIES: Record<Tincture, number> = {
+// These must be integers since the implementation uses a multiset to realize the different values.
+const TINCTURE_WEIGHTS: Record<Tincture, number> = {
   // Common colors.
-  argent: 0.8,
-  azure: 0.8,
-  gules: 0.8,
-  or: 0.8,
-  sable: 0.8,
+  argent: 8,
+  azure: 8,
+  gules: 8,
+  or: 8,
+  sable: 8,
 
   // Uncommon colors.
-  vert: 0.4,
-  purpure: 0.1,
+  vert: 4,
+  purpure: 1,
 
   // Furs.
-  ermine: 0.2,
-  ermines: 0.1,
-  erminois: 0.1,
-  pean: 0.1,
+  ermine: 2,
+  ermines: 1,
+  erminois: 1,
+  pean: 1,
 
   // It's REALLY hard to generate a random blazon where counterchanged makes sense, since the
   // grammar does not express a relationship between the context ("party per") and the tincture.
   // Just ban it to reduce nonsense blazons by a lot.
   counterchanged: 0,
 };
-const TINCTURES = Object.keys(TINCTURE_PROBABILITIES) as Tincture[];
+
+const WEIGHTED_TINCTURE_ARRAY = Object.entries(TINCTURE_WEIGHTS).reduce<
+  Tincture[]
+>((prev, [tincture, weight]) => [...prev, ...Array(weight).fill(tincture)], []);
+function randomTincture(): Tincture {
+  return WEIGHTED_TINCTURE_ARRAY[
+    Math.floor(Math.random() * WEIGHTED_TINCTURE_ARRAY.length)
+  ];
+}
+
+const TINCTURES = Object.keys(TINCTURE_WEIGHTS) as Tincture[];
 const TINCTURE_REGEX = new RegExp(`\\b(${TINCTURES.join("|")})\\b`, "g");
 const TINCTURE_PAIR_REGEX = new RegExp(
   `\\b(${TINCTURES.join("|")}) and (${TINCTURES.join("|")})\\b`,
@@ -3525,14 +3533,6 @@ const TINCTURE_PAIR_REGEX = new RegExp(
 const TINCTURE_ONLY_SKIP_RATIO = 0.8;
 const INESCUTCHEON_SKIP_RATIO = 0.6;
 function generateRandomBlazon() {
-  function randomTincture(): Tincture {
-    let tincture;
-    do {
-      tincture = TINCTURES[Math.floor(Math.random() * TINCTURES.length)];
-    } while (Math.random() >= TINCTURE_PROBABILITIES[tincture]);
-    return tincture;
-  }
-
   function generate() {
     return (
       // 16 chosen empirally. It gets lions, where 12 does not. It produces some kinda bizarre and
