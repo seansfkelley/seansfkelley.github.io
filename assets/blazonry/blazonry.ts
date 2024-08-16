@@ -1102,20 +1102,29 @@ const BEND_LENGTH = Math.hypot(W, W) + BEND_WIDTH / 2;
 async function bend({ tincture, cotised, treatment }: Ordinary) {
   const bend = svg.g();
 
+  const treatments = [
+    relativePathFor([0, -BEND_WIDTH / 2], undefined, undefined),
+    TREATMENTS[treatment ?? "untreated"](BEND_LENGTH, false, "primary"),
+    relativePathFor(undefined, [0, BEND_WIDTH], undefined),
+    // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
+    // we traverse around the bend clockwise.
+    TREATMENTS[treatment ?? "untreated"](
+      -BEND_LENGTH,
+      true,
+      "secondary",
+      "end"
+    ),
+  ];
+
+  for (const t of treatments) {
+    RelativeTreatmentPath.rotate(t, Radians.EIGHTH_TURN);
+  }
+
   bend.appendChild(
     svg.path(
       relativePathsToClosedLoop(
-        relativePathFor([0, -BEND_WIDTH / 2], undefined, undefined),
-        TREATMENTS[treatment ?? "untreated"](BEND_LENGTH, false, "primary"),
-        relativePathFor(undefined, [0, BEND_WIDTH], undefined),
-        // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
-        // we traverse around the bend clockwise.
-        TREATMENTS[treatment ?? "untreated"](
-          -BEND_LENGTH,
-          true,
-          "secondary",
-          "end"
-        )
+        RelativeTreatmentPath.offset([-W_2, -H_2]),
+        ...treatments
       ),
       await resolveTincture(tincture, "fill", bend)
     )
@@ -1124,27 +1133,34 @@ async function bend({ tincture, cotised, treatment }: Ordinary) {
   if (cotised != null) {
     const resolvedTincture = await resolveTincture(cotised, "stroke", bend);
 
-    const offset = BEND_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
+    // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
+    // I don't understand why this isn't COTISED_WIDTH * 1.5; don't we need to center the draw line
+    // in the width of the stroke? It seems to work correctly like this though.
+    const offset = (Math.sin(Math.PI / 4) * BEND_WIDTH) / 2 + COTISED_WIDTH;
+
     bend.appendChild(
-      svg.line([0, -offset], [BEND_LENGTH, -offset], {
-        strokeWidth: COTISED_WIDTH,
-        ...resolvedTincture,
-      })
+      svg.line(
+        [-W_2 + offset, -H_2 - offset],
+        [H - W_2 + offset, H_2 - offset],
+        {
+          strokeWidth: COTISED_WIDTH,
+          ...resolvedTincture,
+        }
+      )
     );
     bend.appendChild(
-      svg.line([0, offset], [BEND_LENGTH, offset], {
-        strokeWidth: COTISED_WIDTH,
-        ...resolvedTincture,
-      })
+      svg.line(
+        [-W_2 - offset, -H_2 + offset],
+        [H - W_2 - offset, H_2 + offset],
+        {
+          strokeWidth: COTISED_WIDTH,
+          ...resolvedTincture,
+        }
+      )
     );
   }
 
-  Transforms.apply(bend, {
-    translate: [-W_2, -H_2],
-    rotate: Radians.EIGHTH_TURN,
-  });
-
-  return svg.g(bend);
+  return bend;
 }
 
 bend.on = new LineSegmentLocator(
