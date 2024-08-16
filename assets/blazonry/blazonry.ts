@@ -337,6 +337,11 @@ const RelativeTreatmentPath = {
     [{ type: "m", loc: [0, 0] }],
     { type: "m", loc: [0, 0] },
   ],
+  line: (line: Coordinate): RelativeTreatmentPath => [
+    { type: "m", loc: [0, 0] },
+    [{ type: "l", loc: line }],
+    { type: "m", loc: [0, 0] },
+  ],
   rotate: (
     [start, main, end]: RelativeTreatmentPath,
     radians: number
@@ -1103,9 +1108,9 @@ async function bend({ tincture, cotised, treatment }: Ordinary) {
   const bend = svg.g();
 
   const treatments = [
-    relativePathFor([0, -BEND_WIDTH / 2], undefined, undefined),
+    RelativeTreatmentPath.offset([0, -BEND_WIDTH / 2]),
     TREATMENTS[treatment ?? "untreated"](BEND_LENGTH, false, "primary"),
-    relativePathFor(undefined, [0, BEND_WIDTH], undefined),
+    RelativeTreatmentPath.line([0, BEND_WIDTH]),
     // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
     // we traverse around the bend clockwise.
     TREATMENTS[treatment ?? "untreated"](
@@ -1300,52 +1305,46 @@ async function chevron({ tincture, cotised, treatment }: Ordinary) {
 
   const topLength = Coordinate.length(mid, right) + CHEVRON_WIDTH / 2;
   const bottomLength = Coordinate.length(mid, right) - CHEVRON_WIDTH / 2;
-  for (const sign of [-1, 1]) {
-    const [topStart, topMain, topEnd] = TREATMENTS[treatment ?? "untreated"](
-      topLength,
-      false,
-      "primary",
+
+  const treatments = [
+    TREATMENTS[treatment ?? "untreated"](topLength, false, "primary", "start"),
+    RelativeTreatmentPath.line([0, CHEVRON_WIDTH]),
+    TREATMENTS[treatment ?? "untreated"](
+      -bottomLength,
+      true,
+      "secondary",
+      "end"
+    ),
+    TREATMENTS[treatment ?? "untreated"](
+      -bottomLength,
+      true,
+      "secondary",
       "start"
-    );
-    const [bottomStart, bottomMain, bottomEnd] = TREATMENTS[
-      treatment ?? "untreated"
-    ](-bottomLength, true, "secondary", "end");
-    const p = svg.path(
-      [
-        { type: "m", loc: topStart.loc },
-        ...topMain,
-        {
-          type: "l",
-          loc: Coordinate.add(topEnd.loc, [0, CHEVRON_WIDTH], bottomStart.loc),
-        },
-        ...bottomMain,
-        {
-          type: "l",
-          // topStart appears here because we want to ensure that the line from the first point
-          // (which is topStart) to the last point is at pi/4 (ignoring the hack immediately
-          // below). We are guaranteed that it is pi/4 from 0, 0 to bottomEnd, but since we shift
-          // it by topStart we need to shift it here too.
-          loc: Coordinate.add(topStart.loc, bottomEnd.loc),
-        },
-        // HACK: juke out of the way a bit to overlap with the other side. Ensures that the very
-        // skinny point at the top of the chevron doesn't turn itself inside out and fill the
-        // wrong side when using e.g. engrailed.
-        { type: "l", loc: [-CHEVRON_WIDTH / 10, 0] },
-        { type: "z" },
-      ],
-      await resolveTincture(tincture, "fill", chevron)
-    );
-    Transforms.apply(p, {
-      origin: topStart.loc,
-      scale: [sign, 1],
-      rotate: Radians.EIGHTH_TURN,
-      translate: Coordinate.add(mid, [
-        0,
-        -Math.hypot(CHEVRON_WIDTH, CHEVRON_WIDTH) / 2,
-      ]),
-    });
-    chevron.append(p);
+    ),
+    RelativeTreatmentPath.line([-CHEVRON_WIDTH, 0]),
+    TREATMENTS[treatment ?? "untreated"](topLength, false, "primary", "end"),
+  ];
+
+  for (const index of [3, 5]) {
+    RelativeTreatmentPath.rotate(treatments[index], Radians.NEG_QUARTER_TURN);
   }
+
+  for (const t of treatments) {
+    RelativeTreatmentPath.rotate(t, Radians.EIGHTH_TURN);
+  }
+
+  chevron.appendChild(
+    svg.path(
+      relativePathsToClosedLoop(
+        RelativeTreatmentPath.offset([
+          0,
+          -Math.sqrt((CHEVRON_WIDTH * CHEVRON_WIDTH) / 2) - (H_2 - W_2),
+        ]),
+        ...treatments
+      ),
+      await resolveTincture(tincture, "fill", chevron)
+    )
+  );
 
   if (cotised != null) {
     // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
@@ -1475,8 +1474,6 @@ async function cross({ tincture, cotised, treatment }: Ordinary) {
 
   const cross = svg.g();
 
-  const g = svg.g();
-
   const hLength = W_2 - CROSS_WIDTH / 2;
   const vLength = H_2 - CROSS_WIDTH / 2 + CROSS_VERTICAL_OFFSET;
 
@@ -1499,7 +1496,7 @@ async function cross({ tincture, cotised, treatment }: Ordinary) {
     RelativeTreatmentPath.rotate(treatments[index], Math.PI / 2);
   }
 
-  g.appendChild(
+  cross.appendChild(
     svg.path(
       relativePathsToClosedLoop(
         // Offset the path itself rather than translating the entire cross so that fur patterns are
@@ -1507,11 +1504,9 @@ async function cross({ tincture, cotised, treatment }: Ordinary) {
         RelativeTreatmentPath.offset([CROSS_WIDTH / 2, H_2]),
         ...treatments
       ),
-      await resolveTincture(tincture, "fill", g)
+      await resolveTincture(tincture, "fill", cross)
     )
   );
-
-  cross.appendChild(g);
 
   if (cotised != null) {
     const resolvedTincture = await resolveTincture(cotised, "stroke", cross);
@@ -1709,7 +1704,7 @@ async function pale({ tincture, cotised, treatment }: Ordinary) {
       relativePathsToClosedLoop(
         RelativeTreatmentPath.offset([PALE_WIDTH / 2, -H_2]),
         right,
-        relativePathFor(undefined, [-PALE_WIDTH, 0], undefined),
+        RelativeTreatmentPath.line([-PALE_WIDTH, 0]),
         left
       ),
       await resolveTincture(tincture, "fill", pale)
@@ -2420,18 +2415,6 @@ function wrapSimpleTreatment(
       assertNever(alignment);
     }
   };
-}
-
-function relativePathFor(
-  start: Coordinate | undefined,
-  main: Coordinate | undefined,
-  end: Coordinate | undefined
-): RelativeTreatmentPath {
-  return [
-    { type: "m", loc: start ?? [0, 0] },
-    main ? [{ type: "l", loc: main }] : [],
-    { type: "m", loc: end ?? [0, 0] },
-  ];
 }
 
 function relativePathsToClosedLoop(
