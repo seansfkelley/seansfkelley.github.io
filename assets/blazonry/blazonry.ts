@@ -36,10 +36,12 @@ FUTURE WORK and KNOWN ISSUES
   or does it become invisible because it matches the canton's counterchanging?
 - Specialized charges that imply tinctures (or other attributes) like "bezant" (meaning "rondel or")
   are not supported.
-- Furs are misaligned for SVG-based charges like escallop.
+- Furs are misaligned and the wrong size when applied to some charges or variations.
 - Embattled(-counter-embattled) treatments can leave visual artifacts due to a bit of a hack... try:
   - argent a chevron embattled sable
   - argent a cross embattled-counter-embattled sable
+- Mixing quarterly and variations can cause the bottom quarters to truncate the pattern:
+  - quarterly first and fourth barry bendy of six azure and or second and third gules
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
@@ -2025,7 +2027,10 @@ const ORDINARIES: Record<string, OrdinaryRenderer> = {
 // ----------------------------------------------------------------------------
 
 async function rondel({ tincture }: SimpleCharge) {
-  const { fill, pattern } = await resolveTincture(tincture);
+  const { fill, pattern } = await resolveTincture(tincture, {
+    scale: 0.4,
+    translate: [0, 6.5],
+  });
   return svg.g(
     pattern,
     // Not quite the full 40x40. Since these are the more visually heavyweight and fill out their
@@ -2035,7 +2040,10 @@ async function rondel({ tincture }: SimpleCharge) {
 }
 
 async function mullet({ tincture }: SimpleCharge) {
-  const { fill, pattern } = await resolveTincture(tincture);
+  const { fill, pattern } = await resolveTincture(tincture, {
+    scale: 0.4,
+    translate: [0, 5],
+  });
   return svg.g(
     pattern,
     svg.path(
@@ -2137,7 +2145,9 @@ async function fret({ tincture }: SimpleCharge) {
 }
 
 async function escallop({ tincture }: SimpleCharge) {
-  const { fill, pattern } = await resolveTincture(tincture);
+  const { fill, pattern } = await resolveTincture(tincture, {
+    translate: [1.5, -7],
+  });
   const escallop = await fetchMutableComplexSvg("escallop");
   maybeAppendChild(escallop, pattern);
   if ("classes" in fill) {
@@ -2149,7 +2159,9 @@ async function escallop({ tincture }: SimpleCharge) {
 }
 
 async function fleurDeLys({ tincture }: SimpleCharge) {
-  const { fill, pattern } = await resolveTincture(tincture);
+  const { fill, pattern } = await resolveTincture(tincture, {
+    translate: [3.5, 5],
+  });
   const fleurDeLys = await fetchMutableComplexSvg("fleur-de-lys");
   maybeAppendChild(fleurDeLys, pattern);
   if ("classes" in fill) {
@@ -2312,7 +2324,10 @@ async function getErmineTincture(
   return pattern;
 }
 
-async function resolveTincture(tincture: Tincture): Promise<{
+async function resolveTincture(
+  tincture: Tincture,
+  patternTransform: Transforms = {}
+): Promise<{
   // The value of classes instead of just setting fill/stroke directly is that complex charges like
   // lions can use CSS to choose which sub-elements should respect the color, as well as tweak
   // things like lightness.
@@ -2331,6 +2346,9 @@ async function resolveTincture(tincture: Tincture): Promise<{
     background: ColorOrMetal
   ) {
     const pattern = await getErmineTincture(foreground, background);
+    applySvgAttributes(pattern, {
+      patternTransform: Transforms.toString(patternTransform),
+    });
     const color = `url(#${pattern.id})` as const;
     return { fill: { fill: color }, stroke: { stroke: color }, pattern };
   }
