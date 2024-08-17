@@ -295,7 +295,6 @@ a[data-example]:not(:hover) {
 }
 
 .lion {
-  fill: none;
   stroke-width: 1 !important;
 }
 .lion .outline {
@@ -310,6 +309,9 @@ a[data-example]:not(:hover) {
 .lion .medial-sulcus {
   fill: black;
 }
+.lion.argent {
+  fill: none;
+}
 .lion.argent .body,
 .lion.argent .claw,
 .lion.argent .langue {
@@ -320,6 +322,9 @@ a[data-example]:not(:hover) {
 }
 .lion.langued-argent .langue {
   fill: whitesmoke !important;
+}
+.lion.sable {
+  fill: none;
 }
 .lion.sable .body,
 .lion.sable .claw,
@@ -332,6 +337,9 @@ a[data-example]:not(:hover) {
 .lion.langued-sable .langue {
   fill: black !important;
 }
+.lion.gules {
+  fill: none;
+}
 .lion.gules .body,
 .lion.gules .claw,
 .lion.gules .langue {
@@ -342,6 +350,9 @@ a[data-example]:not(:hover) {
 }
 .lion.langued-gules .langue {
   fill: crimson !important;
+}
+.lion.vert {
+  fill: none;
 }
 .lion.vert .body,
 .lion.vert .claw,
@@ -354,6 +365,9 @@ a[data-example]:not(:hover) {
 .lion.langued-vert .langue {
   fill: green !important;
 }
+.lion.azure {
+  fill: none;
+}
 .lion.azure .body,
 .lion.azure .claw,
 .lion.azure .langue {
@@ -365,6 +379,9 @@ a[data-example]:not(:hover) {
 .lion.langued-azure .langue {
   fill: mediumblue !important;
 }
+.lion.or {
+  fill: none;
+}
 .lion.or .body,
 .lion.or .claw,
 .lion.or .langue {
@@ -375,6 +392,9 @@ a[data-example]:not(:hover) {
 }
 .lion.langued-or .langue {
   fill: gold !important;
+}
+.lion.purpure {
+  fill: none;
 }
 .lion.purpure .body,
 .lion.purpure .claw,
@@ -388,13 +408,13 @@ a[data-example]:not(:hover) {
   fill: blueviolet !important;
 }
 
-.escallop {
-  fill: none;
-}
 .escallop .outline {
   stroke: black;
   stroke-opacity: 0.3;
   stroke-width: 2;
+}
+.escallop.argent {
+  fill: none;
 }
 .escallop.argent .light {
   fill: whitesmoke;
@@ -402,11 +422,17 @@ a[data-example]:not(:hover) {
 .escallop.argent .dark {
   fill: gainsboro;
 }
+.escallop.sable {
+  fill: none;
+}
 .escallop.sable .light {
   fill: black;
 }
 .escallop.sable .dark {
   fill: black;
+}
+.escallop.gules {
+  fill: none;
 }
 .escallop.gules .light {
   fill: crimson;
@@ -414,11 +440,17 @@ a[data-example]:not(:hover) {
 .escallop.gules .dark {
   fill: #ad102f;
 }
+.escallop.vert {
+  fill: none;
+}
 .escallop.vert .light {
   fill: green;
 }
 .escallop.vert .dark {
   fill: #004d00;
+}
+.escallop.azure {
+  fill: none;
 }
 .escallop.azure .light {
   fill: mediumblue;
@@ -426,11 +458,17 @@ a[data-example]:not(:hover) {
 .escallop.azure .dark {
   fill: #00009a;
 }
+.escallop.or {
+  fill: none;
+}
 .escallop.or .light {
   fill: gold;
 }
 .escallop.or .dark {
   fill: #ccac00;
+}
+.escallop.purpure {
+  fill: none;
 }
 .escallop.purpure .light {
   fill: blueviolet;
@@ -439,13 +477,13 @@ a[data-example]:not(:hover) {
   fill: #701ac0;
 }
 
-.fleur-de-lys {
-  fill: none;
-}
 .fleur-de-lys .outline {
   stroke: black;
   stroke-opacity: 0.3;
   stroke-width: 2;
+}
+.fleur-de-lys.argent {
+  fill: none;
 }
 .fleur-de-lys.argent .main {
   fill: whitesmoke;
@@ -456,6 +494,9 @@ a[data-example]:not(:hover) {
 .fleur-de-lys.argent .highlight {
   fill: white;
 }
+.fleur-de-lys.sable {
+  fill: none;
+}
 .fleur-de-lys.sable .main {
   fill: black;
 }
@@ -464,6 +505,9 @@ a[data-example]:not(:hover) {
 }
 .fleur-de-lys.sable .highlight {
   fill: #262626;
+}
+.fleur-de-lys.gules {
+  fill: none;
 }
 .fleur-de-lys.gules .main {
   fill: crimson;
@@ -474,6 +518,9 @@ a[data-example]:not(:hover) {
 .fleur-de-lys.gules .highlight {
   fill: #ef4e6e;
 }
+.fleur-de-lys.vert {
+  fill: none;
+}
 .fleur-de-lys.vert .main {
   fill: green;
 }
@@ -482,6 +529,9 @@ a[data-example]:not(:hover) {
 }
 .fleur-de-lys.vert .highlight {
   fill: #00cd00;
+}
+.fleur-de-lys.azure {
+  fill: none;
 }
 .fleur-de-lys.azure .main {
   fill: mediumblue;
@@ -492,6 +542,9 @@ a[data-example]:not(:hover) {
 .fleur-de-lys.azure .highlight {
   fill: #1b1bff;
 }
+.fleur-de-lys.or {
+  fill: none;
+}
 .fleur-de-lys.or .main {
   fill: gold;
 }
@@ -500,6 +553,9 @@ a[data-example]:not(:hover) {
 }
 .fleur-de-lys.or .highlight {
   fill: #ffe34d;
+}
+.fleur-de-lys.purpure {
+  fill: none;
 }
 .fleur-de-lys.purpure .main {
   fill: blueviolet;

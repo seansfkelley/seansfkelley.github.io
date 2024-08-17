@@ -34,12 +34,14 @@ FUTURE WORK and KNOWN ISSUES
 - It's unclear what to do with nested counterchanges. If you have "on a canton counterchanged a
   rondel counterchanged" on a variated background, does the rondel match the background variation,
   or does it become invisible because it matches the canton's counterchanging?
-- Ermine and other furs are not supported.
 - Specialized charges that imply tinctures (or other attributes) like "bezant" (meaning "rondel or")
   are not supported.
+- Furs are misaligned and the wrong size when applied to some charges or variations.
 - Embattled(-counter-embattled) treatments can leave visual artifacts due to a bit of a hack... try:
   - argent a chevron embattled sable
   - argent a cross embattled-counter-embattled sable
+- Mixing quarterly and variations can cause the bottom quarters to truncate the pattern:
+  - quarterly first and fourth barry bendy of six azure and or second and third gules
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
@@ -120,15 +122,18 @@ type Unsupported = typeof UNSUPPORTED;
 
 type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
-type Tincture =
+type ColorOrMetal =
   | "argent"
   | "azure"
   | "gules"
   | "or"
   | "purpure"
   | "sable"
-  | "vert"
-  | "counterchanged";
+  | "vert";
+
+type Fur = "ermine" | "ermines" | "erminois" | "pean";
+
+type Tincture = ColorOrMetal | Fur | "counterchanged";
 
 type Treatment =
   | "embattled-counter-embattled"
@@ -304,7 +309,7 @@ interface Inescutcheon {
 }
 
 interface OrdinaryRenderer {
-  (ordinary: Ordinary): SVGElement;
+  (ordinary: Ordinary): Promise<SVGElement>;
   on: ParametricLocator;
   between: ParametricLocator;
   // I'd use non-?-optional `undefined` to mean unsupported, but the compiler complains about
@@ -329,6 +334,16 @@ type RelativeTreatmentPath = [
 ];
 
 const RelativeTreatmentPath = {
+  offset: (coordinate: Coordinate): RelativeTreatmentPath => [
+    { type: "m", loc: coordinate },
+    [{ type: "m", loc: [0, 0] }],
+    { type: "m", loc: [0, 0] },
+  ],
+  line: (line: Coordinate): RelativeTreatmentPath => [
+    { type: "m", loc: [0, 0] },
+    [{ type: "l", loc: line }],
+    { type: "m", loc: [0, 0] },
+  ],
   rotate: (
     [start, main, end]: RelativeTreatmentPath,
     radians: number
@@ -363,6 +378,7 @@ const Coordinate = {
     coordinates.reduce(([x1, y1], [x2, y2]) => [x1 + x2, y1 + y2]),
   subtract: (...coordinates: Coordinate[]): Coordinate =>
     coordinates.reduce(([x1, y1], [x2, y2]) => [x1 - x2, y1 - y2]),
+  negate: ([x, y]: Coordinate): Coordinate => [-x, -y],
   length: ([x1, y1]: Coordinate, [x2, y2]: Coordinate): number =>
     Math.hypot(x2 - x1, y2 - y1),
   /**
@@ -406,16 +422,20 @@ const Coordinate = {
 };
 
 namespace PathCommand {
-  type SimpleElement<T extends string> = {
-    type: T;
-    loc: Coordinate;
-  };
-
   export interface Z {
     type: "Z";
   }
-  export type L = SimpleElement<"L">;
-  export type M = SimpleElement<"M">;
+
+  export interface L {
+    type: "L";
+    loc: Coordinate;
+  }
+
+  export interface M {
+    type: "M";
+    loc: Coordinate;
+  }
+
   export interface C {
     type: "C";
     c1: Coordinate;
@@ -456,9 +476,10 @@ namespace PathCommand {
         (e) =>
           `${e.type} ${SVG_ELEMENT_TO_COORDINATES[e.type](e as never)
             .map(
-              ([x, y]) => `${roundToPrecision(x, 3)} ${roundToPrecision(y, 3)}`
+              ([x, y]) => `${roundToPrecision(x, 3)},${roundToPrecision(y, 3)}`
             )
-            .join(" ")}`
+            .join(" ")
+            .trim()}`
       )
       .join(" ");
   }
@@ -754,6 +775,10 @@ function assertNever(nope: never): never {
   throw new Error("was not never");
 }
 
+function isNotNullish<T>(value: T): value is NonNullable<T> {
+  return value != null;
+}
+
 let idCounter = 1;
 function uniqueId(prefix: string = "id"): string {
   return `${prefix}-${idCounter++}`;
@@ -778,6 +803,12 @@ function deepEqual<T>(one: T, two: T): boolean {
     return one === two;
   }
 }
+
+type SvgUrlReference = `url(#${string})`;
+
+// This is obviously not exhaustive, but the gist of it is that it's anything that can be slapped
+// right into a `fill` or `stroke` rule unmodified.
+type SvgColor = "white" | SvgUrlReference;
 
 type Radians = number & { __radians: unknown };
 const Radians = {
@@ -844,7 +875,7 @@ function applySvgAttributes(
 
 function applyClasses(
   element: SVGElement,
-  classes?: { fill?: Tincture; stroke?: Tincture }
+  classes: { fill?: ColorOrMetal; stroke?: ColorOrMetal } | undefined
 ): void {
   if (classes?.fill != null) {
     element.classList.add(`fill-${classes.fill}`);
@@ -854,7 +885,35 @@ function applyClasses(
   }
 }
 
+function maybeAppendChild(parent: SVGElement, child: SVGElement | undefined) {
+  if (child != null) {
+    parent.appendChild(child);
+  }
+}
+
 const svg = {
+  circle: (
+    [cx, cy]: Coordinate,
+    r: number,
+    {
+      fill,
+      classes,
+    }: {
+      fill?: SvgColor;
+      classes?: { fill?: ColorOrMetal };
+    } = {}
+  ): SVGCircleElement => {
+    const circle = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "circle"
+    );
+    circle.setAttribute("r", r.toString());
+    circle.setAttribute("cx", cx.toString());
+    circle.setAttribute("cy", cy.toString());
+    applySvgAttributes(circle, { fill });
+    applyClasses(circle, classes);
+    return circle;
+  },
   path: (
     d: PathCommand.Any[],
     {
@@ -864,11 +923,11 @@ const svg = {
       fill,
       classes,
     }: {
-      stroke?: string;
+      stroke?: SvgColor;
       strokeWidth?: number;
       strokeLinecap?: "butt" | "round" | "square";
-      fill?: string;
-      classes?: { fill?: Tincture; stroke?: Tincture };
+      fill?: SvgColor;
+      classes?: { fill?: ColorOrMetal; stroke?: ColorOrMetal };
     } = {}
   ): SVGPathElement => {
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -895,7 +954,7 @@ const svg = {
       strokeWidth?: number;
       strokeLinecap?: "butt" | "round" | "square";
       classes?: {
-        stroke?: Tincture;
+        stroke?: ColorOrMetal;
       };
     } = {}
   ): SVGLineElement => {
@@ -919,7 +978,11 @@ const svg = {
       fill,
       stroke,
       classes,
-    }: { fill?: string; stroke?: string; classes?: { fill?: Tincture } } = {}
+    }: {
+      fill?: SvgColor;
+      stroke?: SvgColor;
+      classes?: { fill?: ColorOrMetal };
+    } = {}
   ): SVGRectElement => {
     const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     applySvgAttributes(rect, {
@@ -933,9 +996,9 @@ const svg = {
     applyClasses(rect, classes);
     return rect;
   },
-  g: (...children: SVGElement[]): SVGGElement => {
+  g: (...children: (SVGElement | undefined)[]): SVGGElement => {
     const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    g.append(...children);
+    g.append(...children.filter(isNotNullish));
     return g;
   },
   pattern: (
@@ -956,7 +1019,7 @@ const svg = {
       preserveAspectRatio?: string;
       patternTransform?: Transforms;
     },
-    ...children: SVGElement[]
+    ...children: (SVGElement | undefined)[]
   ): SVGPatternElement => {
     const pattern = document.createElementNS(
       "http://www.w3.org/2000/svg",
@@ -979,7 +1042,7 @@ const svg = {
           ? undefined
           : Transforms.toString(patternTransform),
     });
-    pattern.append(...children);
+    pattern.append(...children.filter(isNotNullish));
     return pattern;
   },
   polygon: ({
@@ -988,8 +1051,8 @@ const svg = {
     stroke,
   }: {
     points: Coordinate[];
-    fill?: string;
-    stroke?: string;
+    fill?: SvgColor;
+    stroke?: SvgColor;
   }): SVGPolygonElement => {
     const polygon = document.createElementNS(
       "http://www.w3.org/2000/svg",
@@ -1004,22 +1067,22 @@ const svg = {
   },
   mask: (
     { id }: { id?: string },
-    ...children: SVGElement[]
+    ...children: (SVGElement | undefined)[]
   ): SVGMaskElement => {
     const mask = document.createElementNS("http://www.w3.org/2000/svg", "mask");
     if (id != null) {
       mask.id = id;
     }
-    mask.append(...children);
+    mask.append(...children.filter(isNotNullish));
     return mask;
   },
 };
 
-const complexSvgCache: Record<string, Promise<SVGElement>> = {};
-async function fetchComplexSvg(
+const complexSvgCache: Record<string, Promise<SVGGElement>> = {};
+async function fetchMutableComplexSvg(
   kind: string,
   variant?: string
-): Promise<SVGElement> {
+): Promise<SVGGElement> {
   const key = variant ? `${kind}-${variant}` : kind;
   if (!(key in complexSvgCache)) {
     complexSvgCache[key] = fetch(`/assets/blazonry/svg/${key}.svg`).then(
@@ -1040,7 +1103,8 @@ async function fetchComplexSvg(
     );
   }
 
-  return complexSvgCache[key];
+  const loadedSvg = await complexSvgCache[key];
+  return loadedSvg.cloneNode(true);
 }
 
 // #endregion
@@ -1053,54 +1117,65 @@ const COTISED_WIDTH = W_2 / 12;
 const BEND_WIDTH = W / 3;
 // Make sure it's long enough to reach diagonally!
 const BEND_LENGTH = Math.hypot(W, W) + BEND_WIDTH / 2;
-function bend({ tincture, cotised, treatment }: Ordinary) {
-  const bend = svg.g();
+async function bend({ tincture, cotised, treatment }: Ordinary) {
+  const { fill, pattern } = await resolveTincture(tincture);
 
-  if (treatment != null) {
-    bend.appendChild(
-      svg.path(
-        relativePathsToClosedLoop(
-          relativePathFor([0, -BEND_WIDTH / 2], undefined, undefined),
-          TREATMENTS[treatment](BEND_LENGTH, false, "primary"),
-          relativePathFor(undefined, [0, BEND_WIDTH], undefined),
-          // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
-          // we traverse around the bend clockwise.
-          TREATMENTS[treatment](-BEND_LENGTH, true, "secondary", "end")
-        ),
-        { classes: { fill: tincture } }
-      )
-    );
-  } else {
-    bend.appendChild(
-      svg.line([0, 0], [BEND_LENGTH, 0], {
-        strokeWidth: BEND_WIDTH,
-        classes: { stroke: tincture },
-      })
-    );
+  const bend = svg.g(pattern);
+
+  const treatments = [
+    RelativeTreatmentPath.offset([0, -BEND_WIDTH / 2]),
+    TREATMENTS[treatment ?? "untreated"](BEND_LENGTH, false, "primary"),
+    RelativeTreatmentPath.line([0, BEND_WIDTH]),
+    // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
+    // we traverse around the bend clockwise.
+    TREATMENTS[treatment ?? "untreated"](
+      -BEND_LENGTH,
+      true,
+      "secondary",
+      "end"
+    ),
+  ];
+
+  for (const t of treatments) {
+    RelativeTreatmentPath.rotate(t, Radians.EIGHTH_TURN);
   }
+
+  bend.appendChild(
+    svg.path(
+      relativePathsToClosedLoop(
+        RelativeTreatmentPath.offset([-W_2, -H_2]),
+        ...treatments
+      ),
+      fill
+    )
+  );
 
   if (cotised != null) {
-    const offset = BEND_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
+    const { stroke, pattern } = await resolveTincture(cotised);
+    maybeAppendChild(bend, pattern);
+
+    // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
+    // I don't understand why this isn't COTISED_WIDTH * 1.5; don't we need to center the draw line
+    // in the width of the stroke? It seems to work correctly like this though.
+    const offset = (Math.sin(Math.PI / 4) * BEND_WIDTH) / 2 + COTISED_WIDTH;
+
     bend.appendChild(
-      svg.line([0, -offset], [BEND_LENGTH, -offset], {
-        strokeWidth: COTISED_WIDTH,
-        classes: { stroke: cotised },
-      })
+      svg.line(
+        [-W_2 + offset, -H_2 - offset],
+        [H - W_2 + offset, H_2 - offset],
+        { ...stroke, strokeWidth: COTISED_WIDTH }
+      )
     );
     bend.appendChild(
-      svg.line([0, offset], [BEND_LENGTH, offset], {
-        strokeWidth: COTISED_WIDTH,
-        classes: { stroke: cotised },
-      })
+      svg.line(
+        [-W_2 - offset, -H_2 + offset],
+        [H - W_2 - offset, H_2 + offset],
+        { ...stroke, strokeWidth: COTISED_WIDTH }
+      )
     );
   }
 
-  Transforms.apply(bend, {
-    translate: [-W_2, -H_2],
-    rotate: Radians.EIGHTH_TURN,
-  });
-
-  return svg.g(bend);
+  return bend;
 }
 
 bend.on = new LineSegmentLocator(
@@ -1161,8 +1236,8 @@ bend.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
   }
 };
 
-function bendSinister(ordinary: Ordinary) {
-  const g = svg.g(bend(ordinary));
+async function bendSinister(ordinary: Ordinary) {
+  const g = svg.g(await bend(ordinary));
   Transforms.apply(g, {
     scale: [-1, 1],
   });
@@ -1182,43 +1257,39 @@ bendSinister.partition = (
 };
 
 const CHIEF_WIDTH = H / 3;
-function chief({ tincture, cotised, treatment }: Ordinary) {
-  const chief = svg.g();
+async function chief({ tincture, cotised, treatment }: Ordinary) {
+  const { fill, pattern } = await resolveTincture(tincture);
 
-  if (treatment != null) {
-    const [start, main, end] = TREATMENTS[treatment](
-      -W,
-      true,
-      "primary",
-      "center"
-    );
-    chief.appendChild(
-      svg.path(
-        [
-          { type: "M", loc: [-W_2, -H_2] },
-          { type: "L", loc: [W_2, -H_2] },
-          { type: "l", loc: Coordinate.add([0, CHIEF_WIDTH], start.loc) },
-          ...main,
-          { type: "l", loc: Coordinate.add([0, -CHIEF_WIDTH], end.loc) },
-        ],
-        { classes: { fill: tincture } }
-      )
-    );
-  } else {
-    chief.appendChild(
-      svg.line([-W_2, -H_2 + CHIEF_WIDTH / 2], [W_2, -H_2 + CHIEF_WIDTH / 2], {
-        strokeWidth: CHIEF_WIDTH,
-        classes: { stroke: tincture },
-      })
-    );
-  }
+  const chief = svg.g(pattern);
+
+  const [start, main, end] = TREATMENTS[treatment ?? "untreated"](
+    -W,
+    true,
+    "primary",
+    "center"
+  );
+  chief.appendChild(
+    svg.path(
+      [
+        { type: "M", loc: [-W_2, -H_2] },
+        { type: "L", loc: [W_2, -H_2] },
+        { type: "l", loc: Coordinate.add([0, CHIEF_WIDTH], start.loc) },
+        ...main,
+        { type: "l", loc: Coordinate.add([0, -CHIEF_WIDTH], end.loc) },
+      ],
+      fill
+    )
+  );
 
   if (cotised != null) {
+    const { stroke, pattern } = await resolveTincture(cotised);
+    maybeAppendChild(chief, pattern);
+
     chief.append(
       svg.line(
         [-W_2, -H_2 + CHIEF_WIDTH + (COTISED_WIDTH * 3) / 2],
         [W_2, -H_2 + CHIEF_WIDTH + (COTISED_WIDTH * 3) / 2],
-        { strokeWidth: COTISED_WIDTH, classes: { stroke: cotised } }
+        { ...stroke, strokeWidth: COTISED_WIDTH }
       )
     );
   }
@@ -1238,89 +1309,110 @@ chief.partition = UNSUPPORTED;
 
 const CHEVRON_WIDTH = W / 4;
 
-function chevron({ tincture, cotised, treatment }: Ordinary) {
+async function chevron({ tincture, cotised, treatment }: Ordinary) {
+  const { fill, pattern } = await resolveTincture(tincture);
+
+  const chevron = svg.g(pattern);
+
   const left: Coordinate = [-W_2, -H_2 + W];
   const right: Coordinate = [-W_2 + H, H_2];
   // Cross at 45 degrees starting from the top edge, so we bias upwards from the center.
   const mid: Coordinate = [0, -(H_2 - W_2)];
 
-  const chevron = svg.g();
+  const topLength = Coordinate.length(mid, right) + CHEVRON_WIDTH / 2;
+  const bottomLength = Coordinate.length(mid, right) - CHEVRON_WIDTH / 2;
 
-  if (treatment != null) {
-    const topLength = Coordinate.length(mid, right) + CHEVRON_WIDTH / 2;
-    const bottomLength = Coordinate.length(mid, right) - CHEVRON_WIDTH / 2;
-    for (const sign of [-1, 1]) {
-      const [topStart, topMain, topEnd] = TREATMENTS[treatment](
-        topLength,
-        false,
-        "primary",
-        "start"
-      );
-      const [bottomStart, bottomMain, bottomEnd] = TREATMENTS[treatment](
-        -bottomLength,
-        true,
-        "secondary",
-        "end"
-      );
+  const topLeft = TREATMENTS[treatment ?? "untreated"](
+    topLength,
+    false,
+    "primary",
+    "end"
+  );
+  RelativeTreatmentPath.rotate(topLeft, Radians.NEG_QUARTER_TURN);
+  const topRight = TREATMENTS[treatment ?? "untreated"](
+    topLength,
+    false,
+    "primary",
+    "start"
+  );
+  const bottomLeft = TREATMENTS[treatment ?? "untreated"](
+    -bottomLength,
+    true,
+    "secondary",
+    "start"
+  );
+  RelativeTreatmentPath.rotate(bottomLeft, Radians.NEG_QUARTER_TURN);
+  const bottomRight = TREATMENTS[treatment ?? "untreated"](
+    -bottomLength,
+    true,
+    "secondary",
+    "end"
+  );
 
-      const p = svg.path(
-        [
-          { type: "m", loc: topStart.loc },
-          ...topMain,
-          {
-            type: "l",
-            loc: Coordinate.add(
-              topEnd.loc,
-              [0, CHEVRON_WIDTH],
-              bottomStart.loc
-            ),
-          },
-          ...bottomMain,
-          {
-            type: "l",
-            // topStart appears here because we want to ensure that the line from the first point
-            // (which is topStart) to the last point is at pi/4 (ignoring the hack immediately
-            // below). We are guaranteed that it is pi/4 from 0, 0 to bottomEnd, but since we shift
-            // it by topStart we need to shift it here too.
-            loc: Coordinate.add(topStart.loc, bottomEnd.loc),
-          },
-          // HACK: juke out of the way a bit to overlap with the other side. Ensures that the very
-          // skinny point at the top of the chevron doesn't turn itself inside out and fill the
-          // wrong side when using e.g. engrailed.
-          { type: "l", loc: [-CHEVRON_WIDTH / 10, 0] },
-          { type: "z" },
-        ],
-        { classes: { fill: tincture } }
-      );
-      Transforms.apply(p, {
-        origin: topStart.loc,
-        scale: [sign, 1],
-        rotate: Radians.EIGHTH_TURN,
-        translate: Coordinate.add(mid, [
-          0,
-          -Math.hypot(CHEVRON_WIDTH, CHEVRON_WIDTH) / 2,
-        ]),
-      });
-      chevron.append(p);
-    }
-  } else {
-    chevron.appendChild(
-      svg.line(left, mid, {
-        strokeWidth: CHEVRON_WIDTH,
-        strokeLinecap: "square",
-        classes: { stroke: tincture },
-      })
-    );
-    chevron.appendChild(
-      svg.line(mid, right, {
-        strokeWidth: CHEVRON_WIDTH,
-        strokeLinecap: "square",
-        classes: { stroke: tincture },
-      })
+  const treatments = [
+    topRight,
+    RelativeTreatmentPath.line([0, CHEVRON_WIDTH]),
+    bottomRight,
+    bottomLeft,
+    RelativeTreatmentPath.line([-CHEVRON_WIDTH, 0]),
+    topLeft,
+  ];
+
+  for (const t of treatments) {
+    RelativeTreatmentPath.rotate(t, Radians.EIGHTH_TURN);
+  }
+
+  // n.b. this depends on `topLeft`, etc., being a shared reference to the same values in `treatments`.
+  {
+    const [start, , end] = topRight;
+    const originalStart: Coordinate = [...start.loc];
+    start.loc = [
+      0,
+      Math.sign(start.loc[1]) * Math.sqrt(2 * start.loc[1] * start.loc[1]),
+    ];
+    end.loc = Coordinate.add(
+      end.loc,
+      originalStart,
+      Coordinate.negate(start.loc)
     );
   }
 
+  {
+    const [start, , end] = topLeft;
+    const originalEnd: Coordinate = [...end.loc];
+    end.loc = [
+      0,
+      Math.sign(end.loc[1]) * Math.sqrt(2 * end.loc[1] * end.loc[1]),
+    ];
+    start.loc = Coordinate.add(
+      start.loc,
+      originalEnd,
+      Coordinate.negate(end.loc)
+    );
+  }
+
+  // We don't adjust the endpoints of the bottom edges because due to the vagaries of the way that
+  // treatments are rendered, they actually look fine where they meet at the lower/inner corner.
+  // Embattled-counter-embattled isn't great, but it would look even worse if we tightened it up
+  // like we do to the top side.
+
+  chevron.appendChild(
+    svg.path(
+      relativePathsToClosedLoop(
+        RelativeTreatmentPath.offset([
+          0,
+          -Math.sqrt((CHEVRON_WIDTH * CHEVRON_WIDTH) / 2) - (H_2 - W_2),
+        ]),
+        ...treatments
+      ),
+      fill
+    )
+  );
+
   if (cotised != null) {
+    const { stroke, pattern } = await resolveTincture(cotised);
+    maybeAppendChild(chevron, pattern);
+
     // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
     const offset = Math.sin(Math.PI / 4) * CHEVRON_WIDTH + COTISED_WIDTH * 2;
 
@@ -1330,11 +1422,7 @@ function chevron({ tincture, cotised, treatment }: Ordinary) {
           svg.line(
             Coordinate.add(end, [0, sign * offset]),
             Coordinate.add(mid, [0, sign * offset]),
-            {
-              strokeWidth: COTISED_WIDTH,
-              strokeLinecap: "square",
-              classes: { stroke: cotised },
-            }
+            { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
           )
         );
       }
@@ -1439,69 +1527,54 @@ chevron.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
 const CROSS_WIDTH = W / 4;
 const CROSS_VERTICAL_OFFSET = (H - W) / 2;
 
-function cross({ tincture, cotised, treatment }: Ordinary) {
+async function cross({ tincture, cotised, treatment }: Ordinary) {
+  const { fill, pattern } = await resolveTincture(tincture);
+
+  const cross = svg.g(pattern);
+
   const top: Coordinate = [0, -H_2];
   const bottom: Coordinate = [0, H_2];
   const left: Coordinate = [-W_2, -CROSS_VERTICAL_OFFSET];
   const right: Coordinate = [W_2, -CROSS_VERTICAL_OFFSET];
 
-  const cross = svg.g();
+  const hLength = W_2 - CROSS_WIDTH / 2;
+  const vLength = H_2 - CROSS_WIDTH / 2 + CROSS_VERTICAL_OFFSET;
 
-  if (treatment != null) {
-    const g = svg.g();
+  const treatments = [
+    // Starting on the bottom right, moving around counter-clockwise.
+    TREATMENTS[treatment ?? "untreated"](-vLength, false, "secondary", "end"),
+    TREATMENTS[treatment ?? "untreated"](hLength, true, "secondary", "start"),
+    RelativeTreatmentPath.line([-CROSS_WIDTH, 0]),
+    TREATMENTS[treatment ?? "untreated"](-hLength, false, "primary", "end"),
+    TREATMENTS[treatment ?? "untreated"](-vLength, false, "secondary", "start"),
+    RelativeTreatmentPath.line([-CROSS_WIDTH, 0]),
+    TREATMENTS[treatment ?? "untreated"](vLength, true, "secondary", "end"),
+    TREATMENTS[treatment ?? "untreated"](-hLength, false, "primary", "start"),
+    RelativeTreatmentPath.line([CROSS_WIDTH, 0]),
+    TREATMENTS[treatment ?? "untreated"](hLength, true, "secondary", "end"),
+    TREATMENTS[treatment ?? "untreated"](vLength, true, "secondary", "start"),
+  ];
 
-    const hLength = W_2 - CROSS_WIDTH / 2;
-    const vLength = H_2 - CROSS_WIDTH / 2 + CROSS_VERTICAL_OFFSET;
-
-    const treatments = [
-      // Starting on the bottom right, moving around counter-clockwise.
-      TREATMENTS[treatment](-vLength, false, "secondary", "end"),
-      TREATMENTS[treatment](hLength, true, "secondary", "start"),
-      straightLineTreatment(-CROSS_WIDTH),
-      TREATMENTS[treatment](-hLength, false, "primary", "end"),
-      TREATMENTS[treatment](-vLength, false, "secondary", "start"),
-      straightLineTreatment(-CROSS_WIDTH),
-      TREATMENTS[treatment](vLength, true, "secondary", "end"),
-      TREATMENTS[treatment](-hLength, false, "primary", "start"),
-      straightLineTreatment(CROSS_WIDTH),
-      TREATMENTS[treatment](hLength, true, "secondary", "end"),
-      TREATMENTS[treatment](vLength, true, "secondary", "start"),
-    ];
-
-    for (const index of [0, 2, 4, 6, 8, 10]) {
-      RelativeTreatmentPath.rotate(treatments[index], Math.PI / 2);
-    }
-
-    g.appendChild(
-      svg.path(relativePathsToClosedLoop(...treatments), {
-        classes: { fill: tincture },
-      })
-    );
-
-    Transforms.apply(g, {
-      // I _think_ this is the correct offset: the vertical offset is accounted for by being
-      // included in the vertical length, and even though the first treatment can vary in length
-      // depending on the type, the end-alignment means that it'll grow downwards, out of view.
-      translate: [CROSS_WIDTH / 2, H_2],
-    });
-
-    cross.appendChild(g);
-  } else {
-    cross.appendChild(
-      svg.line(top, bottom, {
-        strokeWidth: CROSS_WIDTH,
-        classes: { stroke: tincture },
-      })
-    );
-    cross.appendChild(
-      svg.line(left, right, {
-        strokeWidth: CROSS_WIDTH,
-        classes: { stroke: tincture },
-      })
-    );
+  for (const index of [0, 2, 4, 6, 8, 10]) {
+    RelativeTreatmentPath.rotate(treatments[index], Math.PI / 2);
   }
 
+  cross.appendChild(
+    svg.path(
+      relativePathsToClosedLoop(
+        // Offset the path itself rather than translating the entire cross so that fur patterns are
+        // not shifted off-center.
+        RelativeTreatmentPath.offset([CROSS_WIDTH / 2, H_2]),
+        ...treatments
+      ),
+      fill
+    )
+  );
+
   if (cotised != null) {
+    const { stroke, pattern } = await resolveTincture(cotised);
+    maybeAppendChild(cross, pattern);
+
     const offset = CROSS_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
     const mid: Coordinate = [0, -CROSS_VERTICAL_OFFSET];
 
@@ -1515,22 +1588,14 @@ function cross({ tincture, cotised, treatment }: Ordinary) {
         svg.line(
           Coordinate.add(p, [offset * x1sign, offset * y1sign]),
           Coordinate.add(mid, [offset * x1sign, offset * y1sign]),
-          {
-            strokeWidth: COTISED_WIDTH,
-            strokeLinecap: "square",
-            classes: { stroke: cotised },
-          }
+          { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
         )
       );
       cross.appendChild(
         svg.line(
           Coordinate.add(p, [offset * x2sign, offset * y2sign]),
           Coordinate.add(mid, [offset * x2sign, offset * y2sign]),
-          {
-            strokeWidth: COTISED_WIDTH,
-            strokeLinecap: "square",
-            classes: { stroke: cotised },
-          }
+          { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
         )
       );
     }
@@ -1580,54 +1645,50 @@ cross.partition = UNSUPPORTED;
 
 const FESS_WIDTH = W / 3;
 const FESS_VERTICAL_OFFSET = -H_2 + FESS_WIDTH * (3 / 2);
-function fess({ tincture, cotised, treatment }: Ordinary) {
-  const fess = svg.g();
+async function fess({ tincture, cotised, treatment }: Ordinary) {
+  const { fill, pattern } = await resolveTincture(tincture);
 
-  if (treatment != null) {
-    fess.appendChild(
-      svg.path(
-        [
-          {
-            type: "m",
-            loc: [-W_2, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2],
-          },
-          ...relativePathsToClosedLoop(
-            TREATMENTS[treatment](W, false, "primary", "center"),
-            [
-              { type: "m", loc: [0, 0] },
-              [{ type: "l", loc: [0, FESS_WIDTH] }],
-              { type: "m", loc: [0, 0] },
-            ],
-            TREATMENTS[treatment](-W, true, "secondary", "center")
-          ),
-        ],
-        { classes: { fill: tincture } }
-      )
-    );
-  } else {
-    fess.appendChild(
-      svg.line([-W_2, FESS_VERTICAL_OFFSET], [W_2, FESS_VERTICAL_OFFSET], {
-        strokeWidth: FESS_WIDTH,
-        classes: { stroke: tincture },
-      })
-    );
-  }
+  const fess = svg.g(pattern);
+
+  fess.appendChild(
+    svg.path(
+      [
+        {
+          type: "m",
+          loc: [-W_2, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2],
+        },
+        ...relativePathsToClosedLoop(
+          TREATMENTS[treatment ?? "untreated"](W, false, "primary", "center"),
+          [
+            { type: "m", loc: [0, 0] },
+            [{ type: "l", loc: [0, FESS_WIDTH] }],
+            { type: "m", loc: [0, 0] },
+          ],
+          TREATMENTS[treatment ?? "untreated"](-W, true, "secondary", "center")
+        ),
+      ],
+      fill
+    )
+  );
 
   if (cotised != null) {
+    const { stroke, pattern } = await resolveTincture(cotised);
+    maybeAppendChild(fess, pattern);
+
     const offset = FESS_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
 
     fess.appendChild(
       svg.line(
         [-W_2, FESS_VERTICAL_OFFSET - offset],
         [W_2, FESS_VERTICAL_OFFSET - offset],
-        { strokeWidth: COTISED_WIDTH, classes: { stroke: cotised } }
+        { ...stroke, strokeWidth: COTISED_WIDTH }
       )
     );
     fess.appendChild(
       svg.line(
         [-W_2, FESS_VERTICAL_OFFSET + offset],
         [W_2, FESS_VERTICAL_OFFSET + offset],
-        { strokeWidth: COTISED_WIDTH, classes: { stroke: cotised } }
+        { ...stroke, strokeWidth: COTISED_WIDTH }
       )
     );
   }
@@ -1682,48 +1743,51 @@ fess.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
 };
 
 const PALE_WIDTH = W / 3;
-function pale({ tincture, cotised, treatment }: Ordinary) {
-  const pale = svg.g();
+async function pale({ tincture, cotised, treatment }: Ordinary) {
+  const { fill, pattern } = await resolveTincture(tincture);
 
-  if (treatment != null) {
-    const p = svg.path(
+  const pale = svg.g(pattern);
+
+  const right = TREATMENTS[treatment ?? "untreated"](H, false, "primary");
+  RelativeTreatmentPath.rotate(right, Radians.QUARTER_TURN);
+  // Note that right is left-to-right, but left is right-to-left. This is to make sure that
+  // we traverse around the pale clockwise after rotations have been performed.
+  const left = TREATMENTS[treatment ?? "untreated"](
+    -H,
+    true,
+    "secondary",
+    "end"
+  );
+  RelativeTreatmentPath.rotate(left, Radians.QUARTER_TURN);
+
+  pale.appendChild(
+    svg.path(
       relativePathsToClosedLoop(
-        relativePathFor([0, -PALE_WIDTH / 2], undefined, undefined),
-        TREATMENTS[treatment](H, false, "primary"),
-        relativePathFor(undefined, [0, PALE_WIDTH], undefined),
-        // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
-        // we traverse around the pale clockwise.
-        TREATMENTS[treatment](-H, true, "secondary", "end")
+        RelativeTreatmentPath.offset([PALE_WIDTH / 2, -H_2]),
+        right,
+        RelativeTreatmentPath.line([-PALE_WIDTH, 0]),
+        left
       ),
-      { classes: { fill: tincture } }
-    );
-    Transforms.apply(p, {
-      translate: [0, -H_2],
-      rotate: Radians.QUARTER_TURN,
-    });
-    pale.appendChild(p);
-  } else {
-    pale.appendChild(
-      svg.line([0, -H_2], [0, H_2], {
-        strokeWidth: PALE_WIDTH,
-        classes: { stroke: tincture },
-      })
-    );
-  }
+      fill
+    )
+  );
 
   if (cotised != null) {
+    const { stroke, pattern } = await resolveTincture(cotised);
+    maybeAppendChild(pale, pattern);
+
     const offset = PALE_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
 
     pale.appendChild(
       svg.line([offset, -H_2], [offset, H_2], {
+        ...stroke,
         strokeWidth: COTISED_WIDTH,
-        classes: { stroke: cotised },
       })
     );
     pale.appendChild(
       svg.line([-offset, -H_2], [-offset, H_2], {
+        ...stroke,
         strokeWidth: COTISED_WIDTH,
-        classes: { stroke: cotised },
       })
     );
   }
@@ -1779,71 +1843,58 @@ pale.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
 };
 
 const SALTIRE_WIDTH = W / 4;
-function saltire({ tincture, cotised, treatment }: Ordinary) {
+async function saltire({ tincture, cotised, treatment }: Ordinary) {
+  const { fill, pattern } = await resolveTincture(tincture);
+
+  const saltire = svg.g(pattern);
+
   const tl: Coordinate = [-W_2, -H_2];
   const tr: Coordinate = [W_2, -H_2];
   const bl: Coordinate = [W_2 - H, H_2];
   const br: Coordinate = [-W_2 + H, H_2];
 
-  const saltire = svg.g();
+  const length = Math.hypot(W_2, W_2);
 
-  if (treatment != null) {
-    const g = svg.g();
+  const treatments = [
+    // Starting on the bottom left moving around clockwise.
+    TREATMENTS[treatment ?? "untreated"](length, false, "primary", "end"),
+    TREATMENTS[treatment ?? "untreated"](length, false, "secondary", "start"),
+    RelativeTreatmentPath.line([SALTIRE_WIDTH, 0]),
+    TREATMENTS[treatment ?? "untreated"](-length, true, "primary", "end"),
+    TREATMENTS[treatment ?? "untreated"](length, false, "primary", "start"),
+    RelativeTreatmentPath.line([-SALTIRE_WIDTH, 0]),
+    TREATMENTS[treatment ?? "untreated"](-length, true, "secondary", "end"),
+    TREATMENTS[treatment ?? "untreated"](-length, true, "primary", "start"),
+    RelativeTreatmentPath.line([-SALTIRE_WIDTH, 0]),
+    TREATMENTS[treatment ?? "untreated"](length, false, "secondary", "end"),
+    TREATMENTS[treatment ?? "untreated"](-length, true, "secondary", "start"),
+  ];
 
-    const length = Math.hypot(W_2, W_2);
-
-    const treatments = [
-      // Starting on the bottom left, moving around clockwise.
-      TREATMENTS[treatment](length, false, "primary", "end"),
-      TREATMENTS[treatment](length, false, "secondary", "start"),
-      straightLineTreatment(SALTIRE_WIDTH),
-      TREATMENTS[treatment](-length, true, "primary", "end"),
-      TREATMENTS[treatment](length, false, "primary", "start"),
-      straightLineTreatment(-SALTIRE_WIDTH),
-      TREATMENTS[treatment](-length, true, "secondary", "end"),
-      TREATMENTS[treatment](-length, true, "primary", "start"),
-      straightLineTreatment(-SALTIRE_WIDTH),
-      TREATMENTS[treatment](length, false, "secondary", "end"),
-      TREATMENTS[treatment](-length, true, "secondary", "start"),
-    ];
-
-    for (const index of [1, 3, 5, 7, 9]) {
-      RelativeTreatmentPath.rotate(treatments[index], -Math.PI / 2);
-    }
-
-    const saltirePath = svg.path(relativePathsToClosedLoop(...treatments), {
-      classes: { fill: tincture },
-    });
-
-    Transforms.apply(saltirePath, {
-      translate: [
-        -(length + SALTIRE_WIDTH / 2),
-        -H_2 - SALTIRE_WIDTH / 2 + W_2,
-      ],
-    });
-    Transforms.apply(g, {
-      rotate: Radians.NEG_EIGHTH_TURN,
-      origin: [0, -H_2 + W_2],
-    });
-
-    g.appendChild(saltirePath);
-    saltire.appendChild(g);
-  } else {
-    saltire.appendChild(
-      svg.line(tl, br, {
-        strokeWidth: SALTIRE_WIDTH,
-        classes: { stroke: tincture },
-      })
-    );
-    saltire.appendChild(
-      svg.line(bl, tr, {
-        strokeWidth: SALTIRE_WIDTH,
-        classes: { stroke: tincture },
-      })
-    );
+  for (const index of [1, 3, 5, 7, 9]) {
+    RelativeTreatmentPath.rotate(treatments[index], -Math.PI / 2);
   }
 
+  for (const t of treatments) {
+    RelativeTreatmentPath.rotate(t, Radians.NEG_EIGHTH_TURN);
+  }
+
+  saltire.appendChild(
+    svg.path(
+      relativePathsToClosedLoop(
+        RelativeTreatmentPath.offset([
+          -W_2 - Math.sqrt((SALTIRE_WIDTH * SALTIRE_WIDTH) / 2),
+          W_2 - (H_2 - W_2),
+        ]),
+        ...treatments
+      ),
+      fill
+    )
+  );
+
   if (cotised != null) {
+    const { stroke, pattern } = await resolveTincture(cotised);
+    maybeAppendChild(saltire, pattern);
+
     // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
     const offset = Math.sin(Math.PI / 4) * SALTIRE_WIDTH + COTISED_WIDTH * 2;
     // Cross at 45 degrees starting from the top edge, so we bias upwards from the center.
@@ -1859,22 +1910,14 @@ function saltire({ tincture, cotised, treatment }: Ordinary) {
         svg.line(
           Coordinate.add(p, [offset * x1sign, offset * y1sign]),
           Coordinate.add(mid, [offset * x1sign, offset * y1sign]),
-          {
-            strokeWidth: COTISED_WIDTH,
-            strokeLinecap: "square",
-            classes: { stroke: cotised },
-          }
+          { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
         )
       );
       saltire.appendChild(
         svg.line(
           Coordinate.add(p, [offset * x2sign, offset * y2sign]),
           Coordinate.add(mid, [offset * x2sign, offset * y2sign]),
-          {
-            strokeWidth: COTISED_WIDTH,
-            strokeLinecap: "square",
-            classes: { stroke: cotised },
-          }
+          { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
         )
       );
     }
@@ -1983,42 +2026,50 @@ const ORDINARIES: Record<string, OrdinaryRenderer> = {
 // #region CHARGES
 // ----------------------------------------------------------------------------
 
-function rondel({ tincture }: SimpleCharge) {
-  const circle = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "circle"
+async function rondel({ tincture }: SimpleCharge) {
+  const { fill, pattern } = await resolveTincture(tincture, {
+    scale: 0.4,
+    translate: [0, 6.5],
+  });
+  return svg.g(
+    pattern,
+    // Not quite the full 40x40. Since these are the more visually heavyweight and fill out their
+    // allotted space entirely without natural negative spaces, shrink them so they don't crowd too much.
+    svg.circle([0, 0], 18, fill)
   );
-  // Not quite the full 40x40. Since these are the more visually heavyweight and fill out their
-  // allotted space entirely without natural negative spaces, shrink them so they don't crowd too much.
-  circle.setAttribute("r", "18");
-  circle.setAttribute("cx", "0");
-  circle.setAttribute("cy", "0");
-  circle.classList.add(`fill-${tincture}`);
-  return circle;
 }
 
-function mullet({ tincture }: SimpleCharge) {
-  return svg.path(
-    [
-      // These awkward numbers keep the proportions nice while just filling out a 40x40 square.
-      { type: "M", loc: [0, -18.8] },
-      { type: "L", loc: [5, -4.6] },
-      { type: "L", loc: [20, -4.6] },
-      { type: "L", loc: [8.4, 4.5] },
-      { type: "L", loc: [12.5, 18.8] },
-      { type: "L", loc: [0, 10.4] },
-      { type: "L", loc: [-12.5, 18.8] },
-      { type: "L", loc: [-8.4, 4.5] },
-      { type: "L", loc: [-20, -4.6] },
-      { type: "L", loc: [-5, -4.6] },
-      { type: "Z" },
-    ],
-    { classes: { fill: tincture } }
+async function mullet({ tincture }: SimpleCharge) {
+  const { fill, pattern } = await resolveTincture(tincture, {
+    scale: 0.4,
+    translate: [0, 5],
+  });
+  return svg.g(
+    pattern,
+    svg.path(
+      [
+        // These awkward numbers keep the proportions nice while just filling out a 40x40 square.
+        { type: "M", loc: [0, -18.8] },
+        { type: "L", loc: [5, -4.6] },
+        { type: "L", loc: [20, -4.6] },
+        { type: "L", loc: [8.4, 4.5] },
+        { type: "L", loc: [12.5, 18.8] },
+        { type: "L", loc: [0, 10.4] },
+        { type: "L", loc: [-12.5, 18.8] },
+        { type: "L", loc: [-8.4, 4.5] },
+        { type: "L", loc: [-20, -4.6] },
+        { type: "L", loc: [-5, -4.6] },
+        { type: "Z" },
+      ],
+      fill
+    )
   );
 }
 
 const FRET_WIDTH = 40;
-function fret({ tincture }: SimpleCharge) {
+async function fret({ tincture }: SimpleCharge) {
+  const { stroke, pattern } = await resolveTincture(tincture);
+
   const halfWidth = FRET_WIDTH / 2;
   const thirdWidth = FRET_WIDTH / 3;
 
@@ -2030,6 +2081,7 @@ function fret({ tincture }: SimpleCharge) {
   // but would still require patching-up of the outline to produce the proper visual layering, and
   // doesn't have a good way to make sure the open ends in the four corners also have an outline.
   return svg.g(
+    pattern,
     svg.line(
       [-halfWidth - outlineWidth, -halfWidth - outlineWidth],
       [halfWidth + outlineWidth, halfWidth + outlineWidth],
@@ -2039,8 +2091,8 @@ function fret({ tincture }: SimpleCharge) {
       }
     ),
     svg.line([-halfWidth, -halfWidth], [halfWidth, halfWidth], {
+      ...stroke,
       strokeWidth,
-      classes: { stroke: tincture },
     }),
     svg.path(
       [
@@ -2063,7 +2115,7 @@ function fret({ tincture }: SimpleCharge) {
         { type: "L", loc: [0, thirdWidth] },
         { type: "Z" },
       ],
-      { strokeWidth: strokeWidth, classes: { stroke: tincture } }
+      { ...stroke, strokeWidth: strokeWidth }
     ),
     svg.line(
       [-halfWidth - outlineWidth, halfWidth + outlineWidth],
@@ -2074,35 +2126,49 @@ function fret({ tincture }: SimpleCharge) {
       }
     ),
     svg.line([-halfWidth, halfWidth], [halfWidth, -halfWidth], {
+      ...stroke,
       strokeWidth,
-      classes: { stroke: tincture },
     }),
-    // Patch up the first line to have it appear over the last one, as is the style.
-    svg.line([-strokeWidth, -strokeWidth], [strokeWidth, strokeWidth], {
-      strokeWidth: strokeWidth + 0.5,
-      classes: { stroke: "sable" },
-    }),
+    svg.line(
+      // Patch up the first line to have it appear over the last one, as is the style.
+      [-strokeWidth, -strokeWidth],
+      [strokeWidth, strokeWidth],
+      { strokeWidth: strokeWidth + 0.5, classes: { stroke: "sable" } }
+    ),
     svg.line(
       // Bump this out to be longer so that it doesn't produce visual artifacts.
       [-strokeWidth - 1, -strokeWidth - 1],
       [strokeWidth + 1, strokeWidth + 1],
-      {
-        strokeWidth,
-        classes: { stroke: tincture },
-      }
+      { ...stroke, strokeWidth }
     )
   );
 }
 
 async function escallop({ tincture }: SimpleCharge) {
-  const escallop = (await fetchComplexSvg("escallop")).cloneNode(true);
-  escallop.classList.add(tincture);
+  const { fill, pattern } = await resolveTincture(tincture, {
+    translate: [1.5, -7],
+  });
+  const escallop = await fetchMutableComplexSvg("escallop");
+  maybeAppendChild(escallop, pattern);
+  if ("classes" in fill) {
+    escallop.classList.add(fill.classes.fill);
+  } else {
+    applySvgAttributes(escallop, fill);
+  }
   return escallop;
 }
 
 async function fleurDeLys({ tincture }: SimpleCharge) {
-  const fleurDeLys = (await fetchComplexSvg("fleur-de-lys")).cloneNode(true);
-  fleurDeLys.classList.add(tincture);
+  const { fill, pattern } = await resolveTincture(tincture, {
+    translate: [3.5, 5],
+  });
+  const fleurDeLys = await fetchMutableComplexSvg("fleur-de-lys");
+  maybeAppendChild(fleurDeLys, pattern);
+  if ("classes" in fill) {
+    fleurDeLys.classList.add(fill.classes.fill);
+  } else {
+    applySvgAttributes(fleurDeLys, fill);
+  }
   return fleurDeLys;
 }
 
@@ -2122,10 +2188,18 @@ async function lion({
   attitude,
   placement,
 }: LionCharge) {
-  const lion = (await fetchComplexSvg("lion", attitude)).cloneNode(true);
-  lion.classList.add(tincture);
-  lion.classList.add(`armed-${armed}`);
-  lion.classList.add(`langued-${langued}`);
+  const lion = await fetchMutableComplexSvg("lion", attitude);
+  const { fill, pattern } = await resolveTincture(tincture);
+  maybeAppendChild(lion, pattern);
+  if ("classes" in fill) {
+    lion.classList.add(fill.classes.fill);
+    lion.classList.add(`armed-${armed}`);
+    lion.classList.add(`langued-${langued}`);
+  } else {
+    applySvgAttributes(lion, fill);
+    // TODO: This doesn't support armed/langued for furs. Which is... okay?
+  }
+
   if (placement === "pale" && HORIZONTALLY_STRETCHED_ATTITUDES.has(attitude)) {
     // This is a bit of a hack! But it makes the Bavarian arms look a little less stupid overall.
     // Really, the passant variants should be naturally wider, as that is how they are typically shown.
@@ -2138,7 +2212,7 @@ async function lion({
 
 async function escutcheon({ content }: EscutcheonCharge) {
   const escutcheon = svg.g(
-    field("argent"),
+    await field("argent"),
     ...(await escutcheonContent(content)),
     svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } })
   );
@@ -2192,6 +2266,107 @@ async function nonOrdinaryCharge(
       return escutcheon(charge);
     default:
       assertNever(charge);
+  }
+}
+
+// #endregion
+
+// #region TINCTURES
+// ----------------------------------------------------------------------------
+
+// Hardcoded to match the specifics of this SVG. Calculated with largest/smallest-running-sum of the
+// path commands making up the pattern. Note that for doing that calculation, the `c` commands
+// should only use every third coordinate, as the first two of each triplet are control points.
+const ERMINE_WIDTH = 14.69366;
+const ERMINE_HEIGHT = 23.71317;
+
+// Returns a pattern that is centered on the whole shield's width/height. Plan accordingly when
+// using scale/transform on the element that refers to this pattern, as it may behave unexpectedly.
+async function getErmineTincture(
+  foreground: ColorOrMetal,
+  background: ColorOrMetal
+): Promise<SVGPatternElement> {
+  const ermine1 = await fetchMutableComplexSvg("ermine");
+  // n.b. will be inherited by the copy.
+  applyClasses(ermine1, { fill: foreground });
+
+  const ermine2 = ermine1.cloneNode(true);
+  Transforms.apply(ermine2, {
+    // Additional .5 is to add spacing between adjacent marks.
+    translate: [1.5 * ERMINE_WIDTH, 1.5 * ERMINE_HEIGHT],
+  });
+
+  const pattern = svg.pattern(
+    {
+      viewBox: [
+        // Additional .25 is to add spacing between adjacent marks.
+        [-0.25 * ERMINE_WIDTH, -0.25 * ERMINE_HEIGHT],
+        // Additional 1 is to compensate for .25 + .5 + .25 added for spacing in each dimension.
+        [3 * ERMINE_WIDTH, 3 * ERMINE_HEIGHT],
+      ],
+      x: -W_2,
+      y: -H_2,
+      // 4 arbitrarily chosen to look nice; .5 so that we use half a tile (each of which has two
+      // ermines in it) so the unit of tiling isn't obvious and asymmetrical.
+      width: W / 4.5,
+      height: (W / 4.5) * (ERMINE_HEIGHT / ERMINE_WIDTH),
+    },
+    svg.rect(
+      [-0.25 * ERMINE_WIDTH, -0.25 * ERMINE_HEIGHT],
+      // rect takes x2/y2 not w/h, so inline the math (3 * W - 0.25 * W; same for H)
+      [2.75 * ERMINE_WIDTH, 2.75 * ERMINE_HEIGHT],
+      { classes: { fill: background } }
+    ),
+    ermine1,
+    ermine2
+  );
+  pattern.id = uniqueId("pattern-ermine");
+  return pattern;
+}
+
+async function resolveTincture(
+  tincture: Tincture,
+  patternTransform: Transforms = {}
+): Promise<{
+  // The value of classes instead of just setting fill/stroke directly is that complex charges like
+  // lions can use CSS to choose which sub-elements should respect the color, as well as tweak
+  // things like lightness.
+  fill: { fill: SvgColor } | { classes: { fill: ColorOrMetal } };
+  stroke: { stroke: SvgColor } | { classes: { stroke: ColorOrMetal } };
+  pattern?: SVGPatternElement;
+}> {
+  // It has to be rewritten based on the context it's defined in before we attempt to resolve it.
+  assert(
+    tincture != "counterchanged",
+    "cannot resolve a counterchanged tincture"
+  );
+
+  async function getErmineBasedPattern(
+    foreground: ColorOrMetal,
+    background: ColorOrMetal
+  ) {
+    const pattern = await getErmineTincture(foreground, background);
+    applySvgAttributes(pattern, {
+      patternTransform: Transforms.toString(patternTransform),
+    });
+    const color = `url(#${pattern.id})` as const;
+    return { fill: { fill: color }, stroke: { stroke: color }, pattern };
+  }
+
+  switch (tincture) {
+    case "ermine":
+      return getErmineBasedPattern("sable", "argent");
+    case "ermines":
+      return getErmineBasedPattern("argent", "sable");
+    case "erminois":
+      return getErmineBasedPattern("sable", "or");
+    case "pean":
+      return getErmineBasedPattern("or", "sable");
+    default:
+      return {
+        fill: { classes: { fill: tincture } },
+        stroke: { classes: { stroke: tincture } },
+      };
   }
 }
 
@@ -2257,7 +2432,7 @@ function wrapSimpleTreatment(
   return (xLength, invertY, side, alignment = "start") => {
     const chosenTreatment =
       side !== "primary" && onlyRenderPrimary
-        ? straightLineTreatment
+        ? (length: number) => RelativeTreatmentPath.line([length, 0])
         : treatment;
 
     const invertX = xLength < 0;
@@ -2290,21 +2465,11 @@ function wrapSimpleTreatment(
   };
 }
 
-function relativePathFor(
-  start: Coordinate | undefined,
-  main: Coordinate | undefined,
-  end: Coordinate | undefined
-): RelativeTreatmentPath {
-  return [
-    { type: "m", loc: start ?? [0, 0] },
-    main ? [{ type: "l", loc: main }] : [],
-    { type: "m", loc: end ?? [0, 0] },
-  ];
-}
-
 function relativePathsToClosedLoop(
   ...paths: RelativeTreatmentPath[]
 ): PathCommand.Relative[] {
+  assert(paths.length > 0, "must have at least one path to render");
+
   const commands: PathCommand.Relative[] = [
     paths[0][0],
     ...paths[0][1],
@@ -2324,7 +2489,18 @@ function relativePathsToClosedLoop(
   }
   commands.pop();
   commands.push({ type: "z" });
-  return commands;
+  return [
+    // Always include the first move, which is necessary to make the path valid.
+    commands[0],
+    ...commands.slice(1).filter(
+      // Remove no-op commands just so that the SVG is easier to read and debug.
+      (c) =>
+        !(
+          (c.type === "l" && c.loc[0] === 0 && c.loc[1] === 0) ||
+          (c.type === "m" && c.loc[0] === 0 && c.loc[1] === 0)
+        )
+    ),
+  ];
 }
 
 relativePathsToClosedLoop.debug = (
@@ -2332,14 +2508,6 @@ relativePathsToClosedLoop.debug = (
 ): PathCommand.Relative[] => {
   return paths.flat(2).map((c) => (c.type === "m" ? { ...c, type: "l" } : c));
 };
-
-function straightLineTreatment(length: number): RelativeTreatmentPath {
-  return [
-    { type: "m", loc: [0, 0] },
-    [{ type: "l", loc: [length, 0] }],
-    { type: "m", loc: [0, 0] },
-  ];
-}
 
 function embattled(length: number): RelativeTreatmentPath {
   const xStep = W / 12;
@@ -2450,12 +2618,13 @@ function wavy(length: number): RelativeTreatmentPath {
   ];
 }
 
-const TREATMENTS: Record<Treatment, TreatmentPathGenerator> = {
+const TREATMENTS: Record<Treatment | "untreated", TreatmentPathGenerator> = {
   "embattled-counter-embattled": wrapSimpleTreatment(embattled, true, false),
   embattled: wrapSimpleTreatment(embattled, true, true),
   engrailed: wrapSimpleTreatment(engrailed, false, false),
   indented: wrapSimpleTreatment(indented, true, false),
   wavy: wrapSimpleTreatment(wavy, true, false),
+  untreated: (length: number) => RelativeTreatmentPath.line([length, 0]),
 };
 
 // #endregion
@@ -2730,11 +2899,13 @@ const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
 // #region HIGHER-ORDER ELEMENTS
 // ----------------------------------------------------------------------------
 
-function field(tincture: Tincture) {
-  // Expand the height so that when this is rendered on the extra-tall quarter segments it still fills.
-  return svg.rect([-W_2, -H_2], [W_2, H_2 + 2 * (H_2 - W_2)], {
-    classes: { fill: tincture },
-  });
+async function field(tincture: Tincture) {
+  const { fill, pattern } = await resolveTincture(tincture);
+  return svg.g(
+    pattern,
+    // Expand the height so that when this is rendered on the extra-tall quarter segments it still fills.
+    svg.rect([-W_2, -H_2], [W_2, H_2 + 2 * (H_2 - W_2)], fill)
+  );
 }
 
 const ESCUTCHEON_PATH: PathCommand.Any[] = [
@@ -2779,21 +2950,21 @@ const CANTON_PATH: PathCommand.Any[] = [
   { type: "z" },
 ];
 
-async function simpleContent(element: Charge): Promise<SVGElement[]> {
+async function charge(element: Charge): Promise<SVGElement[]> {
   if ("canton" in element) {
-    const g = svg.g();
+    const { fill, pattern } = await resolveTincture(element.canton);
+    const g = svg.g(pattern);
     Transforms.apply(g, { origin: [-W_2, -H_2], scale: CANTON_SCALE_FACTOR });
     g.style.clipPath = `path("${PathCommand.toDString(CANTON_PATH)}") view-box`;
-    g.appendChild(svg.path(CANTON_PATH, { classes: { fill: element.canton } }));
-    g.classList.add(`fill-${element.canton}`);
+    g.appendChild(svg.path(CANTON_PATH, fill));
     for (const c of element.charges ?? []) {
-      g.append(...(await simpleContent(c)));
+      g.append(...(await charge(c)));
     }
     return [g];
   } else if ("on" in element) {
     return on(element);
   } else if ("ordinary" in element) {
-    return [ORDINARIES[element.ordinary](element)];
+    return [await ORDINARIES[element.ordinary](element)];
   } else if ("charge" in element) {
     const children: SVGElement[] = [];
     const locator = CHARGE_LOCATORS[element.placement ?? "none"];
@@ -2888,15 +3059,15 @@ async function escutcheonContent(
     // This should be prevented in grammar, so this should never fire.
     assert(partition !== UNSUPPORTED, `cannot partition with this ordinary`);
 
-    const id = uniqueId("parted-mask-");
+    const id = uniqueId("parted-mask");
     const mask = svg.mask(
       { id },
       svg.path(partition(content.treatment), { fill: "white" })
     );
 
-    const g1 = svg.g(field(content.first));
+    const g1 = svg.g(await field(content.first));
     g1.setAttribute("mask", `url(#${id})`);
-    const g2 = svg.g(field(content.second));
+    const g2 = svg.g(await field(content.second));
 
     // Add g2 first so that it's underneath g1, which is the masked one.
     const children: SVGElement[] = [mask, g2, g1];
@@ -2917,14 +3088,14 @@ async function escutcheonContent(
           overwriteCounterchangedTincture(c, content.second)
         );
         for (const c of counterchangedSecond) {
-          g1.append(...(await simpleContent(c)));
+          g1.append(...(await charge(c)));
         }
         for (const c of counterchangedFirst) {
-          g2.append(...(await simpleContent(c)));
+          g2.append(...(await charge(c)));
         }
       } else {
         for (const c of content.charges) {
-          children.push(...(await simpleContent(c)));
+          children.push(...(await charge(c)));
         }
       }
     }
@@ -2959,7 +3130,7 @@ async function escutcheonContent(
 
     for (const e of Object.values(quartered)) {
       if (e.children.length === 0) {
-        e.appendChild(field("argent"));
+        e.appendChild(await field("argent"));
       }
     }
 
@@ -2979,7 +3150,7 @@ async function escutcheonContent(
     children.push(line);
 
     if (content.overall) {
-      children.push(...(await simpleContent(content.overall)));
+      children.push(...(await charge(content.overall)));
     }
 
     return children;
@@ -2987,11 +3158,11 @@ async function escutcheonContent(
     const g1 = svg.g();
     const g2 = svg.g();
 
-    g1.appendChild(field(content.first));
-    g2.appendChild(field(content.second));
+    g1.appendChild(await field(content.first));
+    g2.appendChild(await field(content.second));
 
     // TODO: Deduplicate this with party-per, if possible, or at least make them consistent.
-    const id = uniqueId("variation-pattern-");
+    const id = uniqueId("variation-pattern");
     const pattern = VARIATIONS[content.variation.type](content.variation.count);
     pattern.id = id;
     const mask = svg.mask(
@@ -3013,29 +3184,29 @@ async function escutcheonContent(
           overwriteCounterchangedTincture(c, content.second)
         );
         for (const c of counterchangedSecond) {
-          g1.append(...(await simpleContent(c)));
+          g1.append(...(await charge(c)));
         }
         for (const c of counterchangedFirst) {
-          g2.append(...(await simpleContent(c)));
+          g2.append(...(await charge(c)));
         }
       } else {
         for (const c of content.charges) {
-          children.push(...(await simpleContent(c)));
+          children.push(...(await charge(c)));
         }
       }
     }
     return children;
   } else {
-    const children: SVGElement[] = [field(content.tincture)];
+    const children: SVGElement[] = [await field(content.tincture)];
     for (const c of content.charges ?? []) {
-      children.push(...(await simpleContent(c)));
+      children.push(...(await charge(c)));
     }
     return children;
   }
 }
 
 async function on({ on, surround, charge }: On): Promise<SVGElement[]> {
-  const children: SVGElement[] = [ORDINARIES[on.ordinary](on)];
+  const children: SVGElement[] = [await ORDINARIES[on.ordinary](on)];
 
   if (charge != null) {
     if (charge.placement != null) {
@@ -3079,7 +3250,7 @@ async function inescutcheon(
   { location, content }: Inescutcheon
 ) {
   const escutcheon = svg.g(
-    field("argent"),
+    await field("argent"),
     ...(await escutcheonContent(content)),
     svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } })
   );
@@ -3174,7 +3345,7 @@ async function parseAndRenderBlazon(initialAmbiguousIndex: number = 0) {
     )}") view-box`;
     rendered.appendChild(container);
     // Make sure there's always a default background.
-    container.appendChild(field("argent"));
+    container.appendChild(await field("argent"));
 
     container.append(...(await escutcheonContent(blazon.main)));
     if (blazon.inescutcheon != null) {
@@ -3272,15 +3443,41 @@ form.addEventListener("submit", async (e) => {
   await parseAndRenderBlazon();
 });
 
-const TINCTURES = [
-  "argent",
-  "azure",
-  "gules",
-  "or",
-  "purpure",
-  "sable",
-  "vert",
-];
+// These must be integers since the implementation uses a multiset to realize the different values.
+const TINCTURE_WEIGHTS: Record<Tincture, number> = {
+  // Common colors.
+  argent: 8,
+  azure: 8,
+  gules: 8,
+  or: 8,
+  sable: 8,
+
+  // Uncommon colors.
+  vert: 4,
+  purpure: 1,
+
+  // Furs.
+  ermine: 2,
+  ermines: 1,
+  erminois: 1,
+  pean: 1,
+
+  // It's REALLY hard to generate a random blazon where counterchanged makes sense, since the
+  // grammar does not express a relationship between the context ("party per") and the tincture.
+  // Just ban it to reduce nonsense blazons by a lot.
+  counterchanged: 0,
+};
+
+const WEIGHTED_TINCTURE_ARRAY = Object.entries(TINCTURE_WEIGHTS).reduce<
+  Tincture[]
+>((prev, [tincture, weight]) => [...prev, ...Array(weight).fill(tincture)], []);
+function randomTincture(): Tincture {
+  return WEIGHTED_TINCTURE_ARRAY[
+    Math.floor(Math.random() * WEIGHTED_TINCTURE_ARRAY.length)
+  ];
+}
+
+const TINCTURES = Object.keys(TINCTURE_WEIGHTS) as Tincture[];
 const TINCTURE_REGEX = new RegExp(`\\b(${TINCTURES.join("|")})\\b`, "g");
 const TINCTURE_PAIR_REGEX = new RegExp(
   `\\b(${TINCTURES.join("|")}) and (${TINCTURES.join("|")})\\b`,
@@ -3300,16 +3497,12 @@ function generateRandomBlazon() {
         // Periods are the only punctuation of significance; they separate the main blazon from
         // augmentations.
         .replaceAll(/ ?\./g, ".")
-        .replaceAll(
-          // It's REALLY hard to generate a random blazon where counterchanged makes sense, since the
-          // grammar does not express a relationship between the context ("party per") and the tincture.
-          // Since it's 1/8th of the colors, just ban it to reduce nonsense blazons by a lot.
-          /\bcounterchanged\b/g,
-          () => TINCTURES[Math.floor(Math.random() * TINCTURES.length)]
-        )
-        .replaceAll(TINCTURE_PAIR_REGEX, (_, first, second) => {
+        // Ignore any tinctures generated by the grammar since they are equally likely in all
+        // places; instead, rewrite them according to our probabilities.
+        .replaceAll(TINCTURE_REGEX, randomTincture)
+        .replaceAll(TINCTURE_PAIR_REGEX, (_, first: string, second: string) => {
           while (first === second) {
-            second = TINCTURES[Math.floor(Math.random() * TINCTURES.length)];
+            second = randomTincture();
           }
           return `${first} and ${second}`;
         })
