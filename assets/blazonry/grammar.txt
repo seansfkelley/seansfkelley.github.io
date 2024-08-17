@@ -193,6 +193,7 @@ Tincture ->
   | "purpure"        {% id %}
   | "sable"          {% id %}
   | "vert"           {% id %}
+  | "cendrée"        {% literal("cendree") %}
   | "ermine"         {% id %}
   | "ermines"        {% id %}
   | "erminois"       {% id %}

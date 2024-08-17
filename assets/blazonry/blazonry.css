@@ -184,6 +184,14 @@ a[data-example]:not(:hover) {
   stroke: blueviolet;
 }
 
+.fill-cendree {
+  fill: grey;
+}
+
+.stroke-cendree {
+  stroke: grey;
+}
+
 .fill-none {
   fill: none;
 }
@@ -407,6 +415,20 @@ a[data-example]:not(:hover) {
 .lion.langued-purpure .langue {
   fill: blueviolet !important;
 }
+.lion.cendree {
+  fill: none;
+}
+.lion.cendree .body,
+.lion.cendree .claw,
+.lion.cendree .langue {
+  fill: grey;
+}
+.lion.armed-cendree .claw {
+  fill: grey !important;
+}
+.lion.langued-cendree .langue {
+  fill: grey !important;
+}
 
 .escallop .outline {
   stroke: black;
@@ -475,6 +497,15 @@ a[data-example]:not(:hover) {
 }
 .escallop.purpure .dark {
   fill: #701ac0;
+}
+.escallop.cendree {
+  fill: none;
+}
+.escallop.cendree .light {
+  fill: grey;
+}
+.escallop.cendree .dark {
+  fill: #676767;
 }
 
 .fleur-de-lys .outline {
@@ -565,4 +596,16 @@ a[data-example]:not(:hover) {
 }
 .fleur-de-lys.purpure .highlight {
   fill: #af6eeb;
+}
+.fleur-de-lys.cendree {
+  fill: none;
+}
+.fleur-de-lys.cendree .main {
+  fill: grey;
+}
+.fleur-de-lys.cendree .lowlight {
+  fill: #737373;
+}
+.fleur-de-lys.cendree .highlight {
+  fill: #a6a6a6;
 }
