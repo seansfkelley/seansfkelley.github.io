@@ -884,7 +884,9 @@ chevron.partition = (treatment) => {
 const CROSS_WIDTH = W / 4;
 const CROSS_VERTICAL_OFFSET = (H - W) / 2;
 async function cross({ tincture, cotised, treatment }) {
-    const { fill, pattern } = await resolveTincture(tincture);
+    const { fill, pattern } = await resolveTincture(tincture, {
+        translate: [0, 12],
+    });
     const cross = svg.g(pattern);
     const top = [0, -H_2];
     const bottom = [0, H_2];
@@ -1189,8 +1191,8 @@ const ORDINARIES = {
 // ----------------------------------------------------------------------------
 async function rondel({ tincture }) {
     const { fill, pattern } = await resolveTincture(tincture, {
-        scale: 0.4,
-        translate: [0, 6.5],
+        scale: 0.5,
+        translate: [0, 11],
     });
     return svg.g(pattern, 
     // Not quite the full 40x40. Since these are the more visually heavyweight and fill out their
@@ -1200,7 +1202,7 @@ async function rondel({ tincture }) {
 async function mullet({ tincture }) {
     const { fill, pattern } = await resolveTincture(tincture, {
         scale: 0.4,
-        translate: [0, 5],
+        translate: [0, 8],
     });
     return svg.g(pattern, svg.path([
         // These awkward numbers keep the proportions nice while just filling out a 40x40 square.
@@ -1374,30 +1376,32 @@ const ERMINE_HEIGHT = 23.71317;
 // Returns a pattern that is centered on the whole shield's width/height. Plan accordingly when
 // using scale/transform on the element that refers to this pattern, as it may behave unexpectedly.
 async function getErmineTincture(foreground, background) {
+    const spacing = ERMINE_WIDTH / 3;
     const ermine1 = await fetchMutableComplexSvg("ermine");
-    // n.b. will be inherited by the copy.
+    // n.b. fill will be inherited by the copy.
     applyClasses(ermine1, { fill: foreground });
     const ermine2 = ermine1.cloneNode(true);
+    Transforms.apply(ermine1, {
+        translate: [spacing, spacing],
+    });
     Transforms.apply(ermine2, {
         // Additional .5 is to add spacing between adjacent marks.
-        translate: [1.5 * ERMINE_WIDTH, 1.5 * ERMINE_HEIGHT],
+        translate: [3 * spacing + ERMINE_WIDTH, 3 * spacing + ERMINE_HEIGHT],
     });
+    const width = 4 * spacing + 2 * ERMINE_WIDTH;
+    const height = 4 * spacing + 2 * ERMINE_HEIGHT;
     const pattern = svg.pattern({
         viewBox: [
-            // Additional .25 is to add spacing between adjacent marks.
-            [-0.25 * ERMINE_WIDTH, -0.25 * ERMINE_HEIGHT],
-            // Additional 1 is to compensate for .25 + .5 + .25 added for spacing in each dimension.
-            [3 * ERMINE_WIDTH, 3 * ERMINE_HEIGHT],
+            [0, 0],
+            [width, height],
         ],
         x: -W_2,
         y: -H_2,
         // 4 arbitrarily chosen to look nice; .5 so that we use half a tile (each of which has two
         // ermines in it) so the unit of tiling isn't obvious and asymmetrical.
         width: W / 4.5,
-        height: (W / 4.5) * (ERMINE_HEIGHT / ERMINE_WIDTH),
-    }, svg.rect([-0.25 * ERMINE_WIDTH, -0.25 * ERMINE_HEIGHT], 
-    // rect takes x2/y2 not w/h, so inline the math (3 * W - 0.25 * W; same for H)
-    [2.75 * ERMINE_WIDTH, 2.75 * ERMINE_HEIGHT], { classes: { fill: background } }), ermine1, ermine2);
+        height: (W / 4.5) * (height / width),
+    }, svg.rect([0, 0], [4 * spacing + 2 * ERMINE_WIDTH, 4 * spacing + 2 * ERMINE_HEIGHT], { classes: { fill: background } }), ermine1, ermine2);
     pattern.id = uniqueId("pattern-ermine");
     return pattern;
 }
