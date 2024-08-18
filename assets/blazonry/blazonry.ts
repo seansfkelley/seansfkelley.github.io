@@ -3249,10 +3249,7 @@ async function on({ on, surround, charge }: On): Promise<SVGElement[]> {
   return children;
 }
 
-async function inescutcheon(
-  parent: SVGElement,
-  { location, content }: Inescutcheon
-) {
+async function inescutcheon({ location, content }: Inescutcheon) {
   const escutcheon = svg.g(
     await field("argent"),
     ...(await escutcheonContent(content)),
@@ -3266,7 +3263,7 @@ async function inescutcheon(
     scale: 0.25,
     translate: Location_.toOffset(location),
   });
-  parent.appendChild(escutcheon);
+  return escutcheon;
 }
 
 // #endregion
@@ -3277,7 +3274,8 @@ async function inescutcheon(
 function recursivelyOmitNullish<T>(value: T): T {
   assert(value != null, "cannot omit nullish root values");
   if (Array.isArray(value)) {
-    return value.filter((e) => e != null).map(recursivelyOmitNullish) as T;
+    // Cast: compiler does not know that narrowing `value` to an array means T is an array type.
+    return value.filter(isNotNullish).map(recursivelyOmitNullish) as T;
   } else if (typeof value === "object") {
     const o: Record<string, any> = {};
     for (const [k, v] of Object.entries(value)) {
@@ -3332,34 +3330,30 @@ async function parseAndRenderBlazon(initialAmbiguousIndex: number = 0) {
   ): Promise<void> {
     blazon = recursivelyOmitNullish(blazon);
 
-    ast.innerHTML = JSON.stringify(blazon, null, 2);
-
-    rendered.innerHTML = "";
-    rendered.appendChild(
-      svg.path(ESCUTCHEON_PATH, {
-        strokeWidth: 2,
-        classes: { stroke: "sable" },
-      })
-    );
-
     // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
-    const container = svg.g();
+    const container = svg.g(
+      ...(await escutcheonContent(blazon.main)),
+      blazon.inescutcheon != null
+        ? await inescutcheon(blazon.inescutcheon)
+        : undefined
+    );
     container.style.clipPath = `path("${PathCommand.toDString(
       ESCUTCHEON_PATH
     )}") view-box`;
-    rendered.appendChild(container);
-    // Make sure there's always a default background.
-    container.appendChild(await field("argent"));
 
-    container.append(...(await escutcheonContent(blazon.main)));
-    if (blazon.inescutcheon != null) {
-      await inescutcheon(container, blazon.inescutcheon);
-    }
+    ast.innerHTML = JSON.stringify(blazon, null, 2);
 
-    renderedPreviewContainer.innerHTML = "";
+    rendered.replaceChildren(
+      svg.path(ESCUTCHEON_PATH, {
+        strokeWidth: 2,
+        classes: { stroke: "sable" },
+      }),
+      container
+    );
+
     const clonedRendered = rendered.cloneNode(true);
     clonedRendered.removeAttribute("id");
-    renderedPreviewContainer.appendChild(clonedRendered);
+    renderedPreviewContainer.replaceChildren(clonedRendered);
 
     const url = new URL(window.location.href);
     url.hash = JSON.stringify({ text, index });
