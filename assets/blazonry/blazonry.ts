@@ -805,11 +805,9 @@ function deepEqual<T>(one: T, two: T): boolean {
   }
 }
 
-type SvgUrlReference = `url(#${string})`;
-
 // This is obviously not exhaustive, but the gist of it is that it's anything that can be slapped
 // right into a `fill` or `stroke` rule unmodified.
-type SvgColor = "white" | SvgUrlReference;
+type SvgColor = "white" | `url(#${string})`;
 
 type Radians = number & { __radians: unknown };
 const Radians = {
@@ -2291,16 +2289,15 @@ async function getErmineTincture(
 ): Promise<SVGPatternElement> {
   const spacing = ERMINE_WIDTH / 3;
 
-  const ermine1 = await fetchMutableComplexSvg("ermine");
+  const topLeft = await fetchMutableComplexSvg("ermine");
   // n.b. fill will be inherited by the copy.
-  applyClasses(ermine1, { fill: foreground });
-  const ermine2 = ermine1.cloneNode(true);
+  applyClasses(topLeft, { fill: foreground });
+  const bottomRight = topLeft.cloneNode(true);
 
-  Transforms.apply(ermine1, {
+  Transforms.apply(topLeft, {
     translate: [spacing, spacing],
   });
-  Transforms.apply(ermine2, {
-    // Additional .5 is to add spacing between adjacent marks.
+  Transforms.apply(bottomRight, {
     translate: [3 * spacing + ERMINE_WIDTH, 3 * spacing + ERMINE_HEIGHT],
   });
 
@@ -2316,17 +2313,14 @@ async function getErmineTincture(
       x: -W_2,
       y: -H_2,
       // 4 arbitrarily chosen to look nice; .5 so that we use half a tile (each of which has two
-      // ermines in it) so the unit of tiling isn't obvious and asymmetrical.
+      // ermines in it) so the unit of tiling isn't obvious and the whole pattern is vertically
+      // centered.
       width: W / 4.5,
       height: (W / 4.5) * (height / width),
     },
-    svg.rect(
-      [0, 0],
-      [4 * spacing + 2 * ERMINE_WIDTH, 4 * spacing + 2 * ERMINE_HEIGHT],
-      { classes: { fill: background } }
-    ),
-    ermine1,
-    ermine2
+    svg.rect([0, 0], [width, height], { classes: { fill: background } }),
+    topLeft,
+    bottomRight
   );
   pattern.id = uniqueId("pattern-ermine");
   return pattern;

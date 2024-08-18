@@ -1377,15 +1377,14 @@ const ERMINE_HEIGHT = 23.71317;
 // using scale/transform on the element that refers to this pattern, as it may behave unexpectedly.
 async function getErmineTincture(foreground, background) {
     const spacing = ERMINE_WIDTH / 3;
-    const ermine1 = await fetchMutableComplexSvg("ermine");
+    const topLeft = await fetchMutableComplexSvg("ermine");
     // n.b. fill will be inherited by the copy.
-    applyClasses(ermine1, { fill: foreground });
-    const ermine2 = ermine1.cloneNode(true);
-    Transforms.apply(ermine1, {
+    applyClasses(topLeft, { fill: foreground });
+    const bottomRight = topLeft.cloneNode(true);
+    Transforms.apply(topLeft, {
         translate: [spacing, spacing],
     });
-    Transforms.apply(ermine2, {
-        // Additional .5 is to add spacing between adjacent marks.
+    Transforms.apply(bottomRight, {
         translate: [3 * spacing + ERMINE_WIDTH, 3 * spacing + ERMINE_HEIGHT],
     });
     const width = 4 * spacing + 2 * ERMINE_WIDTH;
@@ -1398,10 +1397,11 @@ async function getErmineTincture(foreground, background) {
         x: -W_2,
         y: -H_2,
         // 4 arbitrarily chosen to look nice; .5 so that we use half a tile (each of which has two
-        // ermines in it) so the unit of tiling isn't obvious and asymmetrical.
+        // ermines in it) so the unit of tiling isn't obvious and the whole pattern is vertically
+        // centered.
         width: W / 4.5,
         height: (W / 4.5) * (height / width),
-    }, svg.rect([0, 0], [4 * spacing + 2 * ERMINE_WIDTH, 4 * spacing + 2 * ERMINE_HEIGHT], { classes: { fill: background } }), ermine1, ermine2);
+    }, svg.rect([0, 0], [width, height], { classes: { fill: background } }), topLeft, bottomRight);
     pattern.id = uniqueId("pattern-ermine");
     return pattern;
 }
