@@ -153,19 +153,6 @@ const Coordinate = {
         return [x * cos - y * sin, x * sin + y * cos];
     },
     /**
-     * Return the angle of the given line segment, in radians. Returns a value on [-pi, pi], according
-     * to the relative direction from the first to second point.
-     */
-    radians: ([x1, y1], [x2, y2]) => {
-        if (x1 === x2) {
-            // TODO: Confirm this is correct.
-            return ((y1 < y2 ? 1 : -1) * Math.PI) / 2;
-        }
-        else {
-            return Math.atan((y2 - y1) / (x2 - x1)) + (x2 < x1 ? Math.PI : 0);
-        }
-    },
-    /**
      * Reflect the coordinate over the given line segment.
      */
     reflect: ([x, y], [x1, y1], [x2, y2]) => {
@@ -704,7 +691,7 @@ bend.partition = (treatment) => {
     }
     else {
         const treatmentPath = TREATMENTS[treatment](BEND_LENGTH, false, "primary", "start");
-        RelativeTreatmentPath.rotate(treatmentPath, Math.PI / 4);
+        RelativeTreatmentPath.rotate(treatmentPath, Radians.EIGHTH_TURN);
         return [
             { type: "M", loc: topLeft },
             { type: "l", loc: treatmentPath[0].loc },
@@ -861,20 +848,20 @@ chevron.partition = (treatment) => {
     else {
         const [leftStart, leftMain, leftEnd] = TREATMENTS[treatment](Coordinate.length(midLeft, mid), false, "primary", "end");
         const [rightStart, rightMain, rightEnd] = TREATMENTS[treatment](Coordinate.length(mid, midRight), false, "primary", "start");
-        leftMain.forEach((c) => PathCommand.rotate(c, -Math.PI / 4));
-        rightMain.forEach((c) => PathCommand.rotate(c, Math.PI / 4));
+        leftMain.forEach((c) => PathCommand.rotate(c, Radians.NEG_EIGHTH_TURN));
+        rightMain.forEach((c) => PathCommand.rotate(c, Radians.EIGHTH_TURN));
         return [
             { type: "M", loc: topLeft },
             { type: "L", loc: midLeft },
             {
                 type: "l",
-                loc: Coordinate.rotate(Coordinate.add(leftStart.loc, leftEnd.loc), -Math.PI / 4),
+                loc: Coordinate.rotate(Coordinate.add(leftStart.loc, leftEnd.loc), Radians.NEG_EIGHTH_TURN),
             },
             ...leftMain,
             ...rightMain,
             {
                 type: "l",
-                loc: Coordinate.rotate(Coordinate.add(rightEnd.loc, rightStart.loc), Math.PI / 4),
+                loc: Coordinate.rotate(Coordinate.add(rightEnd.loc, rightStart.loc), Radians.EIGHTH_TURN),
             },
             { type: "L", loc: midRight },
             { type: "L", loc: topRight },
@@ -911,7 +898,7 @@ async function cross({ tincture, cotised, treatment }) {
         TREATMENTS[treatment ?? "untreated"](vLength, true, "secondary", "start"),
     ];
     for (const index of [0, 2, 4, 6, 8, 10]) {
-        RelativeTreatmentPath.rotate(treatments[index], Math.PI / 2);
+        RelativeTreatmentPath.rotate(treatments[index], Radians.QUARTER_TURN);
     }
     cross.appendChild(svg.path(relativePathsToClosedLoop(
     // Offset the path itself rather than translating the entire cross so that fur patterns are
@@ -1052,7 +1039,7 @@ pale.partition = (treatment) => {
     }
     else {
         const [start, main, end] = TREATMENTS[treatment](H, false, "primary", "start");
-        RelativeTreatmentPath.rotate([start, main, end], Math.PI / 2);
+        RelativeTreatmentPath.rotate([start, main, end], Radians.QUARTER_TURN);
         return [
             topLeft,
             topMid,
@@ -1089,7 +1076,7 @@ async function saltire({ tincture, cotised, treatment }) {
         TREATMENTS[treatment ?? "untreated"](-length, true, "secondary", "start"),
     ];
     for (const index of [1, 3, 5, 7, 9]) {
-        RelativeTreatmentPath.rotate(treatments[index], -Math.PI / 2);
+        RelativeTreatmentPath.rotate(treatments[index], Radians.NEG_QUARTER_TURN);
     }
     for (const t of treatments) {
         RelativeTreatmentPath.rotate(t, Radians.NEG_EIGHTH_TURN);
@@ -1157,9 +1144,9 @@ saltire.partition = (treatment) => {
     }
     else {
         const [start1, main1, end1] = TREATMENTS[treatment](Math.hypot(W, W), true, "primary", "center");
-        RelativeTreatmentPath.rotate([start1, main1, end1], (3 * Math.PI) / 4);
+        RelativeTreatmentPath.rotate([start1, main1, end1], (Radians.EIGHTH_TURN * 3));
         const [start2, main2, end2] = TREATMENTS[treatment](Math.hypot(W, W), true, "primary", "center");
-        RelativeTreatmentPath.rotate([start2, main2, end2], -(3 * Math.PI) / 4);
+        RelativeTreatmentPath.rotate([start2, main2, end2], (Radians.NEG_EIGHTH_TURN * 3));
         return [
             { type: "M", loc: topLeft.loc },
             topRight,
