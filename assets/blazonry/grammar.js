@@ -27,7 +27,7 @@ function $(o) {
 
   function nop() { return undefined; }
   function literal(l) { return () => l; }
-  function slugify(delegate) { return delegate[0].replaceAll(' ', '-'); }
+  function slugify(delegate) { return id(delegate).replaceAll(' ', '-'); }
   function spread(o) { return (delegate) => ({ ...id(delegate), ...o }); }
 var grammar = {
     Lexer: undefined,

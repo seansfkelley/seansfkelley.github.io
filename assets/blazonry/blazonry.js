@@ -2147,14 +2147,14 @@ async function on({ on, surround, charge }) {
     }
     return children;
 }
-async function inescutcheon(parent, { location, content }) {
+async function inescutcheon({ location, content }) {
     const escutcheon = svg.g(await field("argent"), ...(await escutcheonContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
     escutcheon.setAttribute("clip-path", `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`);
     Transforms.apply(escutcheon, {
         scale: 0.25,
         translate: Location_.toOffset(location),
     });
-    parent.appendChild(escutcheon);
+    return escutcheon;
 }
 // #endregion
 // #region INITIALIZATION
@@ -2162,7 +2162,8 @@ async function inescutcheon(parent, { location, content }) {
 function recursivelyOmitNullish(value) {
     assert(value != null, "cannot omit nullish root values");
     if (Array.isArray(value)) {
-        return value.filter((e) => e != null).map(recursivelyOmitNullish);
+        // Cast: compiler does not know that narrowing `value` to an array means T is an array type.
+        return value.filter(isNotNullish).map(recursivelyOmitNullish);
     }
     else if (typeof value === "object") {
         const o = {};
@@ -2202,26 +2203,19 @@ let previousNextEventHandler;
 async function parseAndRenderBlazon(initialAmbiguousIndex = 0) {
     async function render(blazon, index) {
         blazon = recursivelyOmitNullish(blazon);
+        // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
+        const container = svg.g(...(await escutcheonContent(blazon.main)), blazon.inescutcheon != null
+            ? await inescutcheon(blazon.inescutcheon)
+            : undefined);
+        container.style.clipPath = `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`;
         ast.innerHTML = JSON.stringify(blazon, null, 2);
-        rendered.innerHTML = "";
-        rendered.appendChild(svg.path(ESCUTCHEON_PATH, {
+        rendered.replaceChildren(svg.path(ESCUTCHEON_PATH, {
             strokeWidth: 2,
             classes: { stroke: "sable" },
-        }));
-        // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
-        const container = svg.g();
-        container.style.clipPath = `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`;
-        rendered.appendChild(container);
-        // Make sure there's always a default background.
-        container.appendChild(await field("argent"));
-        container.append(...(await escutcheonContent(blazon.main)));
-        if (blazon.inescutcheon != null) {
-            await inescutcheon(container, blazon.inescutcheon);
-        }
-        renderedPreviewContainer.innerHTML = "";
+        }), container);
         const clonedRendered = rendered.cloneNode(true);
         clonedRendered.removeAttribute("id");
-        renderedPreviewContainer.appendChild(clonedRendered);
+        renderedPreviewContainer.replaceChildren(clonedRendered);
         const url = new URL(window.location.href);
         url.hash = JSON.stringify({ text, index });
         history.replaceState(null, "", url);
