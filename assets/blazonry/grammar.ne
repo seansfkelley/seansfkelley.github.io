@@ -10,11 +10,19 @@
 %}
 
 SIMPLE_CHARGE[S, P] ->
-    Singular __ $S (__ Posture {% nth(1) %}):? __ Tincture                               {% (d) => ({
+    Singular __ $S (__ Posture {% nth(1) %}):? __ Tincture                             {% (d) => ({
       count: 1, posture: d[3], tincture: d[5]
     }) %}
   | Plural __ $P (__ Posture {% nth(1) %}):? __ Tincture (__ Placement {% nth(1) %}):? {% (d) => ({
       count: d[0], posture: d[3], tincture: d[5], placement: d[6]
+    }) %}
+
+SIMPLE_TINCTURELESS_CHARGE[S, P] ->
+    Singular __ $S (__ Posture {% nth(1) %}):?                             {% (d) => ({
+      count: 1, posture: d[3]
+    }) %}
+  | Plural __ $P (__ Posture {% nth(1) %}):? (__ Placement {% nth(1) %}):? {% (d) => ({
+      count: d[0], posture: d[3], placement: d[4]
     }) %}
 
 Blazon ->
@@ -83,6 +91,8 @@ NonOrdinaryCharge ->
   | SIMPLE_CHARGE["fret", "frets"]                                                        {% spread({ charge: 'fret' }) %}
   | SIMPLE_CHARGE["escallop", "escallops"]                                                {% spread({ charge: 'escallop' }) %}
   | SIMPLE_CHARGE[("fleur-de-lys" | "fleur-de-lis"), ("fleurs-de-lys" | "fleurs-de-lis")] {% spread({ charge: 'fleur-de-lys' }) %}
+  | SIMPLE_TINCTURELESS_CHARGE["bezant", "bezants"]                                       {% spread({ charge: 'rondel', tincture: 'or' }) %}
+  | SIMPLE_TINCTURELESS_CHARGE["torteau", ("torteaus" | "torteaux")]                      {% spread({ charge: 'rondel', tincture: 'gules' }) %}
   | Lion                                                                                  {% id %}
   | Escutcheon                                                                            {% id %}
 
