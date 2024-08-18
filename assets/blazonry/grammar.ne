@@ -10,7 +10,7 @@
 %}
 
 SIMPLE_CHARGE[S, P] ->
-    Singular __ $S (__ Posture {% nth(1) %}):? __ Tincture                               {% (d) => ({
+    Singular __ $S (__ Posture {% nth(1) %}):? __ Tincture                             {% (d) => ({
       count: 1, posture: d[3], tincture: d[5]
     }) %}
   | Plural __ $P (__ Posture {% nth(1) %}):? __ Tincture (__ Placement {% nth(1) %}):? {% (d) => ({
@@ -18,7 +18,7 @@ SIMPLE_CHARGE[S, P] ->
     }) %}
 
 SIMPLE_TINCTURELESS_CHARGE[S, P] ->
-    Singular __ $S (__ Posture {% nth(1) %}):?                               {% (d) => ({
+    Singular __ $S (__ Posture {% nth(1) %}):?                             {% (d) => ({
       count: 1, posture: d[3]
     }) %}
   | Plural __ $P (__ Posture {% nth(1) %}):? (__ Placement {% nth(1) %}):? {% (d) => ({
