@@ -1,7 +1,7 @@
 const audios = [...document.getElementsByTagName("audio")];
 const mute = document.getElementById("mute");
 
-/** @type HTMLAudioElement */
+/** @type HTMLAudioElement | undefined */
 let playing = undefined;
 let muted = false;
 
