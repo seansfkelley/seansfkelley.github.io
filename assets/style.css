@@ -572,11 +572,11 @@ hr {
 }
 
 html {
-  scroll-padding-top: calc(2.7rem + 29px);
+  scroll-padding-top: calc(2.7rem + 8px);
 }
 
 .site-header {
-  padding: 14px 0;
+  padding: 3.5px 0;
   border-bottom: 1px solid var(--brand-color-light);
   background-color: var(--background-color);
   position: sticky;
