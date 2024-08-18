@@ -12,6 +12,8 @@ FUTURE WORK and KNOWN ISSUES
 - Charges `on` an ordinary are often too close; especially 2s and 3s, and more especially on chief
   and fess.
 - Treated variations (e.g. "barry wavy", like ocean waves) is not supported.
+- Charges colored with variations (e.g. "rondel barry wavy argent and azure", i.e., "fountain") are
+  not supported.
 - Charges in quartered quadrants aren't pushed around to account for the curvature of the bottom of
   the arms; a proper rendering would make them more cramped rather than cut them off.
 - Cantons are proportionally scaled and cropped at the bottom, which mostly works but can cause
@@ -34,14 +36,14 @@ FUTURE WORK and KNOWN ISSUES
 - It's unclear what to do with nested counterchanges. If you have "on a canton counterchanged a
   rondel counterchanged" on a variated background, does the rondel match the background variation,
   or does it become invisible because it matches the canton's counterchanging?
-- Specialized charges that imply tinctures (or other attributes) like "bezant" (meaning "rondel or")
-  are not supported.
 - Furs are misaligned and the wrong size when applied to some charges or variations.
 - Embattled(-counter-embattled) treatments can leave visual artifacts due to a bit of a hack... try:
   - argent a chevron embattled sable
   - argent a cross embattled-counter-embattled sable
 - Mixing quarterly and variations can cause the bottom quarters to truncate the pattern:
   - quarterly first and fourth barry bendy of six azure and or second and third gules
+- When multiple charges are present, the counts in each row can be specified:
+  - argent four rondels gules one two and one
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
