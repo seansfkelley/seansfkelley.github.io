@@ -349,7 +349,7 @@ const RelativeTreatmentPath = {
   ],
   rotate: (
     [start, main, end]: RelativeTreatmentPath,
-    radians: number
+    radians: Radians
   ): void => {
     PathCommand.rotate(start, radians);
     main.forEach((c) => PathCommand.rotate(c, radians));
@@ -387,22 +387,10 @@ const Coordinate = {
   /**
    * Rotates the given coordinates about the origin.
    */
-  rotate: ([x, y]: Coordinate, radians: number): Coordinate => {
+  rotate: ([x, y]: Coordinate, radians: Radians): Coordinate => {
     const cos = Math.cos(radians);
     const sin = Math.sin(radians);
     return [x * cos - y * sin, x * sin + y * cos];
-  },
-  /**
-   * Return the angle of the given line segment, in radians. Returns a value on [-pi, pi], according
-   * to the relative direction from the first to second point.
-   */
-  radians: ([x1, y1]: Coordinate, [x2, y2]: Coordinate): number => {
-    if (x1 === x2) {
-      // TODO: Confirm this is correct.
-      return ((y1 < y2 ? 1 : -1) * Math.PI) / 2;
-    } else {
-      return Math.atan((y2 - y1) / (x2 - x1)) + (x2 < x1 ? Math.PI : 0);
-    }
   },
   /**
    * Reflect the coordinate over the given line segment.
@@ -499,7 +487,7 @@ namespace PathCommand {
     }
   }
 
-  export function rotate(e: Any, radians: number): void {
+  export function rotate(e: Any, radians: Radians): void {
     for (const c of SVG_ELEMENT_TO_COORDINATES[e.type](e as never)) {
       [c[0], c[1]] = Coordinate.rotate(c, radians);
     }
@@ -1225,7 +1213,7 @@ bend.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
       "primary",
       "start"
     );
-    RelativeTreatmentPath.rotate(treatmentPath, Math.PI / 4);
+    RelativeTreatmentPath.rotate(treatmentPath, Radians.EIGHTH_TURN);
     return [
       { type: "M", loc: topLeft },
       { type: "l", loc: treatmentPath[0].loc },
@@ -1496,8 +1484,8 @@ chevron.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
       "primary",
       "start"
     );
-    leftMain.forEach((c) => PathCommand.rotate(c, -Math.PI / 4));
-    rightMain.forEach((c) => PathCommand.rotate(c, Math.PI / 4));
+    leftMain.forEach((c) => PathCommand.rotate(c, Radians.NEG_EIGHTH_TURN));
+    rightMain.forEach((c) => PathCommand.rotate(c, Radians.EIGHTH_TURN));
     return [
       { type: "M", loc: topLeft },
       { type: "L", loc: midLeft },
@@ -1505,7 +1493,7 @@ chevron.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
         type: "l",
         loc: Coordinate.rotate(
           Coordinate.add(leftStart.loc, leftEnd.loc),
-          -Math.PI / 4
+          Radians.NEG_EIGHTH_TURN
         ),
       },
       ...leftMain,
@@ -1514,7 +1502,7 @@ chevron.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
         type: "l",
         loc: Coordinate.rotate(
           Coordinate.add(rightEnd.loc, rightStart.loc),
-          Math.PI / 4
+          Radians.EIGHTH_TURN
         ),
       },
       { type: "L", loc: midRight },
@@ -1559,7 +1547,7 @@ async function cross({ tincture, cotised, treatment }: Ordinary) {
   ];
 
   for (const index of [0, 2, 4, 6, 8, 10]) {
-    RelativeTreatmentPath.rotate(treatments[index], Math.PI / 2);
+    RelativeTreatmentPath.rotate(treatments[index], Radians.QUARTER_TURN);
   }
 
   cross.appendChild(
@@ -1831,7 +1819,7 @@ pale.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
       "primary",
       "start"
     );
-    RelativeTreatmentPath.rotate([start, main, end], Math.PI / 2);
+    RelativeTreatmentPath.rotate([start, main, end], Radians.QUARTER_TURN);
     return [
       topLeft,
       topMid,
@@ -1874,7 +1862,7 @@ async function saltire({ tincture, cotised, treatment }: Ordinary) {
   ];
 
   for (const index of [1, 3, 5, 7, 9]) {
-    RelativeTreatmentPath.rotate(treatments[index], -Math.PI / 2);
+    RelativeTreatmentPath.rotate(treatments[index], Radians.NEG_QUARTER_TURN);
   }
 
   for (const t of treatments) {
@@ -1984,7 +1972,10 @@ saltire.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
       "primary",
       "center"
     );
-    RelativeTreatmentPath.rotate([start1, main1, end1], (3 * Math.PI) / 4);
+    RelativeTreatmentPath.rotate(
+      [start1, main1, end1],
+      (Radians.EIGHTH_TURN * 3) as Radians
+    );
 
     const [start2, main2, end2] = TREATMENTS[treatment](
       Math.hypot(W, W),
@@ -1992,7 +1983,10 @@ saltire.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
       "primary",
       "center"
     );
-    RelativeTreatmentPath.rotate([start2, main2, end2], -(3 * Math.PI) / 4);
+    RelativeTreatmentPath.rotate(
+      [start2, main2, end2],
+      (Radians.NEG_EIGHTH_TURN * 3) as Radians
+    );
 
     return [
       { type: "M", loc: topLeft.loc },
