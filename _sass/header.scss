@@ -1,5 +1,7 @@
+@use "sass:math";
+
 $font-size-site-title: 1.5rem;
-$header-vertical-spacing: $spacing;
+$header-vertical-spacing: math.div($spacing, 4);
 
 html {
   // mathmathmath
