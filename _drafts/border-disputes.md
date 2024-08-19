@@ -15,7 +15,7 @@ In this post, we will explore solutions to long-standing border disputes propose
 
 Due to the nature of the goods and services in question, not all of them propose solutions to all the aforementioned disputes.[^provider] I think this is commendable; it is better to do one thing well than to try to solve all problems at the same time. As such, I will discuss only those solutions readily apparent in each good or service and leave the others unaddressed.
 
-[^provider]: On an actually somewhat serious note, it's worth pointing out that the providers of these goods and services may be restricted by their government to a specific rendition of the relevant maps (China is [known to do this](https://en.wikipedia.org/wiki/Restrictions_on_geographic_data_in_China#Map_content)) or may not even know that there is a border dispute at all and just picked whatever came up first on Google.
+[^provider]: On an actually somewhat serious note, it's worth pointing out that the providers of these goods and services may be restricted by their government to a specific rendition of the relevant maps (China is [known to do this](https://en.wikipedia.org/wiki/Restrictions_on_geographic_data_in_China#Map_content)) or may not even know that there is a border dispute at all and just picked whatever came up first on Google (which suggests the kind of power a private for-profit company can have over education and geopolitics).
 
 Non-disclaimer: links in this post to vendors like Amazon are not affiliate links. I won't make any money if you choose to express your geopolitical opinions by making purchases to goods or services linked through this post.
 
@@ -50,8 +50,9 @@ This map also makes some unrelated proposals around filling in large lakes in No
 ## TODO
 
 - https://www.amazon.com/Wood-World-Wall-Large-D%C3%A9cor/dp/B09BR3WFP7/ref=sr_1_9
-- insets to highlight the disputed area
-- baseline against Apple maps, which only uses dotted lines for Kashmir
-- name which disputes are covered by each item
+- include a section that shows what Apple maps shows
+  - only uses dotted lines for Kashmir
+  - assigns Crimea to Ukraine
+- name which disputes are covered by each item and include ea little preview for reference
 
 {% include next-previous.html %}
