@@ -11,7 +11,6 @@ FUTURE WORK and KNOWN ISSUES
   generally disliked for introducing complexity and ambiguity.
 - Charges `on` an ordinary are often too close; especially 2s and 3s, and more especially on chief
   and fess.
-- Treated variations (e.g. "barry wavy", like ocean waves) is not supported.
 - Charges colored with variations (e.g. "rondel barry wavy argent and azure", i.e., "fountain") are
   not supported.
 - Charges in quartered quadrants aren't pushed around to account for the curvature of the bottom of
@@ -235,6 +234,7 @@ interface VariationField {
 
 interface Variation {
   type: VariationName;
+  treatment?: Treatment;
   count?: number;
 }
 
@@ -326,8 +326,13 @@ interface NonOrdinaryChargeRenderer<T extends NonOrdinaryCharge> {
   (charge: T): SVGElement | Promise<SVGElement>;
 }
 
+type VariationWithCount = Variation & {
+  count: number;
+};
+
 interface VariationPatternGenerator {
-  (count?: number): SVGPatternElement;
+  (variation: VariationWithCount): SVGPatternElement;
+  defaultCount: number;
 }
 
 type RelativeTreatmentPath = [
@@ -2630,25 +2635,40 @@ const TREATMENTS: Record<Treatment | "untreated", TreatmentPathGenerator> = {
 // #region VARIATIONS
 // ----------------------------------------------------------------------------
 
-function barry(count: number = 6) {
+function barry({ treatment, count }: VariationWithCount) {
+  const width = W * 1.5; // 1.5: overrun to prevent visual artifacts around the left/right edges.
+  const height = H / (count / 2);
+
   return svg.pattern(
     {
       viewBox: [
         [0, 0],
-        [1, 4],
+        [width, height],
       ],
-      x: -W_2,
-      y: -H_2,
-      width: W,
-      height: H / (count / 2),
-      // Explicitly require non-uniform scaling; it's the easiest way to implement barry.
-      preserveAspectRatio: "none",
+      x: -width / 2,
+      y: -height / 4,
+      width,
+      height,
     },
-    svg.line([0, 3], [1, 3], { strokeWidth: 2, stroke: "white" })
+    svg.path(
+      relativePathsToClosedLoop(
+        RelativeTreatmentPath.offset([0, height / 4]),
+        TREATMENTS[treatment ?? "untreated"](width, false, "primary", "center"),
+        RelativeTreatmentPath.line([0, height / 2]),
+        TREATMENTS[treatment ?? "untreated"](
+          -width,
+          false,
+          "secondary",
+          "center"
+        )
+      ),
+      { fill: "white" }
+    )
   );
 }
+barry.defaultCount = 6;
 
-function barryBendy(count: number = 8) {
+function barryBendy({ count }: VariationWithCount) {
   const size = (2 * W) / count; // W < H, so we'll step based on that.
   // This angle allows nice patterning where a 2x2 checkered unit shifts horizontally by half a unit
   // (0.5) for every full checked unit height (2). So it lines up vertically nicely.
@@ -2674,8 +2694,9 @@ function barryBendy(count: number = 8) {
     svg.rect([1, 1], [2, 2], { fill: "white" })
   );
 }
+barryBendy.defaultCount = 8;
 
-function bendy(count: number = 8) {
+function bendy({ count }: VariationWithCount) {
   const width = (2 * Math.hypot(W, W)) / count;
   return svg.pattern(
     {
@@ -2696,8 +2717,9 @@ function bendy(count: number = 8) {
     svg.line([3, 0], [3, 1], { strokeWidth: 2, stroke: "white" })
   );
 }
+bendy.defaultCount = 8;
 
-function bendySinister(count: number = 8) {
+function bendySinister({ count }: VariationWithCount) {
   const width = (2 * Math.hypot(W, W)) / count;
   return svg.pattern(
     {
@@ -2718,8 +2740,9 @@ function bendySinister(count: number = 8) {
     svg.line([1, 0], [1, 1], { strokeWidth: 2, stroke: "white" })
   );
 }
+bendySinister.defaultCount = 8;
 
-function checky(count: number = 6) {
+function checky({ count }: VariationWithCount) {
   const size = (2 * W) / count; // W < H, so we'll step based on that.
   return svg.pattern(
     {
@@ -2736,8 +2759,9 @@ function checky(count: number = 6) {
     svg.rect([0, 1], [1, 2], { fill: "white" })
   );
 }
+checky.defaultCount = 6;
 
-function chevronny(count: number = 6) {
+function chevronny({ count }: VariationWithCount) {
   function roundUpToEven(n: number) {
     return n % 2 === 1 ? n + 1 : n;
   }
@@ -2779,8 +2803,9 @@ function chevronny(count: number = 6) {
     ...chevrons
   );
 }
+chevronny.defaultCount = 6;
 
-function fusilly(count: number = 8) {
+function fusilly({ count }: VariationWithCount) {
   const width = W / count;
   return svg.pattern(
     {
@@ -2804,10 +2829,11 @@ function fusilly(count: number = 8) {
     })
   );
 }
+fusilly.defaultCount = 8;
 
 // There is no visual reference I could find for this besides the arms of Bavaria, so the precise
 // positioning of the variations relative to the corners and edges matches the appearance there.
-function fusillyInBends(count: number = 8) {
+function fusillyInBends({ count }: VariationWithCount) {
   const width = W / count;
   return svg.pattern(
     {
@@ -2835,8 +2861,9 @@ function fusillyInBends(count: number = 8) {
     })
   );
 }
+fusillyInBends.defaultCount = 8;
 
-function lozengy(count: number = 8) {
+function lozengy({ count }: VariationWithCount) {
   const width = W / count;
   return svg.pattern(
     {
@@ -2860,8 +2887,9 @@ function lozengy(count: number = 8) {
     })
   );
 }
+lozengy.defaultCount = 8;
 
-function paly(count: number = 6) {
+function paly({ count }: VariationWithCount) {
   return svg.pattern(
     {
       viewBox: [
@@ -2878,6 +2906,7 @@ function paly(count: number = 6) {
     svg.line([3, 0], [3, 1], { strokeWidth: 2, stroke: "white" })
   );
 }
+paly.defaultCount = 6;
 
 const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
   barry,
@@ -3161,17 +3190,30 @@ async function escutcheonContent(
 
     // TODO: Deduplicate this with party-per, if possible, or at least make them consistent.
     const id = uniqueId("variation-pattern");
-    const pattern = VARIATIONS[content.variation.type](content.variation.count);
+    const count =
+      content.variation.count ??
+      VARIATIONS[content.variation.type].defaultCount;
+    const pattern = VARIATIONS[content.variation.type]({
+      count,
+      ...content.variation,
+    });
     pattern.id = id;
     const mask = svg.mask(
       { id: `${id}-mask` },
       // TODO: Is this always the correct size? If rotates and such happen
       // at the pattern level, do we ever need to worry about changing the shape?
-      svg.rect([-W_2, -H_2], [W_2, H_2], { fill: `url(#${id})` })
+      svg.rect([-W_2, -H_2], [W_2, H_2], { fill: `url(#${id})` }),
+      // As a special case, ensure the top edge meets the top of the field. This avoids ugly visual
+      // artifacts such as when a wavy variation dips away from the top edge and reveals small
+      // splotches of the other tincture.
+      svg.rect([-W_2, -H_2], [W_2, -H_2 + H / count / 2], {
+        fill: "white",
+      })
     );
-    g2.setAttribute("mask", `url(#${id}-mask)`);
+    g1.setAttribute("mask", `url(#${id}-mask)`);
 
-    const children: SVGElement[] = [pattern, mask, g1, g2];
+    // This looks backwards but isn't: the masked <g> must come later in order to take precedence.
+    const children: SVGElement[] = [pattern, mask, g2, g1];
     if (content.charges != null) {
       const counterchangedFirst = content.charges.map((c) =>
         overwriteCounterchangedTincture(c, content.first)
