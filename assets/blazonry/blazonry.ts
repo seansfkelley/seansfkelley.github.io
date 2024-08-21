@@ -332,6 +332,7 @@ type VariationWithCount = Variation & {
 
 interface VariationPatternGenerator {
   (variation: VariationWithCount): SVGPatternElement;
+  edges?: (count: number) => SVGRectElement[];
   defaultCount: number;
 }
 
@@ -802,7 +803,7 @@ function deepEqual<T>(one: T, two: T): boolean {
 
 // This is obviously not exhaustive, but the gist of it is that it's anything that can be slapped
 // right into a `fill` or `stroke` rule unmodified.
-type SvgColor = "white" | `url(#${string})`;
+type SvgColor = "white" | "black" | `url(#${string})`;
 
 type Radians = number & { __radians: unknown };
 const Radians = {
@@ -2646,7 +2647,7 @@ function barry({ treatment, count }: VariationWithCount) {
         [width, height],
       ],
       x: -width / 2,
-      y: -height / 4,
+      y: -H_2 - height / 4,
       width,
       height,
     },
@@ -2666,6 +2667,16 @@ function barry({ treatment, count }: VariationWithCount) {
     )
   );
 }
+barry.edges = (count: number) => [
+  // Hide dips from e.g. wavy on the top edge.
+  svg.rect([-W_2, -H_2], [W_2, -H_2 + H / count / 2], {
+    fill: "white",
+  }),
+  // Same, but note that the bottom bar changes color depending on the parity.
+  svg.rect([-W_2, H_2 - H / count / 2], [W_2, H_2], {
+    fill: count % 2 === 0 ? "black" : "white",
+  }),
+];
 barry.defaultCount = 6;
 
 function barryBendy({ count }: VariationWithCount) {
@@ -3203,12 +3214,10 @@ async function escutcheonContent(
       // TODO: Is this always the correct size? If rotates and such happen
       // at the pattern level, do we ever need to worry about changing the shape?
       svg.rect([-W_2, -H_2], [W_2, H_2], { fill: `url(#${id})` }),
-      // As a special case, ensure the top edge meets the top of the field. This avoids ugly visual
-      // artifacts such as when a wavy variation dips away from the top edge and reveals small
-      // splotches of the other tincture.
-      svg.rect([-W_2, -H_2], [W_2, -H_2 + H / count / 2], {
-        fill: "white",
-      })
+      // Some patterns want to special-case the edges to prevent splotches of tincture showing up
+      // along the edges from repeats of the pattern that are mostly outside the viewable area of
+      // the field, such as when "barry wavy" has dips revealing some negative space.
+      ...(VARIATIONS[content.variation.type].edges?.(count) ?? [])
     );
     g1.setAttribute("mask", `url(#${id}-mask)`);
 
