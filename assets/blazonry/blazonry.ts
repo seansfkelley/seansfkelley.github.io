@@ -6,7 +6,8 @@ deployment pipeline, and it's not _that_ many different concepts. The types help
 
 FUTURE WORK and KNOWN ISSUES
 -------------------------------------------------------------------------------
-- In general, more vocabulary (charges, ordinaries, postures, treatments, etc.) is always welcome.
+- In general, more vocabulary (charges, ordinaries, postures, attitudes, treatments, etc.) is always
+  welcome.
 - Tincture references ("of the first", "of the field", etc.) are not supported. Apparently they are
   generally disliked for introducing complexity and ambiguity.
 - Charges `on` an ordinary are often too close; especially 2s and 3s, and more especially on chief
@@ -26,15 +27,14 @@ FUTURE WORK and KNOWN ISSUES
 - A singular fret should extend to the corners of the containing field, but there's currently no
   facility to treat charges differently depending on their count. (Abstraction break?)
 - It would be nice if the shield looked at least a little more realistic.
-- There are plenty more charges/ordinaries (and their attitudes) to add!
-- When several charges in a row have the same tincture, it is idiomatically only specified once at
+- When several charges in a row have the same tincture, it is idiomatic to only specify it once at
   the end. The parser does not support that, instead requiring every charge to have a tincture
   specified.
 - Some currently-unsupported charges get special layout behavior, for instance, swords on a chevron
   or saltire should be rotated according to their position on the ordinary, rather than always up.
-- It's unclear what to do with nested counterchanges. If you have "on a canton counterchanged a
-  rondel counterchanged" on a variated background, does the rondel match the background variation,
-  or does it become invisible because it matches the canton's counterchanging?
+- It's unclear what to do with nested counterchanges. Should this rondel be "invisible" because it
+  is counterchanged to match the canton, or should it be counterchanged back to match the field:
+    - per bend azure and argent on a canton counterchanged a rondel counterchanged
 - Furs are misaligned and the wrong size when applied to some charges or variations.
 - Embattled(-counter-embattled) treatments can leave visual artifacts due to a bit of a hack... try:
   - argent a chevron embattled sable
@@ -332,7 +332,7 @@ type VariationWithCount = Variation & {
 
 interface VariationPatternGenerator {
   (variation: VariationWithCount): SVGPatternElement;
-  edges?: (count: number) => SVGRectElement[];
+  maskEdges?: (count: number) => SVGGeometryElement[];
   defaultCount: number;
 }
 
@@ -799,6 +799,10 @@ function deepEqual<T>(one: T, two: T): boolean {
   } else {
     return one === two;
   }
+}
+
+function roundUpToEven(n: number) {
+  return n % 2 === 1 ? n + 1 : n;
 }
 
 // This is obviously not exhaustive, but the gist of it is that it's anything that can be slapped
@@ -2667,7 +2671,7 @@ function barry({ treatment, count }: VariationWithCount) {
     )
   );
 }
-barry.edges = (count: number) => [
+barry.maskEdges = (count: number) => [
   // Hide dips from e.g. wavy on the top edge.
   svg.rect([-W_2, -H_2], [W_2, -H_2 + H / count / 2], {
     fill: "white",
@@ -2707,27 +2711,75 @@ function barryBendy({ count }: VariationWithCount) {
 }
 barryBendy.defaultCount = 8;
 
-function bendy({ count }: VariationWithCount) {
-  const width = (2 * Math.hypot(W, W)) / count;
+function bendy({ treatment, count }: VariationWithCount) {
+  // Ensure it's wide enough for the full diagonal extent to avoid any weird artifacting between
+  // adjacent repeats of the pattern that would otherwise be visible.
+  const width = Math.hypot(H, H);
+  const height = Math.hypot(W, W) / (count / 2);
+
   return svg.pattern(
     {
       viewBox: [
         [0, 0],
-        [4, 1],
+        [width, height],
       ],
-      // The rotation happens last, so translating positively in x actually shifts visually
-      // northeast. The rotation also happens around (0, 0), but we're trying to line up the corner
-      // at (-50, -60), hence the weird math. There was a geometry drawing to prove this.
-      x: Math.sqrt(Math.pow(H_2 - W_2, 2) / 2) + width / 2,
+      // Offset to hide the horizontal pattern boundary out beyond the clipping zone -- we don't
+      // know if the treatment pattern will tile horizontally well as that isn't part of their
+      // contract.
+      x: -width / 2,
+      // n.b. that a vertical offset might help with a visual artifact: "bendy wavy of two" will
+      // show the boundary between repeat pattern tiles near the bottom right of the bend.
       width,
-      height: H,
-      // Explicitly require non-uniform scaling; it's the easiest way to implement bendy.
-      preserveAspectRatio: "none",
-      patternTransform: { rotate: Radians.NEG_EIGHTH_TURN },
+      height,
+      patternTransform: {
+        rotate: Radians.EIGHTH_TURN,
+        // Subtract W and H to move the center towards the W x W upper square of the shield, which
+        // centers a bend in the top left corner, then offset further by half vertical distance of
+        // a bend, which is a quarter of the total vertical distance, where the vertical distance
+        // is Pythagoras'd from the width of the bend. But only if we're an even number of bends,
+        // otherwise we want to be centered.
+        translate: [
+          0,
+          W_2 -
+            H_2 -
+            (count % 2 === 0 ? Math.sqrt(2 * height * height) / 4 : 0),
+        ],
+      },
     },
-    svg.line([3, 0], [3, 1], { strokeWidth: 2, stroke: "white" })
+    svg.path(
+      relativePathsToClosedLoop(
+        RelativeTreatmentPath.offset([0, height / 4]),
+        TREATMENTS[treatment ?? "untreated"](width, false, "primary", "center"),
+        RelativeTreatmentPath.line([0, height / 2]),
+        TREATMENTS[treatment ?? "untreated"](
+          -width,
+          false,
+          "secondary",
+          "center"
+        )
+      ),
+      { fill: "white" }
+    )
   );
 }
+bendy.maskEdges = (count: number) => {
+  const bendHeight = Math.hypot(W, W) / count;
+  // hypot -> hypot transforms back to vertical/horizontal instead of 45 degree space.
+  const edgeHeight = Math.hypot(bendHeight / 2, bendHeight / 2);
+
+  return [
+    svg.polygon({
+      points: [
+        [W_2, -H_2],
+        [W_2, -H_2 + edgeHeight],
+        [W_2 - edgeHeight, -H_2],
+      ],
+      // I wrote out a table to prove this, but basically, the color of the top right corner only
+      // changes every two counts, hence the rounding up to even.
+      fill: (roundUpToEven(count) / 2) % 2 === 0 ? "white" : "black",
+    }),
+  ];
+};
 bendy.defaultCount = 8;
 
 function bendySinister({ count }: VariationWithCount) {
@@ -2773,10 +2825,6 @@ function checky({ count }: VariationWithCount) {
 checky.defaultCount = 6;
 
 function chevronny({ count }: VariationWithCount) {
-  function roundUpToEven(n: number) {
-    return n % 2 === 1 ? n + 1 : n;
-  }
-
   // -2 because the nature of chevrons means that even if you have exactly `count` bands along the
   // center line, you'll see more off to the sides. -2 empirally splits the difference, where the
   // center line has less but the sides have more and it looks approximately like what you wanted.
@@ -3217,7 +3265,7 @@ async function escutcheonContent(
       // Some patterns want to special-case the edges to prevent splotches of tincture showing up
       // along the edges from repeats of the pattern that are mostly outside the viewable area of
       // the field, such as when "barry wavy" has dips revealing some negative space.
-      ...(VARIATIONS[content.variation.type].edges?.(count) ?? [])
+      ...(VARIATIONS[content.variation.type].maskEdges?.(count) ?? [])
     );
     g1.setAttribute("mask", `url(#${id}-mask)`);
 
