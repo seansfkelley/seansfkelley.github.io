@@ -57,11 +57,14 @@ var grammar = {
     {"name": "VariationField", "symbols": ["Variation", "__", "Tincture", "__", "VariationField$string$1", "__", "Tincture", "VariationField$ebnf$1"], "postprocess":  $({
           variation: 0, first: 2, second: 6, charges: 7
         }) },
-    {"name": "Variation$ebnf$1$subexpression$1$string$1", "symbols": [{"literal":"o"}, {"literal":"f"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "Variation$ebnf$1$subexpression$1", "symbols": ["__", "Variation$ebnf$1$subexpression$1$string$1", "__", "Plural"], "postprocess": nth(3)},
+    {"name": "Variation$ebnf$1$subexpression$1", "symbols": ["__", "Treatment"], "postprocess": nth(1)},
     {"name": "Variation$ebnf$1", "symbols": ["Variation$ebnf$1$subexpression$1"], "postprocess": id},
     {"name": "Variation$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
-    {"name": "Variation", "symbols": ["VariationName", "Variation$ebnf$1"], "postprocess": $({ type: 0, count: 1 })},
+    {"name": "Variation$ebnf$2$subexpression$1$string$1", "symbols": [{"literal":"o"}, {"literal":"f"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "Variation$ebnf$2$subexpression$1", "symbols": ["__", "Variation$ebnf$2$subexpression$1$string$1", "__", "Plural"], "postprocess": nth(3)},
+    {"name": "Variation$ebnf$2", "symbols": ["Variation$ebnf$2$subexpression$1"], "postprocess": id},
+    {"name": "Variation$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "Variation", "symbols": ["VariationName", "Variation$ebnf$1", "Variation$ebnf$2"], "postprocess": $({ type: 0, treatment:1, count: 2 })},
     {"name": "PartitionedField$ebnf$1$subexpression$1$subexpression$1$string$1", "symbols": [{"literal":"p"}, {"literal":"a"}, {"literal":"r"}, {"literal":"t"}, {"literal":"y"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "PartitionedField$ebnf$1$subexpression$1$subexpression$1", "symbols": ["PartitionedField$ebnf$1$subexpression$1$subexpression$1$string$1"]},
     {"name": "PartitionedField$ebnf$1$subexpression$1$subexpression$1$string$2", "symbols": [{"literal":"p"}, {"literal":"a"}, {"literal":"r"}, {"literal":"t"}, {"literal":"e"}, {"literal":"d"}], "postprocess": function joiner(d) {return d.join('');}},

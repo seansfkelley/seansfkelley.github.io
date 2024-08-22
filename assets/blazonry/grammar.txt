@@ -48,7 +48,7 @@ VariationField ->
   }) %}
 
 Variation ->
-  VariationName (__ "of" __ Plural {% nth(3) %}):? {% $({ type: 0, count: 1 }) %}
+  VariationName (__ Treatment {% nth(1) %}):? (__ "of" __ Plural {% nth(3) %}):? {% $({ type: 0, treatment:1, count: 2 }) %}
 
 PartitionedField ->
   (("party" | "parted") __):? "per" __ Direction (__ Treatment {% nth(1) %}):? __ Tincture __ "and" __ Tincture (__ Charge {% nth(1) %}):* {% $({
