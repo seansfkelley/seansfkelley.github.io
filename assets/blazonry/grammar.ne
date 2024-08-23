@@ -17,7 +17,7 @@ SIMPLE_CHARGE[S, P] ->
       count: d[0], posture: d[3], tincture: d[5], placement: d[6]
     }) %}
 
-SIMPLE_TINCTURELESS_CHARGE[S, P] ->
+SIMPLE_UNCOLORED_CHARGE[S, P] ->
     Singular __ $S (__ Posture {% nth(1) %}):?                             {% (d) => ({
       count: 1, posture: d[3]
     }) %}
@@ -33,22 +33,22 @@ Blazon ->
 
 EscutcheonContent ->
     SimpleField      {% id %}
-  | VariationField   {% id %}
   | PartitionedField {% id %}
   | Quartered        {% id %}
 
 SimpleField ->
-  Tincture (__ Charge {% nth(1) %}):* {% $({
-    tincture: 0, charges: 1
+  Coloration (__ Charge {% nth(1) %}):* {% $({
+    coloration: 0, charges: 1
   }) %}
 
-VariationField ->
-  Variation __ Tincture __ "and" __ Tincture (__ Charge {% nth(1) %}):* {% $({
-    variation: 0, first: 2, second: 6, charges: 7
-  }) %}
+Coloration ->
+    Variation {% id %}
+  | Tincture  {% $({ tincture: 0 }) %}
 
 Variation ->
-  VariationName (__ Treatment {% nth(1) %}):? (__ "of" __ Plural {% nth(3) %}):? {% $({ type: 0, treatment:1, count: 2 }) %}
+  VariationName (__ Treatment {% nth(1) %}):? (__ "of" __ Plural {% nth(3) %}):? __ Tincture __ "and" __ Tincture {%
+    $({ type: 0, treatment:1, count: 2, first: 4, second: 8 })
+  %}
 
 PartitionedField ->
   (("party" | "parted") __):? "per" __ Direction (__ Treatment {% nth(1) %}):? __ Tincture __ "and" __ Tincture (__ Charge {% nth(1) %}):* {% $({
@@ -91,8 +91,8 @@ NonOrdinaryCharge ->
   | SIMPLE_CHARGE["fret", "frets"]                                                        {% spread({ charge: 'fret' }) %}
   | SIMPLE_CHARGE["escallop", "escallops"]                                                {% spread({ charge: 'escallop' }) %}
   | SIMPLE_CHARGE[("fleur-de-lys" | "fleur-de-lis"), ("fleurs-de-lys" | "fleurs-de-lis")] {% spread({ charge: 'fleur-de-lys' }) %}
-  | SIMPLE_TINCTURELESS_CHARGE["bezant", "bezants"]                                       {% spread({ charge: 'rondel', tincture: 'or' }) %}
-  | SIMPLE_TINCTURELESS_CHARGE["torteau", ("torteaus" | "torteaux")]                      {% spread({ charge: 'rondel', tincture: 'gules' }) %}
+  | SIMPLE_UNCOLORED_CHARGE["bezant", "bezants"]                                       {% spread({ charge: 'rondel', tincture: 'or' }) %}
+  | SIMPLE_UNCOLORED_CHARGE["torteau", ("torteaus" | "torteaux")]                      {% spread({ charge: 'rondel', tincture: 'gules' }) %}
   | Lion                                                                                  {% id %}
   | Escutcheon                                                                            {% id %}
 

@@ -41,22 +41,16 @@ var grammar = {
     {"name": "Blazon$subexpression$1", "symbols": ["Blazon$subexpression$1$ebnf$2"], "postprocess": nop},
     {"name": "Blazon", "symbols": ["EscutcheonContent", "Blazon$subexpression$1"], "postprocess": $({ main: 0, inescutcheon: 1 })},
     {"name": "EscutcheonContent", "symbols": ["SimpleField"], "postprocess": id},
-    {"name": "EscutcheonContent", "symbols": ["VariationField"], "postprocess": id},
     {"name": "EscutcheonContent", "symbols": ["PartitionedField"], "postprocess": id},
     {"name": "EscutcheonContent", "symbols": ["Quartered"], "postprocess": id},
     {"name": "SimpleField$ebnf$1", "symbols": []},
     {"name": "SimpleField$ebnf$1$subexpression$1", "symbols": ["__", "Charge"], "postprocess": nth(1)},
     {"name": "SimpleField$ebnf$1", "symbols": ["SimpleField$ebnf$1", "SimpleField$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "SimpleField", "symbols": ["Tincture", "SimpleField$ebnf$1"], "postprocess":  $({
-          tincture: 0, charges: 1
+    {"name": "SimpleField", "symbols": ["Coloration", "SimpleField$ebnf$1"], "postprocess":  $({
+          coloration: 0, charges: 1
         }) },
-    {"name": "VariationField$string$1", "symbols": [{"literal":"a"}, {"literal":"n"}, {"literal":"d"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "VariationField$ebnf$1", "symbols": []},
-    {"name": "VariationField$ebnf$1$subexpression$1", "symbols": ["__", "Charge"], "postprocess": nth(1)},
-    {"name": "VariationField$ebnf$1", "symbols": ["VariationField$ebnf$1", "VariationField$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "VariationField", "symbols": ["Variation", "__", "Tincture", "__", "VariationField$string$1", "__", "Tincture", "VariationField$ebnf$1"], "postprocess":  $({
-          variation: 0, first: 2, second: 6, charges: 7
-        }) },
+    {"name": "Coloration", "symbols": ["Variation"], "postprocess": id},
+    {"name": "Coloration", "symbols": ["Tincture"], "postprocess": $({ tincture: 0 })},
     {"name": "Variation$ebnf$1$subexpression$1", "symbols": ["__", "Treatment"], "postprocess": nth(1)},
     {"name": "Variation$ebnf$1", "symbols": ["Variation$ebnf$1$subexpression$1"], "postprocess": id},
     {"name": "Variation$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
@@ -64,7 +58,10 @@ var grammar = {
     {"name": "Variation$ebnf$2$subexpression$1", "symbols": ["__", "Variation$ebnf$2$subexpression$1$string$1", "__", "Plural"], "postprocess": nth(3)},
     {"name": "Variation$ebnf$2", "symbols": ["Variation$ebnf$2$subexpression$1"], "postprocess": id},
     {"name": "Variation$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
-    {"name": "Variation", "symbols": ["VariationName", "Variation$ebnf$1", "Variation$ebnf$2"], "postprocess": $({ type: 0, treatment:1, count: 2 })},
+    {"name": "Variation$string$1", "symbols": [{"literal":"a"}, {"literal":"n"}, {"literal":"d"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "Variation", "symbols": ["VariationName", "Variation$ebnf$1", "Variation$ebnf$2", "__", "Tincture", "__", "Variation$string$1", "__", "Tincture"], "postprocess": 
+        $({ type: 0, treatment:1, count: 2, first: 4, second: 8 })
+          },
     {"name": "PartitionedField$ebnf$1$subexpression$1$subexpression$1$string$1", "symbols": [{"literal":"p"}, {"literal":"a"}, {"literal":"r"}, {"literal":"t"}, {"literal":"y"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "PartitionedField$ebnf$1$subexpression$1$subexpression$1", "symbols": ["PartitionedField$ebnf$1$subexpression$1$subexpression$1$string$1"]},
     {"name": "PartitionedField$ebnf$1$subexpression$1$subexpression$1$string$2", "symbols": [{"literal":"p"}, {"literal":"a"}, {"literal":"r"}, {"literal":"t"}, {"literal":"e"}, {"literal":"d"}], "postprocess": function joiner(d) {return d.join('');}},

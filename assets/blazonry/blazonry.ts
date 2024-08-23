@@ -212,28 +212,25 @@ interface Blazon {
   inescutcheon?: Inescutcheon;
 }
 
-type EscutcheonContent =
-  | SimpleField
-  | VariationField
-  | PartitionedField
-  | Quartered;
+type EscutcheonContent = SimpleField | PartitionedField | Quartered;
 
 type Charge = Ordinary | NonOrdinaryCharge | Canton | On;
 
 interface SimpleField {
-  tincture: Tincture;
+  coloration: Coloration;
   charges: Charge[];
 }
 
-interface VariationField {
-  variation: Variation;
-  first: Tincture;
-  second: Tincture;
-  charges: Charge[];
-}
+type Coloration =
+  | {
+      tincture: Tincture;
+    }
+  | Variation;
 
 interface Variation {
   type: VariationName;
+  first: Tincture;
+  second: Tincture;
   treatment?: Treatment;
   count?: number;
 }
@@ -2993,7 +2990,7 @@ function paly({ count }: VariationWithCount) {
       // Explicitly require non-uniform scaling; it's the easiest way to implement paly.
       preserveAspectRatio: "none",
     },
-    svg.line([3, 0], [3, 1], { strokeWidth: 2, stroke: "white" })
+    svg.line([1, 0], [1, 1], { strokeWidth: 2, stroke: "white" })
   );
 }
 paly.defaultCount = 6;
@@ -3271,21 +3268,27 @@ async function escutcheonContent(
     }
 
     return children;
-  } else if ("variation" in content) {
+  } else if ("tincture" in content.coloration) {
+    const children: SVGElement[] = [await field(content.coloration.tincture)];
+    for (const c of content.charges ?? []) {
+      children.push(...(await charge(c)));
+    }
+    return children;
+  } else {
+    const variation = content.coloration;
+
     const g1 = svg.g();
     const g2 = svg.g();
 
-    g1.appendChild(await field(content.first));
-    g2.appendChild(await field(content.second));
+    g1.appendChild(await field(variation.first));
+    g2.appendChild(await field(variation.second));
 
     // TODO: Deduplicate this with party-per, if possible, or at least make them consistent.
     const id = uniqueId("variation-pattern");
-    const count =
-      content.variation.count ??
-      VARIATIONS[content.variation.type].defaultCount;
-    const pattern = VARIATIONS[content.variation.type]({
+    const count = variation.count ?? VARIATIONS[variation.type].defaultCount;
+    const pattern = VARIATIONS[variation.type]({
       count,
-      ...content.variation,
+      ...variation,
     });
     pattern.id = id;
     const mask = svg.mask(
@@ -3296,7 +3299,7 @@ async function escutcheonContent(
       // Some patterns want to special-case the edges to prevent splotches of tincture showing up
       // along the edges from repeats of the pattern that are mostly outside the viewable area of
       // the field, such as when "barry wavy" has dips revealing some negative space.
-      ...(VARIATIONS[content.variation.type].maskEdges?.(count) ?? [])
+      ...(VARIATIONS[variation.type].maskEdges?.(count) ?? [])
     );
     g1.setAttribute("mask", `url(#${id}-mask)`);
 
@@ -3304,12 +3307,12 @@ async function escutcheonContent(
     const children: SVGElement[] = [pattern, mask, g2, g1];
     if (content.charges != null) {
       const counterchangedFirst = content.charges.map((c) =>
-        overwriteCounterchangedTincture(c, content.first)
+        overwriteCounterchangedTincture(c, variation.first)
       );
       // See the party-per branch for why this check is here. I do not like it.
       if (!deepEqual(content.charges, counterchangedFirst)) {
         const counterchangedSecond = content.charges.map((c) =>
-          overwriteCounterchangedTincture(c, content.second)
+          overwriteCounterchangedTincture(c, variation.second)
         );
         for (const c of counterchangedSecond) {
           g1.append(...(await charge(c)));
@@ -3322,12 +3325,6 @@ async function escutcheonContent(
           children.push(...(await charge(c)));
         }
       }
-    }
-    return children;
-  } else {
-    const children: SVGElement[] = [await field(content.tincture)];
-    for (const c of content.charges ?? []) {
-      children.push(...(await charge(c)));
     }
     return children;
   }
