@@ -10,11 +10,11 @@
 %}
 
 SIMPLE_CHARGE[S, P] ->
-    Singular __ $S (__ Posture {% nth(1) %}):? __ Tincture                             {% (d) => ({
-      count: 1, posture: d[3], tincture: d[5]
+    Singular __ $S (__ Posture {% nth(1) %}):? __ Coloration                             {% (d) => ({
+      count: 1, posture: d[3], coloration: d[5]
     }) %}
-  | Plural __ $P (__ Posture {% nth(1) %}):? __ Tincture (__ Placement {% nth(1) %}):? {% (d) => ({
-      count: d[0], posture: d[3], tincture: d[5], placement: d[6]
+  | Plural __ $P (__ Posture {% nth(1) %}):? __ Coloration (__ Placement {% nth(1) %}):? {% (d) => ({
+      count: d[0], posture: d[3], coloration: d[5], placement: d[6]
     }) %}
 
 SIMPLE_UNCOLORED_CHARGE[S, P] ->

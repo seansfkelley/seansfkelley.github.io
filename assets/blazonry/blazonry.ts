@@ -268,7 +268,7 @@ interface BaseCharge {
 
 interface SimpleCharge extends BaseCharge {
   charge: "mullet" | "rondel" | "fleur-de-lys" | "escallop" | "fret";
-  tincture: Tincture;
+  coloration: Coloration;
 }
 
 interface LionCharge extends BaseCharge {
@@ -323,13 +323,18 @@ interface NonOrdinaryChargeRenderer<T extends NonOrdinaryCharge> {
   (charge: T): SVGElement | Promise<SVGElement>;
 }
 
-type VariationWithCount = Variation & {
+interface PatternableVariation {
+  first: Coloration | { color: SvgColor };
+  second: Coloration | { color: SvgColor };
   count: number;
-};
+  treatment?: Treatment;
+}
 
 interface VariationPatternGenerator {
-  (variation: VariationWithCount): SVGPatternElement;
-  maskEdges?: (count: number) => SVGGeometryElement[];
+  (variation: PatternableVariation): Promise<SVGPatternElement>;
+  nonRepeatingElements?: (
+    variatoin: PatternableVariation
+  ) => Promise<SVGGeometryElement[]>;
   defaultCount: number;
 }
 
@@ -2077,8 +2082,8 @@ const ORDINARIES: Record<string, OrdinaryRenderer> = {
 // #region CHARGES
 // ----------------------------------------------------------------------------
 
-async function rondel({ tincture }: SimpleCharge) {
-  const { fill, pattern } = await resolveTincture(tincture, {
+async function rondel({ coloration }: SimpleCharge) {
+  const { fill, pattern } = await resolveTincture(coloration, {
     scale: 0.5,
     translate: [0, 11],
   });
@@ -2379,7 +2384,7 @@ async function getErmineTincture(
 }
 
 async function resolveTincture(
-  tincture: Tincture,
+  coloration: Coloration | { color: SvgColor },
   patternTransform: Transforms = {}
 ): Promise<{
   // The value of classes instead of just setting fill/stroke directly is that complex charges like
@@ -2389,38 +2394,59 @@ async function resolveTincture(
   stroke: { stroke: SvgColor } | { classes: { stroke: ColorOrMetal } };
   pattern?: SVGPatternElement;
 }> {
-  // It has to be rewritten based on the context it's defined in before we attempt to resolve it.
-  assert(
-    tincture != "counterchanged",
-    "cannot resolve a counterchanged tincture"
-  );
+  if ("color" in coloration) {
+    return {
+      fill: { fill: coloration.color },
+      stroke: { stroke: coloration.color },
+    };
+  } else if ("tincture" in coloration) {
+    const { tincture } = coloration;
 
-  async function getErmineBasedPattern(
-    foreground: ColorOrMetal,
-    background: ColorOrMetal
-  ) {
-    const pattern = await getErmineTincture(foreground, background);
-    applySvgAttributes(pattern, {
-      patternTransform: Transforms.toString(patternTransform),
+    // It has to be rewritten based on the context it's defined in before we attempt to resolve it.
+    assert(
+      tincture != "counterchanged",
+      "cannot resolve a counterchanged tincture"
+    );
+
+    async function getErmineBasedPattern(
+      foreground: ColorOrMetal,
+      background: ColorOrMetal
+    ) {
+      const pattern = await getErmineTincture(foreground, background);
+      applySvgAttributes(pattern, {
+        patternTransform: Transforms.toString(patternTransform),
+      });
+      const color = `url(#${pattern.id})` as const;
+      return { fill: { fill: color }, stroke: { stroke: color }, pattern };
+    }
+
+    switch (tincture) {
+      case "ermine":
+        return getErmineBasedPattern("sable", "argent");
+      case "ermines":
+        return getErmineBasedPattern("argent", "sable");
+      case "erminois":
+        return getErmineBasedPattern("sable", "or");
+      case "pean":
+        return getErmineBasedPattern("or", "sable");
+      default:
+        return {
+          fill: { classes: { fill: tincture } },
+          stroke: { classes: { stroke: tincture } },
+        };
+    }
+  } else {
+    const count = coloration.count ?? VARIATIONS[coloration.type].defaultCount;
+    const pattern = await VARIATIONS[coloration.type]({
+      first: { tincture: coloration.first },
+      second: { tincture: coloration.second },
+      treatment: coloration.treatment,
+      count,
     });
+    // TODO: should be done by the generator
+    pattern.id = uniqueId("coloration-variation");
     const color = `url(#${pattern.id})` as const;
     return { fill: { fill: color }, stroke: { stroke: color }, pattern };
-  }
-
-  switch (tincture) {
-    case "ermine":
-      return getErmineBasedPattern("sable", "argent");
-    case "ermines":
-      return getErmineBasedPattern("argent", "sable");
-    case "erminois":
-      return getErmineBasedPattern("sable", "or");
-    case "pean":
-      return getErmineBasedPattern("or", "sable");
-    default:
-      return {
-        fill: { classes: { fill: tincture } },
-        stroke: { classes: { stroke: tincture } },
-      };
   }
 }
 
@@ -2655,7 +2681,15 @@ const IS_VARIATION_TREATMENT_ALIGNED: Record<Treatment | "untreated", boolean> =
     untreated: false,
   };
 
-function barry({ treatment, count }: VariationWithCount) {
+async function barry({
+  treatment,
+  count,
+  first,
+  second,
+}: PatternableVariation) {
+  const { fill: firstFill } = await resolveTincture(first);
+  const { fill: secondFill } = await resolveTincture(second);
+
   const width = W * 1.5; // 1.5: overrun to prevent visual artifacts around the left/right edges.
   const height = H / (count / 2);
 
@@ -2670,6 +2704,7 @@ function barry({ treatment, count }: VariationWithCount) {
       width,
       height,
     },
+    svg.rect([0, 0], [width, height], firstFill),
     svg.path(
       TreatmentRelativePath.toClosedLoop(
         TreatmentRelativePath.offset([0, height / 4]),
@@ -2682,23 +2717,32 @@ function barry({ treatment, count }: VariationWithCount) {
         TreatmentRelativePath.line([0, height / 2]),
         TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center")
       ),
-      { fill: "white" }
+      secondFill
     )
   );
 }
-barry.maskEdges = (count: number) => [
-  // Hide dips from e.g. wavy on the top edge.
-  svg.rect([-W_2, -H_2], [W_2, -H_2 + H / count / 2], {
-    fill: "white",
-  }),
-  // Same, but note that the bottom bar changes color depending on the parity.
-  svg.rect([-W_2, H_2 - H / count / 2], [W_2, H_2], {
-    fill: count % 2 === 0 ? "black" : "white",
-  }),
-];
+barry.nonRepeatingElements = async ({
+  count,
+  first,
+  second,
+}: PatternableVariation) => {
+  const { fill: firstFill } = await resolveTincture(first);
+  const { fill: secondFill } = await resolveTincture(second);
+
+  return [
+    // Hide dips from e.g. wavy on the top edge.
+    svg.rect([-W_2, -H_2], [W_2, -H_2 + H / count / 2], secondFill),
+    // Same, but note that the bottom bar changes color depending on the parity.
+    svg.rect(
+      [-W_2, H_2 - H / count / 2],
+      [W_2, H_2],
+      count % 2 === 0 ? firstFill : secondFill
+    ),
+  ];
+};
 barry.defaultCount = 6;
 
-function barryBendy({ count }: VariationWithCount) {
+function barryBendy({ count }: PatternableVariation) {
   const size = (2 * W) / count; // W < H, so we'll step based on that.
   // This angle allows nice patterning where a 2x2 checkered unit shifts horizontally by half a unit
   // (0.5) for every full checked unit height (2). So it lines up vertically nicely.
@@ -2726,7 +2770,7 @@ function barryBendy({ count }: VariationWithCount) {
 }
 barryBendy.defaultCount = 8;
 
-function bendy({ treatment, count }: VariationWithCount) {
+function bendy({ treatment, count }: PatternableVariation) {
   // Ensure it's wide enough for the full diagonal extent to avoid any weird artifacting between
   // adjacent repeats of the pattern that would otherwise be visible.
   const width = Math.hypot(H, H);
@@ -2777,7 +2821,7 @@ function bendy({ treatment, count }: VariationWithCount) {
     )
   );
 }
-bendy.maskEdges = (count: number) => {
+bendy.nonRepeatingElements = (count: number) => {
   const bendHeight = Math.hypot(W, W) / count;
   // hypot -> hypot transforms back to vertical/horizontal instead of 45 degree space.
   const edgeHeight = Math.hypot(bendHeight / 2, bendHeight / 2);
@@ -2797,7 +2841,7 @@ bendy.maskEdges = (count: number) => {
 };
 bendy.defaultCount = 8;
 
-function bendySinister(variation: VariationWithCount) {
+function bendySinister(variation: PatternableVariation) {
   const pattern = bendy(variation);
 
   const height = Math.hypot(W, W) / (variation.count / 2);
@@ -2818,7 +2862,7 @@ function bendySinister(variation: VariationWithCount) {
 
   return pattern;
 }
-bendySinister.maskEdges = (count: number) => {
+bendySinister.nonRepeatingElements = (count: number) => {
   // Copy-pasta-signflip from the bendy version. I couldn't think of a good way define this in terms
   // of the result of calling the other function, so I didn't.
 
@@ -2838,7 +2882,7 @@ bendySinister.maskEdges = (count: number) => {
 };
 bendySinister.defaultCount = 8;
 
-function checky({ count }: VariationWithCount) {
+function checky({ count }: PatternableVariation) {
   const size = (2 * W) / count; // W < H, so we'll step based on that.
   return svg.pattern(
     {
@@ -2857,7 +2901,7 @@ function checky({ count }: VariationWithCount) {
 }
 checky.defaultCount = 6;
 
-function chevronny({ treatment, count }: VariationWithCount) {
+function chevronny({ treatment, count }: PatternableVariation) {
   // -2 because the nature of chevrons means that even if you have exactly `count` bands along the
   // center line, you'll see more off to the sides. -2 empirally splits the difference, where the
   // center line has less but the sides have more and it looks approximately like what you wanted.
@@ -2950,7 +2994,7 @@ function chevronny({ treatment, count }: VariationWithCount) {
 }
 chevronny.defaultCount = 6;
 
-function fusilly({ count }: VariationWithCount) {
+function fusilly({ count }: PatternableVariation) {
   const width = W / count;
   return svg.pattern(
     {
@@ -2978,7 +3022,7 @@ fusilly.defaultCount = 8;
 
 // There is no visual reference I could find for this besides the arms of Bavaria, so the precise
 // positioning of the variations relative to the corners and edges matches the appearance there.
-function fusillyInBends({ count }: VariationWithCount) {
+function fusillyInBends({ count }: PatternableVariation) {
   const width = W / count;
   return svg.pattern(
     {
@@ -3008,7 +3052,7 @@ function fusillyInBends({ count }: VariationWithCount) {
 }
 fusillyInBends.defaultCount = 8;
 
-function lozengy({ count }: VariationWithCount) {
+function lozengy({ count }: PatternableVariation) {
   const width = W / count;
   return svg.pattern(
     {
@@ -3034,7 +3078,7 @@ function lozengy({ count }: VariationWithCount) {
 }
 lozengy.defaultCount = 8;
 
-function paly({ treatment, count }: VariationWithCount) {
+function paly({ treatment, count }: PatternableVariation) {
   const width = W / (count / 2);
   const height = H * 1.5; // 1.5: overrun to prevent visual artifacts around the top/bottom edges.
 
@@ -3107,7 +3151,7 @@ const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
 // ----------------------------------------------------------------------------
 
 async function field(tincture: Tincture) {
-  const { fill, pattern } = await resolveTincture(tincture);
+  const { fill, pattern } = await resolveTincture({ tincture });
   return svg.g(
     { "data-kind": "field" },
     pattern,
@@ -3388,11 +3432,16 @@ async function escutcheonContent(
     g2.appendChild(await field(variation.second));
 
     // TODO: Deduplicate this with party-per, if possible, or at least make them consistent.
+    // BETTER TODO: This should just render the variation with colors instead of masks and be done
+    // with it, yeah?
     const count = variation.count ?? VARIATIONS[variation.type].defaultCount;
-    const pattern = VARIATIONS[variation.type]({
+    const patternableVariation: PatternableVariation = {
+      first: { color: "white" },
+      second: { color: "black" },
+      treatment: variation.treatment,
       count,
-      ...variation,
-    });
+    };
+    const pattern = await VARIATIONS[variation.type](patternableVariation);
     const mask = svg.mask(
       {},
       // TODO: Is this always the correct size? If rotates and such happen
@@ -3401,7 +3450,9 @@ async function escutcheonContent(
       // Some patterns want to special-case the edges to prevent splotches of tincture showing up
       // along the edges from repeats of the pattern that are mostly outside the viewable area of
       // the field, such as when "barry wavy" has dips revealing some negative space.
-      ...(VARIATIONS[variation.type].maskEdges?.(count) ?? [])
+      ...((await VARIATIONS[variation.type].nonRepeatingElements?.(
+        patternableVariation
+      )) ?? [])
     );
     g1.setAttribute("mask", `url(#${mask.id})`);
 
