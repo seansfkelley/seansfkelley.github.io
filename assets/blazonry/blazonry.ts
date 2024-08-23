@@ -2640,6 +2640,19 @@ const TREATMENTS: Record<Treatment | "untreated", TreatmentPathGenerator> = {
 // #region VARIATIONS
 // ----------------------------------------------------------------------------
 
+// Whether any given treatment of a variation should have the two edges "nesting" (i.e. pointing in
+// the same direction) or whether they should be opposing. Basically only exists to make sure that
+// wavy variations are aligned so they look like water.
+const IS_VARIATION_TREATMENT_ALIGNED: Record<Treatment | "untreated", boolean> =
+  {
+    "embattled-counter-embattled": false,
+    embattled: false,
+    engrailed: false,
+    indented: false,
+    wavy: true,
+    untreated: false,
+  };
+
 function barry({ treatment, count }: VariationWithCount) {
   const width = W * 1.5; // 1.5: overrun to prevent visual artifacts around the left/right edges.
   const height = H / (count / 2);
@@ -2658,14 +2671,14 @@ function barry({ treatment, count }: VariationWithCount) {
     svg.path(
       relativePathsToClosedLoop(
         RelativeTreatmentPath.offset([0, height / 4]),
-        TREATMENTS[treatment ?? "untreated"](width, false, "primary", "center"),
-        RelativeTreatmentPath.line([0, height / 2]),
         TREATMENTS[treatment ?? "untreated"](
-          -width,
-          false,
+          width,
+          !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"],
           "secondary",
           "center"
-        )
+        ),
+        RelativeTreatmentPath.line([0, height / 2]),
+        TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center")
       ),
       { fill: "white" }
     )
@@ -2749,14 +2762,14 @@ function bendy({ treatment, count }: VariationWithCount) {
     svg.path(
       relativePathsToClosedLoop(
         RelativeTreatmentPath.offset([0, height / 4]),
-        TREATMENTS[treatment ?? "untreated"](width, false, "primary", "center"),
-        RelativeTreatmentPath.line([0, height / 2]),
         TREATMENTS[treatment ?? "untreated"](
-          -width,
-          false,
+          width,
+          !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"],
           "secondary",
           "center"
-        )
+        ),
+        RelativeTreatmentPath.line([0, height / 2]),
+        TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center")
       ),
       { fill: "white" }
     )
@@ -2782,27 +2795,45 @@ bendy.maskEdges = (count: number) => {
 };
 bendy.defaultCount = 8;
 
-function bendySinister({ count }: VariationWithCount) {
-  const width = (2 * Math.hypot(W, W)) / count;
-  return svg.pattern(
-    {
-      viewBox: [
-        [0, 0],
-        [4, 1],
+function bendySinister(variation: VariationWithCount) {
+  const pattern = bendy(variation);
+
+  const height = Math.hypot(W, W) / (variation.count / 2);
+  applySvgAttributes(pattern, {
+    // There's no good way to DRY up this calculation and just override the rotation, so we have to
+    // restate the translation as well. Unless we want to being doing string manipulation on the
+    // transform rule itself (we don't).
+    patternTransform: Transforms.toString({
+      rotate: Radians.NEG_EIGHTH_TURN,
+      translate: [
+        0,
+        W_2 -
+          H_2 -
+          (variation.count % 2 === 0 ? Math.sqrt(2 * height * height) / 4 : 0),
       ],
-      // The rotation happens last, so translating positively in x actually shifts visually
-      // northeast. The rotation also happens around (0, 0), but we're trying to line up the corner
-      // at (-50, -60), hence the weird math. There was a geometry drawing to prove this.
-      x: -Math.sqrt(Math.pow(H_2 - W_2, 2) / 2) - width / 2,
-      width,
-      height: H,
-      // Explicitly require non-uniform scaling; it's the easiest way to implement bendy.
-      preserveAspectRatio: "none",
-      patternTransform: { rotate: Radians.EIGHTH_TURN },
-    },
-    svg.line([1, 0], [1, 1], { strokeWidth: 2, stroke: "white" })
-  );
+    }),
+  });
+
+  return pattern;
 }
+bendySinister.maskEdges = (count: number) => {
+  // Copy-pasta-signflip from the bendy version. I couldn't think of a good way define this in terms
+  // of the result of calling the other function, so I didn't.
+
+  const bendHeight = Math.hypot(W, W) / count;
+  const edgeHeight = Math.hypot(bendHeight / 2, bendHeight / 2);
+
+  return [
+    svg.polygon({
+      points: [
+        [-W_2, -H_2],
+        [-W_2, -H_2 + edgeHeight],
+        [-W_2 + edgeHeight, -H_2],
+      ],
+      fill: (roundUpToEven(count) / 2) % 2 === 0 ? "white" : "black",
+    }),
+  ];
+};
 bendySinister.defaultCount = 8;
 
 function checky({ count }: VariationWithCount) {

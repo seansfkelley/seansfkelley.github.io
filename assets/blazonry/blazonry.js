@@ -1620,6 +1620,17 @@ const TREATMENTS = {
 // #endregion
 // #region VARIATIONS
 // ----------------------------------------------------------------------------
+// Whether any given treatment of a variation should have the two edges "nesting" (i.e. pointing in
+// the same direction) or whether they should be opposing. Basically only exists to make sure that
+// wavy variations are aligned so they look like water.
+const IS_VARIATION_TREATMENT_ALIGNED = {
+    "embattled-counter-embattled": false,
+    embattled: false,
+    engrailed: false,
+    indented: false,
+    wavy: true,
+    untreated: false,
+};
 function barry({ treatment, count }) {
     const width = W * 1.5; // 1.5: overrun to prevent visual artifacts around the left/right edges.
     const height = H / (count / 2);
@@ -1632,7 +1643,7 @@ function barry({ treatment, count }) {
         y: -H_2 - height / 4,
         width,
         height,
-    }, svg.path(relativePathsToClosedLoop(RelativeTreatmentPath.offset([0, height / 4]), TREATMENTS[treatment ?? "untreated"](width, false, "primary", "center"), RelativeTreatmentPath.line([0, height / 2]), TREATMENTS[treatment ?? "untreated"](-width, false, "secondary", "center")), { fill: "white" }));
+    }, svg.path(relativePathsToClosedLoop(RelativeTreatmentPath.offset([0, height / 4]), TREATMENTS[treatment ?? "untreated"](width, !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"], "secondary", "center"), RelativeTreatmentPath.line([0, height / 2]), TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center")), { fill: "white" }));
 }
 barry.maskEdges = (count) => [
     // Hide dips from e.g. wavy on the top edge.
@@ -1700,7 +1711,7 @@ function bendy({ treatment, count }) {
                     (count % 2 === 0 ? Math.sqrt(2 * height * height) / 4 : 0),
             ],
         },
-    }, svg.path(relativePathsToClosedLoop(RelativeTreatmentPath.offset([0, height / 4]), TREATMENTS[treatment ?? "untreated"](width, false, "primary", "center"), RelativeTreatmentPath.line([0, height / 2]), TREATMENTS[treatment ?? "untreated"](-width, false, "secondary", "center")), { fill: "white" }));
+    }, svg.path(relativePathsToClosedLoop(RelativeTreatmentPath.offset([0, height / 4]), TREATMENTS[treatment ?? "untreated"](width, !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"], "secondary", "center"), RelativeTreatmentPath.line([0, height / 2]), TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center")), { fill: "white" }));
 }
 bendy.maskEdges = (count) => {
     const bendHeight = Math.hypot(W, W) / count;
@@ -1720,24 +1731,41 @@ bendy.maskEdges = (count) => {
     ];
 };
 bendy.defaultCount = 8;
-function bendySinister({ count }) {
-    const width = (2 * Math.hypot(W, W)) / count;
-    return svg.pattern({
-        viewBox: [
-            [0, 0],
-            [4, 1],
-        ],
-        // The rotation happens last, so translating positively in x actually shifts visually
-        // northeast. The rotation also happens around (0, 0), but we're trying to line up the corner
-        // at (-50, -60), hence the weird math. There was a geometry drawing to prove this.
-        x: -Math.sqrt(Math.pow(H_2 - W_2, 2) / 2) - width / 2,
-        width,
-        height: H,
-        // Explicitly require non-uniform scaling; it's the easiest way to implement bendy.
-        preserveAspectRatio: "none",
-        patternTransform: { rotate: Radians.EIGHTH_TURN },
-    }, svg.line([1, 0], [1, 1], { strokeWidth: 2, stroke: "white" }));
+function bendySinister(variation) {
+    const pattern = bendy(variation);
+    const height = Math.hypot(W, W) / (variation.count / 2);
+    applySvgAttributes(pattern, {
+        // There's no good way to DRY up this calculation and just override the rotation, so we have to
+        // restate the translation as well. Unless we want to being doing string manipulation on the
+        // transform rule itself (we don't).
+        patternTransform: Transforms.toString({
+            rotate: Radians.NEG_EIGHTH_TURN,
+            translate: [
+                0,
+                W_2 -
+                    H_2 -
+                    (variation.count % 2 === 0 ? Math.sqrt(2 * height * height) / 4 : 0),
+            ],
+        }),
+    });
+    return pattern;
 }
+bendySinister.maskEdges = (count) => {
+    // Copy-pasta-signflip from the bendy version. I couldn't think of a good way define this in terms
+    // of the result of calling the other function, so I didn't.
+    const bendHeight = Math.hypot(W, W) / count;
+    const edgeHeight = Math.hypot(bendHeight / 2, bendHeight / 2);
+    return [
+        svg.polygon({
+            points: [
+                [-W_2, -H_2],
+                [-W_2, -H_2 + edgeHeight],
+                [-W_2 + edgeHeight, -H_2],
+            ],
+            fill: (roundUpToEven(count) / 2) % 2 === 0 ? "white" : "black",
+        }),
+    ];
+};
 bendySinister.defaultCount = 8;
 function checky({ count }) {
     const size = (2 * W) / count; // W < H, so we'll step based on that.
