@@ -43,8 +43,6 @@ FUTURE WORK and KNOWN ISSUES
   - quarterly first and fourth barry bendy of six azure and or second and third gules
 - When multiple charges are present, the counts in each row can be specified:
   - argent four rondels gules one two and one
-- The Baltimore blazon has somehow ended up reversed; paly should start with the first tincture on
-  the dexter side.
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
@@ -2992,7 +2990,7 @@ function paly({ count }: VariationWithCount) {
       // Explicitly require non-uniform scaling; it's the easiest way to implement paly.
       preserveAspectRatio: "none",
     },
-    svg.line([3, 0], [3, 1], { strokeWidth: 2, stroke: "white" })
+    svg.line([1, 0], [1, 1], { strokeWidth: 2, stroke: "white" })
   );
 }
 paly.defaultCount = 6;
