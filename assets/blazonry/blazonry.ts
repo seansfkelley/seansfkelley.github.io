@@ -237,8 +237,8 @@ interface Variation {
 
 interface PartitionedField {
   partition: Direction;
-  first: Tincture;
-  second: Tincture;
+  first: Coloration;
+  second: Coloration;
   charges: Charge[];
   treatment?: Treatment;
 }
@@ -2096,8 +2096,8 @@ async function rondel({ coloration }: SimpleCharge) {
   );
 }
 
-async function mullet({ tincture }: SimpleCharge) {
-  const { fill, pattern } = await resolveTincture(tincture, {
+async function mullet({ coloration }: SimpleCharge) {
+  const { fill, pattern } = await resolveTincture(coloration, {
     scale: 0.4,
     translate: [0, 8],
   });
@@ -2125,8 +2125,8 @@ async function mullet({ tincture }: SimpleCharge) {
 }
 
 const FRET_WIDTH = 40;
-async function fret({ tincture }: SimpleCharge) {
-  const { stroke, pattern } = await resolveTincture(tincture);
+async function fret({ coloration }: SimpleCharge) {
+  const { stroke, pattern } = await resolveTincture(coloration);
 
   const halfWidth = FRET_WIDTH / 2;
   const thirdWidth = FRET_WIDTH / 3;
@@ -2203,8 +2203,8 @@ async function fret({ tincture }: SimpleCharge) {
   );
 }
 
-async function escallop({ tincture }: SimpleCharge) {
-  const { fill, pattern } = await resolveTincture(tincture, {
+async function escallop({ coloration }: SimpleCharge) {
+  const { fill, pattern } = await resolveTincture(coloration, {
     translate: [1.5, -7],
   });
   const escallop = await fetchMutableComplexSvg("escallop");
@@ -2217,8 +2217,8 @@ async function escallop({ tincture }: SimpleCharge) {
   return escallop;
 }
 
-async function fleurDeLys({ tincture }: SimpleCharge) {
-  const { fill, pattern } = await resolveTincture(tincture, {
+async function fleurDeLys({ coloration }: SimpleCharge) {
+  const { fill, pattern } = await resolveTincture(coloration, {
     translate: [3.5, 5],
   });
   const fleurDeLys = await fetchMutableComplexSvg("fleur-de-lys");
@@ -2248,7 +2248,7 @@ async function lion({
   placement,
 }: LionCharge) {
   const lion = await fetchMutableComplexSvg("lion", attitude);
-  const { fill, pattern } = await resolveTincture(tincture);
+  const { fill, pattern } = await resolveTincture({ tincture });
   maybeAppendChild(lion, pattern);
   if ("classes" in fill) {
     lion.classList.add(fill.classes.fill);
@@ -2272,7 +2272,6 @@ async function lion({
 async function escutcheon({ content }: EscutcheonCharge) {
   const escutcheon = svg.g(
     { "data-kind": "escutcheon" },
-    await field("argent"),
     ...(await escutcheonContent(content)),
     svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } })
   );
@@ -3150,8 +3149,8 @@ const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
 // #region HIGHER-ORDER ELEMENTS
 // ----------------------------------------------------------------------------
 
-async function field(tincture: Tincture) {
-  const { fill, pattern } = await resolveTincture({ tincture });
+async function field(coloration: Coloration) {
+  const { fill, pattern } = await resolveTincture(coloration);
   return svg.g(
     { "data-kind": "field" },
     pattern,
@@ -3392,7 +3391,7 @@ async function escutcheonContent(
 
     for (const e of Object.values(quartered)) {
       if (e.children.length === 0) {
-        e.appendChild(await field("argent"));
+        e.appendChild(await field({ tincture: "argent" }));
       }
     }
 
@@ -3417,7 +3416,7 @@ async function escutcheonContent(
 
     return children;
   } else if ("tincture" in content.coloration) {
-    const children: SVGElement[] = [await field(content.coloration.tincture)];
+    const children: SVGElement[] = [await field(content.coloration)];
     for (const c of content.charges ?? []) {
       children.push(...(await charge(c)));
     }
@@ -3428,8 +3427,8 @@ async function escutcheonContent(
     const g1 = svg.g({ "data-kind": "variation-1" });
     const g2 = svg.g({ "data-kind": "variation-2" });
 
-    g1.appendChild(await field(variation.first));
-    g2.appendChild(await field(variation.second));
+    g1.appendChild(await field({ tincture: variation.first }));
+    g2.appendChild(await field({ tincture: variation.second }));
 
     // TODO: Deduplicate this with party-per, if possible, or at least make them consistent.
     // BETTER TODO: This should just render the variation with colors instead of masks and be done
@@ -3526,7 +3525,6 @@ async function on({ on, surround, charge }: On): Promise<SVGElement[]> {
 async function inescutcheon({ location, content }: Inescutcheon) {
   const escutcheon = svg.g(
     { "data-kind": "inescutcheon" },
-    await field("argent"),
     ...(await escutcheonContent(content)),
     svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } })
   );

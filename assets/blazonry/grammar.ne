@@ -51,7 +51,7 @@ Variation ->
   %}
 
 PartitionedField ->
-  (("party" | "parted") __):? "per" __ Direction (__ Treatment {% nth(1) %}):? __ Tincture __ "and" __ Tincture (__ Charge {% nth(1) %}):* {% $({
+  (("party" | "parted") __):? "per" __ Direction (__ Treatment {% nth(1) %}):? __ Coloration __ "and" __ Coloration (__ Charge {% nth(1) %}):* {% $({
     partition: 3, treatment: 4, first: 6, second: 10, charges: 11
   }) %}
 
