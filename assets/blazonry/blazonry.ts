@@ -255,8 +255,8 @@ interface Quartering {
 
 interface Ordinary {
   ordinary: string;
-  tincture: Tincture;
-  cotised?: Tincture;
+  coloration: Coloration;
+  cotised?: Coloration;
   treatment?: Treatment;
 }
 
@@ -293,7 +293,7 @@ interface EscutcheonCharge extends BaseCharge {
 type NonOrdinaryCharge = SimpleCharge | LionCharge | EscutcheonCharge;
 
 interface Canton {
-  canton: Tincture;
+  canton: Coloration;
   charges: Charge[];
 }
 
@@ -1168,8 +1168,8 @@ const COTISED_WIDTH = W_2 / 12;
 const BEND_WIDTH = W / 3;
 // Make sure it's long enough to reach diagonally!
 const BEND_LENGTH = Math.hypot(W, W) + BEND_WIDTH / 2;
-async function bend({ tincture, cotised, treatment }: Ordinary) {
-  const { fill, pattern } = await resolveTincture(tincture);
+async function bend({ coloration, cotised, treatment }: Ordinary) {
+  const { fill, pattern } = await resolveColoration(coloration);
 
   const bend = svg.g({ "data-kind": "bend" }, pattern);
 
@@ -1202,7 +1202,7 @@ async function bend({ tincture, cotised, treatment }: Ordinary) {
   );
 
   if (cotised != null) {
-    const { stroke, pattern } = await resolveTincture(cotised);
+    const { stroke, pattern } = await resolveColoration(cotised);
     maybeAppendChild(bend, pattern);
 
     // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
@@ -1308,8 +1308,8 @@ bendSinister.partition = (
 };
 
 const CHIEF_WIDTH = H / 3;
-async function chief({ tincture, cotised, treatment }: Ordinary) {
-  const { fill, pattern } = await resolveTincture(tincture);
+async function chief({ coloration, cotised, treatment }: Ordinary) {
+  const { fill, pattern } = await resolveColoration(coloration);
 
   const chief = svg.g({ "data-kind": "chief" }, pattern);
 
@@ -1333,7 +1333,7 @@ async function chief({ tincture, cotised, treatment }: Ordinary) {
   );
 
   if (cotised != null) {
-    const { stroke, pattern } = await resolveTincture(cotised);
+    const { stroke, pattern } = await resolveColoration(cotised);
     maybeAppendChild(chief, pattern);
 
     chief.append(
@@ -1360,8 +1360,8 @@ chief.partition = UNSUPPORTED;
 
 const CHEVRON_WIDTH = W / 4;
 
-async function chevron({ tincture, cotised, treatment }: Ordinary) {
-  const { fill, pattern } = await resolveTincture(tincture);
+async function chevron({ coloration, cotised, treatment }: Ordinary) {
+  const { fill, pattern } = await resolveColoration(coloration);
 
   const chevron = svg.g({ "data-kind": "chevron" }, pattern);
 
@@ -1458,7 +1458,7 @@ async function chevron({ tincture, cotised, treatment }: Ordinary) {
   );
 
   if (cotised != null) {
-    const { stroke, pattern } = await resolveTincture(cotised);
+    const { stroke, pattern } = await resolveColoration(cotised);
     maybeAppendChild(chevron, pattern);
 
     // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
@@ -1575,8 +1575,8 @@ chevron.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
 const CROSS_WIDTH = W / 4;
 const CROSS_VERTICAL_OFFSET = (H - W) / 2;
 
-async function cross({ tincture, cotised, treatment }: Ordinary) {
-  const { fill, pattern } = await resolveTincture(tincture, {
+async function cross({ coloration, cotised, treatment }: Ordinary) {
+  const { fill, pattern } = await resolveColoration(coloration, {
     translate: [0, 12],
   });
 
@@ -1622,7 +1622,7 @@ async function cross({ tincture, cotised, treatment }: Ordinary) {
   );
 
   if (cotised != null) {
-    const { stroke, pattern } = await resolveTincture(cotised);
+    const { stroke, pattern } = await resolveColoration(cotised);
     maybeAppendChild(cross, pattern);
 
     const offset = CROSS_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
@@ -1695,8 +1695,8 @@ cross.partition = UNSUPPORTED;
 
 const FESS_WIDTH = W / 3;
 const FESS_VERTICAL_OFFSET = -H_2 + FESS_WIDTH * (3 / 2);
-async function fess({ tincture, cotised, treatment }: Ordinary) {
-  const { fill, pattern } = await resolveTincture(tincture);
+async function fess({ coloration, cotised, treatment }: Ordinary) {
+  const { fill, pattern } = await resolveColoration(coloration);
 
   const fess = svg.g({ "data-kind": "fess" }, pattern);
 
@@ -1722,7 +1722,7 @@ async function fess({ tincture, cotised, treatment }: Ordinary) {
   );
 
   if (cotised != null) {
-    const { stroke, pattern } = await resolveTincture(cotised);
+    const { stroke, pattern } = await resolveColoration(cotised);
     maybeAppendChild(fess, pattern);
 
     const offset = FESS_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
@@ -1793,8 +1793,8 @@ fess.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
 };
 
 const PALE_WIDTH = W / 3;
-async function pale({ tincture, cotised, treatment }: Ordinary) {
-  const { fill, pattern } = await resolveTincture(tincture);
+async function pale({ coloration, cotised, treatment }: Ordinary) {
+  const { fill, pattern } = await resolveColoration(coloration);
 
   const pale = svg.g({ "data-kind": "pale" }, pattern);
 
@@ -1823,7 +1823,7 @@ async function pale({ tincture, cotised, treatment }: Ordinary) {
   );
 
   if (cotised != null) {
-    const { stroke, pattern } = await resolveTincture(cotised);
+    const { stroke, pattern } = await resolveColoration(cotised);
     maybeAppendChild(pale, pattern);
 
     const offset = PALE_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
@@ -1893,8 +1893,8 @@ pale.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
 };
 
 const SALTIRE_WIDTH = W / 4;
-async function saltire({ tincture, cotised, treatment }: Ordinary) {
-  const { fill, pattern } = await resolveTincture(tincture);
+async function saltire({ coloration, cotised, treatment }: Ordinary) {
+  const { fill, pattern } = await resolveColoration(coloration);
 
   const saltire = svg.g({ "data-kind": "saltire" }, pattern);
 
@@ -1942,7 +1942,7 @@ async function saltire({ tincture, cotised, treatment }: Ordinary) {
   );
 
   if (cotised != null) {
-    const { stroke, pattern } = await resolveTincture(cotised);
+    const { stroke, pattern } = await resolveColoration(cotised);
     maybeAppendChild(saltire, pattern);
 
     // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
@@ -2083,7 +2083,7 @@ const ORDINARIES: Record<string, OrdinaryRenderer> = {
 // ----------------------------------------------------------------------------
 
 async function rondel({ coloration }: SimpleCharge) {
-  const { fill, pattern } = await resolveTincture(coloration, {
+  const { fill, pattern } = await resolveColoration(coloration, {
     scale: 0.5,
     translate: [0, 11],
   });
@@ -2097,7 +2097,7 @@ async function rondel({ coloration }: SimpleCharge) {
 }
 
 async function mullet({ coloration }: SimpleCharge) {
-  const { fill, pattern } = await resolveTincture(coloration, {
+  const { fill, pattern } = await resolveColoration(coloration, {
     scale: 0.4,
     translate: [0, 8],
   });
@@ -2126,7 +2126,7 @@ async function mullet({ coloration }: SimpleCharge) {
 
 const FRET_WIDTH = 40;
 async function fret({ coloration }: SimpleCharge) {
-  const { stroke, pattern } = await resolveTincture(coloration);
+  const { stroke, pattern } = await resolveColoration(coloration);
 
   const halfWidth = FRET_WIDTH / 2;
   const thirdWidth = FRET_WIDTH / 3;
@@ -2204,7 +2204,7 @@ async function fret({ coloration }: SimpleCharge) {
 }
 
 async function escallop({ coloration }: SimpleCharge) {
-  const { fill, pattern } = await resolveTincture(coloration, {
+  const { fill, pattern } = await resolveColoration(coloration, {
     translate: [1.5, -7],
   });
   const escallop = await fetchMutableComplexSvg("escallop");
@@ -2218,7 +2218,7 @@ async function escallop({ coloration }: SimpleCharge) {
 }
 
 async function fleurDeLys({ coloration }: SimpleCharge) {
-  const { fill, pattern } = await resolveTincture(coloration, {
+  const { fill, pattern } = await resolveColoration(coloration, {
     translate: [3.5, 5],
   });
   const fleurDeLys = await fetchMutableComplexSvg("fleur-de-lys");
@@ -2248,7 +2248,7 @@ async function lion({
   placement,
 }: LionCharge) {
   const lion = await fetchMutableComplexSvg("lion", attitude);
-  const { fill, pattern } = await resolveTincture({ tincture });
+  const { fill, pattern } = await resolveColoration({ tincture });
   maybeAppendChild(lion, pattern);
   if ("classes" in fill) {
     lion.classList.add(fill.classes.fill);
@@ -2382,7 +2382,7 @@ async function getErmineTincture(
   );
 }
 
-async function resolveTincture(
+async function resolveColoration(
   coloration: Coloration | { color: SvgColor },
   patternTransform: Transforms = {}
 ): Promise<{
@@ -2686,8 +2686,8 @@ async function barry({
   first,
   second,
 }: PatternableVariation) {
-  const { fill: firstFill } = await resolveTincture(first);
-  const { fill: secondFill } = await resolveTincture(second);
+  const { fill: firstFill } = await resolveColoration(first);
+  const { fill: secondFill } = await resolveColoration(second);
 
   const width = W * 1.5; // 1.5: overrun to prevent visual artifacts around the left/right edges.
   const height = H / (count / 2);
@@ -2725,8 +2725,8 @@ barry.nonRepeatingElements = async ({
   first,
   second,
 }: PatternableVariation) => {
-  const { fill: firstFill } = await resolveTincture(first);
-  const { fill: secondFill } = await resolveTincture(second);
+  const { fill: firstFill } = await resolveColoration(first);
+  const { fill: secondFill } = await resolveColoration(second);
 
   return [
     // Hide dips from e.g. wavy on the top edge.
@@ -2742,8 +2742,8 @@ barry.nonRepeatingElements = async ({
 barry.defaultCount = 6;
 
 async function barryBendy({ count, first, second }: PatternableVariation) {
-  const { fill: firstFill } = await resolveTincture(first);
-  const { fill: secondFill } = await resolveTincture(second);
+  const { fill: firstFill } = await resolveColoration(first);
+  const { fill: secondFill } = await resolveColoration(second);
 
   const size = (2 * W) / count; // W < H, so we'll step based on that.
   // This angle allows nice patterning where a 2x2 checkered unit shifts horizontally by half a unit
@@ -2779,8 +2779,8 @@ async function bendy({
   second,
   count,
 }: PatternableVariation) {
-  const { fill: firstFill } = await resolveTincture(first);
-  const { fill: secondFill } = await resolveTincture(second);
+  const { fill: firstFill } = await resolveColoration(first);
+  const { fill: secondFill } = await resolveColoration(second);
 
   // Ensure it's wide enough for the full diagonal extent to avoid any weird artifacting between
   // adjacent repeats of the pattern that would otherwise be visible.
@@ -2838,8 +2838,8 @@ bendy.nonRepeatingElements = async ({
   first,
   second,
 }: PatternableVariation) => {
-  const { fill: firstFill } = await resolveTincture(first);
-  const { fill: secondFill } = await resolveTincture(second);
+  const { fill: firstFill } = await resolveColoration(first);
+  const { fill: secondFill } = await resolveColoration(second);
 
   const bendHeight = Math.hypot(W, W) / count;
   // hypot -> hypot transforms back to vertical/horizontal instead of 45 degree space.
@@ -2886,8 +2886,8 @@ bendySinister.nonRepeatingElements = async ({
   first,
   second,
 }: PatternableVariation) => {
-  const { fill: firstFill } = await resolveTincture(first);
-  const { fill: secondFill } = await resolveTincture(second);
+  const { fill: firstFill } = await resolveColoration(first);
+  const { fill: secondFill } = await resolveColoration(second);
 
   // Copy-pasta-signflip from the bendy version. I couldn't think of a good way define this in terms
   // of the result of calling the other function, so I didn't.
@@ -2909,8 +2909,8 @@ bendySinister.nonRepeatingElements = async ({
 bendySinister.defaultCount = 8;
 
 async function checky({ count, first, second }: PatternableVariation) {
-  const { fill: firstFill } = await resolveTincture(first);
-  const { fill: secondFill } = await resolveTincture(second);
+  const { fill: firstFill } = await resolveColoration(first);
+  const { fill: secondFill } = await resolveColoration(second);
 
   const size = (2 * W) / count; // W < H, so we'll step based on that.
   return svg.pattern(
@@ -2931,7 +2931,15 @@ async function checky({ count, first, second }: PatternableVariation) {
 }
 checky.defaultCount = 6;
 
-function chevronny({ treatment, count }: PatternableVariation) {
+async function chevronny({
+  treatment,
+  first,
+  second,
+  count,
+}: PatternableVariation) {
+  const { fill: firstFill } = await resolveColoration(first);
+  const { fill: secondFill } = await resolveColoration(second);
+
   // -2 because the nature of chevrons means that even if you have exactly `count` bands along the
   // center line, you'll see more off to the sides. -2 empirally splits the difference, where the
   // center line has less but the sides have more and it looks approximately like what you wanted.
@@ -3003,7 +3011,7 @@ function chevronny({ treatment, count }: PatternableVariation) {
           TreatmentRelativePath.offset([W_2, i * 2 * chevronHeight]),
           ...template
         ),
-        { fill: "white" }
+        secondFill
       )
     );
   }
@@ -3019,12 +3027,16 @@ function chevronny({ treatment, count }: PatternableVariation) {
       x: -W_2,
       y: -H_2,
     },
+    svg.rect([0, 0], [W, height], firstFill),
     ...paths
   );
 }
 chevronny.defaultCount = 6;
 
-function fusilly({ count }: PatternableVariation) {
+async function fusilly({ count, first, second }: PatternableVariation) {
+  const { fill: firstFill } = await resolveColoration(first);
+  const { fill: secondFill } = await resolveColoration(second);
+
   const width = W / count;
   return svg.pattern(
     {
@@ -3037,6 +3049,7 @@ function fusilly({ count }: PatternableVariation) {
       width,
       height: width * 4,
     },
+    svg.rect([0, 0], [2, 8], firstFill),
     svg.polygon({
       points: [
         [1, 0],
@@ -3044,7 +3057,7 @@ function fusilly({ count }: PatternableVariation) {
         [1, 8],
         [0, 4],
       ],
-      fill: "white",
+      ...secondFill,
     })
   );
 }
@@ -3052,7 +3065,10 @@ fusilly.defaultCount = 8;
 
 // There is no visual reference I could find for this besides the arms of Bavaria, so the precise
 // positioning of the variations relative to the corners and edges matches the appearance there.
-function fusillyInBends({ count }: PatternableVariation) {
+async function fusillyInBends({ count, first, second }: PatternableVariation) {
+  const { fill: firstFill } = await resolveColoration(first);
+  const { fill: secondFill } = await resolveColoration(second);
+
   const width = W / count;
   return svg.pattern(
     {
@@ -3069,6 +3085,7 @@ function fusillyInBends({ count }: PatternableVariation) {
         translate: [-width, -width - (H_2 - W_2)],
       },
     },
+    svg.rect([0, 0], [2, 8], firstFill),
     svg.polygon({
       points: [
         [1, 0],
@@ -3076,13 +3093,16 @@ function fusillyInBends({ count }: PatternableVariation) {
         [1, 8],
         [0, 4],
       ],
-      fill: "white",
+      ...secondFill,
     })
   );
 }
 fusillyInBends.defaultCount = 8;
 
-function lozengy({ count }: PatternableVariation) {
+async function lozengy({ count, first, second }: PatternableVariation) {
+  const { fill: firstFill } = await resolveColoration(first);
+  const { fill: secondFill } = await resolveColoration(second);
+
   const width = W / count;
   return svg.pattern(
     {
@@ -3095,6 +3115,7 @@ function lozengy({ count }: PatternableVariation) {
       width,
       height: width * 2,
     },
+    svg.rect([0, 0], [2, 4], firstFill),
     svg.polygon({
       points: [
         [1, 0],
@@ -3102,13 +3123,16 @@ function lozengy({ count }: PatternableVariation) {
         [1, 4],
         [0, 2],
       ],
-      fill: "white",
+      ...secondFill,
     })
   );
 }
 lozengy.defaultCount = 8;
 
-function paly({ treatment, count }: PatternableVariation) {
+async function paly({ treatment, first, second, count }: PatternableVariation) {
+  const { fill: firstFill } = await resolveColoration(first);
+  const { fill: secondFill } = await resolveColoration(second);
+
   const width = W / (count / 2);
   const height = H * 1.5; // 1.5: overrun to prevent visual artifacts around the top/bottom edges.
 
@@ -3139,6 +3163,7 @@ function paly({ treatment, count }: PatternableVariation) {
       width,
       height,
     },
+    svg.rect([0, 0], [width, height], firstFill),
     svg.path(
       TreatmentRelativePath.toClosedLoop(
         TreatmentRelativePath.offset([width / 4, 0]),
@@ -3146,20 +3171,29 @@ function paly({ treatment, count }: PatternableVariation) {
         TreatmentRelativePath.line([width / 2, 0]),
         right
       ),
-      { fill: "white" }
+      secondFill
     )
   );
 }
-paly.maskEdges = (count: number) => [
-  // Hide dips from e.g. wavy on the left edge.
-  svg.rect([-W_2, -H_2], [-W_2 + W / count / 2, H_2], {
-    fill: "white",
-  }),
-  // Same, but note that the right bar changes color depending on the parity.
-  svg.rect([W_2 - W / count / 2, -H_2], [W_2, H_2], {
-    fill: count % 2 === 0 ? "black" : "white",
-  }),
-];
+paly.nonRepeatingElements = async ({
+  count,
+  first,
+  second,
+}: PatternableVariation) => {
+  const { fill: firstFill } = await resolveColoration(first);
+  const { fill: secondFill } = await resolveColoration(second);
+
+  return [
+    // Hide dips from e.g. wavy on the left edge.
+    svg.rect([-W_2, -H_2], [-W_2 + W / count / 2, H_2], secondFill),
+    // Same, but note that the right bar changes color depending on the parity.
+    svg.rect(
+      [W_2 - W / count / 2, -H_2],
+      [W_2, H_2],
+      count % 2 === 0 ? firstFill : secondFill
+    ),
+  ];
+};
 paly.defaultCount = 6;
 
 const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
@@ -3181,7 +3215,7 @@ const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
 // ----------------------------------------------------------------------------
 
 async function field(coloration: Coloration) {
-  const { fill, pattern } = await resolveTincture(coloration);
+  const { fill, pattern } = await resolveColoration(coloration);
   return svg.g(
     { "data-kind": "field" },
     pattern,
@@ -3234,7 +3268,7 @@ const CANTON_PATH: PathCommand.Any[] = [
 
 async function charge(element: Charge): Promise<SVGElement[]> {
   if ("canton" in element) {
-    const { fill, pattern } = await resolveTincture(element.canton);
+    const { fill, pattern } = await resolveColoration(element.canton);
     const canton = svg.g({ "data-kind": "canton" }, pattern);
     Transforms.apply(canton, {
       origin: [-W_2, -H_2],
@@ -3287,7 +3321,7 @@ async function escutcheonContent(
     function counterchangeOrdinary(ordinary: Ordinary): Ordinary {
       return {
         ...ordinary,
-        tincture: counterchangeTincture(ordinary.tincture),
+        tincture: counterchangeTincture(ordinary.coloration),
         cotised: counterchangeTincture(ordinary.cotised),
       };
     }
