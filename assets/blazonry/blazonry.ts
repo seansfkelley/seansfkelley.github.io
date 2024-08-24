@@ -2975,23 +2975,58 @@ function lozengy({ count }: VariationWithCount) {
 }
 lozengy.defaultCount = 8;
 
-function paly({ count }: VariationWithCount) {
+function paly({ treatment, count }: VariationWithCount) {
+  const width = W / (count / 2);
+  const height = H * 1.5; // 1.5: overrun to prevent visual artifacts around the top/bottom edges.
+
+  const left = TREATMENTS[treatment ?? "untreated"](
+    height,
+    false,
+    "primary",
+    "center"
+  );
+  RelativeTreatmentPath.rotate(left, Radians.QUARTER_TURN);
+
+  const right = TREATMENTS[treatment ?? "untreated"](
+    -height,
+    !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"],
+    "secondary",
+    "center"
+  );
+  RelativeTreatmentPath.rotate(right, Radians.QUARTER_TURN);
+
   return svg.pattern(
     {
       viewBox: [
         [0, 0],
-        [4, 1],
+        [width, height],
       ],
-      x: -W_2,
-      y: -H_2,
-      width: (2 * W) / count,
-      height: H,
-      // Explicitly require non-uniform scaling; it's the easiest way to implement paly.
-      preserveAspectRatio: "none",
+      x: -W_2 - width / 4,
+      y: -height / 2,
+      width,
+      height,
     },
-    svg.line([1, 0], [1, 1], { strokeWidth: 2, stroke: "white" })
+    svg.path(
+      relativePathsToClosedLoop(
+        RelativeTreatmentPath.offset([width / 4, 0]),
+        left,
+        RelativeTreatmentPath.line([width / 2, 0]),
+        right
+      ),
+      { fill: "white" }
+    )
   );
 }
+paly.maskEdges = (count: number) => [
+  // Hide dips from e.g. wavy on the left edge.
+  svg.rect([-W_2, -H_2], [-W_2 + W / count / 2, H_2], {
+    fill: "white",
+  }),
+  // Same, but note that the right bar changes color depending on the parity.
+  svg.rect([W_2 - W / count / 2, -H_2], [W_2, H_2], {
+    fill: count % 2 === 0 ? "black" : "white",
+  }),
+];
 paly.defaultCount = 6;
 
 const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
