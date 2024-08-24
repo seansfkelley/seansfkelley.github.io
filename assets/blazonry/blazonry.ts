@@ -3304,6 +3304,8 @@ async function charge(element: Charge): Promise<SVGElement[]> {
     const locator = CHARGE_LOCATORS[element.placement ?? "none"];
     for (const [translate, scale] of locator.forCount(element.count)) {
       const rendered = await nonOrdinaryCharge(element);
+      // TODO: Charges and ordinaries should... always...? be masks that we can then apply a pattern
+      // to. Apply the transform to the mask definition so the pattern doesn't get skewed.
       Transforms.apply(rendered, {
         translate,
         scale,
