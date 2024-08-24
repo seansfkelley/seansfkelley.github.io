@@ -12,8 +12,6 @@ FUTURE WORK and KNOWN ISSUES
   generally disliked for introducing complexity and ambiguity.
 - Charges `on` an ordinary are often too close; especially 2s and 3s, and more especially on chief
   and fess.
-- Charges colored with variations (e.g. "rondel barry wavy argent and azure", i.e., "fountain") are
-  not supported.
 - Charges in quartered quadrants aren't pushed around to account for the curvature of the bottom of
   the arms; a proper rendering would make them more cramped rather than cut them off.
 - Cantons are proportionally scaled and cropped at the bottom, which mostly works but can cause
@@ -135,7 +133,9 @@ type ColorOrMetal =
 
 type Fur = "ermine" | "ermines" | "erminois" | "pean";
 
-type Tincture = ColorOrMetal | Fur | "counterchanged";
+type Tincture = ColorOrMetal | Fur;
+
+type CounterchangeableTincture = Tincture | "counterchanged";
 
 type Treatment =
   | "embattled-counter-embattled"
@@ -223,7 +223,7 @@ interface SimpleField {
 
 type Coloration =
   | {
-      tincture: Tincture;
+      tincture: CounterchangeableTincture;
     }
   | Variation;
 
@@ -273,7 +273,7 @@ interface SimpleCharge extends BaseCharge {
 
 interface LionCharge extends BaseCharge {
   charge: "lion";
-  tincture: Tincture;
+  coloration: Coloration;
   armed: Tincture;
   langued: Tincture;
   attitude:
@@ -1102,10 +1102,12 @@ const svg = {
     points,
     fill,
     stroke,
+    classes,
   }: {
     points: Coordinate[];
     fill?: SvgColor;
     stroke?: SvgColor;
+    classes?: { fill?: ColorOrMetal; stroke?: ColorOrMetal };
   }): SVGPolygonElement => {
     const polygon = document.createElementNS(
       "http://www.w3.org/2000/svg",
@@ -1116,6 +1118,7 @@ const svg = {
       fill,
       stroke,
     });
+    applyClasses(polygon, classes);
     return polygon;
   },
   mask: (
@@ -2241,14 +2244,14 @@ const HORIZONTALLY_STRETCHED_ATTITUDES: Set<LionCharge["attitude"]> = new Set([
   "passant-reguardant",
 ]);
 async function lion({
-  tincture,
+  coloration,
   armed,
   langued,
   attitude,
   placement,
 }: LionCharge) {
   const lion = await fetchMutableComplexSvg("lion", attitude);
-  const { fill, pattern } = await resolveColoration({ tincture });
+  const { fill, pattern } = await resolveColoration(coloration);
   maybeAppendChild(lion, pattern);
   if ("classes" in fill) {
     lion.classList.add(fill.classes.fill);
@@ -3307,25 +3310,14 @@ async function charge(element: Charge): Promise<SVGElement[]> {
 async function escutcheonContent(
   content: EscutcheonContent
 ): Promise<SVGElement[]> {
-  // Note that counterchanging happens shallowly. If you have e.g. "on an ordinary counterchange a
-  // charge counterchanged", both will receive the _same_ patterning, even though the charge is on
-  // top of the ordinary (and could justifiably be re-reversed, matching the background variation).
+  // Note that counterchanging happens shallowly. If you have e.g. "per pale argent and gules on a
+  // bend counterchanged a mullet counterchanged", both will receive the _same_ patterning, even
+  // though the charge is on top of the ordinary (and could justifiably be re-reversed, matching the
+  // background variation).
   function overwriteCounterchangedColorations(
     element: Charge,
     coloration: Coloration
   ): Charge {
-    const tincture = "tincture" in coloration ? coloration.tincture : undefined;
-
-    function counterchangeTincture(t: Tincture): Tincture;
-    function counterchangeTincture(
-      t: Tincture | undefined
-    ): Tincture | undefined;
-    function counterchangeTincture(
-      t: Tincture | undefined
-    ): Tincture | undefined {
-      return t === "counterchanged" ? tincture ?? t : t;
-    }
-
     function counterchangeColoration(c: Coloration): Coloration;
     function counterchangeColoration(
       c: Coloration | undefined
@@ -3338,12 +3330,7 @@ async function escutcheonContent(
       } else if ("tincture" in c) {
         return c.tincture === "counterchanged" ? coloration : c;
       } else if ("type" in c) {
-        return {
-          ...c,
-          first: c.first === "counterchanged" ? tincture ?? c.first : c.first,
-          second:
-            c.second === "counterchanged" ? tincture ?? c.second : c.second,
-        };
+        return { ...c, first: c.second, second: c.first };
       } else {
         assertNever(c);
       }
@@ -3370,14 +3357,10 @@ async function escutcheonContent(
         case "fleur-de-lys":
         case "escallop":
         case "fret":
-          return {
-            ...charge,
-            coloration: counterchangeColoration(charge.coloration),
-          };
         case "lion":
           return {
             ...charge,
-            tincture: counterchangeTincture(charge.tincture),
+            coloration: counterchangeColoration(charge.coloration),
           };
         case "escutcheon":
           return charge; // TODO: Unsupported!
@@ -3824,7 +3807,7 @@ form.addEventListener("submit", async (e) => {
 });
 
 // These must be integers since the implementation uses a multiset to realize the different values.
-const TINCTURE_WEIGHTS: Record<Tincture, number> = {
+const TINCTURE_WEIGHTS: Record<CounterchangeableTincture, number> = {
   // Common colors.
   argent: 8,
   azure: 8,

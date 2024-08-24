@@ -42,8 +42,12 @@ SimpleField ->
   }) %}
 
 Coloration ->
-    Variation {% id %}
-  | Tincture  {% $({ tincture: 0 }) %}
+    Variation                 {% id %}
+  | CounterchangeableTincture {% $({ tincture: 0 }) %}
+
+CounterchangeableTincture ->
+    Tincture         {% id %}
+  | "counterchanged" {% id %}
 
 Variation ->
   VariationName (__ Treatment {% nth(1) %}):? (__ "of" __ Plural {% nth(3) %}):? __ Tincture __ "and" __ Tincture {%
@@ -93,6 +97,7 @@ NonOrdinaryCharge ->
   | SIMPLE_CHARGE[("fleur-de-lys" | "fleur-de-lis"), ("fleurs-de-lys" | "fleurs-de-lis")] {% spread({ charge: 'fleur-de-lys' }) %}
   | SIMPLE_UNCOLORED_CHARGE["bezant", "bezants"]                                          {% spread({ charge: 'rondel', coloration: { tincture: 'or' } }) %}
   | SIMPLE_UNCOLORED_CHARGE["torteau", ("torteaus" | "torteaux")]                         {% spread({ charge: 'rondel', coloration: { tincture: 'gules' } }) %}
+  | SIMPLE_UNCOLORED_CHARGE["fountain", "fountains"]                                      {% spread({ charge: 'rondel', coloration: { type: 'barry', treatment: 'wavy', first: 'argent', second: 'azure' } }) %}
   | Lion                                                                                  {% id %}
   | Escutcheon                                                                            {% id %}
 
@@ -101,12 +106,12 @@ Lion ->
       # Don't bother to restrict to "a" as singular, this makes it easier to play with different charges.
       Singular __ "lion" {% literal(1) %}
     | Plural __ "lions"  {% nth(0) %}
-  ) (__ LionAttitude {% nth(1) %}):? (__ Posture {% nth(1) %}):? __ Tincture (__ LionModifiers {% nth(1) %}):? (__ Placement {% nth(1) %}):? {% (d) => ({
+  ) (__ LionAttitude {% nth(1) %}):? (__ Posture {% nth(1) %}):? __ Coloration (__ LionModifiers {% nth(1) %}):? (__ Placement {% nth(1) %}):? {% (d) => ({
     charge: "lion",
     count: d[0],
     attitude: d[1] ?? "rampant",
     posture: d[2],
-    tincture: d[4],
+    coloration: d[4],
     armed: "gules",
     langued: "gules",
     ...d[5],
@@ -208,7 +213,6 @@ Tincture ->
   | "ermines"        {% id %}
   | "erminois"       {% id %}
   | "pean"           {% id %}
-  | "counterchanged" {% id %}
 
 OrdinaryName ->
     "bend"          {% id %}
