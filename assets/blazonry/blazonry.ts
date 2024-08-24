@@ -323,7 +323,11 @@ interface NonOrdinaryChargeRenderer<T extends NonOrdinaryCharge> {
   (charge: T): SVGElement | Promise<SVGElement>;
 }
 
-type VariationWithCount = Variation & { count: number };
+type VariationWithCount = Variation & {
+  count: number;
+  width?: number;
+  height?: number;
+};
 
 interface VariationPatternGenerator {
   (variation: VariationWithCount): Promise<SVGPatternElement>;
@@ -2081,7 +2085,7 @@ const ORDINARIES: Record<string, OrdinaryRenderer> = {
 // ----------------------------------------------------------------------------
 
 async function rondel({ coloration }: SimpleCharge) {
-  const { fill, pattern } = await resolveColoration(coloration, {
+  const { fill, pattern } = await resolveColoration(coloration, [36, 36], {
     scale: 0.5,
     translate: [0, 11],
   });
@@ -2095,7 +2099,7 @@ async function rondel({ coloration }: SimpleCharge) {
 }
 
 async function mullet({ coloration }: SimpleCharge) {
-  const { fill, pattern } = await resolveColoration(coloration, {
+  const { fill, pattern } = await resolveColoration(coloration, [40, 40], {
     scale: 0.4,
     translate: [0, 8],
   });
@@ -2382,6 +2386,7 @@ async function getErmineTincture(
 
 async function resolveColoration(
   coloration: Coloration | { color: SvgColor },
+  [width, height]: Coordinate = [W, H],
   patternTransform: Transforms = {}
 ): Promise<{
   // The value of classes instead of just setting fill/stroke directly is that complex charges like
@@ -2435,7 +2440,12 @@ async function resolveColoration(
     }
   } else {
     const count = coloration.count ?? VARIATIONS[coloration.type].defaultCount;
-    const pattern = await VARIATIONS[coloration.type]({ ...coloration, count });
+    const pattern = await VARIATIONS[coloration.type]({
+      ...coloration,
+      count,
+      width,
+      height,
+    });
     const color = `url(#${pattern.id})` as const;
     return {
       fill: { fill: color },
@@ -2679,12 +2689,19 @@ const IS_VARIATION_TREATMENT_ALIGNED: Record<Treatment | "untreated", boolean> =
     untreated: false,
   };
 
-async function barry({ treatment, count, first, second }: VariationWithCount) {
+async function barry({
+  treatment,
+  count,
+  first,
+  second,
+  width: fillWidth = W,
+  height: fillHeight = H,
+}: VariationWithCount) {
   const { fill: firstFill } = await resolveColoration({ tincture: first });
   const { fill: secondFill } = await resolveColoration({ tincture: second });
 
-  const width = W * 1.5; // 1.5: overrun to prevent visual artifacts around the left/right edges.
-  const height = H / (count / 2);
+  const width = fillWidth * 1.5; // 1.5: overrun to prevent visual artifacts around the left/right edges.
+  const height = fillHeight / (count / 2);
 
   return svg.pattern(
     {
@@ -2693,7 +2710,7 @@ async function barry({ treatment, count, first, second }: VariationWithCount) {
         [width, height],
       ],
       x: -width / 2,
-      y: -H_2 - height / 4,
+      y: -(fillHeight / 2) - height / 4,
       width,
       height,
     },
@@ -3285,6 +3302,9 @@ async function charge(element: Charge): Promise<SVGElement[]> {
       const rendered = await nonOrdinaryCharge(element);
       // TODO: Charges and ordinaries should... always...? be masks that we can then apply a pattern
       // to. Apply the transform to the mask definition so the pattern doesn't get skewed.
+      // TODO part II: update variations to be given w/h instead of assuming the full size, then use
+      // this to allow charges to render appropriately-sized variations. This clashes with the
+      // desire to always make them masks to support counterchanging.
       Transforms.apply(rendered, {
         translate,
         scale,
