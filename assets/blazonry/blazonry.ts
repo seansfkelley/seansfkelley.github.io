@@ -333,25 +333,25 @@ interface VariationPatternGenerator {
   defaultCount: number;
 }
 
-type RelativeTreatmentPath = [
+type TreatmentRelativePath = [
   PathCommand.m,
   PathCommand.Relative[],
   PathCommand.m
 ];
 
-const RelativeTreatmentPath = {
-  offset: (coordinate: Coordinate): RelativeTreatmentPath => [
+const TreatmentRelativePath = {
+  offset: (coordinate: Coordinate): TreatmentRelativePath => [
     { type: "m", loc: coordinate },
     [{ type: "m", loc: [0, 0] }],
     { type: "m", loc: [0, 0] },
   ],
-  line: (line: Coordinate): RelativeTreatmentPath => [
+  line: (line: Coordinate): TreatmentRelativePath => [
     { type: "m", loc: [0, 0] },
     [{ type: "l", loc: line }],
     { type: "m", loc: [0, 0] },
   ],
   rotate: (
-    [start, main, end]: RelativeTreatmentPath,
+    [start, main, end]: TreatmentRelativePath,
     radians: Radians
   ): void => {
     PathCommand.rotate(start, radians);
@@ -369,7 +369,7 @@ interface TreatmentPathGenerator {
     // _top_ of ordinaries. "Primary" means top.
     side: "primary" | "secondary",
     alignment?: "start" | "end" | "center"
-  ): RelativeTreatmentPath;
+  ): TreatmentRelativePath;
 }
 
 // #endregion
@@ -1120,9 +1120,9 @@ async function bend({ tincture, cotised, treatment }: Ordinary) {
   const bend = svg.g(pattern);
 
   const treatments = [
-    RelativeTreatmentPath.offset([0, -BEND_WIDTH / 2]),
+    TreatmentRelativePath.offset([0, -BEND_WIDTH / 2]),
     TREATMENTS[treatment ?? "untreated"](BEND_LENGTH, false, "primary"),
-    RelativeTreatmentPath.line([0, BEND_WIDTH]),
+    TreatmentRelativePath.line([0, BEND_WIDTH]),
     // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
     // we traverse around the bend clockwise.
     TREATMENTS[treatment ?? "untreated"](
@@ -1134,13 +1134,13 @@ async function bend({ tincture, cotised, treatment }: Ordinary) {
   ];
 
   for (const t of treatments) {
-    RelativeTreatmentPath.rotate(t, Radians.EIGHTH_TURN);
+    TreatmentRelativePath.rotate(t, Radians.EIGHTH_TURN);
   }
 
   bend.appendChild(
     svg.path(
       relativePathsToClosedLoop(
-        RelativeTreatmentPath.offset([-W_2, -H_2]),
+        TreatmentRelativePath.offset([-W_2, -H_2]),
         ...treatments
       ),
       fill
@@ -1221,7 +1221,7 @@ bend.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
       "primary",
       "start"
     );
-    RelativeTreatmentPath.rotate(treatmentPath, Radians.EIGHTH_TURN);
+    TreatmentRelativePath.rotate(treatmentPath, Radians.EIGHTH_TURN);
     return [
       { type: "M", loc: topLeft },
       { type: "l", loc: treatmentPath[0].loc },
@@ -1325,7 +1325,7 @@ async function chevron({ tincture, cotised, treatment }: Ordinary) {
     "primary",
     "end"
   );
-  RelativeTreatmentPath.rotate(topLeft, Radians.NEG_QUARTER_TURN);
+  TreatmentRelativePath.rotate(topLeft, Radians.NEG_QUARTER_TURN);
   const topRight = TREATMENTS[treatment ?? "untreated"](
     topLength,
     false,
@@ -1338,7 +1338,7 @@ async function chevron({ tincture, cotised, treatment }: Ordinary) {
     "secondary",
     "start"
   );
-  RelativeTreatmentPath.rotate(bottomLeft, Radians.NEG_QUARTER_TURN);
+  TreatmentRelativePath.rotate(bottomLeft, Radians.NEG_QUARTER_TURN);
   const bottomRight = TREATMENTS[treatment ?? "untreated"](
     -bottomLength,
     true,
@@ -1348,15 +1348,15 @@ async function chevron({ tincture, cotised, treatment }: Ordinary) {
 
   const treatments = [
     topRight,
-    RelativeTreatmentPath.line([0, CHEVRON_WIDTH]),
+    TreatmentRelativePath.line([0, CHEVRON_WIDTH]),
     bottomRight,
     bottomLeft,
-    RelativeTreatmentPath.line([-CHEVRON_WIDTH, 0]),
+    TreatmentRelativePath.line([-CHEVRON_WIDTH, 0]),
     topLeft,
   ];
 
   for (const t of treatments) {
-    RelativeTreatmentPath.rotate(t, Radians.EIGHTH_TURN);
+    TreatmentRelativePath.rotate(t, Radians.EIGHTH_TURN);
   }
 
   // n.b. this depends on `topLeft`, etc., being a shared reference to the same values in `treatments`.
@@ -1396,7 +1396,7 @@ async function chevron({ tincture, cotised, treatment }: Ordinary) {
   chevron.appendChild(
     svg.path(
       relativePathsToClosedLoop(
-        RelativeTreatmentPath.offset([
+        TreatmentRelativePath.offset([
           0,
           -Math.sqrt((CHEVRON_WIDTH * CHEVRON_WIDTH) / 2) - (H_2 - W_2),
         ]),
@@ -1543,19 +1543,19 @@ async function cross({ tincture, cotised, treatment }: Ordinary) {
     // Starting on the bottom right, moving around counter-clockwise.
     TREATMENTS[treatment ?? "untreated"](-vLength, false, "secondary", "end"),
     TREATMENTS[treatment ?? "untreated"](hLength, true, "secondary", "start"),
-    RelativeTreatmentPath.line([-CROSS_WIDTH, 0]),
+    TreatmentRelativePath.line([-CROSS_WIDTH, 0]),
     TREATMENTS[treatment ?? "untreated"](-hLength, false, "primary", "end"),
     TREATMENTS[treatment ?? "untreated"](-vLength, false, "secondary", "start"),
-    RelativeTreatmentPath.line([-CROSS_WIDTH, 0]),
+    TreatmentRelativePath.line([-CROSS_WIDTH, 0]),
     TREATMENTS[treatment ?? "untreated"](vLength, true, "secondary", "end"),
     TREATMENTS[treatment ?? "untreated"](-hLength, false, "primary", "start"),
-    RelativeTreatmentPath.line([CROSS_WIDTH, 0]),
+    TreatmentRelativePath.line([CROSS_WIDTH, 0]),
     TREATMENTS[treatment ?? "untreated"](hLength, true, "secondary", "end"),
     TREATMENTS[treatment ?? "untreated"](vLength, true, "secondary", "start"),
   ];
 
   for (const index of [0, 2, 4, 6, 8, 10]) {
-    RelativeTreatmentPath.rotate(treatments[index], Radians.QUARTER_TURN);
+    TreatmentRelativePath.rotate(treatments[index], Radians.QUARTER_TURN);
   }
 
   cross.appendChild(
@@ -1563,7 +1563,7 @@ async function cross({ tincture, cotised, treatment }: Ordinary) {
       relativePathsToClosedLoop(
         // Offset the path itself rather than translating the entire cross so that fur patterns are
         // not shifted off-center.
-        RelativeTreatmentPath.offset([CROSS_WIDTH / 2, H_2]),
+        TreatmentRelativePath.offset([CROSS_WIDTH / 2, H_2]),
         ...treatments
       ),
       fill
@@ -1748,7 +1748,7 @@ async function pale({ tincture, cotised, treatment }: Ordinary) {
   const pale = svg.g(pattern);
 
   const right = TREATMENTS[treatment ?? "untreated"](H, false, "primary");
-  RelativeTreatmentPath.rotate(right, Radians.QUARTER_TURN);
+  TreatmentRelativePath.rotate(right, Radians.QUARTER_TURN);
   // Note that right is left-to-right, but left is right-to-left. This is to make sure that
   // we traverse around the pale clockwise after rotations have been performed.
   const left = TREATMENTS[treatment ?? "untreated"](
@@ -1757,14 +1757,14 @@ async function pale({ tincture, cotised, treatment }: Ordinary) {
     "secondary",
     "end"
   );
-  RelativeTreatmentPath.rotate(left, Radians.QUARTER_TURN);
+  TreatmentRelativePath.rotate(left, Radians.QUARTER_TURN);
 
   pale.appendChild(
     svg.path(
       relativePathsToClosedLoop(
-        RelativeTreatmentPath.offset([PALE_WIDTH / 2, -H_2]),
+        TreatmentRelativePath.offset([PALE_WIDTH / 2, -H_2]),
         right,
-        RelativeTreatmentPath.line([-PALE_WIDTH, 0]),
+        TreatmentRelativePath.line([-PALE_WIDTH, 0]),
         left
       ),
       fill
@@ -1827,7 +1827,7 @@ pale.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
       "primary",
       "start"
     );
-    RelativeTreatmentPath.rotate([start, main, end], Radians.QUARTER_TURN);
+    TreatmentRelativePath.rotate([start, main, end], Radians.QUARTER_TURN);
     return [
       topLeft,
       topMid,
@@ -1858,29 +1858,29 @@ async function saltire({ tincture, cotised, treatment }: Ordinary) {
     // Starting on the bottom left moving around clockwise.
     TREATMENTS[treatment ?? "untreated"](length, false, "primary", "end"),
     TREATMENTS[treatment ?? "untreated"](length, false, "secondary", "start"),
-    RelativeTreatmentPath.line([SALTIRE_WIDTH, 0]),
+    TreatmentRelativePath.line([SALTIRE_WIDTH, 0]),
     TREATMENTS[treatment ?? "untreated"](-length, true, "primary", "end"),
     TREATMENTS[treatment ?? "untreated"](length, false, "primary", "start"),
-    RelativeTreatmentPath.line([-SALTIRE_WIDTH, 0]),
+    TreatmentRelativePath.line([-SALTIRE_WIDTH, 0]),
     TREATMENTS[treatment ?? "untreated"](-length, true, "secondary", "end"),
     TREATMENTS[treatment ?? "untreated"](-length, true, "primary", "start"),
-    RelativeTreatmentPath.line([-SALTIRE_WIDTH, 0]),
+    TreatmentRelativePath.line([-SALTIRE_WIDTH, 0]),
     TREATMENTS[treatment ?? "untreated"](length, false, "secondary", "end"),
     TREATMENTS[treatment ?? "untreated"](-length, true, "secondary", "start"),
   ];
 
   for (const index of [1, 3, 5, 7, 9]) {
-    RelativeTreatmentPath.rotate(treatments[index], Radians.NEG_QUARTER_TURN);
+    TreatmentRelativePath.rotate(treatments[index], Radians.NEG_QUARTER_TURN);
   }
 
   for (const t of treatments) {
-    RelativeTreatmentPath.rotate(t, Radians.NEG_EIGHTH_TURN);
+    TreatmentRelativePath.rotate(t, Radians.NEG_EIGHTH_TURN);
   }
 
   saltire.appendChild(
     svg.path(
       relativePathsToClosedLoop(
-        RelativeTreatmentPath.offset([
+        TreatmentRelativePath.offset([
           -W_2 - Math.sqrt((SALTIRE_WIDTH * SALTIRE_WIDTH) / 2),
           W_2 - (H_2 - W_2),
         ]),
@@ -1980,7 +1980,7 @@ saltire.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
       "primary",
       "center"
     );
-    RelativeTreatmentPath.rotate(
+    TreatmentRelativePath.rotate(
       [start1, main1, end1],
       (Radians.EIGHTH_TURN * 3) as Radians
     );
@@ -1991,7 +1991,7 @@ saltire.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
       "primary",
       "center"
     );
-    RelativeTreatmentPath.rotate(
+    TreatmentRelativePath.rotate(
       [start2, main2, end2],
       (Radians.NEG_EIGHTH_TURN * 3) as Radians
     );
@@ -2380,12 +2380,12 @@ async function resolveTincture(
 // ----------------------------------------------------------------------------
 
 function wrapSimpleTreatment(
-  treatment: (length: number) => RelativeTreatmentPath,
+  treatment: (length: number) => TreatmentRelativePath,
   isPatternCycleComposite: boolean,
   onlyRenderPrimary: boolean
 ): TreatmentPathGenerator {
   function mutatinglyApplyTransforms(
-    [start, main, end]: RelativeTreatmentPath,
+    [start, main, end]: TreatmentRelativePath,
     {
       invertX = false,
       invertY = false,
@@ -2395,7 +2395,7 @@ function wrapSimpleTreatment(
       invertY?: boolean;
       alignToEnd?: boolean;
     }
-  ): RelativeTreatmentPath {
+  ): TreatmentRelativePath {
     if (alignToEnd) {
       [start, end] = [end, start];
       main.reverse();
@@ -2436,7 +2436,7 @@ function wrapSimpleTreatment(
   return (xLength, invertY, side, alignment = "start") => {
     const chosenTreatment =
       side !== "primary" && onlyRenderPrimary
-        ? (length: number) => RelativeTreatmentPath.line([length, 0])
+        ? (length: number) => TreatmentRelativePath.line([length, 0])
         : treatment;
 
     const invertX = xLength < 0;
@@ -2470,7 +2470,7 @@ function wrapSimpleTreatment(
 }
 
 function relativePathsToClosedLoop(
-  ...paths: RelativeTreatmentPath[]
+  ...paths: TreatmentRelativePath[]
 ): PathCommand.Relative[] {
   assert(paths.length > 0, "must have at least one path to render");
 
@@ -2508,12 +2508,12 @@ function relativePathsToClosedLoop(
 }
 
 relativePathsToClosedLoop.debug = (
-  ...paths: RelativeTreatmentPath[]
+  ...paths: TreatmentRelativePath[]
 ): PathCommand.Relative[] => {
   return paths.flat(2).map((c) => (c.type === "m" ? { ...c, type: "l" } : c));
 };
 
-function embattled(length: number): RelativeTreatmentPath {
+function embattled(length: number): TreatmentRelativePath {
   const xStep = W / 12;
   const yStep = xStep / 2;
 
@@ -2539,7 +2539,7 @@ function embattled(length: number): RelativeTreatmentPath {
   ];
 }
 
-function engrailed(length: number): RelativeTreatmentPath {
+function engrailed(length: number): TreatmentRelativePath {
   const width = W / 6;
   const height = width / 6;
   const iterations = Math.ceil(length / width);
@@ -2562,7 +2562,7 @@ function engrailed(length: number): RelativeTreatmentPath {
   ];
 }
 
-function indented(length: number): RelativeTreatmentPath {
+function indented(length: number): TreatmentRelativePath {
   const size = W / 12;
 
   const points: Coordinate[] = [];
@@ -2587,7 +2587,7 @@ function indented(length: number): RelativeTreatmentPath {
   ];
 }
 
-function wavy(length: number): RelativeTreatmentPath {
+function wavy(length: number): TreatmentRelativePath {
   const halfWidth = W / 12;
 
   const curves: PathCommand.c[] = [];
@@ -2628,7 +2628,7 @@ const TREATMENTS: Record<Treatment | "untreated", TreatmentPathGenerator> = {
   engrailed: wrapSimpleTreatment(engrailed, false, false),
   indented: wrapSimpleTreatment(indented, true, false),
   wavy: wrapSimpleTreatment(wavy, true, false),
-  untreated: (length: number) => RelativeTreatmentPath.line([length, 0]),
+  untreated: (length: number) => TreatmentRelativePath.line([length, 0]),
 };
 
 // #endregion
@@ -2666,14 +2666,14 @@ function barry({ treatment, count }: VariationWithCount) {
     },
     svg.path(
       relativePathsToClosedLoop(
-        RelativeTreatmentPath.offset([0, height / 4]),
+        TreatmentRelativePath.offset([0, height / 4]),
         TREATMENTS[treatment ?? "untreated"](
           width,
           !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"],
           "secondary",
           "center"
         ),
-        RelativeTreatmentPath.line([0, height / 2]),
+        TreatmentRelativePath.line([0, height / 2]),
         TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center")
       ),
       { fill: "white" }
@@ -2757,14 +2757,14 @@ function bendy({ treatment, count }: VariationWithCount) {
     },
     svg.path(
       relativePathsToClosedLoop(
-        RelativeTreatmentPath.offset([0, height / 4]),
+        TreatmentRelativePath.offset([0, height / 4]),
         TREATMENTS[treatment ?? "untreated"](
           width,
           !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"],
           "secondary",
           "center"
         ),
-        RelativeTreatmentPath.line([0, height / 2]),
+        TreatmentRelativePath.line([0, height / 2]),
         TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center")
       ),
       { fill: "white" }
@@ -2985,7 +2985,7 @@ function paly({ treatment, count }: VariationWithCount) {
     "primary",
     "center"
   );
-  RelativeTreatmentPath.rotate(left, Radians.QUARTER_TURN);
+  TreatmentRelativePath.rotate(left, Radians.QUARTER_TURN);
 
   const right = TREATMENTS[treatment ?? "untreated"](
     -height,
@@ -2993,7 +2993,7 @@ function paly({ treatment, count }: VariationWithCount) {
     "secondary",
     "center"
   );
-  RelativeTreatmentPath.rotate(right, Radians.QUARTER_TURN);
+  TreatmentRelativePath.rotate(right, Radians.QUARTER_TURN);
 
   return svg.pattern(
     {
@@ -3008,9 +3008,9 @@ function paly({ treatment, count }: VariationWithCount) {
     },
     svg.path(
       relativePathsToClosedLoop(
-        RelativeTreatmentPath.offset([width / 4, 0]),
+        TreatmentRelativePath.offset([width / 4, 0]),
         left,
-        RelativeTreatmentPath.line([width / 2, 0]),
+        TreatmentRelativePath.line([width / 2, 0]),
         right
       ),
       { fill: "white" }
