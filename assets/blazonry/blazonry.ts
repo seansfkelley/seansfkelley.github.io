@@ -2741,7 +2741,10 @@ barry.nonRepeatingElements = async ({
 };
 barry.defaultCount = 6;
 
-function barryBendy({ count }: PatternableVariation) {
+async function barryBendy({ count, first, second }: PatternableVariation) {
+  const { fill: firstFill } = await resolveTincture(first);
+  const { fill: secondFill } = await resolveTincture(second);
+
   const size = (2 * W) / count; // W < H, so we'll step based on that.
   // This angle allows nice patterning where a 2x2 checkered unit shifts horizontally by half a unit
   // (0.5) for every full checked unit height (2). So it lines up vertically nicely.
@@ -2763,13 +2766,22 @@ function barryBendy({ count }: PatternableVariation) {
       y: -H_2,
       patternTransform: { skewX: angle },
     },
-    svg.rect([0, 0], [1, 1], { fill: "white" }),
-    svg.rect([1, 1], [2, 2], { fill: "white" })
+    svg.rect([0, 0], [2, 2], firstFill),
+    svg.rect([0, 0], [1, 1], secondFill),
+    svg.rect([1, 1], [2, 2], secondFill)
   );
 }
 barryBendy.defaultCount = 8;
 
-function bendy({ treatment, count }: PatternableVariation) {
+async function bendy({
+  treatment,
+  first,
+  second,
+  count,
+}: PatternableVariation) {
+  const { fill: firstFill } = await resolveTincture(first);
+  const { fill: secondFill } = await resolveTincture(second);
+
   // Ensure it's wide enough for the full diagonal extent to avoid any weird artifacting between
   // adjacent repeats of the pattern that would otherwise be visible.
   const width = Math.hypot(H, H);
@@ -2804,6 +2816,7 @@ function bendy({ treatment, count }: PatternableVariation) {
         ],
       },
     },
+    svg.rect([0, 0], [width, height], firstFill),
     svg.path(
       TreatmentRelativePath.toClosedLoop(
         TreatmentRelativePath.offset([0, height / 4]),
@@ -2816,11 +2829,18 @@ function bendy({ treatment, count }: PatternableVariation) {
         TreatmentRelativePath.line([0, height / 2]),
         TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center")
       ),
-      { fill: "white" }
+      secondFill
     )
   );
 }
-bendy.nonRepeatingElements = (count: number) => {
+bendy.nonRepeatingElements = async ({
+  count,
+  first,
+  second,
+}: PatternableVariation) => {
+  const { fill: firstFill } = await resolveTincture(first);
+  const { fill: secondFill } = await resolveTincture(second);
+
   const bendHeight = Math.hypot(W, W) / count;
   // hypot -> hypot transforms back to vertical/horizontal instead of 45 degree space.
   const edgeHeight = Math.hypot(bendHeight / 2, bendHeight / 2);
@@ -2834,14 +2854,14 @@ bendy.nonRepeatingElements = (count: number) => {
       ],
       // I wrote out a table to prove this, but basically, the color of the top right corner only
       // changes every two counts, hence the rounding up to even.
-      fill: (roundUpToEven(count) / 2) % 2 === 0 ? "white" : "black",
+      ...((roundUpToEven(count) / 2) % 2 === 0 ? secondFill : firstFill),
     }),
   ];
 };
 bendy.defaultCount = 8;
 
-function bendySinister(variation: PatternableVariation) {
-  const pattern = bendy(variation);
+async function bendySinister(variation: PatternableVariation) {
+  const pattern = await bendy(variation);
 
   const height = Math.hypot(W, W) / (variation.count / 2);
   applySvgAttributes(pattern, {
@@ -2861,7 +2881,14 @@ function bendySinister(variation: PatternableVariation) {
 
   return pattern;
 }
-bendySinister.nonRepeatingElements = (count: number) => {
+bendySinister.nonRepeatingElements = async ({
+  count,
+  first,
+  second,
+}: PatternableVariation) => {
+  const { fill: firstFill } = await resolveTincture(first);
+  const { fill: secondFill } = await resolveTincture(second);
+
   // Copy-pasta-signflip from the bendy version. I couldn't think of a good way define this in terms
   // of the result of calling the other function, so I didn't.
 
@@ -2875,13 +2902,16 @@ bendySinister.nonRepeatingElements = (count: number) => {
         [-W_2, -H_2 + edgeHeight],
         [-W_2 + edgeHeight, -H_2],
       ],
-      fill: (roundUpToEven(count) / 2) % 2 === 0 ? "white" : "black",
+      ...((roundUpToEven(count) / 2) % 2 === 0 ? secondFill : firstFill),
     }),
   ];
 };
 bendySinister.defaultCount = 8;
 
-function checky({ count }: PatternableVariation) {
+async function checky({ count, first, second }: PatternableVariation) {
+  const { fill: firstFill } = await resolveTincture(first);
+  const { fill: secondFill } = await resolveTincture(second);
+
   const size = (2 * W) / count; // W < H, so we'll step based on that.
   return svg.pattern(
     {
@@ -2894,8 +2924,9 @@ function checky({ count }: PatternableVariation) {
       x: -W_2,
       y: -H_2,
     },
-    svg.rect([1, 0], [2, 1], { fill: "white" }),
-    svg.rect([0, 1], [1, 2], { fill: "white" })
+    svg.rect([0, 0], [2, 2], firstFill),
+    svg.rect([1, 0], [2, 1], secondFill),
+    svg.rect([0, 1], [1, 2], secondFill)
   );
 }
 checky.defaultCount = 6;
