@@ -3310,19 +3310,50 @@ async function escutcheonContent(
   // Note that counterchanging happens shallowly. If you have e.g. "on an ordinary counterchange a
   // charge counterchanged", both will receive the _same_ patterning, even though the charge is on
   // top of the ordinary (and could justifiably be re-reversed, matching the background variation).
-  function overwriteCounterchangedTincture(
+  function overwriteCounterchangedColorations(
     element: Charge,
-    tincture: Tincture
+    coloration: Coloration
   ): Charge {
-    function counterchangeTincture<T extends Tincture | undefined>(t: T): T {
-      return (t === "counterchanged" ? tincture : t) as T;
+    const tincture = "tincture" in coloration ? coloration.tincture : undefined;
+
+    function counterchangeTincture(t: Tincture): Tincture;
+    function counterchangeTincture(
+      t: Tincture | undefined
+    ): Tincture | undefined;
+    function counterchangeTincture(
+      t: Tincture | undefined
+    ): Tincture | undefined {
+      return t === "counterchanged" ? tincture ?? t : t;
+    }
+
+    function counterchangeColoration(c: Coloration): Coloration;
+    function counterchangeColoration(
+      c: Coloration | undefined
+    ): Coloration | undefined;
+    function counterchangeColoration(
+      c: Coloration | undefined
+    ): Coloration | undefined {
+      if (c == null) {
+        return c;
+      } else if ("tincture" in c) {
+        return c.tincture === "counterchanged" ? coloration : c;
+      } else if ("type" in c) {
+        return {
+          ...c,
+          first: c.first === "counterchanged" ? tincture ?? c.first : c.first,
+          second:
+            c.second === "counterchanged" ? tincture ?? c.second : c.second,
+        };
+      } else {
+        assertNever(c);
+      }
     }
 
     function counterchangeOrdinary(ordinary: Ordinary): Ordinary {
       return {
         ...ordinary,
-        tincture: counterchangeTincture(ordinary.coloration),
-        cotised: counterchangeTincture(ordinary.cotised),
+        coloration: counterchangeColoration(ordinary.coloration),
+        cotised: counterchangeColoration(ordinary.cotised),
       };
     }
 
@@ -3339,6 +3370,10 @@ async function escutcheonContent(
         case "fleur-de-lys":
         case "escallop":
         case "fret":
+          return {
+            ...charge,
+            coloration: counterchangeColoration(charge.coloration),
+          };
         case "lion":
           return {
             ...charge,
@@ -3354,9 +3389,9 @@ async function escutcheonContent(
     if ("canton" in element) {
       return {
         ...element,
-        canton: counterchangeTincture(element.canton),
+        canton: counterchangeColoration(element.canton),
         charges: element.charges?.map((c) =>
-          overwriteCounterchangedTincture(c, tincture)
+          overwriteCounterchangedColorations(c, coloration)
         ),
       };
     } else if ("on" in element) {
@@ -3399,7 +3434,7 @@ async function escutcheonContent(
     const children: SVGElement[] = [mask, g2, g1];
     if (content.charges != null) {
       const counterchangedFirst = content.charges.map((c) =>
-        overwriteCounterchangedTincture(c, content.first)
+        overwriteCounterchangedColorations(c, content.first)
       );
       // This branch is not just a perf/DOM optimization, but prevents visual artifacts. If we
       // unconditionally do the counterchanged thing, even when not necessary, the line of division
@@ -3411,7 +3446,7 @@ async function escutcheonContent(
       // always render a single ordinary, which I am not willing to do at the moment.
       if (!deepEqual(content.charges, counterchangedFirst)) {
         const counterchangedSecond = content.charges.map((c) =>
-          overwriteCounterchangedTincture(c, content.second)
+          overwriteCounterchangedColorations(c, content.second)
         );
         for (const c of counterchangedSecond) {
           g1.append(...(await charge(c)));
@@ -3524,12 +3559,20 @@ async function escutcheonContent(
     const children: SVGElement[] = [pattern, mask, g2, g1];
     if (content.charges != null) {
       const counterchangedFirst = content.charges.map((c) =>
-        overwriteCounterchangedTincture(c, variation.first)
+        overwriteCounterchangedColorations(c, {
+          ...variation,
+          first: variation.second,
+          second: variation.first,
+        })
       );
       // See the party-per branch for why this check is here. I do not like it.
       if (!deepEqual(content.charges, counterchangedFirst)) {
         const counterchangedSecond = content.charges.map((c) =>
-          overwriteCounterchangedTincture(c, variation.second)
+          overwriteCounterchangedColorations(c, {
+            ...variation,
+            first: variation.second,
+            second: variation.first,
+          })
         );
         for (const c of counterchangedSecond) {
           g1.append(...(await charge(c)));
