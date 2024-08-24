@@ -1404,13 +1404,13 @@ async function chevron({ tincture, cotised, treatment }: Ordinary) {
     TreatmentRelativePath.rotate(t, Radians.EIGHTH_TURN);
   }
 
-  // n.b. this depends on `topLeft`, etc., being a shared reference to the same values in `treatments`.
+  // n.b. this depends on `topRight`, etc., being a shared reference to the same values in `treatments`.
   {
     const [start, , end] = topRight;
     const originalStart: Coordinate = [...start.loc];
     start.loc = [
       0,
-      Math.sign(start.loc[1]) * Math.sqrt(2 * start.loc[1] * start.loc[1]),
+      Math.sign(start.loc[1]) * Math.hypot(start.loc[1], start.loc[1]),
     ];
     end.loc = Coordinate.add(
       end.loc,
@@ -1422,10 +1422,7 @@ async function chevron({ tincture, cotised, treatment }: Ordinary) {
   {
     const [start, , end] = topLeft;
     const originalEnd: Coordinate = [...end.loc];
-    end.loc = [
-      0,
-      Math.sign(end.loc[1]) * Math.sqrt(2 * end.loc[1] * end.loc[1]),
-    ];
+    end.loc = [0, Math.sign(end.loc[1]) * Math.hypot(end.loc[1], end.loc[1])];
     start.loc = Coordinate.add(
       start.loc,
       originalEnd,
@@ -2852,27 +2849,79 @@ function checky({ count }: VariationWithCount) {
 }
 checky.defaultCount = 6;
 
-function chevronny({ count }: VariationWithCount) {
+function chevronny({ treatment, count }: VariationWithCount) {
   // -2 because the nature of chevrons means that even if you have exactly `count` bands along the
   // center line, you'll see more off to the sides. -2 empirally splits the difference, where the
   // center line has less but the sides have more and it looks approximately like what you wanted.
-  const strokeVerticalHeight = H / (count - 2);
-  const strokeWidth = Math.sqrt(Math.pow(strokeVerticalHeight, 2) / 2);
-  const chevronCount = roundUpToEven(Math.ceil(W_2 / strokeVerticalHeight) + 1);
+  const chevronHeight = H / (count - 2);
+  // The 45 degree angle centered on the midline means the tiling unit needs to be at least w/2
+  // tall, but it also needs to snap to a unit of tiling, which is two heights (one on, on off).
+  const height = 2 * chevronHeight * Math.ceil(W_2 / (2 * chevronHeight));
 
-  const chevrons = [];
-  for (let i = -chevronCount / 2; i <= chevronCount / 2; ++i) {
-    chevrons.push(
+  // 1.5: overrun to prevent visual artifacts around rounding errors and small-pixel adjustments for
+  // alignment among the joints of the various parts.
+  const length = Math.hypot(W_2, W_2) * 1.5;
+
+  const topRight = TREATMENTS[treatment ?? "untreated"](
+    length,
+    false,
+    "primary",
+    "start"
+  );
+  TreatmentRelativePath.rotate(topRight, Radians.EIGHTH_TURN);
+  const bottomRight = TREATMENTS[treatment ?? "untreated"](
+    -length,
+    false,
+    "secondary",
+    "end"
+  );
+  TreatmentRelativePath.rotate(bottomRight, Radians.EIGHTH_TURN);
+
+  topRight[0].loc = [0, 0];
+  bottomRight[2].loc = [0, 0];
+
+  const bottomLeft = TREATMENTS[treatment ?? "untreated"](
+    length,
+    true,
+    "secondary",
+    "start"
+  );
+  TreatmentRelativePath.rotate(bottomLeft, (Math.PI * (3 / 4)) as Radians);
+  const topLeft = TREATMENTS[treatment ?? "untreated"](
+    -length,
+    true,
+    "primary",
+    "end"
+  );
+  TreatmentRelativePath.rotate(topLeft, (Math.PI * (3 / 4)) as Radians);
+
+  bottomLeft[0].loc = [0, 0];
+  topLeft[2].loc = [0, 0];
+
+  const template = [
+    topRight,
+    TreatmentRelativePath.line([0, chevronHeight]),
+    bottomRight,
+    bottomLeft,
+    TreatmentRelativePath.line([0, -chevronHeight]),
+    topLeft,
+  ];
+
+  const paths = [];
+  // Start negative to ensure we render copies in the top left and right corners of the tile. The
+  // template is based on the top middle location.
+  for (
+    let i = -height / (2 * chevronHeight);
+    i < height / (2 * chevronHeight);
+    ++i
+  ) {
+    paths.push(
       svg.path(
-        [
-          {
-            type: "M",
-            loc: [0, strokeVerticalHeight / 2 + i * 2 * strokeVerticalHeight],
-          },
-          { type: "l", loc: [W_2, W_2] },
-          { type: "l", loc: [W_2, -W_2] },
-        ],
-        { strokeWidth, stroke: "white", strokeLinecap: "square" }
+        TreatmentRelativePath.toClosedLoop(
+          TreatmentRelativePath.offset([W_2, i * 2 * chevronHeight]),
+          ...template
+        ),
+        { fill: "white" }
       )
     );
   }
@@ -2881,13 +2930,14 @@ function chevronny({ count }: VariationWithCount) {
     {
       viewBox: [
         [0, 0],
-        [W, chevronCount * strokeVerticalHeight],
+        [W, height],
       ],
       width: W,
-      height: chevronCount * strokeVerticalHeight,
-      y: -strokeVerticalHeight,
+      height,
+      x: -W_2,
+      y: -H_2,
     },
-    ...chevrons
+    ...paths
   );
 }
 chevronny.defaultCount = 6;
