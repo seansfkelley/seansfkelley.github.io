@@ -333,7 +333,7 @@ interface PatternableVariation {
 interface VariationPatternGenerator {
   (variation: PatternableVariation): Promise<SVGPatternElement>;
   nonRepeatingElements?: (
-    variatoin: PatternableVariation
+    variation: PatternableVariation
   ) => Promise<SVGGeometryElement[]>;
   defaultCount: number;
 }
@@ -2395,6 +2395,7 @@ async function resolveColoration(
   fill: { fill: SvgColor } | { classes: { fill: ColorOrMetal } };
   stroke: { stroke: SvgColor } | { classes: { stroke: ColorOrMetal } };
   pattern?: SVGPatternElement;
+  nonRepeatingElements?: SVGGeometryElement[];
 }> {
   if ("color" in coloration) {
     return {
@@ -2439,16 +2440,22 @@ async function resolveColoration(
     }
   } else {
     const count = coloration.count ?? VARIATIONS[coloration.type].defaultCount;
-    const pattern = await VARIATIONS[coloration.type]({
+    const patternable: PatternableVariation = {
       first: { tincture: coloration.first },
       second: { tincture: coloration.second },
       treatment: coloration.treatment,
       count,
-    });
-    // TODO: should be done by the generator
-    pattern.id = uniqueId("coloration-variation");
+    };
+    const pattern = await VARIATIONS[coloration.type](patternable);
     const color = `url(#${pattern.id})` as const;
-    return { fill: { fill: color }, stroke: { stroke: color }, pattern };
+    return {
+      fill: { fill: color },
+      stroke: { stroke: color },
+      pattern,
+      nonRepeatingElements: await VARIATIONS[
+        coloration.type
+      ].nonRepeatingElements?.(patternable),
+    };
   }
 }
 
@@ -2706,7 +2713,7 @@ async function barry({
       width,
       height,
     },
-    svg.rect([0, 0], [width, height], firstFill),
+    svg.rect([0, 0], [width, height], secondFill),
     svg.path(
       TreatmentRelativePath.toClosedLoop(
         TreatmentRelativePath.offset([0, height / 4]),
@@ -2719,7 +2726,7 @@ async function barry({
         TreatmentRelativePath.line([0, height / 2]),
         TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center")
       ),
-      secondFill
+      firstFill
     )
   );
 }
@@ -2733,12 +2740,12 @@ barry.nonRepeatingElements = async ({
 
   return [
     // Hide dips from e.g. wavy on the top edge.
-    svg.rect([-W_2, -H_2], [W_2, -H_2 + H / count / 2], secondFill),
+    svg.rect([-W_2, -H_2], [W_2, -H_2 + H / count / 2], firstFill),
     // Same, but note that the bottom bar changes color depending on the parity.
     svg.rect(
       [-W_2, H_2 - H / count / 2],
       [W_2, H_2],
-      count % 2 === 0 ? firstFill : secondFill
+      count % 2 === 0 ? secondFill : firstFill
     ),
   ];
 };
@@ -2769,9 +2776,9 @@ async function barryBendy({ count, first, second }: PatternableVariation) {
       y: -H_2,
       patternTransform: { skewX: angle },
     },
-    svg.rect([0, 0], [2, 2], firstFill),
-    svg.rect([0, 0], [1, 1], secondFill),
-    svg.rect([1, 1], [2, 2], secondFill)
+    svg.rect([0, 0], [2, 2], secondFill),
+    svg.rect([0, 0], [1, 1], firstFill),
+    svg.rect([1, 1], [2, 2], firstFill)
   );
 }
 barryBendy.defaultCount = 8;
@@ -2819,7 +2826,7 @@ async function bendy({
         ],
       },
     },
-    svg.rect([0, 0], [width, height], firstFill),
+    svg.rect([0, 0], [width, height], secondFill),
     svg.path(
       TreatmentRelativePath.toClosedLoop(
         TreatmentRelativePath.offset([0, height / 4]),
@@ -2832,7 +2839,7 @@ async function bendy({
         TreatmentRelativePath.line([0, height / 2]),
         TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center")
       ),
-      secondFill
+      firstFill
     )
   );
 }
@@ -2857,7 +2864,7 @@ bendy.nonRepeatingElements = async ({
       ],
       // I wrote out a table to prove this, but basically, the color of the top right corner only
       // changes every two counts, hence the rounding up to even.
-      ...((roundUpToEven(count) / 2) % 2 === 0 ? secondFill : firstFill),
+      ...((roundUpToEven(count) / 2) % 2 === 0 ? firstFill : secondFill),
     }),
   ];
 };
@@ -2905,7 +2912,7 @@ bendySinister.nonRepeatingElements = async ({
         [-W_2, -H_2 + edgeHeight],
         [-W_2 + edgeHeight, -H_2],
       ],
-      ...((roundUpToEven(count) / 2) % 2 === 0 ? secondFill : firstFill),
+      ...((roundUpToEven(count) / 2) % 2 === 0 ? firstFill : secondFill),
     }),
   ];
 };
@@ -2927,9 +2934,9 @@ async function checky({ count, first, second }: PatternableVariation) {
       x: -W_2,
       y: -H_2,
     },
-    svg.rect([0, 0], [2, 2], firstFill),
-    svg.rect([1, 0], [2, 1], secondFill),
-    svg.rect([0, 1], [1, 2], secondFill)
+    svg.rect([0, 0], [2, 2], secondFill),
+    svg.rect([1, 0], [2, 1], firstFill),
+    svg.rect([0, 1], [1, 2], firstFill)
   );
 }
 checky.defaultCount = 6;
@@ -3014,7 +3021,7 @@ async function chevronny({
           TreatmentRelativePath.offset([W_2, i * 2 * chevronHeight]),
           ...template
         ),
-        secondFill
+        firstFill
       )
     );
   }
@@ -3030,7 +3037,7 @@ async function chevronny({
       x: -W_2,
       y: -H_2,
     },
-    svg.rect([0, 0], [W, height], firstFill),
+    svg.rect([0, 0], [W, height], secondFill),
     ...paths
   );
 }
@@ -3052,7 +3059,7 @@ async function fusilly({ count, first, second }: PatternableVariation) {
       width,
       height: width * 4,
     },
-    svg.rect([0, 0], [2, 8], firstFill),
+    svg.rect([0, 0], [2, 8], secondFill),
     svg.polygon({
       points: [
         [1, 0],
@@ -3060,7 +3067,7 @@ async function fusilly({ count, first, second }: PatternableVariation) {
         [1, 8],
         [0, 4],
       ],
-      ...secondFill,
+      ...firstFill,
     })
   );
 }
@@ -3088,7 +3095,7 @@ async function fusillyInBends({ count, first, second }: PatternableVariation) {
         translate: [-width, -width - (H_2 - W_2)],
       },
     },
-    svg.rect([0, 0], [2, 8], firstFill),
+    svg.rect([0, 0], [2, 8], secondFill),
     svg.polygon({
       points: [
         [1, 0],
@@ -3096,7 +3103,7 @@ async function fusillyInBends({ count, first, second }: PatternableVariation) {
         [1, 8],
         [0, 4],
       ],
-      ...secondFill,
+      ...firstFill,
     })
   );
 }
@@ -3118,7 +3125,7 @@ async function lozengy({ count, first, second }: PatternableVariation) {
       width,
       height: width * 2,
     },
-    svg.rect([0, 0], [2, 4], firstFill),
+    svg.rect([0, 0], [2, 4], secondFill),
     svg.polygon({
       points: [
         [1, 0],
@@ -3126,7 +3133,7 @@ async function lozengy({ count, first, second }: PatternableVariation) {
         [1, 4],
         [0, 2],
       ],
-      ...secondFill,
+      ...firstFill,
     })
   );
 }
@@ -3166,7 +3173,7 @@ async function paly({ treatment, first, second, count }: PatternableVariation) {
       width,
       height,
     },
-    svg.rect([0, 0], [width, height], firstFill),
+    svg.rect([0, 0], [width, height], secondFill),
     svg.path(
       TreatmentRelativePath.toClosedLoop(
         TreatmentRelativePath.offset([width / 4, 0]),
@@ -3174,7 +3181,7 @@ async function paly({ treatment, first, second, count }: PatternableVariation) {
         TreatmentRelativePath.line([width / 2, 0]),
         right
       ),
-      secondFill
+      firstFill
     )
   );
 }
@@ -3188,12 +3195,12 @@ paly.nonRepeatingElements = async ({
 
   return [
     // Hide dips from e.g. wavy on the left edge.
-    svg.rect([-W_2, -H_2], [-W_2 + W / count / 2, H_2], secondFill),
+    svg.rect([-W_2, -H_2], [-W_2 + W / count / 2, H_2], firstFill),
     // Same, but note that the right bar changes color depending on the parity.
     svg.rect(
       [W_2 - W / count / 2, -H_2],
       [W_2, H_2],
-      count % 2 === 0 ? firstFill : secondFill
+      count % 2 === 0 ? secondFill : firstFill
     ),
   ];
 };
@@ -3218,12 +3225,15 @@ const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
 // ----------------------------------------------------------------------------
 
 async function field(coloration: Coloration) {
-  const { fill, pattern } = await resolveColoration(coloration);
+  const { fill, pattern, nonRepeatingElements } = await resolveColoration(
+    coloration
+  );
   return svg.g(
     { "data-kind": "field" },
     pattern,
     // Expand the height so that when this is rendered on the extra-tall quarter segments it still fills.
-    svg.rect([-W_2, -H_2], [W_2, H_2 + 2 * (H_2 - W_2)], fill)
+    svg.rect([-W_2, -H_2], [W_2, H_2 + 2 * (H_2 - W_2)], fill),
+    ...(nonRepeatingElements ?? [])
   );
 }
 
@@ -3504,72 +3514,26 @@ async function escutcheonContent(
       children.push(...(await charge(c)));
     }
     return children;
-  } else {
+  } else if ("coloration" in content) {
     const variation = content.coloration;
 
-    const g1 = svg.g({ "data-kind": "variation-1" });
-    const g2 = svg.g({ "data-kind": "variation-2" });
-
-    g1.appendChild(await field({ tincture: variation.first }));
-    g2.appendChild(await field({ tincture: variation.second }));
-
-    // TODO: Deduplicate this with party-per, if possible, or at least make them consistent.
-    // BETTER TODO: This should just render the variation with colors instead of masks and be done
-    // with it, yeah?
-    const count = variation.count ?? VARIATIONS[variation.type].defaultCount;
-    const patternableVariation: PatternableVariation = {
-      first: { color: "white" },
-      second: { color: "black" },
-      treatment: variation.treatment,
-      count,
-    };
-    const pattern = await VARIATIONS[variation.type](patternableVariation);
-    const mask = svg.mask(
-      {},
-      // TODO: Is this always the correct size? If rotates and such happen
-      // at the pattern level, do we ever need to worry about changing the shape?
-      svg.rect([-W_2, -H_2], [W_2, H_2], { fill: `url(#${pattern.id})` }),
-      // Some patterns want to special-case the edges to prevent splotches of tincture showing up
-      // along the edges from repeats of the pattern that are mostly outside the viewable area of
-      // the field, such as when "barry wavy" has dips revealing some negative space.
-      ...((await VARIATIONS[variation.type].nonRepeatingElements?.(
-        patternableVariation
-      )) ?? [])
-    );
-    g1.setAttribute("mask", `url(#${mask.id})`);
-
     // This looks backwards but isn't: the masked <g> must come later in order to take precedence.
-    const children: SVGElement[] = [pattern, mask, g2, g1];
+    const children: SVGElement[] = [await field(variation)];
     if (content.charges != null) {
-      const counterchangedFirst = content.charges.map((c) =>
+      const counterchanged = content.charges.map((c) =>
         overwriteCounterchangedColorations(c, {
           ...variation,
           first: variation.second,
           second: variation.first,
         })
       );
-      // See the party-per branch for why this check is here. I do not like it.
-      if (!deepEqual(content.charges, counterchangedFirst)) {
-        const counterchangedSecond = content.charges.map((c) =>
-          overwriteCounterchangedColorations(c, {
-            ...variation,
-            first: variation.second,
-            second: variation.first,
-          })
-        );
-        for (const c of counterchangedSecond) {
-          g1.append(...(await charge(c)));
-        }
-        for (const c of counterchangedFirst) {
-          g2.append(...(await charge(c)));
-        }
-      } else {
-        for (const c of content.charges) {
-          children.push(...(await charge(c)));
-        }
+      for (const c of counterchanged) {
+        children.push(...(await charge(c)));
       }
     }
     return children;
+  } else {
+    assertNever(content);
   }
 }
 
