@@ -3340,7 +3340,7 @@ async function escutcheonContent(
       } else if ("tincture" in c) {
         return c.tincture === "counterchanged" ? coloration : c;
       } else if ("type" in c) {
-        return { ...c, first: c.second, second: c.first };
+        return c;
       } else {
         assertNever(c);
       }
@@ -3508,19 +3508,18 @@ async function escutcheonContent(
     }
 
     return children;
-  } else if ("tincture" in content.coloration) {
-    const children: SVGElement[] = [await field(content.coloration)];
-    for (const c of content.charges ?? []) {
-      children.push(...(await charge(c)));
-    }
-    return children;
   } else if ("coloration" in content) {
-    const variation = content.coloration;
+    if ("tincture" in content.coloration) {
+      const children: SVGElement[] = [await field(content.coloration)];
+      for (const c of content.charges ?? []) {
+        children.push(...(await charge(c)));
+      }
+      return children;
+    } else if ("type" in content.coloration) {
+      const variation = content.coloration;
 
-    // This looks backwards but isn't: the masked <g> must come later in order to take precedence.
-    const children: SVGElement[] = [await field(variation)];
-    if (content.charges != null) {
-      const counterchanged = content.charges.map((c) =>
+      const children: SVGElement[] = [await field(variation)];
+      const counterchanged = (content.charges ?? []).map((c) =>
         overwriteCounterchangedColorations(c, {
           ...variation,
           first: variation.second,
@@ -3530,8 +3529,10 @@ async function escutcheonContent(
       for (const c of counterchanged) {
         children.push(...(await charge(c)));
       }
+      return children;
+    } else {
+      assertNever(content.coloration);
     }
-    return children;
   } else {
     assertNever(content);
   }
