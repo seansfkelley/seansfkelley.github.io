@@ -598,8 +598,9 @@ const svg = {
         applyClasses(rect, classes);
         return rect;
     },
-    g: (...children) => {
+    g: ({ "data-kind": kind = undefined }, ...children) => {
         const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        applySvgAttributes(g, { "data-kind": kind });
         g.append(...children.filter(isNotNullish));
         return g;
     },
@@ -647,7 +648,7 @@ async function fetchMutableComplexSvg(kind, variant) {
     if (!(key in complexSvgCache)) {
         complexSvgCache[key] = fetch(`/assets/blazonry/svg/${key}.svg`).then(async (response) => {
             const root = new DOMParser().parseFromString(await response.text(), "image/svg+xml").documentElement;
-            const wrapper = svg.g();
+            const wrapper = svg.g({ "data-kind": key });
             wrapper.classList.add(kind);
             // Shallow copy: appendChild also deletes it from the source node, so this is modifying the
             // collection as we iterate it.
@@ -669,7 +670,7 @@ const BEND_WIDTH = W / 3;
 const BEND_LENGTH = Math.hypot(W, W) + BEND_WIDTH / 2;
 async function bend({ tincture, cotised, treatment }) {
     const { fill, pattern } = await resolveTincture(tincture);
-    const bend = svg.g(pattern);
+    const bend = svg.g({ "data-kind": "bend" }, pattern);
     const treatments = [
         TreatmentRelativePath.offset([0, -BEND_WIDTH / 2]),
         TREATMENTS[treatment ?? "untreated"](BEND_LENGTH, false, "primary"),
@@ -735,7 +736,7 @@ bend.partition = (treatment) => {
     }
 };
 async function bendSinister(ordinary) {
-    const g = svg.g(await bend(ordinary));
+    const g = svg.g({ "data-kind": "bend-sinister" }, await bend(ordinary));
     Transforms.apply(g, {
         scale: [-1, 1],
     });
@@ -751,7 +752,7 @@ bendSinister.partition = (treatment) => {
 const CHIEF_WIDTH = H / 3;
 async function chief({ tincture, cotised, treatment }) {
     const { fill, pattern } = await resolveTincture(tincture);
-    const chief = svg.g(pattern);
+    const chief = svg.g({ "data-kind": "chief" }, pattern);
     const [start, main, end] = TREATMENTS[treatment ?? "untreated"](-W, true, "primary", "center");
     chief.appendChild(svg.path([
         { type: "M", loc: [-W_2, -H_2] },
@@ -773,7 +774,7 @@ chief.partition = UNSUPPORTED;
 const CHEVRON_WIDTH = W / 4;
 async function chevron({ tincture, cotised, treatment }) {
     const { fill, pattern } = await resolveTincture(tincture);
-    const chevron = svg.g(pattern);
+    const chevron = svg.g({ "data-kind": "chevron" }, pattern);
     const left = [-W_2, -H_2 + W];
     const right = [-W_2 + H, H_2];
     // Cross at 45 degrees starting from the top edge, so we bias upwards from the center.
@@ -905,7 +906,7 @@ async function cross({ tincture, cotised, treatment }) {
     const { fill, pattern } = await resolveTincture(tincture, {
         translate: [0, 12],
     });
-    const cross = svg.g(pattern);
+    const cross = svg.g({ "data-kind": "cross" }, pattern);
     const top = [0, -H_2];
     const bottom = [0, H_2];
     const left = [-W_2, -CROSS_VERTICAL_OFFSET];
@@ -981,7 +982,7 @@ const FESS_WIDTH = W / 3;
 const FESS_VERTICAL_OFFSET = -H_2 + FESS_WIDTH * (3 / 2);
 async function fess({ tincture, cotised, treatment }) {
     const { fill, pattern } = await resolveTincture(tincture);
-    const fess = svg.g(pattern);
+    const fess = svg.g({ "data-kind": "fess" }, pattern);
     fess.appendChild(svg.path([
         {
             type: "m",
@@ -1031,7 +1032,7 @@ fess.partition = (treatment) => {
 const PALE_WIDTH = W / 3;
 async function pale({ tincture, cotised, treatment }) {
     const { fill, pattern } = await resolveTincture(tincture);
-    const pale = svg.g(pattern);
+    const pale = svg.g({ "data-kind": "pale" }, pattern);
     const right = TREATMENTS[treatment ?? "untreated"](H, false, "primary");
     TreatmentRelativePath.rotate(right, Radians.QUARTER_TURN);
     // Note that right is left-to-right, but left is right-to-left. This is to make sure that
@@ -1084,7 +1085,7 @@ pale.partition = (treatment) => {
 const SALTIRE_WIDTH = W / 4;
 async function saltire({ tincture, cotised, treatment }) {
     const { fill, pattern } = await resolveTincture(tincture);
-    const saltire = svg.g(pattern);
+    const saltire = svg.g({ "data-kind": "saltire" }, pattern);
     const tl = [-W_2, -H_2];
     const tr = [W_2, -H_2];
     const bl = [W_2 - H, H_2];
@@ -1212,7 +1213,7 @@ async function rondel({ tincture }) {
         scale: 0.5,
         translate: [0, 11],
     });
-    return svg.g(pattern, 
+    return svg.g({ "data-kind": "rondel" }, pattern, 
     // Not quite the full 40x40. Since these are the more visually heavyweight and fill out their
     // allotted space entirely without natural negative spaces, shrink them so they don't crowd too much.
     svg.circle([0, 0], 18, fill));
@@ -1222,7 +1223,7 @@ async function mullet({ tincture }) {
         scale: 0.4,
         translate: [0, 8],
     });
-    return svg.g(pattern, svg.path([
+    return svg.g({ "data-kind": "mullet" }, pattern, svg.path([
         // These awkward numbers keep the proportions nice while just filling out a 40x40 square.
         { type: "M", loc: [0, -18.8] },
         { type: "L", loc: [5, -4.6] },
@@ -1248,7 +1249,7 @@ async function fret({ tincture }) {
     // having to duplicate-with-slight-modifications the various elements. A single path almost works,
     // but would still require patching-up of the outline to produce the proper visual layering, and
     // doesn't have a good way to make sure the open ends in the four corners also have an outline.
-    return svg.g(pattern, svg.line([-halfWidth - outlineWidth, -halfWidth - outlineWidth], [halfWidth + outlineWidth, halfWidth + outlineWidth], {
+    return svg.g({ "data-kind": "fret" }, pattern, svg.line([-halfWidth - outlineWidth, -halfWidth - outlineWidth], [halfWidth + outlineWidth, halfWidth + outlineWidth], {
         strokeWidth: strokeWidth + outlineWidth * 2,
         classes: { stroke: "sable" },
     }), svg.line([-halfWidth, -halfWidth], [halfWidth, halfWidth], {
@@ -1335,21 +1336,21 @@ async function lion({ tincture, armed, langued, attitude, placement, }) {
         // This is a bit of a hack! But it makes the Bavarian arms look a little less stupid overall.
         // Really, the passant variants should be naturally wider, as that is how they are typically shown.
         Transforms.apply(lion, { scale: [2, 1] });
-        return svg.g(lion);
+        return svg.g({ "data-kind": "lion" }, lion);
     }
     else {
         return lion;
     }
 }
 async function escutcheon({ content }) {
-    const escutcheon = svg.g(await field("argent"), ...(await escutcheonContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
+    const escutcheon = svg.g({ "data-kind": "escutcheon" }, await field("argent"), ...(await escutcheonContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
     escutcheon.setAttribute("clip-path", `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`);
     Transforms.apply(escutcheon, {
         scale: 0.35,
     });
     // Charges are scaled according to count and placement, so wrap in an extra layer in order to
     // apply our own scaling.
-    return svg.g(escutcheon);
+    return svg.g({ "data-kind": "escutcheon-wrapper" }, escutcheon);
 }
 const CHARGE_LOCATORS = {
     // The vertical offset here matches the offset for both quarterings and some of the ordinaries
@@ -1947,7 +1948,7 @@ const VARIATIONS = {
 // ----------------------------------------------------------------------------
 async function field(tincture) {
     const { fill, pattern } = await resolveTincture(tincture);
-    return svg.g(pattern, 
+    return svg.g({ "data-kind": "field" }, pattern, 
     // Expand the height so that when this is rendered on the extra-tall quarter segments it still fills.
     svg.rect([-W_2, -H_2], [W_2, H_2 + 2 * (H_2 - W_2)], fill));
 }
@@ -1992,14 +1993,17 @@ const CANTON_PATH = [
 async function charge(element) {
     if ("canton" in element) {
         const { fill, pattern } = await resolveTincture(element.canton);
-        const g = svg.g(pattern);
-        Transforms.apply(g, { origin: [-W_2, -H_2], scale: CANTON_SCALE_FACTOR });
-        g.style.clipPath = `path("${PathCommand.toDString(CANTON_PATH)}") view-box`;
-        g.appendChild(svg.path(CANTON_PATH, fill));
+        const canton = svg.g({ "data-kind": "canton" }, pattern);
+        Transforms.apply(canton, {
+            origin: [-W_2, -H_2],
+            scale: CANTON_SCALE_FACTOR,
+        });
+        canton.style.clipPath = `path("${PathCommand.toDString(CANTON_PATH)}") view-box`;
+        canton.appendChild(svg.path(CANTON_PATH, fill));
         for (const c of element.charges ?? []) {
-            g.append(...(await charge(c)));
+            canton.append(...(await charge(c)));
         }
-        return [g];
+        return [canton];
     }
     else if ("on" in element) {
         return on(element);
@@ -2091,9 +2095,9 @@ async function escutcheonContent(content) {
         // This should be prevented in grammar, so this should never fire.
         assert(partition !== UNSUPPORTED, `cannot partition with this ordinary`);
         const mask = svg.mask({}, svg.path(partition(content.treatment), { fill: "white" }));
-        const g1 = svg.g(await field(content.first));
+        const g1 = svg.g({ "data-kind": "partition-1" }, await field(content.first));
         g1.setAttribute("mask", `url(#${mask.id})`);
-        const g2 = svg.g(await field(content.second));
+        const g2 = svg.g({ "data-kind": "partition-2" }, await field(content.second));
         // Add g2 first so that it's underneath g1, which is the masked one.
         const children = [mask, g2, g1];
         if (content.charges != null) {
@@ -2125,10 +2129,10 @@ async function escutcheonContent(content) {
     }
     else if ("quarters" in content) {
         const quartered = {
-            1: svg.g(),
-            2: svg.g(),
-            3: svg.g(),
-            4: svg.g(),
+            1: svg.g({ "data-kind": "quarter-1" }),
+            2: svg.g({ "data-kind": "quarter-2" }),
+            3: svg.g({ "data-kind": "quarter-3" }),
+            4: svg.g({ "data-kind": "quarter-4" }),
         };
         for (const [i_, { translate, height }] of Object.entries(QUARTERINGS)) {
             const i = +i_;
@@ -2178,8 +2182,8 @@ async function escutcheonContent(content) {
     }
     else {
         const variation = content.coloration;
-        const g1 = svg.g();
-        const g2 = svg.g();
+        const g1 = svg.g({ "data-kind": "variation-1" });
+        const g2 = svg.g({ "data-kind": "variation-2" });
         g1.appendChild(await field(variation.first));
         g2.appendChild(await field(variation.second));
         // TODO: Deduplicate this with party-per, if possible, or at least make them consistent.
@@ -2255,7 +2259,7 @@ async function on({ on, surround, charge }) {
     return children;
 }
 async function inescutcheon({ location, content }) {
-    const escutcheon = svg.g(await field("argent"), ...(await escutcheonContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
+    const escutcheon = svg.g({ "data-kind": "inescutcheon" }, await field("argent"), ...(await escutcheonContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
     escutcheon.setAttribute("clip-path", `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`);
     Transforms.apply(escutcheon, {
         scale: 0.25,
@@ -2311,7 +2315,7 @@ async function parseAndRenderBlazon(initialAmbiguousIndex = 0) {
     async function render(blazon, index) {
         blazon = recursivelyOmitNullish(blazon);
         // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
-        const container = svg.g(...(await escutcheonContent(blazon.main)), blazon.inescutcheon != null
+        const container = svg.g({ "data-kind": "container" }, ...(await escutcheonContent(blazon.main)), blazon.inescutcheon != null
             ? await inescutcheon(blazon.inescutcheon)
             : undefined);
         container.style.clipPath = `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`;
