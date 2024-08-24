@@ -325,8 +325,8 @@ interface NonOrdinaryChargeRenderer<T extends NonOrdinaryCharge> {
 
 type VariationWithCount = Variation & {
   count: number;
-  width?: number;
-  height?: number;
+  width: number;
+  height: number;
 };
 
 interface VariationPatternGenerator {
@@ -2453,7 +2453,7 @@ async function resolveColoration(
       pattern,
       nonRepeatingElements: await VARIATIONS[
         coloration.type
-      ].nonRepeatingElements?.({ ...coloration, count }),
+      ].nonRepeatingElements?.({ ...coloration, count, width, height }),
     };
   }
 }
@@ -2694,8 +2694,8 @@ async function barry({
   count,
   first,
   second,
-  width: fillWidth = W,
-  height: fillHeight = H,
+  width: fillWidth,
+  height: fillHeight,
 }: VariationWithCount) {
   const { fill: firstFill } = await resolveColoration({ tincture: first });
   const { fill: secondFill } = await resolveColoration({ tincture: second });
@@ -2914,11 +2914,17 @@ bendySinister.nonRepeatingElements = async ({
 };
 bendySinister.defaultCount = 8;
 
-async function checky({ count, first, second }: VariationWithCount) {
+async function checky({
+  count,
+  first,
+  second,
+  width: fillWidth,
+  height: fillHeight,
+}: VariationWithCount) {
   const { fill: firstFill } = await resolveColoration({ tincture: first });
   const { fill: secondFill } = await resolveColoration({ tincture: second });
 
-  const size = (2 * W) / count; // W < H, so we'll step based on that.
+  const size = (2 * fillWidth) / count; // W < H, so we'll step based on that.
   return svg.pattern(
     {
       viewBox: [
@@ -2927,8 +2933,8 @@ async function checky({ count, first, second }: VariationWithCount) {
       ],
       width: size,
       height: size,
-      x: -W_2,
-      y: -H_2,
+      x: -fillWidth / 2,
+      y: -fillHeight / 2,
     },
     svg.rect([0, 0], [2, 2], secondFill),
     svg.rect([1, 0], [2, 1], firstFill),
