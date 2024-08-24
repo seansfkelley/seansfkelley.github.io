@@ -358,6 +358,51 @@ const TreatmentRelativePath = {
     main.forEach((c) => PathCommand.rotate(c, radians));
     PathCommand.rotate(end, radians);
   },
+  toClosedLoop: (...paths: TreatmentRelativePath[]): PathCommand.Relative[] => {
+    assert(paths.length > 0, "must have at least one path to render");
+
+    const commands: PathCommand.Relative[] = [
+      paths[0][0],
+      ...paths[0][1],
+      paths[0][2],
+    ];
+    for (const [start, middle, end] of paths.slice(1)) {
+      const previous = commands.pop();
+      assert(
+        previous != null && previous.type === "m",
+        "commands must always end in m"
+      );
+      commands.push(
+        { type: "l", loc: Coordinate.add(previous.loc, start.loc) },
+        ...middle,
+        end
+      );
+    }
+    commands.pop();
+    commands.push({ type: "z" });
+    return [
+      // Always include the first move, which is necessary to make the path valid.
+      commands[0],
+      ...commands.slice(1).filter(
+        // Remove no-op commands just so that the SVG is easier to read and debug.
+        (c) =>
+          !(
+            (c.type === "l" && c.loc[0] === 0 && c.loc[1] === 0) ||
+            (c.type === "m" && c.loc[0] === 0 && c.loc[1] === 0)
+          )
+      ),
+    ];
+  },
+  debugToClosedLoop: (
+    ...paths: TreatmentRelativePath[]
+  ): PathCommand.Relative[] => {
+    return [
+      ...paths
+        .flat(2)
+        .map((c) => (c.type === "m" ? { ...c, type: "l" as const } : c)),
+      { type: "z" },
+    ];
+  },
 };
 
 interface TreatmentPathGenerator {
@@ -1139,7 +1184,7 @@ async function bend({ tincture, cotised, treatment }: Ordinary) {
 
   bend.appendChild(
     svg.path(
-      relativePathsToClosedLoop(
+      TreatmentRelativePath.toClosedLoop(
         TreatmentRelativePath.offset([-W_2, -H_2]),
         ...treatments
       ),
@@ -1395,7 +1440,7 @@ async function chevron({ tincture, cotised, treatment }: Ordinary) {
 
   chevron.appendChild(
     svg.path(
-      relativePathsToClosedLoop(
+      TreatmentRelativePath.toClosedLoop(
         TreatmentRelativePath.offset([
           0,
           -Math.sqrt((CHEVRON_WIDTH * CHEVRON_WIDTH) / 2) - (H_2 - W_2),
@@ -1560,7 +1605,7 @@ async function cross({ tincture, cotised, treatment }: Ordinary) {
 
   cross.appendChild(
     svg.path(
-      relativePathsToClosedLoop(
+      TreatmentRelativePath.toClosedLoop(
         // Offset the path itself rather than translating the entire cross so that fur patterns are
         // not shifted off-center.
         TreatmentRelativePath.offset([CROSS_WIDTH / 2, H_2]),
@@ -1656,7 +1701,7 @@ async function fess({ tincture, cotised, treatment }: Ordinary) {
           type: "m",
           loc: [-W_2, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2],
         },
-        ...relativePathsToClosedLoop(
+        ...TreatmentRelativePath.toClosedLoop(
           TREATMENTS[treatment ?? "untreated"](W, false, "primary", "center"),
           [
             { type: "m", loc: [0, 0] },
@@ -1761,7 +1806,7 @@ async function pale({ tincture, cotised, treatment }: Ordinary) {
 
   pale.appendChild(
     svg.path(
-      relativePathsToClosedLoop(
+      TreatmentRelativePath.toClosedLoop(
         TreatmentRelativePath.offset([PALE_WIDTH / 2, -H_2]),
         right,
         TreatmentRelativePath.line([-PALE_WIDTH, 0]),
@@ -1879,7 +1924,7 @@ async function saltire({ tincture, cotised, treatment }: Ordinary) {
 
   saltire.appendChild(
     svg.path(
-      relativePathsToClosedLoop(
+      TreatmentRelativePath.toClosedLoop(
         TreatmentRelativePath.offset([
           -W_2 - Math.sqrt((SALTIRE_WIDTH * SALTIRE_WIDTH) / 2),
           W_2 - (H_2 - W_2),
@@ -2469,50 +2514,6 @@ function wrapSimpleTreatment(
   };
 }
 
-function relativePathsToClosedLoop(
-  ...paths: TreatmentRelativePath[]
-): PathCommand.Relative[] {
-  assert(paths.length > 0, "must have at least one path to render");
-
-  const commands: PathCommand.Relative[] = [
-    paths[0][0],
-    ...paths[0][1],
-    paths[0][2],
-  ];
-  for (const [start, middle, end] of paths.slice(1)) {
-    const previous = commands.pop();
-    assert(
-      previous != null && previous.type === "m",
-      "commands must always end in m"
-    );
-    commands.push(
-      { type: "l", loc: Coordinate.add(previous.loc, start.loc) },
-      ...middle,
-      end
-    );
-  }
-  commands.pop();
-  commands.push({ type: "z" });
-  return [
-    // Always include the first move, which is necessary to make the path valid.
-    commands[0],
-    ...commands.slice(1).filter(
-      // Remove no-op commands just so that the SVG is easier to read and debug.
-      (c) =>
-        !(
-          (c.type === "l" && c.loc[0] === 0 && c.loc[1] === 0) ||
-          (c.type === "m" && c.loc[0] === 0 && c.loc[1] === 0)
-        )
-    ),
-  ];
-}
-
-relativePathsToClosedLoop.debug = (
-  ...paths: TreatmentRelativePath[]
-): PathCommand.Relative[] => {
-  return paths.flat(2).map((c) => (c.type === "m" ? { ...c, type: "l" } : c));
-};
-
 function embattled(length: number): TreatmentRelativePath {
   const xStep = W / 12;
   const yStep = xStep / 2;
@@ -2665,7 +2666,7 @@ function barry({ treatment, count }: VariationWithCount) {
       height,
     },
     svg.path(
-      relativePathsToClosedLoop(
+      TreatmentRelativePath.toClosedLoop(
         TreatmentRelativePath.offset([0, height / 4]),
         TREATMENTS[treatment ?? "untreated"](
           width,
@@ -2756,7 +2757,7 @@ function bendy({ treatment, count }: VariationWithCount) {
       },
     },
     svg.path(
-      relativePathsToClosedLoop(
+      TreatmentRelativePath.toClosedLoop(
         TreatmentRelativePath.offset([0, height / 4]),
         TREATMENTS[treatment ?? "untreated"](
           width,
@@ -3007,7 +3008,7 @@ function paly({ treatment, count }: VariationWithCount) {
       height,
     },
     svg.path(
-      relativePathsToClosedLoop(
+      TreatmentRelativePath.toClosedLoop(
         TreatmentRelativePath.offset([width / 4, 0]),
         left,
         TreatmentRelativePath.line([width / 2, 0]),
