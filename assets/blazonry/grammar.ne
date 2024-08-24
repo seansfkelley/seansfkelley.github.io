@@ -97,7 +97,7 @@ NonOrdinaryCharge ->
   | SIMPLE_CHARGE[("fleur-de-lys" | "fleur-de-lis"), ("fleurs-de-lys" | "fleurs-de-lis")] {% spread({ charge: 'fleur-de-lys' }) %}
   | SIMPLE_UNCOLORED_CHARGE["bezant", "bezants"]                                          {% spread({ charge: 'rondel', coloration: { tincture: 'or' } }) %}
   | SIMPLE_UNCOLORED_CHARGE["torteau", ("torteaus" | "torteaux")]                         {% spread({ charge: 'rondel', coloration: { tincture: 'gules' } }) %}
-  | SIMPLE_UNCOLORED_CHARGE["fountain", "fountains"]                                      {% spread({ charge: 'rondel', coloration: { type: 'barry', treatment: 'wavy', first: 'argent', second: 'azure' } }) %}
+  | SIMPLE_UNCOLORED_CHARGE["fountain", "fountains"]                                      {% spread({ charge: 'rondel', coloration: { type: 'barry', treatment: 'wavy', first: 'azure', second: 'argent', count: 8 } }) %}
   | Lion                                                                                  {% id %}
   | Escutcheon                                                                            {% id %}
 
