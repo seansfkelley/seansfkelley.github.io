@@ -323,17 +323,12 @@ interface NonOrdinaryChargeRenderer<T extends NonOrdinaryCharge> {
   (charge: T): SVGElement | Promise<SVGElement>;
 }
 
-interface PatternableVariation {
-  first: Coloration | { color: SvgColor };
-  second: Coloration | { color: SvgColor };
-  count: number;
-  treatment?: Treatment;
-}
+type VariationWithCount = Variation & { count: number };
 
 interface VariationPatternGenerator {
-  (variation: PatternableVariation): Promise<SVGPatternElement>;
+  (variation: VariationWithCount): Promise<SVGPatternElement>;
   nonRepeatingElements?: (
-    variation: PatternableVariation
+    variation: VariationWithCount
   ) => Promise<SVGGeometryElement[]>;
   defaultCount: number;
 }
@@ -2440,13 +2435,7 @@ async function resolveColoration(
     }
   } else {
     const count = coloration.count ?? VARIATIONS[coloration.type].defaultCount;
-    const patternable: PatternableVariation = {
-      first: { tincture: coloration.first },
-      second: { tincture: coloration.second },
-      treatment: coloration.treatment,
-      count,
-    };
-    const pattern = await VARIATIONS[coloration.type](patternable);
+    const pattern = await VARIATIONS[coloration.type]({ ...coloration, count });
     const color = `url(#${pattern.id})` as const;
     return {
       fill: { fill: color },
@@ -2454,7 +2443,7 @@ async function resolveColoration(
       pattern,
       nonRepeatingElements: await VARIATIONS[
         coloration.type
-      ].nonRepeatingElements?.(patternable),
+      ].nonRepeatingElements?.({ ...coloration, count }),
     };
   }
 }
@@ -2690,14 +2679,9 @@ const IS_VARIATION_TREATMENT_ALIGNED: Record<Treatment | "untreated", boolean> =
     untreated: false,
   };
 
-async function barry({
-  treatment,
-  count,
-  first,
-  second,
-}: PatternableVariation) {
-  const { fill: firstFill } = await resolveColoration(first);
-  const { fill: secondFill } = await resolveColoration(second);
+async function barry({ treatment, count, first, second }: VariationWithCount) {
+  const { fill: firstFill } = await resolveColoration({ tincture: first });
+  const { fill: secondFill } = await resolveColoration({ tincture: second });
 
   const width = W * 1.5; // 1.5: overrun to prevent visual artifacts around the left/right edges.
   const height = H / (count / 2);
@@ -2734,9 +2718,9 @@ barry.nonRepeatingElements = async ({
   count,
   first,
   second,
-}: PatternableVariation) => {
-  const { fill: firstFill } = await resolveColoration(first);
-  const { fill: secondFill } = await resolveColoration(second);
+}: VariationWithCount) => {
+  const { fill: firstFill } = await resolveColoration({ tincture: first });
+  const { fill: secondFill } = await resolveColoration({ tincture: second });
 
   return [
     // Hide dips from e.g. wavy on the top edge.
@@ -2751,9 +2735,9 @@ barry.nonRepeatingElements = async ({
 };
 barry.defaultCount = 6;
 
-async function barryBendy({ count, first, second }: PatternableVariation) {
-  const { fill: firstFill } = await resolveColoration(first);
-  const { fill: secondFill } = await resolveColoration(second);
+async function barryBendy({ count, first, second }: VariationWithCount) {
+  const { fill: firstFill } = await resolveColoration({ tincture: first });
+  const { fill: secondFill } = await resolveColoration({ tincture: second });
 
   const size = (2 * W) / count; // W < H, so we'll step based on that.
   // This angle allows nice patterning where a 2x2 checkered unit shifts horizontally by half a unit
@@ -2783,14 +2767,9 @@ async function barryBendy({ count, first, second }: PatternableVariation) {
 }
 barryBendy.defaultCount = 8;
 
-async function bendy({
-  treatment,
-  first,
-  second,
-  count,
-}: PatternableVariation) {
-  const { fill: firstFill } = await resolveColoration(first);
-  const { fill: secondFill } = await resolveColoration(second);
+async function bendy({ treatment, first, second, count }: VariationWithCount) {
+  const { fill: firstFill } = await resolveColoration({ tincture: first });
+  const { fill: secondFill } = await resolveColoration({ tincture: second });
 
   // Ensure it's wide enough for the full diagonal extent to avoid any weird artifacting between
   // adjacent repeats of the pattern that would otherwise be visible.
@@ -2847,9 +2826,9 @@ bendy.nonRepeatingElements = async ({
   count,
   first,
   second,
-}: PatternableVariation) => {
-  const { fill: firstFill } = await resolveColoration(first);
-  const { fill: secondFill } = await resolveColoration(second);
+}: VariationWithCount) => {
+  const { fill: firstFill } = await resolveColoration({ tincture: first });
+  const { fill: secondFill } = await resolveColoration({ tincture: second });
 
   const bendHeight = Math.hypot(W, W) / count;
   // hypot -> hypot transforms back to vertical/horizontal instead of 45 degree space.
@@ -2870,7 +2849,7 @@ bendy.nonRepeatingElements = async ({
 };
 bendy.defaultCount = 8;
 
-async function bendySinister(variation: PatternableVariation) {
+async function bendySinister(variation: VariationWithCount) {
   const pattern = await bendy(variation);
 
   const height = Math.hypot(W, W) / (variation.count / 2);
@@ -2895,9 +2874,9 @@ bendySinister.nonRepeatingElements = async ({
   count,
   first,
   second,
-}: PatternableVariation) => {
-  const { fill: firstFill } = await resolveColoration(first);
-  const { fill: secondFill } = await resolveColoration(second);
+}: VariationWithCount) => {
+  const { fill: firstFill } = await resolveColoration({ tincture: first });
+  const { fill: secondFill } = await resolveColoration({ tincture: second });
 
   // Copy-pasta-signflip from the bendy version. I couldn't think of a good way define this in terms
   // of the result of calling the other function, so I didn't.
@@ -2918,9 +2897,9 @@ bendySinister.nonRepeatingElements = async ({
 };
 bendySinister.defaultCount = 8;
 
-async function checky({ count, first, second }: PatternableVariation) {
-  const { fill: firstFill } = await resolveColoration(first);
-  const { fill: secondFill } = await resolveColoration(second);
+async function checky({ count, first, second }: VariationWithCount) {
+  const { fill: firstFill } = await resolveColoration({ tincture: first });
+  const { fill: secondFill } = await resolveColoration({ tincture: second });
 
   const size = (2 * W) / count; // W < H, so we'll step based on that.
   return svg.pattern(
@@ -2946,9 +2925,9 @@ async function chevronny({
   first,
   second,
   count,
-}: PatternableVariation) {
-  const { fill: firstFill } = await resolveColoration(first);
-  const { fill: secondFill } = await resolveColoration(second);
+}: VariationWithCount) {
+  const { fill: firstFill } = await resolveColoration({ tincture: first });
+  const { fill: secondFill } = await resolveColoration({ tincture: second });
 
   // -2 because the nature of chevrons means that even if you have exactly `count` bands along the
   // center line, you'll see more off to the sides. -2 empirally splits the difference, where the
@@ -3043,9 +3022,9 @@ async function chevronny({
 }
 chevronny.defaultCount = 6;
 
-async function fusilly({ count, first, second }: PatternableVariation) {
-  const { fill: firstFill } = await resolveColoration(first);
-  const { fill: secondFill } = await resolveColoration(second);
+async function fusilly({ count, first, second }: VariationWithCount) {
+  const { fill: firstFill } = await resolveColoration({ tincture: first });
+  const { fill: secondFill } = await resolveColoration({ tincture: second });
 
   const width = W / count;
   return svg.pattern(
@@ -3075,9 +3054,9 @@ fusilly.defaultCount = 8;
 
 // There is no visual reference I could find for this besides the arms of Bavaria, so the precise
 // positioning of the variations relative to the corners and edges matches the appearance there.
-async function fusillyInBends({ count, first, second }: PatternableVariation) {
-  const { fill: firstFill } = await resolveColoration(first);
-  const { fill: secondFill } = await resolveColoration(second);
+async function fusillyInBends({ count, first, second }: VariationWithCount) {
+  const { fill: firstFill } = await resolveColoration({ tincture: first });
+  const { fill: secondFill } = await resolveColoration({ tincture: second });
 
   const width = W / count;
   return svg.pattern(
@@ -3109,9 +3088,9 @@ async function fusillyInBends({ count, first, second }: PatternableVariation) {
 }
 fusillyInBends.defaultCount = 8;
 
-async function lozengy({ count, first, second }: PatternableVariation) {
-  const { fill: firstFill } = await resolveColoration(first);
-  const { fill: secondFill } = await resolveColoration(second);
+async function lozengy({ count, first, second }: VariationWithCount) {
+  const { fill: firstFill } = await resolveColoration({ tincture: first });
+  const { fill: secondFill } = await resolveColoration({ tincture: second });
 
   const width = W / count;
   return svg.pattern(
@@ -3139,9 +3118,9 @@ async function lozengy({ count, first, second }: PatternableVariation) {
 }
 lozengy.defaultCount = 8;
 
-async function paly({ treatment, first, second, count }: PatternableVariation) {
-  const { fill: firstFill } = await resolveColoration(first);
-  const { fill: secondFill } = await resolveColoration(second);
+async function paly({ treatment, first, second, count }: VariationWithCount) {
+  const { fill: firstFill } = await resolveColoration({ tincture: first });
+  const { fill: secondFill } = await resolveColoration({ tincture: second });
 
   const width = W / (count / 2);
   const height = H * 1.5; // 1.5: overrun to prevent visual artifacts around the top/bottom edges.
@@ -3189,9 +3168,9 @@ paly.nonRepeatingElements = async ({
   count,
   first,
   second,
-}: PatternableVariation) => {
-  const { fill: firstFill } = await resolveColoration(first);
-  const { fill: secondFill } = await resolveColoration(second);
+}: VariationWithCount) => {
+  const { fill: firstFill } = await resolveColoration({ tincture: first });
+  const { fill: secondFill } = await resolveColoration({ tincture: second });
 
   return [
     // Hide dips from e.g. wavy on the left edge.
