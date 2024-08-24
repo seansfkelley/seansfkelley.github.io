@@ -488,25 +488,6 @@ function deepEqual(one, two) {
         return one === two;
     }
 }
-// Not foolproof, but simple and suitable for us.
-function deepClone(obj) {
-    if (obj == null) {
-        return obj;
-    }
-    else if (Array.isArray(obj)) {
-        return obj.map(deepClone);
-    }
-    else if (typeof obj === "object") {
-        const clone = {};
-        for (const [key, value] of Object.entries(obj)) {
-            clone[key] = deepClone(value);
-        }
-        return clone;
-    }
-    else {
-        return obj;
-    }
-}
 function roundUpToEven(n) {
     return n % 2 === 1 ? n + 1 : n;
 }
@@ -1823,7 +1804,6 @@ function chevronny({ treatment, count }) {
     bottomLeft[0].loc = [0, 0];
     topLeft[2].loc = [0, 0];
     const template = [
-        TreatmentRelativePath.offset([W_2, 0]),
         topRight,
         TreatmentRelativePath.line([0, chevronHeight]),
         bottomRight,
@@ -1835,7 +1815,7 @@ function chevronny({ treatment, count }) {
     // Start negative to ensure we render copies in the top left and right corners of the tile. The
     // template is based on the top middle location.
     for (let i = -height / (2 * chevronHeight); i < height / (2 * chevronHeight); ++i) {
-        paths.push(svg.path(TreatmentRelativePath.toClosedLoop(TreatmentRelativePath.offset([0, i * 2 * chevronHeight]), ...template), { fill: "white" }));
+        paths.push(svg.path(TreatmentRelativePath.toClosedLoop(TreatmentRelativePath.offset([W_2, i * 2 * chevronHeight]), ...template), { fill: "white" }));
     }
     return svg.pattern({
         viewBox: [

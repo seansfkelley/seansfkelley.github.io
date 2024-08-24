@@ -843,23 +843,6 @@ function deepEqual<T>(one: T, two: T): boolean {
   }
 }
 
-// Not foolproof, but simple and suitable for us.
-function deepClone<T>(obj: T): T {
-  if (obj == null) {
-    return obj;
-  } else if (Array.isArray(obj)) {
-    return obj.map(deepClone) as T;
-  } else if (typeof obj === "object") {
-    const clone: Record<string, unknown> = {};
-    for (const [key, value] of Object.entries(obj)) {
-      clone[key] = deepClone(value);
-    }
-    return clone as T;
-  } else {
-    return obj;
-  }
-}
-
 function roundUpToEven(n: number) {
   return n % 2 === 1 ? n + 1 : n;
 }
@@ -2916,7 +2899,6 @@ function chevronny({ treatment, count }: VariationWithCount) {
   topLeft[2].loc = [0, 0];
 
   const template = [
-    TreatmentRelativePath.offset([W_2, 0]),
     topRight,
     TreatmentRelativePath.line([0, chevronHeight]),
     bottomRight,
@@ -2936,7 +2918,7 @@ function chevronny({ treatment, count }: VariationWithCount) {
     paths.push(
       svg.path(
         TreatmentRelativePath.toClosedLoop(
-          TreatmentRelativePath.offset([0, i * 2 * chevronHeight]),
+          TreatmentRelativePath.offset([W_2, i * 2 * chevronHeight]),
           ...template
         ),
         { fill: "white" }
@@ -2955,7 +2937,6 @@ function chevronny({ treatment, count }: VariationWithCount) {
       x: -W_2,
       y: -H_2,
     },
-
     ...paths
   );
 }
