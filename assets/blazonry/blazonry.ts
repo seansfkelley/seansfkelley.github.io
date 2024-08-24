@@ -999,6 +999,7 @@ const svg = {
   },
   pattern: (
     {
+      id = uniqueId("pattern"),
       viewBox,
       x = 0,
       y = 0,
@@ -1007,6 +1008,7 @@ const svg = {
       preserveAspectRatio,
       patternTransform,
     }: {
+      id?: string;
       viewBox: [Coordinate, Coordinate];
       x?: number;
       y?: number;
@@ -1022,6 +1024,7 @@ const svg = {
       "pattern"
     );
     applySvgAttributes(pattern, {
+      id,
       // Make sure that the coordinate system is the same as the referent, rather than some kind of
       // scaling. This is what we always want in this project.
       patternUnits: "userSpaceOnUse",
@@ -1062,13 +1065,11 @@ const svg = {
     return polygon;
   },
   mask: (
-    { id }: { id?: string },
+    { id = uniqueId("mask") }: { id?: string },
     ...children: (SVGElement | undefined)[]
   ): SVGMaskElement => {
     const mask = document.createElementNS("http://www.w3.org/2000/svg", "mask");
-    if (id != null) {
-      mask.id = id;
-    }
+    applySvgAttributes(mask, { id });
     mask.append(...children.filter(isNotNullish));
     return mask;
   },
@@ -2307,7 +2308,7 @@ async function getErmineTincture(
   const width = 4 * spacing + 2 * ERMINE_WIDTH;
   const height = 4 * spacing + 2 * ERMINE_HEIGHT;
 
-  const pattern = svg.pattern(
+  return svg.pattern(
     {
       viewBox: [
         [0, 0],
@@ -2325,8 +2326,6 @@ async function getErmineTincture(
     topLeft,
     bottomRight
   );
-  pattern.id = uniqueId("pattern-ermine");
-  return pattern;
 }
 
 async function resolveTincture(
@@ -3173,14 +3172,13 @@ async function escutcheonContent(
     // This should be prevented in grammar, so this should never fire.
     assert(partition !== UNSUPPORTED, `cannot partition with this ordinary`);
 
-    const id = uniqueId("parted-mask");
     const mask = svg.mask(
-      { id },
+      {},
       svg.path(partition(content.treatment), { fill: "white" })
     );
 
     const g1 = svg.g(await field(content.first));
-    g1.setAttribute("mask", `url(#${id})`);
+    g1.setAttribute("mask", `url(#${mask.id})`);
     const g2 = svg.g(await field(content.second));
 
     // Add g2 first so that it's underneath g1, which is the masked one.
@@ -3284,24 +3282,22 @@ async function escutcheonContent(
     g2.appendChild(await field(variation.second));
 
     // TODO: Deduplicate this with party-per, if possible, or at least make them consistent.
-    const id = uniqueId("variation-pattern");
     const count = variation.count ?? VARIATIONS[variation.type].defaultCount;
     const pattern = VARIATIONS[variation.type]({
       count,
       ...variation,
     });
-    pattern.id = id;
     const mask = svg.mask(
-      { id: `${id}-mask` },
+      {},
       // TODO: Is this always the correct size? If rotates and such happen
       // at the pattern level, do we ever need to worry about changing the shape?
-      svg.rect([-W_2, -H_2], [W_2, H_2], { fill: `url(#${id})` }),
+      svg.rect([-W_2, -H_2], [W_2, H_2], { fill: `url(#${pattern.id})` }),
       // Some patterns want to special-case the edges to prevent splotches of tincture showing up
       // along the edges from repeats of the pattern that are mostly outside the viewable area of
       // the field, such as when "barry wavy" has dips revealing some negative space.
       ...(VARIATIONS[variation.type].maskEdges?.(count) ?? [])
     );
-    g1.setAttribute("mask", `url(#${id}-mask)`);
+    g1.setAttribute("mask", `url(#${mask.id})`);
 
     // This looks backwards but isn't: the masked <g> must come later in order to take precedence.
     const children: SVGElement[] = [pattern, mask, g2, g1];
