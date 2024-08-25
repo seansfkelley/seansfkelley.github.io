@@ -41,6 +41,9 @@ FUTURE WORK and KNOWN ISSUES
   - quarterly first and fourth barry bendy of six azure and or second and third gules
 - When multiple charges are present, the counts in each row can be specified:
   - argent four rondels gules one two and one
+- Mixing counterchanging, partitions and variations is probably unresolvable -- should it flip the
+  colors between the two sides, or flip the colors amongst each variation on each side:
+  - per pale: barry or and sable, and argent; a rondel counterchanged
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
