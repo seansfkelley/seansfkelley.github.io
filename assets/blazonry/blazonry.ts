@@ -315,7 +315,7 @@ type WithSvgColoration<T> = DeeplyRewrite<
 >;
 
 interface OrdinaryRenderer {
-  (ordinary: WithSvgColoration<Ordinary>): Promise<SVGElement>;
+  render: (ordinary: WithSvgColoration<Ordinary>) => Promise<SVGElement>;
   on: ParametricLocator;
   between: ParametricLocator;
   // I'd use non-?-optional `undefined` to mean unsupported, but the compiler complains about
@@ -1186,902 +1186,928 @@ const COTISED_WIDTH = W_2 / 12;
 const BEND_WIDTH = W / 3;
 // Make sure it's long enough to reach diagonally!
 const BEND_LENGTH = Math.hypot(W, W) + BEND_WIDTH / 2;
-async function bend({ coloration, cotised, treatment }: Ordinary) {
-  const { fill, pattern } = await resolveColoration(coloration);
+const bend: OrdinaryRenderer = {
+  async render({ coloration, cotised, treatment }) {
+    const { fill, pattern } = await resolveColoration(coloration);
 
-  const bend = svg.g({ "data-kind": "bend" }, pattern);
+    const bend = svg.g({ "data-kind": "bend" }, pattern);
 
-  const treatments = [
-    TreatmentRelativePath.offset([0, -BEND_WIDTH / 2]),
-    TREATMENTS[treatment ?? "untreated"](BEND_LENGTH, false, "primary"),
-    TreatmentRelativePath.line([0, BEND_WIDTH]),
-    // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
-    // we traverse around the bend clockwise.
-    TREATMENTS[treatment ?? "untreated"](
-      -BEND_LENGTH,
-      true,
-      "secondary",
-      "end"
-    ),
-  ];
-
-  for (const t of treatments) {
-    TreatmentRelativePath.rotate(t, Radians.EIGHTH_TURN);
-  }
-
-  bend.appendChild(
-    svg.path(
-      TreatmentRelativePath.toClosedLoop(
-        TreatmentRelativePath.offset([-W_2, -H_2]),
-        ...treatments
+    const treatments = [
+      TreatmentRelativePath.offset([0, -BEND_WIDTH / 2]),
+      TREATMENTS[treatment ?? "untreated"](BEND_LENGTH, false, "primary"),
+      TreatmentRelativePath.line([0, BEND_WIDTH]),
+      // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
+      // we traverse around the bend clockwise.
+      TREATMENTS[treatment ?? "untreated"](
+        -BEND_LENGTH,
+        true,
+        "secondary",
+        "end"
       ),
-      fill
-    )
-  );
+    ];
 
-  if (cotised != null) {
-    const { stroke, pattern } = await resolveColoration(cotised);
-    maybeAppendChild(bend, pattern);
-
-    // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
-    // I don't understand why this isn't COTISED_WIDTH * 1.5; don't we need to center the draw line
-    // in the width of the stroke? It seems to work correctly like this though.
-    const offset = (Math.sin(Math.PI / 4) * BEND_WIDTH) / 2 + COTISED_WIDTH;
+    for (const t of treatments) {
+      TreatmentRelativePath.rotate(t, Radians.EIGHTH_TURN);
+    }
 
     bend.appendChild(
-      svg.line(
-        [-W_2 + offset, -H_2 - offset],
-        [H - W_2 + offset, H_2 - offset],
-        { ...stroke, strokeWidth: COTISED_WIDTH }
+      svg.path(
+        TreatmentRelativePath.toClosedLoop(
+          TreatmentRelativePath.offset([-W_2, -H_2]),
+          ...treatments
+        ),
+        fill
       )
     );
-    bend.appendChild(
-      svg.line(
-        [-W_2 - offset, -H_2 + offset],
-        [H - W_2 - offset, H_2 + offset],
-        { ...stroke, strokeWidth: COTISED_WIDTH }
-      )
-    );
-  }
 
-  return bend;
-}
+    if (cotised != null) {
+      const { stroke, pattern } = await resolveColoration(cotised);
+      maybeAppendChild(bend, pattern);
 
-bend.on = new LineSegmentLocator(
-  [-W_2, -H_2],
-  [W_2, -H_2 + W],
-  [0.5, 0.5, 0.5, 0.5, 0.4, 0.35, 0.3, 0.25]
-);
+      // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
+      // I don't understand why this isn't COTISED_WIDTH * 1.5; don't we need to center the draw line
+      // in the width of the stroke? It seems to work correctly like this though.
+      const offset = (Math.sin(Math.PI / 4) * BEND_WIDTH) / 2 + COTISED_WIDTH;
 
-bend.between = new AlternatingReflectiveLocator(
-  new ExhaustiveLocator(
-    [
-      [
-        [W_2 - 24, -H_2 + 24], //
-      ],
-      [
-        [W_2 - 32, -H_2 + 12], //
-        [W_2 - 12, -H_2 + 32],
-      ],
-      [
-        [W_2 - 15, -H_2 + 15], //
-        [W_2 - 35, -H_2 + 15],
-        [W_2 - 15, -H_2 + 35],
-      ],
-    ],
-    [0.7, 0.5, 0.4]
+      bend.appendChild(
+        svg.line(
+          [-W_2 + offset, -H_2 - offset],
+          [H - W_2 + offset, H_2 - offset],
+          { ...stroke, strokeWidth: COTISED_WIDTH }
+        )
+      );
+      bend.appendChild(
+        svg.line(
+          [-W_2 - offset, -H_2 + offset],
+          [H - W_2 - offset, H_2 + offset],
+          { ...stroke, strokeWidth: COTISED_WIDTH }
+        )
+      );
+    }
+
+    return bend;
+  },
+
+  on: new LineSegmentLocator(
+    [-W_2, -H_2],
+    [W_2, -H_2 + W],
+    [0.5, 0.5, 0.5, 0.5, 0.4, 0.35, 0.3, 0.25]
   ),
-  [-W_2, -H_2],
-  [W_2, -H_2 + W]
-);
 
-bend.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
-  const topLeft: Coordinate = [-W_2, -H_2];
-  const topRight: Coordinate = [W_2, -H_2];
-  const bottomRight = Coordinate.add(topLeft, [BEND_LENGTH, BEND_LENGTH]);
-  if (treatment == null) {
-    return [
-      { type: "M", loc: topLeft },
-      { type: "L", loc: bottomRight },
-      { type: "L", loc: topRight },
-      { type: "Z" },
-    ];
-  } else {
-    const treatmentPath = TREATMENTS[treatment](
-      BEND_LENGTH,
-      false,
-      "primary",
-      "start"
-    );
-    TreatmentRelativePath.rotate(treatmentPath, Radians.EIGHTH_TURN);
-    return [
-      { type: "M", loc: topLeft },
-      { type: "l", loc: treatmentPath[0].loc },
-      ...treatmentPath[1],
-      { type: "l", loc: treatmentPath[2].loc },
-      { type: "L", loc: topRight },
-      { type: "Z" },
-    ];
-  }
+  between: new AlternatingReflectiveLocator(
+    new ExhaustiveLocator(
+      [
+        [
+          [W_2 - 24, -H_2 + 24], //
+        ],
+        [
+          [W_2 - 32, -H_2 + 12], //
+          [W_2 - 12, -H_2 + 32],
+        ],
+        [
+          [W_2 - 15, -H_2 + 15], //
+          [W_2 - 35, -H_2 + 15],
+          [W_2 - 15, -H_2 + 35],
+        ],
+      ],
+      [0.7, 0.5, 0.4]
+    ),
+    [-W_2, -H_2],
+    [W_2, -H_2 + W]
+  ),
+
+  partition(treatment: Treatment | undefined): PathCommand.Any[] {
+    const topLeft: Coordinate = [-W_2, -H_2];
+    const topRight: Coordinate = [W_2, -H_2];
+    const bottomRight = Coordinate.add(topLeft, [BEND_LENGTH, BEND_LENGTH]);
+    if (treatment == null) {
+      return [
+        { type: "M", loc: topLeft },
+        { type: "L", loc: bottomRight },
+        { type: "L", loc: topRight },
+        { type: "Z" },
+      ];
+    } else {
+      const treatmentPath = TREATMENTS[treatment](
+        BEND_LENGTH,
+        false,
+        "primary",
+        "start"
+      );
+      TreatmentRelativePath.rotate(treatmentPath, Radians.EIGHTH_TURN);
+      return [
+        { type: "M", loc: topLeft },
+        { type: "l", loc: treatmentPath[0].loc },
+        ...treatmentPath[1],
+        { type: "l", loc: treatmentPath[2].loc },
+        { type: "L", loc: topRight },
+        { type: "Z" },
+      ];
+    }
+  },
 };
 
-async function bendSinister(ordinary: Ordinary) {
-  const g = svg.g({ "data-kind": "bend-sinister" }, await bend(ordinary));
-  Transforms.apply(g, {
-    scale: [-1, 1],
-  });
-  return g;
-}
+const bendSinister: OrdinaryRenderer = {
+  async render(ordinary) {
+    const g = svg.g(
+      { "data-kind": "bend-sinister" },
+      await bend.render(ordinary)
+    );
+    Transforms.apply(g, {
+      scale: [-1, 1],
+    });
+    return g;
+  },
 
-bendSinister.on = new ReflectiveLocator(bend.on, [0, -H_2], [0, H_2]);
+  on: new ReflectiveLocator(bend.on, [0, -H_2], [0, H_2]),
 
-bendSinister.between = new ReflectiveLocator(bend.between, [0, -H_2], [0, H_2]);
+  between: new ReflectiveLocator(bend.between, [0, -H_2], [0, H_2]),
 
-bendSinister.partition = (
-  treatment: Treatment | undefined
-): PathCommand.Any[] => {
-  const commands = bend.partition(treatment);
-  commands.forEach(PathCommand.negateX);
-  return commands;
+  partition(treatment: Treatment | undefined): PathCommand.Any[] {
+    assert(
+      bend.partition !== UNSUPPORTED,
+      "cannot delegate to unsupported partition"
+    );
+    const commands = bend.partition(treatment);
+    commands.forEach(PathCommand.negateX);
+    return commands;
+  },
 };
 
 const CHIEF_WIDTH = H / 3;
-async function chief({ coloration, cotised, treatment }: Ordinary) {
-  const { fill, pattern } = await resolveColoration(coloration);
+const chief: OrdinaryRenderer = {
+  async render({ coloration, cotised, treatment }) {
+    const { fill, pattern } = await resolveColoration(coloration);
 
-  const chief = svg.g({ "data-kind": "chief" }, pattern);
+    const chief = svg.g({ "data-kind": "chief" }, pattern);
 
-  const [start, main, end] = TREATMENTS[treatment ?? "untreated"](
-    -W,
-    true,
-    "primary",
-    "center"
-  );
-  chief.appendChild(
-    svg.path(
-      [
-        { type: "M", loc: [-W_2, -H_2] },
-        { type: "L", loc: [W_2, -H_2] },
-        { type: "l", loc: Coordinate.add([0, CHIEF_WIDTH], start.loc) },
-        ...main,
-        { type: "l", loc: Coordinate.add([0, -CHIEF_WIDTH], end.loc) },
-      ],
-      fill
-    )
-  );
-
-  if (cotised != null) {
-    const { stroke, pattern } = await resolveColoration(cotised);
-    maybeAppendChild(chief, pattern);
-
-    chief.append(
-      svg.line(
-        [-W_2, -H_2 + CHIEF_WIDTH + (COTISED_WIDTH * 3) / 2],
-        [W_2, -H_2 + CHIEF_WIDTH + (COTISED_WIDTH * 3) / 2],
-        { ...stroke, strokeWidth: COTISED_WIDTH }
+    const [start, main, end] = TREATMENTS[treatment ?? "untreated"](
+      -W,
+      true,
+      "primary",
+      "center"
+    );
+    chief.appendChild(
+      svg.path(
+        [
+          { type: "M", loc: [-W_2, -H_2] },
+          { type: "L", loc: [W_2, -H_2] },
+          { type: "l", loc: Coordinate.add([0, CHIEF_WIDTH], start.loc) },
+          ...main,
+          { type: "l", loc: Coordinate.add([0, -CHIEF_WIDTH], end.loc) },
+        ],
+        fill
       )
     );
-  }
 
-  return chief;
-}
+    if (cotised != null) {
+      const { stroke, pattern } = await resolveColoration(cotised);
+      maybeAppendChild(chief, pattern);
 
-chief.on = new LineSegmentLocator(
-  [-W_2, -H_2 + H_2 / 3],
-  [W_2, -H_2 + H_2 / 3],
-  [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]
-);
+      chief.append(
+        svg.line(
+          [-W_2, -H_2 + CHIEF_WIDTH + (COTISED_WIDTH * 3) / 2],
+          [W_2, -H_2 + CHIEF_WIDTH + (COTISED_WIDTH * 3) / 2],
+          { ...stroke, strokeWidth: COTISED_WIDTH }
+        )
+      );
+    }
 
-chief.between = new NullLocator();
+    return chief;
+  },
 
-chief.partition = UNSUPPORTED;
+  on: new LineSegmentLocator(
+    [-W_2, -H_2 + H_2 / 3],
+    [W_2, -H_2 + H_2 / 3],
+    [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]
+  ),
+
+  between: new NullLocator(),
+
+  partition: UNSUPPORTED,
+};
 
 const CHEVRON_WIDTH = W / 4;
+const chevron: OrdinaryRenderer = {
+  async render({ coloration, cotised, treatment }) {
+    const { fill, pattern } = await resolveColoration(coloration);
 
-async function chevron({ coloration, cotised, treatment }: Ordinary) {
-  const { fill, pattern } = await resolveColoration(coloration);
+    const chevron = svg.g({ "data-kind": "chevron" }, pattern);
 
-  const chevron = svg.g({ "data-kind": "chevron" }, pattern);
+    const left: Coordinate = [-W_2, -H_2 + W];
+    const right: Coordinate = [-W_2 + H, H_2];
+    // Cross at 45 degrees starting from the top edge, so we bias upwards from the center.
+    const mid: Coordinate = [0, -(H_2 - W_2)];
 
-  const left: Coordinate = [-W_2, -H_2 + W];
-  const right: Coordinate = [-W_2 + H, H_2];
-  // Cross at 45 degrees starting from the top edge, so we bias upwards from the center.
-  const mid: Coordinate = [0, -(H_2 - W_2)];
+    const topLength = Coordinate.length(mid, right) + CHEVRON_WIDTH / 2;
+    const bottomLength = Coordinate.length(mid, right) - CHEVRON_WIDTH / 2;
 
-  const topLength = Coordinate.length(mid, right) + CHEVRON_WIDTH / 2;
-  const bottomLength = Coordinate.length(mid, right) - CHEVRON_WIDTH / 2;
-
-  const topLeft = TREATMENTS[treatment ?? "untreated"](
-    topLength,
-    false,
-    "primary",
-    "end"
-  );
-  TreatmentRelativePath.rotate(topLeft, Radians.NEG_QUARTER_TURN);
-  const topRight = TREATMENTS[treatment ?? "untreated"](
-    topLength,
-    false,
-    "primary",
-    "start"
-  );
-  const bottomLeft = TREATMENTS[treatment ?? "untreated"](
-    -bottomLength,
-    true,
-    "secondary",
-    "start"
-  );
-  TreatmentRelativePath.rotate(bottomLeft, Radians.NEG_QUARTER_TURN);
-  const bottomRight = TREATMENTS[treatment ?? "untreated"](
-    -bottomLength,
-    true,
-    "secondary",
-    "end"
-  );
-
-  const treatments = [
-    topRight,
-    TreatmentRelativePath.line([0, CHEVRON_WIDTH]),
-    bottomRight,
-    bottomLeft,
-    TreatmentRelativePath.line([-CHEVRON_WIDTH, 0]),
-    topLeft,
-  ];
-
-  for (const t of treatments) {
-    TreatmentRelativePath.rotate(t, Radians.EIGHTH_TURN);
-  }
-
-  // n.b. this depends on `topRight`, etc., being a shared reference to the same values in `treatments`.
-  {
-    const [start, , end] = topRight;
-    const originalStart: Coordinate = [...start.loc];
-    start.loc = [
-      0,
-      Math.sign(start.loc[1]) * Math.hypot(start.loc[1], start.loc[1]),
-    ];
-    end.loc = Coordinate.add(
-      end.loc,
-      originalStart,
-      Coordinate.negate(start.loc)
-    );
-  }
-
-  {
-    const [start, , end] = topLeft;
-    const originalEnd: Coordinate = [...end.loc];
-    end.loc = [0, Math.sign(end.loc[1]) * Math.hypot(end.loc[1], end.loc[1])];
-    start.loc = Coordinate.add(
-      start.loc,
-      originalEnd,
-      Coordinate.negate(end.loc)
-    );
-  }
-
-  // We don't adjust the endpoints of the bottom edges because due to the vagaries of the way that
-  // treatments are rendered, they actually look fine where they meet at the lower/inner corner.
-  // Embattled-counter-embattled isn't great, but it would look even worse if we tightened it up
-  // like we do to the top side.
-
-  chevron.appendChild(
-    svg.path(
-      TreatmentRelativePath.toClosedLoop(
-        TreatmentRelativePath.offset([
-          0,
-          -Math.sqrt((CHEVRON_WIDTH * CHEVRON_WIDTH) / 2) - (H_2 - W_2),
-        ]),
-        ...treatments
-      ),
-      fill
-    )
-  );
-
-  if (cotised != null) {
-    const { stroke, pattern } = await resolveColoration(cotised);
-    maybeAppendChild(chevron, pattern);
-
-    // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
-    const offset = Math.sin(Math.PI / 4) * CHEVRON_WIDTH + COTISED_WIDTH * 2;
-
-    for (const end of [left, right]) {
-      for (const sign of [-1, 1]) {
-        chevron.appendChild(
-          svg.line(
-            Coordinate.add(end, [0, sign * offset]),
-            Coordinate.add(mid, [0, sign * offset]),
-            { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
-          )
-        );
-      }
-    }
-  }
-
-  return chevron;
-}
-
-chevron.on = new OnChevronLocator(
-  [-W_2, W_2 - 10],
-  [0, -10],
-  [W_2, W_2 - 10],
-  [0.4, 0.4, 0.4, 0.4, 0.35, 0.35, 0.3, 0.25]
-);
-
-chevron.between = new ExhaustiveLocator(
-  [
-    [
-      [0, H_2 - 25], //
-    ],
-    [
-      [0, H_2 - 25], //
-      [0, -H_2 + 18],
-    ],
-    [
-      [0, H_2 - 25], //
-      [-20, -H_2 + 18],
-      [20, -H_2 + 18],
-    ],
-    [
-      [0, H_2 - 25], //
-      [0, -H_2 + 18],
-      [-30, -H_2 + 30],
-      [30, -H_2 + 30],
-    ],
-  ],
-  [0.5, 0.5, 0.5, 0.5]
-);
-
-chevron.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
-  const [topLeft, midLeft, mid, midRight, topRight] = [
-    [-W_2, -H_2],
-    // See the main renderer for how these values are picked.
-    [-W_2, -H_2 + W],
-    [0, -(H_2 - W_2)],
-    [W_2, -H_2 + W],
-    [W_2, -H_2],
-  ] satisfies Coordinate[];
-
-  if (treatment == null) {
-    return [
-      { type: "M", loc: topLeft },
-      { type: "L", loc: midLeft },
-      { type: "L", loc: mid },
-      { type: "L", loc: midRight },
-      { type: "L", loc: topRight },
-      { type: "Z" },
-    ];
-  } else {
-    const [leftStart, leftMain, leftEnd] = TREATMENTS[treatment](
-      Coordinate.length(midLeft, mid),
+    const topLeft = TREATMENTS[treatment ?? "untreated"](
+      topLength,
       false,
       "primary",
       "end"
     );
-    const [rightStart, rightMain, rightEnd] = TREATMENTS[treatment](
-      Coordinate.length(mid, midRight),
+    TreatmentRelativePath.rotate(topLeft, Radians.NEG_QUARTER_TURN);
+    const topRight = TREATMENTS[treatment ?? "untreated"](
+      topLength,
       false,
       "primary",
       "start"
     );
-    leftMain.forEach((c) => PathCommand.rotate(c, Radians.NEG_EIGHTH_TURN));
-    rightMain.forEach((c) => PathCommand.rotate(c, Radians.EIGHTH_TURN));
-    return [
-      { type: "M", loc: topLeft },
-      { type: "L", loc: midLeft },
-      {
-        type: "l",
-        loc: Coordinate.rotate(
-          Coordinate.add(leftStart.loc, leftEnd.loc),
-          Radians.NEG_EIGHTH_TURN
-        ),
-      },
-      ...leftMain,
-      ...rightMain,
-      {
-        type: "l",
-        loc: Coordinate.rotate(
-          Coordinate.add(rightEnd.loc, rightStart.loc),
-          Radians.EIGHTH_TURN
-        ),
-      },
-      { type: "L", loc: midRight },
-      { type: "L", loc: topRight },
-      { type: "Z" },
+    const bottomLeft = TREATMENTS[treatment ?? "untreated"](
+      -bottomLength,
+      true,
+      "secondary",
+      "start"
+    );
+    TreatmentRelativePath.rotate(bottomLeft, Radians.NEG_QUARTER_TURN);
+    const bottomRight = TREATMENTS[treatment ?? "untreated"](
+      -bottomLength,
+      true,
+      "secondary",
+      "end"
+    );
+
+    const treatments = [
+      topRight,
+      TreatmentRelativePath.line([0, CHEVRON_WIDTH]),
+      bottomRight,
+      bottomLeft,
+      TreatmentRelativePath.line([-CHEVRON_WIDTH, 0]),
+      topLeft,
     ];
-  }
+
+    for (const t of treatments) {
+      TreatmentRelativePath.rotate(t, Radians.EIGHTH_TURN);
+    }
+
+    // n.b. this depends on `topRight`, etc., being a shared reference to the same values in `treatments`.
+    {
+      const [start, , end] = topRight;
+      const originalStart: Coordinate = [...start.loc];
+      start.loc = [
+        0,
+        Math.sign(start.loc[1]) * Math.hypot(start.loc[1], start.loc[1]),
+      ];
+      end.loc = Coordinate.add(
+        end.loc,
+        originalStart,
+        Coordinate.negate(start.loc)
+      );
+    }
+
+    {
+      const [start, , end] = topLeft;
+      const originalEnd: Coordinate = [...end.loc];
+      end.loc = [0, Math.sign(end.loc[1]) * Math.hypot(end.loc[1], end.loc[1])];
+      start.loc = Coordinate.add(
+        start.loc,
+        originalEnd,
+        Coordinate.negate(end.loc)
+      );
+    }
+
+    // We don't adjust the endpoints of the bottom edges because due to the vagaries of the way that
+    // treatments are rendered, they actually look fine where they meet at the lower/inner corner.
+    // Embattled-counter-embattled isn't great, but it would look even worse if we tightened it up
+    // like we do to the top side.
+
+    chevron.appendChild(
+      svg.path(
+        TreatmentRelativePath.toClosedLoop(
+          TreatmentRelativePath.offset([
+            0,
+            -Math.sqrt((CHEVRON_WIDTH * CHEVRON_WIDTH) / 2) - (H_2 - W_2),
+          ]),
+          ...treatments
+        ),
+        fill
+      )
+    );
+
+    if (cotised != null) {
+      const { stroke, pattern } = await resolveColoration(cotised);
+      maybeAppendChild(chevron, pattern);
+
+      // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
+      const offset = Math.sin(Math.PI / 4) * CHEVRON_WIDTH + COTISED_WIDTH * 2;
+
+      for (const end of [left, right]) {
+        for (const sign of [-1, 1]) {
+          chevron.appendChild(
+            svg.line(
+              Coordinate.add(end, [0, sign * offset]),
+              Coordinate.add(mid, [0, sign * offset]),
+              { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
+            )
+          );
+        }
+      }
+    }
+
+    return chevron;
+  },
+
+  on: new OnChevronLocator(
+    [-W_2, W_2 - 10],
+    [0, -10],
+    [W_2, W_2 - 10],
+    [0.4, 0.4, 0.4, 0.4, 0.35, 0.35, 0.3, 0.25]
+  ),
+
+  between: new ExhaustiveLocator(
+    [
+      [
+        [0, H_2 - 25], //
+      ],
+      [
+        [0, H_2 - 25], //
+        [0, -H_2 + 18],
+      ],
+      [
+        [0, H_2 - 25], //
+        [-20, -H_2 + 18],
+        [20, -H_2 + 18],
+      ],
+      [
+        [0, H_2 - 25], //
+        [0, -H_2 + 18],
+        [-30, -H_2 + 30],
+        [30, -H_2 + 30],
+      ],
+    ],
+    [0.5, 0.5, 0.5, 0.5]
+  ),
+
+  partition(treatment: Treatment | undefined): PathCommand.Any[] {
+    const [topLeft, midLeft, mid, midRight, topRight] = [
+      [-W_2, -H_2],
+      // See the main renderer for how these values are picked.
+      [-W_2, -H_2 + W],
+      [0, -(H_2 - W_2)],
+      [W_2, -H_2 + W],
+      [W_2, -H_2],
+    ] satisfies Coordinate[];
+
+    if (treatment == null) {
+      return [
+        { type: "M", loc: topLeft },
+        { type: "L", loc: midLeft },
+        { type: "L", loc: mid },
+        { type: "L", loc: midRight },
+        { type: "L", loc: topRight },
+        { type: "Z" },
+      ];
+    } else {
+      const [leftStart, leftMain, leftEnd] = TREATMENTS[treatment](
+        Coordinate.length(midLeft, mid),
+        false,
+        "primary",
+        "end"
+      );
+      const [rightStart, rightMain, rightEnd] = TREATMENTS[treatment](
+        Coordinate.length(mid, midRight),
+        false,
+        "primary",
+        "start"
+      );
+      leftMain.forEach((c) => PathCommand.rotate(c, Radians.NEG_EIGHTH_TURN));
+      rightMain.forEach((c) => PathCommand.rotate(c, Radians.EIGHTH_TURN));
+      return [
+        { type: "M", loc: topLeft },
+        { type: "L", loc: midLeft },
+        {
+          type: "l",
+          loc: Coordinate.rotate(
+            Coordinate.add(leftStart.loc, leftEnd.loc),
+            Radians.NEG_EIGHTH_TURN
+          ),
+        },
+        ...leftMain,
+        ...rightMain,
+        {
+          type: "l",
+          loc: Coordinate.rotate(
+            Coordinate.add(rightEnd.loc, rightStart.loc),
+            Radians.EIGHTH_TURN
+          ),
+        },
+        { type: "L", loc: midRight },
+        { type: "L", loc: topRight },
+        { type: "Z" },
+      ];
+    }
+  },
 };
 
 // Ensure that the sides and top arms are all the same length!
 const CROSS_WIDTH = W / 4;
 const CROSS_VERTICAL_OFFSET = (H - W) / 2;
-
-async function cross({ coloration, cotised, treatment }: Ordinary) {
-  const { fill, pattern } = await resolveColoration(coloration, [W, H], {
-    translate: [0, 12],
-  });
-
-  const cross = svg.g({ "data-kind": "cross" }, pattern);
-
-  const top: Coordinate = [0, -H_2];
-  const bottom: Coordinate = [0, H_2];
-  const left: Coordinate = [-W_2, -CROSS_VERTICAL_OFFSET];
-  const right: Coordinate = [W_2, -CROSS_VERTICAL_OFFSET];
-
-  const hLength = W_2 - CROSS_WIDTH / 2;
-  const vLength = H_2 - CROSS_WIDTH / 2 + CROSS_VERTICAL_OFFSET;
-
-  const treatments = [
-    // Starting on the bottom right, moving around counter-clockwise.
-    TREATMENTS[treatment ?? "untreated"](-vLength, false, "secondary", "end"),
-    TREATMENTS[treatment ?? "untreated"](hLength, true, "secondary", "start"),
-    TreatmentRelativePath.line([-CROSS_WIDTH, 0]),
-    TREATMENTS[treatment ?? "untreated"](-hLength, false, "primary", "end"),
-    TREATMENTS[treatment ?? "untreated"](-vLength, false, "secondary", "start"),
-    TreatmentRelativePath.line([-CROSS_WIDTH, 0]),
-    TREATMENTS[treatment ?? "untreated"](vLength, true, "secondary", "end"),
-    TREATMENTS[treatment ?? "untreated"](-hLength, false, "primary", "start"),
-    TreatmentRelativePath.line([CROSS_WIDTH, 0]),
-    TREATMENTS[treatment ?? "untreated"](hLength, true, "secondary", "end"),
-    TREATMENTS[treatment ?? "untreated"](vLength, true, "secondary", "start"),
-  ];
-
-  for (const index of [0, 2, 4, 6, 8, 10]) {
-    TreatmentRelativePath.rotate(treatments[index], Radians.QUARTER_TURN);
-  }
-
-  cross.appendChild(
-    svg.path(
-      TreatmentRelativePath.toClosedLoop(
-        // Offset the path itself rather than translating the entire cross so that fur patterns are
-        // not shifted off-center.
-        TreatmentRelativePath.offset([CROSS_WIDTH / 2, H_2]),
-        ...treatments
-      ),
-      fill
-    )
-  );
-
-  if (cotised != null) {
-    const { stroke, pattern } = await resolveColoration(cotised);
-    maybeAppendChild(cross, pattern);
-
-    const offset = CROSS_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
-    const mid: Coordinate = [0, -CROSS_VERTICAL_OFFSET];
-
-    for (const [p, [x1sign, y1sign], [x2sign, y2sign]] of [
-      [top, [-1, -1], [1, -1]],
-      [bottom, [-1, 1], [1, 1]],
-      [left, [-1, -1], [-1, 1]],
-      [right, [1, 1], [1, -1]],
-    ] as const) {
-      cross.appendChild(
-        svg.line(
-          Coordinate.add(p, [offset * x1sign, offset * y1sign]),
-          Coordinate.add(mid, [offset * x1sign, offset * y1sign]),
-          { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
-        )
-      );
-      cross.appendChild(
-        svg.line(
-          Coordinate.add(p, [offset * x2sign, offset * y2sign]),
-          Coordinate.add(mid, [offset * x2sign, offset * y2sign]),
-          { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
-        )
-      );
-    }
-  }
-
-  return cross;
-}
-
-cross.on = new SequenceLocator(
-  [
-    [-H_2 / 2, -CROSS_VERTICAL_OFFSET],
-    [H_2 / 2, -CROSS_VERTICAL_OFFSET],
-    [0, -H_2 / 2 - CROSS_VERTICAL_OFFSET],
-    [0, H_2 / 2 - CROSS_VERTICAL_OFFSET],
-    [0, -CROSS_VERTICAL_OFFSET],
-  ],
-  [0.4, 0.4, 0.4, 0.4, 0.4],
-  {
-    1: [[0, -CROSS_VERTICAL_OFFSET]],
-  }
-);
-
 const CROSS_SECTOR_2 = (W - CROSS_WIDTH) / 4;
+const cross: OrdinaryRenderer = {
+  async render({ coloration, cotised, treatment }) {
+    const { fill, pattern } = await resolveColoration(coloration, [W, H], {
+      translate: [0, 12],
+    });
 
-cross.between = new SequenceLocator(
-  [
-    [W_2 - CROSS_SECTOR_2, -H_2 + CROSS_SECTOR_2],
-    [-W_2 + CROSS_SECTOR_2, -H_2 + CROSS_SECTOR_2],
-    [
-      -W_2 + CROSS_SECTOR_2,
-      CROSS_SECTOR_2 - CROSS_VERTICAL_OFFSET + CROSS_WIDTH / 2,
-    ],
-    [
-      W_2 - CROSS_SECTOR_2,
-      CROSS_SECTOR_2 - CROSS_VERTICAL_OFFSET + CROSS_WIDTH / 2,
-    ],
-  ],
-  [0.5, 0.5, 0.5, 0.5],
-  {
-    1: SequenceLocator.EMPTY,
-  }
-);
+    const cross = svg.g({ "data-kind": "cross" }, pattern);
 
-// Technically this is synonymous with "quarterly", but the code architecture makes it annoying to
-// do that without breaking the abstraction. It'll just be unsupported instead.
-cross.partition = UNSUPPORTED;
+    const top: Coordinate = [0, -H_2];
+    const bottom: Coordinate = [0, H_2];
+    const left: Coordinate = [-W_2, -CROSS_VERTICAL_OFFSET];
+    const right: Coordinate = [W_2, -CROSS_VERTICAL_OFFSET];
+
+    const hLength = W_2 - CROSS_WIDTH / 2;
+    const vLength = H_2 - CROSS_WIDTH / 2 + CROSS_VERTICAL_OFFSET;
+
+    const treatments = [
+      // Starting on the bottom right, moving around counter-clockwise.
+      TREATMENTS[treatment ?? "untreated"](-vLength, false, "secondary", "end"),
+      TREATMENTS[treatment ?? "untreated"](hLength, true, "secondary", "start"),
+      TreatmentRelativePath.line([-CROSS_WIDTH, 0]),
+      TREATMENTS[treatment ?? "untreated"](-hLength, false, "primary", "end"),
+      TREATMENTS[treatment ?? "untreated"](
+        -vLength,
+        false,
+        "secondary",
+        "start"
+      ),
+      TreatmentRelativePath.line([-CROSS_WIDTH, 0]),
+      TREATMENTS[treatment ?? "untreated"](vLength, true, "secondary", "end"),
+      TREATMENTS[treatment ?? "untreated"](-hLength, false, "primary", "start"),
+      TreatmentRelativePath.line([CROSS_WIDTH, 0]),
+      TREATMENTS[treatment ?? "untreated"](hLength, true, "secondary", "end"),
+      TREATMENTS[treatment ?? "untreated"](vLength, true, "secondary", "start"),
+    ];
+
+    for (const index of [0, 2, 4, 6, 8, 10]) {
+      TreatmentRelativePath.rotate(treatments[index], Radians.QUARTER_TURN);
+    }
+
+    cross.appendChild(
+      svg.path(
+        TreatmentRelativePath.toClosedLoop(
+          // Offset the path itself rather than translating the entire cross so that fur patterns are
+          // not shifted off-center.
+          TreatmentRelativePath.offset([CROSS_WIDTH / 2, H_2]),
+          ...treatments
+        ),
+        fill
+      )
+    );
+
+    if (cotised != null) {
+      const { stroke, pattern } = await resolveColoration(cotised);
+      maybeAppendChild(cross, pattern);
+
+      const offset = CROSS_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
+      const mid: Coordinate = [0, -CROSS_VERTICAL_OFFSET];
+
+      for (const [p, [x1sign, y1sign], [x2sign, y2sign]] of [
+        [top, [-1, -1], [1, -1]],
+        [bottom, [-1, 1], [1, 1]],
+        [left, [-1, -1], [-1, 1]],
+        [right, [1, 1], [1, -1]],
+      ] as const) {
+        cross.appendChild(
+          svg.line(
+            Coordinate.add(p, [offset * x1sign, offset * y1sign]),
+            Coordinate.add(mid, [offset * x1sign, offset * y1sign]),
+            { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
+          )
+        );
+        cross.appendChild(
+          svg.line(
+            Coordinate.add(p, [offset * x2sign, offset * y2sign]),
+            Coordinate.add(mid, [offset * x2sign, offset * y2sign]),
+            { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
+          )
+        );
+      }
+    }
+
+    return cross;
+  },
+
+  on: new SequenceLocator(
+    [
+      [-H_2 / 2, -CROSS_VERTICAL_OFFSET],
+      [H_2 / 2, -CROSS_VERTICAL_OFFSET],
+      [0, -H_2 / 2 - CROSS_VERTICAL_OFFSET],
+      [0, H_2 / 2 - CROSS_VERTICAL_OFFSET],
+      [0, -CROSS_VERTICAL_OFFSET],
+    ],
+    [0.4, 0.4, 0.4, 0.4, 0.4],
+    {
+      1: [[0, -CROSS_VERTICAL_OFFSET]],
+    }
+  ),
+
+  between: new SequenceLocator(
+    [
+      [W_2 - CROSS_SECTOR_2, -H_2 + CROSS_SECTOR_2],
+      [-W_2 + CROSS_SECTOR_2, -H_2 + CROSS_SECTOR_2],
+      [
+        -W_2 + CROSS_SECTOR_2,
+        CROSS_SECTOR_2 - CROSS_VERTICAL_OFFSET + CROSS_WIDTH / 2,
+      ],
+      [
+        W_2 - CROSS_SECTOR_2,
+        CROSS_SECTOR_2 - CROSS_VERTICAL_OFFSET + CROSS_WIDTH / 2,
+      ],
+    ],
+    [0.5, 0.5, 0.5, 0.5],
+    {
+      1: SequenceLocator.EMPTY,
+    }
+  ),
+
+  // Technically this is synonymous with "quarterly", but the code architecture makes it annoying to
+  // do that without breaking the abstraction. It'll just be unsupported instead.
+  partition: UNSUPPORTED,
+};
 
 const FESS_WIDTH = W / 3;
 const FESS_VERTICAL_OFFSET = -H_2 + FESS_WIDTH * (3 / 2);
-async function fess({ coloration, cotised, treatment }: Ordinary) {
-  const { fill, pattern } = await resolveColoration(coloration);
+const fess: OrdinaryRenderer = {
+  async render({ coloration, cotised, treatment }) {
+    const { fill, pattern } = await resolveColoration(coloration);
 
-  const fess = svg.g({ "data-kind": "fess" }, pattern);
-
-  fess.appendChild(
-    svg.path(
-      [
-        {
-          type: "m",
-          loc: [-W_2, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2],
-        },
-        ...TreatmentRelativePath.toClosedLoop(
-          TREATMENTS[treatment ?? "untreated"](W, false, "primary", "center"),
-          [
-            { type: "m", loc: [0, 0] },
-            [{ type: "l", loc: [0, FESS_WIDTH] }],
-            { type: "m", loc: [0, 0] },
-          ],
-          TREATMENTS[treatment ?? "untreated"](-W, true, "secondary", "center")
-        ),
-      ],
-      fill
-    )
-  );
-
-  if (cotised != null) {
-    const { stroke, pattern } = await resolveColoration(cotised);
-    maybeAppendChild(fess, pattern);
-
-    const offset = FESS_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
+    const fess = svg.g({ "data-kind": "fess" }, pattern);
 
     fess.appendChild(
-      svg.line(
-        [-W_2, FESS_VERTICAL_OFFSET - offset],
-        [W_2, FESS_VERTICAL_OFFSET - offset],
-        { ...stroke, strokeWidth: COTISED_WIDTH }
+      svg.path(
+        [
+          {
+            type: "m",
+            loc: [-W_2, FESS_VERTICAL_OFFSET - FESS_WIDTH / 2],
+          },
+          ...TreatmentRelativePath.toClosedLoop(
+            TREATMENTS[treatment ?? "untreated"](W, false, "primary", "center"),
+            [
+              { type: "m", loc: [0, 0] },
+              [{ type: "l", loc: [0, FESS_WIDTH] }],
+              { type: "m", loc: [0, 0] },
+            ],
+            TREATMENTS[treatment ?? "untreated"](
+              -W,
+              true,
+              "secondary",
+              "center"
+            )
+          ),
+        ],
+        fill
       )
     );
-    fess.appendChild(
-      svg.line(
-        [-W_2, FESS_VERTICAL_OFFSET + offset],
-        [W_2, FESS_VERTICAL_OFFSET + offset],
-        { ...stroke, strokeWidth: COTISED_WIDTH }
-      )
-    );
-  }
 
-  return fess;
-}
+    if (cotised != null) {
+      const { stroke, pattern } = await resolveColoration(cotised);
+      maybeAppendChild(fess, pattern);
 
-fess.on = new LineSegmentLocator(
-  [-W_2, FESS_VERTICAL_OFFSET],
-  [W_2, FESS_VERTICAL_OFFSET],
-  [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]
-);
+      const offset = FESS_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
 
-fess.between = new AlternatingReflectiveLocator(
-  new LineSegmentLocator(
-    [-W_2, -H_2 + FESS_WIDTH / 2],
-    [W_2, -H_2 + FESS_WIDTH / 2],
-    [0.6, 0.5, 0.4, 0.4]
-  ),
-  [-W_2, FESS_VERTICAL_OFFSET],
-  [W_2, FESS_VERTICAL_OFFSET]
-);
-
-fess.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
-  const [topLeft, midLeft, midRight, topRight] = [
-    { type: "M", loc: [-W_2, -H_2] },
-    { type: "L", loc: [-W_2, -H / 10] },
-    { type: "L", loc: [W_2, -H / 10] },
-    { type: "L", loc: [W_2, -H_2] },
-  ] satisfies PathCommand.Any[];
-
-  if (treatment == null) {
-    return [topLeft, midLeft, midRight, topRight, { type: "Z" }];
-  } else {
-    const [start, main, end] = TREATMENTS[treatment](
-      W,
-      false,
-      "primary",
-      "center"
-    );
-    return [
-      topLeft,
-      midLeft,
-      { type: "l", loc: start.loc },
-      ...main,
-      { type: "l", loc: end.loc },
-      midRight,
-      topRight,
-      { type: "Z" },
-    ];
-  }
-};
-
-const PALE_WIDTH = W / 3;
-async function pale({ coloration, cotised, treatment }: Ordinary) {
-  const { fill, pattern } = await resolveColoration(coloration);
-
-  const pale = svg.g({ "data-kind": "pale" }, pattern);
-
-  const right = TREATMENTS[treatment ?? "untreated"](H, false, "primary");
-  TreatmentRelativePath.rotate(right, Radians.QUARTER_TURN);
-  // Note that right is left-to-right, but left is right-to-left. This is to make sure that
-  // we traverse around the pale clockwise after rotations have been performed.
-  const left = TREATMENTS[treatment ?? "untreated"](
-    -H,
-    true,
-    "secondary",
-    "end"
-  );
-  TreatmentRelativePath.rotate(left, Radians.QUARTER_TURN);
-
-  pale.appendChild(
-    svg.path(
-      TreatmentRelativePath.toClosedLoop(
-        TreatmentRelativePath.offset([PALE_WIDTH / 2, -H_2]),
-        right,
-        TreatmentRelativePath.line([-PALE_WIDTH, 0]),
-        left
-      ),
-      fill
-    )
-  );
-
-  if (cotised != null) {
-    const { stroke, pattern } = await resolveColoration(cotised);
-    maybeAppendChild(pale, pattern);
-
-    const offset = PALE_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
-
-    pale.appendChild(
-      svg.line([offset, -H_2], [offset, H_2], {
-        ...stroke,
-        strokeWidth: COTISED_WIDTH,
-      })
-    );
-    pale.appendChild(
-      svg.line([-offset, -H_2], [-offset, H_2], {
-        ...stroke,
-        strokeWidth: COTISED_WIDTH,
-      })
-    );
-  }
-
-  return pale;
-}
-
-pale.on = new LineSegmentLocator(
-  [0, -H_2],
-  [0, H_2],
-  [0.6, 0.6, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2]
-);
-
-pale.between = new AlternatingReflectiveLocator(
-  new LineSegmentLocator(
-    [-W_2 + PALE_WIDTH / 2, -H_2],
-    [-W_2 + PALE_WIDTH / 2, H_2],
-    [0.6, 0.5, 0.4, 0.4]
-  ),
-  [0, -H_2],
-  [0, H_2]
-);
-
-pale.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
-  const [topLeft, topMid, bottomMid, bottomLeft] = [
-    { type: "M", loc: [-W_2, -H_2] },
-    { type: "L", loc: [0, -H_2] },
-    { type: "L", loc: [0, H_2] },
-    { type: "L", loc: [-W_2, H_2] },
-  ] satisfies PathCommand.Any[];
-
-  if (treatment == null) {
-    return [topLeft, topMid, bottomMid, bottomLeft, { type: "Z" }];
-  } else {
-    const [start, main, end] = TREATMENTS[treatment](
-      H,
-      false,
-      "primary",
-      "start"
-    );
-    TreatmentRelativePath.rotate([start, main, end], Radians.QUARTER_TURN);
-    return [
-      topLeft,
-      topMid,
-      { type: "l", loc: start.loc },
-      ...main,
-      { type: "l", loc: end.loc },
-      bottomMid,
-      bottomLeft,
-      { type: "Z" },
-    ];
-  }
-};
-
-const SALTIRE_WIDTH = W / 4;
-async function saltire({ coloration, cotised, treatment }: Ordinary) {
-  const { fill, pattern } = await resolveColoration(coloration);
-
-  const saltire = svg.g({ "data-kind": "saltire" }, pattern);
-
-  const tl: Coordinate = [-W_2, -H_2];
-  const tr: Coordinate = [W_2, -H_2];
-  const bl: Coordinate = [W_2 - H, H_2];
-  const br: Coordinate = [-W_2 + H, H_2];
-
-  const length = Math.hypot(W_2, W_2);
-
-  const treatments = [
-    // Starting on the bottom left moving around clockwise.
-    TREATMENTS[treatment ?? "untreated"](length, false, "primary", "end"),
-    TREATMENTS[treatment ?? "untreated"](length, false, "secondary", "start"),
-    TreatmentRelativePath.line([SALTIRE_WIDTH, 0]),
-    TREATMENTS[treatment ?? "untreated"](-length, true, "primary", "end"),
-    TREATMENTS[treatment ?? "untreated"](length, false, "primary", "start"),
-    TreatmentRelativePath.line([-SALTIRE_WIDTH, 0]),
-    TREATMENTS[treatment ?? "untreated"](-length, true, "secondary", "end"),
-    TREATMENTS[treatment ?? "untreated"](-length, true, "primary", "start"),
-    TreatmentRelativePath.line([-SALTIRE_WIDTH, 0]),
-    TREATMENTS[treatment ?? "untreated"](length, false, "secondary", "end"),
-    TREATMENTS[treatment ?? "untreated"](-length, true, "secondary", "start"),
-  ];
-
-  for (const index of [1, 3, 5, 7, 9]) {
-    TreatmentRelativePath.rotate(treatments[index], Radians.NEG_QUARTER_TURN);
-  }
-
-  for (const t of treatments) {
-    TreatmentRelativePath.rotate(t, Radians.NEG_EIGHTH_TURN);
-  }
-
-  saltire.appendChild(
-    svg.path(
-      TreatmentRelativePath.toClosedLoop(
-        TreatmentRelativePath.offset([
-          -W_2 - Math.sqrt((SALTIRE_WIDTH * SALTIRE_WIDTH) / 2),
-          W_2 - (H_2 - W_2),
-        ]),
-        ...treatments
-      ),
-      fill
-    )
-  );
-
-  if (cotised != null) {
-    const { stroke, pattern } = await resolveColoration(cotised);
-    maybeAppendChild(saltire, pattern);
-
-    // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
-    const offset = Math.sin(Math.PI / 4) * SALTIRE_WIDTH + COTISED_WIDTH * 2;
-    // Cross at 45 degrees starting from the top edge, so we bias upwards from the center.
-    const mid: Coordinate = [0, -(H_2 - W_2)];
-
-    for (const [p, [x1sign, y1sign], [x2sign, y2sign]] of [
-      [tl, [-1, 0], [0, -1]],
-      [tr, [0, -1], [1, 0]],
-      [bl, [-1, 0], [0, 1]],
-      [br, [0, 1], [1, 0]],
-    ] as const) {
-      saltire.appendChild(
+      fess.appendChild(
         svg.line(
-          Coordinate.add(p, [offset * x1sign, offset * y1sign]),
-          Coordinate.add(mid, [offset * x1sign, offset * y1sign]),
-          { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
+          [-W_2, FESS_VERTICAL_OFFSET - offset],
+          [W_2, FESS_VERTICAL_OFFSET - offset],
+          { ...stroke, strokeWidth: COTISED_WIDTH }
         )
       );
-      saltire.appendChild(
+      fess.appendChild(
         svg.line(
-          Coordinate.add(p, [offset * x2sign, offset * y2sign]),
-          Coordinate.add(mid, [offset * x2sign, offset * y2sign]),
-          { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
+          [-W_2, FESS_VERTICAL_OFFSET + offset],
+          [W_2, FESS_VERTICAL_OFFSET + offset],
+          { ...stroke, strokeWidth: COTISED_WIDTH }
         )
       );
     }
-  }
 
-  return saltire;
-}
+    return fess;
+  },
 
-saltire.on = new SequenceLocator(
-  [
-    [-25, -35],
-    [25, -35],
-    [25, 15],
-    [-25, 15],
-    [0, -10],
-  ],
-  [0.5, 0.5, 0.5, 0.5, 0.5],
-  {
-    1: [[0, -10]],
-  }
-);
+  on: new LineSegmentLocator(
+    [-W_2, FESS_VERTICAL_OFFSET],
+    [W_2, FESS_VERTICAL_OFFSET],
+    [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]
+  ),
 
-saltire.between = new SequenceLocator(
-  [
-    [0, -H_2 + 12],
-    [-W_2 + 12, -10],
-    [W_2 - 12, -10],
-    [0, -H_2 + W - 12],
-  ],
-  [0.5, 0.5, 0.5, 0.5],
-  {
-    1: SequenceLocator.EMPTY,
-  }
-);
+  between: new AlternatingReflectiveLocator(
+    new LineSegmentLocator(
+      [-W_2, -H_2 + FESS_WIDTH / 2],
+      [W_2, -H_2 + FESS_WIDTH / 2],
+      [0.6, 0.5, 0.4, 0.4]
+    ),
+    [-W_2, FESS_VERTICAL_OFFSET],
+    [W_2, FESS_VERTICAL_OFFSET]
+  ),
 
-saltire.partition = (treatment: Treatment | undefined): PathCommand.Any[] => {
-  const [topLeft, topRight, bottomLeft, bottomRight] = [
-    { type: "L", loc: [-W_2, -H_2] },
-    { type: "L", loc: [W_2, -H_2] },
-    { type: "L", loc: [-W_2, -H_2 + W] },
-    { type: "L", loc: [W_2, -H_2 + W] },
-  ] satisfies PathCommand.Any[];
+  partition(treatment: Treatment | undefined): PathCommand.Any[] {
+    const [topLeft, midLeft, midRight, topRight] = [
+      { type: "M", loc: [-W_2, -H_2] },
+      { type: "L", loc: [-W_2, -H / 10] },
+      { type: "L", loc: [W_2, -H / 10] },
+      { type: "L", loc: [W_2, -H_2] },
+    ] satisfies PathCommand.Any[];
 
-  if (treatment == null) {
-    // The ordering of this is significant, since it defines which tincture is on the top/bottom
-    // versus left/right.
-    return [
-      { type: "M", loc: topLeft.loc },
-      topRight,
-      bottomLeft,
-      // These two are to make the clip path reaches the bottom of the taller-than-wide shield.
-      { type: "l", loc: [0, H - W] },
-      { type: "l", loc: [W, 0] },
-      bottomRight,
-      { type: "Z" },
-    ];
-  } else {
-    const [start1, main1, end1] = TREATMENTS[treatment](
-      Math.hypot(W, W),
+    if (treatment == null) {
+      return [topLeft, midLeft, midRight, topRight, { type: "Z" }];
+    } else {
+      const [start, main, end] = TREATMENTS[treatment](
+        W,
+        false,
+        "primary",
+        "center"
+      );
+      return [
+        topLeft,
+        midLeft,
+        { type: "l", loc: start.loc },
+        ...main,
+        { type: "l", loc: end.loc },
+        midRight,
+        topRight,
+        { type: "Z" },
+      ];
+    }
+  },
+};
+
+const PALE_WIDTH = W / 3;
+const pale: OrdinaryRenderer = {
+  async render({ coloration, cotised, treatment }) {
+    const { fill, pattern } = await resolveColoration(coloration);
+
+    const pale = svg.g({ "data-kind": "pale" }, pattern);
+
+    const right = TREATMENTS[treatment ?? "untreated"](H, false, "primary");
+    TreatmentRelativePath.rotate(right, Radians.QUARTER_TURN);
+    // Note that right is left-to-right, but left is right-to-left. This is to make sure that
+    // we traverse around the pale clockwise after rotations have been performed.
+    const left = TREATMENTS[treatment ?? "untreated"](
+      -H,
       true,
-      "primary",
-      "center"
+      "secondary",
+      "end"
     );
-    TreatmentRelativePath.rotate(
-      [start1, main1, end1],
-      (Radians.EIGHTH_TURN * 3) as Radians
+    TreatmentRelativePath.rotate(left, Radians.QUARTER_TURN);
+
+    pale.appendChild(
+      svg.path(
+        TreatmentRelativePath.toClosedLoop(
+          TreatmentRelativePath.offset([PALE_WIDTH / 2, -H_2]),
+          right,
+          TreatmentRelativePath.line([-PALE_WIDTH, 0]),
+          left
+        ),
+        fill
+      )
     );
 
-    const [start2, main2, end2] = TREATMENTS[treatment](
-      Math.hypot(W, W),
-      true,
-      "primary",
-      "center"
-    );
-    TreatmentRelativePath.rotate(
-      [start2, main2, end2],
-      (Radians.NEG_EIGHTH_TURN * 3) as Radians
-    );
+    if (cotised != null) {
+      const { stroke, pattern } = await resolveColoration(cotised);
+      maybeAppendChild(pale, pattern);
 
-    return [
-      { type: "M", loc: topLeft.loc },
-      topRight,
-      { type: "l", loc: start1.loc },
-      ...main1,
-      { type: "l", loc: end1.loc },
-      bottomLeft,
-      // These two are to make the clip path reaches the bottom of the taller-than-wide shield.
-      { type: "l", loc: [0, H - W] },
-      { type: "l", loc: [W, 0] },
-      bottomRight,
-      { type: "l", loc: start2.loc },
-      ...main2,
-      { type: "l", loc: end2.loc },
-      { type: "Z" },
+      const offset = PALE_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
+
+      pale.appendChild(
+        svg.line([offset, -H_2], [offset, H_2], {
+          ...stroke,
+          strokeWidth: COTISED_WIDTH,
+        })
+      );
+      pale.appendChild(
+        svg.line([-offset, -H_2], [-offset, H_2], {
+          ...stroke,
+          strokeWidth: COTISED_WIDTH,
+        })
+      );
+    }
+
+    return pale;
+  },
+
+  on: new LineSegmentLocator(
+    [0, -H_2],
+    [0, H_2],
+    [0.6, 0.6, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2]
+  ),
+
+  between: new AlternatingReflectiveLocator(
+    new LineSegmentLocator(
+      [-W_2 + PALE_WIDTH / 2, -H_2],
+      [-W_2 + PALE_WIDTH / 2, H_2],
+      [0.6, 0.5, 0.4, 0.4]
+    ),
+    [0, -H_2],
+    [0, H_2]
+  ),
+
+  partition(treatment: Treatment | undefined): PathCommand.Any[] {
+    const [topLeft, topMid, bottomMid, bottomLeft] = [
+      { type: "M", loc: [-W_2, -H_2] },
+      { type: "L", loc: [0, -H_2] },
+      { type: "L", loc: [0, H_2] },
+      { type: "L", loc: [-W_2, H_2] },
+    ] satisfies PathCommand.Any[];
+
+    if (treatment == null) {
+      return [topLeft, topMid, bottomMid, bottomLeft, { type: "Z" }];
+    } else {
+      const [start, main, end] = TREATMENTS[treatment](
+        H,
+        false,
+        "primary",
+        "start"
+      );
+      TreatmentRelativePath.rotate([start, main, end], Radians.QUARTER_TURN);
+      return [
+        topLeft,
+        topMid,
+        { type: "l", loc: start.loc },
+        ...main,
+        { type: "l", loc: end.loc },
+        bottomMid,
+        bottomLeft,
+        { type: "Z" },
+      ];
+    }
+  },
+};
+
+const SALTIRE_WIDTH = W / 4;
+const saltire: OrdinaryRenderer = {
+  async render({ coloration, cotised, treatment }) {
+    const { fill, pattern } = await resolveColoration(coloration);
+
+    const saltire = svg.g({ "data-kind": "saltire" }, pattern);
+
+    const tl: Coordinate = [-W_2, -H_2];
+    const tr: Coordinate = [W_2, -H_2];
+    const bl: Coordinate = [W_2 - H, H_2];
+    const br: Coordinate = [-W_2 + H, H_2];
+
+    const length = Math.hypot(W_2, W_2);
+
+    const treatments = [
+      // Starting on the bottom left moving around clockwise.
+      TREATMENTS[treatment ?? "untreated"](length, false, "primary", "end"),
+      TREATMENTS[treatment ?? "untreated"](length, false, "secondary", "start"),
+      TreatmentRelativePath.line([SALTIRE_WIDTH, 0]),
+      TREATMENTS[treatment ?? "untreated"](-length, true, "primary", "end"),
+      TREATMENTS[treatment ?? "untreated"](length, false, "primary", "start"),
+      TreatmentRelativePath.line([-SALTIRE_WIDTH, 0]),
+      TREATMENTS[treatment ?? "untreated"](-length, true, "secondary", "end"),
+      TREATMENTS[treatment ?? "untreated"](-length, true, "primary", "start"),
+      TreatmentRelativePath.line([-SALTIRE_WIDTH, 0]),
+      TREATMENTS[treatment ?? "untreated"](length, false, "secondary", "end"),
+      TREATMENTS[treatment ?? "untreated"](-length, true, "secondary", "start"),
     ];
-  }
+
+    for (const index of [1, 3, 5, 7, 9]) {
+      TreatmentRelativePath.rotate(treatments[index], Radians.NEG_QUARTER_TURN);
+    }
+
+    for (const t of treatments) {
+      TreatmentRelativePath.rotate(t, Radians.NEG_EIGHTH_TURN);
+    }
+
+    saltire.appendChild(
+      svg.path(
+        TreatmentRelativePath.toClosedLoop(
+          TreatmentRelativePath.offset([
+            -W_2 - Math.sqrt((SALTIRE_WIDTH * SALTIRE_WIDTH) / 2),
+            W_2 - (H_2 - W_2),
+          ]),
+          ...treatments
+        ),
+        fill
+      )
+    );
+
+    if (cotised != null) {
+      const { stroke, pattern } = await resolveColoration(cotised);
+      maybeAppendChild(saltire, pattern);
+
+      // remember: sin(pi/4) = cos(pi/4), so the choice of sin is arbitrary.
+      const offset = Math.sin(Math.PI / 4) * SALTIRE_WIDTH + COTISED_WIDTH * 2;
+      // Cross at 45 degrees starting from the top edge, so we bias upwards from the center.
+      const mid: Coordinate = [0, -(H_2 - W_2)];
+
+      for (const [p, [x1sign, y1sign], [x2sign, y2sign]] of [
+        [tl, [-1, 0], [0, -1]],
+        [tr, [0, -1], [1, 0]],
+        [bl, [-1, 0], [0, 1]],
+        [br, [0, 1], [1, 0]],
+      ] as const) {
+        saltire.appendChild(
+          svg.line(
+            Coordinate.add(p, [offset * x1sign, offset * y1sign]),
+            Coordinate.add(mid, [offset * x1sign, offset * y1sign]),
+            { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
+          )
+        );
+        saltire.appendChild(
+          svg.line(
+            Coordinate.add(p, [offset * x2sign, offset * y2sign]),
+            Coordinate.add(mid, [offset * x2sign, offset * y2sign]),
+            { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
+          )
+        );
+      }
+    }
+
+    return saltire;
+  },
+
+  on: new SequenceLocator(
+    [
+      [-25, -35],
+      [25, -35],
+      [25, 15],
+      [-25, 15],
+      [0, -10],
+    ],
+    [0.5, 0.5, 0.5, 0.5, 0.5],
+    {
+      1: [[0, -10]],
+    }
+  ),
+  between: new SequenceLocator(
+    [
+      [0, -H_2 + 12],
+      [-W_2 + 12, -10],
+      [W_2 - 12, -10],
+      [0, -H_2 + W - 12],
+    ],
+    [0.5, 0.5, 0.5, 0.5],
+    {
+      1: SequenceLocator.EMPTY,
+    }
+  ),
+  partition(treatment: Treatment | undefined): PathCommand.Any[] {
+    const [topLeft, topRight, bottomLeft, bottomRight] = [
+      { type: "L", loc: [-W_2, -H_2] },
+      { type: "L", loc: [W_2, -H_2] },
+      { type: "L", loc: [-W_2, -H_2 + W] },
+      { type: "L", loc: [W_2, -H_2 + W] },
+    ] satisfies PathCommand.Any[];
+
+    if (treatment == null) {
+      // The ordering of this is significant, since it defines which tincture is on the top/bottom
+      // versus left/right.
+      return [
+        { type: "M", loc: topLeft.loc },
+        topRight,
+        bottomLeft,
+        // These two are to make the clip path reaches the bottom of the taller-than-wide shield.
+        { type: "l", loc: [0, H - W] },
+        { type: "l", loc: [W, 0] },
+        bottomRight,
+        { type: "Z" },
+      ];
+    } else {
+      const [start1, main1, end1] = TREATMENTS[treatment](
+        Math.hypot(W, W),
+        true,
+        "primary",
+        "center"
+      );
+      TreatmentRelativePath.rotate(
+        [start1, main1, end1],
+        (Radians.EIGHTH_TURN * 3) as Radians
+      );
+
+      const [start2, main2, end2] = TREATMENTS[treatment](
+        Math.hypot(W, W),
+        true,
+        "primary",
+        "center"
+      );
+      TreatmentRelativePath.rotate(
+        [start2, main2, end2],
+        (Radians.NEG_EIGHTH_TURN * 3) as Radians
+      );
+
+      return [
+        { type: "M", loc: topLeft.loc },
+        topRight,
+        { type: "l", loc: start1.loc },
+        ...main1,
+        { type: "l", loc: end1.loc },
+        bottomLeft,
+        // These two are to make the clip path reaches the bottom of the taller-than-wide shield.
+        { type: "l", loc: [0, H - W] },
+        { type: "l", loc: [W, 0] },
+        bottomRight,
+        { type: "l", loc: start2.loc },
+        ...main2,
+        { type: "l", loc: end2.loc },
+        { type: "Z" },
+      ];
+    }
+  },
 };
 
 const ORDINARIES: Record<string, OrdinaryRenderer> = {
@@ -2100,7 +2126,7 @@ const ORDINARIES: Record<string, OrdinaryRenderer> = {
 // #region CHARGES
 // ----------------------------------------------------------------------------
 
-async function rondel({ coloration }: SimpleCharge) {
+async function rondel({ coloration }: WithSvgColoration<SimpleCharge>) {
   const { fill, pattern } = await resolveColoration(coloration, [36, 36], {
     scale: 0.5,
     translate: [0, 11],
@@ -2114,7 +2140,7 @@ async function rondel({ coloration }: SimpleCharge) {
   );
 }
 
-async function mullet({ coloration }: SimpleCharge) {
+async function mullet({ coloration }: WithSvgColoration<SimpleCharge>) {
   const { fill, pattern } = await resolveColoration(coloration, [40, 40], {
     scale: 0.4,
     translate: [0, 8],
@@ -2143,7 +2169,7 @@ async function mullet({ coloration }: SimpleCharge) {
 }
 
 const FRET_WIDTH = 40;
-async function fret({ coloration }: SimpleCharge) {
+async function fret({ coloration }: WithSvgColoration<SimpleCharge>) {
   const { stroke, pattern } = await resolveColoration(coloration);
 
   const halfWidth = FRET_WIDTH / 2;
@@ -2221,9 +2247,9 @@ async function fret({ coloration }: SimpleCharge) {
   );
 }
 
-async function escallop({ coloration }: SimpleCharge) {
-  const { fill, pattern } = await resolveColoration(coloration, {
-    translate: [1.5, -7],
+async function escallop({ coloration }: WithSvgColoration<SimpleCharge>) {
+  const { fill, pattern } = await resolveColoration(coloration, [100, 100], {
+    translate: [0, -7],
   });
   const escallop = await fetchMutableComplexSvg("escallop");
   maybeAppendChild(escallop, pattern);
@@ -2235,8 +2261,8 @@ async function escallop({ coloration }: SimpleCharge) {
   return escallop;
 }
 
-async function fleurDeLys({ coloration }: SimpleCharge) {
-  const { fill, pattern } = await resolveColoration(coloration, {
+async function fleurDeLys({ coloration }: WithSvgColoration<SimpleCharge>) {
+  const { fill, pattern } = await resolveColoration(coloration, [40, 50], {
     translate: [3.5, 5],
   });
   const fleurDeLys = await fetchMutableComplexSvg("fleur-de-lys");
@@ -3321,7 +3347,7 @@ async function charge(
   } else if ("on" in element) {
     return on(element);
   } else if ("ordinary" in element) {
-    return [await ORDINARIES[element.ordinary](element)];
+    return [await ORDINARIES[element.ordinary].render(element)];
   } else if ("charge" in element) {
     const children: SVGElement[] = [];
     const locator = CHARGE_LOCATORS[element.placement ?? "none"];
@@ -3585,7 +3611,7 @@ async function on({
   surround,
   charge,
 }: WithSvgColoration<On>): Promise<SVGElement[]> {
-  const children: SVGElement[] = [await ORDINARIES[on.ordinary](on)];
+  const children: SVGElement[] = [await ORDINARIES[on.ordinary].render(on)];
 
   if (charge != null) {
     if (charge.placement != null) {
