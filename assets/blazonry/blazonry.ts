@@ -318,11 +318,9 @@ interface OrdinaryRenderer {
   render: (ordinary: WithSvgColoration<Ordinary>) => Promise<SVGElement>;
   on: ParametricLocator;
   between: ParametricLocator;
-  // I'd use non-?-optional `undefined` to mean unsupported, but the compiler complains about
-  // implicit `any` if I try that.
   partition:
     | ((treatment: Treatment | undefined) => PathCommand.Any[])
-    | Unsupported;
+    | undefined;
 }
 
 interface NonOrdinaryChargeRenderer<
@@ -338,10 +336,10 @@ type VariationWithCount = Variation & {
 };
 
 interface VariationPatternGenerator {
-  (variation: VariationWithCount): Promise<SVGPatternElement>;
-  nonRepeatingElements?: (
-    variation: VariationWithCount
-  ) => Promise<SVGGeometryElement[]>;
+  generate(variation: VariationWithCount): Promise<SVGPatternElement>;
+  nonRepeatingElements:
+    | ((variation: VariationWithCount) => Promise<SVGGeometryElement[]>)
+    | undefined;
   defaultCount: number;
 }
 
@@ -1324,10 +1322,7 @@ const bendSinister: OrdinaryRenderer = {
   between: new ReflectiveLocator(bend.between, [0, -H_2], [0, H_2]),
 
   partition(treatment: Treatment | undefined): PathCommand.Any[] {
-    assert(
-      bend.partition !== UNSUPPORTED,
-      "cannot delegate to unsupported partition"
-    );
+    assert(bend.partition != null, "cannot delegate to unsupported partition");
     const commands = bend.partition(treatment);
     commands.forEach(PathCommand.negateX);
     return commands;
@@ -1384,7 +1379,7 @@ const chief: OrdinaryRenderer = {
 
   between: new NullLocator(),
 
-  partition: UNSUPPORTED,
+  partition: undefined,
 };
 
 const CHEVRON_WIDTH = W / 4;
@@ -1725,7 +1720,7 @@ const cross: OrdinaryRenderer = {
 
   // Technically this is synonymous with "quarterly", but the code architecture makes it annoying to
   // do that without breaking the abstraction. It'll just be unsupported instead.
-  partition: UNSUPPORTED,
+  partition: undefined,
 };
 
 const FESS_WIDTH = W / 3;
@@ -2483,7 +2478,7 @@ async function resolveColoration(
     }
   } else if ("type" in coloration) {
     const count = coloration.count ?? VARIATIONS[coloration.type].defaultCount;
-    const pattern = await VARIATIONS[coloration.type]({
+    const pattern = await VARIATIONS[coloration.type].generate({
       ...coloration,
       count,
       width,
@@ -2734,524 +2729,541 @@ const IS_VARIATION_TREATMENT_ALIGNED: Record<Treatment | "untreated", boolean> =
     untreated: false,
   };
 
-async function barry({
-  treatment,
-  count,
-  first,
-  second,
-  width: fillWidth,
-  height: fillHeight,
-}: VariationWithCount) {
-  const { fill: firstFill } = await resolveColoration({ tincture: first });
-  const { fill: secondFill } = await resolveColoration({ tincture: second });
+const barry: VariationPatternGenerator = {
+  async generate({
+    treatment,
+    count,
+    first,
+    second,
+    width: fillWidth,
+    height: fillHeight,
+  }: VariationWithCount) {
+    const { fill: firstFill } = await resolveColoration({ tincture: first });
+    const { fill: secondFill } = await resolveColoration({ tincture: second });
 
-  const width = fillWidth * 1.5; // 1.5: overrun to prevent visual artifacts around the left/right edges.
-  const height = fillHeight / (count / 2);
+    const width = fillWidth * 1.5; // 1.5: overrun to prevent visual artifacts around the left/right edges.
+    const height = fillHeight / (count / 2);
 
-  return svg.pattern(
-    {
-      viewBox: [
-        [0, 0],
-        [width, height],
-      ],
-      x: -width / 2,
-      y: -(fillHeight / 2) - height / 4,
-      width,
-      height,
-    },
-    svg.rect([0, 0], [width, height], secondFill),
-    svg.path(
-      TreatmentRelativePath.toClosedLoop(
-        TreatmentRelativePath.offset([0, height / 4]),
-        TREATMENTS[treatment ?? "untreated"](
-          width,
-          !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"],
-          "secondary",
-          "center"
-        ),
-        TreatmentRelativePath.line([0, height / 2]),
-        TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center")
-      ),
-      firstFill
-    )
-  );
-}
-barry.nonRepeatingElements = async ({
-  count,
-  first,
-  second,
-}: VariationWithCount) => {
-  const { fill: firstFill } = await resolveColoration({ tincture: first });
-  const { fill: secondFill } = await resolveColoration({ tincture: second });
-
-  return [
-    // Hide dips from e.g. wavy on the top edge.
-    svg.rect([-W_2, -H_2], [W_2, -H_2 + H / count / 2], firstFill),
-    // Same, but note that the bottom bar changes color depending on the parity.
-    svg.rect(
-      [-W_2, H_2 - H / count / 2],
-      [W_2, H_2],
-      count % 2 === 0 ? secondFill : firstFill
-    ),
-  ];
-};
-barry.defaultCount = 6;
-
-async function barryBendy({ count, first, second }: VariationWithCount) {
-  const { fill: firstFill } = await resolveColoration({ tincture: first });
-  const { fill: secondFill } = await resolveColoration({ tincture: second });
-
-  const size = (2 * W) / count; // W < H, so we'll step based on that.
-  // This angle allows nice patterning where a 2x2 checkered unit shifts horizontally by half a unit
-  // (0.5) for every full checked unit height (2). So it lines up vertically nicely.
-  const angle = Math.asin(1 / Math.sqrt(5)) as Radians;
-  return svg.pattern(
-    {
-      viewBox: [
-        [0, 0],
-        [2, 2],
-      ],
-      width: size,
-      height: size,
-      // The height component compensates for the horizontal shift due to the shifting y. Since we
-      // skew, shifting by y also shifts horizontally. The chosen angle has a nice 2-to-1 ratio, so
-      // we can return the horizontal shift to the center by just dividing by 2. Once there, we
-      // shift horizontally according to how many size-sized units we can fit.
-      // dead center according to the size, so it's lined up with the edges.
-      x: H_2 / 2 - (W_2 % size),
-      y: -H_2,
-      patternTransform: { skewX: angle },
-    },
-    svg.rect([0, 0], [2, 2], secondFill),
-    svg.rect([0, 0], [1, 1], firstFill),
-    svg.rect([1, 1], [2, 2], firstFill)
-  );
-}
-barryBendy.defaultCount = 8;
-
-async function bendy({ treatment, first, second, count }: VariationWithCount) {
-  const { fill: firstFill } = await resolveColoration({ tincture: first });
-  const { fill: secondFill } = await resolveColoration({ tincture: second });
-
-  // Ensure it's wide enough for the full diagonal extent to avoid any weird artifacting between
-  // adjacent repeats of the pattern that would otherwise be visible.
-  const width = Math.hypot(H, H);
-  const height = Math.hypot(W, W) / (count / 2);
-
-  return svg.pattern(
-    {
-      viewBox: [
-        [0, 0],
-        [width, height],
-      ],
-      // Offset to hide the horizontal pattern boundary out beyond the clipping zone -- we don't
-      // know if the treatment pattern will tile horizontally well as that isn't part of their
-      // contract.
-      x: -width / 2,
-      // n.b. that a vertical offset might help with a visual artifact: "bendy wavy of two" will
-      // show the boundary between repeat pattern tiles near the bottom right of the bend.
-      width,
-      height,
-      patternTransform: {
-        rotate: Radians.EIGHTH_TURN,
-        // Subtract W and H to move the center towards the W x W upper square of the shield, which
-        // centers a bend in the top left corner, then offset further by half vertical distance of
-        // a bend, which is a quarter of the total vertical distance, where the vertical distance
-        // is Pythagoras'd from the width of the bend. But only if we're an even number of bends,
-        // otherwise we want to be centered.
-        translate: [
-          0,
-          W_2 -
-            H_2 -
-            (count % 2 === 0 ? Math.sqrt(2 * height * height) / 4 : 0),
+    return svg.pattern(
+      {
+        viewBox: [
+          [0, 0],
+          [width, height],
         ],
+        x: -width / 2,
+        y: -(fillHeight / 2) - height / 4,
+        width,
+        height,
       },
-    },
-    svg.rect([0, 0], [width, height], secondFill),
-    svg.path(
-      TreatmentRelativePath.toClosedLoop(
-        TreatmentRelativePath.offset([0, height / 4]),
-        TREATMENTS[treatment ?? "untreated"](
-          width,
-          !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"],
-          "secondary",
-          "center"
-        ),
-        TreatmentRelativePath.line([0, height / 2]),
-        TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center")
-      ),
-      firstFill
-    )
-  );
-}
-bendy.nonRepeatingElements = async ({
-  count,
-  first,
-  second,
-}: VariationWithCount) => {
-  const { fill: firstFill } = await resolveColoration({ tincture: first });
-  const { fill: secondFill } = await resolveColoration({ tincture: second });
-
-  const bendHeight = Math.hypot(W, W) / count;
-  // hypot -> hypot transforms back to vertical/horizontal instead of 45 degree space.
-  const edgeHeight = Math.hypot(bendHeight / 2, bendHeight / 2);
-
-  return [
-    svg.polygon({
-      points: [
-        [W_2, -H_2],
-        [W_2, -H_2 + edgeHeight],
-        [W_2 - edgeHeight, -H_2],
-      ],
-      // I wrote out a table to prove this, but basically, the color of the top right corner only
-      // changes every two counts, hence the rounding up to even.
-      ...((roundUpToEven(count) / 2) % 2 === 0 ? firstFill : secondFill),
-    }),
-  ];
-};
-bendy.defaultCount = 8;
-
-async function bendySinister(variation: VariationWithCount) {
-  const pattern = await bendy(variation);
-
-  const height = Math.hypot(W, W) / (variation.count / 2);
-  applySvgAttributes(pattern, {
-    // There's no good way to DRY up this calculation and just override the rotation, so we have to
-    // restate the translation as well. Unless we want to being doing string manipulation on the
-    // transform rule itself (we don't).
-    patternTransform: Transforms.toString({
-      rotate: Radians.NEG_EIGHTH_TURN,
-      translate: [
-        0,
-        W_2 -
-          H_2 -
-          (variation.count % 2 === 0 ? Math.sqrt(2 * height * height) / 4 : 0),
-      ],
-    }),
-  });
-
-  return pattern;
-}
-bendySinister.nonRepeatingElements = async ({
-  count,
-  first,
-  second,
-}: VariationWithCount) => {
-  const { fill: firstFill } = await resolveColoration({ tincture: first });
-  const { fill: secondFill } = await resolveColoration({ tincture: second });
-
-  // Copy-pasta-signflip from the bendy version. I couldn't think of a good way define this in terms
-  // of the result of calling the other function, so I didn't.
-
-  const bendHeight = Math.hypot(W, W) / count;
-  const edgeHeight = Math.hypot(bendHeight / 2, bendHeight / 2);
-
-  return [
-    svg.polygon({
-      points: [
-        [-W_2, -H_2],
-        [-W_2, -H_2 + edgeHeight],
-        [-W_2 + edgeHeight, -H_2],
-      ],
-      ...((roundUpToEven(count) / 2) % 2 === 0 ? firstFill : secondFill),
-    }),
-  ];
-};
-bendySinister.defaultCount = 8;
-
-async function checky({
-  count,
-  first,
-  second,
-  width: fillWidth,
-  height: fillHeight,
-}: VariationWithCount) {
-  const { fill: firstFill } = await resolveColoration({ tincture: first });
-  const { fill: secondFill } = await resolveColoration({ tincture: second });
-
-  const size = (2 * fillWidth) / count; // W < H, so we'll step based on that.
-  return svg.pattern(
-    {
-      viewBox: [
-        [0, 0],
-        [2, 2],
-      ],
-      width: size,
-      height: size,
-      x: -fillWidth / 2,
-      y: -fillHeight / 2,
-    },
-    svg.rect([0, 0], [2, 2], secondFill),
-    svg.rect([1, 0], [2, 1], firstFill),
-    svg.rect([0, 1], [1, 2], firstFill)
-  );
-}
-checky.defaultCount = 6;
-
-async function chevronny({
-  treatment,
-  first,
-  second,
-  count,
-}: VariationWithCount) {
-  const { fill: firstFill } = await resolveColoration({ tincture: first });
-  const { fill: secondFill } = await resolveColoration({ tincture: second });
-
-  // -2 because the nature of chevrons means that even if you have exactly `count` bands along the
-  // center line, you'll see more off to the sides. -2 empirally splits the difference, where the
-  // center line has less but the sides have more and it looks approximately like what you wanted.
-  const chevronHeight = H / (count - 2);
-  // The 45 degree angle centered on the midline means the tiling unit needs to be at least w/2
-  // tall, but it also needs to snap to a unit of tiling, which is two heights (one on, on off).
-  const height = 2 * chevronHeight * Math.ceil(W_2 / (2 * chevronHeight));
-
-  // 1.5: overrun to prevent visual artifacts around rounding errors and small-pixel adjustments for
-  // alignment among the joints of the various parts.
-  const length = Math.hypot(W_2, W_2) * 1.5;
-
-  const topRight = TREATMENTS[treatment ?? "untreated"](
-    length,
-    false,
-    "primary",
-    "start"
-  );
-  TreatmentRelativePath.rotate(topRight, Radians.EIGHTH_TURN);
-  const bottomRight = TREATMENTS[treatment ?? "untreated"](
-    -length,
-    false,
-    "secondary",
-    "end"
-  );
-  TreatmentRelativePath.rotate(bottomRight, Radians.EIGHTH_TURN);
-
-  topRight[0].loc = [0, 0];
-  bottomRight[2].loc = [0, 0];
-
-  const bottomLeft = TREATMENTS[treatment ?? "untreated"](
-    length,
-    true,
-    "secondary",
-    "start"
-  );
-  TreatmentRelativePath.rotate(bottomLeft, (Math.PI * (3 / 4)) as Radians);
-  const topLeft = TREATMENTS[treatment ?? "untreated"](
-    -length,
-    true,
-    "primary",
-    "end"
-  );
-  TreatmentRelativePath.rotate(topLeft, (Math.PI * (3 / 4)) as Radians);
-
-  bottomLeft[0].loc = [0, 0];
-  topLeft[2].loc = [0, 0];
-
-  const template = [
-    topRight,
-    TreatmentRelativePath.line([0, chevronHeight]),
-    bottomRight,
-    bottomLeft,
-    TreatmentRelativePath.line([0, -chevronHeight]),
-    topLeft,
-  ];
-
-  const paths = [];
-  // Start negative to ensure we render copies in the top left and right corners of the tile. The
-  // template is based on the top middle location.
-  for (
-    let i = -height / (2 * chevronHeight);
-    i < height / (2 * chevronHeight);
-    ++i
-  ) {
-    paths.push(
+      svg.rect([0, 0], [width, height], secondFill),
       svg.path(
         TreatmentRelativePath.toClosedLoop(
-          TreatmentRelativePath.offset([W_2, i * 2 * chevronHeight]),
-          ...template
+          TreatmentRelativePath.offset([0, height / 4]),
+          TREATMENTS[treatment ?? "untreated"](
+            width,
+            !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"],
+            "secondary",
+            "center"
+          ),
+          TreatmentRelativePath.line([0, height / 2]),
+          TREATMENTS[treatment ?? "untreated"](
+            -width,
+            false,
+            "primary",
+            "center"
+          )
         ),
         firstFill
       )
     );
-  }
+  },
+  async nonRepeatingElements({ count, first, second }: VariationWithCount) {
+    const { fill: firstFill } = await resolveColoration({ tincture: first });
+    const { fill: secondFill } = await resolveColoration({ tincture: second });
 
-  return svg.pattern(
-    {
-      viewBox: [
-        [0, 0],
-        [W, height],
-      ],
-      width: W,
-      height,
-      x: -W_2,
-      y: -H_2,
-    },
-    svg.rect([0, 0], [W, height], secondFill),
-    ...paths
-  );
-}
-chevronny.defaultCount = 6;
+    return [
+      // Hide dips from e.g. wavy on the top edge.
+      svg.rect([-W_2, -H_2], [W_2, -H_2 + H / count / 2], firstFill),
+      // Same, but note that the bottom bar changes color depending on the parity.
+      svg.rect(
+        [-W_2, H_2 - H / count / 2],
+        [W_2, H_2],
+        count % 2 === 0 ? secondFill : firstFill
+      ),
+    ];
+  },
+  defaultCount: 6,
+};
 
-async function fusilly({ count, first, second }: VariationWithCount) {
-  const { fill: firstFill } = await resolveColoration({ tincture: first });
-  const { fill: secondFill } = await resolveColoration({ tincture: second });
+const barryBendy: VariationPatternGenerator = {
+  async generate({ count, first, second }: VariationWithCount) {
+    const { fill: firstFill } = await resolveColoration({ tincture: first });
+    const { fill: secondFill } = await resolveColoration({ tincture: second });
 
-  const width = W / count;
-  return svg.pattern(
-    {
-      viewBox: [
-        [0, 0],
-        [2, 8],
-      ],
-      x: -width / 2 - W_2,
-      y: -H_2,
-      width,
-      height: width * 4,
-    },
-    svg.rect([0, 0], [2, 8], secondFill),
-    svg.polygon({
-      points: [
-        [1, 0],
-        [2, 4],
-        [1, 8],
-        [0, 4],
-      ],
-      ...firstFill,
-    })
-  );
-}
-fusilly.defaultCount = 8;
+    const size = (2 * W) / count; // W < H, so we'll step based on that.
+    // This angle allows nice patterning where a 2x2 checkered unit shifts horizontally by half a unit
+    // (0.5) for every full checked unit height (2). So it lines up vertically nicely.
+    const angle = Math.asin(1 / Math.sqrt(5)) as Radians;
+    return svg.pattern(
+      {
+        viewBox: [
+          [0, 0],
+          [2, 2],
+        ],
+        width: size,
+        height: size,
+        // The height component compensates for the horizontal shift due to the shifting y. Since we
+        // skew, shifting by y also shifts horizontally. The chosen angle has a nice 2-to-1 ratio, so
+        // we can return the horizontal shift to the center by just dividing by 2. Once there, we
+        // shift horizontally according to how many size-sized units we can fit.
+        // dead center according to the size, so it's lined up with the edges.
+        x: H_2 / 2 - (W_2 % size),
+        y: -H_2,
+        patternTransform: { skewX: angle },
+      },
+      svg.rect([0, 0], [2, 2], secondFill),
+      svg.rect([0, 0], [1, 1], firstFill),
+      svg.rect([1, 1], [2, 2], firstFill)
+    );
+  },
+  nonRepeatingElements: undefined,
+  defaultCount: 8,
+};
+
+const bendy: VariationPatternGenerator = {
+  async generate({ treatment, first, second, count }: VariationWithCount) {
+    const { fill: firstFill } = await resolveColoration({ tincture: first });
+    const { fill: secondFill } = await resolveColoration({ tincture: second });
+
+    // Ensure it's wide enough for the full diagonal extent to avoid any weird artifacting between
+    // adjacent repeats of the pattern that would otherwise be visible.
+    const width = Math.hypot(H, H);
+    const height = Math.hypot(W, W) / (count / 2);
+
+    return svg.pattern(
+      {
+        viewBox: [
+          [0, 0],
+          [width, height],
+        ],
+        // Offset to hide the horizontal pattern boundary out beyond the clipping zone -- we don't
+        // know if the treatment pattern will tile horizontally well as that isn't part of their
+        // contract.
+        x: -width / 2,
+        // n.b. that a vertical offset might help with a visual artifact: "bendy wavy of two" will
+        // show the boundary between repeat pattern tiles near the bottom right of the bend.
+        width,
+        height,
+        patternTransform: {
+          rotate: Radians.EIGHTH_TURN,
+          // Subtract W and H to move the center towards the W x W upper square of the shield, which
+          // centers a bend in the top left corner, then offset further by half vertical distance of
+          // a bend, which is a quarter of the total vertical distance, where the vertical distance
+          // is Pythagoras'd from the width of the bend. But only if we're an even number of bends,
+          // otherwise we want to be centered.
+          translate: [
+            0,
+            W_2 -
+              H_2 -
+              (count % 2 === 0 ? Math.sqrt(2 * height * height) / 4 : 0),
+          ],
+        },
+      },
+      svg.rect([0, 0], [width, height], secondFill),
+      svg.path(
+        TreatmentRelativePath.toClosedLoop(
+          TreatmentRelativePath.offset([0, height / 4]),
+          TREATMENTS[treatment ?? "untreated"](
+            width,
+            !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"],
+            "secondary",
+            "center"
+          ),
+          TreatmentRelativePath.line([0, height / 2]),
+          TREATMENTS[treatment ?? "untreated"](
+            -width,
+            false,
+            "primary",
+            "center"
+          )
+        ),
+        firstFill
+      )
+    );
+  },
+  async nonRepeatingElements({ count, first, second }: VariationWithCount) {
+    const { fill: firstFill } = await resolveColoration({ tincture: first });
+    const { fill: secondFill } = await resolveColoration({ tincture: second });
+
+    const bendHeight = Math.hypot(W, W) / count;
+    // hypot -> hypot transforms back to vertical/horizontal instead of 45 degree space.
+    const edgeHeight = Math.hypot(bendHeight / 2, bendHeight / 2);
+
+    return [
+      svg.polygon({
+        points: [
+          [W_2, -H_2],
+          [W_2, -H_2 + edgeHeight],
+          [W_2 - edgeHeight, -H_2],
+        ],
+        // I wrote out a table to prove this, but basically, the color of the top right corner only
+        // changes every two counts, hence the rounding up to even.
+        ...((roundUpToEven(count) / 2) % 2 === 0 ? firstFill : secondFill),
+      }),
+    ];
+  },
+  defaultCount: 8,
+};
+
+const bendySinister: VariationPatternGenerator = {
+  async generate(variation: VariationWithCount) {
+    const pattern = await bendy.generate(variation);
+
+    const height = Math.hypot(W, W) / (variation.count / 2);
+    applySvgAttributes(pattern, {
+      // There's no good way to DRY up this calculation and just override the rotation, so we have to
+      // restate the translation as well. Unless we want to being doing string manipulation on the
+      // transform rule itself (we don't).
+      patternTransform: Transforms.toString({
+        rotate: Radians.NEG_EIGHTH_TURN,
+        translate: [
+          0,
+          W_2 -
+            H_2 -
+            (variation.count % 2 === 0
+              ? Math.sqrt(2 * height * height) / 4
+              : 0),
+        ],
+      }),
+    });
+
+    return pattern;
+  },
+  async nonRepeatingElements({ count, first, second }: VariationWithCount) {
+    const { fill: firstFill } = await resolveColoration({ tincture: first });
+    const { fill: secondFill } = await resolveColoration({ tincture: second });
+
+    // Copy-pasta-signflip from the bendy version. I couldn't think of a good way define this in terms
+    // of the result of calling the other function, so I didn't.
+
+    const bendHeight = Math.hypot(W, W) / count;
+    const edgeHeight = Math.hypot(bendHeight / 2, bendHeight / 2);
+
+    return [
+      svg.polygon({
+        points: [
+          [-W_2, -H_2],
+          [-W_2, -H_2 + edgeHeight],
+          [-W_2 + edgeHeight, -H_2],
+        ],
+        ...((roundUpToEven(count) / 2) % 2 === 0 ? firstFill : secondFill),
+      }),
+    ];
+  },
+  defaultCount: 8,
+};
+
+const checky: VariationPatternGenerator = {
+  async generate({
+    count,
+    first,
+    second,
+    width: fillWidth,
+    height: fillHeight,
+  }: VariationWithCount) {
+    const { fill: firstFill } = await resolveColoration({ tincture: first });
+    const { fill: secondFill } = await resolveColoration({ tincture: second });
+
+    const size = (2 * fillWidth) / count; // W < H, so we'll step based on that.
+    return svg.pattern(
+      {
+        viewBox: [
+          [0, 0],
+          [2, 2],
+        ],
+        width: size,
+        height: size,
+        x: -fillWidth / 2,
+        y: -fillHeight / 2,
+      },
+      svg.rect([0, 0], [2, 2], secondFill),
+      svg.rect([1, 0], [2, 1], firstFill),
+      svg.rect([0, 1], [1, 2], firstFill)
+    );
+  },
+  nonRepeatingElements: undefined,
+  defaultCount: 6,
+};
+
+const chevronny: VariationPatternGenerator = {
+  async generate({ treatment, first, second, count }: VariationWithCount) {
+    const { fill: firstFill } = await resolveColoration({ tincture: first });
+    const { fill: secondFill } = await resolveColoration({ tincture: second });
+
+    // -2 because the nature of chevrons means that even if you have exactly `count` bands along the
+    // center line, you'll see more off to the sides. -2 empirally splits the difference, where the
+    // center line has less but the sides have more and it looks approximately like what you wanted.
+    const chevronHeight = H / (count - 2);
+    // The 45 degree angle centered on the midline means the tiling unit needs to be at least w/2
+    // tall, but it also needs to snap to a unit of tiling, which is two heights (one on, on off).
+    const height = 2 * chevronHeight * Math.ceil(W_2 / (2 * chevronHeight));
+
+    // 1.5: overrun to prevent visual artifacts around rounding errors and small-pixel adjustments for
+    // alignment among the joints of the various parts.
+    const length = Math.hypot(W_2, W_2) * 1.5;
+
+    const topRight = TREATMENTS[treatment ?? "untreated"](
+      length,
+      false,
+      "primary",
+      "start"
+    );
+    TreatmentRelativePath.rotate(topRight, Radians.EIGHTH_TURN);
+    const bottomRight = TREATMENTS[treatment ?? "untreated"](
+      -length,
+      false,
+      "secondary",
+      "end"
+    );
+    TreatmentRelativePath.rotate(bottomRight, Radians.EIGHTH_TURN);
+
+    topRight[0].loc = [0, 0];
+    bottomRight[2].loc = [0, 0];
+
+    const bottomLeft = TREATMENTS[treatment ?? "untreated"](
+      length,
+      true,
+      "secondary",
+      "start"
+    );
+    TreatmentRelativePath.rotate(bottomLeft, (Math.PI * (3 / 4)) as Radians);
+    const topLeft = TREATMENTS[treatment ?? "untreated"](
+      -length,
+      true,
+      "primary",
+      "end"
+    );
+    TreatmentRelativePath.rotate(topLeft, (Math.PI * (3 / 4)) as Radians);
+
+    bottomLeft[0].loc = [0, 0];
+    topLeft[2].loc = [0, 0];
+
+    const template = [
+      topRight,
+      TreatmentRelativePath.line([0, chevronHeight]),
+      bottomRight,
+      bottomLeft,
+      TreatmentRelativePath.line([0, -chevronHeight]),
+      topLeft,
+    ];
+
+    const paths = [];
+    // Start negative to ensure we render copies in the top left and right corners of the tile. The
+    // template is based on the top middle location.
+    for (
+      let i = -height / (2 * chevronHeight);
+      i < height / (2 * chevronHeight);
+      ++i
+    ) {
+      paths.push(
+        svg.path(
+          TreatmentRelativePath.toClosedLoop(
+            TreatmentRelativePath.offset([W_2, i * 2 * chevronHeight]),
+            ...template
+          ),
+          firstFill
+        )
+      );
+    }
+
+    return svg.pattern(
+      {
+        viewBox: [
+          [0, 0],
+          [W, height],
+        ],
+        width: W,
+        height,
+        x: -W_2,
+        y: -H_2,
+      },
+      svg.rect([0, 0], [W, height], secondFill),
+      ...paths
+    );
+  },
+  nonRepeatingElements: undefined,
+  defaultCount: 6,
+};
+
+const fusilly: VariationPatternGenerator = {
+  async generate({ count, first, second }: VariationWithCount) {
+    const { fill: firstFill } = await resolveColoration({ tincture: first });
+    const { fill: secondFill } = await resolveColoration({ tincture: second });
+
+    const width = W / count;
+    return svg.pattern(
+      {
+        viewBox: [
+          [0, 0],
+          [2, 8],
+        ],
+        x: -width / 2 - W_2,
+        y: -H_2,
+        width,
+        height: width * 4,
+      },
+      svg.rect([0, 0], [2, 8], secondFill),
+      svg.polygon({
+        points: [
+          [1, 0],
+          [2, 4],
+          [1, 8],
+          [0, 4],
+        ],
+        ...firstFill,
+      })
+    );
+  },
+  nonRepeatingElements: undefined,
+  defaultCount: 8,
+};
 
 // There is no visual reference I could find for this besides the arms of Bavaria, so the precise
 // positioning of the variations relative to the corners and edges matches the appearance there.
-async function fusillyInBends({ count, first, second }: VariationWithCount) {
-  const { fill: firstFill } = await resolveColoration({ tincture: first });
-  const { fill: secondFill } = await resolveColoration({ tincture: second });
+const fusillyInBends: VariationPatternGenerator = {
+  async generate({ count, first, second }: VariationWithCount) {
+    const { fill: firstFill } = await resolveColoration({ tincture: first });
+    const { fill: secondFill } = await resolveColoration({ tincture: second });
 
-  const width = W / count;
-  return svg.pattern(
-    {
-      viewBox: [
-        [0, 0],
-        [2, 8],
-      ],
-      x: -W_2,
-      y: -H_2,
-      width,
-      height: width * 4,
-      patternTransform: {
-        rotate: Radians.NEG_EIGHTH_TURN,
-        translate: [-width, -width - (H_2 - W_2)],
+    const width = W / count;
+    return svg.pattern(
+      {
+        viewBox: [
+          [0, 0],
+          [2, 8],
+        ],
+        x: -W_2,
+        y: -H_2,
+        width,
+        height: width * 4,
+        patternTransform: {
+          rotate: Radians.NEG_EIGHTH_TURN,
+          translate: [-width, -width - (H_2 - W_2)],
+        },
       },
-    },
-    svg.rect([0, 0], [2, 8], secondFill),
-    svg.polygon({
-      points: [
-        [1, 0],
-        [2, 4],
-        [1, 8],
-        [0, 4],
-      ],
-      ...firstFill,
-    })
-  );
-}
-fusillyInBends.defaultCount = 8;
-
-async function lozengy({ count, first, second }: VariationWithCount) {
-  const { fill: firstFill } = await resolveColoration({ tincture: first });
-  const { fill: secondFill } = await resolveColoration({ tincture: second });
-
-  const width = W / count;
-  return svg.pattern(
-    {
-      viewBox: [
-        [0, 0],
-        [2, 4],
-      ],
-      x: -width / 2 - W_2,
-      y: -H_2,
-      width,
-      height: width * 2,
-    },
-    svg.rect([0, 0], [2, 4], secondFill),
-    svg.polygon({
-      points: [
-        [1, 0],
-        [2, 2],
-        [1, 4],
-        [0, 2],
-      ],
-      ...firstFill,
-    })
-  );
-}
-lozengy.defaultCount = 8;
-
-async function paly({ treatment, first, second, count }: VariationWithCount) {
-  const { fill: firstFill } = await resolveColoration({ tincture: first });
-  const { fill: secondFill } = await resolveColoration({ tincture: second });
-
-  const width = W / (count / 2);
-  const height = H * 1.5; // 1.5: overrun to prevent visual artifacts around the top/bottom edges.
-
-  const left = TREATMENTS[treatment ?? "untreated"](
-    height,
-    false,
-    "primary",
-    "center"
-  );
-  TreatmentRelativePath.rotate(left, Radians.QUARTER_TURN);
-
-  const right = TREATMENTS[treatment ?? "untreated"](
-    -height,
-    !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"],
-    "secondary",
-    "center"
-  );
-  TreatmentRelativePath.rotate(right, Radians.QUARTER_TURN);
-
-  return svg.pattern(
-    {
-      viewBox: [
-        [0, 0],
-        [width, height],
-      ],
-      x: -W_2 - width / 4,
-      y: -height / 2,
-      width,
-      height,
-    },
-    svg.rect([0, 0], [width, height], secondFill),
-    svg.path(
-      TreatmentRelativePath.toClosedLoop(
-        TreatmentRelativePath.offset([width / 4, 0]),
-        left,
-        TreatmentRelativePath.line([width / 2, 0]),
-        right
-      ),
-      firstFill
-    )
-  );
-}
-paly.nonRepeatingElements = async ({
-  count,
-  first,
-  second,
-}: VariationWithCount) => {
-  const { fill: firstFill } = await resolveColoration({ tincture: first });
-  const { fill: secondFill } = await resolveColoration({ tincture: second });
-
-  return [
-    // Hide dips from e.g. wavy on the left edge.
-    svg.rect([-W_2, -H_2], [-W_2 + W / count / 2, H_2], firstFill),
-    // Same, but note that the right bar changes color depending on the parity.
-    svg.rect(
-      [W_2 - W / count / 2, -H_2],
-      [W_2, H_2],
-      count % 2 === 0 ? secondFill : firstFill
-    ),
-  ];
+      svg.rect([0, 0], [2, 8], secondFill),
+      svg.polygon({
+        points: [
+          [1, 0],
+          [2, 4],
+          [1, 8],
+          [0, 4],
+        ],
+        ...firstFill,
+      })
+    );
+  },
+  nonRepeatingElements: undefined,
+  defaultCount: 8,
 };
-paly.defaultCount = 6;
+
+const lozengy: VariationPatternGenerator = {
+  async generate({ count, first, second }: VariationWithCount) {
+    const { fill: firstFill } = await resolveColoration({ tincture: first });
+    const { fill: secondFill } = await resolveColoration({ tincture: second });
+
+    const width = W / count;
+    return svg.pattern(
+      {
+        viewBox: [
+          [0, 0],
+          [2, 4],
+        ],
+        x: -width / 2 - W_2,
+        y: -H_2,
+        width,
+        height: width * 2,
+      },
+      svg.rect([0, 0], [2, 4], secondFill),
+      svg.polygon({
+        points: [
+          [1, 0],
+          [2, 2],
+          [1, 4],
+          [0, 2],
+        ],
+        ...firstFill,
+      })
+    );
+  },
+  nonRepeatingElements: undefined,
+  defaultCount: 8,
+};
+
+const paly: VariationPatternGenerator = {
+  async generate({ treatment, first, second, count }: VariationWithCount) {
+    const { fill: firstFill } = await resolveColoration({ tincture: first });
+    const { fill: secondFill } = await resolveColoration({ tincture: second });
+
+    const width = W / (count / 2);
+    const height = H * 1.5; // 1.5: overrun to prevent visual artifacts around the top/bottom edges.
+
+    const left = TREATMENTS[treatment ?? "untreated"](
+      height,
+      false,
+      "primary",
+      "center"
+    );
+    TreatmentRelativePath.rotate(left, Radians.QUARTER_TURN);
+
+    const right = TREATMENTS[treatment ?? "untreated"](
+      -height,
+      !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"],
+      "secondary",
+      "center"
+    );
+    TreatmentRelativePath.rotate(right, Radians.QUARTER_TURN);
+
+    return svg.pattern(
+      {
+        viewBox: [
+          [0, 0],
+          [width, height],
+        ],
+        x: -W_2 - width / 4,
+        y: -height / 2,
+        width,
+        height,
+      },
+      svg.rect([0, 0], [width, height], secondFill),
+      svg.path(
+        TreatmentRelativePath.toClosedLoop(
+          TreatmentRelativePath.offset([width / 4, 0]),
+          left,
+          TreatmentRelativePath.line([width / 2, 0]),
+          right
+        ),
+        firstFill
+      )
+    );
+  },
+  async nonRepeatingElements({ count, first, second }: VariationWithCount) {
+    const { fill: firstFill } = await resolveColoration({ tincture: first });
+    const { fill: secondFill } = await resolveColoration({ tincture: second });
+
+    return [
+      // Hide dips from e.g. wavy on the left edge.
+      svg.rect([-W_2, -H_2], [-W_2 + W / count / 2, H_2], firstFill),
+      // Same, but note that the right bar changes color depending on the parity.
+      svg.rect(
+        [W_2 - W / count / 2, -H_2],
+        [W_2, H_2],
+        count % 2 === 0 ? secondFill : firstFill
+      ),
+    ];
+  },
+  defaultCount: 6,
+};
 
 const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
   barry,
@@ -3476,7 +3488,7 @@ async function escutcheonContent(
   if ("partition" in content) {
     const { partition } = ORDINARIES[content.partition];
     // This should be prevented in grammar, so this should never fire.
-    assert(partition !== UNSUPPORTED, `cannot partition with this ordinary`);
+    assert(partition != undefined, `cannot partition with this ordinary`);
 
     // TODO: Reshape this to match how variation masking is done. Right now it'll mess up the
     // layering because it pushes counterchanged things further down the stack.
