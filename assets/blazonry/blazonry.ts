@@ -1009,11 +1009,13 @@ const svg = {
       stroke,
       strokeWidth = 1,
       strokeLinecap = "butt",
+      vectorEffect,
       classes,
     }: {
       stroke?: string;
       strokeWidth?: number;
       strokeLinecap?: "butt" | "round" | "square";
+      vectorEffect?: string;
       classes?: {
         stroke?: ColorOrMetal;
       };
@@ -1027,6 +1029,7 @@ const svg = {
       y2,
       "stroke-width": strokeWidth,
       "stroke-linecap": strokeLinecap,
+      "vector-effect": vectorEffect,
       stroke,
     });
     applyClasses(line, classes);
@@ -3558,20 +3561,19 @@ async function escutcheonContent(
       }
     }
 
-    const children = Object.values(quartered);
-
-    let line = svg.line([0, -H_2], [0, H_2], {
-      strokeWidth: 0.5,
-      classes: { stroke: "sable" },
-    });
-    line.setAttribute("vector-effect", "non-scaling-stroke");
-    children.push(line);
-    line = svg.line([-W_2, -H_2 + W_2], [W_2, -H_2 + W_2], {
-      strokeWidth: 0.5,
-      classes: { stroke: "sable" },
-    });
-    line.setAttribute("vector-effect", "non-scaling-stroke");
-    children.push(line);
+    const children = [
+      ...Object.values(quartered),
+      svg.line([0, -H_2], [0, H_2], {
+        strokeWidth: 0.5,
+        classes: { stroke: "sable" },
+        vectorEffect: "non-scaling-stroke",
+      }),
+      svg.line([-W_2, -H_2 + W_2], [W_2, -H_2 + W_2], {
+        strokeWidth: 0.5,
+        classes: { stroke: "sable" },
+        vectorEffect: "non-scaling-stroke",
+      }),
+    ];
 
     if (content.overall) {
       children.push(...(await charge(content.overall)));
