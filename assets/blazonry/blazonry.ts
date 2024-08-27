@@ -3367,11 +3367,6 @@ async function charge(
     const locator = CHARGE_LOCATORS[element.placement ?? "none"];
     for (const [translate, scale] of locator.forCount(element.count)) {
       const rendered = await nonOrdinaryCharge(element);
-      // TODO: Charges and ordinaries should... always...? be masks that we can then apply a pattern
-      // to. Apply the transform to the mask definition so the pattern doesn't get skewed.
-      // TODO part II: update variations to be given w/h instead of assuming the full size, then use
-      // this to allow charges to render appropriately-sized variations. This clashes with the
-      // desire to always make them masks to support counterchanging.
       Transforms.apply(rendered, {
         translate,
         scale,
@@ -3490,36 +3485,41 @@ async function escutcheonContent(
   if ("partition" in content) {
     const { partition } = ORDINARIES[content.partition];
     // This should be prevented in grammar, so this should never fire.
-    assert(partition != undefined, `cannot partition with this ordinary`);
+    assert(partition != undefined, "cannot partition with this ordinary");
 
-    // TODO: Reshape this to match how variation masking is done. Right now it'll mess up the
-    // layering because it pushes counterchanged things further down the stack.
-    // Example:
-    // Per pale Sable and Argent, a cross or a fess embattled counterchanged.
     const mask = svg.mask(
       {},
       svg.path(partition(content.treatment), { fill: "white" })
     );
 
-    const g1 = svg.g(
-      { "data-kind": "partition-1" },
-      await field(content.first)
-    );
-    g1.setAttribute("mask", `url(#${mask.id})`);
-    const g2 = svg.g(
-      { "data-kind": "partition-2" },
-      await field(content.second)
-    );
+    function applyMask(e: SVGElement): SVGElement {
+      applySvgAttributes(e, { mask: `url(#${mask.id})` });
+      return e;
+    }
 
-    // Add g2 first so that it's underneath g1, which is the masked one.
-    const children: SVGElement[] = [mask, g2, g1];
+    const children: SVGElement[] = [
+      mask,
+      // Consider having an inverted mask to apply to this side instead; may avoid small visual
+      // artifacts from half of the ordinaries/charges being rendered above a copy of themselves.
+      await field(content.second),
+      // Masked element has to be on top. Masks are arbitrarily defined to pass through the side
+      // considered "first" (dexter, top), so put it afterwards because it's a subset of "second".
+      applyMask(await field(content.first)),
+    ];
+
     for (const c of content.charges ?? []) {
       const counterchanged = counterchangeCharge(c, content.first);
       if (deepEqual(c, counterchanged)) {
         children.push(...(await charge(c)));
       } else {
-        g2.append(...(await charge(counterchanged)));
-        g1.append(...(await charge(counterchangeCharge(c, content.second))));
+        children.push(...(await charge(counterchanged)));
+        // This is reversed (counterchanged!) from the field -- second is the one that gets the mask
+        // and it must appear later.
+        children.push(
+          ...(await charge(counterchangeCharge(c, content.second))).map(
+            applyMask
+          )
+        );
       }
     }
 
