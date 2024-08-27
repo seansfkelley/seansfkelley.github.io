@@ -1594,7 +1594,7 @@ const CROSS_WIDTH = W / 4;
 const CROSS_VERTICAL_OFFSET = (H - W) / 2;
 
 async function cross({ coloration, cotised, treatment }: Ordinary) {
-  const { fill, pattern } = await resolveColoration(coloration, {
+  const { fill, pattern } = await resolveColoration(coloration, [W, H], {
     translate: [0, 12],
   });
 
@@ -3352,7 +3352,7 @@ async function escutcheonContent(
   // bend counterchanged a mullet counterchanged", both will receive the _same_ patterning, even
   // though the charge is on top of the ordinary (and could justifiably be re-reversed, matching the
   // background variation).
-  function overwriteCounterchangedColorations(
+  function counterchangeCharge(
     element: WithSvgColoration<Charge>,
     coloration: SvgColorableColoration
   ): WithSvgColoration<Charge> {
@@ -3379,12 +3379,15 @@ async function escutcheonContent(
     ): WithSvgColoration<Ordinary> {
       return {
         ...ordinary,
+        // Stupid conditional to preserve absence of field for the purposes of deep equality checks.
+        ...("cotised" in ordinary
+          ? { cotised: counterchangeColoration(ordinary.cotised) }
+          : {}),
         coloration: counterchangeColoration(ordinary.coloration),
-        cotised: counterchangeColoration(ordinary.cotised),
       };
     }
 
-    function counterchangeCharge<
+    function counterchangeNonOrdinaryCharge<
       T extends WithSvgColoration<NonOrdinaryCharge> | undefined
     >(charge: T): T {
       if (charge == null) {
@@ -3413,21 +3416,32 @@ async function escutcheonContent(
       return {
         ...element,
         canton: counterchangeColoration(element.canton),
-        charges: element.charges?.map((c) =>
-          overwriteCounterchangedColorations(c, coloration)
-        ),
+        // Stupid conditional to preserve absence of field for the purposes of deep equality checks.
+        ...("charges" in element
+          ? {
+              charges: element.charges?.map((c) =>
+                counterchangeCharge(c, coloration)
+              ),
+            }
+          : {}),
       };
     } else if ("on" in element) {
       return {
         ...element,
         on: counterchangeOrdinary(element.on),
-        charge: counterchangeCharge(element.charge),
-        surround: counterchangeCharge(element.surround),
+        // Stupid conditional to preserve absence of field for the purposes of deep equality checks.
+        ...("charge" in element
+          ? { charge: counterchangeNonOrdinaryCharge(element.charge) }
+          : {}),
+        // Stupid conditional to preserve absence of field for the purposes of deep equality checks.
+        ...("surround" in element
+          ? { surround: counterchangeNonOrdinaryCharge(element.surround) }
+          : {}),
       };
     } else if ("ordinary" in element) {
       return counterchangeOrdinary(element);
     } else if ("charge" in element) {
-      return counterchangeCharge(element);
+      return counterchangeNonOrdinaryCharge(element);
     } else {
       assertNever(element);
     }
@@ -3457,7 +3471,7 @@ async function escutcheonContent(
     const children: SVGElement[] = [mask, g2, g1];
     if (content.charges != null) {
       const counterchangedFirst = content.charges.map((c) =>
-        overwriteCounterchangedColorations(c, content.first)
+        counterchangeCharge(c, content.first)
       );
       // This branch is not just a perf/DOM optimization, but prevents visual artifacts. If we
       // unconditionally do the counterchanged thing, even when not necessary, the line of division
@@ -3469,7 +3483,7 @@ async function escutcheonContent(
       // always render a single ordinary, which I am not willing to do at the moment.
       if (!deepEqual(content.charges, counterchangedFirst)) {
         const counterchangedSecond = content.charges.map((c) =>
-          overwriteCounterchangedColorations(c, content.second)
+          counterchangeCharge(c, content.second)
         );
         for (const c of counterchangedSecond) {
           g1.append(...(await charge(c)));
@@ -3548,27 +3562,26 @@ async function escutcheonContent(
     } else if ("type" in content.coloration) {
       const children: SVGElement[] = [await field(content.coloration)];
 
-      const counterchangedMasks = (content.charges ?? []).map((c) =>
-        overwriteCounterchangedColorations(c, { color: "white" })
-      );
-      if (!deepEqual(content.charges ?? [], counterchangedMasks)) {
-        const chargeMasks = [];
-        for (const c of counterchangedMasks) {
-          chargeMasks.push(...(await charge(c)));
-        }
-        const mask = svg.mask({}, ...chargeMasks);
-
-        const counterchangedField = await field({
-          ...content.coloration,
-          first: content.coloration.second,
-          second: content.coloration.first,
-        });
-        applySvgAttributes(counterchangedField, { mask: `url(#${mask.id})` });
-
-        children.push(mask, counterchangedField);
-      } else {
-        for (const c of content.charges) {
+      for (const c of content.charges ?? []) {
+        const counterchanged = counterchangeCharge(c, { color: "white" });
+        if (deepEqual(c, counterchanged)) {
           children.push(...(await charge(c)));
+        } else {
+          // n.b. we do this in a loop instead of all at once at the end to preserve proper stacking
+          // and to make it easier to debug by having a 1:1 mask:charge ratio in the DOM.
+          const mask = svg.mask({}, ...(await charge(counterchanged)));
+
+          const counterchangedField = await field({
+            ...content.coloration,
+            first: content.coloration.second,
+            second: content.coloration.first,
+          });
+          applySvgAttributes(counterchangedField, {
+            "data-kind": "counterchanged-field",
+            mask: `url(#${mask.id})`,
+          });
+
+          children.push(mask, counterchangedField);
         }
       }
 
