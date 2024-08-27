@@ -3452,6 +3452,10 @@ async function escutcheonContent(
     // This should be prevented in grammar, so this should never fire.
     assert(partition !== UNSUPPORTED, `cannot partition with this ordinary`);
 
+    // TODO: Reshape this to match how variation masking is done. Right now it'll mess up the
+    // layering because it pushes counterchanged things further down the stack.
+    // Example:
+    // Per pale Sable and Argent, a cross or a fess embattled counterchanged.
     const mask = svg.mask(
       {},
       svg.path(partition(content.treatment), { fill: "white" })
@@ -3469,34 +3473,16 @@ async function escutcheonContent(
 
     // Add g2 first so that it's underneath g1, which is the masked one.
     const children: SVGElement[] = [mask, g2, g1];
-    if (content.charges != null) {
-      const counterchangedFirst = content.charges.map((c) =>
-        counterchangeCharge(c, content.first)
-      );
-      // This branch is not just a perf/DOM optimization, but prevents visual artifacts. If we
-      // unconditionally do the counterchanged thing, even when not necessary, the line of division
-      // often leaks through any superimposed ordinaries as a thin line of off-color pixels since
-      // those ordinaries are actually two compatible shapes, overlapping and clipped.
-      //
-      // This does not fix the artifact in the case where we do actually need to render something
-      // counterchanged. A fuller fix would involve a lot more fiddling and masking to ensure we
-      // always render a single ordinary, which I am not willing to do at the moment.
-      if (!deepEqual(content.charges, counterchangedFirst)) {
-        const counterchangedSecond = content.charges.map((c) =>
-          counterchangeCharge(c, content.second)
-        );
-        for (const c of counterchangedSecond) {
-          g1.append(...(await charge(c)));
-        }
-        for (const c of counterchangedFirst) {
-          g2.append(...(await charge(c)));
-        }
+    for (const c of content.charges ?? []) {
+      const counterchanged = counterchangeCharge(c, content.first);
+      if (deepEqual(c, counterchanged)) {
+        children.push(...(await charge(c)));
       } else {
-        for (const c of content.charges) {
-          children.push(...(await charge(c)));
-        }
+        g2.append(...(await charge(counterchanged)));
+        g1.append(...(await charge(counterchangeCharge(c, content.second))));
       }
     }
+
     return children;
   } else if ("quarters" in content) {
     const quartered: Record<Quarter, SVGElement> = {
