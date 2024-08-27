@@ -2170,7 +2170,12 @@ async function mullet({ coloration }: WithSvgColoration<SimpleCharge>) {
 
 const FRET_WIDTH = 40;
 async function fret({ coloration }: WithSvgColoration<SimpleCharge>) {
-  const { stroke, pattern } = await resolveColoration(coloration);
+  const { stroke, pattern } = await resolveColoration(coloration, [
+    // Bump the size ever so slightly because the way the math is done, a tiny triangle of the wide
+    // stroke dips above/below the stated extents.
+    FRET_WIDTH * 1.1,
+    FRET_WIDTH * 1.1,
+  ]);
 
   const halfWidth = FRET_WIDTH / 2;
   const thirdWidth = FRET_WIDTH / 3;
@@ -2801,11 +2806,17 @@ const barry: VariationPatternGenerator = {
 };
 
 const barryBendy: VariationPatternGenerator = {
-  async generate({ count, first, second }: VariationWithCount) {
+  async generate({
+    count,
+    first,
+    second,
+    width: fillWidth,
+    height: fillHeight,
+  }: VariationWithCount) {
     const { fill: firstFill } = await resolveColoration({ tincture: first });
     const { fill: secondFill } = await resolveColoration({ tincture: second });
 
-    const size = (2 * W) / count; // W < H, so we'll step based on that.
+    const size = (2 * fillWidth) / count; // Assume W <= H, so we'll step based on that.
     // This angle allows nice patterning where a 2x2 checkered unit shifts horizontally by half a unit
     // (0.5) for every full checked unit height (2). So it lines up vertically nicely.
     const angle = Math.asin(1 / Math.sqrt(5)) as Radians;
@@ -2822,8 +2833,8 @@ const barryBendy: VariationPatternGenerator = {
         // we can return the horizontal shift to the center by just dividing by 2. Once there, we
         // shift horizontally according to how many size-sized units we can fit.
         // dead center according to the size, so it's lined up with the edges.
-        x: H_2 / 2 - (W_2 % size),
-        y: -H_2,
+        x: fillHeight / 4 - ((fillWidth / 2) % size),
+        y: -fillHeight / 2,
         patternTransform: { skewX: angle },
       },
       svg.rect([0, 0], [2, 2], secondFill),
@@ -3206,12 +3217,19 @@ const lozengy: VariationPatternGenerator = {
 };
 
 const paly: VariationPatternGenerator = {
-  async generate({ treatment, first, second, count }: VariationWithCount) {
+  async generate({
+    treatment,
+    first,
+    second,
+    count,
+    width: fillWidth,
+    height: fillHeight,
+  }: VariationWithCount) {
     const { fill: firstFill } = await resolveColoration({ tincture: first });
     const { fill: secondFill } = await resolveColoration({ tincture: second });
 
-    const width = W / (count / 2);
-    const height = H * 1.5; // 1.5: overrun to prevent visual artifacts around the top/bottom edges.
+    const width = fillWidth / (count / 2);
+    const height = fillHeight * 1.5; // 1.5: overrun to prevent visual artifacts around the top/bottom edges.
 
     const left = TREATMENTS[treatment ?? "untreated"](
       height,
@@ -3235,7 +3253,7 @@ const paly: VariationPatternGenerator = {
           [0, 0],
           [width, height],
         ],
-        x: -W_2 - width / 4,
+        x: -(fillWidth / 2) - width / 4,
         y: -height / 2,
         width,
         height,
@@ -3252,17 +3270,27 @@ const paly: VariationPatternGenerator = {
       )
     );
   },
-  async nonRepeatingElements({ count, first, second }: VariationWithCount) {
+  async nonRepeatingElements({
+    count,
+    first,
+    second,
+    width: fillWidth,
+    height: fillHeight,
+  }: VariationWithCount) {
     const { fill: firstFill } = await resolveColoration({ tincture: first });
     const { fill: secondFill } = await resolveColoration({ tincture: second });
 
     return [
       // Hide dips from e.g. wavy on the left edge.
-      svg.rect([-W_2, -H_2], [-W_2 + W / count / 2, H_2], firstFill),
+      svg.rect(
+        [-fillWidth / 2, -fillHeight / 2],
+        [-fillWidth / 2 + fillWidth / count / 2, fillHeight / 2],
+        firstFill
+      ),
       // Same, but note that the right bar changes color depending on the parity.
       svg.rect(
-        [W_2 - W / count / 2, -H_2],
-        [W_2, H_2],
+        [fillWidth / 2 - fillWidth / count / 2, -fillHeight / 2],
+        [fillWidth / 2, fillHeight / 2],
         count % 2 === 0 ? secondFill : firstFill
       ),
     ];
