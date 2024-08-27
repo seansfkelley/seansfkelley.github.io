@@ -3580,45 +3580,44 @@ async function escutcheonContent(
     }
 
     return children;
-  } else if ("coloration" in content) {
-    if ("tincture" in content.coloration || "color" in content.coloration) {
-      const children: SVGElement[] = [await field(content.coloration)];
-      for (const c of content.charges ?? []) {
-        children.push(...(await charge(c)));
-      }
-      return children;
-    } else if ("type" in content.coloration) {
-      const children: SVGElement[] = [await field(content.coloration)];
-
-      for (const c of content.charges ?? []) {
-        const counterchanged = counterchangeCharge(c, { color: "white" });
-        if (deepEqual(c, counterchanged)) {
-          children.push(...(await charge(c)));
-        } else {
-          // n.b. we do this in a loop instead of all at once at the end to preserve proper stacking
-          // and to make it easier to debug by having a 1:1 mask:charge ratio in the DOM.
-          const mask = svg.mask({}, ...(await charge(counterchanged)));
-
-          const counterchangedField = await field({
-            ...content.coloration,
-            first: content.coloration.second,
-            second: content.coloration.first,
-          });
-          applySvgAttributes(counterchangedField, {
-            "data-kind": "counterchanged-field",
-            mask: `url(#${mask.id})`,
-          });
-
-          children.push(mask, counterchangedField);
-        }
-      }
-
-      return children;
-    } else {
-      assertNever(content.coloration);
+  } else if (
+    "tincture" in content.coloration ||
+    "color" in content.coloration
+  ) {
+    const children: SVGElement[] = [await field(content.coloration)];
+    for (const c of content.charges ?? []) {
+      children.push(...(await charge(c)));
     }
+    return children;
+  } else if ("type" in content.coloration) {
+    const children: SVGElement[] = [await field(content.coloration)];
+
+    for (const c of content.charges ?? []) {
+      const counterchanged = counterchangeCharge(c, { color: "white" });
+      if (deepEqual(c, counterchanged)) {
+        children.push(...(await charge(c)));
+      } else {
+        // n.b. we do this in a loop instead of all at once at the end to preserve proper stacking
+        // and to make it easier to debug by having a 1:1 mask:charge ratio in the DOM.
+        const mask = svg.mask({}, ...(await charge(counterchanged)));
+
+        const counterchangedField = await field({
+          ...content.coloration,
+          first: content.coloration.second,
+          second: content.coloration.first,
+        });
+        applySvgAttributes(counterchangedField, {
+          "data-kind": "counterchanged-field",
+          mask: `url(#${mask.id})`,
+        });
+
+        children.push(mask, counterchangedField);
+      }
+    }
+
+    return children;
   } else {
-    assertNever(content);
+    assertNever(content.coloration);
   }
 }
 
