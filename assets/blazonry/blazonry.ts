@@ -38,12 +38,14 @@ FUTURE WORK and KNOWN ISSUES
   - argent a chevron embattled sable
   - argent a cross embattled-counter-embattled sable
 - Mixing quarterly and variations can cause the bottom quarters to truncate the pattern:
-  - quarterly first and fourth barry bendy of six azure and or second and third gules
+  - Churchill arms
 - When multiple charges are present, the counts in each row can be specified:
   - argent four rondels gules one two and one
 - Mixing counterchanging, partitions and variations is probably unresolvable -- should it flip the
   colors between the two sides, or flip the colors amongst each variation on each side:
   - per pale: barry or and sable, and argent; a rondel counterchanged
+- Variations using furs don't render the fur:
+  - bendy of eight erminois and azure
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
