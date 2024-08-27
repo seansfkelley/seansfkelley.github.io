@@ -224,11 +224,7 @@ interface SimpleField {
   charges: Charge[];
 }
 
-type Coloration =
-  | {
-      tincture: CounterchangeableTincture;
-    }
-  | Variation;
+type Coloration = { tincture: CounterchangeableTincture } | Variation;
 
 interface Variation {
   type: VariationName;
@@ -311,8 +307,15 @@ interface Inescutcheon {
   location?: Location_;
 }
 
+type SvgColorableColoration = Coloration | { color: SvgColor };
+type WithSvgColoration<T> = DeeplyRewrite<
+  T,
+  Coloration,
+  SvgColorableColoration
+>;
+
 interface OrdinaryRenderer {
-  (ordinary: Ordinary): Promise<SVGElement>;
+  (ordinary: WithSvgColoration<Ordinary>): Promise<SVGElement>;
   on: ParametricLocator;
   between: ParametricLocator;
   // I'd use non-?-optional `undefined` to mean unsupported, but the compiler complains about
@@ -322,7 +325,9 @@ interface OrdinaryRenderer {
     | Unsupported;
 }
 
-interface NonOrdinaryChargeRenderer<T extends NonOrdinaryCharge> {
+interface NonOrdinaryChargeRenderer<
+  T extends WithSvgColoration<NonOrdinaryCharge>
+> {
   (charge: T): SVGElement | Promise<SVGElement>;
 }
 
@@ -853,6 +858,14 @@ function deepEqual<T>(one: T, two: T): boolean {
 function roundUpToEven(n: number) {
   return n % 2 === 1 ? n + 1 : n;
 }
+
+type DeeplyRewrite<T, TFrom, TTo> = T extends TFrom
+  ? TTo
+  : T extends string | number | boolean | null | undefined
+  ? T
+  : T extends object | any[]
+  ? { [K in keyof T]: DeeplyRewrite<T[K], TFrom, TTo> }
+  : T;
 
 // This is obviously not exhaustive, but the gist of it is that it's anything that can be slapped
 // right into a `fill` or `stroke` rule unmodified.
@@ -2251,7 +2264,7 @@ async function lion({
   langued,
   attitude,
   placement,
-}: LionCharge) {
+}: WithSvgColoration<LionCharge>) {
   const lion = await fetchMutableComplexSvg("lion", attitude);
   const { fill, pattern } = await resolveColoration(coloration);
   maybeAppendChild(lion, pattern);
@@ -2260,6 +2273,7 @@ async function lion({
     lion.classList.add(`armed-${armed}`);
     lion.classList.add(`langued-${langued}`);
   } else {
+    // TODO: How to make sure the lines end up masking, just lighter?
     applySvgAttributes(lion, fill);
     // TODO: This doesn't support armed/langued for furs. Which is... okay?
   }
@@ -2274,7 +2288,7 @@ async function lion({
   }
 }
 
-async function escutcheon({ content }: EscutcheonCharge) {
+async function escutcheon({ content }: WithSvgColoration<EscutcheonCharge>) {
   const escutcheon = svg.g(
     { "data-kind": "escutcheon" },
     ...(await escutcheonContent(content)),
@@ -2307,7 +2321,7 @@ const CHARGE_LOCATORS: Record<Placement | "none", ParametricLocator> = {
 
 const SIMPLE_CHARGES: {
   [K in SimpleCharge["charge"]]: NonOrdinaryChargeRenderer<
-    DiscriminateUnion<NonOrdinaryCharge, "charge", K>
+    WithSvgColoration<DiscriminateUnion<NonOrdinaryCharge, "charge", K>>
   >;
 } = { rondel, mullet, fret, escallop, "fleur-de-lys": fleurDeLys };
 
@@ -2315,7 +2329,7 @@ const SIMPLE_CHARGES: {
 // render based on the string. Throwing all charges, simple and otherwise, into a constant mapping
 // together means the inferred type of the function has `never` as the first argument. :(
 async function nonOrdinaryCharge(
-  charge: NonOrdinaryCharge
+  charge: WithSvgColoration<NonOrdinaryCharge>
 ): Promise<SVGElement> {
   switch (charge.charge) {
     case "rondel":
@@ -2388,7 +2402,7 @@ async function getErmineTincture(
 }
 
 async function resolveColoration(
-  coloration: Coloration | { color: SvgColor },
+  coloration: SvgColorableColoration,
   [width, height]: Coordinate = [W, H],
   patternTransform: Transforms = {}
 ): Promise<{
@@ -2441,7 +2455,7 @@ async function resolveColoration(
           stroke: { classes: { stroke: tincture } },
         };
     }
-  } else {
+  } else if ("type" in coloration) {
     const count = coloration.count ?? VARIATIONS[coloration.type].defaultCount;
     const pattern = await VARIATIONS[coloration.type]({
       ...coloration,
@@ -2458,6 +2472,8 @@ async function resolveColoration(
         coloration.type
       ].nonRepeatingElements?.({ ...coloration, count, width, height }),
     };
+  } else {
+    assertNever(coloration);
   }
 }
 
@@ -3229,7 +3245,7 @@ const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
 // #region HIGHER-ORDER ELEMENTS
 // ----------------------------------------------------------------------------
 
-async function field(coloration: Coloration) {
+async function field(coloration: SvgColorableColoration) {
   const { fill, pattern, nonRepeatingElements } = await resolveColoration(
     coloration
   );
@@ -3284,7 +3300,9 @@ const CANTON_PATH: PathCommand.Any[] = [
   { type: "z" },
 ];
 
-async function charge(element: Charge): Promise<SVGElement[]> {
+async function charge(
+  element: WithSvgColoration<Charge>
+): Promise<SVGElement[]> {
   if ("canton" in element) {
     const { fill, pattern } = await resolveColoration(element.canton);
     const canton = svg.g({ "data-kind": "canton" }, pattern);
@@ -3328,35 +3346,37 @@ async function charge(element: Charge): Promise<SVGElement[]> {
 }
 
 async function escutcheonContent(
-  content: EscutcheonContent
+  content: WithSvgColoration<EscutcheonContent>
 ): Promise<SVGElement[]> {
   // Note that counterchanging happens shallowly. If you have e.g. "per pale argent and gules on a
   // bend counterchanged a mullet counterchanged", both will receive the _same_ patterning, even
   // though the charge is on top of the ordinary (and could justifiably be re-reversed, matching the
   // background variation).
   function overwriteCounterchangedColorations(
-    element: Charge,
-    coloration: Coloration
-  ): Charge {
-    function counterchangeColoration(c: Coloration): Coloration;
+    element: WithSvgColoration<Charge>,
+    coloration: SvgColorableColoration
+  ): WithSvgColoration<Charge> {
     function counterchangeColoration(
-      c: Coloration | undefined
-    ): Coloration | undefined;
+      c: SvgColorableColoration
+    ): SvgColorableColoration;
     function counterchangeColoration(
-      c: Coloration | undefined
-    ): Coloration | undefined {
-      if (c == null) {
+      c: SvgColorableColoration | undefined
+    ): SvgColorableColoration | undefined;
+    function counterchangeColoration(
+      c: SvgColorableColoration | undefined
+    ): SvgColorableColoration | undefined {
+      if (c == null || "color" in c || "type" in c) {
         return c;
       } else if ("tincture" in c) {
         return c.tincture === "counterchanged" ? coloration : c;
-      } else if ("type" in c) {
-        return c;
       } else {
         assertNever(c);
       }
     }
 
-    function counterchangeOrdinary(ordinary: Ordinary): Ordinary {
+    function counterchangeOrdinary(
+      ordinary: WithSvgColoration<Ordinary>
+    ): WithSvgColoration<Ordinary> {
       return {
         ...ordinary,
         coloration: counterchangeColoration(ordinary.coloration),
@@ -3364,9 +3384,9 @@ async function escutcheonContent(
       };
     }
 
-    function counterchangeCharge<T extends NonOrdinaryCharge | undefined>(
-      charge: T
-    ): T {
+    function counterchangeCharge<
+      T extends WithSvgColoration<NonOrdinaryCharge> | undefined
+    >(charge: T): T {
       if (charge == null) {
         return undefined as T;
       }
@@ -3519,26 +3539,39 @@ async function escutcheonContent(
 
     return children;
   } else if ("coloration" in content) {
-    if ("tincture" in content.coloration) {
+    if ("tincture" in content.coloration || "color" in content.coloration) {
       const children: SVGElement[] = [await field(content.coloration)];
       for (const c of content.charges ?? []) {
         children.push(...(await charge(c)));
       }
       return children;
     } else if ("type" in content.coloration) {
-      const variation = content.coloration;
+      const children: SVGElement[] = [await field(content.coloration)];
 
-      const children: SVGElement[] = [await field(variation)];
-      const counterchanged = (content.charges ?? []).map((c) =>
-        overwriteCounterchangedColorations(c, {
-          ...variation,
-          first: variation.second,
-          second: variation.first,
-        })
+      const counterchangedMasks = (content.charges ?? []).map((c) =>
+        overwriteCounterchangedColorations(c, { color: "white" })
       );
-      for (const c of counterchanged) {
-        children.push(...(await charge(c)));
+      if (!deepEqual(content.charges ?? [], counterchangedMasks)) {
+        const chargeMasks = [];
+        for (const c of counterchangedMasks) {
+          chargeMasks.push(...(await charge(c)));
+        }
+        const mask = svg.mask({}, ...chargeMasks);
+
+        const counterchangedField = await field({
+          ...content.coloration,
+          first: content.coloration.second,
+          second: content.coloration.first,
+        });
+        applySvgAttributes(counterchangedField, { mask: `url(#${mask.id})` });
+
+        children.push(mask, counterchangedField);
+      } else {
+        for (const c of content.charges) {
+          children.push(...(await charge(c)));
+        }
       }
+
       return children;
     } else {
       assertNever(content.coloration);
@@ -3548,7 +3581,11 @@ async function escutcheonContent(
   }
 }
 
-async function on({ on, surround, charge }: On): Promise<SVGElement[]> {
+async function on({
+  on,
+  surround,
+  charge,
+}: WithSvgColoration<On>): Promise<SVGElement[]> {
   const children: SVGElement[] = [await ORDINARIES[on.ordinary](on)];
 
   if (charge != null) {
