@@ -46,6 +46,9 @@ FUTURE WORK and KNOWN ISSUES
   - per pale: barry or and sable, and argent; a rondel counterchanged
 - Variations using furs don't render the fur:
   - bendy of eight erminois and azure
+- Variated SVG charges don't adhere to the correct number of repeats because they are made of
+  multiple parts of different sizes and may be translated/rotated:
+  - argent a lion barry of six sable and or
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
@@ -2253,7 +2256,7 @@ async function fret({ coloration }: WithSvgColoration<SimpleCharge>) {
 }
 
 async function escallop({ coloration }: WithSvgColoration<SimpleCharge>) {
-  const { fill, pattern } = await resolveColoration(coloration, [100, 100], {
+  const { fill, pattern } = await resolveColoration(coloration, [90, 95], {
     translate: [0, -7],
   });
   const escallop = await fetchMutableComplexSvg("escallop");
