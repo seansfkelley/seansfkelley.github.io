@@ -2446,6 +2446,9 @@ async function resolveColoration(
   fill: { fill: SvgColor } | { classes: { fill: ColorOrMetal } };
   stroke: { stroke: SvgColor } | { classes: { stroke: ColorOrMetal } };
   pattern?: SVGPatternElement;
+  // Used for touching up the edges of the pattern where they might look bad against the clipping
+  // frame, like paly wavy just barely dipping into view on the left and right edges.
+  // TODO: Consider doing this for charges that can be variated. Right now they ignore this.
   nonRepeatingElements?: SVGGeometryElement[];
 }> {
   if ("color" in coloration) {
@@ -4029,7 +4032,10 @@ function generateRandomBlazon() {
   } while (
     (blazon.match(/^[A-Za-z]+\.$/) &&
       Math.random() <= TINCTURE_ONLY_SKIP_RATIO) ||
-    blazon.match(/[Qq]uarterly/)
+    // Quarterly never comes out well.
+    blazon.match(/[Qq]uarterly/) ||
+    // Arbitrary; chosen because it seems to keep some, uh, variety without going too crazy.
+    blazon.length > 160
   );
   return blazon;
 }
