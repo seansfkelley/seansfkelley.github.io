@@ -1065,7 +1065,7 @@ const svg = {
     return rect;
   },
   g: (
-    { "data-kind": kind = undefined }: { "data-kind"?: string },
+    { "data-kind": kind }: { "data-kind"?: string },
     ...children: (SVGElement | undefined)[]
   ): SVGGElement => {
     const g = document.createElementNS("http://www.w3.org/2000/svg", "g");

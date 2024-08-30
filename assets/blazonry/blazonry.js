@@ -606,7 +606,7 @@ const svg = {
         applyClasses(rect, classes);
         return rect;
     },
-    g: ({ "data-kind": kind = undefined }, ...children) => {
+    g: ({ "data-kind": kind }, ...children) => {
         const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
         applySvgAttributes(g, { "data-kind": kind });
         g.append(...children.filter(isNotNullish));
