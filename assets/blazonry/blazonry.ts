@@ -36,8 +36,8 @@ FUTURE WORK and KNOWN ISSUES
 - Embattled(-counter-embattled) treatments can leave visual artifacts due to a bit of a hack... try:
   - argent a chevron embattled sable
   - argent a cross embattled-counter-embattled sable
-- Mixing quarterly and variations can cause the bottom quarters to truncate the pattern:
-  - Churchill arms
+- Nested quarterlies can end up too short on along the bottom edge:
+  - quarterly third quarterly first and fourth argent second and third gules [second parsing]
 - When multiple charges are present, the counts in each row can be specified:
   - argent four rondels gules one two and one
 - Mixing counterchanging, partitions and variations is probably unresolvable -- should it flip the
