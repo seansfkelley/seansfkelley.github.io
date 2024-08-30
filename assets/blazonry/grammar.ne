@@ -59,8 +59,12 @@ PartitionedField ->
     partition: 3, treatment: 4, first: 6, second: 10, charges: 11
   }) %}
 
+QuarteringPrefix ->
+    "quarterly"                                  {% nop %}
+  | (("party" | "parted") __):? "per" __ "cross" {% nop %}
+
 Quartered ->
-  "quarterly" __ Quartering (__ Quartering {% nth(1) %}):* (__ "overall" __ Charge {% nth(3) %}):? {% (d) => ({
+  QuarteringPrefix __ Quartering (__ Quartering {% nth(1) %}):* (__ "overall" __ Charge {% nth(3) %}):? {% (d) => ({
     quarters: [d[2], ...d[3]], overall: d[4]
   }) %}
 
@@ -213,6 +217,7 @@ Tincture ->
   | "ermines"        {% id %}
   | "erminois"       {% id %}
   | "pean"           {% id %}
+  | "vair"           {% id %}
 
 OrdinaryName ->
     "bend"          {% id %}

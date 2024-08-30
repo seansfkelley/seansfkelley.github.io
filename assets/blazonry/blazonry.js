@@ -20,7 +20,6 @@ FUTURE WORK and KNOWN ISSUES
   treatment for the square (rather than rectangular) field in a canton.
 - Divided fields ("party per") should be allowed to contain "complex" content (such as other divided
   fields) and not just ordinaries and charges.
-- "Party per cross" is not allowed, even though it's synonymous with "quarterly".
 - The error messages are really hard to read. A lexer that properly groups characters into tokens
   would probably help (as right now every character in a literal is its own rule).
 - A singular fret should extend to the corners of the containing field, but there's currently no
@@ -38,8 +37,8 @@ FUTURE WORK and KNOWN ISSUES
 - Embattled(-counter-embattled) treatments can leave visual artifacts due to a bit of a hack... try:
   - argent a chevron embattled sable
   - argent a cross embattled-counter-embattled sable
-- Mixing quarterly and variations can cause the bottom quarters to truncate the pattern:
-  - Churchill arms
+- Nested quarterlies can end up too short on along the bottom edge:
+  - quarterly third quarterly first and fourth argent second and third gules [second parsing]
 - When multiple charges are present, the counts in each row can be specified:
   - argent four rondels gules one two and one
 - Mixing counterchanging, partitions and variations is probably unresolvable -- should it flip the
@@ -1453,6 +1452,42 @@ async function getErmineTincture(foreground, background) {
         height: (W / 4.5) * (height / width),
     }, svg.rect([0, 0], [width, height], { classes: { fill: background } }), topLeft, bottomRight);
 }
+function getVairTincture() {
+    const width = W / 5;
+    const height = H / 6;
+    return svg.pattern({
+        viewBox: [
+            [0, 0],
+            [width, height * 2],
+        ],
+        width,
+        height: height * 2,
+        x: -width / 2,
+        y: -height,
+    }, svg.rect([0, 0], [width, height * 2], { classes: { fill: "argent" } }), svg.path([
+        // All paths have to start with a move, I guess.
+        { type: "M", loc: [0, 0] },
+        { type: "l", loc: [width / 4, width / 4] },
+        { type: "l", loc: [0, height - width / 2] },
+        { type: "l", loc: [width / 4, width / 4] },
+        { type: "l", loc: [-width / 2, 0] },
+        { type: "z" },
+        { type: "M", loc: [width, 0] },
+        { type: "l", loc: [-width / 4, width / 4] },
+        { type: "l", loc: [0, height - width / 2] },
+        { type: "l", loc: [-width / 4, width / 4] },
+        { type: "l", loc: [width / 2, 0] },
+        { type: "z" },
+        { type: "M", loc: [width / 2, height] },
+        { type: "l", loc: [-width / 4, width / 4] },
+        { type: "l", loc: [0, height - width / 2] },
+        { type: "l", loc: [-width / 4, width / 4] },
+        { type: "l", loc: [width, 0] },
+        { type: "l", loc: [-width / 4, -width / 4] },
+        { type: "l", loc: [0, -(height - width / 2)] },
+        { type: "z" },
+    ], { classes: { fill: "azure" } }));
+}
 async function resolveColoration(coloration, [width, height] = [W, H], patternTransform = {}) {
     if ("color" in coloration) {
         return {
@@ -1472,6 +1507,11 @@ async function resolveColoration(coloration, [width, height] = [W, H], patternTr
             const color = `url(#${pattern.id})`;
             return { fill: { fill: color }, stroke: { stroke: color }, pattern };
         }
+        function getVairPattern() {
+            const pattern = getVairTincture();
+            const color = `url(#${pattern.id})`;
+            return { fill: { fill: color }, stroke: { stroke: color }, pattern };
+        }
         switch (tincture) {
             case "ermine":
                 return getErmineBasedPattern("sable", "argent");
@@ -1481,6 +1521,8 @@ async function resolveColoration(coloration, [width, height] = [W, H], patternTr
                 return getErmineBasedPattern("sable", "or");
             case "pean":
                 return getErmineBasedPattern("or", "sable");
+            case "vair":
+                return getVairPattern();
             default:
                 return {
                     fill: { classes: { fill: tincture } },
@@ -2531,6 +2573,7 @@ const TINCTURE_WEIGHTS = {
     ermines: 1,
     erminois: 1,
     pean: 1,
+    vair: 2,
     // It's REALLY hard to generate a random blazon where counterchanged makes sense, since the
     // grammar does not express a relationship between the context ("party per") and the tincture.
     // Just ban it to reduce nonsense blazons by a lot.

@@ -83,7 +83,18 @@ var grammar = {
     {"name": "PartitionedField", "symbols": ["PartitionedField$ebnf$1", "PartitionedField$string$1", "__", "Direction", "PartitionedField$ebnf$2", "__", "Coloration", "__", "PartitionedField$string$2", "__", "Coloration", "PartitionedField$ebnf$3"], "postprocess":  $({
           partition: 3, treatment: 4, first: 6, second: 10, charges: 11
         }) },
-    {"name": "Quartered$string$1", "symbols": [{"literal":"q"}, {"literal":"u"}, {"literal":"a"}, {"literal":"r"}, {"literal":"t"}, {"literal":"e"}, {"literal":"r"}, {"literal":"l"}, {"literal":"y"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "QuarteringPrefix$string$1", "symbols": [{"literal":"q"}, {"literal":"u"}, {"literal":"a"}, {"literal":"r"}, {"literal":"t"}, {"literal":"e"}, {"literal":"r"}, {"literal":"l"}, {"literal":"y"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "QuarteringPrefix", "symbols": ["QuarteringPrefix$string$1"], "postprocess": nop},
+    {"name": "QuarteringPrefix$ebnf$1$subexpression$1$subexpression$1$string$1", "symbols": [{"literal":"p"}, {"literal":"a"}, {"literal":"r"}, {"literal":"t"}, {"literal":"y"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "QuarteringPrefix$ebnf$1$subexpression$1$subexpression$1", "symbols": ["QuarteringPrefix$ebnf$1$subexpression$1$subexpression$1$string$1"]},
+    {"name": "QuarteringPrefix$ebnf$1$subexpression$1$subexpression$1$string$2", "symbols": [{"literal":"p"}, {"literal":"a"}, {"literal":"r"}, {"literal":"t"}, {"literal":"e"}, {"literal":"d"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "QuarteringPrefix$ebnf$1$subexpression$1$subexpression$1", "symbols": ["QuarteringPrefix$ebnf$1$subexpression$1$subexpression$1$string$2"]},
+    {"name": "QuarteringPrefix$ebnf$1$subexpression$1", "symbols": ["QuarteringPrefix$ebnf$1$subexpression$1$subexpression$1", "__"]},
+    {"name": "QuarteringPrefix$ebnf$1", "symbols": ["QuarteringPrefix$ebnf$1$subexpression$1"], "postprocess": id},
+    {"name": "QuarteringPrefix$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "QuarteringPrefix$string$2", "symbols": [{"literal":"p"}, {"literal":"e"}, {"literal":"r"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "QuarteringPrefix$string$3", "symbols": [{"literal":"c"}, {"literal":"r"}, {"literal":"o"}, {"literal":"s"}, {"literal":"s"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "QuarteringPrefix", "symbols": ["QuarteringPrefix$ebnf$1", "QuarteringPrefix$string$2", "__", "QuarteringPrefix$string$3"], "postprocess": nop},
     {"name": "Quartered$ebnf$1", "symbols": []},
     {"name": "Quartered$ebnf$1$subexpression$1", "symbols": ["__", "Quartering"], "postprocess": nth(1)},
     {"name": "Quartered$ebnf$1", "symbols": ["Quartered$ebnf$1", "Quartered$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
@@ -91,7 +102,7 @@ var grammar = {
     {"name": "Quartered$ebnf$2$subexpression$1", "symbols": ["__", "Quartered$ebnf$2$subexpression$1$string$1", "__", "Charge"], "postprocess": nth(3)},
     {"name": "Quartered$ebnf$2", "symbols": ["Quartered$ebnf$2$subexpression$1"], "postprocess": id},
     {"name": "Quartered$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
-    {"name": "Quartered", "symbols": ["Quartered$string$1", "__", "Quartering", "Quartered$ebnf$1", "Quartered$ebnf$2"], "postprocess":  (d) => ({
+    {"name": "Quartered", "symbols": ["QuarteringPrefix", "__", "Quartering", "Quartered$ebnf$1", "Quartered$ebnf$2"], "postprocess":  (d) => ({
           quarters: [d[2], ...d[3]], overall: d[4]
         }) },
     {"name": "Charge$string$1", "symbols": [{"literal":"b"}, {"literal":"e"}, {"literal":"t"}, {"literal":"w"}, {"literal":"e"}, {"literal":"e"}, {"literal":"n"}], "postprocess": function joiner(d) {return d.join('');}},
@@ -496,6 +507,8 @@ var grammar = {
     {"name": "Tincture", "symbols": ["Tincture$string$11"], "postprocess": id},
     {"name": "Tincture$string$12", "symbols": [{"literal":"p"}, {"literal":"e"}, {"literal":"a"}, {"literal":"n"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "Tincture", "symbols": ["Tincture$string$12"], "postprocess": id},
+    {"name": "Tincture$string$13", "symbols": [{"literal":"v"}, {"literal":"a"}, {"literal":"i"}, {"literal":"r"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "Tincture", "symbols": ["Tincture$string$13"], "postprocess": id},
     {"name": "OrdinaryName$string$1", "symbols": [{"literal":"b"}, {"literal":"e"}, {"literal":"n"}, {"literal":"d"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "OrdinaryName", "symbols": ["OrdinaryName$string$1"], "postprocess": id},
     {"name": "OrdinaryName$string$2", "symbols": [{"literal":"b"}, {"literal":"e"}, {"literal":"n"}, {"literal":"d"}, {"literal":" "}, {"literal":"s"}, {"literal":"i"}, {"literal":"n"}, {"literal":"i"}, {"literal":"s"}, {"literal":"t"}, {"literal":"e"}, {"literal":"r"}], "postprocess": function joiner(d) {return d.join('');}},
