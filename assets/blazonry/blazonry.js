@@ -1454,6 +1454,8 @@ async function getErmineTincture(foreground, background) {
 }
 function getVairTincture() {
     const width = W / 5;
+    // Cheeky: the choice of H/6 means that this will Just Work to do the arms of Coucy without having
+    // to bake in any features around adjusting the size or spacing of furs when they are in variations.
     const height = H / 6;
     return svg.pattern({
         viewBox: [
