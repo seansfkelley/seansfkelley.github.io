@@ -48,6 +48,8 @@ FUTURE WORK and KNOWN ISSUES
 - Variated SVG charges don't adhere to the correct number of repeats because they are made of
   multiple parts of different sizes and may be translated/rotated:
   - argent a lion barry of six sable and or
+- Chevronny doesn't work in extreme cases:
+  - chevronny of two or and sable
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
@@ -2494,7 +2496,6 @@ async function resolveColoration(
   pattern?: SVGPatternElement;
   // Used for touching up the edges of the pattern where they might look bad against the clipping
   // frame, like paly wavy just barely dipping into view on the left and right edges.
-  // TODO: Consider doing this for charges that can be variated. Right now they ignore this.
   nonRepeatingElements?: SVGGeometryElement[];
 }> {
   if ("color" in coloration) {
@@ -3653,11 +3654,18 @@ async function escutcheonContent(
         children.push(...(await charge(c)));
       } else {
         children.push(...(await charge(counterchanged)));
-        // This is reversed (counterchanged!) from the field -- second is the one that gets the mask
-        // and it must appear later.
         children.push(
-          ...(await charge(counterchangeCharge(c, content.second))).map(
-            applyMask
+          applyMask(
+            // The g is necessary here because we cannot apply the masking to the charge itself: the
+            // charge may have transformations (scale/translate) to lay it out properly, so the
+            // masking has to happen above that to prevent the partition line from being scaled and
+            // translated on the face of the charge, too.
+            svg.g(
+              { "data-kind": "masked-counterchanged" },
+              // This is reversed (counterchanged!) from the field -- second is the one that gets
+              // the mask and it must appear later.
+              ...(await charge(counterchangeCharge(c, content.second)))
+            )
           )
         );
       }
@@ -4088,7 +4096,9 @@ function generateRandomBlazon() {
     (blazon.match(/^[A-Za-z]+\.$/) &&
       Math.random() <= TINCTURE_ONLY_SKIP_RATIO) ||
     // Quarterly never comes out well.
-    blazon.match(/[Qq]uarterly/) ||
+    blazon.match(/quarterly/i) ||
+    // Synonymous with quarterly.
+    blazon.match(/(parted |party )?per cross/i) ||
     // Arbitrary; chosen because it seems to keep some, uh, variety without going too crazy.
     blazon.length > 160
   );

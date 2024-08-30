@@ -49,6 +49,8 @@ FUTURE WORK and KNOWN ISSUES
 - Variated SVG charges don't adhere to the correct number of repeats because they are made of
   multiple parts of different sizes and may be translated/rotated:
   - argent a lion barry of six sable and or
+- Chevronny doesn't work in extreme cases:
+  - chevronny of two or and sable
 
 NOTES ON THE IMPLEMENTATION
 -------------------------------------------------------------------------------
@@ -2294,9 +2296,15 @@ async function escutcheonContent(content) {
             }
             else {
                 children.push(...(await charge(counterchanged)));
-                // This is reversed (counterchanged!) from the field -- second is the one that gets the mask
-                // and it must appear later.
-                children.push(...(await charge(counterchangeCharge(c, content.second))).map(applyMask));
+                children.push(applyMask(
+                // The g is necessary here because we cannot apply the masking to the charge itself: the
+                // charge may have transformations (scale/translate) to lay it out properly, so the
+                // masking has to happen above that to prevent the partition line from being scaled and
+                // translated on the face of the charge, too.
+                svg.g({ "data-kind": "masked-counterchanged" }, 
+                // This is reversed (counterchanged!) from the field -- second is the one that gets
+                // the mask and it must appear later.
+                ...(await charge(counterchangeCharge(c, content.second))))));
             }
         }
         return children;
@@ -2634,7 +2642,9 @@ function generateRandomBlazon() {
     } while ((blazon.match(/^[A-Za-z]+\.$/) &&
         Math.random() <= TINCTURE_ONLY_SKIP_RATIO) ||
         // Quarterly never comes out well.
-        blazon.match(/[Qq]uarterly/) ||
+        blazon.match(/quarterly/i) ||
+        // Synonymous with quarterly.
+        blazon.match(/(parted |party )?per cross/i) ||
         // Arbitrary; chosen because it seems to keep some, uh, variety without going too crazy.
         blazon.length > 160);
     return blazon;
