@@ -138,7 +138,7 @@ type ColorOrMetal =
   | "vert"
   | "cendree";
 
-type Fur = "ermine" | "ermines" | "erminois" | "pean";
+type Fur = "ermine" | "ermines" | "erminois" | "pean" | "vair";
 
 type Tincture = ColorOrMetal | Fur;
 
@@ -2434,6 +2434,53 @@ async function getErmineTincture(
   );
 }
 
+function getVairTincture() {
+  const width = W / 5;
+  // Cheeky: the choice of H/6 means that this will Just Work to do the arms of Coucy without having
+  // to bake in any features around adjusting the size or spacing of furs when they are in variations.
+  const height = H / 6;
+
+  return svg.pattern(
+    {
+      viewBox: [
+        [0, 0],
+        [width, height * 2],
+      ],
+      width,
+      height: height * 2,
+      x: -width / 2,
+      y: -height,
+    },
+    svg.rect([0, 0], [width, height * 2], { classes: { fill: "argent" } }),
+    svg.path(
+      [
+        // All paths have to start with a move, I guess.
+        { type: "M", loc: [0, 0] },
+        { type: "l", loc: [width / 4, width / 4] },
+        { type: "l", loc: [0, height - width / 2] },
+        { type: "l", loc: [width / 4, width / 4] },
+        { type: "l", loc: [-width / 2, 0] },
+        { type: "z" },
+        { type: "M", loc: [width, 0] },
+        { type: "l", loc: [-width / 4, width / 4] },
+        { type: "l", loc: [0, height - width / 2] },
+        { type: "l", loc: [-width / 4, width / 4] },
+        { type: "l", loc: [width / 2, 0] },
+        { type: "z" },
+        { type: "M", loc: [width / 2, height] },
+        { type: "l", loc: [-width / 4, width / 4] },
+        { type: "l", loc: [0, height - width / 2] },
+        { type: "l", loc: [-width / 4, width / 4] },
+        { type: "l", loc: [width, 0] },
+        { type: "l", loc: [-width / 4, -width / 4] },
+        { type: "l", loc: [0, -(height - width / 2)] },
+        { type: "z" },
+      ],
+      { classes: { fill: "azure" } }
+    )
+  );
+}
+
 async function resolveColoration(
   coloration: SvgColorableColoration,
   [width, height]: Coordinate = [W, H],
@@ -2476,6 +2523,12 @@ async function resolveColoration(
       return { fill: { fill: color }, stroke: { stroke: color }, pattern };
     }
 
+    function getVairPattern() {
+      const pattern = getVairTincture();
+      const color = `url(#${pattern.id})` as const;
+      return { fill: { fill: color }, stroke: { stroke: color }, pattern };
+    }
+
     switch (tincture) {
       case "ermine":
         return getErmineBasedPattern("sable", "argent");
@@ -2485,6 +2538,8 @@ async function resolveColoration(
         return getErmineBasedPattern("sable", "or");
       case "pean":
         return getErmineBasedPattern("or", "sable");
+      case "vair":
+        return getVairPattern();
       default:
         return {
           fill: { classes: { fill: tincture } },
@@ -3959,6 +4014,7 @@ const TINCTURE_WEIGHTS: Record<CounterchangeableTincture, number> = {
   ermines: 1,
   erminois: 1,
   pean: 1,
+  vair: 2,
 
   // It's REALLY hard to generate a random blazon where counterchanged makes sense, since the
   // grammar does not express a relationship between the context ("party per") and the tincture.

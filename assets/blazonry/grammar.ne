@@ -217,6 +217,7 @@ Tincture ->
   | "ermines"        {% id %}
   | "erminois"       {% id %}
   | "pean"           {% id %}
+  | "vair"           {% id %}
 
 OrdinaryName ->
     "bend"          {% id %}
