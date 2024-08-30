@@ -1065,7 +1065,7 @@ const svg = {
     return rect;
   },
   g: (
-    { "data-kind": kind = undefined }: { "data-kind"?: string },
+    { "data-kind": kind }: { "data-kind"?: string },
     ...children: (SVGElement | undefined)[]
   ): SVGGElement => {
     const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
@@ -3654,11 +3654,18 @@ async function escutcheonContent(
         children.push(...(await charge(c)));
       } else {
         children.push(...(await charge(counterchanged)));
-        // This is reversed (counterchanged!) from the field -- second is the one that gets the mask
-        // and it must appear later.
         children.push(
-          ...(await charge(counterchangeCharge(c, content.second))).map(
-            applyMask
+          applyMask(
+            // The g is necessary here because we cannot apply the masking to the charge itself: the
+            // charge may have transformations (scale/translate) to lay it out properly, so the
+            // masking has to happen above that to prevent the partition line from being scaled and
+            // translated on the face of the charge, too.
+            svg.g(
+              { "data-kind": "masked-counterchanged" },
+              // This is reversed (counterchanged!) from the field -- second is the one that gets
+              // the mask and it must appear later.
+              ...(await charge(counterchangeCharge(c, content.second)))
+            )
           )
         );
       }
