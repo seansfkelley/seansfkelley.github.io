@@ -19,7 +19,6 @@ FUTURE WORK and KNOWN ISSUES
   treatment for the square (rather than rectangular) field in a canton.
 - Divided fields ("party per") should be allowed to contain "complex" content (such as other divided
   fields) and not just ordinaries and charges.
-- "Party per cross" is not allowed, even though it's synonymous with "quarterly".
 - The error messages are really hard to read. A lexer that properly groups characters into tokens
   would probably help (as right now every character in a literal is its own rule).
 - A singular fret should extend to the corners of the containing field, but there's currently no
