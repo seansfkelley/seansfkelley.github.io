@@ -91,10 +91,10 @@ curl "$image_url" -s > "$output_path"
 image_size="$(stat -f %z "$output_path")"
 if [ "$image_size" -gt "$MAXIMUM_FILE_SIZE" ] ; then
   if [ "$(identify -ping -format '%w' "$output_path")" -lt "$TARGET_WIDTH" ] ; then
-    echo 'image is too large on disk, but under maximum width, so not resizing'
+    echo 'image is too large on disk, but under desired width, so not resizing'
   else
     echo "image too large ($image_size bytes); resizing"
-    # per docs, a single number is assumed to be width and the height calculated to preserve aspect ratio
+    # per docs, a single number is assumed to be width and the height is calculated to preserve aspect ratio
     magick "$output_path" -resize "$TARGET_WIDTH" /tmp/resized
     mv /tmp/resized "$output_path"
 
@@ -121,8 +121,8 @@ echo "file at $output_path"
   poster: $(basename "$output_path")
   watched: $(date "+%Y-%m-%d")
   # watched-display:
-  watch-this-if:
-  dont-watch-this-because:
+  watch-this:
+  # dont-watch-this:
   more-thoughts: |
     ") < _data/movies.yml | sponge _data/movies.yml
 
