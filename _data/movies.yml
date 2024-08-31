@@ -1,3 +1,18 @@
+- title: The Green Knight
+  year: 2021
+  kind: movie
+  link: https://www.imdb.com/title/tt9243804/
+  poster: the-green-knight-2021.jpg
+  watched: 2024-08-30
+  # TODO: rephrase "watch this if" to "watch this"
+  # watch-this: for a very A24 take on medieval fantasy.
+  watch-this-if: you'd like to see a very A24 take on medieval fantasy.
+  more-thoughts: |
+    This movie is to Blade Runner as [_Sir Gawain and the Green Knight_](https://en.wikipedia.org/wiki/Sir_Gawain_and_the_Green_Knight) is to _Do Androids Dream of Electric Sheep?_ That is: the characters and many plot elements are shared, but the arc and destination end up quite different (e.g. the addition of St. Winifred; the presumed beheading at the end).
+
+    The feel of the movie is very A24, [Saint Maud](#saint-maud-2019)-ish, due to the camerawork, editing and pacing. They like the "atmospheric" thing coupled with mostly-unsubtle visual metaphors/references/hints, with a bit of reading between the lines.
+
+    I watched this lying down on the floor which made a handful of the shots very disorienting indeed -- especially the skyward entry through the castle doors. The full-circle shot where he becomes and then un-becomes a skeleton was neat.
 - title: RRR
   year: 2022
   kind: movie
