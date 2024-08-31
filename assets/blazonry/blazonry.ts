@@ -2869,6 +2869,25 @@ const barry: VariationPatternGenerator = {
     const width = fillWidth * 1.5; // 1.5: overrun to prevent visual artifacts around the left/right edges.
     const height = fillHeight / (count / 2);
 
+    // In order to avoid clipping the edges of "out of bounds" treatments like wavy, this generator
+    // renders the bar offset into the middle of the view box slightly, then shifts it back into
+    // position with the x/y values. Consequently, the pattern also needs to undergo the same shift
+    // to make sure the bar is sampling from the appropriate part of the pattern. This is
+    // particularly important for coordination with the nonRepeatingElements.
+    //
+    // TODO: Generalize this. Why does this math work for the arms of Coucy?
+    //
+    // TODO: This is not safe if the pattern has already been transformed, such as when a charge
+    // shifts the coloration it uses slightly to get better alignment with the geometry. Find an
+    // example and figure out how to fix it.
+    for (const p of [...firstPatterns, ...secondPatterns]) {
+      applySvgAttributes(p, {
+        patternTransform: Transforms.toString({
+          translate: [-width / 2, -(fillHeight / 2) - height / 4],
+        }),
+      });
+    }
+
     return [
       svg.pattern(
         {
@@ -2884,6 +2903,7 @@ const barry: VariationPatternGenerator = {
         svg.rect([0, 0], [width, height], secondFill),
         svg.path(
           TreatmentRelativePath.toClosedLoop(
+            // Offset so that we don't clip the edge of any treatment that goes "out of bounds".
             TreatmentRelativePath.offset([0, height / 4]),
             TREATMENTS[treatment ?? "untreated"](
               width,
