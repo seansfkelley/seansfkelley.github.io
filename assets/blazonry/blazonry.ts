@@ -2258,7 +2258,8 @@ async function fret({ coloration }: WithSvgColoration<SimpleCharge>) {
 
 async function escallop({ coloration }: WithSvgColoration<SimpleCharge>) {
   const { fill, pattern } = await resolveColoration(coloration, [90, 95], {
-    translate: [0, -7],
+    scale: 0.6,
+    translate: [0, -15],
   });
   const escallop = await fetchMutableComplexSvg("escallop");
   maybeAppendChild(escallop, pattern);

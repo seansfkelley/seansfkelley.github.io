@@ -197,7 +197,7 @@ a[data-example]:not(:hover) {
   .outline {
     stroke: black;
     stroke-opacity: 0.3;
-    stroke-width: 2;
+    stroke-width: 0.75;
   }
 
   @each $key, $val in $colors {
