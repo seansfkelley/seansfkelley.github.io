@@ -47,7 +47,11 @@ inferred_year="$(cat /tmp/movie_page.html \
   | tr -d ' ' \
   | sed -E 's|.*>([[:digit:]]{4}).?([[:digit:]]{4})?<.*|\1|g')"
 
-if [ -z "$year" ] ; then
+if ! [[ "$inferred_year" =~ '[[:digit:]]{4}' ]] ; then
+  echo "$inferred_year"
+  echo "unable to infer year (see above); the script probably needs to be updated"
+  exit 1
+elif [ -z "$year" ] ; then
   year="$inferred_year"
   echo "inferred year as $year"
 elif [ "$year" -ne "$inferred_year" ] ; then
@@ -84,7 +88,7 @@ echo "poster image URL: $image_url"
 # this is some garbage bash-ism
 extension="${image_url##*.}"
 # note that this script cd's into the repo root
-output_path="assets/movies/$(echo "$title" | tr ' ' '-' | tr '[:upper:]' '[:lower:]')-$year.$extension"
+output_path="assets/movies/$(echo "$title" | tr '[:upper:]' '[:lower:]' | tr -d -C '[:alnum:] ' | tr ' ' '-')-$year.$extension"
 
 curl "$image_url" -s > "$output_path"
 
