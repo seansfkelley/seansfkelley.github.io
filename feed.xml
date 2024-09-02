@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-08-31T21:02:39+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">The Blast Radius of Inconsideracy</title><link href="https://blog.sea.nkelley.me/blast-radius-of-inconsideracy" rel="alternate" type="text/html" title="The Blast Radius of Inconsideracy" /><published>2024-08-31T00:00:00+00:00</published><updated>2024-08-31T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/blast-radius-of-inconsideracy</id><content type="html" xml:base="https://blog.sea.nkelley.me/blast-radius-of-inconsideracy"><![CDATA[<p>Two well-known facts:</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2024-09-02T18:16:27+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">The Blast Radius of Inconsideracy</title><link href="https://blog.sea.nkelley.me/blast-radius-of-inconsideracy" rel="alternate" type="text/html" title="The Blast Radius of Inconsideracy" /><published>2024-08-31T00:00:00+00:00</published><updated>2024-08-31T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/blast-radius-of-inconsideracy</id><content type="html" xml:base="https://blog.sea.nkelley.me/blast-radius-of-inconsideracy"><![CDATA[<p>Two well-known facts:</p>
 
 <ul>
   <li>New Yorkers are assholes.</li>
@@ -772,7 +772,61 @@
 </form>
 
 <div class="list-container">
-  <div id="the-green-knight-2021" class="entry" data-year="2021" data-title="The Green Knight" data-watched="2024-08-30" data-kind="movie" data-recommendation="not-recommended">
+  <div id="kill-bill-volume-1-2003" class="entry" data-year="2003" data-title="Kill Bill: Volume 1" data-watched="2024-08-31" data-kind="movie" data-recommendation="recommended">
+      <div class="title">
+        <a href="https://www.imdb.com/title/tt0266697/">
+          <h3>Kill Bill: Volume 1 (2003)</h3>
+        </a>
+        <a class="permalink" href="#kill-bill-volume-1-2003">
+          🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+        </a>
+      </div>
+      <div class="content">
+        <a href="#kill-bill-volume-1-2003" class="poster">
+          <img class="" src="/assets/movies/kill-bill-volume-1-2003.jpg" loading="lazy" alt="Kill Bill: Volume 1" />
+        </a>
+        <div class="text">
+            <p class="one-liner">👍 <b>Watch this…</b> as it needs no introduction.</p>
+          <p class="watched" title="2024-08-31">
+            watched 2024-08-31
+          </p>
+            <div class="more-thoughts spoiler">
+          <p>I forgot just how much of this movie was O-Ren Ishii. I think that I actually just like her and that whole sequence, rather than Kill Bill itself or the Bride, which is why I never warmed up to Volume 2.</p>
+
+          <p>There are at least two Wilhelm screams in the movie, and a lot more cheesy kung-fu sound effects than I remember.</p>
+        </div></div>
+      </div>
+    </div>
+  <div id="joan-is-awful-2023" class="entry" data-year="2023" data-title="Black Mirror: Joan is Awful" data-watched="2024-08-31" data-kind="tv" data-recommendation="recommended">
+      <div class="title">
+        <a href="https://www.imdb.com/title/tt20247352/">
+          <h3>Black Mirror: Joan is Awful (2023)</h3>
+        </a>
+        <a class="permalink" href="#joan-is-awful-2023">
+          🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+        </a>
+      </div>
+      <div class="content">
+        <a href="#joan-is-awful-2023" class="poster">
+          <img class="" src="/assets/movies/joan-is-awful-2023.jpg" loading="lazy" alt="Black Mirror: Joan is Awful" />
+        </a>
+        <div class="text">
+            <p class="one-liner">👍 <b>Watch this…</b> to refine your stance on personalized media.</p>
+          <p class="watched" title="2024-08-31">
+            watched 2024-08-31
+          </p>
+            <div class="more-thoughts spoiler">
+          <p>This episode was definitely saved by its ending. For the first three quarters I was put off by the obviously-too-obvious Netflix doppelganger, the weird fawning over Salma Hayek and the “quantum computers explain everything” plot justification.</p>
+
+          <p>Then suddenly: <em>I am in this universe</em> because I am watching Streamberry, Salma Hayek is playing herself but as would be written for a TV show, and quantum computers are an acceptable plot device where multiverses are involved. Bam!</p>
+
+          <p>This is cleverly pragmatic storywriting too, because they can pawn off plot holes (i.e, that’s <em>definitely</em> not an enforceable contract) as being part of the worldbuilding from inside the TV episode.</p>
+
+          <p>At first I was complimentary to Netflix for letting such an episode be made, but now I worry that they are so embedded in the culture that they can point out “lol we intentionally make TV to keep you selfish and addicted” and everyone will just laugh it off.</p>
+        </div></div>
+      </div>
+    </div>
+  <div id="the-green-knight-2021" class="entry" data-year="2021" data-title="The Green Knight" data-watched="2024-08-30" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt9243804/">
           <h3>The Green Knight (2021)</h3>
@@ -799,7 +853,34 @@
         </div></div>
       </div>
     </div>
-  <div id="rrr-2022" class="entry" data-year="2022" data-title="RRR" data-watched="2024-08-13" data-kind="movie" data-recommendation="not-recommended">
+  <div id="rachel-jack-and-ashley-too-2019" class="entry" data-year="2019" data-title="Black Mirror: Rachel, Jack and Ashley Too" data-watched="2024-08-29" data-kind="tv" data-recommendation="not-recommended">
+      <div class="title">
+        <a href="https://www.imdb.com/title/tt9053874/">
+          <h3>Black Mirror: Rachel, Jack and Ashley Too (2019)</h3>
+        </a>
+        <a class="permalink" href="#rachel-jack-and-ashley-too-2019">
+          🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+        </a>
+      </div>
+      <div class="content">
+        <a href="#rachel-jack-and-ashley-too-2019" class="poster">
+          <img class="" src="/assets/movies/rachel-jack-and-ashley-too-2019.jpg" loading="lazy" alt="Black Mirror: Rachel, Jack and Ashley Too" />
+        </a>
+        <div class="text">
+            <p class="one-liner">👎 <b>Don’t watch this…</b> because it treads familiar ground, superficially.</p>
+          <p class="watched" title="2024-08-29">
+            watched 2024-08-29
+          </p>
+            <div class="more-thoughts spoiler">
+          <p>The tension in this episode came from all the wrong places. Usually, Black Mirror episodes crank up the tension either by subjecting the characters to stresses until they break, or giving them time to realize their situation and take action. This episode had all the typical shallow pressures from crappy action movies, up to and including a car chase. It cheapens the plot.</p>
+
+          <p>The “resurrection by technology” idea has been explored in several other Black Mirror episodes to much greater effect.</p>
+
+          <p>I did really like the reveal at the end, where it turned out the pop song was just NIN in disguise. Miley Cyrus even released her version under the name Ashley O!</p>
+        </div></div>
+      </div>
+    </div>
+  <div id="rrr-2022" class="entry" data-year="2022" data-title="RRR" data-watched="2024-08-13" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt8178634/">
           <h3>RRR (2022)</h3>
@@ -826,7 +907,7 @@
         </div></div>
       </div>
     </div>
-  <div id="death-proof-2007" class="entry" data-year="2007" data-title="Death Proof" data-watched="2024-08-13" data-kind="movie" data-recommendation="not-recommended">
+  <div id="death-proof-2007" class="entry" data-year="2007" data-title="Death Proof" data-watched="2024-08-13" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt1028528/">
           <h3>Death Proof (2007)</h3>
@@ -851,7 +932,7 @@
         </div></div>
       </div>
     </div>
-  <div id="the-fall-guy-2024" class="entry" data-year="2024" data-title="The Fall Guy" data-watched="2024-08-13" data-kind="movie" data-recommendation="not-recommended">
+  <div id="the-fall-guy-2024" class="entry" data-year="2024" data-title="The Fall Guy" data-watched="2024-08-13" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt1684562/">
           <h3>The Fall Guy (2024)</h3>
@@ -874,7 +955,7 @@
         </div></div>
       </div>
     </div>
-  <div id="how-to-blow-up-a-pipeline-2022" class="entry" data-year="2022" data-title="How to Blow Up a Pipeline" data-watched="2024-08-13" data-kind="movie" data-recommendation="not-recommended">
+  <div id="how-to-blow-up-a-pipeline-2022" class="entry" data-year="2022" data-title="How to Blow Up a Pipeline" data-watched="2024-08-13" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt21440780/">
           <h3>How to Blow Up a Pipeline (2022)</h3>
@@ -937,7 +1018,7 @@
         </div></div>
       </div>
     </div>
-  <div id="the-expanse-2015" class="entry" data-year="2015" data-title="The Expanse (Season 1)" data-watched="2024-06-05" data-kind="tv" data-recommendation="not-recommended">
+  <div id="the-expanse-2015" class="entry" data-year="2015" data-title="The Expanse (Season 1)" data-watched="2024-06-05" data-kind="tv" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt3230854/">
           <h3>The Expanse (Season 1) (2015)</h3>
@@ -991,7 +1072,7 @@
         </div></div>
       </div>
     </div>
-  <div id="enemy-2013" class="entry" data-year="2013" data-title="Enemy" data-watched="2024-05-19" data-kind="movie" data-recommendation="not-recommended">
+  <div id="enemy-2013" class="entry" data-year="2013" data-title="Enemy" data-watched="2024-05-19" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt2316411/">
           <h3>Enemy (2013)</h3>
@@ -1018,7 +1099,7 @@
         </div></div>
       </div>
     </div>
-  <div id="shogun-2024" class="entry" data-year="2024" data-title="Shogun" data-watched="2024-05-08" data-kind="tv" data-recommendation="not-recommended">
+  <div id="shogun-2024" class="entry" data-year="2024" data-title="Shogun" data-watched="2024-05-08" data-kind="tv" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt2788316/">
           <h3>Shogun (2024)</h3>
@@ -1045,7 +1126,7 @@
         </div></div>
       </div>
     </div>
-  <div id="blue-ruin-2013" class="entry" data-year="2013" data-title="Blue Ruin" data-watched="2024-04-22" data-kind="movie" data-recommendation="not-recommended">
+  <div id="blue-ruin-2013" class="entry" data-year="2013" data-title="Blue Ruin" data-watched="2024-04-22" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt2359024/">
           <h3>Blue Ruin (2013)</h3>
@@ -1070,7 +1151,7 @@
         </div></div>
       </div>
     </div>
-  <div id="poor-things-2023" class="entry" data-year="2023" data-title="Poor Things" data-watched="2024-04-18" data-kind="movie" data-recommendation="not-recommended">
+  <div id="poor-things-2023" class="entry" data-year="2023" data-title="Poor Things" data-watched="2024-04-18" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt14230458/">
           <h3>Poor Things (2023)</h3>
@@ -1126,7 +1207,7 @@
         </div></div>
       </div>
     </div>
-  <div id="ran-1985" class="entry" data-year="1985" data-title="Ran" data-watched="2024-03-31" data-kind="movie" data-recommendation="not-recommended">
+  <div id="ran-1985" class="entry" data-year="1985" data-title="Ran" data-watched="2024-03-31" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt0089881/">
           <h3>Ran (1985)</h3>
@@ -1151,7 +1232,7 @@
         </div></div>
       </div>
     </div>
-  <div id="ex-machina-2014" class="entry" data-year="2014" data-title="Ex Machina" data-watched="2024-03-30" data-kind="movie" data-recommendation="not-recommended">
+  <div id="ex-machina-2014" class="entry" data-year="2014" data-title="Ex Machina" data-watched="2024-03-30" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt0470752/">
           <h3>Ex Machina (2014)</h3>
@@ -1176,7 +1257,7 @@
         </div></div>
       </div>
     </div>
-  <div id="sinister-2012" class="entry" data-year="2012" data-title="Sinister" data-watched="2024-03-29" data-kind="movie" data-recommendation="not-recommended">
+  <div id="sinister-2012" class="entry" data-year="2012" data-title="Sinister" data-watched="2024-03-29" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt1922777">
           <h3>Sinister (2012)</h3>
@@ -1201,7 +1282,7 @@
         </div></div>
       </div>
     </div>
-  <div id="dune-part-two-2024" class="entry" data-year="2024" data-title="Dune: Part Two" data-watched="2024-03-08" data-kind="movie" data-recommendation="not-recommended">
+  <div id="dune-part-two-2024" class="entry" data-year="2024" data-title="Dune: Part Two" data-watched="2024-03-08" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt15239678">
           <h3>Dune: Part Two (2024)</h3>
@@ -1251,7 +1332,7 @@
         </div></div>
       </div>
     </div>
-  <div id="the-wicker-man-1973" class="entry" data-year="1973" data-title="The Wicker Man" data-watched="2024-02-26" data-kind="movie" data-recommendation="not-recommended">
+  <div id="the-wicker-man-1973" class="entry" data-year="1973" data-title="The Wicker Man" data-watched="2024-02-26" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt0070917">
           <h3>The Wicker Man (1973)</h3>
@@ -1276,7 +1357,7 @@
         </div></div>
       </div>
     </div>
-  <div id="crouching-tiger-hidden-dragon-2000" class="entry" data-year="2000" data-title="Crouching Tiger, Hidden Dragon" data-watched="2024-02-14" data-kind="movie" data-recommendation="not-recommended">
+  <div id="crouching-tiger-hidden-dragon-2000" class="entry" data-year="2000" data-title="Crouching Tiger, Hidden Dragon" data-watched="2024-02-14" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt0190332">
           <h3>Crouching Tiger, Hidden Dragon (2000)</h3>
@@ -1301,7 +1382,7 @@
         </div></div>
       </div>
     </div>
-  <div id="the-menu-2022" class="entry" data-year="2022" data-title="The Menu" data-watched="2024-02-12" data-kind="movie" data-recommendation="not-recommended">
+  <div id="the-menu-2022" class="entry" data-year="2022" data-title="The Menu" data-watched="2024-02-12" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt9764362/">
           <h3>The Menu (2022)</h3>
@@ -1326,7 +1407,7 @@
         </div></div>
       </div>
     </div>
-  <div id="one-cut-of-the-dead-2017" class="entry" data-year="2017" data-title="One Cut of the Dead" data-watched="2024-01-31" data-kind="movie" data-recommendation="not-recommended">
+  <div id="one-cut-of-the-dead-2017" class="entry" data-year="2017" data-title="One Cut of the Dead" data-watched="2024-01-31" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt7914416/">
           <h3>One Cut of the Dead (2017)</h3>
@@ -1378,7 +1459,7 @@
         </div></div>
       </div>
     </div>
-  <div id="the-wailing-2016" class="entry" data-year="2016" data-title="The Wailing" data-watched="2024-01-22" data-kind="movie" data-recommendation="not-recommended">
+  <div id="the-wailing-2016" class="entry" data-year="2016" data-title="The Wailing" data-watched="2024-01-22" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt5215952/">
           <h3>The Wailing (2016)</h3>
@@ -1403,7 +1484,7 @@
         </div></div>
       </div>
     </div>
-  <div id="sideways-2004" class="entry" data-year="2004" data-title="Sideways" data-watched="2024-01-14" data-kind="movie" data-recommendation="not-recommended">
+  <div id="sideways-2004" class="entry" data-year="2004" data-title="Sideways" data-watched="2024-01-14" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt0375063/">
           <h3>Sideways (2004)</h3>
@@ -1446,7 +1527,7 @@
         </div></div>
       </div>
     </div>
-  <div id="green-room-2015" class="entry" data-year="2015" data-title="Green Room" data-watched="2023-12-29" data-kind="movie" data-recommendation="not-recommended">
+  <div id="green-room-2015" class="entry" data-year="2015" data-title="Green Room" data-watched="2023-12-29" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt4062536/">
           <h3>Green Room (2015)</h3>
@@ -1471,7 +1552,7 @@
         </div></div>
       </div>
     </div>
-  <div id="elf-2003" class="entry" data-year="2003" data-title="Elf" data-watched="2023-12-23" data-kind="movie" data-recommendation="not-recommended">
+  <div id="elf-2003" class="entry" data-year="2003" data-title="Elf" data-watched="2023-12-23" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt0319343/">
           <h3>Elf (2003)</h3>
@@ -1491,7 +1572,7 @@
           </p></div>
       </div>
     </div>
-  <div id="the-cell-2000" class="entry" data-year="2000" data-title="The Cell" data-watched="2023-12-22" data-kind="movie" data-recommendation="not-recommended">
+  <div id="the-cell-2000" class="entry" data-year="2000" data-title="The Cell" data-watched="2023-12-22" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt0209958/">
           <h3>The Cell (2000)</h3>
@@ -1514,7 +1595,7 @@
         </div></div>
       </div>
     </div>
-  <div id="the-great-dictator-1940" class="entry" data-year="1940" data-title="The Great Dictator" data-watched="2023-12-17" data-kind="movie" data-recommendation="not-recommended">
+  <div id="the-great-dictator-1940" class="entry" data-year="1940" data-title="The Great Dictator" data-watched="2023-12-17" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt0032553/">
           <h3>The Great Dictator (1940)</h3>
@@ -1539,7 +1620,7 @@
         </div></div>
       </div>
     </div>
-  <div id="mystic-river-2003" class="entry" data-year="2003" data-title="Mystic River" data-watched="2023-12-15" data-kind="movie" data-recommendation="not-recommended">
+  <div id="mystic-river-2003" class="entry" data-year="2003" data-title="Mystic River" data-watched="2023-12-15" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt0327056/">
           <h3>Mystic River (2003)</h3>
@@ -1562,7 +1643,7 @@
         </div></div>
       </div>
     </div>
-  <div id="it-follows-2014" class="entry" data-year="2014" data-title="It Follows" data-watched="2023-12-11" data-kind="movie" data-recommendation="not-recommended">
+  <div id="it-follows-2014" class="entry" data-year="2014" data-title="It Follows" data-watched="2023-12-11" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt3235888/">
           <h3>It Follows (2014)</h3>
@@ -1587,7 +1668,7 @@
         </div></div>
       </div>
     </div>
-  <div id="oculus-2013" class="entry" data-year="2013" data-title="Oculus" data-watched="2023-12-09" data-kind="movie" data-recommendation="not-recommended">
+  <div id="oculus-2013" class="entry" data-year="2013" data-title="Oculus" data-watched="2023-12-09" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt2388715/">
           <h3>Oculus (2013)</h3>
@@ -1637,7 +1718,7 @@
         </div></div>
       </div>
     </div>
-  <div id="hereditary-2018" class="entry" data-year="2018" data-title="Hereditary" data-watched="2023-12-04" data-kind="movie" data-recommendation="not-recommended">
+  <div id="hereditary-2018" class="entry" data-year="2018" data-title="Hereditary" data-watched="2023-12-04" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt7784604/">
           <h3>Hereditary (2018)</h3>
@@ -1662,7 +1743,7 @@
         </div></div>
       </div>
     </div>
-  <div id="coherence-2013" class="entry" data-year="2013" data-title="Coherence" data-watched="2023-11-30" data-kind="movie" data-recommendation="not-recommended">
+  <div id="coherence-2013" class="entry" data-year="2013" data-title="Coherence" data-watched="2023-11-30" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt2866360/">
           <h3>Coherence (2013)</h3>
@@ -1687,7 +1768,7 @@
         </div></div>
       </div>
     </div>
-  <div id="the-witch-2015" class="entry" data-year="2015" data-title="The Witch" data-watched="2023-11-28" data-kind="movie" data-recommendation="not-recommended">
+  <div id="the-witch-2015" class="entry" data-year="2015" data-title="The Witch" data-watched="2023-11-28" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt4263482/">
           <h3>The Witch (2015)</h3>
@@ -1735,7 +1816,7 @@
         </div></div>
       </div>
     </div>
-  <div id="talk-to-me-2022" class="entry" data-year="2022" data-title="Talk to Me" data-watched="2023-11-26" data-kind="movie" data-recommendation="not-recommended">
+  <div id="talk-to-me-2022" class="entry" data-year="2022" data-title="Talk to Me" data-watched="2023-11-26" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt10638522/">
           <h3>Talk to Me (2022)</h3>
@@ -1760,7 +1841,7 @@
         </div></div>
       </div>
     </div>
-  <div id="midsommar-2019" class="entry" data-year="2019" data-title="Midsommar" data-watched="2023-11-25" data-kind="movie" data-recommendation="not-recommended">
+  <div id="midsommar-2019" class="entry" data-year="2019" data-title="Midsommar" data-watched="2023-11-25" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt8772262/">
           <h3>Midsommar (2019)</h3>
@@ -1783,7 +1864,7 @@
         </div></div>
       </div>
     </div>
-  <div id="train-to-busan-2016" class="entry" data-year="2016" data-title="Train to Busan" data-watched="2023-11-24" data-kind="movie" data-recommendation="not-recommended">
+  <div id="train-to-busan-2016" class="entry" data-year="2016" data-title="Train to Busan" data-watched="2023-11-24" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt5700672/">
           <h3>Train to Busan (2016)</h3>
@@ -1803,7 +1884,7 @@
           </p></div>
       </div>
     </div>
-  <div id="the-invitation-2015" class="entry" data-year="2015" data-title="The Invitation" data-watched="2023-11-22" data-kind="movie" data-recommendation="not-recommended">
+  <div id="the-invitation-2015" class="entry" data-year="2015" data-title="The Invitation" data-watched="2023-11-22" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt2400463/">
           <h3>The Invitation (2015)</h3>
@@ -1828,7 +1909,7 @@
         </div></div>
       </div>
     </div>
-  <div id="requiem-for-a-dream-2000" class="entry" data-year="2000" data-title="Requiem for a Dream" data-watched="2023-11-21" data-kind="movie" data-recommendation="not-recommended">
+  <div id="requiem-for-a-dream-2000" class="entry" data-year="2000" data-title="Requiem for a Dream" data-watched="2023-11-21" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt0180093/">
           <h3>Requiem for a Dream (2000)</h3>
@@ -1878,7 +1959,7 @@
         </div></div>
       </div>
     </div>
-  <div id="us-2019" class="entry" data-year="2019" data-title="Us" data-watched="2023-11-19" data-kind="movie" data-recommendation="not-recommended">
+  <div id="us-2019" class="entry" data-year="2019" data-title="Us" data-watched="2023-11-19" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt6857112/">
           <h3>Us (2019)</h3>
@@ -1903,7 +1984,7 @@
         </div></div>
       </div>
     </div>
-  <div id="the-last-of-us-2023" class="entry" data-year="2023" data-title="The Last of Us" data-watched="2023-03-12" data-kind="tv" data-recommendation="not-recommended">
+  <div id="the-last-of-us-2023" class="entry" data-year="2023" data-title="The Last of Us" data-watched="2023-03-12" data-kind="tv" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt3581920/">
           <h3>The Last of Us (2023)</h3>
@@ -1955,7 +2036,7 @@
         </div></div>
       </div>
     </div>
-  <div id="mind-game-2004" class="entry" data-year="2004" data-title="Mind Game" data-watched="2023-01-01" data-kind="movie" data-recommendation="not-recommended">
+  <div id="mind-game-2004" class="entry" data-year="2004" data-title="Mind Game" data-watched="2023-01-01" data-kind="movie" data-recommendation="recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt0452039/">
           <h3>Mind Game (2004)</h3>
