@@ -40,12 +40,18 @@ movie_url="https://www.imdb.com/title/$movie_id/"
 echo "movie URL: $movie_url"
 
 curl "$movie_url" --compressed -s -H "$USER_AGENT_HEADER" > /tmp/movie_page.html
+
 inferred_year="$(cat /tmp/movie_page.html \
   | hxnormalize -x \
   | hxselect -s '\n' "a[href^='/title/$movie_id/releaseinfo']" \
   | tr -d '\n' \
   | tr -d ' ' \
-  | sed -E 's|.*>([[:digit:]]{4}).?([[:digit:]]{4})?<.*|\1|g')"
+  | sed -E 's/.*>([A-Z][a-z]+[[:digit:]]+,)?([[:digit:]]{4}).?([[:digit:]]{4})?(\([A-Za-z]+\))?<.*/\2/g'
+# The horrible regex above tries to match the following formats as narrowly as possible:
+#   YYYY
+#   YYYY-
+#   YYYY-YYYY
+#   MMM DD, YYYY (Country)
 
 if ! [[ "$inferred_year" =~ '^[[:digit:]]{4}$' ]] ; then
   echo "$inferred_year"
