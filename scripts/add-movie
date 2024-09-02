@@ -47,7 +47,7 @@ inferred_year="$(cat /tmp/movie_page.html \
   | tr -d ' ' \
   | sed -E 's|.*>([[:digit:]]{4}).?([[:digit:]]{4})?<.*|\1|g')"
 
-if ! [[ "$inferred_year" =~ '[[:digit:]]{4}' ]] ; then
+if ! [[ "$inferred_year" =~ '^[[:digit:]]{4}$' ]] ; then
   echo "$inferred_year"
   echo "unable to infer year (see above); the script probably needs to be updated"
   exit 1
