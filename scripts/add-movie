@@ -46,7 +46,7 @@ inferred_year="$(cat /tmp/movie_page.html \
   | hxselect -s '\n' "a[href^='/title/$movie_id/releaseinfo']" \
   | tr -d '\n' \
   | tr -d ' ' \
-  | sed -E 's/.*>([A-Z][a-z]+[[:digit:]]+,)?([[:digit:]]{4}).?([[:digit:]]{4})?(\([A-Za-z]+\))?<.*/\2/g'
+  | sed -E 's/.*>([A-Z][a-z]+[[:digit:]]+,)?([[:digit:]]{4}).?([[:digit:]]{4})?(\([A-Za-z]+\))?<.*/\2/g')"
 # The horrible regex above tries to match the following formats as narrowly as possible:
 #   YYYY
 #   YYYY-
@@ -67,8 +67,8 @@ fi
 
 if cat /tmp/movie_page.html \
   | hxnormalize -x \
-  | hxselect -c -s '\n' '[data-testid="hero__pageTitle"] + * > :first-child' \
-  | head -n1 \
+  | hxselect -c -s '\n' '[data-testid="hero__pageTitle"] + *' \
+  | tr -d '\n' \
   | grep -q 'TV' ; then
   kind="tv"
 else
