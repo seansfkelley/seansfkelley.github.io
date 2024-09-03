@@ -22,7 +22,7 @@ type Transform =
 const TRANSFORM_REGEX =
   /\s*((scale)\(([-.0-9]+)([ ,]+([-.0-9]+))?\)|((translate)\(([-.0-9]+)[ ,]+([-.0-9]+)\))|((rotate)\(([-.0-9]+)([ ,]+([-.0-9]+))?([ ,]+([-.0-9]+))?\))|((matrix)\(([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)\)))\s*/g;
 
-const RADIANS_TO_DEG = Math.PI / 180;
+const RADIANS_TO_DEG = 180 / Math.PI;
 
 function* extractTransforms(transform: string): Generator<Transform> {
   let start = 0;
@@ -85,8 +85,9 @@ function* extractTransforms(transform: string): Generator<Transform> {
         denom
       );
 
-      // I can't tell what order this is supposed to be in -- both seem to produce a valid result?
-      // TODO check this against lion passant
+      // Seems to be the correct order here, but I think that's just a function of whichever order
+      // the matrix happened to be constructed in -- hopefully, a consistent ordering of several
+      // transforms from Inkscape or something like that.
       yield { translate: [+matrix5, +matrix6] };
       yield { rotate: angle * RADIANS_TO_DEG, origin: [0, 0] };
       yield { scale: [scaleX, scaleY] };
