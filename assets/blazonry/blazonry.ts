@@ -45,9 +45,6 @@ FUTURE WORK and KNOWN ISSUES
   - per pale: barry or and sable, and argent; a rondel counterchanged
 - Variations using furs don't render the fur:
   - bendy of eight erminois and azure
-- Variated SVG charges don't adhere to the correct number of repeats because they are made of
-  multiple parts of different sizes and may be translated/rotated:
-  - argent a lion barry of six sable and or
 - Chevronny doesn't work in extreme cases:
   - chevronny of two or and sable
 
@@ -2294,7 +2291,15 @@ const HORIZONTALLY_STRETCHED_ATTITUDES: Set<LionCharge["attitude"]> = new Set([
   "passant",
   "passant-guardant",
   "passant-reguardant",
-]);
+] satisfies LionCharge["attitude"][]);
+const LION_SIZES: Record<LionCharge["attitude"], Coordinate> = {
+  rampant: [36.706, 39.128],
+  "rampant-guardant": [36.706, 39.128],
+  "rampant-reguardant": [36.706, 39.128],
+  passant: [47.894, 39.028],
+  "passant-guardant": [47.894, 39.028],
+  "passant-reguardant": [47.894, 39.028],
+};
 async function lion({
   coloration,
   armed,
@@ -2303,7 +2308,10 @@ async function lion({
   placement,
 }: WithSvgColoration<LionCharge>) {
   const lion = await fetchMutableComplexSvg("lion", attitude);
-  const { fill, pattern } = await resolveColoration(coloration, [48, 39]);
+  const { fill, pattern } = await resolveColoration(
+    coloration,
+    LION_SIZES[attitude]
+  );
   maybeAppendChild(lion, pattern);
 
   if ("classes" in fill) {
