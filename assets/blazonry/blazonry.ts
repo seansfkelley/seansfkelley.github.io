@@ -2272,7 +2272,7 @@ async function escallop({ coloration }: WithSvgColoration<SimpleCharge>) {
 }
 
 async function fleurDeLys({ coloration }: WithSvgColoration<SimpleCharge>) {
-  const { fill, pattern } = await resolveColoration(coloration, [40, 50], {
+  const { fill, pattern } = await resolveColoration(coloration, [30, 42], {
     translate: [0, 10],
     scale: 0.5,
   });
@@ -2303,7 +2303,7 @@ async function lion({
   placement,
 }: WithSvgColoration<LionCharge>) {
   const lion = await fetchMutableComplexSvg("lion", attitude);
-  const { fill, pattern } = await resolveColoration(coloration);
+  const { fill, pattern } = await resolveColoration(coloration, [48, 39]);
   maybeAppendChild(lion, pattern);
   if ("classes" in fill) {
     lion.classList.add(fill.classes.fill);
