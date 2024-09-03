@@ -2254,10 +2254,11 @@ async function fret({ coloration }: WithSvgColoration<SimpleCharge>) {
 }
 
 async function escallop({ coloration }: WithSvgColoration<SimpleCharge>) {
-  const { fill, pattern } = await resolveColoration(coloration, [90, 95], {
-    scale: 0.6,
-    translate: [0, -15],
-  });
+  const { fill, pattern } = await resolveColoration(
+    coloration,
+    [39.089, 40.967],
+    { scale: 0.6, translate: [0, -15] }
+  );
   const escallop = await fetchMutableComplexSvg("escallop");
   maybeAppendChild(escallop, pattern);
   if ("classes" in fill) {
@@ -2269,10 +2270,11 @@ async function escallop({ coloration }: WithSvgColoration<SimpleCharge>) {
 }
 
 async function fleurDeLys({ coloration }: WithSvgColoration<SimpleCharge>) {
-  const { fill, pattern } = await resolveColoration(coloration, [30, 42], {
-    translate: [0, 10],
-    scale: 0.5,
-  });
+  const { fill, pattern } = await resolveColoration(
+    coloration,
+    [30.117, 41.528],
+    { translate: [0, 10], scale: 0.5 }
+  );
   const fleurDeLys = await fetchMutableComplexSvg("fleur-de-lys");
   maybeAppendChild(fleurDeLys, pattern);
   if ("classes" in fill) {
@@ -2293,6 +2295,10 @@ const HORIZONTALLY_STRETCHED_ATTITUDES: Set<LionCharge["attitude"]> = new Set([
   "passant-reguardant",
 ] satisfies LionCharge["attitude"][]);
 const LION_SIZES: Record<LionCharge["attitude"], Coordinate> = {
+  // These values can be fetched from the browser by rendering a single charge:
+  //   argent a lion rampant or
+  // then selecting the <g> that represents the charge and running this in the console:
+  // $0.removeAttribute('transform') ; console.log(`"${$0.dataset.kind.slice(5)}": [${($0.getBoundingClientRect().width / 3).toFixed(3)}, ${($0.getBoundingClientRect().height / 3).toFixed(3)}],`)
   rampant: [36.706, 39.128],
   "rampant-guardant": [36.706, 39.128],
   "rampant-reguardant": [36.706, 39.128],
@@ -2310,7 +2316,8 @@ async function lion({
   const lion = await fetchMutableComplexSvg("lion", attitude);
   const { fill, pattern } = await resolveColoration(
     coloration,
-    LION_SIZES[attitude]
+    LION_SIZES[attitude],
+    { scale: 0.4 }
   );
   maybeAppendChild(lion, pattern);
 
