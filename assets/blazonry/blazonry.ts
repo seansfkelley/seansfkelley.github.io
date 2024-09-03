@@ -2549,6 +2549,9 @@ async function resolveColoration(
 
     function getVairPattern() {
       const pattern = getVairTincture();
+      applySvgAttributes(pattern, {
+        patternTransform: Transforms.toString(patternTransform),
+      });
       const color = `url(#${pattern.id})` as const;
       return { fill: { fill: color }, stroke: { stroke: color }, pattern };
     }
