@@ -2273,7 +2273,8 @@ async function escallop({ coloration }: WithSvgColoration<SimpleCharge>) {
 
 async function fleurDeLys({ coloration }: WithSvgColoration<SimpleCharge>) {
   const { fill, pattern } = await resolveColoration(coloration, [40, 50], {
-    translate: [3.5, 5],
+    translate: [0, 10],
+    scale: 0.5,
   });
   const fleurDeLys = await fetchMutableComplexSvg("fleur-de-lys");
   maybeAppendChild(fleurDeLys, pattern);
