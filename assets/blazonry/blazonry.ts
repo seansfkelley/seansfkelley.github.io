@@ -2328,13 +2328,8 @@ async function lion({
     applySvgAttributes(lion, fill);
   }
 
-  if (armed != null) {
-    lion.classList.add(`armed-${armed}`);
-  }
-
-  if (langued != null) {
-    lion.classList.add(`langued-${langued}`);
-  }
+  lion.classList.add(`armed-${armed ?? "gules"}`);
+  lion.classList.add(`langued-${langued ?? "gules"}`);
 
   if (placement === "pale" && HORIZONTALLY_STRETCHED_ATTITUDES.has(attitude)) {
     // This is a bit of a hack! But it makes the Bavarian arms look a little less stupid overall.
