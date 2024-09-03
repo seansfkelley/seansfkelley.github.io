@@ -1,9 +1,13 @@
 {
   "name": "seansfkelley.github.io",
   "version": "0.0.0",
+  "type": "module",
   "dependencies": {
     "@types/nearley": "^2.11.2",
+    "@types/node": "^22.5.2",
     "nearley": "^2.20.1",
+    "node-html-parser": "^6.1.13",
+    "tsx": "^4.19.0",
     "typescript": "^5.5.4"
   },
   "resolutions": {
