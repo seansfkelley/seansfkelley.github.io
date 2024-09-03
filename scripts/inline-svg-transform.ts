@@ -17,10 +17,10 @@ type Transform =
   | { scale: [number, number] }
   | { translate: [number, number] }
   | { skew: [number, number] }
-  | { rotate: number };
+  | { rotate: number; origin: [number, number] };
 
 const TRANSFORM_REGEX =
-  /\s*((scale)\(([-.0-9]+)(,\s*([-.0-9]+))?\)|((translate)\(([-.0-9]+),\s*([-.0-9]+)\))|((matrix)\(([-.0-9]+),\s*([-.0-9]+),\s*([-.0-9]+),\s*([-.0-9]+),\s*([-.0-9]+),\s*([-.0-9]+)\)))\s*/g;
+  /\s*((scale)\(([-.0-9]+)([ ,]+([-.0-9]+))?\)|((translate)\(([-.0-9]+)[ ,]+([-.0-9]+)\))|((rotate)\(([-.0-9]+)([ ,]+([-.0-9]+))?([ ,]+([-.0-9]+))?\))|((matrix)\(([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)\)))\s*/g;
 
 const RADIANS_TO_DEG = Math.PI / 180;
 
@@ -44,14 +44,21 @@ function* extractTransforms(transform: string): Generator<Transform> {
       translateX,
       translateY,
       ,
+      isRotate,
+      angle,
+      ,
+      originX,
+      ,
+      originY,
+      ,
       isMatrix,
       // https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix
-      matrixScaleX,
-      matrixSkewY,
-      matrixSkewX,
-      matrixScaleY,
-      matrixTranslateX,
-      matrixTranslateY,
+      matrix1,
+      matrix2,
+      matrix3,
+      matrix4,
+      matrix5,
+      matrix6,
     ] = match;
 
     start = match.index + all.length;
@@ -65,31 +72,28 @@ function* extractTransforms(transform: string): Generator<Transform> {
       };
     } else if (isTranslate) {
       yield { translate: [+translateX, +translateY] };
+    } else if (isRotate) {
+      yield { rotate: +angle, origin: [+(originX || "0"), +(originY || "0")] };
     } else if (isMatrix) {
       // Adapted from https://stackoverflow.com/a/32125700 because I am lazy.
-      const args = [
-        +matrixScaleX,
-        +matrixSkewY,
-        +matrixSkewX,
-        +matrixScaleY,
-        +matrixTranslateX,
-        +matrixTranslateY,
-      ];
-      const angle = Math.atan2(args[1], args[0]);
-      const denom = Math.pow(args[0], 2) + Math.pow(args[1], 2);
+      const angle = Math.atan2(+matrix2, +matrix1);
+      const denom = Math.pow(+matrix1, 2) + Math.pow(+matrix2, 2);
       const scaleX = Math.sqrt(denom);
-      const scaleY = (args[0] * args[3] - args[2] * args[1]) / scaleX;
-      const skewX = Math.atan2(args[0] * args[2] + args[1] * args[3], denom);
-      // Which order?
-      yield { translate: [+matrixTranslateX, +matrixTranslateY] };
-      yield { rotate: angle * RADIANS_TO_DEG };
+      const scaleY = (+matrix1 * +matrix4 - +matrix3 * +matrix2) / scaleX;
+      const skewX = Math.atan2(
+        +matrix1 * +matrix3 + +matrix2 * +matrix4,
+        denom
+      );
+
       yield { scale: [scaleX, scaleY] };
       yield { skew: [skewX * RADIANS_TO_DEG, 0] };
+      yield { translate: [+matrix5, +matrix6] };
+      yield { rotate: angle * RADIANS_TO_DEG, origin: [0, 0] };
     }
   }
 
   if (start != transform.length) {
-    throw new Error("did not exhaust transform string");
+    throw new Error(`did not exhaust transform string: ${transform}`);
   }
 }
 
@@ -124,7 +128,7 @@ async function processFile(filename: string) {
         } else if ("skew" in t) {
           d.skew(t.skew[0], t.skew[1]);
         } else if ("rotate" in t) {
-          d.rotate(0, 0, t.rotate);
+          d.rotate(t.origin[0], t.origin[1], t.rotate);
         } else {
           throw new Error("unrecognized transform");
         }
