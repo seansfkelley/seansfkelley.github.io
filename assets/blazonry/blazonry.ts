@@ -279,8 +279,8 @@ interface SimpleCharge extends BaseCharge {
 interface LionCharge extends BaseCharge {
   charge: "lion";
   coloration: Coloration;
-  armed: Tincture;
-  langued: Tincture;
+  armed?: Tincture;
+  langued?: Tincture;
   attitude:
     | "rampant"
     | "rampant-guardant"
@@ -2305,14 +2305,20 @@ async function lion({
   const lion = await fetchMutableComplexSvg("lion", attitude);
   const { fill, pattern } = await resolveColoration(coloration, [48, 39]);
   maybeAppendChild(lion, pattern);
+
   if ("classes" in fill) {
     lion.classList.add(fill.classes.fill);
-    lion.classList.add(`armed-${armed}`);
-    lion.classList.add(`langued-${langued}`);
   } else {
     // TODO: How to make sure the lines end up masking, just lighter?
     applySvgAttributes(lion, fill);
-    // TODO: This doesn't support armed/langued for furs. Which is... okay?
+  }
+
+  if (armed != null) {
+    lion.classList.add(`armed-${armed}`);
+  }
+
+  if (langued != null) {
+    lion.classList.add(`langued-${langued}`);
   }
 
   if (placement === "pale" && HORIZONTALLY_STRETCHED_ATTITUDES.has(attitude)) {
