@@ -46,9 +46,6 @@ FUTURE WORK and KNOWN ISSUES
   - per pale: barry or and sable, and argent; a rondel counterchanged
 - Variations using furs don't render the fur:
   - bendy of eight erminois and azure
-- Variated SVG charges don't adhere to the correct number of repeats because they are made of
-  multiple parts of different sizes and may be translated/rotated:
-  - argent a lion barry of six sable and or
 - Chevronny doesn't work in extreme cases:
   - chevronny of two or and sable
 
@@ -1314,10 +1311,7 @@ async function fret({ coloration }) {
     [-strokeWidth - 1, -strokeWidth - 1], [strokeWidth + 1, strokeWidth + 1], { ...stroke, strokeWidth }));
 }
 async function escallop({ coloration }) {
-    const { fill, pattern } = await resolveColoration(coloration, [90, 95], {
-        scale: 0.6,
-        translate: [0, -15],
-    });
+    const { fill, pattern } = await resolveColoration(coloration, [39.089, 40.967], { scale: 0.6, translate: [0, -15] });
     const escallop = await fetchMutableComplexSvg("escallop");
     maybeAppendChild(escallop, pattern);
     if ("classes" in fill) {
@@ -1329,9 +1323,7 @@ async function escallop({ coloration }) {
     return escallop;
 }
 async function fleurDeLys({ coloration }) {
-    const { fill, pattern } = await resolveColoration(coloration, [40, 50], {
-        translate: [3.5, 5],
-    });
+    const { fill, pattern } = await resolveColoration(coloration, [30.117, 41.528], { translate: [0, 10], scale: 0.5 });
     const fleurDeLys = await fetchMutableComplexSvg("fleur-de-lys");
     maybeAppendChild(fleurDeLys, pattern);
     if ("classes" in fill) {
@@ -1351,20 +1343,31 @@ const HORIZONTALLY_STRETCHED_ATTITUDES = new Set([
     "passant-guardant",
     "passant-reguardant",
 ]);
+const LION_SIZES = {
+    // These values can be fetched from the browser by rendering a single charge:
+    //   argent a lion rampant or
+    // then selecting the <g> that represents the charge and running this in the console:
+    // $0.removeAttribute('transform') ; console.log(`"${$0.dataset.kind.slice(5)}": [${($0.getBoundingClientRect().width / 3).toFixed(3)}, ${($0.getBoundingClientRect().height / 3).toFixed(3)}],`)
+    rampant: [36.706, 39.128],
+    "rampant-guardant": [36.706, 39.128],
+    "rampant-reguardant": [36.706, 39.128],
+    passant: [47.894, 39.028],
+    "passant-guardant": [47.894, 39.028],
+    "passant-reguardant": [47.894, 39.028],
+};
 async function lion({ coloration, armed, langued, attitude, placement, }) {
     const lion = await fetchMutableComplexSvg("lion", attitude);
-    const { fill, pattern } = await resolveColoration(coloration);
+    const { fill, pattern } = await resolveColoration(coloration, LION_SIZES[attitude], { scale: 0.4 });
     maybeAppendChild(lion, pattern);
     if ("classes" in fill) {
         lion.classList.add(fill.classes.fill);
-        lion.classList.add(`armed-${armed}`);
-        lion.classList.add(`langued-${langued}`);
     }
     else {
         // TODO: How to make sure the lines end up masking, just lighter?
         applySvgAttributes(lion, fill);
-        // TODO: This doesn't support armed/langued for furs. Which is... okay?
     }
+    lion.classList.add(`armed-${armed ?? "gules"}`);
+    lion.classList.add(`langued-${langued ?? "gules"}`);
     if (placement === "pale" && HORIZONTALLY_STRETCHED_ATTITUDES.has(attitude)) {
         // This is a bit of a hack! But it makes the Bavarian arms look a little less stupid overall.
         // Really, the passant variants should be naturally wider, as that is how they are typically shown.
@@ -1514,6 +1517,9 @@ async function resolveColoration(coloration, [width, height] = [W, H], patternTr
         }
         function getVairPattern() {
             const pattern = getVairTincture();
+            applySvgAttributes(pattern, {
+                patternTransform: Transforms.toString(patternTransform),
+            });
             const color = `url(#${pattern.id})`;
             return { fill: { fill: color }, stroke: { stroke: color }, pattern };
         }

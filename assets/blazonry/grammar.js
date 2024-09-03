@@ -348,8 +348,6 @@ var grammar = {
           attitude: d[1] ?? "rampant",
           posture: d[2],
           coloration: d[4],
-          armed: "gules",
-          langued: "gules",
           ...d[5],
           placement: d[6],
         }) },

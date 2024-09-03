@@ -303,7 +303,7 @@ a[data-example]:not(:hover) {
 }
 
 .lion {
-  stroke-width: 1 !important;
+  stroke-width: 0.15;
 }
 .lion .outline {
   stroke: black;
@@ -511,7 +511,7 @@ a[data-example]:not(:hover) {
 .fleur-de-lys .outline {
   stroke: black;
   stroke-opacity: 0.3;
-  stroke-width: 2;
+  stroke-width: 0.75;
 }
 .fleur-de-lys.argent {
   fill: none;
