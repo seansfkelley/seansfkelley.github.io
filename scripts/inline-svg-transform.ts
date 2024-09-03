@@ -2,7 +2,7 @@
 
 import { readFile } from "node:fs/promises";
 import {} from "node:path";
-import { parse, Node, NodeType } from "node-html-parser";
+import { parse, Node, NodeType, TextNode } from "node-html-parser";
 import { SvgPath } from "./svg-lib/svg";
 
 function usage(): never {
@@ -82,6 +82,8 @@ async function processFile(filename: string) {
   }
   svg.childNodes.forEach(assertIsGOrPath);
 
+  const flattenedPaths = [];
+
   for (const path of svg.querySelectorAll("path[d]")) {
     const d = new SvgPath(path.getAttribute("d")!);
 
@@ -100,10 +102,22 @@ async function processFile(filename: string) {
       current = current.parentNode;
     }
 
-    path.setAttribute("path", d.asString());
+    path.removeAttribute("transform");
+    path.setAttribute("d", d.asString());
+    flattenedPaths.push(path);
   }
 
-  // console.log(document.toString().replaceAll(/><\/path>/g, "/>"));
+  while (svg.childNodes.length > 0) {
+    svg.removeChild(svg.lastChild);
+  }
+
+  for (const p of flattenedPaths) {
+    svg.appendChild(new TextNode("\n  "));
+    svg.appendChild(p);
+  }
+  svg.appendChild(new TextNode("\n"));
+
+  console.log(document.toString().replaceAll(/><\/path>/g, "/>"));
 }
 
 for (const filename of process.argv.slice(2)) {
