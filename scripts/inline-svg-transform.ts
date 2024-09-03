@@ -2,7 +2,7 @@
 
 import { readFile } from "node:fs/promises";
 import {} from "node:path";
-import { parse } from "node-html-parser";
+import { parse, Node, NodeType } from "node-html-parser";
 import { SvgPath } from "./svg-lib/svg";
 
 function usage(): never {
@@ -68,7 +68,19 @@ function* extractTransforms(transform: string): Generator<Transform> {
 }
 
 async function processFile(filename: string) {
-  const svg = parse(await readFile(filename, "utf-8"));
+  const document = parse(await readFile(filename, "utf-8"));
+  const svg = document.querySelector("svg");
+
+  function assertIsGOrPath(n: Node) {
+    if (n.nodeType === NodeType.ELEMENT_NODE) {
+      if (n.rawTagName === "g" || n.rawTagName === "path") {
+        n.childNodes.forEach(assertIsGOrPath);
+      } else {
+        throw new Error(`all nodes must be g or path; got ${n.rawTagName}`);
+      }
+    }
+  }
+  svg.childNodes.forEach(assertIsGOrPath);
 
   for (const path of svg.querySelectorAll("path[d]")) {
     const d = new SvgPath(path.getAttribute("d")!);
@@ -91,7 +103,7 @@ async function processFile(filename: string) {
     path.setAttribute("path", d.asString());
   }
 
-  console.log(svg.toString().replaceAll(/><\/path>/g, "/>"));
+  // console.log(document.toString().replaceAll(/><\/path>/g, "/>"));
 }
 
 for (const filename of process.argv.slice(2)) {
