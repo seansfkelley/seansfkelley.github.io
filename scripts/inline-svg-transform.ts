@@ -128,7 +128,9 @@ async function processFile(filename: string) {
         } else if ("translate" in t) {
           d.translate(t.translate[0], t.translate[1]);
         } else if ("skew" in t) {
-          d.skew(t.skew[0], t.skew[1]);
+          if (t.skew[0] !== 0 || t.skew[1] !== 0) {
+            throw new Error(`unsupported: non-zero skew: ${t.skew}`);
+          }
         } else if ("rotate" in t) {
           d.rotate(t.origin[0], t.origin[1], t.rotate);
         } else {

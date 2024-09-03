@@ -183,19 +183,6 @@ export abstract class SvgItem {
         });
     }
 
-    public skew(ax: number, ay: number) {
-        const oldValues = [...this.values];
-        const tanX = Math.tan(ax);
-        const tanY = Math.tan(ay);
-        this.values.forEach( (val, idx) => {
-            if (idx % 2 === 0) {
-                this.values[idx] = val + oldValues[idx + 1] * tanX;
-            } else {
-                this.values[idx] = val + oldValues[idx - 1] * tanY;
-            }
-        });
-    }
-
     public rotate(ox: number, oy: number, degrees: number, force = false) {
         const rad = degrees * Math.PI / 180;
         const cos = Math.cos(rad);
@@ -506,11 +493,6 @@ class EllipticalArcTo extends SvgItem {
         // New sweep flag
         this.values[4] = kx * ky >= 0 ? this.values[4] : 1 - this.values[4];
     }
-    public override skew(ax: number, ay: number) {
-        if (ax !== 0 || ay !== 0) {
-            throw new Error('unsupported: skewing an arc by a non-zero amount');
-        }
-    }
     protected override refreshAbsolutePoints(origin: Point, previous: SvgItem | null) {
         this.previousPoint = previous ? previous.targetLocation() : new Point(0, 0);
         if (this.relative) {
@@ -553,14 +535,6 @@ export class SvgPath {
     scale(kx: number, ky: number): SvgPath {
         this.path.forEach( (it) => {
             it.scale(kx, ky);
-        });
-        this.refreshAbsolutePositions();
-        return this;
-    }
-
-    skew(ax: number, ay: number): SvgPath {
-        this.path.forEach( (it) => {
-            it.skew(ax, ay);
         });
         this.refreshAbsolutePositions();
         return this;
