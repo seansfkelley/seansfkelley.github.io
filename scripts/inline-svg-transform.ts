@@ -85,10 +85,12 @@ function* extractTransforms(transform: string): Generator<Transform> {
         denom
       );
 
-      yield { scale: [scaleX, scaleY] };
-      yield { skew: [skewX * RADIANS_TO_DEG, 0] };
+      // I can't tell what order this is supposed to be in -- both seem to produce a valid result?
+      // TODO check this against lion passant
       yield { translate: [+matrix5, +matrix6] };
       yield { rotate: angle * RADIANS_TO_DEG, origin: [0, 0] };
+      yield { scale: [scaleX, scaleY] };
+      yield { skew: [skewX * RADIANS_TO_DEG, 0] };
     }
   }
 

@@ -506,6 +506,11 @@ class EllipticalArcTo extends SvgItem {
         // New sweep flag
         this.values[4] = kx * ky >= 0 ? this.values[4] : 1 - this.values[4];
     }
+    public override skew(ax: number, ay: number) {
+        if (ax !== 0 || ay !== 0) {
+            throw new Error('unsupported: skewing an arc by a non-zero amount');
+        }
+    }
     protected override refreshAbsolutePoints(origin: Point, previous: SvgItem | null) {
         this.previousPoint = previous ? previous.targetLocation() : new Point(0, 0);
         if (this.relative) {
