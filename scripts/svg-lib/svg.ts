@@ -183,6 +183,19 @@ export abstract class SvgItem {
         });
     }
 
+    public skew(ax: number, ay: number) {
+        const oldValues = [...this.values];
+        const tanX = Math.tan(ax);
+        const tanY = Math.tan(ay);
+        this.values.forEach( (val, idx) => {
+            if (idx % 2 === 0) {
+                this.values[idx] = val + oldValues[idx + 1] * tanX;
+            } else {
+                this.values[idx] = val + oldValues[idx - 1] * tanY;
+            }
+        });
+    }
+
     public rotate(ox: number, oy: number, degrees: number, force = false) {
         const rad = degrees * Math.PI / 180;
         const cos = Math.cos(rad);
@@ -535,6 +548,14 @@ export class SvgPath {
     scale(kx: number, ky: number): SvgPath {
         this.path.forEach( (it) => {
             it.scale(kx, ky);
+        });
+        this.refreshAbsolutePositions();
+        return this;
+    }
+
+    skew(ax: number, ay: number): SvgPath {
+        this.path.forEach( (it) => {
+            it.skew(ax, ay);
         });
         this.refreshAbsolutePositions();
         return this;

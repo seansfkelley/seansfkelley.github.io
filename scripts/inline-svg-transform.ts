@@ -14,15 +14,15 @@ if (process.argv.length < 3) {
 }
 
 type Transform =
-  | {
-      scale: [number, number];
-    }
-  | {
-      translate: [number, number];
-    };
+  | { scale: [number, number] }
+  | { translate: [number, number] }
+  | { skew: [number, number] }
+  | { rotate: number };
 
 const TRANSFORM_REGEX =
-  /\s*((scale)\(([-.0-9]+)(,\s*([-.0-9]+))?\)|((translate)\(([-.0-9]+),\s*([-.0-9]+)\)))\s*/g;
+  /\s*((scale)\(([-.0-9]+)(,\s*([-.0-9]+))?\)|((translate)\(([-.0-9]+),\s*([-.0-9]+)\))|((matrix)\(([-.0-9]+),\s*([-.0-9]+),\s*([-.0-9]+),\s*([-.0-9]+),\s*([-.0-9]+),\s*([-.0-9]+)\)))\s*/g;
+
+const RADIANS_TO_DEG = Math.PI / 180;
 
 function* extractTransforms(transform: string): Generator<Transform> {
   let start = 0;
@@ -43,6 +43,15 @@ function* extractTransforms(transform: string): Generator<Transform> {
       isTranslate,
       translateX,
       translateY,
+      ,
+      isMatrix,
+      // https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix
+      matrixScaleX,
+      matrixSkewY,
+      matrixSkewX,
+      matrixScaleY,
+      matrixTranslateX,
+      matrixTranslateY,
     ] = match;
 
     start = match.index + all.length;
@@ -55,9 +64,27 @@ function* extractTransforms(transform: string): Generator<Transform> {
             : [+scaleArg1, +scaleArg2],
       };
     } else if (isTranslate) {
-      yield {
-        translate: [+translateX, +translateY],
-      };
+      yield { translate: [+translateX, +translateY] };
+    } else if (isMatrix) {
+      // Adapted from https://stackoverflow.com/a/32125700 because I am lazy.
+      const args = [
+        +matrixScaleX,
+        +matrixSkewY,
+        +matrixSkewX,
+        +matrixScaleY,
+        +matrixTranslateX,
+        +matrixTranslateY,
+      ];
+      const angle = Math.atan2(args[1], args[0]);
+      const denom = Math.pow(args[0], 2) + Math.pow(args[1], 2);
+      const scaleX = Math.sqrt(denom);
+      const scaleY = (args[0] * args[3] - args[2] * args[1]) / scaleX;
+      const skewX = Math.atan2(args[0] * args[2] + args[1] * args[3], denom);
+      // Which order?
+      yield { translate: [+matrixTranslateX, +matrixTranslateY] };
+      yield { rotate: angle * RADIANS_TO_DEG };
+      yield { scale: [scaleX, scaleY] };
+      yield { skew: [skewX * RADIANS_TO_DEG, 0] };
     }
   }
 
@@ -94,6 +121,10 @@ async function processFile(filename: string) {
           d.scale(t.scale[0], t.scale[1]);
         } else if ("translate" in t) {
           d.translate(t.translate[0], t.translate[1]);
+        } else if ("skew" in t) {
+          d.skew(t.skew[0], t.skew[1]);
+        } else if ("rotate" in t) {
+          d.rotate(0, 0, t.rotate);
         } else {
           throw new Error("unrecognized transform");
         }
