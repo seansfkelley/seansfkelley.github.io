@@ -1,7 +1,6 @@
 #!/usr/bin/env yarn tsx
 
-import { readFile } from "node:fs/promises";
-import {} from "node:path";
+import { readFile, writeFile } from "node:fs/promises";
 import { parse, Node, NodeType, TextNode } from "node-html-parser";
 import { SvgPath } from "./svg-lib/svg";
 
@@ -90,7 +89,7 @@ async function processFile(filename: string) {
     let current = path;
     while (current != null) {
       const transform = current.getAttribute("transform");
-      for (const t of extractTransforms(transform || "")) {
+      for (const t of [...extractTransforms(transform || "")].reverse()) {
         if ("scale" in t) {
           d.scale(t.scale[0], t.scale[1]);
         } else if ("translate" in t) {
@@ -117,7 +116,7 @@ async function processFile(filename: string) {
   }
   svg.appendChild(new TextNode("\n"));
 
-  console.log(document.toString().replaceAll(/><\/path>/g, "/>"));
+  await writeFile(filename, document.toString().replaceAll(/><\/path>/g, "/>"));
 }
 
 for (const filename of process.argv.slice(2)) {
