@@ -1049,10 +1049,12 @@ const svg = {
     {
       fill,
       stroke,
+      strokeWidth = 1,
       classes,
     }: {
       fill?: SvgColor;
       stroke?: SvgColor;
+      strokeWidth?: number;
       classes?: { fill?: ColorOrMetal };
     } = {}
   ): SVGRectElement => {
@@ -1064,6 +1066,7 @@ const svg = {
       height: y2 - y1,
       fill,
       stroke,
+      "stroke-width": strokeWidth,
     });
     applyClasses(rect, classes);
     return rect;
@@ -2494,25 +2497,25 @@ function getVairTincture() {
     svg.path(
       [
         // All paths have to start with a move, I guess.
-        { type: "M", loc: [0, 0] },
-        { type: "l", loc: [width / 4, width / 4] },
-        { type: "l", loc: [0, height - width / 2] },
-        { type: "l", loc: [width / 4, width / 4] },
-        { type: "l", loc: [-width / 2, 0] },
-        { type: "z" },
-        { type: "M", loc: [width, 0] },
-        { type: "l", loc: [-width / 4, width / 4] },
-        { type: "l", loc: [0, height - width / 2] },
-        { type: "l", loc: [-width / 4, width / 4] },
-        { type: "l", loc: [width / 2, 0] },
-        { type: "z" },
-        { type: "M", loc: [width / 2, height] },
+        { type: "M", loc: [width / 2, 0] },
         { type: "l", loc: [-width / 4, width / 4] },
         { type: "l", loc: [0, height - width / 2] },
         { type: "l", loc: [-width / 4, width / 4] },
         { type: "l", loc: [width, 0] },
         { type: "l", loc: [-width / 4, -width / 4] },
         { type: "l", loc: [0, -(height - width / 2)] },
+        { type: "z" },
+        { type: "M", loc: [0, height] },
+        { type: "l", loc: [width / 4, width / 4] },
+        { type: "l", loc: [0, height - width / 2] },
+        { type: "l", loc: [width / 4, width / 4] },
+        { type: "l", loc: [-width / 2, 0] },
+        { type: "z" },
+        { type: "M", loc: [width, height] },
+        { type: "l", loc: [-width / 4, width / 4] },
+        { type: "l", loc: [0, height - width / 2] },
+        { type: "l", loc: [-width / 4, width / 4] },
+        { type: "l", loc: [width / 2, 0] },
         { type: "z" },
       ],
       { classes: { fill: "azure" } }
@@ -2866,7 +2869,12 @@ const barry: VariationPatternGenerator = {
     const { fill: secondFill, patterns: secondPatterns = [] } =
       await resolveColoration({ tincture: second });
 
-    const width = fillWidth * 1.5; // 1.5: overrun to prevent visual artifacts around the left/right edges.
+    // Double the width to overrun the left/right edges and make sure we don't get artifacting
+    // there. The choice of 2 (as opposed to, say, 1.1) is significant: if this variation is filled
+    // with a pattern, that pattern will be designed to be center-aligned, and by doubling the width
+    // we can apply the transforms below to shift it back into center alignment without having to
+    // know how wide it is, since 2 is an integer multiple of... 1, where 1 means "standard width".
+    const width = fillWidth * 2;
     const height = fillHeight / (count / 2);
 
     // In order to avoid clipping the edges of "out of bounds" treatments like wavy, this generator
@@ -2875,15 +2883,13 @@ const barry: VariationPatternGenerator = {
     // to make sure the bar is sampling from the appropriate part of the pattern. This is
     // particularly important for coordination with the nonRepeatingElements.
     //
-    // TODO: Generalize this. Why does this math work for the arms of Coucy?
-    //
     // TODO: This is not safe if the pattern has already been transformed, such as when a charge
     // shifts the coloration it uses slightly to get better alignment with the geometry. Find an
     // example and figure out how to fix it.
     for (const p of [...firstPatterns, ...secondPatterns]) {
       applySvgAttributes(p, {
         patternTransform: Transforms.toString({
-          translate: [-width / 2, -(fillHeight / 2) - height / 4],
+          translate: [-width / 2, -height / 4],
         }),
       });
     }
