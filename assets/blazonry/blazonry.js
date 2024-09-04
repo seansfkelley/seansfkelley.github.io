@@ -603,13 +603,13 @@ const svg = {
         applyClasses(rect, classes);
         return rect;
     },
-    g: ({ "data-kind": kind }, ...children) => {
+    g: ({ kind }, ...children) => {
         const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
         applySvgAttributes(g, { "data-kind": kind });
         g.append(...children.filter(isNotNullish));
         return g;
     },
-    pattern: ({ id = uniqueId("pattern"), viewBox, x = 0, y = 0, width, height, preserveAspectRatio, patternTransform, }, ...children) => {
+    pattern: ({ id = uniqueId("pattern"), viewBox, x = 0, y = 0, width, height, preserveAspectRatio, patternTransform, kind, }, ...children) => {
         const pattern = document.createElementNS("http://www.w3.org/2000/svg", "pattern");
         applySvgAttributes(pattern, {
             id,
@@ -627,6 +627,7 @@ const svg = {
             patternTransform: patternTransform == null
                 ? undefined
                 : Transforms.toString(patternTransform),
+            "data-kind": kind,
         });
         pattern.append(...children.filter(isNotNullish));
         return pattern;
@@ -654,7 +655,7 @@ async function fetchMutableComplexSvg(kind, variant) {
     if (!(key in complexSvgCache)) {
         complexSvgCache[key] = fetch(`/assets/blazonry/svg/${key}.svg`).then(async (response) => {
             const root = new DOMParser().parseFromString(await response.text(), "image/svg+xml").documentElement;
-            const wrapper = svg.g({ "data-kind": key });
+            const wrapper = svg.g({ kind: key });
             wrapper.classList.add(kind);
             // Shallow copy: appendChild also deletes it from the source node, so this is modifying the
             // collection as we iterate it.
@@ -677,7 +678,7 @@ const BEND_LENGTH = Math.hypot(W, W) + BEND_WIDTH / 2;
 const bend = {
     async render({ coloration, cotised, treatment }) {
         const { fill, pattern } = await resolveColoration(coloration);
-        const bend = svg.g({ "data-kind": "bend" }, pattern);
+        const bend = svg.g({ kind: "bend" }, pattern);
         const treatments = [
             TreatmentRelativePath.offset([0, -BEND_WIDTH / 2]),
             TREATMENTS[treatment ?? "untreated"](BEND_LENGTH, false, "primary"),
@@ -745,7 +746,7 @@ const bend = {
 };
 const bendSinister = {
     async render(ordinary) {
-        const g = svg.g({ "data-kind": "bend-sinister" }, await bend.render(ordinary));
+        const g = svg.g({ kind: "bend-sinister" }, await bend.render(ordinary));
         Transforms.apply(g, {
             scale: [-1, 1],
         });
@@ -764,7 +765,7 @@ const CHIEF_WIDTH = H / 3;
 const chief = {
     async render({ coloration, cotised, treatment }) {
         const { fill, pattern } = await resolveColoration(coloration);
-        const chief = svg.g({ "data-kind": "chief" }, pattern);
+        const chief = svg.g({ kind: "chief" }, pattern);
         const [start, main, end] = TREATMENTS[treatment ?? "untreated"](-W, true, "primary", "center");
         chief.appendChild(svg.path([
             { type: "M", loc: [-W_2, -H_2] },
@@ -788,7 +789,7 @@ const CHEVRON_WIDTH = W / 4;
 const chevron = {
     async render({ coloration, cotised, treatment }) {
         const { fill, pattern } = await resolveColoration(coloration);
-        const chevron = svg.g({ "data-kind": "chevron" }, pattern);
+        const chevron = svg.g({ kind: "chevron" }, pattern);
         const left = [-W_2, -H_2 + W];
         const right = [-W_2 + H, H_2];
         // Cross at 45 degrees starting from the top edge, so we bias upwards from the center.
@@ -923,7 +924,7 @@ const cross = {
         const { fill, pattern } = await resolveColoration(coloration, [W, H], {
             translate: [0, 12],
         });
-        const cross = svg.g({ "data-kind": "cross" }, pattern);
+        const cross = svg.g({ kind: "cross" }, pattern);
         const top = [0, -H_2];
         const bottom = [0, H_2];
         const left = [-W_2, -CROSS_VERTICAL_OFFSET];
@@ -1000,7 +1001,7 @@ const FESS_VERTICAL_OFFSET = -H_2 + FESS_WIDTH * (3 / 2);
 const fess = {
     async render({ coloration, cotised, treatment }) {
         const { fill, pattern } = await resolveColoration(coloration);
-        const fess = svg.g({ "data-kind": "fess" }, pattern);
+        const fess = svg.g({ kind: "fess" }, pattern);
         fess.appendChild(svg.path([
             {
                 type: "m",
@@ -1052,7 +1053,7 @@ const PALE_WIDTH = W / 3;
 const pale = {
     async render({ coloration, cotised, treatment }) {
         const { fill, pattern } = await resolveColoration(coloration);
-        const pale = svg.g({ "data-kind": "pale" }, pattern);
+        const pale = svg.g({ kind: "pale" }, pattern);
         const right = TREATMENTS[treatment ?? "untreated"](H, false, "primary");
         TreatmentRelativePath.rotate(right, Radians.QUARTER_TURN);
         // Note that right is left-to-right, but left is right-to-left. This is to make sure that
@@ -1107,7 +1108,7 @@ const SALTIRE_WIDTH = W / 4;
 const saltire = {
     async render({ coloration, cotised, treatment }) {
         const { fill, pattern } = await resolveColoration(coloration);
-        const saltire = svg.g({ "data-kind": "saltire" }, pattern);
+        const saltire = svg.g({ kind: "saltire" }, pattern);
         const tl = [-W_2, -H_2];
         const tr = [W_2, -H_2];
         const bl = [W_2 - H, H_2];
@@ -1236,7 +1237,7 @@ async function rondel({ coloration }) {
         scale: 0.5,
         translate: [0, 11],
     });
-    return svg.g({ "data-kind": "rondel" }, pattern, 
+    return svg.g({ kind: "rondel" }, pattern, 
     // Not quite the full 40x40. Since these are the more visually heavyweight and fill out their
     // allotted space entirely without natural negative spaces, shrink them so they don't crowd too much.
     svg.circle([0, 0], 18, fill));
@@ -1246,7 +1247,7 @@ async function mullet({ coloration }) {
         scale: 0.4,
         translate: [0, 8],
     });
-    return svg.g({ "data-kind": "mullet" }, pattern, svg.path([
+    return svg.g({ kind: "mullet" }, pattern, svg.path([
         // These awkward numbers keep the proportions nice while just filling out a 40x40 square.
         { type: "M", loc: [0, -18.8] },
         { type: "L", loc: [5, -4.6] },
@@ -1277,7 +1278,7 @@ async function fret({ coloration }) {
     // having to duplicate-with-slight-modifications the various elements. A single path almost works,
     // but would still require patching-up of the outline to produce the proper visual layering, and
     // doesn't have a good way to make sure the open ends in the four corners also have an outline.
-    return svg.g({ "data-kind": "fret" }, pattern, svg.line([-halfWidth - outlineWidth, -halfWidth - outlineWidth], [halfWidth + outlineWidth, halfWidth + outlineWidth], {
+    return svg.g({ kind: "fret" }, pattern, svg.line([-halfWidth - outlineWidth, -halfWidth - outlineWidth], [halfWidth + outlineWidth, halfWidth + outlineWidth], {
         strokeWidth: strokeWidth + outlineWidth * 2,
         classes: { stroke: "sable" },
     }), svg.line([-halfWidth, -halfWidth], [halfWidth, halfWidth], {
@@ -1372,21 +1373,21 @@ async function lion({ coloration, armed, langued, attitude, placement, }) {
         // This is a bit of a hack! But it makes the Bavarian arms look a little less stupid overall.
         // Really, the passant variants should be naturally wider, as that is how they are typically shown.
         Transforms.apply(lion, { scale: [2, 1] });
-        return svg.g({ "data-kind": "lion" }, lion);
+        return svg.g({ kind: "lion" }, lion);
     }
     else {
         return lion;
     }
 }
 async function escutcheon({ content }) {
-    const escutcheon = svg.g({ "data-kind": "escutcheon" }, ...(await escutcheonContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
+    const escutcheon = svg.g({ kind: "escutcheon" }, ...(await escutcheonContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
     escutcheon.setAttribute("clip-path", `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`);
     Transforms.apply(escutcheon, {
         scale: 0.35,
     });
     // Charges are scaled according to count and placement, so wrap in an extra layer in order to
     // apply our own scaling.
-    return svg.g({ "data-kind": "escutcheon-wrapper" }, escutcheon);
+    return svg.g({ kind: "escutcheon-wrapper" }, escutcheon);
 }
 const CHARGE_LOCATORS = {
     // The vertical offset here matches the offset for both quarterings and some of the ordinaries
@@ -1456,6 +1457,7 @@ async function getErmineTincture(foreground, background) {
         // centered.
         width: W / 4.5,
         height: (W / 4.5) * (height / width),
+        kind: "ermine",
     }, svg.rect([0, 0], [width, height], { classes: { fill: background } }), topLeft, bottomRight);
 }
 function getVairTincture() {
@@ -1472,6 +1474,7 @@ function getVairTincture() {
         height: height * 2,
         x: -width / 2,
         y: -height,
+        kind: "vair",
     }, svg.rect([0, 0], [width, height * 2], { classes: { fill: "argent" } }), svg.path([
         // All paths have to start with a move, I guess.
         { type: "M", loc: [0, 0] },
@@ -1758,6 +1761,7 @@ const barry = {
             y: -(fillHeight / 2) - height / 4,
             width,
             height,
+            kind: "barry",
         }, svg.rect([0, 0], [width, height], secondFill), svg.path(TreatmentRelativePath.toClosedLoop(TreatmentRelativePath.offset([0, height / 4]), TREATMENTS[treatment ?? "untreated"](width, !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"], "secondary", "center"), TreatmentRelativePath.line([0, height / 2]), TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center")), firstFill));
     },
     async nonRepeatingElements({ count, first, second }) {
@@ -1795,6 +1799,7 @@ const barryBendy = {
             x: fillHeight / 4 - ((fillWidth / 2) % size),
             y: -fillHeight / 2,
             patternTransform: { skewX: angle },
+            kind: "barry bendy",
         }, svg.rect([0, 0], [2, 2], secondFill), svg.rect([0, 0], [1, 1], firstFill), svg.rect([1, 1], [2, 2], firstFill));
     },
     nonRepeatingElements: undefined,
@@ -1835,6 +1840,7 @@ const bendy = {
                         (count % 2 === 0 ? Math.sqrt(2 * height * height) / 4 : 0),
                 ],
             },
+            kind: "bendy",
         }, svg.rect([0, 0], [width, height], secondFill), svg.path(TreatmentRelativePath.toClosedLoop(TreatmentRelativePath.offset([0, height / 4]), TREATMENTS[treatment ?? "untreated"](width, !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"], "secondary", "center"), TreatmentRelativePath.line([0, height / 2]), TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center")), firstFill));
     },
     async nonRepeatingElements({ count, first, second, width: fillWidth, height: fillHeight, }) {
@@ -1914,6 +1920,7 @@ const checky = {
             height: size,
             x: -fillWidth / 2,
             y: -fillHeight / 2,
+            kind: "checky",
         }, svg.rect([0, 0], [2, 2], secondFill), svg.rect([1, 0], [2, 1], firstFill), svg.rect([0, 1], [1, 2], firstFill));
     },
     nonRepeatingElements: undefined,
@@ -1971,6 +1978,7 @@ const chevronny = {
             height,
             x: -fillWidth / 2,
             y: -fillHeight / 2,
+            kind: "chevronny",
         }, svg.rect([0, 0], [fillWidth, height], secondFill), ...paths);
     },
     nonRepeatingElements: undefined,
@@ -1990,6 +1998,7 @@ const fusilly = {
             y: -fillHeight / 2,
             width,
             height: width * 4,
+            kind: "fusilly",
         }, svg.rect([0, 0], [2, 8], secondFill), svg.polygon({
             points: [
                 [1, 0],
@@ -2023,6 +2032,7 @@ const fusillyInBends = {
                 rotate: Radians.NEG_EIGHTH_TURN,
                 translate: [-width, -width - (fillHeight / 2 - fillWidth / 2)],
             },
+            kind: "fusilly in bends",
         }, svg.rect([0, 0], [2, 8], secondFill), svg.polygon({
             points: [
                 [1, 0],
@@ -2050,6 +2060,7 @@ const lozengy = {
             y: -fillHeight / 2,
             width,
             height: width * 2,
+            kind: "lozengy",
         }, svg.rect([0, 0], [2, 4], secondFill), svg.polygon({
             points: [
                 [1, 0],
@@ -2082,6 +2093,7 @@ const paly = {
             y: -height / 2,
             width,
             height,
+            kind: "paly",
         }, svg.rect([0, 0], [width, height], secondFill), svg.path(TreatmentRelativePath.toClosedLoop(TreatmentRelativePath.offset([width / 4, 0]), left, TreatmentRelativePath.line([width / 2, 0]), right), firstFill));
     },
     async nonRepeatingElements({ count, first, second, width: fillWidth, height: fillHeight, }) {
@@ -2113,7 +2125,7 @@ const VARIATIONS = {
 // ----------------------------------------------------------------------------
 async function field(coloration) {
     const { fill, pattern, nonRepeatingElements } = await resolveColoration(coloration);
-    return svg.g({ "data-kind": "field" }, pattern, 
+    return svg.g({ kind: "field" }, pattern, 
     // Expand the height so that when this is rendered on the extra-tall quarter segments it still fills.
     svg.rect([-W_2, -H_2], [W_2, H_2 + 2 * (H_2 - W_2)], fill), ...(nonRepeatingElements ?? []));
 }
@@ -2158,7 +2170,7 @@ const CANTON_PATH = [
 async function charge(element) {
     if ("canton" in element) {
         const { fill, pattern } = await resolveColoration(element.canton);
-        const canton = svg.g({ "data-kind": "canton" }, pattern);
+        const canton = svg.g({ kind: "canton" }, pattern);
         Transforms.apply(canton, {
             origin: [-W_2, -H_2],
             scale: CANTON_SCALE_FACTOR,
@@ -2308,7 +2320,7 @@ async function escutcheonContent(content) {
                 // charge may have transformations (scale/translate) to lay it out properly, so the
                 // masking has to happen above that to prevent the partition line from being scaled and
                 // translated on the face of the charge, too.
-                svg.g({ "data-kind": "masked-counterchanged" }, 
+                svg.g({ kind: "masked-counterchanged" }, 
                 // This is reversed (counterchanged!) from the field -- second is the one that gets
                 // the mask and it must appear later.
                 ...(await charge(counterchangeCharge(c, content.second))))));
@@ -2318,10 +2330,10 @@ async function escutcheonContent(content) {
     }
     else if ("quarters" in content) {
         const quartered = {
-            1: svg.g({ "data-kind": "quarter-1" }),
-            2: svg.g({ "data-kind": "quarter-2" }),
-            3: svg.g({ "data-kind": "quarter-3" }),
-            4: svg.g({ "data-kind": "quarter-4" }),
+            1: svg.g({ kind: "quarter-1" }),
+            2: svg.g({ kind: "quarter-2" }),
+            3: svg.g({ kind: "quarter-3" }),
+            4: svg.g({ kind: "quarter-4" }),
         };
         for (const [i_, { translate, height }] of Object.entries(QUARTERINGS)) {
             const i = +i_;
@@ -2387,7 +2399,7 @@ async function escutcheonContent(content) {
                     second: content.coloration.first,
                 });
                 applySvgAttributes(counterchangedField, {
-                    "data-kind": "counterchanged-field",
+                    kind: "counterchanged-field",
                     mask: `url(#${mask.id})`,
                 });
                 children.push(mask, counterchangedField);
@@ -2434,7 +2446,7 @@ async function on({ on, surround, charge, }) {
     return children;
 }
 async function inescutcheon({ location, content }) {
-    const escutcheon = svg.g({ "data-kind": "inescutcheon" }, ...(await escutcheonContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
+    const escutcheon = svg.g({ kind: "inescutcheon" }, ...(await escutcheonContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
     escutcheon.setAttribute("clip-path", `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`);
     Transforms.apply(escutcheon, {
         scale: 0.25,
@@ -2490,7 +2502,7 @@ async function parseAndRenderBlazon(initialAmbiguousIndex = 0) {
     async function render(blazon, index) {
         blazon = recursivelyOmitNullish(blazon);
         // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
-        const container = svg.g({ "data-kind": "container" }, ...(await escutcheonContent(blazon.main)), blazon.inescutcheon != null
+        const container = svg.g({ kind: "container" }, ...(await escutcheonContent(blazon.main)), blazon.inescutcheon != null
             ? await inescutcheon(blazon.inescutcheon)
             : undefined);
         container.style.clipPath = `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`;
