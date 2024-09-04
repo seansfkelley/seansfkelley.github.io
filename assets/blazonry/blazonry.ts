@@ -1090,6 +1090,7 @@ const svg = {
       height,
       preserveAspectRatio,
       patternTransform,
+      "data-kind": kind,
     }: {
       id?: string;
       viewBox: [Coordinate, Coordinate];
@@ -1099,6 +1100,7 @@ const svg = {
       height: number;
       preserveAspectRatio?: string;
       patternTransform?: Transforms;
+      "data-kind"?: string;
     },
     ...children: (SVGElement | undefined)[]
   ): SVGPatternElement => {
@@ -1123,6 +1125,7 @@ const svg = {
         patternTransform == null
           ? undefined
           : Transforms.toString(patternTransform),
+      "data-kind": kind,
     });
     pattern.append(...children.filter(isNotNullish));
     return pattern;
@@ -2469,6 +2472,7 @@ async function getErmineTincture(
       // centered.
       width: W / 4.5,
       height: (W / 4.5) * (height / width),
+      "data-kind": "ermine",
     },
     svg.rect([0, 0], [width, height], { classes: { fill: background } }),
     topLeft,
@@ -2492,6 +2496,7 @@ function getVairTincture() {
       height: height * 2,
       x: -width / 2,
       y: -height,
+      "data-kind": "vair",
     },
     svg.rect([0, 0], [width, height * 2], { classes: { fill: "argent" } }),
     svg.path(
@@ -2888,6 +2893,8 @@ const barry: VariationPatternGenerator = {
     // example and figure out how to fix it.
     for (const p of [...firstPatterns, ...secondPatterns]) {
       applySvgAttributes(p, {
+        x: -fillWidth / 2,
+        y: -fillHeight / 2,
         patternTransform: Transforms.toString({
           translate: [-width / 2, -height / 4],
         }),
@@ -2905,6 +2912,7 @@ const barry: VariationPatternGenerator = {
           y: -(fillHeight / 2) - height / 4,
           width,
           height,
+          "data-kind": "barry",
         },
         svg.rect([0, 0], [width, height], secondFill),
         svg.path(
@@ -2988,6 +2996,7 @@ const barryBendy: VariationPatternGenerator = {
           x: fillHeight / 4 - ((fillWidth / 2) % size),
           y: -fillHeight / 2,
           patternTransform: { skewX: angle },
+          "data-kind": "barry bendy",
         },
         svg.rect([0, 0], [2, 2], secondFill),
         svg.rect([0, 0], [1, 1], firstFill),
@@ -3049,6 +3058,7 @@ const bendy: VariationPatternGenerator = {
                 (count % 2 === 0 ? Math.sqrt(2 * height * height) / 4 : 0),
             ],
           },
+          "data-kind": "bendy",
         },
         svg.rect([0, 0], [width, height], secondFill),
         svg.path(
@@ -3130,6 +3140,7 @@ const bendySinister: VariationPatternGenerator = {
               : 0),
         ],
       }),
+      "data-kind": "bendy sinister",
     });
 
     return [pattern, ...otherPatterns];
@@ -3193,6 +3204,7 @@ const checky: VariationPatternGenerator = {
           height: size,
           x: -fillWidth / 2,
           y: -fillHeight / 2,
+          "data-kind": "checky",
         },
         svg.rect([0, 0], [2, 2], secondFill),
         svg.rect([1, 0], [2, 1], firstFill),
@@ -3311,6 +3323,7 @@ const chevronny: VariationPatternGenerator = {
           height,
           x: -fillWidth / 2,
           y: -fillHeight / 2,
+          "data-kind": "chevronny",
         },
         svg.rect([0, 0], [fillWidth, height], secondFill),
         ...paths
@@ -3348,6 +3361,7 @@ const fusilly: VariationPatternGenerator = {
           y: -fillHeight / 2,
           width,
           height: width * 4,
+          "data-kind": "fusilly",
         },
         svg.rect([0, 0], [2, 8], secondFill),
         svg.polygon({
@@ -3399,6 +3413,7 @@ const fusillyInBends: VariationPatternGenerator = {
             rotate: Radians.NEG_EIGHTH_TURN,
             translate: [-width, -width - (fillHeight / 2 - fillWidth / 2)],
           },
+          "data-kind": "fusilly in bends",
         },
         svg.rect([0, 0], [2, 8], secondFill),
         svg.polygon({
@@ -3444,6 +3459,7 @@ const lozengy: VariationPatternGenerator = {
           y: -fillHeight / 2,
           width,
           height: width * 2,
+          "data-kind": "lozengy",
         },
         svg.rect([0, 0], [2, 4], secondFill),
         svg.polygon({
@@ -3508,6 +3524,7 @@ const paly: VariationPatternGenerator = {
           y: -height / 2,
           width,
           height,
+          "data-kind": "paly",
         },
         svg.rect([0, 0], [width, height], secondFill),
         svg.path(
