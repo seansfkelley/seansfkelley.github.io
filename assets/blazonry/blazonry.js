@@ -590,7 +590,7 @@ const svg = {
         applyClasses(line, classes);
         return line;
     },
-    rect: ([x1, y1], [x2, y2], { fill, stroke, classes, } = {}) => {
+    rect: ([x1, y1], [x2, y2], { fill, stroke, strokeWidth = 1, classes, } = {}) => {
         const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
         applySvgAttributes(rect, {
             x: x1,
@@ -599,6 +599,7 @@ const svg = {
             height: y2 - y1,
             fill,
             stroke,
+            "stroke-width": strokeWidth,
         });
         applyClasses(rect, classes);
         return rect;
@@ -1477,25 +1478,25 @@ function getVairTincture() {
         kind: "vair",
     }, svg.rect([0, 0], [width, height * 2], { classes: { fill: "argent" } }), svg.path([
         // All paths have to start with a move, I guess.
-        { type: "M", loc: [0, 0] },
-        { type: "l", loc: [width / 4, width / 4] },
-        { type: "l", loc: [0, height - width / 2] },
-        { type: "l", loc: [width / 4, width / 4] },
-        { type: "l", loc: [-width / 2, 0] },
-        { type: "z" },
-        { type: "M", loc: [width, 0] },
-        { type: "l", loc: [-width / 4, width / 4] },
-        { type: "l", loc: [0, height - width / 2] },
-        { type: "l", loc: [-width / 4, width / 4] },
-        { type: "l", loc: [width / 2, 0] },
-        { type: "z" },
-        { type: "M", loc: [width / 2, height] },
+        { type: "M", loc: [width / 2, 0] },
         { type: "l", loc: [-width / 4, width / 4] },
         { type: "l", loc: [0, height - width / 2] },
         { type: "l", loc: [-width / 4, width / 4] },
         { type: "l", loc: [width, 0] },
         { type: "l", loc: [-width / 4, -width / 4] },
         { type: "l", loc: [0, -(height - width / 2)] },
+        { type: "z" },
+        { type: "M", loc: [0, height] },
+        { type: "l", loc: [width / 4, width / 4] },
+        { type: "l", loc: [0, height - width / 2] },
+        { type: "l", loc: [width / 4, width / 4] },
+        { type: "l", loc: [-width / 2, 0] },
+        { type: "z" },
+        { type: "M", loc: [width, height] },
+        { type: "l", loc: [-width / 4, width / 4] },
+        { type: "l", loc: [0, height - width / 2] },
+        { type: "l", loc: [-width / 4, width / 4] },
+        { type: "l", loc: [width / 2, 0] },
         { type: "z" },
     ], { classes: { fill: "azure" } }));
 }
