@@ -590,13 +590,13 @@ const svg = {
         applyClasses(line, classes);
         return line;
     },
-    rect: ([x1, y1], [x2, y2], { fill, stroke, strokeWidth = 1, classes, } = {}) => {
+    rect: ([x, y], [width, height], { fill, stroke, strokeWidth = 1, classes, } = {}) => {
         const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
         applySvgAttributes(rect, {
-            x: x1,
-            y: y1,
-            width: x2 - x1,
-            height: y2 - y1,
+            x,
+            y,
+            width,
+            height,
             fill,
             stroke,
             "stroke-width": strokeWidth,
@@ -1770,9 +1770,9 @@ const barry = {
         const { fill: secondFill } = await resolveColoration({ tincture: second });
         return [
             // Hide dips from e.g. wavy on the top edge.
-            svg.rect([-W_2, -H_2], [W_2, -H_2 + H / count / 2], firstFill),
+            svg.rect([-W_2, -H_2], [W, H / count / 2], firstFill),
             // Same, but note that the bottom bar changes color depending on the parity.
-            svg.rect([-W_2, H_2 - H / count / 2], [W_2, H_2], count % 2 === 0 ? secondFill : firstFill),
+            svg.rect([-W_2, H_2 - H / count / 2], [W, H / count / 2], count % 2 === 0 ? secondFill : firstFill),
         ];
     },
     defaultCount: 6,
@@ -1801,7 +1801,7 @@ const barryBendy = {
             y: -fillHeight / 2,
             patternTransform: { skewX: angle },
             kind: "barry bendy",
-        }, svg.rect([0, 0], [2, 2], secondFill), svg.rect([0, 0], [1, 1], firstFill), svg.rect([1, 1], [2, 2], firstFill));
+        }, svg.rect([0, 0], [2, 2], secondFill), svg.rect([0, 0], [1, 1], firstFill), svg.rect([1, 1], [1, 1], firstFill));
     },
     nonRepeatingElements: undefined,
     defaultCount: 8,
@@ -1922,7 +1922,7 @@ const checky = {
             x: -fillWidth / 2,
             y: -fillHeight / 2,
             kind: "checky",
-        }, svg.rect([0, 0], [2, 2], secondFill), svg.rect([1, 0], [2, 1], firstFill), svg.rect([0, 1], [1, 2], firstFill));
+        }, svg.rect([0, 0], [2, 2], secondFill), svg.rect([1, 0], [1, 1], firstFill), svg.rect([0, 1], [1, 1], firstFill));
     },
     nonRepeatingElements: undefined,
     defaultCount: 6,
@@ -2102,9 +2102,9 @@ const paly = {
         const { fill: secondFill } = await resolveColoration({ tincture: second });
         return [
             // Hide dips from e.g. wavy on the left edge.
-            svg.rect([-fillWidth / 2, -fillHeight / 2], [-fillWidth / 2 + fillWidth / count / 2, fillHeight / 2], firstFill),
+            svg.rect([-fillWidth / 2, -fillHeight / 2], [fillWidth / count / 2, fillHeight], firstFill),
             // Same, but note that the right bar changes color depending on the parity.
-            svg.rect([fillWidth / 2 - fillWidth / count / 2, -fillHeight / 2], [fillWidth / 2, fillHeight / 2], count % 2 === 0 ? secondFill : firstFill),
+            svg.rect([fillWidth / 2 - fillWidth / count / 2, -fillHeight / 2], [fillWidth / count / 2, fillHeight], count % 2 === 0 ? secondFill : firstFill),
         ];
     },
     defaultCount: 6,
@@ -2128,7 +2128,7 @@ async function field(coloration) {
     const { fill, pattern, nonRepeatingElements } = await resolveColoration(coloration);
     return svg.g({ kind: "field" }, pattern, 
     // Expand the height so that when this is rendered on the extra-tall quarter segments it still fills.
-    svg.rect([-W_2, -H_2], [W_2, H_2 + 2 * (H_2 - W_2)], fill), ...(nonRepeatingElements ?? []));
+    svg.rect([-W_2, -H_2], [W, H + 2 * (H_2 - W_2)], fill), ...(nonRepeatingElements ?? []));
 }
 const ESCUTCHEON_PATH = [
     { type: "M", loc: [-W_2, -H_2] },
