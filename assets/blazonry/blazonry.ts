@@ -197,6 +197,9 @@ type Quarter = 1 | 2 | 3 | 4;
 type Location_ = "chief" | "base";
 const Location_ = {
   toOffset: (location: Location_ | undefined): Coordinate => {
+    // TODO: This Just Works when everything is drawn centered on 0, 0; if we move everything to be
+    // drawn with 0, 0 as the top left we need to account for the translated shapes' size before
+    // translating it into position.
     const yOffset = -H_2 + W_2;
 
     switch (location) {
@@ -332,16 +335,16 @@ interface NonOrdinaryChargeRenderer<
   (charge: T): SVGElement | Promise<SVGElement>;
 }
 
-type VariationWithCount = Variation & {
+type RenderableVariation = Variation & {
   count: number;
   width: number;
   height: number;
 };
 
 interface VariationPatternGenerator {
-  generate(variation: VariationWithCount): Promise<SVGPatternElement>;
+  generate(variation: RenderableVariation): Promise<SVGPatternElement>;
   nonRepeatingElements:
-    | ((variation: VariationWithCount) => Promise<SVGGeometryElement[]>)
+    | ((variation: RenderableVariation) => Promise<SVGGeometryElement[]>)
     | undefined;
   defaultCount: number;
 }
@@ -2834,7 +2837,7 @@ const barry: VariationPatternGenerator = {
     second,
     width: fillWidth,
     height: fillHeight,
-  }: VariationWithCount) {
+  }: RenderableVariation) {
     const { fill: firstFill } = await resolveColoration({ tincture: first });
     const { fill: secondFill } = await resolveColoration({ tincture: second });
 
@@ -2875,7 +2878,7 @@ const barry: VariationPatternGenerator = {
       )
     );
   },
-  async nonRepeatingElements({ count, first, second }: VariationWithCount) {
+  async nonRepeatingElements({ count, first, second }: RenderableVariation) {
     const { fill: firstFill } = await resolveColoration({ tincture: first });
     const { fill: secondFill } = await resolveColoration({ tincture: second });
 
@@ -2900,7 +2903,7 @@ const barryBendy: VariationPatternGenerator = {
     second,
     width: fillWidth,
     height: fillHeight,
-  }: VariationWithCount) {
+  }: RenderableVariation) {
     const { fill: firstFill } = await resolveColoration({ tincture: first });
     const { fill: secondFill } = await resolveColoration({ tincture: second });
 
@@ -2943,7 +2946,7 @@ const bendy: VariationPatternGenerator = {
     count,
     width: fillWidth,
     height: fillHeight,
-  }: VariationWithCount) {
+  }: RenderableVariation) {
     const { fill: firstFill } = await resolveColoration({ tincture: first });
     const { fill: secondFill } = await resolveColoration({ tincture: second });
 
@@ -3010,7 +3013,7 @@ const bendy: VariationPatternGenerator = {
     second,
     width: fillWidth,
     height: fillHeight,
-  }: VariationWithCount) {
+  }: RenderableVariation) {
     const { fill: firstFill } = await resolveColoration({ tincture: first });
     const { fill: secondFill } = await resolveColoration({ tincture: second });
 
@@ -3035,7 +3038,7 @@ const bendy: VariationPatternGenerator = {
 };
 
 const bendySinister: VariationPatternGenerator = {
-  async generate(variation: VariationWithCount) {
+  async generate(variation: RenderableVariation) {
     const pattern = await bendy.generate(variation);
 
     const height =
@@ -3065,7 +3068,7 @@ const bendySinister: VariationPatternGenerator = {
     second,
     width: fillWidth,
     height: fillHeight,
-  }: VariationWithCount) {
+  }: RenderableVariation) {
     const { fill: firstFill } = await resolveColoration({ tincture: first });
     const { fill: secondFill } = await resolveColoration({ tincture: second });
 
@@ -3096,7 +3099,7 @@ const checky: VariationPatternGenerator = {
     second,
     width: fillWidth,
     height: fillHeight,
-  }: VariationWithCount) {
+  }: RenderableVariation) {
     const { fill: firstFill } = await resolveColoration({ tincture: first });
     const { fill: secondFill } = await resolveColoration({ tincture: second });
 
@@ -3130,7 +3133,7 @@ const chevronny: VariationPatternGenerator = {
     count,
     width: fillWidth,
     height: fillHeight,
-  }: VariationWithCount) {
+  }: RenderableVariation) {
     const { fill: firstFill } = await resolveColoration({ tincture: first });
     const { fill: secondFill } = await resolveColoration({ tincture: second });
 
@@ -3241,7 +3244,7 @@ const fusilly: VariationPatternGenerator = {
     second,
     width: fillWidth,
     height: fillHeight,
-  }: VariationWithCount) {
+  }: RenderableVariation) {
     const { fill: firstFill } = await resolveColoration({ tincture: first });
     const { fill: secondFill } = await resolveColoration({ tincture: second });
 
@@ -3283,7 +3286,7 @@ const fusillyInBends: VariationPatternGenerator = {
     second,
     width: fillWidth,
     height: fillHeight,
-  }: VariationWithCount) {
+  }: RenderableVariation) {
     const { fill: firstFill } = await resolveColoration({ tincture: first });
     const { fill: secondFill } = await resolveColoration({ tincture: second });
 
@@ -3327,7 +3330,7 @@ const lozengy: VariationPatternGenerator = {
     second,
     width: fillWidth,
     height: fillHeight,
-  }: VariationWithCount) {
+  }: RenderableVariation) {
     const { fill: firstFill } = await resolveColoration({ tincture: first });
     const { fill: secondFill } = await resolveColoration({ tincture: second });
 
@@ -3368,7 +3371,7 @@ const paly: VariationPatternGenerator = {
     count,
     width: fillWidth,
     height: fillHeight,
-  }: VariationWithCount) {
+  }: RenderableVariation) {
     const { fill: firstFill } = await resolveColoration({ tincture: first });
     const { fill: secondFill } = await resolveColoration({ tincture: second });
 
@@ -3421,7 +3424,7 @@ const paly: VariationPatternGenerator = {
     second,
     width: fillWidth,
     height: fillHeight,
-  }: VariationWithCount) {
+  }: RenderableVariation) {
     const { fill: firstFill } = await resolveColoration({ tincture: first });
     const { fill: secondFill } = await resolveColoration({ tincture: second });
 

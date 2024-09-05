@@ -112,6 +112,9 @@ const Posture = {
 };
 const Location_ = {
     toOffset: (location) => {
+        // TODO: This Just Works when everything is drawn centered on 0, 0; if we move everything to be
+        // drawn with 0, 0 as the top left we need to account for the translated shapes' size before
+        // translating it into position.
         const yOffset = -H_2 + W_2;
         switch (location) {
             case undefined:
