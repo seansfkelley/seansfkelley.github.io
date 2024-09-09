@@ -343,10 +343,7 @@ type RenderableVariation = Variation & {
 };
 
 interface VariationPatternGenerator {
-  generate(variation: RenderableVariation): Promise<SVGPatternElement>;
-  nonRepeatingElements:
-    | ((variation: RenderableVariation) => Promise<SVGGeometryElement[]>)
-    | undefined;
+  generate(variation: RenderableVariation): Promise<SVGMaskElement>;
   defaultCount: number;
 }
 
@@ -2520,9 +2517,6 @@ interface ResolvedColoration {
   fill: { fill: SvgColor } | { classes: { fill: ColorOrMetal } };
   stroke: { stroke: SvgColor } | { classes: { stroke: ColorOrMetal } };
   pattern?: SVGPatternElement;
-  // Used for touching up the edges of the pattern where they might look bad against the clipping
-  // frame, like paly wavy just barely dipping into view on the left and right edges.
-  nonRepeatingElements?: SVGGeometryElement[];
 }
 
 async function resolveColoration(
@@ -2584,20 +2578,51 @@ async function resolveColoration(
     }
   } else if ("type" in coloration) {
     const count = coloration.count ?? VARIATIONS[coloration.type].defaultCount;
-    const pattern = await VARIATIONS[coloration.type].generate({
+    const mask = await VARIATIONS[coloration.type].generate({
       ...coloration,
       count,
       width,
       height,
     });
+    const { fill: firstFill, pattern: firstPattern } = await resolveColoration({
+      tincture: coloration.first,
+    });
+    const { fill: secondFill, pattern: secondPattern } =
+      await resolveColoration({ tincture: coloration.second });
+
+    const pattern = svg.pattern(
+      {
+        viewBox: [
+          [0, 0],
+          [width, height],
+        ],
+        // Furs assume they are relative to the entire W/H of the field, which means they get all
+        // misaligned when in the context of a 0,0-based viewBox. I think this means we have to
+        // turn everything to be 0,0-based, unless there is a good way to define furs such that
+        // they can set align themselves in a whole field but also 0,0-based viewboxes.
+        //
+        // We can't just mimic the -1/2, -1/2 viewbox with `width` and `height` here because masks
+        // are (reasonably) assumed to start at 0,0... maybe the right answer is to define masks
+        // to start at the -width/2 and -height/2 instead?
+        width,
+        height,
+        kind: "variation",
+      },
+      mask,
+      firstPattern,
+      secondPattern,
+      svg.rect([0, 0], [width, height], secondFill),
+      svg.rect([0, 0], [width, height], {
+        mask: `url(#${mask.id})`,
+        ...firstFill,
+      })
+    );
+
     const color = `url(#${pattern.id})` as const;
     return {
       fill: { fill: color },
       stroke: { stroke: color },
       pattern,
-      nonRepeatingElements: await VARIATIONS[
-        coloration.type
-      ].nonRepeatingElements?.({ ...coloration, count, width, height }),
     };
   } else {
     assertNever(coloration);
@@ -2841,8 +2866,8 @@ const barry: VariationPatternGenerator = {
     count,
     first,
     second,
-    width: fillWidth,
-    height: fillHeight,
+    width,
+    height,
   }: RenderableVariation) {
     const { fill: firstFill, pattern: firstPattern } = await resolveColoration({
       tincture: first,
@@ -2850,33 +2875,33 @@ const barry: VariationPatternGenerator = {
     const { fill: secondFill, pattern: secondPattern } =
       await resolveColoration({ tincture: second });
 
-    const width = fillWidth; // 1.5: overrun to prevent visual artifacts around the left/right edges.
-    const height = fillHeight / (count / 2);
+    const patternWidth = width; // 1.5: overrun to prevent visual artifacts around the left/right edges.
+    const patternHeight = height / (count / 2);
 
     const maskPattern = svg.pattern(
       {
         viewBox: [
           [0, 0],
-          [width, height],
+          [patternWidth, patternHeight],
         ],
-        x: -width / 2,
-        y: -height / 4,
-        width,
-        height,
+        x: -patternWidth / 2,
+        y: -patternHeight / 4,
+        width: patternWidth,
+        height: patternHeight,
         kind: "barry-mask",
       },
       svg.path(
         TreatmentRelativePath.toClosedLoop(
-          TreatmentRelativePath.offset([0, height / 4]),
+          TreatmentRelativePath.offset([0, patternHeight / 4]),
           TREATMENTS[treatment ?? "untreated"](
-            width,
+            patternWidth,
             !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"],
             "secondary",
             "center"
           ),
-          TreatmentRelativePath.line([0, height / 2]),
+          TreatmentRelativePath.line([0, patternHeight / 2]),
           TREATMENTS[treatment ?? "untreated"](
-            -width,
+            -patternWidth,
             false,
             "primary",
             "center"
@@ -2886,62 +2911,17 @@ const barry: VariationPatternGenerator = {
       )
     );
 
-    const mask = svg.mask(
+    return svg.mask(
       {},
       maskPattern,
-      svg.rect([0, 0], [fillWidth, fillHeight], {
+      svg.rect([0, 0], [width, height], {
         fill: `url(#${maskPattern.id})`,
       }),
-      svg.rect([0, 0], [fillWidth, height / 4], { fill: "white" }),
-      svg.rect(
-        [0, fillHeight - height / 4],
-        [fillWidth, height / 4],
-        count % 2 === 0 ? { fill: "black" } : { fill: "white" }
-      )
-    );
-
-    return svg.pattern(
-      {
-        viewBox: [
-          // TODO: This almost works. Problem: the furs currently assume they are being filled into
-          // a full-size field/ordinary/charge/etc., and so offset themselves into the top left
-          // corner with [-W_2, -H_2]. But in this context, we want them to at 0, 0. We can't just
-          // clobber any x/y offset set because it might be a small centering adjustment.
-          //
-          // Options:
-          // - align everything to 0, 0
-          // - figure out (???) if we should pass fillWidth/fillHeight to the coloration resolver
-          //   and if we can change the math there to do a small adjustment for e.g. ermine instead
-          //   of going all the way into the corner
-          // - figure out if we can separate the masked layer from the non-masked one -- though
-          //   I guess this won't actually help in the general case since _something_ is going to
-          //   need the 0, 0-based masking viewbox (and it's also not necessary W/H-sized, even if
-          //   it's not 0, 0-based)
-          //
-          // TODO: If we're committed to masking again, we should probably return a mask of the
-          // desired size instead of a pattern that bakes in the colorations too. A convenience
-          // function can be used to combine the mask with two colors to get the complete result,
-          // so that charges/a variated field can use a more reasonable DOM instead of a hugely
-          // complicated pattern.
-          [0, 0],
-          [fillWidth, fillHeight],
-        ],
-        // x: -fillWidth / 2,
-        // y: -fillHeight / 2,
-        width: fillWidth,
-        height: fillHeight,
-        kind: "barry",
-        patternTransform: {
-          translate: [-fillWidth / 2, -fillHeight / 2],
-        },
-      },
-      mask,
-      firstPattern,
-      secondPattern,
-      svg.rect([0, 0], [fillWidth, fillHeight], secondFill),
-      svg.rect([0, 0], [fillWidth, fillHeight], {
-        ...firstFill,
-        mask: `url(#${mask.id})`,
+      svg.rect([0, 0], [width, patternHeight / 4], {
+        fill: "white",
+      }),
+      svg.rect([0, height - patternHeight / 4], [width, patternHeight / 4], {
+        fill: count % 2 === 0 ? "black" : "white",
       })
     );
   },
