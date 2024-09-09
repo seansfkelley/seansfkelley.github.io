@@ -91,6 +91,7 @@ const H = 120;
 const H_2 = H / 2;
 const W = 100;
 const W_2 = W / 2;
+const MARGIN = 2;
 const UNSUPPORTED = Symbol("unsupported");
 const Posture = {
     toRadians: (posture) => {
@@ -2693,6 +2694,7 @@ try {
 catch (e) {
     // ignore and do default thing
 }
+rendered.setAttribute("viewBox", `${-W_2 - MARGIN} ${-H_2 - MARGIN} ${W + 2 * MARGIN} ${H + 2 * MARGIN}`);
 if (typeof text === "string" &&
     (index === undefined || typeof index === "number")) {
     input.value = text;
