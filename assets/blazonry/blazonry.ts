@@ -1048,11 +1048,13 @@ const svg = {
       stroke,
       strokeWidth = 1,
       classes,
+      mask,
     }: {
       fill?: SvgColor;
       stroke?: SvgColor;
       strokeWidth?: number;
       classes?: { fill?: ColorOrMetal };
+      mask?: `url(#${string})`;
     } = {}
   ): SVGRectElement => {
     const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
@@ -1064,6 +1066,7 @@ const svg = {
       fill,
       stroke,
       "stroke-width": strokeWidth,
+      mask,
     });
     applyClasses(rect, classes);
     return rect;
@@ -2841,25 +2844,27 @@ const barry: VariationPatternGenerator = {
     width: fillWidth,
     height: fillHeight,
   }: RenderableVariation) {
-    const { fill: firstFill } = await resolveColoration({ tincture: first });
-    const { fill: secondFill } = await resolveColoration({ tincture: second });
+    const { fill: firstFill, pattern: firstPattern } = await resolveColoration({
+      tincture: first,
+    });
+    const { fill: secondFill, pattern: secondPattern } =
+      await resolveColoration({ tincture: second });
 
-    const width = fillWidth * 1.5; // 1.5: overrun to prevent visual artifacts around the left/right edges.
+    const width = fillWidth; // 1.5: overrun to prevent visual artifacts around the left/right edges.
     const height = fillHeight / (count / 2);
 
-    return svg.pattern(
+    const maskPattern = svg.pattern(
       {
         viewBox: [
           [0, 0],
           [width, height],
         ],
         x: -width / 2,
-        y: -(fillHeight / 2) - height / 4,
+        y: -height / 4,
         width,
         height,
-        kind: "barry",
+        kind: "barry-mask",
       },
-      svg.rect([0, 0], [width, height], secondFill),
       svg.path(
         TreatmentRelativePath.toClosedLoop(
           TreatmentRelativePath.offset([0, height / 4]),
@@ -2877,24 +2882,68 @@ const barry: VariationPatternGenerator = {
             "center"
           )
         ),
-        firstFill
+        { fill: "white" }
       )
     );
-  },
-  async nonRepeatingElements({ count, first, second }: RenderableVariation) {
-    const { fill: firstFill } = await resolveColoration({ tincture: first });
-    const { fill: secondFill } = await resolveColoration({ tincture: second });
 
-    return [
-      // Hide dips from e.g. wavy on the top edge.
-      svg.rect([-W_2, -H_2], [W, H / count / 2], firstFill),
-      // Same, but note that the bottom bar changes color depending on the parity.
+    const mask = svg.mask(
+      {},
+      maskPattern,
+      svg.rect([0, 0], [fillWidth, fillHeight], {
+        fill: `url(#${maskPattern.id})`,
+      }),
+      svg.rect([0, 0], [fillWidth, height / 4], { fill: "white" }),
       svg.rect(
-        [-W_2, H_2 - H / count / 2],
-        [W, H / count / 2],
-        count % 2 === 0 ? secondFill : firstFill
-      ),
-    ];
+        [0, fillHeight - height / 4],
+        [fillWidth, height / 4],
+        count % 2 === 0 ? { fill: "black" } : { fill: "white" }
+      )
+    );
+
+    return svg.pattern(
+      {
+        viewBox: [
+          // TODO: This almost works. Problem: the furs currently assume they are being filled into
+          // a full-size field/ordinary/charge/etc., and so offset themselves into the top left
+          // corner with [-W_2, -H_2]. But in this context, we want them to at 0, 0. We can't just
+          // clobber any x/y offset set because it might be a small centering adjustment.
+          //
+          // Options:
+          // - align everything to 0, 0
+          // - figure out (???) if we should pass fillWidth/fillHeight to the coloration resolver
+          //   and if we can change the math there to do a small adjustment for e.g. ermine instead
+          //   of going all the way into the corner
+          // - figure out if we can separate the masked layer from the non-masked one -- though
+          //   I guess this won't actually help in the general case since _something_ is going to
+          //   need the 0, 0-based masking viewbox (and it's also not necessary W/H-sized, even if
+          //   it's not 0, 0-based)
+          //
+          // TODO: If we're committed to masking again, we should probably return a mask of the
+          // desired size instead of a pattern that bakes in the colorations too. A convenience
+          // function can be used to combine the mask with two colors to get the complete result,
+          // so that charges/a variated field can use a more reasonable DOM instead of a hugely
+          // complicated pattern.
+          [0, 0],
+          [fillWidth, fillHeight],
+        ],
+        // x: -fillWidth / 2,
+        // y: -fillHeight / 2,
+        width: fillWidth,
+        height: fillHeight,
+        kind: "barry",
+        patternTransform: {
+          translate: [-fillWidth / 2, -fillHeight / 2],
+        },
+      },
+      mask,
+      firstPattern,
+      secondPattern,
+      svg.rect([0, 0], [fillWidth, fillHeight], secondFill),
+      svg.rect([0, 0], [fillWidth, fillHeight], {
+        ...firstFill,
+        mask: `url(#${mask.id})`,
+      })
+    );
   },
   defaultCount: 6,
 };
