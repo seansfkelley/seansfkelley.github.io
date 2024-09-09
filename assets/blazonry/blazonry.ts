@@ -2510,11 +2510,7 @@ function getVairTincture() {
   );
 }
 
-async function resolveColoration(
-  coloration: SvgColorableColoration,
-  [width, height]: Coordinate = [W, H],
-  patternTransform: Transforms = {}
-): Promise<{
+interface ResolvedColoration {
   // The value of classes instead of just setting fill/stroke directly is that complex charges like
   // lions can use CSS to choose which sub-elements should respect the color, as well as tweak
   // things like lightness.
@@ -2524,7 +2520,13 @@ async function resolveColoration(
   // Used for touching up the edges of the pattern where they might look bad against the clipping
   // frame, like paly wavy just barely dipping into view on the left and right edges.
   nonRepeatingElements?: SVGGeometryElement[];
-}> {
+}
+
+async function resolveColoration(
+  coloration: SvgColorableColoration,
+  [width, height]: Coordinate = [W, H],
+  patternTransform: Transforms = {}
+): Promise<ResolvedColoration> {
   if ("color" in coloration) {
     return {
       fill: { fill: coloration.color },
