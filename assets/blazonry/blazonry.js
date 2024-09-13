@@ -560,10 +560,7 @@ function maybeAppendChild(parent, child) {
 const svg = {
     circle: ([cx, cy], r, { fill, classes, } = {}) => {
         const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        circle.setAttribute("r", r.toString());
-        circle.setAttribute("cx", cx.toString());
-        circle.setAttribute("cy", cy.toString());
-        applySvgAttributes(circle, { fill });
+        applySvgAttributes(circle, { r, cx, cy, fill });
         applyClasses(circle, classes);
         return circle;
     },
@@ -2652,6 +2649,9 @@ function generateRandomBlazon() {
         (tincture) => `${tincture[0].toUpperCase()}${tincture.slice(1)}`)
             // Re-convert the special case. Note it's capitalized due to the previous transformation.
             .replaceAll(/\bCendree\b/g, "Cendrée")
+            // Polish: make sure definite articles match the the first letter of the next word. Grammar doesn't.
+            .replaceAll(/\ba ([aeiou])/g, "an $1")
+            .replaceAll(/\ban ([^aeiou])/g, "a $1")
             .replaceAll(/^.|\. ./g, (l) => l.toUpperCase())
             // Periods are optional when there isn't an inescutcheon, so make sure there's always one.
             .replace(/\.?$/, "."));
