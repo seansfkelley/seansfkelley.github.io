@@ -4120,6 +4120,9 @@ function generateRandomBlazon() {
         )
         // Re-convert the special case. Note it's capitalized due to the previous transformation.
         .replaceAll(/\bCendree\b/g, "Cendrée")
+        // Polish: make sure definite articles match the the first letter of the next word. Grammar doesn't.
+        .replaceAll(/\ba ([aeiou])/g, "an $1")
+        .replaceAll(/\ban ([^aeiou])/g, "a $1")
         .replaceAll(/^.|\. ./g, (l) => l.toUpperCase())
         // Periods are optional when there isn't an inescutcheon, so make sure there's always one.
         .replace(/\.?$/, ".")
