@@ -970,10 +970,7 @@ const svg = {
       "http://www.w3.org/2000/svg",
       "circle"
     );
-    circle.setAttribute("r", r.toString());
-    circle.setAttribute("cx", cx.toString());
-    circle.setAttribute("cy", cy.toString());
-    applySvgAttributes(circle, { fill });
+    applySvgAttributes(circle, { r, cx, cy, fill });
     applyClasses(circle, classes);
     return circle;
   },
