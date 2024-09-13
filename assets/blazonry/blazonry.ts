@@ -2415,7 +2415,7 @@ async function resolveColoration(
     const pattern = svg.pattern(
       {
         viewBox: [
-          [0, 0],
+          [-width / 2, -height / 2],
           [width, height],
         ],
         // Furs assume they are relative to the entire W/H of the field, which means they get all
@@ -2426,6 +2426,8 @@ async function resolveColoration(
         // We can't just mimic the -1/2, -1/2 viewbox with `width` and `height` here because masks
         // are (reasonably) assumed to start at 0,0... maybe the right answer is to define masks
         // to start at the -width/2 and -height/2 instead?
+        x: -width / 2,
+        y: -height / 2,
         width,
         height,
         kind: "variation",
@@ -2433,8 +2435,8 @@ async function resolveColoration(
       mask,
       firstPattern,
       secondPattern,
-      svg.rect([0, 0], [width, height], secondFill),
-      svg.rect([0, 0], [width, height], {
+      svg.rect([-width / 2, -height / 2], [width, height], secondFill),
+      svg.rect([-width / 2, -height / 2], [width, height], {
         mask: `url(#${mask.id})`,
         ...firstFill,
       })
@@ -2677,20 +2679,7 @@ const IS_VARIATION_TREATMENT_ALIGNED: Record<Treatment | "untreated", boolean> =
 };
 
 const barry: VariationPatternGenerator = {
-  async generate({
-    treatment,
-    count,
-    first,
-    second,
-    width,
-    height,
-  }: RenderableVariation) {
-    const { fill: firstFill, pattern: firstPattern } = await resolveColoration({
-      tincture: first,
-    });
-    const { fill: secondFill, pattern: secondPattern } =
-      await resolveColoration({ tincture: second });
-
+  async generate({ treatment, count, width, height }: RenderableVariation) {
     const patternWidth = width; // 1.5: overrun to prevent visual artifacts around the left/right edges.
     const patternHeight = height / (count / 2);
 
@@ -2705,6 +2694,9 @@ const barry: VariationPatternGenerator = {
         width: patternWidth,
         height: patternHeight,
         kind: "barry-mask",
+        patternTransform: {
+          translate: [-width / 2, -height / 2],
+        },
       },
       svg.path(
         TreatmentRelativePath.toClosedLoop(
@@ -2730,15 +2722,19 @@ const barry: VariationPatternGenerator = {
     return svg.mask(
       {},
       maskPattern,
-      svg.rect([0, 0], [width, height], {
+      svg.rect([-width / 2, -height / 2], [width, height], {
         fill: `url(#${maskPattern.id})`,
       }),
-      svg.rect([0, 0], [width, patternHeight / 4], {
+      svg.rect([-width / 2, -height / 2], [width, patternHeight / 4], {
         fill: "white",
       }),
-      svg.rect([0, height - patternHeight / 4], [width, patternHeight / 4], {
-        fill: count % 2 === 0 ? "black" : "white",
-      })
+      svg.rect(
+        [-width / 2, height / 2 - patternHeight / 4],
+        [width, patternHeight / 4],
+        {
+          fill: count % 2 === 0 ? "black" : "white",
+        }
+      )
     );
   },
   defaultCount: 6,
