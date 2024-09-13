@@ -321,7 +321,7 @@ type RenderableVariation = Variation & {
   height: number;
 };
 
-interface VariationPatternGenerator {
+interface VariationMaskGenerator {
   generate(variation: RenderableVariation): Promise<SVGMaskElement>;
   defaultCount: number;
 }
@@ -2678,7 +2678,7 @@ const IS_VARIATION_TREATMENT_ALIGNED: Record<Treatment | "untreated", boolean> =
   untreated: false,
 };
 
-const barry: VariationPatternGenerator = {
+const barry: VariationMaskGenerator = {
   async generate({ treatment, count, width, height }: RenderableVariation) {
     const patternWidth = width; // 1.5: overrun to prevent visual artifacts around the left/right edges.
     const patternHeight = height / (count / 2);
@@ -2740,7 +2740,7 @@ const barry: VariationPatternGenerator = {
   defaultCount: 6,
 };
 
-const barryBendy: VariationPatternGenerator = {
+const barryBendy: VariationMaskGenerator = {
   async generate({
     count,
     first,
@@ -2782,7 +2782,7 @@ const barryBendy: VariationPatternGenerator = {
   defaultCount: 8,
 };
 
-const bendy: VariationPatternGenerator = {
+const bendy: VariationMaskGenerator = {
   async generate({
     treatment,
     first,
@@ -2876,7 +2876,7 @@ const bendy: VariationPatternGenerator = {
   defaultCount: 8,
 };
 
-const bendySinister: VariationPatternGenerator = {
+const bendySinister: VariationMaskGenerator = {
   async generate(variation: RenderableVariation) {
     const pattern = await bendy.generate(variation);
 
@@ -2928,7 +2928,7 @@ const bendySinister: VariationPatternGenerator = {
   defaultCount: 8,
 };
 
-const checky: VariationPatternGenerator = {
+const checky: VariationMaskGenerator = {
   async generate({
     count,
     first,
@@ -2961,7 +2961,7 @@ const checky: VariationPatternGenerator = {
   defaultCount: 6,
 };
 
-const chevronny: VariationPatternGenerator = {
+const chevronny: VariationMaskGenerator = {
   async generate({
     treatment,
     first,
@@ -3045,7 +3045,7 @@ const chevronny: VariationPatternGenerator = {
   defaultCount: 6,
 };
 
-const fusilly: VariationPatternGenerator = {
+const fusilly: VariationMaskGenerator = {
   async generate({
     count,
     first,
@@ -3087,7 +3087,7 @@ const fusilly: VariationPatternGenerator = {
 
 // There is no visual reference I could find for this besides the arms of Bavaria, so the precise
 // positioning of the variations relative to the corners and edges matches the appearance there.
-const fusillyInBends: VariationPatternGenerator = {
+const fusillyInBends: VariationMaskGenerator = {
   async generate({
     count,
     first,
@@ -3131,7 +3131,7 @@ const fusillyInBends: VariationPatternGenerator = {
   defaultCount: 8,
 };
 
-const lozengy: VariationPatternGenerator = {
+const lozengy: VariationMaskGenerator = {
   async generate({
     count,
     first,
@@ -3171,7 +3171,7 @@ const lozengy: VariationPatternGenerator = {
   defaultCount: 8,
 };
 
-const paly: VariationPatternGenerator = {
+const paly: VariationMaskGenerator = {
   async generate({
     treatment,
     first,
@@ -3245,7 +3245,7 @@ const paly: VariationPatternGenerator = {
   defaultCount: 6,
 };
 
-const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
+const VARIATIONS: Record<VariationName, VariationMaskGenerator> = {
   barry,
   "barry bendy": barryBendy,
   bendy,
