@@ -3,7 +3,6 @@
 ---
 
 @use "sass:math";
-
 @import "variables";
 
 #sort-filter {
@@ -110,25 +109,26 @@
   }
 }
 
+.reveal-spoilers-on-hover .spoiler :not(.reveal-button) {
+  // Click-button reveals should be immediate; only transition on hovers.
+  transition: filter 200ms ease-in;
+}
+
 .spoiler {
   > :not(.reveal-button) {
-    .reveal-spoilers-on-hover & {
-      // Click-button reveals should be immediate; only transition on hovers.
-      transition: filter 200ms ease-in;
-    }
-
     filter: blur(5px);
     pointer-events: none;
     user-select: none;
+  }
 
-    // https://github.com/sass/sass/issues/1425#issuecomment-55114453
-    @at-root img#{&} {
-      filter: blur(10px);
-    }
+  &.poster img {
+    filter: blur(10px);
   }
 
   &.revealed > *,
-  .reveal-spoilers-on-hover &:hover > * {
+  .reveal-spoilers-on-hover &:hover > *,
+  &.revealed.poster img,
+  .reveal-spoilers-on-hover &.poster img:hover {
     filter: none;
     pointer-events: initial;
     user-select: initial;
@@ -141,7 +141,7 @@
     top: $spacing * 3;
     left: 50%;
     transform: translateX(-50%);
-    padding: $spacing / 2 $spacing;
+    padding: math.div($spacing, 2) $spacing;
     font-size: $font-size-large;
   }
 }
