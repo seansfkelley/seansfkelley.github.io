@@ -56,7 +56,8 @@
       margin-bottom: math.div($spacing, 4);
     }
 
-    .poster {
+    .poster a {
+      display: block;
       margin-bottom: $spacing;
       align-self: center;
       min-width: 200px;
@@ -110,15 +111,39 @@
 }
 
 .spoiler {
-  transition: filter 200ms ease-in;
+  > :not(.reveal-button) {
+    .reveal-spoilers-on-hover & {
+      // Click-button reveals should be immediate; only transition on hovers.
+      transition: filter 200ms ease-in;
+    }
 
-  &:not(:hover) {
     filter: blur(5px);
-  }
-}
+    pointer-events: none;
+    user-select: none;
 
-img.spoiler:not(:hover) {
-  filter: blur(10px);
+    // https://github.com/sass/sass/issues/1425#issuecomment-55114453
+    @at-root img#{&} {
+      filter: blur(10px);
+    }
+  }
+
+  &.revealed > *,
+  .reveal-spoilers-on-hover &:hover > * {
+    filter: none;
+    pointer-events: initial;
+    user-select: initial;
+  }
+
+  position: relative;
+
+  .reveal-button {
+    position: absolute;
+    top: $spacing * 3;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: $spacing / 2 $spacing;
+    font-size: $font-size-large;
+  }
 }
 
 a.permalink {
