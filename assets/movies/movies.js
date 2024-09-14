@@ -13,6 +13,22 @@ const list = document.querySelector(".list-container");
 /** @type HTMLElement[] */
 const entries = [...document.querySelectorAll(".entry")];
 
+list.classList.remove("reveal-spoilers-on-hover");
+
+for (const e of document.querySelectorAll(".spoiler")) {
+  const button = document.createElement("button");
+  button.classList.add("reveal-button");
+  button.textContent = "Reveal Spoiler";
+  e.appendChild(button);
+
+  button.addEventListener("click", (event) => {
+    e.classList.add("revealed");
+    e.removeChild(button);
+    // In case the button is inside an <a>.
+    event.preventDefault();
+  });
+}
+
 function updateSortAndFilter() {
   /** @type Kind */
   const kind = form.elements.kind.value;
