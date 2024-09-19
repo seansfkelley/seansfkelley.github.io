@@ -163,6 +163,9 @@ body[data-theme=dark] {
 .entry .content .one-liner {
   margin-bottom: 3.5px;
 }
+.entry .content .poster {
+  margin: 0 auto;
+}
 .entry .content .poster a {
   display: block;
   margin-bottom: 14px;
