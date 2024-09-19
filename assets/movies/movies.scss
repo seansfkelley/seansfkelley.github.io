@@ -55,12 +55,16 @@
       margin-bottom: math.div($spacing, 4);
     }
 
-    .poster a {
-      display: block;
-      margin-bottom: $spacing;
-      align-self: center;
-      min-width: 200px;
-      width: 200px;
+    .poster {
+      margin: 0 auto;
+
+      a {
+        display: block;
+        margin-bottom: $spacing;
+        align-self: center;
+        min-width: 200px;
+        width: 200px;
+      }
     }
 
     .watched {
