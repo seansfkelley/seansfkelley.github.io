@@ -204,6 +204,8 @@ body[data-theme=dark] {
   }
   .entry .content .poster {
     align-self: initial;
+    margin-left: initial;
+    margin-right: initial;
   }
   .entry .content .more-thoughts :last-child {
     margin-bottom: 14px;
