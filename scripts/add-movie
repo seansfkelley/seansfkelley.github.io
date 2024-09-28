@@ -61,7 +61,7 @@ elif [ -z "$year" ] ; then
   year="$inferred_year"
   echo "inferred year as $year"
 elif [ "$year" -ne "$inferred_year" ] ; then
-  echo "inferred year is different from given; we probably have the wrong movie"
+  echo "inferred year ($inferred_year) is different from given ($year); we probably have the wrong movie"
   exit 1
 fi
 
