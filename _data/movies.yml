@@ -1,3 +1,25 @@
+- title: The Fall
+  year: 2006
+  kind: movie
+  link: https://www.imdb.com/title/tt0460791/
+  poster: the-fall-2006.jpg
+  watched: 2024-10-29
+  # watched-display:
+  watch-this:
+  # dont-watch-this:
+  more-thoughts: |
+
+- title: The Lobster
+  year: 2015
+  kind: movie
+  link: https://www.imdb.com/title/tt3464902/
+  poster: the-lobster-2015.jpg
+  watched: 2024-10-29
+  # watched-display:
+  watch-this:
+  # dont-watch-this:
+  more-thoughts: |
+
 - title: The Substance
   year: 2024
   kind: movie
