@@ -1,3 +1,15 @@
+- title: Your Name.
+  year: 2016
+  kind: movie
+  link: https://www.imdb.com/title/tt5311514/
+  poster: your-name-2016.jpg
+  watched: 2024-11-09
+  watch-this:
+  more-thoughts: |
+    - Much less cutesy and more actually touching than I expected, which was nice.
+    - I liked that the core narrative gimmick was kind of ill-defined and blended several things -- supernatural happenings, time travel, body-switching -- because the rules weren't important and it made for some interesting scenes and unexpected plot turns.
+    - I would have much preferred a melancholy ending where he never meets her again and we wonder if the girl on the bridge was her or someone else with a red ribbon.
+    - Very pretty!
 - title: The Girl With All the Gifts
   year: 2016
   kind: movie
@@ -28,10 +40,9 @@
   link: https://www.imdb.com/title/tt3464902/
   poster: the-lobster-2015.jpg
   watched: 2024-10-29
-  # watched-display:
-  watch-this:
-  # dont-watch-this:
+  watch-this: because it's _assertively_ weird.
   more-thoughts: |
+    I love that this movie dumps this ridiculous premise in your lap right at the beginning, and then just follows through.
 - title: The Substance
   year: 2024
   kind: movie
