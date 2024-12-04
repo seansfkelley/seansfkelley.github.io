@@ -51,13 +51,13 @@ and mix.
 
 Scoop dough out onto hard, non-porous, unfloured surface.[^3] Knead: grab, pull, smash, roll, turn (reference: [original video at 3:20](https://www.youtube.com/watch?v=APEavQg8rMw&t=200s)). **Don't pull too hard.** Doing so tears the outer layers of the dough and makes the whole thing a sticky mess again. Repeat for about 10 minutes. You want dough that is smooth, elastic and tacky (but not sticky).
 
-Cover bowl and proof for 4 hours in a warm environment.
+Return to bowl, cover, and proof for 4 hours in a warm environment.
 
 {% literate_recipe_step wait="4h" duration="5m" %}
 
 Put dough on unfloured countertop. Sprinkle with flour, and flip. Fold each of the four edges over the center until you get a rough ball.
 
-Rest for 30 minutes.
+Rest, covered with the bowl or kitchen towel, for 30 minutes.
 
 {% literate_recipe_step wait="30m" duration="10m" %}
 
