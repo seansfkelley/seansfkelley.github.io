@@ -285,3 +285,5 @@ A common place I've seen this distinction sneak up on people is when boolean use
 ## Merge v. Rebase
 
 ## Force-pushing
+
+## String Literal Log Lines
