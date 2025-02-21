@@ -1,3 +1,14 @@
+- title: Bullitt
+  year: 1968
+  kind: movie
+  link: https://www.imdb.com/title/tt0062765/
+  poster: bullitt-1968.jpg
+  watched: 2025-02-01
+  # watched-display:
+  watch-this:
+  # dont-watch-this:
+  more-thoughts: |
+
 # - title: What We Do in the Shadows
 #   year: 2014
 #   kind: movie
@@ -47,6 +58,16 @@
 #   watched: 2025-01-05
 #   watch-this:
 #   more-thoughts: |
+- title: The Expanse (Seasons 2 and 3)
+  year: 2017
+  kind: tv
+  link: https://www.imdb.com/title/tt3230854/
+  poster: the-expanse-2015.jpg
+  watched: 2024-12-31
+  watched-display: late 2024
+  watch-this: if you watched season 1, though it's very different.
+  more-thoughts: |
+    I lumped these together because I'm writing this review late and I can't remember where the line is between these seasons. The diverging genres and intersecting plotlines of the first season are gone, replaced by a more traditional sci-fi arc. It's still mostly good, but the protomolecule is straight-up shameless [phlebotinum](https://tvtropes.org/pmwiki/pmwiki.php/Main/AppliedPhlebotinum), which makes it difficult to really emotionally invest in said arc and gets narratively tiresome.
 - title: The Outfit
   year: 2022
   kind: movie
