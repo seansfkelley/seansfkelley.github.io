@@ -1,3 +1,18 @@
+- title: The Expanse (Season 4)
+  id: the-expanse-s4
+  year: 2019
+  kind: tv
+  link: https://www.imdb.com/title/tt3230854/
+  poster: the-expanse-2015.jpg
+  watched: 2025-03-01 # when?
+  watched-display: early 2025
+  dont-watch-this: unless you're okay with empty (sci-fi) calories.
+  more-thoughts: |
+    Yikes. I was glad for the sharp change in plot direction, because the Halo-esque planet-sized-machine-to-kill-whatever-killed-this-advance-raced-but-didn't-work-right is near and dear to my heart, but the writing is way worse.
+
+    The season is mostly tensionless filler. The show has historically been reasonable with bending physics rules, but an exploding island (which is okay in my book) would not cause a planet-spanning shockwave and tsunami that will travel hundreds of miles overland. Especially when it motivates a useless and circuitous subplot that, after serveral episodes, finds all the characters more or less where they already were, minus a camp. And the blindness virus? As soon as Amos got it, all tension was defused, because there was no way the show would let him stay blind forever, and lo. Speaking of Amos, he's become monosyllabic comic relief (which is not a huge departure, but he used to have glimpses of a deeper personality and used more syllables).
+
+    The election arc? Uninteresting. Bobby's criminal arc? Okay, but too drawn-out and with too many plot holes (why would she risk her life on that mission when everyone was about to turn back?). Medina Station? Fun interpersonal dynamics, but _nothing is happening_.
 - title: Bullitt
   year: 1968
   kind: movie
@@ -59,6 +74,7 @@
 #   watch-this:
 #   more-thoughts: |
 - title: The Expanse (Seasons 2 and 3)
+  id: the-expanse-s2-s3
   year: 2017
   kind: tv
   link: https://www.imdb.com/title/tt3230854/
@@ -383,6 +399,7 @@
     - trash can robots
     - [Wilhelm scream](https://en.wikipedia.org/wiki/Wilhelm_scream) (just barely made it into the last episode: whew! What if they'd forgotten to include it?)
 - title: The Expanse (Season 1)
+  id: the-expanse-s1
   year: 2015
   kind: tv
   link: https://www.imdb.com/title/tt3230854/
