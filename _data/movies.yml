@@ -28,14 +28,15 @@
     One detail I loved: the detective is reciting his phone number on the answering machine while Joker is  crashing around pulling things out of the fridge, so you can't hear the part where he would have said "555". [555 numbers](https://en.wikipedia.org/wiki/555_(telephone_number)) can (and do) spoil immersion.
 
     Joaquin Phoenix was amazing, but I kept getting distracted because he looked kind of like a blend of [Bill Hader](https://en.wikipedia.org/wiki/Bill_Hader) and [Noel Fielding](https://en.wikipedia.org/wiki/Noel_Fielding).
-# - title: Bullitt
-#   year: 1968
-#   kind: movie
-#   link: https://www.imdb.com/title/tt0062765/
-#   poster: bullitt-1968.jpg
-#   watched: 2025-02-01
-#   watch-this:
-#   more-thoughts: |
+- title: Bullitt
+  year: 1968
+  kind: movie
+  link: https://www.imdb.com/title/tt0062765/
+  poster: bullitt-1968.jpg
+  watched: 2025-02-01
+  watch-this: most especially to see what old San Francisco looked like.
+  more-thoughts: |
+    I don't usually like movies from this era because I find the pacing difficult (among other things), but this movie has aged quite well. It's a fun ride, but my favorite part was sightseeing old San Francisco. Seeing what the Embarcadero used to look like, not from aerial pictures, was wild.
 - title: What We Do in the Shadows
   year: 2014
   kind: movie
@@ -77,14 +78,19 @@
   dont-watch-this: if you already know anything at all about Leonardo.
   more-thoughts: |
     This doucmentary is disappointingly superficial. If you've read a book on Leonardo, or even just the Wikipedia page, you won't find much here you don't already know.
-# - title: Jojo Rabbit
-#   year: 2019
-#   kind: movie
-#   link: https://www.imdb.com/title/tt2584384/
-#   poster: jojo-rabbit-2019.jpg
-#   watched: 2025-01-05
-#   watch-this:
-#   more-thoughts: |
+- title: Jojo Rabbit
+  year: 2019
+  kind: movie
+  link: https://www.imdb.com/title/tt2584384/
+  poster: jojo-rabbit-2019.jpg
+  watched: 2025-01-05
+  watch-this: if you like the comedy/commentary mix of Apocalypse Now.
+  more-thoughts: |
+    Like Apocalypse Now, this movie is all fun and games at the start (well, graded on a curve, since we're talking about Hitler or Vietnam) and rather quickly shifts tone about halfway through and becomes a dark commentary. This is a good thing.
+
+    It's pretty wild that Taika Waititi was able to convince a studio to fund a movie like this. It definitely reflects well on... somebody.
+
+    Sam Rockwell stole the show in every scene he was in.
 - title: The Expanse (Seasons 2 and 3)
   id: the-expanse-s2-s3
   year: 2017
