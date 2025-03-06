@@ -63,7 +63,7 @@ Rest, covered with the bowl or kitchen towel, for 30 minutes.
 
 Sprinkle with flour and flip. Fold all four edges to their opposite sides. Shape into a ball, then with the dough scraper, firmly push the dough in all directions to roll across the surface and build tension.
 
-Dust a proofing basket with flour and transfer the dough to it, seam side up. (If you do not have a proofing basket, you can put a dry kitchen towel, dusted _liberally_ with flour, in a large bowl.)
+Dust a proofing basket with flour[^4] and transfer the dough to it, seam side up. (If you do not have a proofing basket, you can put a dry kitchen towel, dusted _liberally_ with flour, in a large bowl.)
 
 Dust with flour, cover with towel, and place in fridge overnight.
 
@@ -77,7 +77,7 @@ When preheated, wait a little extra time to ensure the oven and dutch oven are h
 
 {% literate_recipe_step wait="30m" duration="5m" %}
 
-Remove loaf from fridge, score it, and place into the dutch oven using your preferred technique.[^4]
+Remove loaf from fridge, score it, and place into the dutch oven using your preferred technique.[^5]
 
 Optionally, spritz with water to encourage a bubbly, golden crust.
 
@@ -100,4 +100,5 @@ Let cool completely before slicing. The inside is still cooking! (Yeah, it's dif
 [^1]: All-purpose flour _does_ work, it's just less forgiving and the texture is slightly different (but still good!). Bread flour is just high-protein flour, usually about 13%. Some flours state the protein percentage on their package; others mention it on their site. [King Arthur's bread flour](https://shop.kingarthurbaking.com/items/bread-flour) is 12.7%. Trader Joe's all purpose was, [in 2014](https://www.pizzamaking.com/forum/index.php?topic=30417.msg305351#msg305351), 11.8%.
 [^2]: Don't forget to save some to feed it again!
 [^3]: If you don't have a stone countertop, you can use a baking sheet, though they tend to slide around a lot. You can flour a wooden surface if you really want, but the non-porous surface really does make a big difference.
-[^4]: The standard is to place it on a large piece of parchment paper on a cutting board, score it, and lift it by the paper into the dutch oven. If the scoring is simple, you can also just drop the proofing basket right into the dutch oven and palm it back out, but make sure that you drop it forcefully and without hesitation to encourage a clean separation of the dough. If you used the kitchen-towel-in-bowl technique, I would very much not recommend trying to aim the loaf right into the dutch oven.
+[^4]: I use a 50/50 mix of all-purpose and rice flours, and the loaf pops right out of the basket. Amazing!
+[^5]: The standard is to place it on a large piece of parchment paper on a cutting board, score it, and lift it by the paper into the dutch oven. If the scoring is simple, you can also just drop the proofing basket right into the dutch oven and palm it back out, but make sure that you drop it forcefully and without hesitation to encourage a clean separation of the dough. If you used the kitchen-towel-in-bowl technique, I would very much not recommend trying to aim the loaf right into the dutch oven.
