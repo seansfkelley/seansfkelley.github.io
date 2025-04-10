@@ -82,6 +82,7 @@ GEM
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
+    logger (1.7.0)
     mercenary (0.4.0)
     mini_portile2 (2.8.8)
     nokogiri (1.16.4)
@@ -136,6 +137,7 @@ DEPENDENCIES
   jekyll-feed (~> 0.12)
   jekyll-redirect-from (~> 0.16)
   jekyll-seo-tag (~> 2)
+  logger (~> 1.7)
 
 RUBY VERSION
    ruby 3.4.2p28
