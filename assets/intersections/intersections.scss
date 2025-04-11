@@ -1,0 +1,104 @@
+---
+# including front matter = "please compile this Jekyll"
+---
+
+@import "variables";
+
+svg {
+  .asphalt {
+    fill: rgb(32, 32, 32);
+  }
+
+  .sidewalk {
+    fill: rgb(192, 192, 192);
+  }
+
+  .crosswalk {
+    stroke: rgb(240, 240, 240);
+    stroke-width: 6;
+    stroke-dasharray: 1;
+  }
+
+  --walk: none;
+  --dont-walk: none;
+  --dont-walk-animation: none;
+  --green: none;
+  --yellow: none;
+  --red: none;
+
+  .show-walk {
+    --walk: initial;
+  }
+
+  .show-dont-walk {
+    --dont-walk: initial;
+
+    &.flashing {
+      --dont-walk-animation: 1s step-start infinite sign-flash;
+    }
+  }
+
+  .show-green {
+    --green: initial;
+  }
+
+  .show-yellow {
+    --yellow: initial;
+  }
+
+  .show-red {
+    --red: initial;
+  }
+}
+
+// Cannot be inside the svg block for some reason.
+#pedestrian-signal {
+  .outline {
+    stroke-width: 0.5;
+    stroke: white;
+  }
+
+  .walk {
+    fill: white;
+    display: var(--walk);
+  }
+
+  .dont-walk {
+    fill: red;
+    display: var(--dont-walk);
+    animation: var(--dont-walk-animation);
+  }
+}
+
+// Cannot be inside the svg block for some reason.
+#traffic-signal {
+  .outline {
+    stroke-width: 0.5;
+    stroke: white;
+  }
+
+  .green {
+    fill: green;
+    display: var(--green);
+  }
+
+  .yellow {
+    fill: yellow;
+    display: var(--yellow);
+  }
+
+  .red {
+    fill: red;
+    display: var(--red);
+  }
+}
+
+@keyframes sign-flash {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
