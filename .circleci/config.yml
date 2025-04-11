@@ -17,11 +17,6 @@ jobs:
           fingerprints:
             - "55:39:f6:ef:0d:9d:64:81:4a:a5:88:20:d5:ed:a1:ff"
       - checkout
-      - run:
-          name: Enable Corepack
-          command: |
-            sudo corepack enable # this is fine
-            corepack prepare yarn@3.6.1 --activate
       - node/install-packages:
           pkg-manager: yarn-berry
           cache-version: v2
