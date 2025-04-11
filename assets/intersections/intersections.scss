@@ -16,7 +16,7 @@ svg {
   .crosswalk {
     stroke: rgb(240, 240, 240);
     stroke-width: 6;
-    stroke-dasharray: 1;
+    stroke-dasharray: 0 0.5 1 0.5;
   }
 
   --walk: none;
