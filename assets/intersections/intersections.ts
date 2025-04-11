@@ -53,7 +53,8 @@ function rect(
 }
 
 const INTERSECTION = ((): Intersection => {
-  const timing: CrosswalkSignalTiming = [5, 2, 3];
+  const timing: CrosswalkSignalTiming = [5, 6, 13];
+  const timingOffset = 12;
 
   return {
     sidewalks: {
@@ -96,7 +97,7 @@ const INTERSECTION = ((): Intersection => {
       {
         type: "simple",
         timing,
-        timingOffset: 5,
+        timingOffset,
         a: "ne.s",
         b: "se.n",
       },
@@ -108,7 +109,7 @@ const INTERSECTION = ((): Intersection => {
       },
       {
         type: "simple",
-        timingOffset: 5,
+        timingOffset,
         timing,
         a: "sw.n",
         b: "nw.s",
@@ -143,11 +144,27 @@ function applySvgAttributes(
   }
 }
 
+function applyClasses(
+  element: SVGElement,
+  classes: Record<string, string | number | boolean | undefined>
+) {
+  for (const [klass, condition] of Object.entries(classes)) {
+    if (condition) {
+      element.classList.add(klass);
+    } else {
+      element.classList.remove(klass);
+    }
+  }
+}
+
 function renderPedestrianSignal(
   [x, y]: Point,
   timing: CrosswalkSignalTiming,
   timingOffset: number | undefined
 ): SVGElement {
+  const SIZE = 3;
+  const BUFFER = 1;
+
   const outline = document.createElementNS(
     "http://www.w3.org/2000/svg",
     "rect"
@@ -156,37 +173,53 @@ function renderPedestrianSignal(
     class: "outline",
     x,
     y,
-    width: 5,
-    height: 5,
+    width: SIZE + 2 * BUFFER,
+    height: SIZE + 2 * BUFFER,
     rx: 1,
   });
 
   const walk = document.createElementNS("http://www.w3.org/2000/svg", "rect");
   applySvgAttributes(walk, {
     class: "walk",
-    x: x + 1,
-    y: y + 1,
-    width: 3,
-    height: 3,
+    x: x + BUFFER + SIZE / 2,
+    y: y + BUFFER,
+    width: SIZE / 2,
+    height: SIZE,
   });
 
-  const dontWalk = document.createElementNS(
+  const dontWalkSymbol = document.createElementNS(
     "http://www.w3.org/2000/svg",
     "rect"
   );
-  applySvgAttributes(dontWalk, {
-    class: "dont-walk",
-    x: x + 1,
-    y: y + 1,
-    width: 3,
-    height: 3,
+  applySvgAttributes(dontWalkSymbol, {
+    class: "symbol",
+    x: x + BUFFER,
+    y: y + BUFFER,
+    width: SIZE / 2,
+    height: SIZE,
   });
+
+  const dontWalkText = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "text"
+  );
+  applySvgAttributes(dontWalkText, {
+    class: "text",
+    // CSS sets this to be middle-end anchored, so do the math relative to that point.
+    x: x + BUFFER + SIZE + 0.5, // 0.5 = fudge factor to smash the glyph up against the right end
+    y: y + BUFFER + SIZE / 2,
+  });
+
+  const dontWalk = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  applySvgAttributes(dontWalk, { class: "dont-walk" });
+  dontWalk.appendChild(dontWalkSymbol);
+  dontWalk.appendChild(dontWalkText);
 
   const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
 
   applySvgAttributes(g, {
     class: "pedestrian-signal",
-    transform: "translate(-2.5, -2.5)",
+    transform: `translate(-${BUFFER + SIZE / 2}, -${BUFFER + SIZE / 2})`,
     "data-walk": timing[0],
     "data-warning": timing[1],
     "data-dont-walk": timing[2],
@@ -211,11 +244,26 @@ function renderTrafficSignal(): SVGElement {
   // </g>
 }
 
-function renderIntersection({
-  sidewalks,
-  crosswalks,
-}: Intersection): SVGSVGElement {
+function renderIntersection({ sidewalks, crosswalks }: Intersection): {
+  svg: SVGSVGElement;
+  pedestrianSignals: SVGElement[];
+  trafficSignals: SVGElement[];
+  cycleTime: number | undefined;
+} {
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  let cycleTime: number | undefined = undefined;
+  const pedestrianSignals: SVGElement[] = [];
+  const trafficSignals: SVGElement[] = [];
+
+  function recordPedestrianSignal(e: SVGElement): SVGElement {
+    pedestrianSignals.push(e);
+    return e;
+  }
+
+  function recordTrafficSignal(e: SVGElement): SVGElement {
+    trafficSignals.push(e);
+    return e;
+  }
 
   applySvgAttributes(svg, {
     width: "400px",
@@ -238,14 +286,13 @@ function renderIntersection({
 
   const availableConnections = new Set<string>();
 
-  let totalCycleDuration: number | undefined = undefined;
-  function assertCycleTimeIsCompatible(timing: CrosswalkSignalTiming) {
+  function assertCycleTimeIsCompatible(timing: CrosswalkSignalTiming): void {
     const total = sum(timing);
-    if (totalCycleDuration == null) {
-      totalCycleDuration = total;
+    if (cycleTime == null) {
+      cycleTime = total;
     }
     assert(
-      total === totalCycleDuration,
+      total === cycleTime,
       "cycle time is not the same as already-defined timings"
     );
   }
@@ -313,10 +360,14 @@ function renderIntersection({
 
       svg.appendChild(line);
       svg.appendChild(
-        renderPedestrianSignal(aConnection, timing, timingOffset)
+        recordPedestrianSignal(
+          renderPedestrianSignal(aConnection, timing, timingOffset)
+        )
       );
       svg.appendChild(
-        renderPedestrianSignal(bConnection, timing, timingOffset)
+        recordPedestrianSignal(
+          renderPedestrianSignal(bConnection, timing, timingOffset)
+        )
       );
     } else if (crosswalk.type === "complex") {
       throw new Error("unimplemented");
@@ -325,7 +376,53 @@ function renderIntersection({
     }
   }
 
-  return svg;
+  return { svg, pedestrianSignals, trafficSignals, cycleTime };
 }
 
-document.body.appendChild(renderIntersection(INTERSECTION));
+const { svg, pedestrianSignals, trafficSignals, cycleTime } =
+  renderIntersection(INTERSECTION);
+document.body.appendChild(svg);
+
+function tick(t: number, cycleTime: number) {
+  for (const pedestrian of pedestrianSignals) {
+    const effectiveT = (t + +(pedestrian.dataset.offset ?? "0")!) % cycleTime;
+    assert(effectiveT >= 0, "effective t must be nonnegative");
+
+    const walkDuration = +pedestrian.dataset.walk!;
+    const warnDuration = +pedestrian.dataset.warning!;
+
+    if (effectiveT < walkDuration) {
+      applyClasses(pedestrian, {
+        walk: true,
+        "dont-walk": false,
+        flashing: false,
+      });
+    } else if (effectiveT < walkDuration + warnDuration) {
+      applyClasses(pedestrian, {
+        walk: false,
+        "dont-walk": true,
+        flashing: true,
+      });
+      pedestrian.querySelector(".text")!.innerHTML = (
+        walkDuration +
+        warnDuration -
+        effectiveT
+      ).toString();
+    } else {
+      applyClasses(pedestrian, {
+        walk: false,
+        "dont-walk": true,
+        flashing: false,
+      });
+    }
+  }
+}
+
+let t = 0;
+tick(t, cycleTime ?? 1);
+if (cycleTime != null) {
+  setInterval(() => {
+    t = (t + 1) % cycleTime;
+    tick(t, cycleTime);
+  }, 1000);
+}

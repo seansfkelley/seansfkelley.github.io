@@ -36,12 +36,27 @@ svg {
     }
 
     &.dont-walk .dont-walk {
-      fill: red;
       display: initial;
+
+      .symbol,
+      .text {
+        fill: red;
+      }
+
+      .text {
+        display: none;
+      }
     }
 
     &.dont-walk.flashing .dont-walk {
       animation: 1s step-start infinite sign-flash;
+
+      .text {
+        display: initial;
+        font-size: 3px;
+        dominant-baseline: central;
+        text-anchor: end;
+      }
     }
   }
 
