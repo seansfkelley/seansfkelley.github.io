@@ -19,9 +19,7 @@ jobs:
       - checkout
       - run:
           name: Enable Corepack
-          command: |
-            sudo corepack enable # this is fine
-            corepack prepare yarn@3.6.1 --activate
+          command: sudo corepack enable # this is fine
       - node/install-packages:
           pkg-manager: yarn-berry
           cache-version: v2
