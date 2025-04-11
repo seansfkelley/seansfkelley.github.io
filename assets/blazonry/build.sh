@@ -4,6 +4,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
+yarn tsc
 yarn nearleyc grammar.ne -o grammar.js
 
 # "CDN"
