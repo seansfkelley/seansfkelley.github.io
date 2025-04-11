@@ -8,7 +8,7 @@
     "nearley": "^2.20.1",
     "node-html-parser": "^6.1.13",
     "tsx": "^4.19.0",
-    "typescript": "^5.5.4"
+    "typescript": "^5.8.2"
   },
   "resolutions": {
     "nearley@^2.20.1": "patch:nearley@npm%3A2.20.1#./.yarn/patches/nearley-npm-2.20.1-2e130941d3.patch"
