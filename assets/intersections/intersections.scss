@@ -16,80 +16,61 @@ svg {
   .crosswalk {
     stroke: rgb(240, 240, 240);
     stroke-width: 6;
-    stroke-dasharray: 1;
+    stroke-dasharray: 0 0.5 1 0.5;
   }
 
-  --walk: none;
-  --dont-walk: none;
-  --dont-walk-animation: none;
-  --green: none;
-  --yellow: none;
-  --red: none;
+  .pedestrian-signal {
+    .outline {
+      stroke-width: 0.5;
+      stroke: white;
+    }
 
-  .show-walk {
-    --walk: initial;
-  }
+    .walk,
+    .dont-walk {
+      display: none;
+    }
 
-  .show-dont-walk {
-    --dont-walk: initial;
+    &.walk .walk {
+      fill: white;
+      display: initial;
+    }
 
-    &.flashing {
-      --dont-walk-animation: 1s step-start infinite sign-flash;
+    &.dont-walk .dont-walk {
+      fill: red;
+      display: initial;
+    }
+
+    &.dont-walk.flashing .dont-walk {
+      animation: 1s step-start infinite sign-flash;
     }
   }
 
-  .show-green {
-    --green: initial;
-  }
+  .traffic-signal {
+    .outline {
+      stroke-width: 0.5;
+      stroke: white;
+    }
 
-  .show-yellow {
-    --yellow: initial;
-  }
+    .green,
+    .yellow,
+    .red {
+      display: none;
+    }
 
-  .show-red {
-    --red: initial;
-  }
-}
+    &.green .green {
+      fill: green;
+      display: initial;
+    }
 
-// Cannot be inside the svg block for some reason.
-#pedestrian-signal {
-  .outline {
-    stroke-width: 0.5;
-    stroke: white;
-  }
+    &.yellow .yellow {
+      fill: yellow;
+      display: initial;
+    }
 
-  .walk {
-    fill: white;
-    display: var(--walk);
-  }
-
-  .dont-walk {
-    fill: red;
-    display: var(--dont-walk);
-    animation: var(--dont-walk-animation);
-  }
-}
-
-// Cannot be inside the svg block for some reason.
-#traffic-signal {
-  .outline {
-    stroke-width: 0.5;
-    stroke: white;
-  }
-
-  .green {
-    fill: green;
-    display: var(--green);
-  }
-
-  .yellow {
-    fill: yellow;
-    display: var(--yellow);
-  }
-
-  .red {
-    fill: red;
-    display: var(--red);
+    &.red .red {
+      fill: red;
+      display: initial;
+    }
   }
 }
 
