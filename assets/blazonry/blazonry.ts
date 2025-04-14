@@ -87,6 +87,9 @@ if (
     )
   )
 ) {
+  // Unsupported browsers are the ones that do non-spec-compliant implementations of the SVG
+  // clip-path attribute. Churchill's arms are the current test case, where the inescutcheon can be
+  // seen to overflow its bounds.
   document
     .querySelector("#unsupported-browser-alert")!
     .classList.remove("hidden");
