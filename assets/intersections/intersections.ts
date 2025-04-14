@@ -1,3 +1,6 @@
+// ASAP
+document.querySelector("#no-javascript-alert")!.remove();
+
 type Point = [x: number, y: number];
 
 interface SvgRect {
