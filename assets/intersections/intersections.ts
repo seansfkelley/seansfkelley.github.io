@@ -47,18 +47,21 @@ const SvgLine = {
   of: (a: Point, b: Point): SvgLine => ({ type: "line", a, b }),
 };
 
-type CrosswalkSignalTiming = [walk: number, warn: number, dontWalk: number];
+type PedestrianSignalTiming = [walk: number, warn: number, dontWalk: number];
+type TrafficSignalTiming = [green: number, yellow: number, red: number];
 
 interface Intersection {
   sidewalks: (SvgRect | SvgPath)[];
   crosswalks: (SvgLine | SvgPath)[];
   pedestrianSignals: {
     location: Point;
-    timing: CrosswalkSignalTiming;
+    timing: PedestrianSignalTiming;
     timingOffset?: number;
   }[];
   trafficSignals: {
     location: Point;
+    timing: TrafficSignalTiming;
+    timingOffset?: number;
   }[];
 }
 
@@ -76,7 +79,7 @@ const DONT_WALK_PATHS = [
 ];
 
 const INTERSECTION = ((): Intersection => {
-  const timing: CrosswalkSignalTiming = [5, 6, 13];
+  const timing: PedestrianSignalTiming = [5, 6, 13];
   const timingOffset = 12;
 
   const nw_s = Point.of(5, 10);
@@ -111,7 +114,7 @@ const INTERSECTION = ((): Intersection => {
       { location: sw_n, timing, timingOffset },
       { location: nw_s, timing, timingOffset },
     ],
-    trafficSignals: [],
+    trafficSignals: [{ location: [50, 5], timing, timingOffset }],
   };
 })();
 
@@ -156,7 +159,7 @@ function applyClasses(
 
 function renderPedestrianSignal(
   [x, y]: Point,
-  timing: CrosswalkSignalTiming,
+  timing: PedestrianSignalTiming,
   timingOffset: number | undefined
 ): SVGElement {
   const SIZE = 4;
@@ -223,15 +226,64 @@ function renderPedestrianSignal(
   return g;
 }
 
-function renderTrafficSignal(): SVGElement {
-  throw new Error("unimplemented");
+function renderTrafficSignal(
+  [x, y]: Point,
+  timing: TrafficSignalTiming,
+  timingOffset: number | undefined
+): SVGElement {
+  const SIZE = 2;
+  const BUFFER = 1;
 
-  // <g id="traffic-signal" transform="translate(-2, -5)">
-  //   <rect class="outline" x="0" y="0" width="4" height="10" rx="1" />
-  //   <circle class="green" cx="2" cy="2" r="1.25" />
-  //   <circle class="yellow" cx="2" cy="5" r="1.25" />
-  //   <circle class="red" cx="2" cy="8" r="1.25" />
-  // </g>
+  const outline = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+  applySvgAttributes(outline, {
+    class: "outline",
+    x,
+    y,
+    width: SIZE + 2 * BUFFER,
+    height: SIZE * 3 + 4 * BUFFER,
+    rx: 1,
+  });
+
+  const green = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  applySvgAttributes(green, {
+    class: "green",
+    cx: x + BUFFER + SIZE / 2,
+    cy: y + BUFFER + SIZE / 2,
+    r: SIZE / 2,
+  });
+
+  const yellow = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  applySvgAttributes(yellow, {
+    class: "yellow",
+    cx: x + BUFFER + SIZE / 2,
+    cy: y + 2 * BUFFER + SIZE + SIZE / 2,
+    r: SIZE / 2,
+  });
+
+  const red = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  applySvgAttributes(red, {
+    class: "red",
+    cx: x + BUFFER + SIZE / 2,
+    cy: y + 3 * BUFFER + 2 * SIZE + SIZE / 2,
+    r: SIZE / 2,
+  });
+
+  const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  applySvgAttributes(g, {
+    class: "traffic-signal",
+    transform: `translate(-${BUFFER + SIZE / 2}, -${BUFFER + (SIZE * 3) / 2})`,
+    "data-green": timing[0],
+    "data-yellow": timing[1],
+    "data-red": timing[2],
+    "data-offset": timingOffset,
+  });
+
+  g.appendChild(outline);
+  g.appendChild(green);
+  g.appendChild(yellow);
+  g.appendChild(red);
+
+  return g;
 }
 
 function renderIntersection(intersection: Intersection): {
@@ -299,7 +351,7 @@ function renderIntersection(intersection: Intersection): {
     svg.append(dontWalkSymbol);
   }
 
-  function assertCycleTimeIsCompatible(timing: CrosswalkSignalTiming): void {
+  function assertCycleTimeIsCompatible(timing: PedestrianSignalTiming | TrafficSignalTiming): void {
     const total = sum(timing);
     if (cycleTime == null) {
       cycleTime = total;
@@ -346,8 +398,12 @@ function renderIntersection(intersection: Intersection): {
 
   for (const { location, timing, timingOffset } of intersection.pedestrianSignals) {
     assertCycleTimeIsCompatible(timing);
-
     svg.appendChild(recordPedestrianSignal(renderPedestrianSignal(location, timing, timingOffset)));
+  }
+
+  for (const { location, timing, timingOffset } of intersection.trafficSignals) {
+    assertCycleTimeIsCompatible(timing);
+    svg.appendChild(recordTrafficSignal(renderTrafficSignal(location, timing, timingOffset)));
   }
 
   return {
@@ -364,35 +420,63 @@ const { svg, pedestrianSignals, trafficSignals, cycleTime } = renderIntersection
 container.appendChild(svg);
 
 function tick(t: number, cycleTime: number) {
-  for (const pedestrian of pedestrianSignals) {
-    const effectiveT = (t + +(pedestrian.dataset.offset ?? "0")!) % cycleTime;
+  for (const signal of pedestrianSignals) {
+    const effectiveT = (t + +(signal.dataset.offset ?? "0")!) % cycleTime;
     assert(effectiveT >= 0, "effective t must be nonnegative");
 
-    const walkDuration = +pedestrian.dataset.walk!;
-    const warnDuration = +pedestrian.dataset.warning!;
+    const walkDuration = +signal.dataset.walk!;
+    const warnDuration = +signal.dataset.warning!;
 
     if (effectiveT < walkDuration) {
-      applyClasses(pedestrian, {
+      applyClasses(signal, {
         walk: true,
         "dont-walk": false,
         flashing: false,
       });
     } else if (effectiveT < walkDuration + warnDuration) {
-      applyClasses(pedestrian, {
+      applyClasses(signal, {
         walk: false,
         "dont-walk": true,
         flashing: true,
       });
-      pedestrian.querySelector(".text")!.innerHTML = (
+      signal.querySelector(".text")!.innerHTML = (
         walkDuration +
         warnDuration -
         effectiveT
       ).toString();
     } else {
-      applyClasses(pedestrian, {
+      applyClasses(signal, {
         walk: false,
         "dont-walk": true,
         flashing: false,
+      });
+    }
+  }
+
+  for (const signal of trafficSignals) {
+    const effectiveT = (t + +(signal.dataset.offset ?? "0")!) % cycleTime;
+    assert(effectiveT >= 0, "effective t must be nonnegative");
+
+    const greenDuration = +signal.dataset.green!;
+    const yellowDuration = +signal.dataset.yellow!;
+
+    if (effectiveT < greenDuration) {
+      applyClasses(signal, {
+        green: true,
+        yellow: false,
+        red: false,
+      });
+    } else if (effectiveT < greenDuration + yellowDuration) {
+      applyClasses(signal, {
+        green: false,
+        yellow: true,
+        red: false,
+      });
+    } else {
+      applyClasses(signal, {
+        green: false,
+        yellow: false,
+        red: true,
       });
     }
   }
