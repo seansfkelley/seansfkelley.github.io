@@ -65,10 +65,7 @@ function* extractTransforms(transform: string): Generator<Transform> {
 
     if (isScale) {
       yield {
-        scale:
-          scaleArg2 == null
-            ? [+scaleArg1, +scaleArg1]
-            : [+scaleArg1, +scaleArg2],
+        scale: scaleArg2 == null ? [+scaleArg1, +scaleArg1] : [+scaleArg1, +scaleArg2],
       };
     } else if (isTranslate) {
       yield { translate: [+translateX, +translateY] };
@@ -80,10 +77,7 @@ function* extractTransforms(transform: string): Generator<Transform> {
       const denom = Math.pow(+matrix1, 2) + Math.pow(+matrix2, 2);
       const scaleX = Math.sqrt(denom);
       const scaleY = (+matrix1 * +matrix4 - +matrix3 * +matrix2) / scaleX;
-      const skewX = Math.atan2(
-        +matrix1 * +matrix3 + +matrix2 * +matrix4,
-        denom
-      );
+      const skewX = Math.atan2(+matrix1 * +matrix3 + +matrix2 * +matrix4, denom);
 
       // Seems to be the correct order here, but I think that's just a function of whichever order
       // the matrix happened to be constructed in -- hopefully, a consistent ordering of several

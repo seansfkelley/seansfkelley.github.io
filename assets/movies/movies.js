@@ -41,8 +41,7 @@ function updateSortAndFilter() {
   function matches(element) {
     return (
       (kind === "both" || element.dataset.kind === kind) &&
-      (recommendation === "both" ||
-        element.dataset.recommendation === recommendation)
+      (recommendation === "both" || element.dataset.recommendation === recommendation)
     );
   }
 
@@ -57,9 +56,7 @@ function updateSortAndFilter() {
    */
   function comparator(first, second) {
     function getNormalizedField(element) {
-      return element.dataset[field]
-        .toLowerCase()
-        .replace(TITLE_IGNORE_REGEX, "");
+      return element.dataset[field].toLowerCase().replace(TITLE_IGNORE_REGEX, "");
     }
 
     const ordering =
@@ -71,9 +68,7 @@ function updateSortAndFilter() {
       return first.dataset.title
         .toLowerCase()
         .replace(TITLE_IGNORE_REGEX, "")
-        .localeCompare(
-          second.dataset.title.toLowerCase().replace(TITLE_IGNORE_REGEX, "")
-        );
+        .localeCompare(second.dataset.title.toLowerCase().replace(TITLE_IGNORE_REGEX, ""));
     } else {
       return ordering;
     }
