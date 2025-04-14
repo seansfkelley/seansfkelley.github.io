@@ -23,9 +23,7 @@ class Duration {
     const [hours, minutes] = Duration._toHoursAndMinutes(
       (this.minutes < 0 ? this.minutes + 24 * 60 : this.minutes) % (24 * 60)
     );
-    return `${hours < 10 ? "0" : ""}${hours}:${
-      minutes < 10 ? "0" : ""
-    }${minutes}`;
+    return `${hours < 10 ? "0" : ""}${hours}:${minutes < 10 ? "0" : ""}${minutes}`;
   }
 }
 
@@ -47,9 +45,7 @@ function recalculateOffsetsRelativeTo(
   const startTime =
     which === "start"
       ? Duration.fromTimeInputValue(step.startTimeInput.value)
-      : Duration.fromTimeInputValue(step.endTimeInput.value).plus(
-          -step.duration
-        );
+      : Duration.fromTimeInputValue(step.endTimeInput.value).plus(-step.duration);
 
   group.forEach(({ offset, duration, startTimeInput, endTimeInput }) => {
     const start = new Duration(startTime.minutes + offset - step.offset);
@@ -64,8 +60,7 @@ const nowDuration = Duration.fromDate(new Date(), 5);
 document.querySelectorAll<HTMLElement>(".recipe-step").forEach((step) => {
   const group: number = +step.dataset.stepGroup!;
   const index: number = +step.dataset.stepIndex!;
-  const wait: number =
-    step.dataset.wait === "overnight" ? 0 : +step.dataset.wait!;
+  const wait: number = step.dataset.wait === "overnight" ? 0 : +step.dataset.wait!;
   const duration: number = +step.dataset.duration!;
   const offset = (groupedOrderedSteps[group]?.at(-1)?.offset ?? 0) + wait;
 
@@ -93,9 +88,7 @@ document.querySelectorAll<HTMLElement>(".recipe-step").forEach((step) => {
     recalculateOffsetsRelativeTo(group, index, "start");
   });
 
-  step
-    .querySelector(".metadata")!
-    .append(setToNowButton, startTimeInput, " → ", endTimeInput);
+  step.querySelector(".metadata")!.append(setToNowButton, startTimeInput, " → ", endTimeInput);
 
   (groupedOrderedSteps[group] ??= []).push({
     offset,

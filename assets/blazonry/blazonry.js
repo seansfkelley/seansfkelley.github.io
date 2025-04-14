@@ -76,14 +76,14 @@ document.querySelector("#interactive").classList.remove("hidden");
 if (!(
 // Per https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent/Firefox, this is the
 // preferred way to sniff Gecko-based browsers.
-((navigator.userAgent.includes("Gecko") &&
-    navigator.userAgent.includes("rv:")) ||
+((navigator.userAgent.includes("Gecko") && navigator.userAgent.includes("rv:")) ||
     // This is a sloppy way to check for Chrome, but I'm mostly interested in identifying Chrome
     // without accidentally including Safari, so this works. It doesn't have to be perfect.
     navigator.userAgent.includes("Chrome/")))) {
-    document
-        .querySelector("#unsupported-browser-alert")
-        .classList.remove("hidden");
+    // Unsupported browsers are the ones that do non-spec-compliant implementations of the SVG
+    // clip-path attribute. Churchill's arms are the current test case, where the inescutcheon can be
+    // seen to overflow its bounds.
+    document.querySelector("#unsupported-browser-alert").classList.remove("hidden");
 }
 // #region LAYOUT
 // TODO: Make _everything_ a function of these proportions.
@@ -147,11 +147,7 @@ const TreatmentRelativePath = {
     },
     toClosedLoop: (...paths) => {
         assert(paths.length > 0, "must have at least one path to render");
-        const commands = [
-            paths[0][0],
-            ...paths[0][1],
-            paths[0][2],
-        ];
+        const commands = [paths[0][0], ...paths[0][1], paths[0][2]];
         for (const [start, middle, end] of paths.slice(1)) {
             const previous = commands.pop();
             assert(previous != null && previous.type === "m", "commands must always end in m");
@@ -170,9 +166,7 @@ const TreatmentRelativePath = {
     },
     debugToClosedLoop: (...paths) => {
         return [
-            ...paths
-                .flat(2)
-                .map((c) => (c.type === "m" ? { ...c, type: "l" } : c)),
+            ...paths.flat(2).map((c) => (c.type === "m" ? { ...c, type: "l" } : c)),
             { type: "z" },
         ];
     },
@@ -271,10 +265,7 @@ class LineSegmentLocator {
             return;
         }
         for (let i = 0; i < total; ++i) {
-            yield [
-                evaluateLineSegment(this.a, this.b, (i + 1) / (total + 1)),
-                this.scales[total - 1],
-            ];
+            yield [evaluateLineSegment(this.a, this.b, (i + 1) / (total + 1)), this.scales[total - 1]];
         }
     }
 }
@@ -390,19 +381,13 @@ class OnChevronLocator {
         const scale = this.scales[total - 1];
         const halfish = (total % 2 === 1 ? total - 1 : total) / 2;
         for (let i = 0; i < halfish; ++i) {
-            yield [
-                evaluateLineSegment(this.left, this.midpoint, (i + 1) / (halfish + 1)),
-                scale,
-            ];
+            yield [evaluateLineSegment(this.left, this.midpoint, (i + 1) / (halfish + 1)), scale];
         }
         if (total % 2 === 1) {
             yield [this.midpoint, scale];
         }
         for (let i = 0; i < halfish; ++i) {
-            yield [
-                evaluateLineSegment(this.midpoint, this.right, (i + 1) / (halfish + 1)),
-                scale,
-            ];
+            yield [evaluateLineSegment(this.midpoint, this.right, (i + 1) / (halfish + 1)), scale];
         }
     }
 }
@@ -444,8 +429,7 @@ class DefaultChargeLocator {
         const rows = DefaultChargeLocator.ROWS[total - 1];
         const step = (this.horizontal[1] - this.horizontal[0]) / (rows[0] + 1);
         for (let i = 0; i < rows.length; ++i) {
-            const y = ((i + 1) / (rows.length + 1)) * (this.vertical[1] - this.vertical[0]) +
-                this.vertical[0];
+            const y = ((i + 1) / (rows.length + 1)) * (this.vertical[1] - this.vertical[0]) + this.vertical[0];
             // This is a bit weird, and it's different from the LineSegmentLocator. Instead of spacing out
             // each row evenly and individually, we want to make a nice upside-down isoceles triangle:
             // this means that each row must be spaced out equally, in absolute terms. We calculate the
@@ -484,7 +468,7 @@ function deepEqual(one, two) {
         return one === two;
     }
     else if (Array.isArray(one) && Array.isArray(two)) {
-        return (one.length === two.length && one.every((o, i) => deepEqual(o, two[i])));
+        return one.length === two.length && one.every((o, i) => deepEqual(o, two[i]));
     }
     else if (typeof one === "object" && typeof two === "object") {
         const oneKeys = Object.getOwnPropertyNames(one).sort();
@@ -510,9 +494,7 @@ const Radians = {
 const Transforms = {
     toString: ({ translate, scale, rotate, skewX }) => {
         return [
-            translate != null
-                ? `translate(${translate[0]}, ${translate[1]})`
-                : undefined,
+            translate != null ? `translate(${translate[0]}, ${translate[1]})` : undefined,
             typeof scale === "number" && scale !== 1
                 ? `scale(${scale})`
                 : Array.isArray(scale)
@@ -626,9 +608,7 @@ const svg = {
             width,
             height,
             preserveAspectRatio,
-            patternTransform: patternTransform == null
-                ? undefined
-                : Transforms.toString(patternTransform),
+            patternTransform: patternTransform == null ? undefined : Transforms.toString(patternTransform),
             "data-kind": kind,
         });
         pattern.append(...children.filter(isNotNullish));
@@ -656,7 +636,8 @@ async function fetchMutableComplexSvg(kind, variant) {
     const key = variant ? `${kind}-${variant}` : kind;
     if (!(key in complexSvgCache)) {
         complexSvgCache[key] = fetch(`/assets/blazonry/svg/${key}.svg`).then(async (response) => {
-            const root = new DOMParser().parseFromString(await response.text(), "image/svg+xml").documentElement;
+            const root = new DOMParser().parseFromString(await response.text(), "image/svg+xml")
+                .documentElement;
             const wrapper = svg.g({ kind: key });
             wrapper.classList.add(kind);
             // Shallow copy: appendChild also deletes it from the source node, so this is modifying the
@@ -700,8 +681,14 @@ const bend = {
             // I don't understand why this isn't COTISED_WIDTH * 1.5; don't we need to center the draw line
             // in the width of the stroke? It seems to work correctly like this though.
             const offset = (Math.sin(Math.PI / 4) * BEND_WIDTH) / 2 + COTISED_WIDTH;
-            bend.appendChild(svg.line([-W_2 + offset, -H_2 - offset], [H - W_2 + offset, H_2 - offset], { ...stroke, strokeWidth: COTISED_WIDTH }));
-            bend.appendChild(svg.line([-W_2 - offset, -H_2 + offset], [H - W_2 - offset, H_2 + offset], { ...stroke, strokeWidth: COTISED_WIDTH }));
+            bend.appendChild(svg.line([-W_2 + offset, -H_2 - offset], [H - W_2 + offset, H_2 - offset], {
+                ...stroke,
+                strokeWidth: COTISED_WIDTH,
+            }));
+            bend.appendChild(svg.line([-W_2 - offset, -H_2 + offset], [H - W_2 - offset, H_2 + offset], {
+                ...stroke,
+                strokeWidth: COTISED_WIDTH,
+            }));
         }
         return bend;
     },
@@ -819,10 +806,7 @@ const chevron = {
         {
             const [start, , end] = topRight;
             const originalStart = [...start.loc];
-            start.loc = [
-                0,
-                Math.sign(start.loc[1]) * Math.hypot(start.loc[1], start.loc[1]),
-            ];
+            start.loc = [0, Math.sign(start.loc[1]) * Math.hypot(start.loc[1], start.loc[1])];
             end.loc = Coordinate.add(end.loc, originalStart, Coordinate.negate(start.loc));
         }
         {
@@ -983,14 +967,8 @@ const cross = {
     between: new SequenceLocator([
         [W_2 - CROSS_SECTOR_2, -H_2 + CROSS_SECTOR_2],
         [-W_2 + CROSS_SECTOR_2, -H_2 + CROSS_SECTOR_2],
-        [
-            -W_2 + CROSS_SECTOR_2,
-            CROSS_SECTOR_2 - CROSS_VERTICAL_OFFSET + CROSS_WIDTH / 2,
-        ],
-        [
-            W_2 - CROSS_SECTOR_2,
-            CROSS_SECTOR_2 - CROSS_VERTICAL_OFFSET + CROSS_WIDTH / 2,
-        ],
+        [-W_2 + CROSS_SECTOR_2, CROSS_SECTOR_2 - CROSS_VERTICAL_OFFSET + CROSS_WIDTH / 2],
+        [W_2 - CROSS_SECTOR_2, CROSS_SECTOR_2 - CROSS_VERTICAL_OFFSET + CROSS_WIDTH / 2],
     ], [0.5, 0.5, 0.5, 0.5], {
         1: SequenceLocator.EMPTY,
     }),
@@ -1019,8 +997,14 @@ const fess = {
             const { stroke, pattern } = await resolveColoration(cotised);
             maybeAppendChild(fess, pattern);
             const offset = FESS_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
-            fess.appendChild(svg.line([-W_2, FESS_VERTICAL_OFFSET - offset], [W_2, FESS_VERTICAL_OFFSET - offset], { ...stroke, strokeWidth: COTISED_WIDTH }));
-            fess.appendChild(svg.line([-W_2, FESS_VERTICAL_OFFSET + offset], [W_2, FESS_VERTICAL_OFFSET + offset], { ...stroke, strokeWidth: COTISED_WIDTH }));
+            fess.appendChild(svg.line([-W_2, FESS_VERTICAL_OFFSET - offset], [W_2, FESS_VERTICAL_OFFSET - offset], {
+                ...stroke,
+                strokeWidth: COTISED_WIDTH,
+            }));
+            fess.appendChild(svg.line([-W_2, FESS_VERTICAL_OFFSET + offset], [W_2, FESS_VERTICAL_OFFSET + offset], {
+                ...stroke,
+                strokeWidth: COTISED_WIDTH,
+            }));
         }
         return fess;
     },
@@ -1314,7 +1298,10 @@ async function fret({ coloration }) {
     [-strokeWidth - 1, -strokeWidth - 1], [strokeWidth + 1, strokeWidth + 1], { ...stroke, strokeWidth }));
 }
 async function escallop({ coloration }) {
-    const { fill, pattern } = await resolveColoration(coloration, [39.089, 40.967], { scale: 0.6, translate: [0, -15] });
+    const { fill, pattern } = await resolveColoration(coloration, [39.089, 40.967], {
+        scale: 0.6,
+        translate: [0, -15],
+    });
     const escallop = await fetchMutableComplexSvg("escallop");
     maybeAppendChild(escallop, pattern);
     if ("classes" in fill) {
@@ -1326,7 +1313,10 @@ async function escallop({ coloration }) {
     return escallop;
 }
 async function fleurDeLys({ coloration }) {
-    const { fill, pattern } = await resolveColoration(coloration, [30.117, 41.528], { translate: [0, 10], scale: 0.5 });
+    const { fill, pattern } = await resolveColoration(coloration, [30.117, 41.528], {
+        translate: [0, 10],
+        scale: 0.5,
+    });
     const fleurDeLys = await fetchMutableComplexSvg("fleur-de-lys");
     maybeAppendChild(fleurDeLys, pattern);
     if ("classes" in fill) {
@@ -1360,7 +1350,9 @@ const LION_SIZES = {
 };
 async function lion({ coloration, armed, langued, attitude, placement, }) {
     const lion = await fetchMutableComplexSvg("lion", attitude);
-    const { fill, pattern } = await resolveColoration(coloration, LION_SIZES[attitude], { scale: 0.4 });
+    const { fill, pattern } = await resolveColoration(coloration, LION_SIZES[attitude], {
+        scale: 0.4,
+    });
     maybeAppendChild(lion, pattern);
     if ("classes" in fill) {
         lion.classList.add(fill.classes.fill);
@@ -1559,7 +1551,12 @@ async function resolveColoration(coloration, [width, height] = [W, H], patternTr
             fill: { fill: color },
             stroke: { stroke: color },
             pattern,
-            nonRepeatingElements: await VARIATIONS[coloration.type].nonRepeatingElements?.({ ...coloration, count, width, height }),
+            nonRepeatingElements: await VARIATIONS[coloration.type].nonRepeatingElements?.({
+                ...coloration,
+                count,
+                width,
+                height,
+            }),
         };
     }
     else {
@@ -1624,9 +1621,14 @@ function wrapSimpleTreatment(treatment, isPatternCycleComposite, onlyRenderPrima
             });
         }
         else if (alignment === "center") {
-            const [start, firstMain] = mutatinglyApplyTransforms(chosenTreatment(length / 2), { alignToEnd: true });
+            const [start, firstMain] = mutatinglyApplyTransforms(chosenTreatment(length / 2), {
+                alignToEnd: true,
+            });
             const [, secondMain, end] = chosenTreatment(length / 2);
-            return mutatinglyApplyTransforms([start, [...firstMain, ...secondMain], end], { invertX, invertY });
+            return mutatinglyApplyTransforms([start, [...firstMain, ...secondMain], end], {
+                invertX,
+                invertY,
+            });
         }
         else {
             assertNever(alignment);
@@ -1720,11 +1722,7 @@ function wavy(length) {
             y -= halfWidth / 2;
         }
     }
-    return [
-        { type: "m", loc: [0, -halfWidth / 4] },
-        curves,
-        { type: "m", loc: [x, -y] },
-    ];
+    return [{ type: "m", loc: [0, -halfWidth / 4] }, curves, { type: "m", loc: [x, -y] }];
 }
 const TREATMENTS = {
     "embattled-counter-embattled": wrapSimpleTreatment(embattled, true, false),
@@ -1880,9 +1878,7 @@ const bendySinister = {
                     0,
                     variation.width / 2 -
                         variation.height / 2 -
-                        (variation.count % 2 === 0
-                            ? Math.sqrt(2 * height * height) / 4
-                            : 0),
+                        (variation.count % 2 === 0 ? Math.sqrt(2 * height * height) / 4 : 0),
                 ],
             }),
         });
@@ -1966,10 +1962,7 @@ const chevronny = {
         // Start negative to ensure we render copies in the top left and right corners of the tile. The
         // template is based on the top middle location.
         for (let i = -height / (2 * chevronHeight); i < height / (2 * chevronHeight); ++i) {
-            paths.push(svg.path(TreatmentRelativePath.toClosedLoop(TreatmentRelativePath.offset([
-                fillWidth / 2,
-                i * 2 * chevronHeight,
-            ]), ...template), firstFill));
+            paths.push(svg.path(TreatmentRelativePath.toClosedLoop(TreatmentRelativePath.offset([fillWidth / 2, i * 2 * chevronHeight]), ...template), firstFill));
         }
         return svg.pattern({
             viewBox: [
@@ -2229,9 +2222,7 @@ async function escutcheonContent(content) {
             return {
                 ...ordinary,
                 // Stupid conditional to preserve absence of field for the purposes of deep equality checks.
-                ...("cotised" in ordinary
-                    ? { cotised: counterchangeColoration(ordinary.cotised) }
-                    : {}),
+                ...("cotised" in ordinary ? { cotised: counterchangeColoration(ordinary.cotised) } : {}),
                 coloration: counterchangeColoration(ordinary.coloration),
             };
         }
@@ -2273,9 +2264,7 @@ async function escutcheonContent(content) {
                 ...element,
                 on: counterchangeOrdinary(element.on),
                 // Stupid conditional to preserve absence of field for the purposes of deep equality checks.
-                ...("charge" in element
-                    ? { charge: counterchangeNonOrdinaryCharge(element.charge) }
-                    : {}),
+                ...("charge" in element ? { charge: counterchangeNonOrdinaryCharge(element.charge) } : {}),
                 // Stupid conditional to preserve absence of field for the purposes of deep equality checks.
                 ...("surround" in element
                     ? { surround: counterchangeNonOrdinaryCharge(element.surround) }
@@ -2376,8 +2365,7 @@ async function escutcheonContent(content) {
         }
         return children;
     }
-    else if ("tincture" in content.coloration ||
-        "color" in content.coloration) {
+    else if ("tincture" in content.coloration || "color" in content.coloration) {
         const children = [await field(content.coloration)];
         for (const c of content.charges ?? []) {
             children.push(...(await charge(c)));
@@ -2413,7 +2401,7 @@ async function escutcheonContent(content) {
         assertNever(content.coloration);
     }
 }
-async function on({ on, surround, charge, }) {
+async function on({ on, surround, charge }) {
     const children = [await ORDINARIES[on.ordinary].render(on)];
     if (charge != null) {
         if (charge.placement != null) {
@@ -2493,8 +2481,7 @@ function initializePreview() {
     // But this won't happen on any real device.
     { threshold: 1 }).observe(rendered);
     new IntersectionObserver(([{ boundingClientRect }]) => {
-        isAboveFootnotes =
-            boundingClientRect.top > document.documentElement.clientHeight;
+        isAboveFootnotes = boundingClientRect.top > document.documentElement.clientHeight;
         update();
     }, { threshold: 0 }).observe(document.querySelector(".footnotes"));
 }
@@ -2504,9 +2491,7 @@ async function parseAndRenderBlazon(initialAmbiguousIndex = 0) {
     async function render(blazon, index) {
         blazon = recursivelyOmitNullish(blazon);
         // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
-        const container = svg.g({ kind: "container" }, ...(await escutcheonContent(blazon.main)), blazon.inescutcheon != null
-            ? await inescutcheon(blazon.inescutcheon)
-            : undefined);
+        const container = svg.g({ kind: "container" }, ...(await escutcheonContent(blazon.main)), blazon.inescutcheon != null ? await inescutcheon(blazon.inescutcheon) : undefined);
         container.style.clipPath = `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`;
         ast.innerHTML = JSON.stringify(blazon, null, 2);
         rendered.replaceChildren(svg.path(ESCUTCHEON_PATH, {
@@ -2548,8 +2533,7 @@ async function parseAndRenderBlazon(initialAmbiguousIndex = 0) {
         ambiguousNext.removeEventListener("click", previousNextEventHandler);
         let ambiguousIndex = initialAmbiguousIndex;
         async function step(sign) {
-            ambiguousIndex =
-                (ambiguousIndex + sign + results.length) % results.length;
+            ambiguousIndex = (ambiguousIndex + sign + results.length) % results.length;
             ambiguousCount.innerHTML = `${ambiguousIndex + 1} / ${results.length}`;
             await render(results[ambiguousIndex], ambiguousIndex);
         }
@@ -2663,8 +2647,7 @@ function generateRandomBlazon() {
         if (inescutcheonIndex !== -1 && Math.random() <= INESCUTCHEON_SKIP_RATIO) {
             blazon = blazon.slice(0, inescutcheonIndex);
         }
-    } while ((blazon.match(/^[A-Za-z]+\.$/) &&
-        Math.random() <= TINCTURE_ONLY_SKIP_RATIO) ||
+    } while ((blazon.match(/^[A-Za-z]+\.$/) && Math.random() <= TINCTURE_ONLY_SKIP_RATIO) ||
         // Quarterly never comes out well.
         blazon.match(/quarterly/i) ||
         // Synonymous with quarterly.
@@ -2695,8 +2678,7 @@ catch (e) {
     // ignore and do default thing
 }
 rendered.setAttribute("viewBox", `${-W_2 - MARGIN} ${-H_2 - MARGIN} ${W + 2 * MARGIN} ${H + 2 * MARGIN}`);
-if (typeof text === "string" &&
-    (index === undefined || typeof index === "number")) {
+if (typeof text === "string" && (index === undefined || typeof index === "number")) {
     input.value = text;
     parseAndRenderBlazon(index);
 }

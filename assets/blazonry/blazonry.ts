@@ -79,17 +79,17 @@ if (
     // Per https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent/Firefox, this is the
     // preferred way to sniff Gecko-based browsers.
     (
-      (navigator.userAgent.includes("Gecko") &&
-        navigator.userAgent.includes("rv:")) ||
+      (navigator.userAgent.includes("Gecko") && navigator.userAgent.includes("rv:")) ||
       // This is a sloppy way to check for Chrome, but I'm mostly interested in identifying Chrome
       // without accidentally including Safari, so this works. It doesn't have to be perfect.
       navigator.userAgent.includes("Chrome/")
     )
   )
 ) {
-  document
-    .querySelector("#unsupported-browser-alert")!
-    .classList.remove("hidden");
+  // Unsupported browsers are the ones that do non-spec-compliant implementations of the SVG
+  // clip-path attribute. Churchill's arms are the current test case, where the inescutcheon can be
+  // seen to overflow its bounds.
+  document.querySelector("#unsupported-browser-alert")!.classList.remove("hidden");
 }
 
 // #region LAYOUT
@@ -111,11 +111,7 @@ interface Node {
 }
 
 declare const grammar: nearley.CompiledRules;
-declare const Unparser: (
-  grammar: nearley.CompiledRules,
-  start: string,
-  depth?: number
-) => string;
+declare const Unparser: (grammar: nearley.CompiledRules, start: string, depth?: number) => string;
 
 type DiscriminateUnion<T, K extends keyof T, V extends T[K]> = T extends T
   ? V extends T[K]
@@ -128,15 +124,7 @@ type Unsupported = typeof UNSUPPORTED;
 
 type Count = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
-type ColorOrMetal =
-  | "argent"
-  | "azure"
-  | "gules"
-  | "or"
-  | "purpure"
-  | "sable"
-  | "vert"
-  | "cendree";
+type ColorOrMetal = "argent" | "azure" | "gules" | "or" | "purpure" | "sable" | "vert" | "cendree";
 
 type Fur = "ermine" | "ermines" | "erminois" | "pean" | "vair";
 
@@ -144,12 +132,7 @@ type Tincture = ColorOrMetal | Fur;
 
 type CounterchangeableTincture = Tincture | "counterchanged";
 
-type Treatment =
-  | "embattled-counter-embattled"
-  | "embattled"
-  | "engrailed"
-  | "indented"
-  | "wavy";
+type Treatment = "embattled-counter-embattled" | "embattled" | "engrailed" | "indented" | "wavy";
 
 type VariationName =
   | "barry bendy"
@@ -184,13 +167,7 @@ const Posture = {
   },
 };
 
-type Direction =
-  | "pale"
-  | "fess"
-  | "bend"
-  | "bend sinister"
-  | "chevron"
-  | "saltire";
+type Direction = "pale" | "fess" | "bend" | "bend sinister" | "chevron" | "saltire";
 type Placement = Direction | "cross";
 type Quarter = 1 | 2 | 3 | 4;
 
@@ -315,24 +292,16 @@ interface Inescutcheon {
 }
 
 type SvgColorableColoration = Coloration | { color: SvgColor };
-type WithSvgColoration<T> = DeeplyRewrite<
-  T,
-  Coloration,
-  SvgColorableColoration
->;
+type WithSvgColoration<T> = DeeplyRewrite<T, Coloration, SvgColorableColoration>;
 
 interface OrdinaryRenderer {
   render: (ordinary: WithSvgColoration<Ordinary>) => Promise<SVGElement>;
   on: ParametricLocator;
   between: ParametricLocator;
-  partition:
-    | ((treatment: Treatment | undefined) => PathCommand.Any[])
-    | undefined;
+  partition: ((treatment: Treatment | undefined) => PathCommand.Any[]) | undefined;
 }
 
-interface NonOrdinaryChargeRenderer<
-  T extends WithSvgColoration<NonOrdinaryCharge>
-> {
+interface NonOrdinaryChargeRenderer<T extends WithSvgColoration<NonOrdinaryCharge>> {
   (charge: T): SVGElement | Promise<SVGElement>;
 }
 
@@ -350,11 +319,7 @@ interface VariationPatternGenerator {
   defaultCount: number;
 }
 
-type TreatmentRelativePath = [
-  PathCommand.m,
-  PathCommand.Relative[],
-  PathCommand.m
-];
+type TreatmentRelativePath = [PathCommand.m, PathCommand.Relative[], PathCommand.m];
 
 const TreatmentRelativePath = {
   offset: (coordinate: Coordinate): TreatmentRelativePath => [
@@ -367,10 +332,7 @@ const TreatmentRelativePath = {
     [{ type: "l", loc: line }],
     { type: "m", loc: [0, 0] },
   ],
-  rotate: (
-    [start, main, end]: TreatmentRelativePath,
-    radians: Radians
-  ): void => {
+  rotate: ([start, main, end]: TreatmentRelativePath, radians: Radians): void => {
     PathCommand.rotate(start, radians);
     main.forEach((c) => PathCommand.rotate(c, radians));
     PathCommand.rotate(end, radians);
@@ -378,22 +340,11 @@ const TreatmentRelativePath = {
   toClosedLoop: (...paths: TreatmentRelativePath[]): PathCommand.Relative[] => {
     assert(paths.length > 0, "must have at least one path to render");
 
-    const commands: PathCommand.Relative[] = [
-      paths[0][0],
-      ...paths[0][1],
-      paths[0][2],
-    ];
+    const commands: PathCommand.Relative[] = [paths[0][0], ...paths[0][1], paths[0][2]];
     for (const [start, middle, end] of paths.slice(1)) {
       const previous = commands.pop();
-      assert(
-        previous != null && previous.type === "m",
-        "commands must always end in m"
-      );
-      commands.push(
-        { type: "l", loc: Coordinate.add(previous.loc, start.loc) },
-        ...middle,
-        end
-      );
+      assert(previous != null && previous.type === "m", "commands must always end in m");
+      commands.push({ type: "l", loc: Coordinate.add(previous.loc, start.loc) }, ...middle, end);
     }
     commands.pop();
     commands.push({ type: "z" });
@@ -410,13 +361,9 @@ const TreatmentRelativePath = {
       ),
     ];
   },
-  debugToClosedLoop: (
-    ...paths: TreatmentRelativePath[]
-  ): PathCommand.Relative[] => {
+  debugToClosedLoop: (...paths: TreatmentRelativePath[]): PathCommand.Relative[] => {
     return [
-      ...paths
-        .flat(2)
-        .map((c) => (c.type === "m" ? { ...c, type: "l" as const } : c)),
+      ...paths.flat(2).map((c) => (c.type === "m" ? { ...c, type: "l" as const } : c)),
       { type: "z" },
     ];
   },
@@ -447,8 +394,7 @@ const Coordinate = {
   subtract: (...coordinates: Coordinate[]): Coordinate =>
     coordinates.reduce(([x1, y1], [x2, y2]) => [x1 - x2, y1 - y2]),
   negate: ([x, y]: Coordinate): Coordinate => [-x, -y],
-  length: ([x1, y1]: Coordinate, [x2, y2]: Coordinate): number =>
-    Math.hypot(x2 - x1, y2 - y1),
+  length: ([x1, y1]: Coordinate, [x2, y2]: Coordinate): number => Math.hypot(x2 - x1, y2 - y1),
   /**
    * Rotates the given coordinates about the origin.
    */
@@ -460,11 +406,7 @@ const Coordinate = {
   /**
    * Reflect the coordinate over the given line segment.
    */
-  reflect: (
-    [x, y]: Coordinate,
-    [x1, y1]: Coordinate,
-    [x2, y2]: Coordinate
-  ): Coordinate => {
+  reflect: ([x, y]: Coordinate, [x1, y1]: Coordinate, [x2, y2]: Coordinate): Coordinate => {
     // Too lazy to figure this out on my own, adapted from https://stackoverflow.com/a/3307181.
     if (x1 === x2) {
       return [x1 - x, y];
@@ -531,9 +473,7 @@ namespace PathCommand {
       .map(
         (e) =>
           `${e.type} ${SVG_ELEMENT_TO_COORDINATES[e.type](e as never)
-            .map(
-              ([x, y]) => `${roundToPrecision(x, 3)},${roundToPrecision(y, 3)}`
-            )
+            .map(([x, y]) => `${roundToPrecision(x, 3)},${roundToPrecision(y, 3)}`)
             .join(" ")
             .trim()}`
       )
@@ -564,11 +504,7 @@ namespace PathCommand {
 // #region LOCATORS
 // ----------------------------------------------------------------------------
 
-function evaluateLineSegment(
-  src: Coordinate,
-  dst: Coordinate,
-  t: number
-): Coordinate {
+function evaluateLineSegment(src: Coordinate, dst: Coordinate, t: number): Coordinate {
   assert(t >= 0 && t <= 1, "parameter must be on [0, 1]");
   return [(dst[0] - src[0]) * t + src[0], (dst[1] - src[1]) * t + src[1]];
 }
@@ -584,11 +520,7 @@ class NullLocator implements ParametricLocator {
 }
 
 class LineSegmentLocator implements ParametricLocator {
-  constructor(
-    private a: Coordinate,
-    private b: Coordinate,
-    private scales: number[]
-  ) {}
+  constructor(private a: Coordinate, private b: Coordinate, private scales: number[]) {}
 
   public *forCount(total: number): Generator<[Coordinate, number]> {
     if (total <= 0 || total > this.scales.length) {
@@ -596,10 +528,7 @@ class LineSegmentLocator implements ParametricLocator {
     }
 
     for (let i = 0; i < total; ++i) {
-      yield [
-        evaluateLineSegment(this.a, this.b, (i + 1) / (total + 1)),
-        this.scales[total - 1],
-      ];
+      yield [evaluateLineSegment(this.a, this.b, (i + 1) / (total + 1)), this.scales[total - 1]];
     }
   }
 }
@@ -610,10 +539,7 @@ class SequenceLocator implements ParametricLocator {
   constructor(
     private sequence: Coordinate[],
     private scales: number[],
-    private exceptions: Record<
-      number,
-      Coordinate[] | typeof SequenceLocator.EMPTY
-    > = {}
+    private exceptions: Record<number, Coordinate[] | typeof SequenceLocator.EMPTY> = {}
   ) {
     assert(
       sequence.length === scales.length,
@@ -640,15 +566,9 @@ class SequenceLocator implements ParametricLocator {
 
 class ExhaustiveLocator implements ParametricLocator {
   constructor(private sequences: Coordinate[][], private scales: number[]) {
-    assert(
-      sequences.length === scales.length,
-      "must have the same number of sequences as scales"
-    );
+    assert(sequences.length === scales.length, "must have the same number of sequences as scales");
     for (let i = 0; i < sequences.length; ++i) {
-      assert(
-        sequences[i].length === i + 1,
-        `sequence at index ${i} must have ${i + 1} elements`
-      );
+      assert(sequences[i].length === i + 1, `sequence at index ${i} must have ${i + 1} elements`);
     }
   }
 
@@ -664,11 +584,7 @@ class ExhaustiveLocator implements ParametricLocator {
 }
 
 class AlternatingReflectiveLocator implements ParametricLocator {
-  constructor(
-    private delegate: ParametricLocator,
-    private a: Coordinate,
-    private b: Coordinate
-  ) {}
+  constructor(private delegate: ParametricLocator, private a: Coordinate, private b: Coordinate) {}
 
   public *forCount(total: number): Generator<[Coordinate, number]> {
     if (total <= 0) {
@@ -705,11 +621,7 @@ class AlternatingReflectiveLocator implements ParametricLocator {
 }
 
 class ReflectiveLocator implements ParametricLocator {
-  constructor(
-    private delegate: ParametricLocator,
-    private a: Coordinate,
-    private b: Coordinate
-  ) {}
+  constructor(private delegate: ParametricLocator, private a: Coordinate, private b: Coordinate) {}
 
   public *forCount(total: number): Generator<[Coordinate, number]> {
     for (const [translate, scale] of this.delegate.forCount(total)) {
@@ -736,10 +648,7 @@ class OnChevronLocator implements ParametricLocator {
     const halfish = (total % 2 === 1 ? total - 1 : total) / 2;
 
     for (let i = 0; i < halfish; ++i) {
-      yield [
-        evaluateLineSegment(this.left, this.midpoint, (i + 1) / (halfish + 1)),
-        scale,
-      ];
+      yield [evaluateLineSegment(this.left, this.midpoint, (i + 1) / (halfish + 1)), scale];
     }
 
     if (total % 2 === 1) {
@@ -747,10 +656,7 @@ class OnChevronLocator implements ParametricLocator {
     }
 
     for (let i = 0; i < halfish; ++i) {
-      yield [
-        evaluateLineSegment(this.midpoint, this.right, (i + 1) / (halfish + 1)),
-        scale,
-      ];
+      yield [evaluateLineSegment(this.midpoint, this.right, (i + 1) / (halfish + 1)), scale];
     }
   }
 }
@@ -782,10 +688,7 @@ class DefaultChargeLocator implements ParametricLocator {
     0.5,
   ];
 
-  constructor(
-    private horizontal: [number, number],
-    private vertical: [number, number]
-  ) {}
+  constructor(private horizontal: [number, number], private vertical: [number, number]) {}
 
   public *forCount(total: number): Generator<[Coordinate, number]> {
     if (total <= 0 || total > DefaultChargeLocator.ROWS.length) {
@@ -797,8 +700,7 @@ class DefaultChargeLocator implements ParametricLocator {
 
     for (let i = 0; i < rows.length; ++i) {
       const y =
-        ((i + 1) / (rows.length + 1)) * (this.vertical[1] - this.vertical[0]) +
-        this.vertical[0];
+        ((i + 1) / (rows.length + 1)) * (this.vertical[1] - this.vertical[0]) + this.vertical[0];
 
       // This is a bit weird, and it's different from the LineSegmentLocator. Instead of spacing out
       // each row evenly and individually, we want to make a nice upside-down isoceles triangle:
@@ -807,8 +709,7 @@ class DefaultChargeLocator implements ParametricLocator {
       // calculate where each row needs to start in order for this spacing to produce a horizontally-
       // centered row. That is a function of the number of items in this row relative to the number
       // of items in the first row, that is, the row that set the spacing in the first place.
-      const offset =
-        this.horizontal[0] + step + (step * (rows[0] - rows[i])) / 2;
+      const offset = this.horizontal[0] + step + (step * (rows[0] - rows[i])) / 2;
       for (let j = 0; j < rows[i]; ++j) {
         yield [[offset + step * j, y], DefaultChargeLocator.SCALES[total - 1]];
       }
@@ -845,9 +746,7 @@ function deepEqual<T>(one: T, two: T): boolean {
   if (one == null || two == null) {
     return one === two;
   } else if (Array.isArray(one) && Array.isArray(two)) {
-    return (
-      one.length === two.length && one.every((o, i) => deepEqual(o, two[i]))
-    );
+    return one.length === two.length && one.every((o, i) => deepEqual(o, two[i]));
   } else if (typeof one === "object" && typeof two === "object") {
     const oneKeys = Object.getOwnPropertyNames(one).sort();
     const twoKeys = Object.getOwnPropertyNames(two).sort();
@@ -896,9 +795,7 @@ interface Transforms {
 const Transforms = {
   toString: ({ translate, scale, rotate, skewX }: Transforms): string => {
     return [
-      translate != null
-        ? `translate(${translate[0]}, ${translate[1]})`
-        : undefined,
+      translate != null ? `translate(${translate[0]}, ${translate[1]})` : undefined,
       typeof scale === "number" && scale !== 1
         ? `scale(${scale})`
         : Array.isArray(scale)
@@ -969,10 +866,7 @@ const svg = {
       classes?: { fill?: ColorOrMetal };
     } = {}
   ): SVGCircleElement => {
-    const circle = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "circle"
-    );
+    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     applySvgAttributes(circle, { r, cx, cy, fill });
     applyClasses(circle, classes);
     return circle;
@@ -1065,10 +959,7 @@ const svg = {
     applyClasses(rect, classes);
     return rect;
   },
-  g: (
-    { kind }: { kind: string },
-    ...children: (SVGElement | undefined)[]
-  ): SVGGElement => {
+  g: ({ kind }: { kind: string }, ...children: (SVGElement | undefined)[]): SVGGElement => {
     const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
     applySvgAttributes(g, { "data-kind": kind });
     g.append(...children.filter(isNotNullish));
@@ -1098,10 +989,7 @@ const svg = {
     },
     ...children: (SVGElement | undefined)[]
   ): SVGPatternElement => {
-    const pattern = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "pattern"
-    );
+    const pattern = document.createElementNS("http://www.w3.org/2000/svg", "pattern");
     applySvgAttributes(pattern, {
       id,
       // Make sure that the coordinate system is the same as the referent, rather than some kind of
@@ -1116,9 +1004,7 @@ const svg = {
       height,
       preserveAspectRatio,
       patternTransform:
-        patternTransform == null
-          ? undefined
-          : Transforms.toString(patternTransform),
+        patternTransform == null ? undefined : Transforms.toString(patternTransform),
       "data-kind": kind,
     });
     pattern.append(...children.filter(isNotNullish));
@@ -1135,10 +1021,7 @@ const svg = {
     stroke?: SvgColor;
     classes?: { fill?: ColorOrMetal; stroke?: ColorOrMetal };
   }): SVGPolygonElement => {
-    const polygon = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "polygon"
-    );
+    const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
     applySvgAttributes(polygon, {
       points: points.map(([x, y]) => `${x},${y}`).join(" "),
       fill,
@@ -1159,28 +1042,21 @@ const svg = {
 };
 
 const complexSvgCache: Record<string, Promise<SVGGElement>> = {};
-async function fetchMutableComplexSvg(
-  kind: string,
-  variant?: string
-): Promise<SVGGElement> {
+async function fetchMutableComplexSvg(kind: string, variant?: string): Promise<SVGGElement> {
   const key = variant ? `${kind}-${variant}` : kind;
   if (!(key in complexSvgCache)) {
-    complexSvgCache[key] = fetch(`/assets/blazonry/svg/${key}.svg`).then(
-      async (response) => {
-        const root = new DOMParser().parseFromString(
-          await response.text(),
-          "image/svg+xml"
-        ).documentElement as any as SVGElement;
-        const wrapper = svg.g({ kind: key });
-        wrapper.classList.add(kind);
-        // Shallow copy: appendChild also deletes it from the source node, so this is modifying the
-        // collection as we iterate it.
-        for (const c of [...root.children]) {
-          wrapper.appendChild(c);
-        }
-        return wrapper;
+    complexSvgCache[key] = fetch(`/assets/blazonry/svg/${key}.svg`).then(async (response) => {
+      const root = new DOMParser().parseFromString(await response.text(), "image/svg+xml")
+        .documentElement as any as SVGElement;
+      const wrapper = svg.g({ kind: key });
+      wrapper.classList.add(kind);
+      // Shallow copy: appendChild also deletes it from the source node, so this is modifying the
+      // collection as we iterate it.
+      for (const c of [...root.children]) {
+        wrapper.appendChild(c);
       }
-    );
+      return wrapper;
+    });
   }
 
   const loadedSvg = await complexSvgCache[key];
@@ -1209,12 +1085,7 @@ const bend: OrdinaryRenderer = {
       TreatmentRelativePath.line([0, BEND_WIDTH]),
       // Note that top is left-to-right, but bottom is right-to-left. This is to make sure that
       // we traverse around the bend clockwise.
-      TREATMENTS[treatment ?? "untreated"](
-        -BEND_LENGTH,
-        true,
-        "secondary",
-        "end"
-      ),
+      TREATMENTS[treatment ?? "untreated"](-BEND_LENGTH, true, "secondary", "end"),
     ];
 
     for (const t of treatments) {
@@ -1241,18 +1112,16 @@ const bend: OrdinaryRenderer = {
       const offset = (Math.sin(Math.PI / 4) * BEND_WIDTH) / 2 + COTISED_WIDTH;
 
       bend.appendChild(
-        svg.line(
-          [-W_2 + offset, -H_2 - offset],
-          [H - W_2 + offset, H_2 - offset],
-          { ...stroke, strokeWidth: COTISED_WIDTH }
-        )
+        svg.line([-W_2 + offset, -H_2 - offset], [H - W_2 + offset, H_2 - offset], {
+          ...stroke,
+          strokeWidth: COTISED_WIDTH,
+        })
       );
       bend.appendChild(
-        svg.line(
-          [-W_2 - offset, -H_2 + offset],
-          [H - W_2 - offset, H_2 + offset],
-          { ...stroke, strokeWidth: COTISED_WIDTH }
-        )
+        svg.line([-W_2 - offset, -H_2 + offset], [H - W_2 - offset, H_2 + offset], {
+          ...stroke,
+          strokeWidth: COTISED_WIDTH,
+        })
       );
     }
 
@@ -1299,12 +1168,7 @@ const bend: OrdinaryRenderer = {
         { type: "Z" },
       ];
     } else {
-      const treatmentPath = TREATMENTS[treatment](
-        BEND_LENGTH,
-        false,
-        "primary",
-        "start"
-      );
+      const treatmentPath = TREATMENTS[treatment](BEND_LENGTH, false, "primary", "start");
       TreatmentRelativePath.rotate(treatmentPath, Radians.EIGHTH_TURN);
       return [
         { type: "M", loc: topLeft },
@@ -1346,12 +1210,7 @@ const chief: OrdinaryRenderer = {
 
     const chief = svg.g({ kind: "chief" }, pattern);
 
-    const [start, main, end] = TREATMENTS[treatment ?? "untreated"](
-      -W,
-      true,
-      "primary",
-      "center"
-    );
+    const [start, main, end] = TREATMENTS[treatment ?? "untreated"](-W, true, "primary", "center");
     chief.appendChild(
       svg.path(
         [
@@ -1407,19 +1266,9 @@ const chevron: OrdinaryRenderer = {
     const topLength = Coordinate.length(mid, right) + CHEVRON_WIDTH / 2;
     const bottomLength = Coordinate.length(mid, right) - CHEVRON_WIDTH / 2;
 
-    const topLeft = TREATMENTS[treatment ?? "untreated"](
-      topLength,
-      false,
-      "primary",
-      "end"
-    );
+    const topLeft = TREATMENTS[treatment ?? "untreated"](topLength, false, "primary", "end");
     TreatmentRelativePath.rotate(topLeft, Radians.NEG_QUARTER_TURN);
-    const topRight = TREATMENTS[treatment ?? "untreated"](
-      topLength,
-      false,
-      "primary",
-      "start"
-    );
+    const topRight = TREATMENTS[treatment ?? "untreated"](topLength, false, "primary", "start");
     const bottomLeft = TREATMENTS[treatment ?? "untreated"](
       -bottomLength,
       true,
@@ -1451,26 +1300,15 @@ const chevron: OrdinaryRenderer = {
     {
       const [start, , end] = topRight;
       const originalStart: Coordinate = [...start.loc];
-      start.loc = [
-        0,
-        Math.sign(start.loc[1]) * Math.hypot(start.loc[1], start.loc[1]),
-      ];
-      end.loc = Coordinate.add(
-        end.loc,
-        originalStart,
-        Coordinate.negate(start.loc)
-      );
+      start.loc = [0, Math.sign(start.loc[1]) * Math.hypot(start.loc[1], start.loc[1])];
+      end.loc = Coordinate.add(end.loc, originalStart, Coordinate.negate(start.loc));
     }
 
     {
       const [start, , end] = topLeft;
       const originalEnd: Coordinate = [...end.loc];
       end.loc = [0, Math.sign(end.loc[1]) * Math.hypot(end.loc[1], end.loc[1])];
-      start.loc = Coordinate.add(
-        start.loc,
-        originalEnd,
-        Coordinate.negate(end.loc)
-      );
+      start.loc = Coordinate.add(start.loc, originalEnd, Coordinate.negate(end.loc));
     }
 
     // We don't adjust the endpoints of the bottom edges because due to the vagaries of the way that
@@ -1593,10 +1431,7 @@ const chevron: OrdinaryRenderer = {
         ...rightMain,
         {
           type: "l",
-          loc: Coordinate.rotate(
-            Coordinate.add(rightEnd.loc, rightStart.loc),
-            Radians.EIGHTH_TURN
-          ),
+          loc: Coordinate.rotate(Coordinate.add(rightEnd.loc, rightStart.loc), Radians.EIGHTH_TURN),
         },
         { type: "L", loc: midRight },
         { type: "L", loc: topRight },
@@ -1632,12 +1467,7 @@ const cross: OrdinaryRenderer = {
       TREATMENTS[treatment ?? "untreated"](hLength, true, "secondary", "start"),
       TreatmentRelativePath.line([-CROSS_WIDTH, 0]),
       TREATMENTS[treatment ?? "untreated"](-hLength, false, "primary", "end"),
-      TREATMENTS[treatment ?? "untreated"](
-        -vLength,
-        false,
-        "secondary",
-        "start"
-      ),
+      TREATMENTS[treatment ?? "untreated"](-vLength, false, "secondary", "start"),
       TreatmentRelativePath.line([-CROSS_WIDTH, 0]),
       TREATMENTS[treatment ?? "untreated"](vLength, true, "secondary", "end"),
       TREATMENTS[treatment ?? "untreated"](-hLength, false, "primary", "start"),
@@ -1713,14 +1543,8 @@ const cross: OrdinaryRenderer = {
     [
       [W_2 - CROSS_SECTOR_2, -H_2 + CROSS_SECTOR_2],
       [-W_2 + CROSS_SECTOR_2, -H_2 + CROSS_SECTOR_2],
-      [
-        -W_2 + CROSS_SECTOR_2,
-        CROSS_SECTOR_2 - CROSS_VERTICAL_OFFSET + CROSS_WIDTH / 2,
-      ],
-      [
-        W_2 - CROSS_SECTOR_2,
-        CROSS_SECTOR_2 - CROSS_VERTICAL_OFFSET + CROSS_WIDTH / 2,
-      ],
+      [-W_2 + CROSS_SECTOR_2, CROSS_SECTOR_2 - CROSS_VERTICAL_OFFSET + CROSS_WIDTH / 2],
+      [W_2 - CROSS_SECTOR_2, CROSS_SECTOR_2 - CROSS_VERTICAL_OFFSET + CROSS_WIDTH / 2],
     ],
     [0.5, 0.5, 0.5, 0.5],
     {
@@ -1755,12 +1579,7 @@ const fess: OrdinaryRenderer = {
               [{ type: "l", loc: [0, FESS_WIDTH] }],
               { type: "m", loc: [0, 0] },
             ],
-            TREATMENTS[treatment ?? "untreated"](
-              -W,
-              true,
-              "secondary",
-              "center"
-            )
+            TREATMENTS[treatment ?? "untreated"](-W, true, "secondary", "center")
           ),
         ],
         fill
@@ -1774,18 +1593,16 @@ const fess: OrdinaryRenderer = {
       const offset = FESS_WIDTH / 2 + (COTISED_WIDTH * 3) / 2;
 
       fess.appendChild(
-        svg.line(
-          [-W_2, FESS_VERTICAL_OFFSET - offset],
-          [W_2, FESS_VERTICAL_OFFSET - offset],
-          { ...stroke, strokeWidth: COTISED_WIDTH }
-        )
+        svg.line([-W_2, FESS_VERTICAL_OFFSET - offset], [W_2, FESS_VERTICAL_OFFSET - offset], {
+          ...stroke,
+          strokeWidth: COTISED_WIDTH,
+        })
       );
       fess.appendChild(
-        svg.line(
-          [-W_2, FESS_VERTICAL_OFFSET + offset],
-          [W_2, FESS_VERTICAL_OFFSET + offset],
-          { ...stroke, strokeWidth: COTISED_WIDTH }
-        )
+        svg.line([-W_2, FESS_VERTICAL_OFFSET + offset], [W_2, FESS_VERTICAL_OFFSET + offset], {
+          ...stroke,
+          strokeWidth: COTISED_WIDTH,
+        })
       );
     }
 
@@ -1819,12 +1636,7 @@ const fess: OrdinaryRenderer = {
     if (treatment == null) {
       return [topLeft, midLeft, midRight, topRight, { type: "Z" }];
     } else {
-      const [start, main, end] = TREATMENTS[treatment](
-        W,
-        false,
-        "primary",
-        "center"
-      );
+      const [start, main, end] = TREATMENTS[treatment](W, false, "primary", "center");
       return [
         topLeft,
         midLeft,
@@ -1850,12 +1662,7 @@ const pale: OrdinaryRenderer = {
     TreatmentRelativePath.rotate(right, Radians.QUARTER_TURN);
     // Note that right is left-to-right, but left is right-to-left. This is to make sure that
     // we traverse around the pale clockwise after rotations have been performed.
-    const left = TREATMENTS[treatment ?? "untreated"](
-      -H,
-      true,
-      "secondary",
-      "end"
-    );
+    const left = TREATMENTS[treatment ?? "untreated"](-H, true, "secondary", "end");
     TreatmentRelativePath.rotate(left, Radians.QUARTER_TURN);
 
     pale.appendChild(
@@ -1893,11 +1700,7 @@ const pale: OrdinaryRenderer = {
     return pale;
   },
 
-  on: new LineSegmentLocator(
-    [0, -H_2],
-    [0, H_2],
-    [0.6, 0.6, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2]
-  ),
+  on: new LineSegmentLocator([0, -H_2], [0, H_2], [0.6, 0.6, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2]),
 
   between: new AlternatingReflectiveLocator(
     new LineSegmentLocator(
@@ -1920,12 +1723,7 @@ const pale: OrdinaryRenderer = {
     if (treatment == null) {
       return [topLeft, topMid, bottomMid, bottomLeft, { type: "Z" }];
     } else {
-      const [start, main, end] = TREATMENTS[treatment](
-        H,
-        false,
-        "primary",
-        "start"
-      );
+      const [start, main, end] = TREATMENTS[treatment](H, false, "primary", "start");
       TreatmentRelativePath.rotate([start, main, end], Radians.QUARTER_TURN);
       return [
         topLeft,
@@ -2079,10 +1877,7 @@ const saltire: OrdinaryRenderer = {
         "primary",
         "center"
       );
-      TreatmentRelativePath.rotate(
-        [start1, main1, end1],
-        (Radians.EIGHTH_TURN * 3) as Radians
-      );
+      TreatmentRelativePath.rotate([start1, main1, end1], (Radians.EIGHTH_TURN * 3) as Radians);
 
       const [start2, main2, end2] = TREATMENTS[treatment](
         Math.hypot(W, W),
@@ -2090,10 +1885,7 @@ const saltire: OrdinaryRenderer = {
         "primary",
         "center"
       );
-      TreatmentRelativePath.rotate(
-        [start2, main2, end2],
-        (Radians.NEG_EIGHTH_TURN * 3) as Radians
-      );
+      TreatmentRelativePath.rotate([start2, main2, end2], (Radians.NEG_EIGHTH_TURN * 3) as Radians);
 
       return [
         { type: "M", loc: topLeft.loc },
@@ -2258,11 +2050,10 @@ async function fret({ coloration }: WithSvgColoration<SimpleCharge>) {
 }
 
 async function escallop({ coloration }: WithSvgColoration<SimpleCharge>) {
-  const { fill, pattern } = await resolveColoration(
-    coloration,
-    [39.089, 40.967],
-    { scale: 0.6, translate: [0, -15] }
-  );
+  const { fill, pattern } = await resolveColoration(coloration, [39.089, 40.967], {
+    scale: 0.6,
+    translate: [0, -15],
+  });
   const escallop = await fetchMutableComplexSvg("escallop");
   maybeAppendChild(escallop, pattern);
   if ("classes" in fill) {
@@ -2274,11 +2065,10 @@ async function escallop({ coloration }: WithSvgColoration<SimpleCharge>) {
 }
 
 async function fleurDeLys({ coloration }: WithSvgColoration<SimpleCharge>) {
-  const { fill, pattern } = await resolveColoration(
-    coloration,
-    [30.117, 41.528],
-    { translate: [0, 10], scale: 0.5 }
-  );
+  const { fill, pattern } = await resolveColoration(coloration, [30.117, 41.528], {
+    translate: [0, 10],
+    scale: 0.5,
+  });
   const fleurDeLys = await fetchMutableComplexSvg("fleur-de-lys");
   maybeAppendChild(fleurDeLys, pattern);
   if ("classes" in fill) {
@@ -2318,11 +2108,9 @@ async function lion({
   placement,
 }: WithSvgColoration<LionCharge>) {
   const lion = await fetchMutableComplexSvg("lion", attitude);
-  const { fill, pattern } = await resolveColoration(
-    coloration,
-    LION_SIZES[attitude],
-    { scale: 0.4 }
-  );
+  const { fill, pattern } = await resolveColoration(coloration, LION_SIZES[attitude], {
+    scale: 0.4,
+  });
   maybeAppendChild(lion, pattern);
 
   if ("classes" in fill) {
@@ -2533,15 +2321,9 @@ async function resolveColoration(
     const { tincture } = coloration;
 
     // It has to be rewritten based on the context it's defined in before we attempt to resolve it.
-    assert(
-      tincture != "counterchanged",
-      "cannot resolve a counterchanged tincture"
-    );
+    assert(tincture != "counterchanged", "cannot resolve a counterchanged tincture");
 
-    async function getErmineBasedPattern(
-      foreground: ColorOrMetal,
-      background: ColorOrMetal
-    ) {
+    async function getErmineBasedPattern(foreground: ColorOrMetal, background: ColorOrMetal) {
       const pattern = await getErmineTincture(foreground, background);
       applySvgAttributes(pattern, {
         patternTransform: Transforms.toString(patternTransform),
@@ -2589,9 +2371,12 @@ async function resolveColoration(
       fill: { fill: color },
       stroke: { stroke: color },
       pattern,
-      nonRepeatingElements: await VARIATIONS[
-        coloration.type
-      ].nonRepeatingElements?.({ ...coloration, count, width, height }),
+      nonRepeatingElements: await VARIATIONS[coloration.type].nonRepeatingElements?.({
+        ...coloration,
+        count,
+        width,
+        height,
+      }),
     };
   } else {
     assertNever(coloration);
@@ -2677,16 +2462,15 @@ function wrapSimpleTreatment(
         alignToEnd: true,
       });
     } else if (alignment === "center") {
-      const [start, firstMain] = mutatinglyApplyTransforms(
-        chosenTreatment(length / 2),
-        { alignToEnd: true }
-      );
+      const [start, firstMain] = mutatinglyApplyTransforms(chosenTreatment(length / 2), {
+        alignToEnd: true,
+      });
 
       const [, secondMain, end] = chosenTreatment(length / 2);
-      return mutatinglyApplyTransforms(
-        [start, [...firstMain, ...secondMain], end],
-        { invertX, invertY }
-      );
+      return mutatinglyApplyTransforms([start, [...firstMain, ...secondMain], end], {
+        invertX,
+        invertY,
+      });
     } else {
       assertNever(alignment);
     }
@@ -2795,11 +2579,7 @@ function wavy(length: number): TreatmentRelativePath {
     }
   }
 
-  return [
-    { type: "m", loc: [0, -halfWidth / 4] },
-    curves,
-    { type: "m", loc: [x, -y] },
-  ];
+  return [{ type: "m", loc: [0, -halfWidth / 4] }, curves, { type: "m", loc: [x, -y] }];
 }
 
 const TREATMENTS: Record<Treatment | "untreated", TreatmentPathGenerator> = {
@@ -2819,15 +2599,14 @@ const TREATMENTS: Record<Treatment | "untreated", TreatmentPathGenerator> = {
 // Whether any given treatment of a variation should have the two edges "nesting" (i.e. pointing in
 // the same direction) or whether they should be opposing. Basically only exists to make sure that
 // wavy variations are aligned so they look like water.
-const IS_VARIATION_TREATMENT_ALIGNED: Record<Treatment | "untreated", boolean> =
-  {
-    "embattled-counter-embattled": false,
-    embattled: false,
-    engrailed: false,
-    indented: false,
-    wavy: true,
-    untreated: false,
-  };
+const IS_VARIATION_TREATMENT_ALIGNED: Record<Treatment | "untreated", boolean> = {
+  "embattled-counter-embattled": false,
+  embattled: false,
+  engrailed: false,
+  indented: false,
+  wavy: true,
+  untreated: false,
+};
 
 const barry: VariationPatternGenerator = {
   async generate({
@@ -2867,12 +2646,7 @@ const barry: VariationPatternGenerator = {
             "center"
           ),
           TreatmentRelativePath.line([0, height / 2]),
-          TREATMENTS[treatment ?? "untreated"](
-            -width,
-            false,
-            "primary",
-            "center"
-          )
+          TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center")
         ),
         firstFill
       )
@@ -2996,12 +2770,7 @@ const bendy: VariationPatternGenerator = {
             "center"
           ),
           TreatmentRelativePath.line([0, height / 2]),
-          TREATMENTS[treatment ?? "untreated"](
-            -width,
-            false,
-            "primary",
-            "center"
-          )
+          TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center")
         ),
         firstFill
       )
@@ -3041,8 +2810,7 @@ const bendySinister: VariationPatternGenerator = {
   async generate(variation: RenderableVariation) {
     const pattern = await bendy.generate(variation);
 
-    const height =
-      Math.hypot(variation.width, variation.width) / (variation.count / 2);
+    const height = Math.hypot(variation.width, variation.width) / (variation.count / 2);
     applySvgAttributes(pattern, {
       // There's no good way to DRY up this calculation and just override the rotation, so we have to
       // restate the translation as well. Unless we want to being doing string manipulation on the
@@ -3053,9 +2821,7 @@ const bendySinister: VariationPatternGenerator = {
           0,
           variation.width / 2 -
             variation.height / 2 -
-            (variation.count % 2 === 0
-              ? Math.sqrt(2 * height * height) / 4
-              : 0),
+            (variation.count % 2 === 0 ? Math.sqrt(2 * height * height) / 4 : 0),
         ],
       }),
     });
@@ -3143,44 +2909,23 @@ const chevronny: VariationPatternGenerator = {
     const chevronHeight = fillHeight / (count - 2);
     // The 45 degree angle centered on the midline means the tiling unit needs to be at least w/2
     // tall, but it also needs to snap to a unit of tiling, which is two heights (one on, on off).
-    const height =
-      2 * chevronHeight * Math.ceil(fillWidth / 2 / (2 * chevronHeight));
+    const height = 2 * chevronHeight * Math.ceil(fillWidth / 2 / (2 * chevronHeight));
 
     // 1.5: overrun to prevent visual artifacts around rounding errors and small-pixel adjustments for
     // alignment among the joints of the various parts.
     const length = Math.hypot(fillWidth / 2, fillWidth / 2) * 1.5;
 
-    const topRight = TREATMENTS[treatment ?? "untreated"](
-      length,
-      false,
-      "primary",
-      "start"
-    );
+    const topRight = TREATMENTS[treatment ?? "untreated"](length, false, "primary", "start");
     TreatmentRelativePath.rotate(topRight, Radians.EIGHTH_TURN);
-    const bottomRight = TREATMENTS[treatment ?? "untreated"](
-      -length,
-      false,
-      "secondary",
-      "end"
-    );
+    const bottomRight = TREATMENTS[treatment ?? "untreated"](-length, false, "secondary", "end");
     TreatmentRelativePath.rotate(bottomRight, Radians.EIGHTH_TURN);
 
     topRight[0].loc = [0, 0];
     bottomRight[2].loc = [0, 0];
 
-    const bottomLeft = TREATMENTS[treatment ?? "untreated"](
-      length,
-      true,
-      "secondary",
-      "start"
-    );
+    const bottomLeft = TREATMENTS[treatment ?? "untreated"](length, true, "secondary", "start");
     TreatmentRelativePath.rotate(bottomLeft, (Math.PI * (3 / 4)) as Radians);
-    const topLeft = TREATMENTS[treatment ?? "untreated"](
-      -length,
-      true,
-      "primary",
-      "end"
-    );
+    const topLeft = TREATMENTS[treatment ?? "untreated"](-length, true, "primary", "end");
     TreatmentRelativePath.rotate(topLeft, (Math.PI * (3 / 4)) as Radians);
 
     bottomLeft[0].loc = [0, 0];
@@ -3198,18 +2943,11 @@ const chevronny: VariationPatternGenerator = {
     const paths = [];
     // Start negative to ensure we render copies in the top left and right corners of the tile. The
     // template is based on the top middle location.
-    for (
-      let i = -height / (2 * chevronHeight);
-      i < height / (2 * chevronHeight);
-      ++i
-    ) {
+    for (let i = -height / (2 * chevronHeight); i < height / (2 * chevronHeight); ++i) {
       paths.push(
         svg.path(
           TreatmentRelativePath.toClosedLoop(
-            TreatmentRelativePath.offset([
-              fillWidth / 2,
-              i * 2 * chevronHeight,
-            ]),
+            TreatmentRelativePath.offset([fillWidth / 2, i * 2 * chevronHeight]),
             ...template
           ),
           firstFill
@@ -3378,12 +3116,7 @@ const paly: VariationPatternGenerator = {
     const width = fillWidth / (count / 2);
     const height = fillHeight * 1.5; // 1.5: overrun to prevent visual artifacts around the top/bottom edges.
 
-    const left = TREATMENTS[treatment ?? "untreated"](
-      height,
-      false,
-      "primary",
-      "center"
-    );
+    const left = TREATMENTS[treatment ?? "untreated"](height, false, "primary", "center");
     TreatmentRelativePath.rotate(left, Radians.QUARTER_TURN);
 
     const right = TREATMENTS[treatment ?? "untreated"](
@@ -3430,11 +3163,7 @@ const paly: VariationPatternGenerator = {
 
     return [
       // Hide dips from e.g. wavy on the left edge.
-      svg.rect(
-        [-fillWidth / 2, -fillHeight / 2],
-        [fillWidth / count / 2, fillHeight],
-        firstFill
-      ),
+      svg.rect([-fillWidth / 2, -fillHeight / 2], [fillWidth / count / 2, fillHeight], firstFill),
       // Same, but note that the right bar changes color depending on the parity.
       svg.rect(
         [fillWidth / 2 - fillWidth / count / 2, -fillHeight / 2],
@@ -3465,9 +3194,7 @@ const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
 // ----------------------------------------------------------------------------
 
 async function field(coloration: SvgColorableColoration) {
-  const { fill, pattern, nonRepeatingElements } = await resolveColoration(
-    coloration
-  );
+  const { fill, pattern, nonRepeatingElements } = await resolveColoration(coloration);
   return svg.g(
     { kind: "field" },
     pattern,
@@ -3499,13 +3226,12 @@ const ESCUTCHEON_PATH: PathCommand.Any[] = [
 // Note that quarterings are NOT the same size. The top two are clipped to be square and the bottom
 // two are made taller to compensate. This means that the cross point of the quarter ends up neatly
 // centered underneath centered ordinaries or collections of charges.
-const QUARTERINGS: Record<Quarter, { translate: Coordinate; height: number }> =
-  {
-    1: { translate: [-W_2 / 2, -H_2 / 2], height: W },
-    2: { translate: [W_2 / 2, -H_2 / 2], height: W },
-    3: { translate: [-W_2 / 2, (-H_2 + W) / 2], height: H + (H - W) },
-    4: { translate: [W_2 / 2, (-H_2 + W) / 2], height: H + (H - W) },
-  };
+const QUARTERINGS: Record<Quarter, { translate: Coordinate; height: number }> = {
+  1: { translate: [-W_2 / 2, -H_2 / 2], height: W },
+  2: { translate: [W_2 / 2, -H_2 / 2], height: W },
+  3: { translate: [-W_2 / 2, (-H_2 + W) / 2], height: H + (H - W) },
+  4: { translate: [W_2 / 2, (-H_2 + W) / 2], height: H + (H - W) },
+};
 
 const CANTON_SCALE_FACTOR = 1 / 3;
 // Note that this clips the bottom of the area. Combined with proportional scaling, this permits us
@@ -3519,9 +3245,7 @@ const CANTON_PATH: PathCommand.Any[] = [
   { type: "z" },
 ];
 
-async function charge(
-  element: WithSvgColoration<Charge>
-): Promise<SVGElement[]> {
+async function charge(element: WithSvgColoration<Charge>): Promise<SVGElement[]> {
   if ("canton" in element) {
     const { fill, pattern } = await resolveColoration(element.canton);
     const canton = svg.g({ kind: "canton" }, pattern);
@@ -3529,9 +3253,7 @@ async function charge(
       origin: [-W_2, -H_2],
       scale: CANTON_SCALE_FACTOR,
     });
-    canton.style.clipPath = `path("${PathCommand.toDString(
-      CANTON_PATH
-    )}") view-box`;
+    canton.style.clipPath = `path("${PathCommand.toDString(CANTON_PATH)}") view-box`;
     canton.appendChild(svg.path(CANTON_PATH, fill));
     for (const c of element.charges ?? []) {
       canton.append(...(await charge(c)));
@@ -3570,9 +3292,7 @@ async function escutcheonContent(
     element: WithSvgColoration<Charge>,
     coloration: SvgColorableColoration
   ): WithSvgColoration<Charge> {
-    function counterchangeColoration(
-      c: SvgColorableColoration
-    ): SvgColorableColoration;
+    function counterchangeColoration(c: SvgColorableColoration): SvgColorableColoration;
     function counterchangeColoration(
       c: SvgColorableColoration | undefined
     ): SvgColorableColoration | undefined;
@@ -3594,9 +3314,7 @@ async function escutcheonContent(
       return {
         ...ordinary,
         // Stupid conditional to preserve absence of field for the purposes of deep equality checks.
-        ...("cotised" in ordinary
-          ? { cotised: counterchangeColoration(ordinary.cotised) }
-          : {}),
+        ...("cotised" in ordinary ? { cotised: counterchangeColoration(ordinary.cotised) } : {}),
         coloration: counterchangeColoration(ordinary.coloration),
       };
     }
@@ -3633,9 +3351,7 @@ async function escutcheonContent(
         // Stupid conditional to preserve absence of field for the purposes of deep equality checks.
         ...("charges" in element
           ? {
-              charges: element.charges?.map((c) =>
-                counterchangeCharge(c, coloration)
-              ),
+              charges: element.charges?.map((c) => counterchangeCharge(c, coloration)),
             }
           : {}),
       };
@@ -3644,9 +3360,7 @@ async function escutcheonContent(
         ...element,
         on: counterchangeOrdinary(element.on),
         // Stupid conditional to preserve absence of field for the purposes of deep equality checks.
-        ...("charge" in element
-          ? { charge: counterchangeNonOrdinaryCharge(element.charge) }
-          : {}),
+        ...("charge" in element ? { charge: counterchangeNonOrdinaryCharge(element.charge) } : {}),
         // Stupid conditional to preserve absence of field for the purposes of deep equality checks.
         ...("surround" in element
           ? { surround: counterchangeNonOrdinaryCharge(element.surround) }
@@ -3666,10 +3380,7 @@ async function escutcheonContent(
     // This should be prevented in grammar, so this should never fire.
     assert(partition != undefined, "cannot partition with this ordinary");
 
-    const mask = svg.mask(
-      {},
-      svg.path(partition(content.treatment), { fill: "white" })
-    );
+    const mask = svg.mask({}, svg.path(partition(content.treatment), { fill: "white" }));
 
     function applyMask(e: SVGElement): SVGElement {
       applySvgAttributes(e, { mask: `url(#${mask.id})` });
@@ -3732,9 +3443,7 @@ async function escutcheonContent(
 
     for (const quartering of content.quarters) {
       for (const quarter of quartering.quarters) {
-        quartered[quarter].append(
-          ...(await escutcheonContent(quartering.content))
-        );
+        quartered[quarter].append(...(await escutcheonContent(quartering.content)));
       }
     }
 
@@ -3763,10 +3472,7 @@ async function escutcheonContent(
     }
 
     return children;
-  } else if (
-    "tincture" in content.coloration ||
-    "color" in content.coloration
-  ) {
+  } else if ("tincture" in content.coloration || "color" in content.coloration) {
     const children: SVGElement[] = [await field(content.coloration)];
     for (const c of content.charges ?? []) {
       children.push(...(await charge(c)));
@@ -3804,11 +3510,7 @@ async function escutcheonContent(
   }
 }
 
-async function on({
-  on,
-  surround,
-  charge,
-}: WithSvgColoration<On>): Promise<SVGElement[]> {
+async function on({ on, surround, charge }: WithSvgColoration<On>): Promise<SVGElement[]> {
   const children: SVGElement[] = [await ORDINARIES[on.ordinary].render(on)];
 
   if (charge != null) {
@@ -3893,10 +3595,7 @@ function initializePreview() {
   let isAboveFootnotes = true;
 
   function update() {
-    renderedPreviewContainer.classList.toggle(
-      "visible",
-      isBelowMainSvg && isAboveFootnotes
-    );
+    renderedPreviewContainer.classList.toggle("visible", isBelowMainSvg && isAboveFootnotes);
   }
 
   new IntersectionObserver(
@@ -3912,8 +3611,7 @@ function initializePreview() {
 
   new IntersectionObserver(
     ([{ boundingClientRect }]) => {
-      isAboveFootnotes =
-        boundingClientRect.top > document.documentElement.clientHeight;
+      isAboveFootnotes = boundingClientRect.top > document.documentElement.clientHeight;
       update();
     },
     { threshold: 0 }
@@ -3923,23 +3621,16 @@ function initializePreview() {
 let previousPrevEventHandler;
 let previousNextEventHandler;
 async function parseAndRenderBlazon(initialAmbiguousIndex: number = 0) {
-  async function render(
-    blazon: Blazon,
-    index: number | undefined
-  ): Promise<void> {
+  async function render(blazon: Blazon, index: number | undefined): Promise<void> {
     blazon = recursivelyOmitNullish(blazon);
 
     // Embed a <g> because it isolates viewBox wierdness when doing clipPaths.
     const container = svg.g(
       { kind: "container" },
       ...(await escutcheonContent(blazon.main)),
-      blazon.inescutcheon != null
-        ? await inescutcheon(blazon.inescutcheon)
-        : undefined
+      blazon.inescutcheon != null ? await inescutcheon(blazon.inescutcheon) : undefined
     );
-    container.style.clipPath = `path("${PathCommand.toDString(
-      ESCUTCHEON_PATH
-    )}") view-box`;
+    container.style.clipPath = `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`;
 
     ast.innerHTML = JSON.stringify(blazon, null, 2);
 
@@ -3970,9 +3661,7 @@ async function parseAndRenderBlazon(initialAmbiguousIndex: number = 0) {
     console.error(e);
     const message = (e as any)
       .toString()
-      .replaceAll(/("(.)"[ \n$])+/g, (match: string) =>
-        match.replaceAll('" "', "")
-      )
+      .replaceAll(/("(.)"[ \n$])+/g, (match: string) => match.replaceAll('" "', ""))
       .replaceAll(/:\n.*?→ /g, " ")
       .replaceAll(/    [^^\n]+\n/g, "") // ^^
       .replaceAll(/A ("[aehilmnorsx]")/g, "An $1");
@@ -3990,8 +3679,7 @@ async function parseAndRenderBlazon(initialAmbiguousIndex: number = 0) {
 
     let ambiguousIndex = initialAmbiguousIndex;
     async function step(sign: number) {
-      ambiguousIndex =
-        (ambiguousIndex + sign + results.length) % results.length;
+      ambiguousIndex = (ambiguousIndex + sign + results.length) % results.length;
       ambiguousCount.innerHTML = `${ambiguousIndex + 1} / ${results.length}`;
       await render(results[ambiguousIndex], ambiguousIndex);
     }
@@ -4022,13 +3710,9 @@ const renderedPreviewContainer: HTMLDivElement = document.querySelector(
 const error: HTMLPreElement = document.querySelector("#error")!;
 const ast: HTMLPreElement = document.querySelector("#ast")!;
 const ambiguous: HTMLDivElement = document.querySelector("#ambiguous")!;
-const ambiguousPrev: HTMLButtonElement = document.querySelector(
-  "#ambiguous-previous"
-)!;
-const ambiguousNext: HTMLButtonElement =
-  document.querySelector("#ambiguous-next")!;
-const ambiguousCount: HTMLSpanElement =
-  document.querySelector("#ambiguous-count")!;
+const ambiguousPrev: HTMLButtonElement = document.querySelector("#ambiguous-previous")!;
+const ambiguousNext: HTMLButtonElement = document.querySelector("#ambiguous-next")!;
+const ambiguousCount: HTMLSpanElement = document.querySelector("#ambiguous-count")!;
 
 input.addEventListener("keydown", async (e) => {
   if (e.code === "Enter" && (e.metaKey || e.shiftKey || e.ctrlKey)) {
@@ -4068,13 +3752,12 @@ const TINCTURE_WEIGHTS: Record<CounterchangeableTincture, number> = {
   counterchanged: 0,
 };
 
-const WEIGHTED_TINCTURE_ARRAY = Object.entries(TINCTURE_WEIGHTS).reduce<
-  Tincture[]
->((prev, [tincture, weight]) => [...prev, ...Array(weight).fill(tincture)], []);
+const WEIGHTED_TINCTURE_ARRAY = Object.entries(TINCTURE_WEIGHTS).reduce<Tincture[]>(
+  (prev, [tincture, weight]) => [...prev, ...Array(weight).fill(tincture)],
+  []
+);
 function randomTincture(): Tincture {
-  return WEIGHTED_TINCTURE_ARRAY[
-    Math.floor(Math.random() * WEIGHTED_TINCTURE_ARRAY.length)
-  ];
+  return WEIGHTED_TINCTURE_ARRAY[Math.floor(Math.random() * WEIGHTED_TINCTURE_ARRAY.length)];
 }
 
 const TINCTURES = Object.keys(TINCTURE_WEIGHTS) as Tincture[];
@@ -4134,8 +3817,7 @@ function generateRandomBlazon() {
       blazon = blazon.slice(0, inescutcheonIndex);
     }
   } while (
-    (blazon.match(/^[A-Za-z]+\.$/) &&
-      Math.random() <= TINCTURE_ONLY_SKIP_RATIO) ||
+    (blazon.match(/^[A-Za-z]+\.$/) && Math.random() <= TINCTURE_ONLY_SKIP_RATIO) ||
     // Quarterly never comes out well.
     blazon.match(/quarterly/i) ||
     // Synonymous with quarterly.
@@ -4151,9 +3833,7 @@ random.addEventListener("click", async () => {
   await parseAndRenderBlazon();
 });
 
-for (const example of document.querySelectorAll<HTMLAnchorElement>(
-  "[data-example]"
-)) {
+for (const example of document.querySelectorAll<HTMLAnchorElement>("[data-example]")) {
   example.addEventListener("click", async (e) => {
     e.preventDefault();
     const a = e.target as HTMLAnchorElement;
@@ -4167,9 +3847,7 @@ initializePreview();
 let text: unknown;
 let index: unknown;
 try {
-  ({ text, index } = JSON.parse(
-    decodeURIComponent(window.location.hash.slice(1))
-  ));
+  ({ text, index } = JSON.parse(decodeURIComponent(window.location.hash.slice(1))));
 } catch (e) {
   // ignore and do default thing
 }
@@ -4179,10 +3857,7 @@ rendered.setAttribute(
   `${-W_2 - MARGIN} ${-H_2 - MARGIN} ${W + 2 * MARGIN} ${H + 2 * MARGIN}`
 );
 
-if (
-  typeof text === "string" &&
-  (index === undefined || typeof index === "number")
-) {
+if (typeof text === "string" && (index === undefined || typeof index === "number")) {
   input.value = text;
   parseAndRenderBlazon(index);
 } else {

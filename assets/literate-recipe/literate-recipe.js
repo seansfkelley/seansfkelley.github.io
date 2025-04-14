@@ -65,9 +65,7 @@ document.querySelectorAll(".recipe-step").forEach((step) => {
         startTimeInput.value = Duration.fromDate(new Date(), 5).toTimeInputValue();
         recalculateOffsetsRelativeTo(group, index, "start");
     });
-    step
-        .querySelector(".metadata")
-        .append(setToNowButton, startTimeInput, " → ", endTimeInput);
+    step.querySelector(".metadata").append(setToNowButton, startTimeInput, " → ", endTimeInput);
     (groupedOrderedSteps[group] ??= []).push({
         offset,
         duration,
