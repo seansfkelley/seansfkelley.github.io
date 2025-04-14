@@ -29,11 +29,11 @@ const SvgRect = {
 
 interface SvgPath {
   type: "path";
-  d: string[];
+  d: string;
 }
 
 const SvgPath = {
-  of: (d: string[]): SvgPath => ({ type: "path", d }),
+  of: (d: string): SvgPath => ({ type: "path", d }),
 };
 
 interface SvgLine {
@@ -60,6 +60,14 @@ interface Intersection {
     location: Point;
   }[];
 }
+
+// viewbox = 0 0 17 25
+const WALK_PATHS = [
+  // head
+  "m 10.29 3.54 a 1.73 1.73 0 1 1 1.71 -1.74 a 1.73 1.73 0 0 1 -1.73 1.73",
+  // body
+  "m 3 12 c 0.54 -1.38 0.85 -2.75 1.36 -4.32 l 2 -0.62 l -6.27 17.06 l 1.85 0.66 l 5 -10.14 l 2.66 4.59 l 0.51 5.73 l 2.18 -0.11 l -0.4 -6.75 l -2.89 -5.56 l 1.61 -3.92 c 0.58 0.43 1.14 1.07 1.76 1.51 l 3.77 2 l 0.8 -1.22 l -3.94 -2.81 l -3 -4.07 l -1.48 -0.61 l -6.11 3 l -1 5.54 z",
+];
 
 const INTERSECTION = ((): Intersection => {
   const timing: CrosswalkSignalTiming = [5, 6, 13];
@@ -145,8 +153,8 @@ function renderPedestrianSignal(
   timing: CrosswalkSignalTiming,
   timingOffset: number | undefined
 ): SVGElement {
-  const SIZE = 3;
-  const BUFFER = 1;
+  const SIZE = 4;
+  const BUFFER = 0.5;
 
   const outline = document.createElementNS(
     "http://www.w3.org/2000/svg",
@@ -161,9 +169,10 @@ function renderPedestrianSignal(
     rx: 1,
   });
 
-  const walk = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+  const walk = document.createElementNS("http://www.w3.org/2000/svg", "use");
   applySvgAttributes(walk, {
     class: "walk",
+    href: "#walk-symbol",
     x: x + BUFFER + SIZE / 2,
     y: y + BUFFER,
     width: SIZE / 2,
@@ -266,6 +275,22 @@ function renderIntersection(intersection: Intersection): {
     class: "asphalt",
   });
   svg.appendChild(asphalt);
+
+  const walkSymbol = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "symbol"
+  );
+  applySvgAttributes(walkSymbol, {
+    id: "walk-symbol",
+    viewBox: "0 0 17 25",
+  });
+  svg.append(walkSymbol);
+
+  for (const d of WALK_PATHS) {
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    applySvgAttributes(path, { d });
+    walkSymbol.appendChild(path);
+  }
 
   function assertCycleTimeIsCompatible(timing: CrosswalkSignalTiming): void {
     const total = sum(timing);
