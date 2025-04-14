@@ -1,5 +1,6 @@
 // ASAP
 document.querySelector("#no-javascript-alert")!.remove();
+document.querySelector("#interactive")!.classList.remove("hidden");
 
 type Point = [x: number, y: number];
 
@@ -382,9 +383,11 @@ function renderIntersection({ sidewalks, crosswalks }: Intersection): {
   return { svg, pedestrianSignals, trafficSignals, cycleTime };
 }
 
+const container: SVGSVGElement = document.querySelector("#interactive")!;
+
 const { svg, pedestrianSignals, trafficSignals, cycleTime } =
   renderIntersection(INTERSECTION);
-document.body.appendChild(svg);
+container.appendChild(svg);
 
 function tick(t: number, cycleTime: number) {
   for (const pedestrian of pedestrianSignals) {
