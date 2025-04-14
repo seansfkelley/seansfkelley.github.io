@@ -4,6 +4,10 @@ document.querySelector("#interactive")!.classList.remove("hidden");
 
 type Point = [x: number, y: number];
 
+const Point = {
+  of: (x: number, y: number): Point => [x, y],
+};
+
 interface SvgRect {
   type: "rect";
   x: number;
@@ -13,112 +17,87 @@ interface SvgRect {
   rx?: number;
 }
 
+const SvgRect = {
+  of: (
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    rx?: number
+  ): SvgRect => ({ type: "rect", x, y, width, height, rx }),
+};
+
 interface SvgPath {
   type: "path";
   d: string[];
 }
 
-interface Sidewalk {
-  shape: SvgRect | SvgPath;
-  connections: Record<string, Point>;
+const SvgPath = {
+  of: (d: string[]): SvgPath => ({ type: "path", d }),
+};
+
+interface SvgLine {
+  type: "line";
+  a: Point;
+  b: Point;
 }
 
-type QualifiedSidewalkConnectionId = `${string}.${string}`;
+const SvgLine = {
+  of: (a: Point, b: Point): SvgLine => ({ type: "line", a, b }),
+};
 
 type CrosswalkSignalTiming = [walk: number, warn: number, dontWalk: number];
 
-interface SimpleCrosswalk {
-  type: "simple";
-  timing: CrosswalkSignalTiming;
-  timingOffset?: number;
-  a: QualifiedSidewalkConnectionId;
-  b: QualifiedSidewalkConnectionId;
-}
-
-interface ComplexCrosswalk {
-  type: "complex";
-  connections: QualifiedSidewalkConnectionId[];
-  shape: SvgPath;
-}
-
 interface Intersection {
-  sidewalks: Record<string, Sidewalk>;
-  crosswalks: (SimpleCrosswalk | ComplexCrosswalk)[];
-}
-
-function rect(
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-  rx?: number
-): SvgRect {
-  return { type: "rect", x, y, width, height, rx };
+  sidewalks: (SvgRect | SvgPath)[];
+  crosswalks: (SvgLine | SvgPath)[];
+  pedestrianSignals: {
+    location: Point;
+    timing: CrosswalkSignalTiming;
+    timingOffset?: number;
+  }[];
+  trafficSignals: {
+    location: Point;
+  }[];
 }
 
 const INTERSECTION = ((): Intersection => {
   const timing: CrosswalkSignalTiming = [5, 6, 13];
   const timingOffset = 12;
 
+  const nw_s = Point.of(5, 10);
+  const nw_e = Point.of(10, 5);
+  const ne_s = Point.of(95, 10);
+  const ne_w = Point.of(90, 5);
+  const se_n = Point.of(95, 90);
+  const se_w = Point.of(90, 95);
+  const sw_n = Point.of(5, 90);
+  const sw_e = Point.of(10, 95);
+
   return {
-    sidewalks: {
-      nw: {
-        shape: rect(0, 0, 10, 10),
-        connections: {
-          s: [5, 10],
-          e: [10, 5],
-        },
-      },
-      ne: {
-        shape: rect(90, 0, 10, 10),
-        connections: {
-          s: [95, 10],
-          w: [90, 5],
-        },
-      },
-      se: {
-        shape: rect(90, 90, 10, 10),
-        connections: {
-          n: [95, 90],
-          w: [90, 95],
-        },
-      },
-      sw: {
-        shape: rect(0, 90, 10, 10),
-        connections: {
-          n: [5, 90],
-          e: [10, 95],
-        },
-      },
-    },
-    crosswalks: [
-      {
-        type: "simple",
-        timing,
-        a: "nw.e",
-        b: "ne.w",
-      },
-      {
-        type: "simple",
-        timing,
-        timingOffset,
-        a: "ne.s",
-        b: "se.n",
-      },
-      {
-        type: "simple",
-        timing,
-        a: "se.w",
-        b: "sw.e",
-      },
-      {
-        type: "simple",
-        timingOffset,
-        timing,
-        a: "sw.n",
-        b: "nw.s",
-      },
+    sidewalks: [
+      SvgRect.of(0, 0, 10, 10),
+      SvgRect.of(90, 0, 10, 10),
+      SvgRect.of(90, 90, 10, 10),
+      SvgRect.of(0, 90, 10, 10),
     ],
+    crosswalks: [
+      SvgLine.of(nw_e, ne_w),
+      SvgLine.of(ne_s, se_n),
+      SvgLine.of(se_w, sw_e),
+      SvgLine.of(sw_n, nw_s),
+    ],
+    pedestrianSignals: [
+      { location: nw_e, timing },
+      { location: ne_w, timing },
+      { location: ne_s, timing, timingOffset },
+      { location: se_n, timing, timingOffset },
+      { location: se_w, timing },
+      { location: sw_e, timing },
+      { location: sw_n, timing, timingOffset },
+      { location: nw_s, timing, timingOffset },
+    ],
+    trafficSignals: [],
   };
 })();
 
@@ -248,7 +227,7 @@ function renderTrafficSignal(): SVGElement {
   // </g>
 }
 
-function renderIntersection({ sidewalks, crosswalks }: Intersection): {
+function renderIntersection(intersection: Intersection): {
   svg: SVGSVGElement;
   pedestrianSignals: SVGElement[];
   trafficSignals: SVGElement[];
@@ -256,16 +235,16 @@ function renderIntersection({ sidewalks, crosswalks }: Intersection): {
 } {
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   let cycleTime: number | undefined = undefined;
-  const pedestrianSignals: SVGElement[] = [];
-  const trafficSignals: SVGElement[] = [];
+  const renderedPedestrianSignals: SVGElement[] = [];
+  const renderedTrafficSignals: SVGElement[] = [];
 
   function recordPedestrianSignal(e: SVGElement): SVGElement {
-    pedestrianSignals.push(e);
+    renderedPedestrianSignals.push(e);
     return e;
   }
 
   function recordTrafficSignal(e: SVGElement): SVGElement {
-    trafficSignals.push(e);
+    renderedTrafficSignals.push(e);
     return e;
   }
 
@@ -288,8 +267,6 @@ function renderIntersection({ sidewalks, crosswalks }: Intersection): {
   });
   svg.appendChild(asphalt);
 
-  const availableConnections = new Set<string>();
-
   function assertCycleTimeIsCompatible(timing: CrosswalkSignalTiming): void {
     const total = sum(timing);
     if (cycleTime == null) {
@@ -301,86 +278,69 @@ function renderIntersection({ sidewalks, crosswalks }: Intersection): {
     );
   }
 
-  for (const [id, { shape, connections }] of Object.entries(sidewalks)) {
-    for (const connectionId of Object.keys(connections)) {
-      availableConnections.add(`${id}.${connectionId}`);
-    }
-
-    if (shape.type === "rect") {
+  for (const sidewalk of intersection.sidewalks) {
+    if (sidewalk.type === "rect") {
       const rect = document.createElementNS(
         "http://www.w3.org/2000/svg",
         "rect"
       );
 
-      const { type, ...rest } = shape;
-      rect.id = id;
+      const { type: _type, ...rest } = sidewalk;
       applySvgAttributes(rect, { ...rest, class: "sidewalk" });
 
       svg.appendChild(rect);
-    } else if (shape.type === "path") {
+    } else if (sidewalk.type === "path") {
       throw new Error("unimplemented");
     } else {
-      assertNever(shape);
+      assertNever(sidewalk);
     }
   }
 
-  for (const crosswalk of crosswalks) {
-    if (crosswalk.type === "simple") {
+  for (const crosswalk of intersection.crosswalks) {
+    if (crosswalk.type === "line") {
       const line = document.createElementNS(
         "http://www.w3.org/2000/svg",
         "line"
       );
 
-      const { type, a, b, timing, timingOffset } = crosswalk;
-      line.id = `${a}-${b}`;
-
-      assert(
-        availableConnections.has(a),
-        `cannot reuse qualified connection ID "${a}" for a-side`
-      );
-      availableConnections.delete(a);
-      assert(
-        availableConnections.has(b),
-        `cannot reuse qualified connection ID "${b}" for b-side`
-      );
-      availableConnections.delete(b);
-
-      const [aSidewalkId, aConnectionId] = a.split(".", 2);
-      const aConnection = sidewalks[aSidewalkId]?.connections[aConnectionId];
-      assert(aConnection != null, "a-side connection cannot be null");
-      const [bSidewalkId, bConnectionId] = b.split(".", 2);
-      const bConnection = sidewalks[bSidewalkId]?.connections[bConnectionId];
-      assert(bConnection != null, "b-side connection cannot be null");
-
-      assertCycleTimeIsCompatible(timing);
+      const { type: _type, a, b } = crosswalk;
 
       applySvgAttributes(line, {
         class: "crosswalk",
-        x1: aConnection[0],
-        y1: aConnection[1],
-        x2: bConnection[0],
-        y2: bConnection[1],
+        x1: a[0],
+        y1: a[1],
+        x2: b[0],
+        y2: b[1],
       });
 
       svg.appendChild(line);
-      svg.appendChild(
-        recordPedestrianSignal(
-          renderPedestrianSignal(aConnection, timing, timingOffset)
-        )
-      );
-      svg.appendChild(
-        recordPedestrianSignal(
-          renderPedestrianSignal(bConnection, timing, timingOffset)
-        )
-      );
-    } else if (crosswalk.type === "complex") {
+    } else if (crosswalk.type === "path") {
       throw new Error("unimplemented");
     } else {
       assertNever(crosswalk);
     }
   }
 
-  return { svg, pedestrianSignals, trafficSignals, cycleTime };
+  for (const {
+    location,
+    timing,
+    timingOffset,
+  } of intersection.pedestrianSignals) {
+    assertCycleTimeIsCompatible(timing);
+
+    svg.appendChild(
+      recordPedestrianSignal(
+        renderPedestrianSignal(location, timing, timingOffset)
+      )
+    );
+  }
+
+  return {
+    svg,
+    pedestrianSignals: renderedPedestrianSignals,
+    trafficSignals: renderedTrafficSignals,
+    cycleTime,
+  };
 }
 
 const container: SVGSVGElement = document.querySelector("#interactive")!;
