@@ -49,7 +49,10 @@ svg {
     }
 
     &.dont-walk.flashing .dont-walk {
-      animation: 1s step-start infinite sign-flash;
+      .symbol {
+        opacity: 0;
+        animation: 1s step-start infinite sign-flash;
+      }
 
       .text {
         display: initial;
@@ -91,10 +94,10 @@ svg {
 
 @keyframes sign-flash {
   0% {
-    opacity: 1;
+    opacity: 0;
   }
 
   50% {
-    opacity: 0;
+    opacity: 1;
   }
 }
