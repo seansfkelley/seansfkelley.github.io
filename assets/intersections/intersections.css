@@ -159,7 +159,8 @@ svg .pedestrian-signal.dont-walk .dont-walk .text {
 svg .pedestrian-signal.dont-walk .dont-walk .text {
   display: none;
 }
-svg .pedestrian-signal.dont-walk.flashing .dont-walk {
+svg .pedestrian-signal.dont-walk.flashing .dont-walk .symbol {
+  opacity: 0;
   animation: 1s step-start infinite sign-flash;
 }
 svg .pedestrian-signal.dont-walk.flashing .dont-walk .text {
@@ -192,9 +193,9 @@ svg .traffic-signal.red .red {
 
 @keyframes sign-flash {
   0% {
-    opacity: 1;
+    opacity: 0;
   }
   50% {
-    opacity: 0;
+    opacity: 1;
   }
 }
