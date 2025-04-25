@@ -16,6 +16,9 @@ layout: base
     {% include anchor_headings.html 
       html=content 
       anchorBody=anchor_headings.anchor_body
+      anchorClass=anchor_headings.anchor_class
+      beforeHeading=anchor_headings.before_heading
+      includeTrailingSpace=anchor_headings.include_trailing_space
     %}
   {%- else -%}
     {{ content }}

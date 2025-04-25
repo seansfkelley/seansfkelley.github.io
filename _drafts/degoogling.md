@@ -1,50 +1,78 @@
 ---
 layout: post
 title: Extricating Myself from Google
+anchor_headings: true
 ---
 
-Internet privacy is something I have been thinking about increasingly often over the last several years. I've been slowly working to reduce the amount of personal data I throw off as I move around the internet, but I've tried to be methodical about it because I still value some amount of convenience at the expense of privacy. But there was an elephant in the room: Google.
+Internet privacy is something I have been thinking about increasingly often over the last decade, during which I've been slowly reducing my [digital footprint](https://en.wikipedia.org/wiki/Digital_footprint) (and, more aggressively, the subtly-different [digital exhaust](https://en.wikipedia.org/wiki/Data_exhaust)). The process is tedious, it's difficult to understand how well it's working, and I sometimes wonder if it's worth it, since credit bureaus and insurance companies are basically handing out your PII to hackers.
 
-Fast-forward to now: I'm actively winding down my reliance on Google. In approximate chronological order:
+I persist because it buys me peace of mind and because I'm too principled to concede the point. I try to be somewhat pragmatic about it, and there are instances where I trade privacy for convenience. This makes Google a particularly thorny case, since I value the services they provide -- unlike Facebook, which I left years ago and often forget still exists.
 
-## Search → [DuckDuckGo](https://duckduckgo.com/)
+This post outlines my de-Googling strategy.
 
-My first serious foray into intentionally avoiding Google products was to switch to DuckDuckGo. The vast majority of my searches are pretty simplistic,[^1] usually ending on Wikipedia, StackOverflow, IMDb... you get the idea. Sometimes I don't even read the titles of the result, but instead just look for a familiar logo because I know it'll be the thing I want. Even Bing would probably work most of the time.
+## Search → [Kagi](https://kagi.com/)
 
-DuckDuckGo generally isn't better or worse than Google. Google has some features I like -- such as the smaller, indented quick links under a particular result -- and one I really don't: it searches for terms it thinks I wanted and not what I asked for _all the time_. Often even when I put some of the terms in quotes, which is just obnoxious.
+Yes: I pay for my search engine. It turns out that if you drink zero cups of coffee a day, the "cheaper than a cup of coffee" marketing play works. It might even work better, since I have a larger budget for coffee-priced things.
 
-DuckDuckGo's quality-of-life features like the unit converters and dictionary definitions and the like are more or less fine. I could give or take the [bangs](https://duckduckgo.com/bang), but I will admit -- maybe 5% of my searches end up with me using `!g`. The irony is that in most of those cases, I end up going back to DuckDuckGo, with the `!g` serving mostly to confirm that my search terms are just bad and it's not DuckDuckGo's fault I can't find what I want.
+For a long time I used [DuckDuckGo](https://duckduckgo.com/) (and I still use it when I'm on someone else's computer or I can't be bothered to set up my Kagi account on that device), but I found the quality of the search results barely better than Google, which itself has undergone a [well-documented decline](https://www.google.com/search?q=google+search+results+are+getting+worse). Perhaps this is because they're both advertising-driven, so their incentives aren't totally aligned with their users.
+
+Kagi, being a pay-for service, only makes money if it serves users' needs. Imagine that! They churn out features like crazy, including a _lot_ to customize your search results, as well as a bunch of random other services I couldn't really care less about. It's really lovely to be able to uprank/downrank sites.[^1]
+
+Admittedly, the vast majority of my searches are pretty simplistic,[^2] usually ending on Wikipedia, StackOverflow, IMDb... so the bar isn't terribly high. I occasionally dip back into Google with `!g` ([bangs](https://help.kagi.com/kagi/features/bangs.html) are a feature they totally stole from DuckDuckGo), but 100% of the time I find the same bad results, so I should really stop bothering.
 
 ## Chrome → [Firefox](https://firefox.com)
 
-I've been using Firefox since 2017, from right before [they announced their major speedup](https://blog.mozilla.org/blog/2017/11/14/introducing-firefox-quantum/) which was _noticeably_ superior to the previous versions. I had abandoned Firefox many years before when Chrome was the hot new thing, because it was actually quite a bit faster and slimmer. But as Firefox clawed back performance and Chrome started to suck up all my available memory and [do creepy things](https://blog.cryptographyengineering.com/2018/09/23/why-im-leaving-chrome/) (which they later [backpedaled on](https://www.blog.google/products/chrome/product-updates-based-your-feedback/), sort of), the practical differences disappeared and it became a no-brainer to vote with my feet.
+It's the same. You'll be fine, trust me. Using Firefox is like driving a Saab -- a _perfectly suitable tool_ for your needs, but because it died out and nobody sees it anymore, you get looks and people assume you're weird and/or totally out of touch.
 
-## Maps → Apple Maps
-
-Apple Maps used to suck. It's still not as good as Google Maps, but the differences are increasingly irrelevant. They recently added [support for biking directions in California](https://www.macrumors.com/2021/04/30/apple-maps-cycling-directions-seattle-california/), which I can only assume is foreshadowing a much broader rollout once they get the necessary data. Google Maps recently added [support for crossroads](https://www.ghacks.net/2021/02/01/google-is-adding-details-such-as-crosswalks-to-google-maps/) which is... cool I guess, but affects my usage precisely zero. I think they've reached diminishing returns, which will allow Apple and others to catch up.
-
-## YouTube → [Nebula](https://watchnebula.com/), [HBO Max](https://www.hbomax.com/) and YouTube
-
-Okay, this one is basically impossible to get rid of. It so happens that I subscribe to a lot of channels that are also on Nebula, which I gladly pay $3/month for. For the other half of the YouTube I watch, I have a separate Google account to preclude any associating[^2] my "real" Google account with whatever I'm watching, which [Firefox Containers](https://addons.mozilla.org/en-US/firefox/addon/multi-account-containers/0) helps with a lot with. I take solace knowing that most of the non-Nebula stuff I watch is... kind of irrelevant. Just modern-day channel surfing, really.
+I switched to Chrome like everybody else back in the 2010s when it was the hot new thing and Firefox was dog slow, but even though Firefox itself hasn't _quite_ kept pace (though [the big change in 2017](https://blog.mozilla.org/blog/2017/11/14/introducing-firefox-quantum/) really made a huge difference), computers and connections have gotten faster so it's not noticeable in real life. What is noticeable is Chrome sucking up all my memory and [normalizing stalker-ish behavior](https://blog.cryptographyengineering.com/2018/09/23/why-im-leaving-chrome/) (which they later [backpedaled on](https://www.blog.google/products/chrome/product-updates-based-your-feedback/), sort of).
 
 ## Gmail → [FastMail](https://fastmail.com)
 
-This was the big one. I spend months hemming and hawing whether I wanted to uproot my entire online identity and replace it with another one. I finally did sometime in 2020,[^3] and it's been... completely fine. The world did not come crumbling down around me, though I'm still in the process of shifting accounts over to the new address. The old account will necessarily have to live forever -- it's in too many places, some of which don't allow me to change it. I also can't shake the feeling that I'm going to regret giving my new, carefully-selected forever-email-address to random companies, so I still use my Google account to sign up for less important stuff.
+This was the big one. I spend months hemming and hawing whether I wanted to uproot my entire online identity and replace it with another one. I finally did sometime in 2020, and it's been... uneventful. The world did not come crumbling down around me, though I'm still in the process of shifting accounts over to the new address. The old account will necessarily have to live forever -- it's in too many places, some of which don't allow me to change it.
+
+The biggest uncertainty was Fastmail's quality of spam filtering. Five years later, I can say: perfectly fine. I can recall two incidents where things I needed were erroneously flagged as spam, and one where spam made it to my inbox.
+
+A component of my strategy here involves heavy usage of the masked email addresses. Only real people and important services (or those with KYC protocols, like banks and airlines) get a real email address. This is annoying to enforce and admittedly has not really yielded many benefits, but I'll keep doing it for peace of mind. I am legitimately surprised at how few companies seem to actually sell my masked email addresses to spammers.
 
 I decided against ProtonMail because I'm willing to trade off a lack of end-to-end encryption for the convenience of being able to use any client I want anywhere and have it just work. That is, after all, the magic of federated protocols!
 
-## Drive, Docs, Sheets... → [Dropbox](https://dropbox.com), Apple Pages, Apple Numbers...
+## Maps → [Apple Maps](https://maps.apple.com/)
 
-I don't really use these, so this was an easy transition to make.
+(With apologies to non-Mac, non-iPhone users.)
 
-The biggest missing thing is obviously collaboration features. I don't know what to do about that.
+Apple Maps used to suck. Like, really bad. It's improved dramatically in the years since its release, and the only things I ever return to Google Maps for are to check suspicious-looking opening hours, which are _occasionally_ wrong in Apple Maps.
+
+This particular transition has been so successful that whenever I do find myself in Google Maps, I find it an overwhelming and unpleasant place to be. The interface is laggy, packed with ads, and bombards you with buttons and completely useless location pins apparently pulled out of a hat. Why??[^3] Apple Maps is refreshingly direct and crisp, and really only shows you information you ask for.
+
+That said, the search, um, leaves something to be desired. Thankfully, like with Kagi, my search needs are pretty basic -- find things by their name, or just the word "gas" -- so it gets the job done. Also, I don't use any of the Yelp-like or custom map/pin features of Google Maps, of which Apple Maps doesn't have a lot. I use Yelp.
+
+## YouTube → [Nebula](https://watchnebula.com/), [Max](https://www.max.com/), [Infuse](https://firecore.com/) and [YouTube](https://youtube.com)
+
+Okay, this one is basically impossible to get rid of. It so happens that I subscribe to a lot of channels that are also on Nebula, which I gladly pay $3/month for. I only ever watch YouTube on an Apple TV, so I gave it its own Google account to keep it away from the remains of my real one.[^4]
+
+Thankfully, since YouTube is just glorified television, the privacy risk seems minimal. To me, it's more important to be able to pay to get rid of the ads _and_ have that pay go towards (usually) higher-quality content instead of all the clickbait garbage on YouTube.
+
+## Drive, Docs, Sheets... → [Dropbox](https://dropbox.com)/[iCloud Drive](https://www.icloud.com/iclouddrive/), Apple Pages, Apple Numbers...
+
+(With more apologies to non-Mac, non-iPhone users.)
+
+I barely use any of these, so this was an easy transition to make.
+
+I have one primary computer, with backups, so I don't see much upside to keeping things on Drive. As a programmer, I use my text editor for almost all text-based work, writing maybe one "document" a year. Spreadsheets are usually one-off a couple times a year, so Numbers' mediocre (but much prettier!) reimplementation of Excel is perfectly serviceable.
+
+I recently started using iCloud Drive for a bunch of shared documents, which was an option available to me, but I only chose it over Dropbox because Dropbox seems like a dying company and the product is really pretty ugly and clunky now.
 
 ## The Elephant in the Room
 
-I still use a lot of things from Apple.
+I replaced one big tech corporation -- Google -- with another -- Apple.
+
+This is a conscious decision I made as part of the convenience/privacy tradeoff. I'm unsure how honest I think Apple's apparent commitment to privacy is (though the [San Bernadino shooter incident](https://en.wikipedia.org/wiki/Apple%E2%80%93FBI_encryption_dispute) was definitely some good press for them), but since they make money off of hardware and being a services middleman, instead of advertising, it's much more believeable than the company that [retracted "don't be evil" as an unofficial slogan](https://www.snopes.com/fact-check/google-motto-dont-be-evil/).
+
+With each passing year, the gap between competitors for commoditized digital products -- meaning primarily Apple, but also sometimes-crappy oepn source alternatives -- closes. If I need to jump ship to OpenStreetMap, I won't be entirely happy, but it'll be a lot more usable than it was five years ago.
 
 {% include next-previous.html %}
 
-[^1]: I've actually got a post on this planned for the future... I just have to collect some browsing data on myself first.
-[^2]: My threat model does not include someone going to the effort to correlate things like IPs and time of access to figure out that my multiple Google accounts are actually the same physical person. I want to not be okay with that, but I think I am.
-[^3]: Hey, if everything else was being turned on its head, why not add more?
+[^1]: As of this writing, the [top 7 blocked domains](https://kagi.com/stats?stat=leaderboard) on Kagi are different flavors of Pinterest. Good to know I'm not the only one who feels this way.
+[^2]: I've actually got a post on this planned for the future... I just have to collect some browsing data on myself first.
+[^3]: Advertising.
+[^4]: My threat model does not include someone going to the effort to correlate things like IPs and time of access to figure out that my multiple Google accounts are actually the same physical person. I want to not be okay with that, but I have to draw the line somewhere.

@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .post {
   margin-bottom: $spacing;
 }
@@ -82,5 +84,18 @@
 
   sup {
     vertical-align: top;
+  }
+
+  .anchor-heading {
+    margin-right: math.div($spacing, 2);
+  }
+
+  @media screen and (min-width: $width-mobile) {
+    .anchor-heading {
+      margin-right: 0;
+      display: inline-block;
+      width: 1em;
+      margin-left: -1em;
+    }
   }
 }

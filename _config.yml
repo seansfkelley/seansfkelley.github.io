@@ -18,3 +18,6 @@ kramdown:
   show_warnings: true
 default_anchor_headings:
   anchor_body: "#"
+  before_heading: true
+  include_trailing_space: false
+  anchor_class: "anchor-heading"
