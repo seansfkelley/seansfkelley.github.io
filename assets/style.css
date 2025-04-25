@@ -763,6 +763,17 @@ body[data-theme=light] #theme-switcher:after {
 .post sup {
   vertical-align: top;
 }
+.post .anchor-heading {
+  margin-right: 7px;
+}
+@media screen and (min-width: 600px) {
+  .post .anchor-heading {
+    margin-right: 0;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+  }
+}
 
 .tag-page {
   margin-top: 14px;
