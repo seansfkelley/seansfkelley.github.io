@@ -1,4 +1,645 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-04-25T04:33:45+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Extricating Myself from Google</title><link href="https://blog.sea.nkelley.me/degoogling" rel="alternate" type="text/html" title="Extricating Myself from Google" /><published>2025-04-24T00:00:00+00:00</published><updated>2025-04-24T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/degoogling</id><content type="html" xml:base="https://blog.sea.nkelley.me/degoogling"><![CDATA[<p>Internet privacy is something I have been thinking about increasingly often over the last decade, during which I’ve been slowly reducing my <a href="https://en.wikipedia.org/wiki/Digital_footprint">digital footprint</a> (and, more aggressively, the subtly-different <a href="https://en.wikipedia.org/wiki/Data_exhaust">digital exhaust</a>). The process is tedious, it’s difficult to understand how well it’s working, and I sometimes wonder if it’s worth it, since credit bureaus and insurance companies are basically handing out your PII to hackers.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-05-15T22:41:31+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">It’s All Greek to Me</title><link href="https://blog.sea.nkelley.me/its-all-greek-to-me" rel="alternate" type="text/html" title="It’s All Greek to Me" /><published>2025-05-15T00:00:00+00:00</published><updated>2025-05-15T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/its-all-greek-to-me</id><content type="html" xml:base="https://blog.sea.nkelley.me/its-all-greek-to-me"><![CDATA[<p>I learned recently that there are more than a few Greek mythological figures whose names are, <em>verbatim</em>, English words. It thought this would be a good excuse for an internet quiz, so here you go.</p>
+
+<p>The quoted definitions are all from Merriam Webster, but I exercised some editorial control to pick recognizable versions and keep them short (and to skip any mythological definitions, obviously).</p>
+
+<hr />
+
+<p class="alert alert-danger " id="no-javascript-alert"><span class="alert-title">JavaScript Required</span>
+    <br />This page is interactive, and only works with JavaScript enabled!
+</p>
+
+<div class="hidden" id="interactive">
+  <p class="alert alert-success hidden" id="right-answer"><span class="alert-title">Right!</span>
+    <br />
+</p>
+
+  <p class="alert alert-danger hidden" id="wrong-answer"><span class="alert-title">Wrong!</span>
+    <br />
+</p>
+
+  
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">nemesis</h2>
+        <span class="pronunciation">/ˈnɛməsɪs/</span>
+      </div>
+      <div class="definition">
+        <p><strong>a</strong>: one that inflicts retribution or vengeance</p>
+
+<p><strong>b</strong>: a formidable and usually victorious rival or opponent</p>
+
+      </div>
+      <p class="detail hidden">
+        <a href="https://en.wikipedia.org/wiki/Nemesis">Nemesis</a> is the goddess of retributive justice.
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="false">📝 just a word</button>
+        <button data-is-answer="true">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">psyche</h2>
+        <span class="pronunciation">/ˈsaɪkiː/</span>
+      </div>
+      <div class="definition">
+        <p><strong>a</strong>: soul, personality</p>
+
+<p><strong>b</strong>: the totality of elements forming the mind</p>
+
+      </div>
+      <p class="detail hidden">
+        <a href="https://en.wikipedia.org/wiki/Psyche_(mythology)">Psyche</a> is the goddess of the soul.
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="false">📝 just a word</button>
+        <button data-is-answer="true">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">aura</h2>
+        <span class="pronunciation">/ǎu̯raː/</span>
+      </div>
+      <div class="definition">
+        <p><strong>a</strong>: a distinctive atmosphere surrounding a given source</p>
+
+<p><strong>b</strong>: a subtle sensory stimulus (such as an aroma)</p>
+
+      </div>
+      <p class="detail hidden">
+        <a href="https://en.wikipedia.org/wiki/Aura_(mythology)">Aura</a> is the goddess of the breeze.
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="false">📝 just a word</button>
+        <button data-is-answer="true">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">pan</h2>
+        <span class="pronunciation">/pæn/</span>
+      </div>
+      <div class="definition">
+        <p><strong>a</strong>: a usually broad, shallow, and open container for domestic use (as for cooking)</p>
+
+<p><strong>b</strong>: any of various similar usually metal receptacles</p>
+
+      </div>
+      <p class="detail hidden">
+        <a href="https://en.wikipedia.org/wiki/Pan_(god)">Pan</a> is the god of the wild, shepherds/flocks and that kind of stuff.
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="false">📝 just a word</button>
+        <button data-is-answer="true">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">iris</h2>
+        <span class="pronunciation">/ˈaɪrɪs/</span>
+      </div>
+      <div class="definition">
+        <p>the opaque contractile diaphragm perforated by the pupil and forming the colored portion of the eye</p>
+
+      </div>
+      <p class="detail hidden">
+        <a href="https://en.wikipedia.org/wiki/Iris_(mythology)">Iris</a> is the goddess of the rainbow.
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="false">📝 just a word</button>
+        <button data-is-answer="true">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">atlas</h2>
+        <span class="pronunciation">/ˈætləs/</span>
+      </div>
+      <div class="definition">
+        <p><strong>a</strong>: a bound collection of maps often including illustrations, informative tables, or textual matter</p>
+
+<p><strong>b</strong>: a bound collection of tables, charts, or plates</p>
+
+      </div>
+      <p class="detail hidden">
+        <a href="https://en.wikipedia.org/wiki/Atlas_(mythology)">Atlas</a> is the Titan condemned to hold up the sky for all eternity.
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="false">📝 just a word</button>
+        <button data-is-answer="true">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">chaos</h2>
+        <span class="pronunciation">/ˈkeɪ.ɑs/</span>
+      </div>
+      <div class="definition">
+        <p><strong>a</strong>: a state of utter confusion</p>
+
+<p><strong>b</strong>: a confused mass or mixture</p>
+
+      </div>
+      <p class="detail hidden">
+        <a href="https://en.wikipedia.org/wiki/Chaos_(cosmogony)">Chaos</a> is the “void state” that existed before the universe existed.
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="false">📝 just a word</button>
+        <button data-is-answer="true">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">hymen</h2>
+        <span class="pronunciation">/ˈhaɪmən/</span>
+      </div>
+      <div class="definition">
+        <p>Ask your parents.</p>
+
+      </div>
+      <p class="detail hidden">
+        <a href="https://en.wikipedia.org/wiki/Hymen_(god)">Hymen</a> is the god of marriage, of course.
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="false">📝 just a word</button>
+        <button data-is-answer="true">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">paean</h2>
+        <span class="pronunciation">/ˈpiːən/</span>
+      </div>
+      <div class="definition">
+        <p>a joyous song or hymn of praise, tribute, thanksgiving, or triumph</p>
+
+      </div>
+      <p class="detail hidden">
+        <a href="https://en.wikipedia.org/wiki/Paean_(god)">Paean</a> is the physician of the gods.
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="false">📝 just a word</button>
+        <button data-is-answer="true">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">panacea</h2>
+        <span class="pronunciation">/ˌpæn.əˈsiː.ə/</span>
+      </div>
+      <div class="definition">
+        <p>a remedy for all ills or difficulties</p>
+
+      </div>
+      <p class="detail hidden">
+        <a href="https://en.wikipedia.org/wiki/Panacea">Panacea</a> is the goddess of universal health (that’s a pretty direct borrowing).
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="false">📝 just a word</button>
+        <button data-is-answer="true">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">echo</h2>
+        <span class="pronunciation">/ˈɛkoʊ/</span>
+      </div>
+      <div class="definition">
+        <p><strong>a</strong>: the repetition of a sound caused by reflection of sound waves</p>
+
+<p><strong>b</strong>: the sound due to such reflection</p>
+
+      </div>
+      <p class="detail hidden">
+        <a href="https://en.wikipedia.org/wiki/Echo_(mythology)">Echo</a> was a nymph cursed to only be able to repeat the last words said to her.
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="false">📝 just a word</button>
+        <button data-is-answer="true">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">python</h2>
+        <span class="pronunciation">/ˈpaɪθɑn/</span>
+      </div>
+      <div class="definition">
+        <p>any of various large constricting snakes</p>
+
+      </div>
+      <p class="detail hidden">
+        <a href="https://en.wikipedia.org/wiki/Python_(mythology)">Python</a> is the serpent that lives at the center of Earth.
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="false">📝 just a word</button>
+        <button data-is-answer="true">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">hyacinth</h2>
+        <span class="pronunciation">/ˈhaɪəsɪnθ/</span>
+      </div>
+      <div class="definition">
+        <p><strong>a</strong>: a precious stone of the ancients sometimes held to be the sapphire</p>
+
+<p><strong>b</strong>: a gem zircon or hessonite</p>
+
+      </div>
+      <p class="detail hidden">
+        <a href="https://en.wikipedia.org/wiki/Hyacinth_(mythology)">Hyacinth</a> was Apollo’s lover.
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="false">📝 just a word</button>
+        <button data-is-answer="true">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">aether/ether</h2>
+        <span class="pronunciation">/ˈiːθər/</span>
+      </div>
+      <div class="definition">
+        <p><strong>a</strong>: the rarefied element formerly believed to fill the upper regions of space</p>
+
+<p><strong>b</strong>: the upper regions of space</p>
+
+      </div>
+      <p class="detail hidden">
+        <a href="https://en.wikipedia.org/wiki/Aether_(mythology)">Aether</a> is the personification of the upper sky (very specific!).
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="false">📝 just a word</button>
+        <button data-is-answer="true">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">siren</h2>
+        <span class="pronunciation">/ˈsaɪɹən/</span>
+      </div>
+      <div class="definition">
+        <p><strong>a</strong>: an apparatus producing musical tones especially in acoustical studies by the rapid interruption of a current of air, steam, or fluid by a perforated rotating disk</p>
+
+<p><strong>b</strong>: a device often electrically operated for producing a penetrating warning sound</p>
+
+      </div>
+      <p class="detail hidden">
+        <a href="https://en.wikipedia.org/wiki/Siren_(mythology)">Sirens</a> are women-like beings that alluringly sing men to their doom.
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="false">📝 just a word</button>
+        <button data-is-answer="true">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">drama</h2>
+        <span class="pronunciation">/ˈdɹɑmə/</span>
+      </div>
+      <div class="definition">
+        <p><strong>a</strong>: a composition in verse or prose intended to portray life or character or to tell a story usually involving conflicts and emotions through action and dialogue and typically designed for theatrical performance</p>
+
+<p><strong>b</strong>: a movie or television production with characteristics (such as conflict) of a serious play</p>
+
+      </div>
+      <p class="detail hidden">
+        <em>δρᾶμα</em> (<em>drâma</em>): “deed” or “act”
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="true">📝 just a word</button>
+        <button data-is-answer="false">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">idea</h2>
+        <span class="pronunciation">/aɪˈdi.ə/</span>
+      </div>
+      <div class="definition">
+        <p>a formulated thought or opinion</p>
+
+      </div>
+      <p class="detail hidden">
+        <em>ἰδέα</em> (<em>idéa</em>): “form” or “pattern”
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="true">📝 just a word</button>
+        <button data-is-answer="false">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">crisis</h2>
+        <span class="pronunciation">/ˈkɹaɪsɪs/</span>
+      </div>
+      <div class="definition">
+        <p><strong>a</strong>: an unstable or crucial time or state of affairs in which a decisive change is impending</p>
+
+<p><strong>b</strong>: a situation that has reached a critical phase</p>
+
+      </div>
+      <p class="detail hidden">
+        <em>κρίσις</em> (<em>krísis</em>): “discrimination”, “decision” or… “crisis”
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="true">📝 just a word</button>
+        <button data-is-answer="false">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">rhythm</h2>
+        <span class="pronunciation">/ˈɹɪð.əm/</span>
+      </div>
+      <div class="definition">
+        <p><strong>a</strong>: an ordered recurrent alternation of strong and weak elements in the flow of sound and silence in speech</p>
+
+<p><strong>b</strong>: a particular example or form of rhythm</p>
+
+      </div>
+      <p class="detail hidden">
+        <em>ῥυθμός</em> (<em>rhuthmós</em>): “regular recurring motion” or “symmetry”
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="true">📝 just a word</button>
+        <button data-is-answer="false">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">encyclopedia</h2>
+        <span class="pronunciation">/ɪnˌsaɪ.kləˈpi(ː).dɪə/</span>
+      </div>
+      <div class="definition">
+        <p>a work that contains information on all branches of knowledge or treats comprehensively a particular branch of knowledge usually in articles arranged alphabetically often by subject</p>
+
+      </div>
+      <p class="detail hidden">
+        <em>ἐγκύκλιος παιδεία</em> (<em>enkúklios paideíā</em>): “general education”, but <a href="https://en.wikipedia.org/wiki/Univerbation">univerbated</a>
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="true">📝 just a word</button>
+        <button data-is-answer="false">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">hyperbole</h2>
+        <span class="pronunciation">/haɪˈpɝbəli/</span>
+      </div>
+      <div class="definition">
+        <p>extravagant exaggeration</p>
+
+      </div>
+      <p class="detail hidden">
+        <em>ὑπερβολή</em> (<em>huperbolḗ</em>): meaning “above” + “throw”
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="true">📝 just a word</button>
+        <button data-is-answer="false">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">aesthete</h2>
+        <span class="pronunciation">/ɛs.θiːt/</span>
+      </div>
+      <div class="definition">
+        <p>one having or affecting sensitivity to the beautiful especially in art</p>
+
+      </div>
+      <p class="detail hidden">
+        <em>αἰσθητής</em> (<em>aisthētḗs</em>): “one who perceives”
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="true">📝 just a word</button>
+        <button data-is-answer="false">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">cosmos</h2>
+        <span class="pronunciation">/ˈkɑzˌmoʊs/</span>
+      </div>
+      <div class="definition">
+        <p><strong>a</strong>: universe</p>
+
+<p><strong>b</strong>: an orderly harmonious systematic universe</p>
+
+      </div>
+      <p class="detail hidden">
+        <em>κόσμος</em> (<em>kósmos</em>): “cosmos” (yup!)
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="true">📝 just a word</button>
+        <button data-is-answer="false">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">phantom</h2>
+        <span class="pronunciation">/ˈfæntəm/</span>
+      </div>
+      <div class="definition">
+        <p><strong>a</strong>: something apparent to sense but with no substantial existence</p>
+
+<p><strong>b</strong>: something elusive or visionary</p>
+
+<p><strong>c</strong>: an object of continual dread or abhorrence</p>
+
+      </div>
+      <p class="detail hidden">
+        <em>φάντασμα</em> (<em>phántasma</em>): “appearance”, “image” or “apparition”
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="true">📝 just a word</button>
+        <button data-is-answer="false">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">euphoria</h2>
+        <span class="pronunciation">/juˈfo.ɹi.ə/</span>
+      </div>
+      <div class="definition">
+        <p>a feeling of well-being or elation</p>
+
+      </div>
+      <p class="detail hidden">
+        <em>εὐφορία</em> (<em>eúphoros</em>): meaning “well” + “bearing”
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="true">📝 just a word</button>
+        <button data-is-answer="false">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">cacophony</h2>
+        <span class="pronunciation">/kəˈkɑfəni/</span>
+      </div>
+      <div class="definition">
+        <p>harsh or jarring sound</p>
+
+      </div>
+      <p class="detail hidden">
+        <em>κακοφωνία</em> (<em>kakophōnía</em>): meaning “bad” + “sound”
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="true">📝 just a word</button>
+        <button data-is-answer="false">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">apathy</h2>
+        <span class="pronunciation">/ˈæ.pə.θi/</span>
+      </div>
+      <div class="definition">
+        <p>lack of feeling or emotion</p>
+
+      </div>
+      <p class="detail hidden">
+        <em>ἀπάθεια</em> (<em>apathḗs</em>): meaning “not” + “emotion” (or “passion”)
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="true">📝 just a word</button>
+        <button data-is-answer="false">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">melancholy</h2>
+        <span class="pronunciation">/ˈmɛl.ənˌkɑ.li/</span>
+      </div>
+      <div class="definition">
+        <p><strong>a</strong>: depression of spirits</p>
+
+<p><strong>b</strong>: a pensive mood</p>
+
+      </div>
+      <p class="detail hidden">
+        <em>μελαγχολία</em> (<em>melankholía</em>): meaning “black” + “bile”, whereupon I discovered the Latin-based equivalent <a href="https://en.wiktionary.org/wiki/atrabiliousness">atrabiliousness</a>
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="true">📝 just a word</button>
+        <button data-is-answer="false">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">hysteria</h2>
+        <span class="pronunciation">/hɪˈstɛɹiə/</span>
+      </div>
+      <div class="definition">
+        <p>behavior exhibiting overwhelming or unmanageable fear or emotional excess</p>
+
+      </div>
+      <p class="detail hidden">
+        <em>ὑστερικός</em> (<em>husterikós</em>): “suffering in the uterus”… yikes
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="true">📝 just a word</button>
+        <button data-is-answer="false">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">meteor</h2>
+        <span class="pronunciation">/ˈmiːtiɚ/</span>
+      </div>
+      <div class="definition">
+        <p><strong>a</strong>: any of the small particles of matter in the solar system that are directly observable only by their incandescence from frictional heating on entry into the atmosphere</p>
+
+<p><strong>b</strong>: the streak of light produced by the passage of a meteor</p>
+
+      </div>
+      <p class="detail hidden">
+        <em>μετέωρον</em> (<em>metéōron</em>): meaning “among” + “to lift” (or “raise up”)
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="true">📝 just a word</button>
+        <button data-is-answer="false">⚡️ mythological figure</button>
+      </p>
+    </div>
+    <div class="question hidden">
+      <div class="header">
+        <h2 class="word">apocalypse</h2>
+        <span class="pronunciation">/əˈpɑkəlɪps/</span>
+      </div>
+      <div class="definition">
+        <p><strong>a</strong>: something viewed as a prophetic revelation</p>
+
+<p><strong>b</strong>: Armageddon</p>
+
+      </div>
+      <p class="detail hidden">
+        <em>ἀποκάλυψις</em> (<em>apokálupsis</em>): “revelation” or “uncovering”, which reminds me, check out this <a href="https://web.archive.org/web/20250512121526/https://www.ft.com/content/a46cb128-1f74-4621-ab0b-242a76583105">bizarre op-ed</a> where Peter Thiel demonstrates how much of a elitist douchebag he is with phrases like “…augurs the <em>apokálypsis</em> of the ancien regime’s secrets”
+
+      </p>
+      <p class="buttons">
+        <button data-is-answer="true">📝 just a word</button>
+        <button data-is-answer="false">⚡️ mythological figure</button>
+      </p>
+    </div><div id="end-message" class="hidden">
+    <p>All done!</p>
+    <p>You can refresh the page to try with a different random selection.</p>
+  </div>
+  <p id="score-container" class="hidden">
+    <strong>Score</strong>: <span id="score"></span>
+  </p>
+</div>
+
+<hr />
+
+<section class="next-previous">
+  
+  <a href="/degoogling" class="next-previous-link next-previous-previous" title="Previous Post: Extricating Myself from Google">
+    <span class="next-previous-icon">←</span>
+    <div class="next-previous-name">
+      <div class="next-previous-label">
+        <span class="next-previous-icon">←</span> Previous Post
+      </div>
+      <div class="next-previous-title">Extricating Myself from Google</div>
+    </div>
+  </a>
+   
+  <div class="next-previous-placeholder"></div>
+  
+</section>
+<hr />]]></content><author><name></name></author><summary type="html"><![CDATA[I learned recently that there are more than a few Greek mythological figures whose names are, verbatim, English words. It thought this would be a good excuse for an internet quiz, so here you go.]]></summary></entry><entry><title type="html">Extricating Myself from Google</title><link href="https://blog.sea.nkelley.me/degoogling" rel="alternate" type="text/html" title="Extricating Myself from Google" /><published>2025-04-24T00:00:00+00:00</published><updated>2025-04-24T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/degoogling</id><content type="html" xml:base="https://blog.sea.nkelley.me/degoogling"><![CDATA[<p>Internet privacy is something I have been thinking about increasingly often over the last decade, during which I’ve been slowly reducing my <a href="https://en.wikipedia.org/wiki/Digital_footprint">digital footprint</a> (and, more aggressively, the subtly-different <a href="https://en.wikipedia.org/wiki/Data_exhaust">digital exhaust</a>). The process is tedious, it’s difficult to understand how well it’s working, and I sometimes wonder if it’s worth it, since credit bureaus and insurance companies are basically handing out your PII to hackers.</p>
 
 <p>I persist because it buys me peace of mind and because I’m too principled to concede the point. I try to be somewhat pragmatic about it, and there are instances where I trade privacy for convenience. This makes Google a particularly thorny case, since I value the services they provide – unlike Facebook, which I left years ago and often forget still exists.</p>
 
@@ -84,7 +725,15 @@
     </div>
   </a>
    
-  <div class="next-previous-placeholder"></div>
+  <a href="/its-all-greek-to-me" class="next-previous-link next-previous-next" title="Next Post: It's All Greek to Me">
+    <div class="next-previous-name">
+      <div class="next-previous-label">
+        Next Post <span class="next-previous-icon">→</span>
+      </div>
+      <div class="next-previous-title">It's All Greek to Me</div>
+    </div>
+    <span class="next-previous-icon">→</span>
+  </a>
   
 </section>
 <hr />
@@ -3264,53 +3913,4 @@
   <i class="tag-label">tags:</i>
   
   <a class="tag-link" href="/tag/reference">reference</a> 
-</section>]]></content><author><name></name></author><category term="reference" /><summary type="html"><![CDATA[This is an abridged summary of the official WPA eight-ball rules. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].]]></summary></entry><entry><title type="html">kathack</title><link href="https://blog.sea.nkelley.me/kathack" rel="alternate" type="text/html" title="kathack" /><published>2023-12-27T00:00:00+00:00</published><updated>2023-12-27T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/kathack</id><content type="html" xml:base="https://blog.sea.nkelley.me/kathack"><![CDATA[<p>I was recently reminded of <a href="http://kathack.com">kathack.com</a>: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.</p>
-
-<p>So anyway, I rewrote out the jQuery and found a way to serve the script indirectly via GitHub, no dedicated site required. You can paste this into your browser console</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">s</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nf">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">script</span><span class="dl">'</span><span class="p">);</span>
-<span class="nx">s</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://cdn.jsdelivr.net/gh/seansfkelley/kathack@v1/kh.js</span><span class="dl">'</span><span class="p">;</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nf">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>or keep it as a bookmarklet with</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">javascript</span><span class="p">:</span><span class="nx">s</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nf">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">script</span><span class="dl">'</span><span class="p">);</span><span class="nx">s</span><span class="p">.</span><span class="nx">src</span><span class="o">=</span><span class="dl">'</span><span class="s1">https://cdn.jsdelivr.net/gh/seansfkelley/kathack@v1/kh.js</span><span class="dl">'</span><span class="p">;</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nf">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span><span class="k">void</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>or just <a href="javascript:s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/seansfkelley/kathack@v1/kh.js';document.body.appendChild(s);void(0);">click this</a> if you want to try it here.</p>
-
-<p>Have fun!</p>
-
-<hr />
-
-<section class="next-previous">
-  
-  <a href="/cornmeal-pancakes" class="next-previous-link next-previous-previous" title="Previous Post: Cornmeal Pancake Recipe">
-    <span class="next-previous-icon">←</span>
-    <div class="next-previous-name">
-      <div class="next-previous-label">
-        <span class="next-previous-icon">←</span> Previous Post
-      </div>
-      <div class="next-previous-title">Cornmeal Pancake Recipe</div>
-    </div>
-  </a>
-   
-  <a href="/abridged-pool-rules" class="next-previous-link next-previous-next" title="Next Post: WPA Eight-ball Rules (Abridged)">
-    <div class="next-previous-name">
-      <div class="next-previous-label">
-        Next Post <span class="next-previous-icon">→</span>
-      </div>
-      <div class="next-previous-title">WPA Eight-ball Rules (Abridged)</div>
-    </div>
-    <span class="next-previous-icon">→</span>
-  </a>
-  
-</section>
-<hr />
-
-<section class="tag-list">
-  <i class="tag-label">tags:</i>
-  
-  <a class="tag-link" href="/tag/interactive">interactive</a> 
-</section>]]></content><author><name></name></author><category term="interactive" /><summary type="html"><![CDATA[I was recently reminded of kathack.com: a gem from the internet’s teenage years that’s still there, 12 years later. Unfortunately, browser security measures and the adoption of HTTPS everywhere have mostly broken the delivery of the script. It also relies on jQuery, which will live forever but is another thing to be delivered that might break. And it makes the bookmarklet bigger.]]></summary></entry></feed>
+</section>]]></content><author><name></name></author><category term="reference" /><summary type="html"><![CDATA[This is an abridged summary of the official WPA eight-ball rules. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].]]></summary></entry></feed>
