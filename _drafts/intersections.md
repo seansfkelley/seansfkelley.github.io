@@ -16,5 +16,5 @@ title="JavaScript Required"
 content="I tried to make this page only use SVGs and CSS animations, but I decided I would rather try to pull my own teeth."
 %}
 
-<div class="center hidden" id="interactive">
+<div class="hidden" id="interactive">
 </div>

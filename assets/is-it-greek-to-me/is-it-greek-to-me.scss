@@ -1,0 +1,81 @@
+---
+# including front matter = "please compile this Jekyll"
+---
+
+@use "sass:math";
+@import "variables";
+
+.hidden {
+  display: none;
+}
+
+@media only screen and (min-width: $width-mobile) {
+  #interactive {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    > * {
+      width: 70%;
+    }
+  }
+}
+
+.question {
+  .header {
+    > * {
+      display: inline;
+    }
+
+    .word {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .pronunciation {
+      margin-left: math.div($spacing, 2);
+    }
+  }
+
+  .definition {
+    margin-left: $spacing;
+
+    :not(:last-child) {
+      margin-bottom: 0;
+    }
+  }
+
+  .disclaimer {
+    font-size: $font-size-small;
+    color: var(--text-color-faded);
+  }
+}
+
+.alert {
+  .detail {
+    margin-bottom: 0;
+  }
+}
+
+#right-answer,
+#wrong-answer {
+  margin-bottom: 0;
+}
+
+#end-message {
+  margin-top: $spacing;
+  margin-bottom: 0;
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+#score-container {
+  margin-top: $spacing;
+  background-color: var(--intent-default-background-color);
+  padding: $spacing;
+  border-radius: 3px;
+  color: var(--intent-default-text-color);
+  margin-bottom: 0;
+}
