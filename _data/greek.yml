@@ -126,3 +126,133 @@
   answer: true
   detail: |
     [Sirens](https://en.wikipedia.org/wiki/Siren_(mythology)) are women-like beings that alluringly sing men to their doom.
+- word: drama
+  pronunciation: "ˈdɹɑmə"
+  definition: |
+    **a**: a composition in verse or prose intended to portray life or character or to tell a story usually involving conflicts and emotions through action and dialogue and typically designed for theatrical performance
+
+    **b**: a movie or television production with characteristics (such as conflict) of a serious play
+  answer: false
+  detail: |
+    _δρᾶμα_ (_drâma_): "deed" or "act"
+- word: idea
+  pronunciation: "aɪˈdi.ə"
+  definition: |
+    a formulated thought or opinion
+  answer: false
+  detail: |
+    _ἰδέα_ (_idéa_): "form" or "pattern"
+- word: crisis
+  pronunciation: "ˈkɹaɪsɪs"
+  definition: |
+    **a**: an unstable or crucial time or state of affairs in which a decisive change is impending
+
+    **b**: a situation that has reached a critical phase
+  answer: false
+  detail: |
+    _κρίσις_ (_krísis_): "discrimination", "decision" or... "crisis"
+- word: rhythm
+  pronunciation: "ˈɹɪð.əm"
+  definition: |
+    **a**: an ordered recurrent alternation of strong and weak elements in the flow of sound and silence in speech
+
+    **b**: a particular example or form of rhythm
+  answer: false
+  detail: |
+    _ῥυθμός_ (_rhuthmós_): "regular recurring motion" or "symmetry"
+- word: encyclopedia
+  pronunciation: "ɪnˌsaɪ.kləˈpi(ː).dɪə"
+  definition: |
+    a work that contains information on all branches of knowledge or treats comprehensively a particular branch of knowledge usually in articles arranged alphabetically often by subject
+  answer: false
+  detail: |
+    _ἐγκύκλιος παιδεία_ (_enkúklios paideíā_): "general education", but [univerbated](https://en.wikipedia.org/wiki/Univerbation)
+- word: hyperbole
+  pronunciation: "haɪˈpɝbəli"
+  definition: |
+    extravagant exaggeration
+  answer: false
+  detail: |
+    _ὑπερβολή_ (_huperbolḗ_): meaning "above" + "throw"
+- word: aesthete
+  pronunciation: "ɛs.θiːt"
+  definition: |
+    one having or affecting sensitivity to the beautiful especially in art
+  answer: false
+  detail: |
+    _αἰσθητής_ (_aisthētḗs_): "one who perceives"
+- word: cosmos
+  pronunciation: "ˈkɑzˌmoʊs"
+  definition: |
+    **a**: universe
+
+    **b**: an orderly harmonious systematic universe
+  answer: false
+  detail: |
+    _κόσμος_ (_kósmos_): "cosmos" (yup!)
+- word: phantom
+  pronunciation: "ˈfæntəm"
+  definition: |
+    **a**: something apparent to sense but with no substantial existence
+
+    **b**: something elusive or visionary
+
+    **c**: an object of continual dread or abhorrence
+  answer: false
+  detail: |
+    _φάντασμα_ (_phántasma_): "appearance", "image" or "apparition"
+- word: euphoria
+  pronunciation: "juˈfo.ɹi.ə"
+  definition: |
+    a feeling of well-being or elation
+  answer: false
+  detail: |
+    _εὐφορία_ (_eúphoros_): meaning "well" + "bearing"
+- word: cacophony
+  pronunciation: "kəˈkɑfəni"
+  definition: |
+    harsh or jarring sound
+  answer: false
+  detail: |
+    _κακοφωνία_ (_kakophōnía_): meaning "bad" + "sound"
+- word: apathy
+  pronunciation: "ˈæ.pə.θi"
+  definition: |
+    lack of feeling or emotion
+  answer: false
+  detail: |
+    _ἀπάθεια_ (_apathḗs_): meaning "not" + "emotion" (or "passion")
+- word: melancholy
+  pronunciation: "ˈmɛl.ənˌkɑ.li"
+  definition: |
+    **a**: depression of spirits
+
+    **b**: a pensive mood
+  answer: false
+  detail: |
+    _μελαγχολία_ (_melankholía_): meaning "black" + "bile", whereupon I discovered the Latin-based equivalent [atrabiliousness](https://en.wiktionary.org/wiki/atrabiliousness)
+- word: hysteria
+  pronunciation: "hɪˈstɛɹiə"
+  definition: |
+    behavior exhibiting overwhelming or unmanageable fear or emotional excess
+  answer: false
+  detail: |
+    _ὑστερικός_ (_husterikós_): "suffering in the uterus"... yikes
+- word: meteor
+  pronunciation: "ˈmiːtiɚ"
+  definition: |
+    **a**: any of the small particles of matter in the solar system that are directly observable only by their incandescence from frictional heating on entry into the atmosphere
+
+    **b**: the streak of light produced by the passage of a meteor
+  answer: false
+  detail: |
+    _μετέωρον_ (_metéōron_): meaning "among" + "to lift" (or "raise up")
+- word: apocalypse
+  pronunciation: "əˈpɑkəlɪps"
+  definition: |
+    **a**: something viewed as a prophetic revelation
+
+    **b**: Armageddon
+  answer: false
+  detail: |
+    _ἀποκάλυψις_ (_apokálupsis_): "revelation" or "uncovering", which reminds me, check out this [bizarre op-ed](https://web.archive.org/web/20250512121526/https://www.ft.com/content/a46cb128-1f74-4621-ab0b-242a76583105) where Peter Thiel demonstrates how much of a elitist douchebag he is with phrases like "...augurs the _apokálypsis_ of the ancien regime's secrets"
