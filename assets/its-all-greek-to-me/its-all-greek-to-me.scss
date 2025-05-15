@@ -6,7 +6,7 @@
 @import "variables";
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 @media only screen and (min-width: $width-mobile) {
@@ -43,11 +43,6 @@
     :not(:last-child) {
       margin-bottom: 0;
     }
-  }
-
-  .disclaimer {
-    font-size: $font-size-small;
-    color: var(--text-color-faded);
   }
 }
 

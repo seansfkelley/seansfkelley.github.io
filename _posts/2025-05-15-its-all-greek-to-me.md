@@ -1,13 +1,15 @@
 ---
 layout: post
-title: Is It Greek to Me?
+title: It's All Greek to Me
 custom-js-list:
-  - /assets/is-it-greek-to-me/is-it-greek-to-me.js
+  - /assets/its-all-greek-to-me/its-all-greek-to-me.js
 custom-css-list:
-  - /assets/is-it-greek-to-me/is-it-greek-to-me.css
+  - /assets/its-all-greek-to-me/its-all-greek-to-me.css
 ---
 
-I learned recently that there are more than a couple Greek mythological figures whose names are, verbatim, English words. I thought it would be fun to list them in quiz form, so here you go.
+I learned recently that there are more than a few Greek mythological figures whose names are, _verbatim_, English words. It thought this would be a good excuse for an internet quiz, so here you go.
+
+The quoted definitions are all from Merriam Webster, but I exercised some editorial control to pick recognizable versions and keep them short (and to skip any mythological definitions, obviously).
 
 <hr>
 
@@ -40,14 +42,13 @@ content="This page is interactive, and only works with JavaScript enabled!"
       <div class="definition" >
         {{ entry.definition | markdownify }}
       </div>
-      <p class="disclaimer">(this is only the first non-mythological definition, for brevity)</p>
       <p class="detail hidden" markdown="1">
         {{ entry.detail }}
       </p>
-      <div class="buttons">
+      <p class="buttons">
         <button data-is-answer="{{ entry.answer | negate | append: "" }}">📝 just a word</button>
         <button data-is-answer="{{ entry.answer | append: "" }}">⚡️ mythological figure</button>
-      </div>
+      </p>
     </div>
   {%- endfor -%}
   <div id="end-message" class="hidden">
