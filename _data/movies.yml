@@ -1,13 +1,27 @@
-# - title: The Producers
-#   year: 1968
-#   kind: movie
-#   link: https://www.imdb.com/title/tt0063462/
-#   poster: the-producers-1968.jpg
-#   watched: 2025-04-27
-#   # watched-display:
-#   watch-this:
-#   # dont-watch-this:
-#   more-thoughts: |
+- title: American Psycho
+  year: 2000
+  kind: movie
+  link: https://www.imdb.com/title/tt0144084/
+  poster: american-psycho-2000.jpg
+  watched: 2025-05-21
+  watch-this: for Christian Bale, or if you just hate Wall Street types.
+  more-thoughts: |
+    Nobody could have swung this like Christian Bale did. He was a little _too_ robotic in a handful of scenes, but the range he demonstrated even within individual scenes (like Paul Allen's murder) is impressive and probably _the_ reason the movie sticks the landing.
+
+    The author [also doesn't know if Patrick Bateman hallucinated the murders or not](https://www.shortlist.com/news/the-bret-easton-ellis-interview) (ctrl-f "Regarding the murders"). I think he killed Paul Allen, but nobody can tell anyone apart and nobody actually cared about him, so the investigation kind of fizzles out. The killing spree was definitely hallucinated.
+
+    Neat moviemaking tidbit: Willem Dafoe did [three takes of each scene, varying how much he seemed to know](https://faroutmagazine.co.uk/willem-dafoe-performance-in-american-psycho/) (ctrl-f "three separate times"), which were edited together to maximize the ambiguity. Love it.
+- title: The Producers
+  year: 1968
+  kind: movie
+  link: https://www.imdb.com/title/tt0063462/
+  poster: the-producers-1968.jpg
+  watched: 2025-04-27
+  watch-this: as a cultural touchstone, but not for your first Mel Brooks movie.
+  more-thoughts: |
+    Fun, but not my favorite Mel Brooks. His other movies are more quotable and are written/edited more tightly, where this one drags a bit.
+
+    Gene Wilder is exuberant and loveable, but overacted the role. Zero Mostel was excellent.
 - title: The Banshees of Inisherin
   year: 2022
   kind: movie
