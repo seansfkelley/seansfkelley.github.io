@@ -1,4 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-06-04T17:08:05+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">It’s All Greek to Me</title><link href="https://blog.sea.nkelley.me/its-all-greek-to-me" rel="alternate" type="text/html" title="It’s All Greek to Me" /><published>2025-05-15T00:00:00+00:00</published><updated>2025-05-15T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/its-all-greek-to-me</id><content type="html" xml:base="https://blog.sea.nkelley.me/its-all-greek-to-me"><![CDATA[<p>I learned recently that there are more than a few Greek mythological figures whose names are, <em>verbatim</em>, English words. It thought this would be a good excuse for an internet quiz, so here you go.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-06-05T03:31:00+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">A Refined Theory of Bad Drivers</title><link href="https://blog.sea.nkelley.me/bad-drivers" rel="alternate" type="text/html" title="A Refined Theory of Bad Drivers" /><published>2025-06-04T00:00:00+00:00</published><updated>2025-06-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/bad-drivers</id><content type="html" xml:base="https://blog.sea.nkelley.me/bad-drivers"><![CDATA[<p>Everyone likes to claim that the drivers where they come from are the worst, but we can’t all be right. I think the problem is that we’re talking past each other: there are different ways to be a bad driver.</p>
+
+<p>I hereby propose a rating system with three axes:</p>
+
+<ul>
+  <li><strong>incompetence</strong></li>
+  <li><strong>negligence</strong></li>
+  <li><strong>aggression</strong></li>
+</ul>
+
+<p>Here are some example applications for some places I’m familiar with:</p>
+
+<ul>
+  <li><strong>NorCal:</strong> incompetent and negligent, but emphatically passive</li>
+  <li><strong>Italy:</strong> hyper-aggressive, but by and large competent and usually attentive</li>
+  <li><strong>New York City:</strong> all sliders to <em>maximum</em></li>
+</ul>
+
+<p>I think disagreements happen when your bad drivers and their bad drivers are at even moderately-different positions along these axes.</p>
+
+<p>Interestingly, while it’s obvious that minimal incompetence and minimal negligence is objectively good, the same is not true for aggression. Drivers that are too passive cause traffic flow problems and annoy other drivers – rightfully, I’d say, if you won’t pull into the intersection on green when you’re waiting to turn left.</p>
+
+<hr />
+
+<section class="next-previous">
+  
+  <a href="/its-all-greek-to-me" class="next-previous-link next-previous-previous" title="Previous Post: It's All Greek to Me">
+    <span class="next-previous-icon">←</span>
+    <div class="next-previous-name">
+      <div class="next-previous-label">
+        <span class="next-previous-icon">←</span> Previous Post
+      </div>
+      <div class="next-previous-title">It's All Greek to Me</div>
+    </div>
+  </a>
+   
+  <div class="next-previous-placeholder"></div>
+  
+</section>
+<hr />]]></content><author><name></name></author><summary type="html"><![CDATA[Everyone likes to claim that the drivers where they come from are the worst, but we can’t all be right. I think the problem is that we’re talking past each other: there are different ways to be a bad driver.]]></summary></entry><entry><title type="html">It’s All Greek to Me</title><link href="https://blog.sea.nkelley.me/its-all-greek-to-me" rel="alternate" type="text/html" title="It’s All Greek to Me" /><published>2025-05-15T00:00:00+00:00</published><updated>2025-05-15T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/its-all-greek-to-me</id><content type="html" xml:base="https://blog.sea.nkelley.me/its-all-greek-to-me"><![CDATA[<p>I learned recently that there are more than a few Greek mythological figures whose names are, <em>verbatim</em>, English words. It thought this would be a good excuse for an internet quiz, so here you go.</p>
 
 <p>The quoted definitions are all from Merriam Webster, but I exercised some editorial control to pick recognizable versions and keep them short (and to skip any mythological definitions, obviously).</p>
 
@@ -636,7 +675,15 @@
     </div>
   </a>
    
-  <div class="next-previous-placeholder"></div>
+  <a href="/bad-drivers" class="next-previous-link next-previous-next" title="Next Post: A Refined Theory of Bad Drivers">
+    <div class="next-previous-name">
+      <div class="next-previous-label">
+        Next Post <span class="next-previous-icon">→</span>
+      </div>
+      <div class="next-previous-title">A Refined Theory of Bad Drivers</div>
+    </div>
+    <span class="next-previous-icon">→</span>
+  </a>
   
 </section>
 <hr />]]></content><author><name></name></author><summary type="html"><![CDATA[I learned recently that there are more than a few Greek mythological figures whose names are, verbatim, English words. It thought this would be a good excuse for an internet quiz, so here you go.]]></summary></entry><entry><title type="html">Extricating Myself from Google</title><link href="https://blog.sea.nkelley.me/degoogling" rel="alternate" type="text/html" title="Extricating Myself from Google" /><published>2025-04-24T00:00:00+00:00</published><updated>2025-04-24T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/degoogling</id><content type="html" xml:base="https://blog.sea.nkelley.me/degoogling"><![CDATA[<p>Internet privacy is something I have been thinking about increasingly often over the last decade, during which I’ve been slowly reducing my <a href="https://en.wikipedia.org/wiki/Digital_footprint">digital footprint</a> (and, more aggressively, the subtly-different <a href="https://en.wikipedia.org/wiki/Data_exhaust">digital exhaust</a>). The process is tedious, it’s difficult to understand how well it’s working, and I sometimes wonder if it’s worth it, since credit bureaus and insurance companies are basically handing out your PII to hackers.</p>
@@ -4052,74 +4099,4 @@
   </a>
   
 </section>
-<hr />]]></content><author><name></name></author><summary type="html"><![CDATA[A reverse-chronological list of movies and TV shows I have seen, including non-spoiler one-liner recommendations and longer, usually-spoiler-filled thoughts – the blurred out bits. Some of the posters are blurred too because they include spoiling details. 😒]]></summary></entry><entry><title type="html">WPA Eight-ball Rules (Abridged)</title><link href="https://blog.sea.nkelley.me/abridged-pool-rules" rel="alternate" type="text/html" title="WPA Eight-ball Rules (Abridged)" /><published>2024-02-29T00:00:00+00:00</published><updated>2024-02-29T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/abridged-pool-rules</id><content type="html" xml:base="https://blog.sea.nkelley.me/abridged-pool-rules"><![CDATA[<p>This is an abridged summary of the <a href="https://wpapool.com/rules/">official WPA eight-ball rules</a>. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].</p>
-
-<h3 id="racking-and-the-break">Racking and the Break</h3>
-
-<ul>
-  <li>Rack with the 1 ball at the apex, the 8 ball in the middle, one solid and one stripe in each of the other corners, and the rest randomly. The 1 is placed on the foot spot. [3.2]</li>
-  <li>Lag to determine order of play. Winner chooses to break or have opponent break. [1.2] [3.1]</li>
-  <li>Table remains open even if a ball is pocketed. [3.3]</li>
-  <li>Fouls on the break are opponent’s choice: [3.3]
-    <ul>
-      <li>Accept the balls in position.</li>
-      <li>Ball-in-hand, behind the head string.</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="play-and-winning">Play and Winning</h3>
-
-<ul>
-  <li>The intended ball and pocket must be called if they are not obvious. [1.6] [3.6]</li>
-  <li>The shooter continues as long as they pocket shots as called and do not foul. Pocketing additional balls is not a foul and does not end the turn. [3.5]</li>
-  <li>The shooter may call “safety”, in which case the turn changes even if they pocket a ball legally. [8.17] [3.6]</li>
-  <li>Fouling while pocketing the 8 ball is a loss. [3.8]</li>
-  <li>Fouling on an 8 ball attempt without pocketing the 8 ball is treated as a normal foul. (My clarification; implied but not stated explicitly in the rules.)</li>
-</ul>
-
-<h3 id="fouls">Fouls</h3>
-
-<p>All fouls are ball in hand without restriction, except as noted during the break.</p>
-
-<ul>
-  <li>Scratch (pocketed cue). [6.1]</li>
-  <li>Wrong first ball. [6.2]</li>
-  <li>No contact. [6.3]</li>
-  <li>No rail after contact. [6.3]</li>
-  <li>Bad play from behind the head string. [6.11]</li>
-  <li>Jump shots by “scooping”. [8.16]</li>
-</ul>
-
-<hr />
-
-<section class="next-previous">
-  
-  <a href="/kathack" class="next-previous-link next-previous-previous" title="Previous Post: kathack">
-    <span class="next-previous-icon">←</span>
-    <div class="next-previous-name">
-      <div class="next-previous-label">
-        <span class="next-previous-icon">←</span> Previous Post
-      </div>
-      <div class="next-previous-title">kathack</div>
-    </div>
-  </a>
-   
-  <a href="/movies" class="next-previous-link next-previous-next" title="Next Post: The Movie/TV List">
-    <div class="next-previous-name">
-      <div class="next-previous-label">
-        Next Post <span class="next-previous-icon">→</span>
-      </div>
-      <div class="next-previous-title">The Movie/TV List</div>
-    </div>
-    <span class="next-previous-icon">→</span>
-  </a>
-  
-</section>
-<hr />
-
-<section class="tag-list">
-  <i class="tag-label">tags:</i>
-  
-  <a class="tag-link" href="/tag/reference">reference</a> 
-</section>]]></content><author><name></name></author><category term="reference" /><summary type="html"><![CDATA[This is an abridged summary of the official WPA eight-ball rules. I wrote it because I wanted a short reference for the most important rules to play in an “official” style, for those already familiar with the bar rules. The corresponding full rule’s number is cited in [brackets].]]></summary></entry></feed>
+<hr />]]></content><author><name></name></author><summary type="html"><![CDATA[A reverse-chronological list of movies and TV shows I have seen, including non-spoiler one-liner recommendations and longer, usually-spoiler-filled thoughts – the blurred out bits. Some of the posters are blurred too because they include spoiling details. 😒]]></summary></entry></feed>
