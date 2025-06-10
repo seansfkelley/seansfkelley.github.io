@@ -16,7 +16,9 @@ There is no objectively correct answer for this kind code style, but this docume
 
 Yes, this document is very dry.
 
-None of these points on style are hard and fast. They overlap and sometimes trade off. Ultimately, code needs to serve an end, and sometimes that requires compromising on principles.
+## Use Engineering Judgement
+
+**None of these points on style are hard and fast.** They overlap and sometimes trade off. Ultimately, code needs to serve an end, and sometimes that requires compromising on principles.
 
 # The Underlying Philosophy
 
@@ -168,7 +170,7 @@ Action words like "get", "commit" or "write" communicate that a function _perfor
 
 ## Values Should be Noun-y
 
-Variables and parameters should have noun-y names that communicate _what_ role they play, but rarely _how_. Avoid including the type of the variable in its name. Like functions being verb-y, this emphasizes a distinction and helpfully frames the question to aid in picking a good name.
+Variables and parameters should have noun-y names that communicate _what_ role they play, but rarely _how_. Avoid including the type of the variable in its name, which may change and thereby confuse more than help. Like functions being verb-y, this emphasizes a distinction and helpfully frames the question to aid in picking a good name.
 
 ## Exception: Booleans
 
@@ -178,7 +180,7 @@ Empirically, boolean functions and values benefit from some special consideratio
 
 Consider [replacing boolean values by a two-state enumeration](#enumerations-v-booleans).
 
-# State Management
+# Managing Complexity
 
 In most run-of-the-mill programming, the complexity you and your reader have to deal with comes from having to track three things:
 
@@ -221,11 +223,17 @@ This technique can often be used to great effect inside loop bodies that would o
 
 Moving a branch higher or lower in the control flow can make a huge difference.
 
-In an extreme case, consider the difference between a set of related methods (say, some [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete)) that can handle two kinds of entities. You would almost certainly rather have eight methods bundled into two sets of four, than four methods, each containing one branch per entity type.
+In an extreme case, consider the difference between a set of related methods (say, some [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete)) that can handle two kinds of entities. You would almost certainly rather have eight methods bundled into two sets of four (two entites times four CRUD methods), than four methods, each containing one branch per entity type.
 
 This can go the other way, too: sometimes readability is improved if you drop an entire `if`-`else` construct and replace it with a single ternary, buried deep in some otherwise-consistent expression.
 
 In both cases, the goal is to find that crossover point that minimizes both the number of branches, and the number of _kinds_ of branches (or things that are being branched on).
+
+### Functions Decide _or_ Act, Not Both
+
+One generally thinks of a function as code that effects a change to something, but oftentimes the complexity instead comes in _choosing_ which change to make. Unless one or both of "decide" and "act" are simple, split them into separate functions, perhaps even one-use functions. This almost always yields a very clear separation of concerns that can be effectively tested and might enable some deduplication (e.g. multiple decisions that end up acting the same).
+
+In rare cases, making this change and noticing that many decisions boil down to the same act with tiny variations can lead to noticing that _all_ decisions boil down to the same act, which removes the "decide" part entirely.
 
 ## Variable Scope
 
@@ -241,7 +249,7 @@ Instead, compute them on the fly when needed by the end consumer. Many languages
 
 ### Defer Declarations as Late as Possible
 
-A variable declaration is a statement to your reader: "here is something you have to keep track of". If you declare everything up front in your scope, you have maximized the number of possible interactions to consider. If you declare a variable without initializing it, you have most likely put your program into a temporarily-invalid state (that you intend to resolve immediately, it's true).
+A variable declaration is a statement to your reader: "here, keep an eye on this". If you declare everything up front in your scope, you have maximized the number of possible interactions to consider. If you declare a variable without initializing it, you have most likely put your program into a temporarily-invalid state (that you presumably intend to resolve near-immediately).
 
 Declaring variables closer to where they are used reduces possible interactions and likely gives you the opportunity to provide a useful initialization value.
 
