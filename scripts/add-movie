@@ -123,8 +123,14 @@ rm "${output_path}_original"
 open "$output_path"
 echo "file at $output_path"
 
+if [[ "$title" =~ : ]] ; then
+  escaped_title='"'"$title"'"'
+else
+  escaped_title="$title"
+fi
+
 # weird syntax via https://stackoverflow.com/questions/10587615/unix-command-to-prepend-text-to-a-file#comment74536218_10587615
-<<(echo "- title: $title
+<<(echo "- title: $escaped_title
   year: $year
   kind: $kind
   link: $movie_url
