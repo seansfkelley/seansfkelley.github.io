@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-06-16T01:14:45+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">A Refined Theory of Bad Drivers</title><link href="https://blog.sea.nkelley.me/bad-drivers" rel="alternate" type="text/html" title="A Refined Theory of Bad Drivers" /><published>2025-06-04T00:00:00+00:00</published><updated>2025-06-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/bad-drivers</id><content type="html" xml:base="https://blog.sea.nkelley.me/bad-drivers"><![CDATA[<p>Everyone likes to claim that the drivers where they come from are the worst, but we can’t all be right. I think the problem is that we’re talking past each other: there are different ways to be a bad driver.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-06-24T19:49:01+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">A Refined Theory of Bad Drivers</title><link href="https://blog.sea.nkelley.me/bad-drivers" rel="alternate" type="text/html" title="A Refined Theory of Bad Drivers" /><published>2025-06-04T00:00:00+00:00</published><updated>2025-06-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/bad-drivers</id><content type="html" xml:base="https://blog.sea.nkelley.me/bad-drivers"><![CDATA[<p>Everyone likes to claim that the drivers where they come from are the worst, but we can’t all be right. I think the problem is that we’re talking past each other: there are different ways to be a bad driver.</p>
 
 <p>I hereby propose a rating system with three axes:</p>
 
@@ -1582,6 +1582,50 @@
 </form>
 
 <div class="list-container reveal-spoilers-on-hover">
+  <div id="phil-tippett-mad-dreams-and-monsters-2019" class="entry" data-year="2019" data-title="Phil Tippett: Mad Dreams and Monsters" data-watched="2025-06-22" data-kind="movie" data-recommendation="recommended">
+      <div class="title">
+        <a href="https://www.imdb.com/title/tt8421278/">
+          <h3>Phil Tippett: Mad Dreams and Monsters (2019)</h3>
+        </a>
+        <a class="permalink" href="#phil-tippett-mad-dreams-and-monsters-2019">
+          🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+        </a>
+      </div>
+      <div class="content"><div class="poster ">
+          <a href="https://www.imdb.com/title/tt8421278/">
+            <img src="/assets/movies/phil-tippett-mad-dreams-and-monsters-2019.jpg" loading="lazy" alt="Phil Tippett: Mad Dreams and Monsters" />
+          </a>
+        </div>
+        <div class="text">
+            <p class="one-liner">👍 <b>Watch this…</b> for some behind-the-scenes on the practical effects of Jaws, Star Wars, etc.</p>
+          <p class="watched" title="2025-06-22">
+            watched 2025-06-22
+          </p></div>
+      </div>
+    </div>
+  <div id="becoming-led-zeppelin-2025" class="entry" data-year="2025" data-title="Becoming Led Zeppelin" data-watched="2025-06-20" data-kind="movie" data-recommendation="recommended">
+      <div class="title">
+        <a href="https://www.imdb.com/title/tt10365912/">
+          <h3>Becoming Led Zeppelin (2025)</h3>
+        </a>
+        <a class="permalink" href="#becoming-led-zeppelin-2025">
+          🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
+        </a>
+      </div>
+      <div class="content"><div class="poster ">
+          <a href="https://www.imdb.com/title/tt10365912/">
+            <img src="/assets/movies/becoming-led-zeppelin-2025.jpg" loading="lazy" alt="Becoming Led Zeppelin" />
+          </a>
+        </div>
+        <div class="text">
+            <p class="one-liner">👍 <b>Watch this…</b> if you like Led Zeppelin, duh.</p>
+          <p class="watched" title="2025-06-20">
+            watched 2025-06-20
+          </p><div class="more-thoughts ">
+          <p>Apparently people have wanted to make a documentary for a long time but could never get permission. This one succeeded because it focuses strongly on the music and music-making process itself, and only talks about the band members themselves a little bit.</p>
+        </div></div>
+      </div>
+    </div>
   <div id="the-yellow-sea-2011" class="entry" data-year="2011" data-title="The Yellow Sea" data-watched="2025-06-15" data-kind="movie" data-recommendation="not-recommended">
       <div class="title">
         <a href="https://www.imdb.com/title/tt1230385/">
@@ -1591,9 +1635,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt1230385/">
             <img src="/assets/movies/the-yellow-sea-2011.jpg" loading="lazy" alt="The Yellow Sea" />
           </a>
@@ -1602,8 +1644,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because it’s scatterbrained, drawn out, and doesn’t offer anything unique.</p>
           <p class="watched" title="2025-06-15">
             watched 2025-06-15
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This movie was difficult to follow and changed course a few times in ways that didn’t seem necessary. It started pretty grounded and small scale, but every chase and fight was more ridiculous than the last, complete with car exploding into fireball. The hyperviolence didn’t have any of the visual charm and/or narrative value that you’d find in e.g. Oldboy or a Tarantino movie, and only served to further confuse who was killing who and for what reason. The soundtrack often felt out of place. And why were the cops so often bumbling, almost cartoonish idiots?</p>
 
           <p>The initial assassination plotline was so long that when it ended I thought the movie had flown by. But no, there was another 90 minutes or incoherent slaughter and predictable chase scenarios. I still don’t understand why the gang leader wanted to kill his own disposable, amateur assassin.</p>
@@ -1619,9 +1660,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt12299608/">
             <img src="/assets/movies/mickey-17-2025.jpg" loading="lazy" alt="Mickey 17" />
           </a>
@@ -1630,8 +1669,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because the premise is not done justice by the weak execution.</p>
           <p class="watched" title="2025-06-10">
             watched 2025-06-10
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>There are a million directions you can take this concept, but this movie doesn’t try that hard. The pacing was slow (it dragged), the worldbuilding minimal (the alien planet had one feature, the alien species, on an almost literal blank canvas), the exposition blunt (the voiceovers carried a lot of the plot and character development), the dialogue simplistic (Nasha’s attempt at scathing indictment at the climax was so weak), and the characters overcooked (Mark Ruffalo’s MAGA-Nazi-evangelical was paper thin and tiresome). The pigeon and brick were briefly amusing, but out of place, like the movie was trying too hard to be fun.</p>
         </div></div>
       </div>
@@ -1645,9 +1683,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0094336/">
             <img src="/assets/movies/withnail--i-1987.jpg" loading="lazy" alt="Withnail &amp; I" />
           </a>
@@ -1656,8 +1692,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> to see what Fear and Loathing in Las Vegas might have been if it were set in the English countryside.</p>
           <p class="watched" title="2025-06-06">
             watched 2025-06-06
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>The more I think about this movie (and the more I see quotations of lines I couldn’t discern because of the low-quality audio on my version), the more I like it. I really really like it. It’s an <a href="https://en.wikiquote.org/wiki/Withnail_and_I">infinitely quotable</a> alcohol-fueled low-stakes adventure (a la Fear and Loathing in Las Vegas) starring two bantering Englishmen making asses of themselves and ruining other peoples’ days (a la Peep Show).</p>
 
           <p>I may have had a poor copy or a bad audio setup (though I think the sound effect/music track is mastered way louder than the dialogue), but do what is necessary to make sure you get every line (make it loud… watch it with subtitles… buy your own copy). I missed a quarter of the jokes because they sounded muddy and I just assumed it was a Britishism I wouldn’t get.</p>
@@ -1673,9 +1708,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0102015/">
             <img src="/assets/movies/hearts-of-darkness-1991.jpg" loading="lazy" alt="Hearts of Darkness: A Filmmaker's Apocalypse" />
           </a>
@@ -1684,8 +1717,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you liked Apocalypse Now, of course.</p>
           <p class="watched" title="2025-06-03">
             watched 2025-06-03
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts ">
           <p>It’s remarkable both how much the making of the movie reflected the arc of the movie itself, and also how much the making of the movie influenced said arc.</p>
 
           <p>Lots of great tidbits, like Martin Sheen’s drunken bloody bedroom scene or the Philippine army lending and then taking away the helicopters.</p>
@@ -1701,9 +1733,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt15567174/">
             <img src="/assets/movies/the-fall-of-the-house-of-usher-2023.jpg" loading="lazy" alt="The Fall of the House of Usher" />
           </a>
@@ -1712,8 +1742,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because everything Netflix touches turns to shit.</p>
           <p class="watched" title="2025-05-31">
             watched two episodes before giving up
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>A great idea, flattened, corporatized and overproduced into flashly blandness. I think the point was to adapt Poe stories, one per episode like an old-school storytelling serial, but framed in an overarching Poe story, and with heavy foreshadowing so that you’re there to watch it unravel (rather than waiting for the twist). I like, except…</p>
 
           <p>The one-dimensional characters are immediately slotted into their designated roles, and in most cases have been focus-group tested to ensure they’ve got a token everybody. This guy’s children span generations, the globe (accents included) and the sexual spectrum, all of which is just frankly unbelievable for a Sackler. Which he is, and they point it out many, many, many, many, many times in case you didn’t get it.</p>
@@ -1735,9 +1764,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt3581920/">
             <img src="/assets/movies/the-last-of-us-2025.jpg" loading="lazy" alt="The Last of Us (Season 2)" />
           </a>
@@ -1746,8 +1773,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for a better-than-most zombie story, but don’t hold your breath for another season 1.</p>
           <p class="watched" title="2025-05-26">
             watched as it aired, 2025
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>The pacing and writing in this season was all over the map. Ellie either hasn’t matured enough or has regressed since season 1, and here is a much simpler and less interesting character. Dina playing coach and Tommy following (not leading) Ellie to Seattle emphasize her as the main character but rob them and other characters of depth, and Ellie’s writing just doesn’t feel like it supports her assigned narrative role.</p>
 
           <p>Telling everybody what was up with Abby from the beginning of the season was a weird choice. Isn’t the big reveal about her vendetta supposed to turn all your previous perception on its head?</p>
@@ -1765,9 +1791,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt31790091/">
             <img src="/assets/movies/hotel-reverie-2025.jpg" loading="lazy" alt="Black Mirror: Hotel Reverie" />
           </a>
@@ -1776,8 +1800,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> but do watch <a href="https://www.imdb.com/title/tt4538072">San Junipero</a> or <a href="https://www.imdb.com/title/tt2290780">Be Right Back</a>.</p>
           <p class="watched" title="2025-05-24">
             watched 2025-05-24
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This borrows the “redo life in a long simulation” idea from San Junipero and the “reconstruct a simulacrum from past media” idea from Be Right Back, but couched in an intolerably obnoxious Silicon Valley company’s shitty product. I’m happy to rag on move-fast-and-break-things startups that ship garbage straight to prod, but between the truly awful fake jargon and wildly poor judgement on the part of the employees, it was weak criticism that was merely painful to watch. Despite the runtime, it did a bunch of telling and not much showing.</p>
 
           <p>Issa Rae’s fish-out-of-water persona was too in-your-face, which was both the fault of the writing (e.g., the usage of “shit”) and her 2020s delivery. I liked it better when Black Mirror used unknown actors for all roles.</p>
@@ -1793,9 +1816,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt5923962/">
             <img src="/assets/movies/gantz-o-2016.jpg" loading="lazy" alt="Gantz: O" />
           </a>
@@ -1805,8 +1826,7 @@
 </p>
           <p class="watched" title="2025-05-23">
             watched 2025-05-23
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Not nearly as flashy as I had been lead to believe. The monsters <em>were</em> fun designs – watch the video above – but aren’t nearly enough to make this watchable. Action scenes are merely on par with a AAA videogame.</p>
 
           <p>The plot was just some predictable low budget videogame schlock, the characters paper thin (especially the female ones) and the dialogue… to quote an <a href="https://www.imdb.com/title/tt5923962/review/rw3645780/">IMDb review</a>, “They could have just shouted random names of fruit and I would have cringed a lot less.” Truly, overwhelmingly, banal. Some worldbuilding would have been preferred to the filler… though the weapons were so weird as to be kinda dumb instead of cool.</p>
@@ -1824,9 +1844,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0144084/">
             <img src="/assets/movies/american-psycho-2000.jpg" loading="lazy" alt="American Psycho" />
           </a>
@@ -1835,8 +1853,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for Christian Bale, or if you just hate Wall Street types.</p>
           <p class="watched" title="2025-05-21">
             watched 2025-05-21
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Nobody could have swung this like Christian Bale did. He was a little <em>too</em> robotic in a handful of scenes, but the range he demonstrated even within individual scenes (like Paul Allen’s murder) is impressive and probably <em>the</em> reason the movie sticks the landing.</p>
 
           <p>The author <a href="https://www.shortlist.com/news/the-bret-easton-ellis-interview">also doesn’t know if Patrick Bateman hallucinated the murders or not</a> (ctrl-f “Regarding the murders”). I think he killed Paul Allen, but nobody can tell anyone apart and nobody actually cared about him, so the investigation kind of fizzles out. The killing spree was definitely hallucinated.</p>
@@ -1854,9 +1871,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0063462/">
             <img src="/assets/movies/the-producers-1968.jpg" loading="lazy" alt="The Producers" />
           </a>
@@ -1865,8 +1880,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> as a cultural touchstone, but not for your first Mel Brooks movie.</p>
           <p class="watched" title="2025-04-27">
             watched 2025-04-27
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Fun, but not my favorite Mel Brooks. His other movies are more quotable and are written/edited more tightly, where this one drags a bit.</p>
 
           <p>Gene Wilder is exuberant and loveable, but overacted the role. Zero Mostel was excellent.</p>
@@ -1882,9 +1896,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt11813216/">
             <img src="/assets/movies/the-banshees-of-inisherin-2022.jpg" loading="lazy" alt="The Banshees of Inisherin" />
           </a>
@@ -1893,8 +1905,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for the acting, cinematography and character development, but not so much the narrative.</p>
           <p class="watched" title="2025-04-18">
             watched 2025-04-18
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>That this movie is excellently acted and shot was immediately obvious, but it took me a while to get over the narrative. I was not expecting (and don’t generally like) “character pieces”.</p>
 
           <p>According to <a href="https://www.reddit.com/r/movies/comments/10mb71w/comment/jc1xd9k/" title="per the Big Picture podcast">a rando on Reddit</a>, the director said it’s not an allegory for the Irish Civil War. I don’t think I believe that.</p>
@@ -1910,9 +1921,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt3230854/">
             <img src="/assets/movies/the-expanse-2015.jpg" loading="lazy" alt="The Expanse" />
           </a>
@@ -1921,8 +1930,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for a couple seasons of better-than-most, high-production-value, hard-ish-science-fiction tangle of spacefaring storylines, but stop before it starts to coast.</p>
           <p class="watched" title="2025-04-11">
             watched mid 2024 - early 2025
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts ">
           <details>
             <summary>👍 Season 1</summary>
             <p>I would have liked a little more worldbuilding, but that didn’t stop me from watching 10 episodes in two days! The neo-noir thriller elements blended reasonably well into spacefaring mystery-adventure and the heavy-handed social commentary parts, the latter of which thankfully didn’t overbear into preachiness.</p>
@@ -1977,9 +1985,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0425112/">
             <img src="/assets/movies/hot-fuzz-2007.jpg" loading="lazy" alt="Hot Fuzz" />
           </a>
@@ -1988,8 +1994,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> to see <a href="#the-wicker-man-1973">The Wicker Man</a> get the Shaun of the Dead treatment.</p>
           <p class="watched" title="2025-04-04">
             watched 2025-04-04
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>A much more violent plot than I remember from watching it the first time. Much funnier if you’ve see The Wicker Man, even though there are few direct references to it. The writing, editing, and general feel is a 100% match for Shaun of the Dead as well, so a good movie to watch if you just want that, but again.</p>
         </div></div>
       </div>
@@ -2003,9 +2008,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0373469/">
             <img src="/assets/movies/kiss-kiss-bang-bang-2005.jpg" loading="lazy" alt="Kiss Kiss Bang Bang" />
           </a>
@@ -2014,8 +2017,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you’re in the mood for a snappy, dynamic and busy action-mystery.</p>
           <p class="watched" title="2025-04-02">
             watched 2025-04-02
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Robert Downey Jr.’s typical frenetic style defines this movie, in fact, this might be one of the more representative examples of his style. This means that, as narrator, his style defines the feel of the movie, which can get a little tiresome when coupled with the fourth-wall breaking narration. It’s kinda fun but not particularly clever, and a few times I wanted him to cut it out.</p>
 
           <p>The chemistry between the three main characters is excellent and carries the movie, though the Robert Downey Jr./Val Kilmer interactions are for sure the most entertaining dynamic in the movie.</p>
@@ -2031,9 +2033,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt7798634/">
             <img src="/assets/movies/ready-or-not-2019.jpg" loading="lazy" alt="Ready or Not" />
           </a>
@@ -2042,8 +2042,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> if you could watch Clue or Knives Out instead.</p>
           <p class="watched" title="2025-03-29">
             watched 2025-03-29
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This movie was <em>okay</em>. The ensemble-cast-running-around-a-big-house-with-comedic-relief thing has been done better in other movies, and the horror elements are light and very trope-y. Dark-comedy-action-fluff.</p>
 
           <p>Alex’s change of heart was poorly motivated. It seemed like Grace saying she wouldn’t be with him after, y’know, everything, was enough to flip him completely 180. The only hint that might happen was the private conversation with his mother, but he had no reason to lie to her then (and what, be deep undercover?) so the twist must have been unplanned, as it was presented.</p>
@@ -2059,9 +2058,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt5715874/">
             <img src="/assets/movies/the-killing-of-a-sacred-deer-2017.jpg" loading="lazy" alt="The Killing of a Sacred Deer" />
           </a>
@@ -2070,8 +2067,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because it’s just the first 30 minutes of a different horror movie stretched agonizingly thin.</p>
           <p class="watched" title="2025-03-26">
             watched 2025-03-26
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>What was the point of this movie? The main narrative arc – man’s negligence leads to death, gets cursed, eventually yields to curse, curse is lifted – is unrewarding and seems incomplete. The possible explanations (fate? prophecy? witchcraft? gods? <a href="https://en.wikipedia.org/wiki/Active_Denial_System">heat ray</a>?) are so broad that the movie’s high-brow refusal to acknowledge any one of them is simply obnoxious, and the whole thing ends on a whimper of unexplored consequences.</p>
 
           <p>The stilted dialogue got old fast since it didn’t seem to serve a worldbuilding purpose a la <a href="#the-lobster-2015">The Lobster</a> and everything otherwise seemed normal. The soundtrack was so overbearing that at certain scenes I was distracted from the story, instead just hoping the music would stop. I suppose the goal was to maximize eerieness, but these superficial approaches clashed more than cohered, and the lack of compelling narrative left them to carry the weight of the movie alone.</p>
@@ -2089,9 +2085,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt7286456/">
             <img src="/assets/movies/joker-2019.jpg" loading="lazy" alt="Joker" />
           </a>
@@ -2100,8 +2094,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you lost hope after Heath Ledger died.</p>
           <p class="watched" title="2025-02-23">
             watched 2025-02-23
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I liked the groundedness of this version of the story (unlike the “most canonical” origin story that involves falling into a vat of chemicals), and will note that the movie both echoes <em>V for Vendetta</em> and more or less foretells the reaction to the shooting of the UnitedHealthcare CEO. I read it as a symbol of the times, since the movie is only a few years old: when a murderous psychopath comes off as sympathetic, things are bad.</p>
 
           <p>One detail I loved: the detective is reciting his phone number on the answering machine while Joker is  crashing around pulling things out of the fridge, so you can’t hear the part where he would have said “555”. <a href="https://en.wikipedia.org/wiki/555_(telephone_number)">555 numbers</a> can (and do) spoil immersion.</p>
@@ -2119,9 +2112,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0062765/">
             <img src="/assets/movies/bullitt-1968.jpg" loading="lazy" alt="Bullitt" />
           </a>
@@ -2130,8 +2121,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> most especially to see what old San Francisco looked like.</p>
           <p class="watched" title="2025-02-01">
             watched 2025-02-01
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I don’t usually like movies from this era because I find the pacing difficult (among other things), but this movie has aged quite well. It’s a fun ride, but my favorite part was sightseeing old San Francisco. Seeing what the Embarcadero used to look like, not from aerial pictures, was wild.</p>
         </div></div>
       </div>
@@ -2145,9 +2135,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt3416742/">
             <img src="/assets/movies/what-we-do-in-the-shadows-2014.jpg" loading="lazy" alt="What We Do in the Shadows" />
           </a>
@@ -2156,8 +2144,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you like Spinal Tap (or just like Taika Waititi).</p>
           <p class="watched" title="2025-01-29">
             watched 2025-01-29
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This movie is less polished than I remember, but that means it fits perfectly into the mockumentary pantheon alongside Spinal Tap. Strong recommend.</p>
         </div></div>
       </div>
@@ -2171,9 +2158,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt31122777/">
             <img src="/assets/movies/say-nothing-2024.jpg" loading="lazy" alt="Say Nothing" />
           </a>
@@ -2182,8 +2167,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for a hard look at the Troubles, especially if you know nothing about them.</p>
           <p class="watched" title="2025-01-27">
             watched January 2025
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This show is a faithful adaptation of the book. The acting is across the board excellent, most especially among the Crazy Prices. Neither the book nor the show pull any punches with either side. Having never been to Belfast, being able to actually see <a href="https://en.wikipedia.org/wiki/Divis_Flats">Divis Flats</a> or the Nationalist/Unionist murals really helps set the tone in a way that the book in unable to.</p>
         </div></div>
       </div>
@@ -2197,9 +2181,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://originaltrilogy.com/topic/The-Blackened-Mantle-2023-Kurosawa-Edition-a-personal-update-to-my-favorite-Prequel-Trilogy-fanedit/id/103338">
             <img src="/assets/movies/the-blackened-mantle-2023.jpg" loading="lazy" alt="The Blackened Mantle" />
           </a>
@@ -2208,8 +2190,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for the first 30 minutes or so, until you get the point.</p>
           <p class="watched" title="2025-01-23">
             watched 2025-01-23
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I love the idea behind this fan edit, and think it’s (accidentally?) a really excellent comparative analysis that highlights the flaws in the source material.</p>
 
           <p>I went in expecting it to have a more Kurosawa-ish feel, but episodes I-III are written and edited way too fast to ever let you breathe, and the fan edits on top are also really aggressive to keep the runtime in check. The source material is also exceptionally visually cluttered; some scenes really suffer from the lack of color and contrast to help parse them. This is a failure of the originals, not the edit. Coruscant, for instance, is an undifferentiated mass of grey.</p>
@@ -2227,9 +2208,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt31259169/">
             <img src="/assets/movies/leonardo-da-vinci-2024.jpg" loading="lazy" alt="Leonardo da Vinci" />
           </a>
@@ -2238,8 +2217,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> if you already know anything at all about Leonardo.</p>
           <p class="watched" title="2025-01-13">
             watched 2025-01-13
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This documentary is disappointingly superficial. If you’ve read a book on Leonardo, or even just the Wikipedia page, you won’t find much here you don’t already know.</p>
         </div></div>
       </div>
@@ -2253,9 +2231,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt2584384/">
             <img src="/assets/movies/jojo-rabbit-2019.jpg" loading="lazy" alt="Jojo Rabbit" />
           </a>
@@ -2264,8 +2240,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you like the comedy/commentary mix of Apocalypse Now.</p>
           <p class="watched" title="2025-01-05">
             watched 2025-01-05
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Like Apocalypse Now, this movie is all fun and games at the start (well, graded on a curve, since we’re talking about Hitler or Vietnam) and rather quickly shifts tone about halfway through and becomes a dark commentary. This is a good thing.</p>
 
           <p>It’s pretty wild that Taika Waititi was able to convince a studio to fund a movie like this. It definitely reflects well on… somebody.</p>
@@ -2283,9 +2258,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt14114802/">
             <img src="/assets/movies/the-outfit-2022.jpg" loading="lazy" alt="The Outfit" />
           </a>
@@ -2294,8 +2267,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> as a chamber piece in the vein of Clue, but serious.</p>
           <p class="watched" title="2024-12-22">
             watched 2024-12-22
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>A nice keep-you-guessing movie. It establishes untrustworthiness early so even though you know a twist is definitely coming, it’s still a satisfying reveal. Mark Rylance absolutely carries the whole movie, even though it’s descibed as an ensemble cast. I did think that Francis more or less rising from the dead at the end was pointless. Did we need to be told so bluntly that Leonard was who he said he was?</p>
 
           <p>I’m still really confused about the setting – I spent the whole movie thinking it was happening in the 30s only to be told by someone at the end it was in 1956.</p>
@@ -2311,9 +2283,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt5311514/">
             <img src="/assets/movies/your-name-2016.jpg" loading="lazy" alt="Your Name." />
           </a>
@@ -2322,8 +2292,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for an earnest, dreamy, Satoshi-Kon-lite <em>seishun eiga</em>.</p>
           <p class="watched" title="2024-11-09">
             watched 2024-11-09
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Much less cutesy and more actually touching than I expected. It was also very visually pretty, and a bit too slow.</p>
 
           <p>I liked that the core narrative gimmick was kind of ill-defined and blended several things – supernatural happenings, time travel, body-switching – because the rules weren’t important and it made for some interesting scenes and unexpected plot turns.</p>
@@ -2341,9 +2310,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt4547056/">
             <img src="/assets/movies/the-girl-with-all-the-gifts-2016.jpg" loading="lazy" alt="The Girl With All the Gifts" />
           </a>
@@ -2352,8 +2319,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for a different vision of what <a href="#the-last-of-us-2023">The Last of Us</a> could have been.</p>
           <p class="watched" title="2024-11-08">
             watched 2024-11-08
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Very. Strong. The Last of Us. Energy. I like a zombie movie that takes itself seriously.</p>
 
           <p>This movie had some seriously fresh takes on the genre, as well as some unique scenes. Second-generation zombies as symbiotes adds a whole dimension of competing motivations. I have only ever seen a scene walking through a crowd of zombies in Shaun of the Dead – this is hard to make believable! Melanie was very clever and well-acted.</p>
@@ -2371,9 +2337,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0460791/">
             <img src="/assets/movies/the-fall-2006.jpg" loading="lazy" alt="The Fall" />
           </a>
@@ -2382,8 +2346,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> to see a mash up of The Princess Bride and <a href="#the-cell-2000">The Cell</a> garnished with some clever storywriting gimmicks.</p>
           <p class="watched" title="2024-10-29">
             watched 2024-10-29
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Like The Cell, this movie was also heavy on the pretty. It has a much more compelling plot, the foreshadowing for which is, in retrospect, pretty obvious. Still, I like that there was a little flourish at the end with the reveal that the whole thing was about stunt men: admittedly I was too distracted to figure that out ahead of time, and it elevated the whole plot.</p>
 
           <p>I <em>loved</em> the way this movie worked the girl’s questions into the story. Watching the characters react as Lee Pace adjusts the narrative on the fly was fun and novel, and the transition between his narration and letting the characters speak was very smooth so the interruptions weren’t jarring.</p>
@@ -2399,9 +2362,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt3464902/">
             <img src="/assets/movies/the-lobster-2015.jpg" loading="lazy" alt="The Lobster" />
           </a>
@@ -2410,8 +2371,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> because it’s <em>assertively</em> weird.</p>
           <p class="watched" title="2024-10-29">
             watched 2024-10-29
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I love that this movie dumps this ridiculous premise in your lap right at the beginning, and then relentlessly follows through. There is never a break from the strangeness: no characters or worldbuilding are at all recognizable and the plot just keeps pushing. The movie establishes this very early so you aren’t completely blindsided, and the pacing does an execellent job meting out revelations and reactions to keep the strangeness fresh.</p>
         </div></div>
       </div>
@@ -2425,9 +2385,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt17526714/">
             <img src="/assets/movies/the-substance-2024.jpg" loading="lazy" alt="The Substance" />
           </a>
@@ -2436,8 +2394,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because it overplays its hand by being too extreme.</p>
           <p class="watched" title="2024-10-08">
             watched 2024-10-08
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>The premise was neat and the cinematography was <em>excellent</em>, but it was largely repetitive, the softcore porn and gore were both way beyond what was necessary to demonstrate the point and the social commentary was so simplistic and heavyhanded that it was like bad satire.</p>
 
           <p>The long-delayed ending highlighted the flaws: a strong hint at a twist that was immediately rescinded (why were they applauding the monster walking down the hallway?), wildly incongruous 70s-style gore, and a general violation of the established rules of the universe. It would have played <em>much</em> better if they’d cut to black as she was injecting the activator for the second time, then let you speculate.</p>
@@ -2455,9 +2412,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt1706620/">
             <img src="/assets/movies/snowpiercer-2013.jpg" loading="lazy" alt="Snowpiercer" />
           </a>
@@ -2466,8 +2421,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> because it’s even more deliciously unhinged than it sounds.</p>
           <p class="watched" title="2024-09-27">
             watched 2024-09-27
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>No pulled punches with this ending! The snow-is-melting foreshadowing had me dreading some Hollywood garbage.</p>
 
           <p>The Brave New World angle is far too heavyhanded to take seriously, which allows one to focus on the absurdity and visuals, like the tunnel fight scene (hi, Oldboy), the sushi scene, the school scene and also the whole rest of the movie.</p>
@@ -2485,9 +2439,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0100802/">
             <img src="/assets/movies/total-recall-1990.jpg" loading="lazy" alt="Total Recall" />
           </a>
@@ -2496,8 +2448,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> because everything Philip K. Dick touches turns to gold.</p>
           <p class="watched" title="2024-09-22">
             watched 2024-09-22
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This movie is a <em>little</em> hokey 80s, but otherwise has aged pretty well. The product placememnt, especially of the ESPN TV ad and giant Fujifilm light-up billboard, was a bit too in-your-face (and believeable) and ruined a few shots/scenes.</p>
 
           <p>I heard the remake was bad, which is a shame, because I think it would do well with a Minority Report-level aesthetic overhaul.</p>
@@ -2513,9 +2464,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt21942866/">
             <img src="/assets/movies/dream-scenario-2023.jpg" loading="lazy" alt="Dream Scenario" />
           </a>
@@ -2524,8 +2473,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because there’s no payoff for what they put you through.</p>
           <p class="watched" title="2024-09-19">
             watched 2024-09-19
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I wanted to like this movie based on the premise, but I just couldn’t get over the fact that it was 90 minutes of selfish people acting irrationally. I spent the whole movie being pissed off at how awful and, worse, stupid, everybody was.</p>
 
           <p>This was like a Black Mirror episode, but without any cleverness or depth to the commentary. Or like The Office, but not really funny. In short: stressful but without a reward. The whole thing ends with a whimper.</p>
@@ -2545,9 +2493,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt12735488/">
             <img src="/assets/movies/kalki-2898-ad-2024.jpg" loading="lazy" alt="Kalki 2898 AD" />
           </a>
@@ -2556,8 +2502,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because it’s only the bad parts of the worst modern superhero movies.</p>
           <p class="watched" title="2024-09-13">
             watched until I couldn't stand it anymore
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This movie has all the trappings of yet another mass-manufactured superhero movie, but is constantly missing the mark on why people like those: the dialogue is stilted, the CG is bad, the costumes are off the shelf, the pacing is all over the place, and the characters think they have charisma when they don’t.</p>
 
           <p>This movie also has all the things that make those superhero movies bad too: they swing violently between shoving exposition down your throat or not bothering to explain anything at all, the universe is obviously created just to make sequels and spinoffs, and the whole thing is absolutely never-ending.</p>
@@ -2575,9 +2520,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt15574270/">
             <img src="/assets/movies/i-saw-the-tv-glow-2024.jpg" loading="lazy" alt="I Saw the TV Glow" />
           </a>
@@ -2586,8 +2529,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> to experience a waking dream, directed by not exactly Darren Aronofsky and taking place inside a rainbow.</p>
           <p class="watched" title="2024-09-09">
             watched 2024-09-09
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This is “horror” in the way that Requiem for a Dream is horror. It’s like being in a trance: more of a state of being than a narrative.</p>
 
           <p>At first I thought it was poor casting to have two clearly 30-year-olds playing high schoolers, but I think now that was an attempt to disorient the viewer.</p>
@@ -2605,9 +2547,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt27731608/">
             <img src="/assets/movies/loch-henry-2023.jpg" loading="lazy" alt="Black Mirror: Loch Henry" />
           </a>
@@ -2616,8 +2556,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because it’s not Black Mirror, it’s just fictional true crime schlock.</p>
           <p class="watched" title="2024-09-08">
             watched 2024-09-08
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>The commentary that Hollywood is heartless and exploitative is nothing new, and was done in a more interesting way in the <a href="#joan-is-awful-2023">preceding episode</a> already. The American girl was selfish and oblivious, which I assume was intentional on the writers’ part, but I still quickly came to dread all the scenes she was in.</p>
 
           <p>I should credit this episode which clarifying to me why I hate true crime as a genre, but I would not recommend watching it just to find that out.</p>
@@ -2635,9 +2574,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt1457767/">
             <img src="/assets/movies/the-conjuring-2013.jpg" loading="lazy" alt="The Conjuring" />
           </a>
@@ -2646,8 +2583,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> only if you particularly like or specifically want to watch a movie about a haunting.</p>
           <p class="watched" title="2024-09-05">
             watched 2024-09-05
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This movie was well-executed and good on its own terms, but it’s pretty firmly rooted in the tropes of the genre and doesn’t offer anything new.</p>
 
           <p>If you only want to watch one haunted house movie, make it The Others instead of this.</p>
@@ -2663,9 +2599,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt17279496/">
             <img src="/assets/movies/civil-war-2024.jpg" loading="lazy" alt="Civil War" />
           </a>
@@ -2674,8 +2608,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> because it’s a good <em>war movie</em>, not because it’s a (Second) American Civil <em>War movie</em>.</p>
           <p class="watched" title="2024-09-05">
             watched 2024-09-05
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This movie was surprisingly apolitical, in the sense that it didn’t choose a side (left/right) and stuck to merely anti-establishment.</p>
 
           <p>For the first two thirds of the movie I kept thinking about The Last of Us, which is telling because I think post-apocalyptic movies are only way we see the US looking anything like this. It’s an effective translation of what it means to be war-torn for a country that hasn’t taken it for 150 years, but loves to dish it out.</p>
@@ -2695,9 +2628,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt12593682/">
             <img src="/assets/movies/bullet-train-2022.jpg" loading="lazy" alt="Bullet Train" />
           </a>
@@ -2706,8 +2637,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because it’s lazy, heartless, overproduced, wannabe-stylish and very forgettable.</p>
           <p class="watched" title="2024-09-02">
             watched 2024-09-02
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I asked ChatGPT to write me a synopsis for “star-studded revenge action movie with explosions and snappy dialogue on the Shinkansen”. It gave me a movie with a Russian “criminal mastermind”, a wise Japanese father figure, a former special ops agent with “a penchant for trouble” and of course Idris Elba as wildcard. Yup, basically nailed it.</p>
 
           <p>In addition to the regurgitated non-plot there was just too much overdone CGI, too many cutesy/predictable/unoriginal comedic moments, too many cloyingly one-dimensional characters, too many cameos, and way too much brazen product placement.</p>
@@ -2727,9 +2657,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0266697/">
             <img src="/assets/movies/kill-bill-volume-1-2003.jpg" loading="lazy" alt="Kill Bill: Volume 1" />
           </a>
@@ -2738,8 +2666,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> as it needs no introduction.</p>
           <p class="watched" title="2024-08-31">
             watched 2024-08-31
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I forgot just how much of this movie was O-Ren Ishii. I think that I actually just like her and that whole sequence, rather than Kill Bill itself or the Bride, which is why I never warmed up to Volume 2.</p>
 
           <p>There are at least two Wilhelm screams in the movie, and a lot more cheesy kung-fu sound effects than I remember.</p>
@@ -2755,9 +2682,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt20247352/">
             <img src="/assets/movies/joan-is-awful-2023.jpg" loading="lazy" alt="Black Mirror: Joan is Awful" />
           </a>
@@ -2766,8 +2691,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> to refine your stance on personalized media.</p>
           <p class="watched" title="2024-08-31">
             watched 2024-08-31
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This episode was definitely saved by its ending. For the first three quarters I was put off by the obviously-too-obvious Netflix doppelganger, the weird fawning over Salma Hayek and the “quantum computers explain everything” plot justification.</p>
 
           <p>Then suddenly: <em>I am in this universe</em> because I am watching Streamberry, Salma Hayek is playing herself but as would be written for a TV show, and quantum computers are an acceptable plot device where multiverses are involved. Bam!</p>
@@ -2787,9 +2711,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt9243804/">
             <img src="/assets/movies/the-green-knight-2021.jpg" loading="lazy" alt="The Green Knight" />
           </a>
@@ -2798,8 +2720,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for a very A24 take on medieval fantasy.</p>
           <p class="watched" title="2024-08-30">
             watched 2024-08-30
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This movie is to Blade Runner as <a href="https://en.wikipedia.org/wiki/Sir_Gawain_and_the_Green_Knight"><em>Sir Gawain and the Green Knight</em></a> is to <em>Do Androids Dream of Electric Sheep?</em> That is: the characters and many plot elements are shared, but the arc and destination end up quite different (e.g. the addition of St. Winifred; the presumed beheading at the end).</p>
 
           <p>The feel of the movie is very A24, <a href="#saint-maud-2019">Saint Maud</a>-ish, due to the camerawork, editing and pacing. They like the “atmospheric” thing coupled with mostly-unsubtle visual metaphors/references/hints, with a bit of reading between the lines.</p>
@@ -2817,9 +2738,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt9053874/">
             <img src="/assets/movies/rachel-jack-and-ashley-too-2019.jpg" loading="lazy" alt="Black Mirror: Rachel, Jack and Ashley Too" />
           </a>
@@ -2828,8 +2747,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because it treads familiar ground, superficially.</p>
           <p class="watched" title="2024-08-29">
             watched 2024-08-29
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>The tension in this episode came from all the wrong places. Usually, Black Mirror episodes crank up the tension either by subjecting the characters to stresses until they break, or giving them time to realize their situation and take action. This episode had all the typical shallow pressures from crappy action movies, up to and including a car chase. It cheapens the plot.</p>
 
           <p>The “resurrection by technology” idea has been explored in several other Black Mirror episodes to much greater effect.</p>
@@ -2847,9 +2765,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt8178634/">
             <img src="/assets/movies/rrr-2022.jpg" loading="lazy" alt="RRR" />
           </a>
@@ -2858,8 +2774,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for a Bollywood take on the kung-fu epic.</p>
           <p class="watched" title="2024-08-13">
             watched on a 13-hour flight, August 2024
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>The director said he was inspired after watching Inglorious Basterds, which you can really see in the increasing shamelessness and detachment from reality. Very fun, but like Inglorious Basterds, you have to roll with it (which took me about an hour into the movie to do).</p>
 
           <p>This is the first <del>Bollywood</del> <a href="https://en.wikipedia.org/wiki/Telugu_cinema">Tollywood</a> movie I’ve seen in some time, so while I expected the dance numbers, I was was not prepared for the blunt exposition and saturated/airbrushed appearance of the entire movie. The writing and delivery of the British characters was quite poor, but I suppose that’s because nobody gives a damn about what they have to say. I hope the Telugu was better, though some of the translations of the song lyrics were doing a whole lot of telling and not a lot of showing. Also, that friendship montage was incredible: borderline gay romance territory.</p>
@@ -2877,9 +2792,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt1028528/">
             <img src="/assets/movies/death-proof-2007.jpg" loading="lazy" alt="Death Proof" />
           </a>
@@ -2888,8 +2801,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you don’t actually like B movies but want to watch one anyway.</p>
           <p class="watched" title="2024-08-13">
             watched on a 13-hour flight, August 2024
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>It’s fun. Moviemaking-wise, my favorite aspect was the mirrored plotlines and the four girls being body doubles of sorts (especially since three of the four in the second half were playing stuntwomen). It was a bit slow at times.</p>
 
           <p>I figure that B movies like this peaked in the 70s, and nothing about the movie definitively identifies it as <em>not</em> being in the 70s save for the clothing… until the cell phone comes out and they mention Lindsey Lohan. That was surprising and an unfortunately unnecessary dating of the movie since both details were irrelevant to the plot, but maybe that’s the point? Do slasher movies date themselves awkwardly like that?</p>
@@ -2905,9 +2817,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt1684562/">
             <img src="/assets/movies/the-fall-guy-2024.jpg" loading="lazy" alt="The Fall Guy" />
           </a>
@@ -2916,8 +2826,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you’re just here for a good time.</p>
           <p class="watched" title="2024-08-13">
             watched on a 13-hour flight, August 2024
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Super fun, silly, irreverent, highly self-referential/meta in the way that Ryan <del>Reynolds</del> Gosling movies can get. It’s just what it says on the tin, and thankfully doesn’t go overboard in the self-reference/fourth-wall-breaking like Ryan Reynolds (I mean it this time) movies often do.</p>
         </div></div>
       </div>
@@ -2931,9 +2840,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt21440780/">
             <img src="/assets/movies/how-to-blow-up-a-pipeline-2022.jpg" loading="lazy" alt="How to Blow Up a Pipeline" />
           </a>
@@ -2942,8 +2849,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for a more nuanced view on quote-unquote “eco-terrorism” than the standard knee-jerk reaction.</p>
           <p class="watched" title="2024-08-13">
             watched on a 13-hour flight, August 2024
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>“Eco-terrorism” has always felt like an extreme label broadly applied to any type of direct action, and I like that a movie like this can be made to explore one possible end state of groups like Just Stop Oil or Extinction Rebellion.</p>
 
           <p>Yes, it is a bit preachy, but it’s largely believable, with some allowances: Logan’s tire-slashing/gunfire-dodging agility; Rowan’s conning of the FBI; the physics of shutting off an oil pipeline; the economic/social/racial diversity of the small group. It’s also definitely a bit cathartic, which might mean that it contributes to apathy regarding climate change. Think on that.</p>
@@ -2961,9 +2867,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt9253284/">
             <img src="/assets/movies/andor-2022.jpg" loading="lazy" alt="Andor" />
           </a>
@@ -2972,8 +2876,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because it’s mostly filler with one-dimensional characters.</p>
           <p class="watched" title="2024-06-25">
             watched June 2024
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This show leaned <em>really</em> heavily into the “Nazi” part of “space Nazis”, which are less compelling than real Nazis. The Designed in California prison subplot was ultimately zero sum (they were looking for him but didn’t know they had him already, and he escaped and ended up alone anyway) and the Peter-Parker-looking Nazi boy scout didn’t do anything the dominatrix in white couldn’t have done by herself.</p>
 
           <p>I think this could have been a 3/4-episode miniseries that focused on how Mon Mothma and whoever Stellan Skarsgård is supported the storming of the base and how Andor ended up there. (This show definitely rewards those who kept track of every minor character in the main Star Wars plot lines.)</p>
@@ -3000,9 +2903,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt10574236/">
             <img src="/assets/movies/station-eleven-2021.jpg" loading="lazy" alt="Station Eleven" />
           </a>
@@ -3011,8 +2912,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because it <em>plods</em> aimlessly through largely uninteresting interpersonal relationships.</p>
           <p class="watched" title="2024-05-26">
             watched 2024-05-26
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I could only make it through four of ten episodes. Even allowing for it being a character piece the pacing is far too slow, and the out-of-order storytelling is so overdone as to give the impression the writers are arbitrarily withholding information to be hostile (as opposed to, say, putting you in the shoes of a lost/confused character).</p>
 
           <p>In the Before, why is everyone immediately and absolutely convinced it’s the literal apocalypse? I lived through real-life COVID where there was more fearmongering than here, and people didn’t act like that. It ruins the effect. The show should know better, being made in 2021.</p>
@@ -3032,9 +2932,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt2316411/">
             <img src="/assets/movies/enemy-2013.jpg" loading="lazy" alt="Enemy" />
           </a>
@@ -3043,8 +2941,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you’re seeking David Lynch, but maybe not full-on David Lynch.</p>
           <p class="watched" title="2024-05-19">
             watched 2024-05-19
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This movie had a whole lot of foreshadowing, but almost all of it was quite subtle, like the cheap sunglasses sitting on the side table in the actor’s house, which were very much not the focus of the scene.</p>
 
           <p>The final shot with the spider was at first scary, and then very quickly absurd. The spider was scared! I liked that the movie seemed to give you only the minimum about to piece together what happened, kind of like Memento. The final scene was then the rather abrupt challenge: “okay, now you figure it out!”</p>
@@ -3062,9 +2959,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt2788316/">
             <img src="/assets/movies/shogun-2024.jpg" loading="lazy" alt="Shogun" />
           </a>
@@ -3073,8 +2968,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for a pretty period piece that’s still compelling enough to send you on Wikipedia binges.</p>
           <p class="watched" title="2024-05-08">
             watched early 2024
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Casting was great; on screen chemistry between the two main actors was good. The story would plod at times, but I kept coming back for the aesthetics and because there were many individually good scenes, even in the slower episodes.</p>
 
           <p>For a modern show about a violent era, I thought it was relatively restrained in the use of sex and violence, the latter in particular well-used as a sharp accent when the story needed it.</p>
@@ -3092,9 +2986,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt2359024/">
             <img src="/assets/movies/blue-ruin-2013.jpg" loading="lazy" alt="Blue Ruin" />
           </a>
@@ -3103,8 +2995,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for a no-frills thriller grounded in reality that <em>won’t</em> haunt your dreams.</p>
           <p class="watched" title="2024-04-22">
             watched 2024-04-22
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This was a good night’s entertainment, well acted and really really tense, but I don’t think it’ll stick with me. The story is straightforward; it’s small and messy and ill-conceived; it’s probably closer than any thriller to how such a feud would play out. But it didn’t get under my skin like, say, Green Room did.</p>
 
           <p>I consider this movie an object lesson in how guns can make mountains out of molehills. (Even though the first murder they showed was a stabbing, the original one, before the movie started, was a shooting too.) And, I suppose, that revenge is fleeting.</p>
@@ -3120,9 +3011,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt14230458/">
             <img src="/assets/movies/poor-things-2023.jpg" loading="lazy" alt="Poor Things" />
           </a>
@@ -3131,8 +3020,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you normally dislike coming-of-age movies and think Wes Anderson is too cutesy.</p>
           <p class="watched" title="2024-04-18">
             watched 2024-04-18
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>There was a. lot. of sex in this movie, which I suppose makes sense since Bella is effectively a teenager in an adult’s body for much of it. Taken individually, the sex scenes were amusing, but I was disappointed that they didn’t clearly delineate a single era in Bella’s life, like the black and white era, or the first-foray-into-the-real-world era. They blurred the remainder of the movie together. Not what I expected based on the first half hour.</p>
 
           <p>I saw a great quote from another review of this movie: just because something is anti-sexist, doesn’t mean it’s feminist. Framing empowerment through prostitution seems fraught, and the madame was more than a little exploitative herself.</p>
@@ -3152,9 +3040,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt2321549/">
             <img src="/assets/movies/the-babadook-2014.jpg" loading="lazy" alt="The Babadook" />
           </a>
@@ -3163,8 +3049,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because the best parts are done better by Requiem for a Dream.</p>
           <p class="watched" title="2024-04-04">
             watched 2024-04-04
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Most of this movie felt like a meditation on how bad sleep deprivation can get. (Or a toothache.) As it accelerated it became a bit like Requiem for a Dream Lite (Ellen Burstyn’s character), complete with drugs, except in this case the hallucinations (?) were not drug-induced but a real (?) monster.</p>
 
           <p>In any case, the paranoia and uncertainty in the first half or two thirds were for sure the most compelling psychological horror part, but once the monster started showing up for real I lost interest. I don’t know that it would have been any better if it used the “surprise it’s just mental illness” escape hatch, though it set itself up for that. I thought the role reversal between mother and child was amusing. Almost as amusing as the Home Alone contraptions.</p>
@@ -3182,9 +3067,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0089881/">
             <img src="/assets/movies/ran-1985.jpg" loading="lazy" alt="Ran" />
           </a>
@@ -3193,8 +3076,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for Shakespeare, but with epic samurai set pieces.</p>
           <p class="watched" title="2024-03-31">
             watched 2024-03-31
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I didn’t know this was <a href="https://en.wikipedia.org/wiki/King_Lear">King Lear</a> when I sat down to watch it, but even then it was very, very apparent that it was a screen<i>play</i> more than it was a movie. There’s nothing wrong with that, but it does have play-like storytelling in that there is a lot of telling instead of showing.</p>
 
           <p>The set pieces are absolutely incredible. Lots and lots of horses, yes, but the king wandering out of the burning castle while the armies part to let him pass… yowza. They really built and burned a full-size set for that.</p>
@@ -3210,9 +3092,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0470752/">
             <img src="/assets/movies/ex-machina-2014.jpg" loading="lazy" alt="Ex Machina" />
           </a>
@@ -3221,8 +3101,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you like Westworld or haven’t yet exhausted the “when does sufficiently-advanced AI <em>think</em>” debate.</p>
           <p class="watched" title="2024-03-30">
             watched 2024-03-30
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This was a very pretty, if visually austere, movie. I see why people like it, but as you might guess from the one-liner, I’m pretty tired of having this conversation. You end up getting it a lot as a tech nerd.</p>
 
           <p>I don’t think the rise of LLMs has changed my thoughts on this movie one way or the other. Ultimately more plausible, perhaps, but they neither undermine nor support the thesis of the movie. That might be a comment more on LLMs themselves than this movie or AI generally.</p>
@@ -3238,9 +3117,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster spoiler">
+      <div class="content"><div class="poster spoiler">
           <a href="https://www.imdb.com/title/tt1922777">
             <img src="/assets/movies/sinister-2012.jpg" loading="lazy" alt="Sinister" />
           </a>
@@ -3249,8 +3126,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you liked Hereditary, but have lower standards now.</p>
           <p class="watched" title="2024-03-29">
             watched 2024-03-29
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>The first half is a legitimately scary movie, even if the snuff films started to get a bit overdone for little added effect. In particular, I like the way they explained away trope-y, spooky sounds with e.g. night terrors, or the way they demonstrated Ethan Hawke wasn’t simply going crazy because other characters corroborated some apparently-supernatural happenings.</p>
 
           <p>It would have been a <em>significantly</em> better movie if they had held the supernatural reveal until the box of movies reappears in the attic right before the end. You would have spent 95% of the movie scared about a murderous and superhumanly stealthly and methodical stalker, and then, twist, it actually <em>is</em> supernatural and the children get Ringu’d into the home movies.</p>
@@ -3266,9 +3142,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt15239678">
             <img src="/assets/movies/dune-part-two-2024.jpg" loading="lazy" alt="Dune: Part Two" />
           </a>
@@ -3277,8 +3151,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you liked Dune: Part One.</p>
           <p class="watched" title="2024-03-08">
             watched 2024-03-08
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I love love love Dune, and think that the movies are an excellent transfer to the screen because they hew so closely to the books at all times.</p>
 
           <p>This one is a little less exciting for not-already-Dune-fans, and even already-Dune-fans, because it doesn’t get to introduce all the wild world-building and main characters, like the first one did. It’s still absolutely worth rewatching, though probably as part of a marathon.</p>
@@ -3294,9 +3167,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt8110652/">
             <img src="/assets/movies/bodies-bodies-bodies-2022.jpg" loading="lazy" alt="Bodies Bodies Bodies" />
           </a>
@@ -3305,8 +3176,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because the parody-commentary gets lost amongst all the contemptible/idiotic characters.</p>
           <p class="watched" title="2024-03-02">
             watched 2024-03-02
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I found this movie exhausting. As mentioned above, the characters are comtemptible, the commentary on Gen Z culture superficial and well-trodden, and the decision-making unrealistically awful. The only tolerable non-idiotic character was Lee Pace, and even then, merely tolerable.</p>
 
           <p>Had I known that the movie did not intend to take itself entirely seriously I would have gone in with different expectations, but I don’t think that would have saved it. The few (in retrospect) genuinely funny lines would have registered as such, instead of coming off as the characters continuing to be obnoxious, but the juice just isn’t worth the squeeze.</p>
@@ -3322,9 +3192,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0070917">
             <img src="/assets/movies/the-wicker-man-1973.jpg" loading="lazy" alt="The Wicker Man" />
           </a>
@@ -3333,8 +3201,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> to see where Midsommar came from.</p>
           <p class="watched" title="2024-02-26">
             watched 2024-02-26
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This movie has aged great! By focusing on the insular island culture and minimizing intrusion from the outside, it created an environment frozen in time that focuses on people and interactions, and doesn’t suffer from the “this would be done already if we had cell phones” problem.</p>
 
           <p>If it didn’t invent all the folk-horror tropes, it certainly solidified them. Christopher Lee is fantastic, and in fact, he has said on several occasions that it was his favorite role. Midsommar owes so, so much to this movie. It’s a tighter, higher-production-value movie, but The Wicker Man’s simpler, more earnest style is a better fit for the “folk” part of “folk-horror”.</p>
@@ -3350,9 +3217,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0190332">
             <img src="/assets/movies/crouching-tiger-hidden-dragon-2000.jpg" loading="lazy" alt="Crouching Tiger, Hidden Dragon" />
           </a>
@@ -3361,8 +3226,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for a straightforward but well-executed <a href="https://en.wikipedia.org/wiki/Wuxia">wuxia</a> film.</p>
           <p class="watched" title="2024-02-14">
             watched 2024-02-14
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I really liked the effects: enough flight to lend the fantasy air, but not enough to cheapen it into B-movie territory. Fun choreography.</p>
 
           <p>It was nice to see Michelle Yeoh from her earlier years, now that she’s super famous!</p>
@@ -3378,9 +3242,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt9764362/">
             <img src="/assets/movies/the-menu-2022.jpg" loading="lazy" alt="The Menu" />
           </a>
@@ -3389,8 +3251,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you hate haute cuisine and love Ralph Fiennes villains.</p>
           <p class="watched" title="2024-02-12">
             watched 2024-02-12
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I fully expected the twist in this movie to be that Ralph Fiennes would feed guests to each other, or previous guests to these guests, or something trope-y like that. But when they served The Mess, I knew I was in for a ride.</p>
 
           <p>I adored the parodical food-porn glamour shots of each dish and the heavy-handed criticism of haute cuisine and the culture around it, in particular, Ralph Fiennes browbeating the insufferable “foodie” into killing himself from shame. Crazy. Head waiter Elsa was also excellently written and acted.</p>
@@ -3406,9 +3267,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt7914416/">
             <img src="/assets/movies/one-cut-of-the-dead-2017.jpg" loading="lazy" alt="One Cut of the Dead" />
           </a>
@@ -3417,8 +3276,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you like clever, no-frills movies like Coherence or Primer.</p>
           <p class="watched" title="2024-01-31">
             watched 2024-01-31
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Like Cabin in the Woods, I judged this book by its cover and the first half was kind of a slog. When the reveal came halfway through the movie, it was transformed and it’s now up there with things like Primer as an excellently tight movie doing a lot with very little and really rewarding you for paying attention and sticking with it.</p>
 
           <p>I assume in Japanese the name is a little less clunky. Do they have a single-syllable word for “one cut” so the name’s cadence is closer to Dawn of the Dead or Day of the Dead or whatever?</p>
@@ -3434,9 +3292,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0261983/">
             <img src="/assets/movies/session-9-2001.jpg" loading="lazy" alt="Session 9" />
           </a>
@@ -3445,8 +3301,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because it’s too predictable and full of established tropes.</p>
           <p class="watched" title="2024-01-30">
             watched 2024-01-30
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>The set is a <a href="https://en.wikipedia.org/wiki/Danvers_State_Hospital">real place</a> and is awesome. It inspired Lovecraft’s famous Arkham.</p>
 
           <p>But really, a murder-y mental breakdown in a mental asylum felt inevitable and was the only reasonable non-supernatural explanation right from the start. You can do without this movie.</p>
@@ -3464,9 +3319,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt5215952/">
             <img src="/assets/movies/the-wailing-2016.jpg" loading="lazy" alt="The Wailing" />
           </a>
@@ -3475,8 +3328,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for a smooth mash-up of several horror tropes all at once that’ll keep you guessing.</p>
           <p class="watched" title="2024-01-22">
             watched 2024-01-22
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I loved the shaman and his exorcism dances.</p>
 
           <p>I don’t have much else to say – despite the length it’s too intricate to sum up in a small space any more than I already have.</p>
@@ -3492,9 +3344,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0375063/">
             <img src="/assets/movies/sideways-2004.jpg" loading="lazy" alt="Sideways" />
           </a>
@@ -3515,9 +3365,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt7557108/">
             <img src="/assets/movies/saint-maud-2019.jpg" loading="lazy" alt="Saint Maud" />
           </a>
@@ -3526,8 +3374,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because, while beautiful, it’s painfully predictable and doesn’t offer any novelty.</p>
           <p class="watched" title="2024-01-03">
             watched 2024-01-03
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>The predictability of this movie really is a shame. The polish is evident and there are a few elements I really liked – using Welsh for speaking in tongues, and especially the visuals in the <a href="https://www.youtube.com/watch?v=MRU7ni9G3rw">last scene of the film</a> (<strong>warning:</strong> mega spoilers at that link)  – but it’s hard to get invested when the movie is telegraphing fanatical mental illness with all the usual religious iconography.</p>
         </div></div>
       </div>
@@ -3541,9 +3388,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt11280740/">
             <img src="/assets/movies/severance-2022.jpg" loading="lazy" alt="Severance" />
           </a>
@@ -3552,8 +3397,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> just watch a Philip K. Dick movie instead.</p>
           <p class="watched" title="2024-01-01">
             watched sometime in 2024
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Unlike a PDK book or their adaptations, the worldbuilding here is minimal and the show barely bothers to actually explore the consequences of the premise. It designs itself a blank slate, and then excruciatingly slowly paints it with shallow, focus-tested filler. In a word: pointless. Or maybe: disappointing.</p>
         </div></div>
       </div>
@@ -3567,9 +3411,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt4062536/">
             <img src="/assets/movies/green-room-2015.jpg" loading="lazy" alt="Green Room" />
           </a>
@@ -3578,8 +3420,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for a modernized, more malicious Deliverance.</p>
           <p class="watched" title="2023-12-29">
             watched 2023-12-29
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Oooof. This was a rough watch, but in a good way. It’s hard to find a good horror movie that doesn’t bother with even <em>suggesting</em> supernatural/religious/psychotic tropery, but these are the ones that truly make you uncomfortable due to their potential to actually maybe really happen.</p>
 
           <p>I’m generally not a fan of body horror, but I thought they hit the mark with enough to contribute to the feeling the movie was going for without accidentally turning the room they were locked inside into Saw Lite.</p>
@@ -3595,9 +3436,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0319343/">
             <img src="/assets/movies/elf-2003.webp" loading="lazy" alt="Elf" />
           </a>
@@ -3618,9 +3457,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0209958/">
             <img src="/assets/movies/the-cell-2000.jpg" loading="lazy" alt="The Cell" />
           </a>
@@ -3629,8 +3466,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for the visuals, all the visuals.</p>
           <p class="watched" title="2023-12-22">
             watched 2023-12-22
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This movie is so pretty, and some of the visual elements would steal the show all by themselves in any other movie. (I’m thinking here of the dangling metal mask that J Lo wears.) The plot is not terribly original, but it is (and should be) considered an entirely visual experience. And it’s worth it for that alone.</p>
         </div></div>
       </div>
@@ -3644,9 +3480,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0032553/">
             <img src="/assets/movies/the-great-dictator-1940.jpg" loading="lazy" alt="The Great Dictator" />
           </a>
@@ -3655,8 +3489,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you want to see Charlie Chaplin use that mustache as a force for good.</p>
           <p class="watched" title="2023-12-17">
             watched 2023-12-17
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>The Mussolini scenes are still my favorites. Close runner up: the speeches.</p>
 
           <p>Watching this again for the first time in many years, I was very surprised at the complete lack of foley effects. Some of the scenes got very quiet, almost uncomfortably so, though I don’t think that was the intent. Different filmmaking standards!</p>
@@ -3672,9 +3505,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0327056/">
             <img src="/assets/movies/mystic-river-2003.jpg" loading="lazy" alt="Mystic River" />
           </a>
@@ -3683,8 +3514,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you want The Departed, but without all the time and convolution.</p>
           <p class="watched" title="2023-12-15">
             watched 2023-12-15
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I had literally no idea what this movie was about when I sat down to watch it. It was an enjoyable set piece of sorts; Sean Penn in particular put on a great performance. It’s all very Boston.</p>
         </div></div>
       </div>
@@ -3698,9 +3528,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt3235888/">
             <img src="/assets/movies/it-follows-2014.jpg" loading="lazy" alt="It Follows" />
           </a>
@@ -3709,8 +3537,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for the unsettling atmosphere, without any (?!) tired tropes.</p>
           <p class="watched" title="2023-12-11">
             watched 2023-12-11
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I didn’t like this movie when I first watched it. It felt corny, forced, too far outside the realm of believability but without the rest of the trappings (and benefits) of a more out-there plot.</p>
 
           <p>But after thinking on it for some time, it’s grown on me, specifically <em>because</em> it’s such an out-there core concept in such mundane trappings. What a strange choice for a representation of… STDs? Sexual assault? Death? It’s chilling how such an innocuous action – literally, following – taken to an extreme becomes so unsettling. Plus, I thought that the characters acted pretty reasonably given the insanity they were subjected to.</p>
@@ -3726,9 +3553,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt2388715/">
             <img src="/assets/movies/oculus-2013.jpg" loading="lazy" alt="Oculus" />
           </a>
@@ -3737,8 +3562,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you really wish someone in these horror movies would have watched some for research beforehand.</p>
           <p class="watched" title="2023-12-09">
             watched 2023-12-09
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This movie has the perfect amount of unreliable-narrator/first-person hallucination, and very well blended into reality too. (Too much rule-breaking and I just stop caring.)</p>
 
           <p>I really appreciate the cat-and-mouse game between the characters and the mirror itself: you start the movie out thinking that yeah, she’s got it in the bag, she’s thought of everything from not forgetting to eat to having a dead man’s switch. So when the mirror wins, ooh, you feel like it tricked you as well.</p>
@@ -3754,9 +3578,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt7984734/">
             <img src="/assets/movies/the-lighthouse-2019.jpg" loading="lazy" alt="The Lighthouse" />
           </a>
@@ -3765,8 +3587,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because it’s just too much plodding, drunken, confused maybe-homoeroticism-maybe-not.</p>
           <p class="watched" title="2023-12-08">
             watched 2023-12-08
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This is what would happen if Hemingway wrote a horror movie. In retrospect I <em>kind of</em> like it, but not because it’s likeable on its face so much as that it’s such a brazenly weird and unapologetic vision of… something. It doesn’t even matter what, it’s just the way that it carries itself. Really, it’s more of an… <em>experience</em>… than a story, but that’s not enough to actually recommend anyone else watch it.</p>
 
           <p>It’s a bit of a shame, because I thought that both castings and both performances were excellent.</p>
@@ -3782,9 +3603,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt7784604/">
             <img src="/assets/movies/hereditary-2018.jpg" loading="lazy" alt="Hereditary" />
           </a>
@@ -3793,8 +3612,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you want to believe in the horror genre again.</p>
           <p class="watched" title="2023-12-04">
             watched 2023-12-04
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I was convinced that this movie was about mental illness right up until the very end, but the real explanation is much more fun. (Ari Aster confirmed in an interview that there is no trick. It’s what it says it is.) Just a perfectly balanced movie: freaky but believable people; unsettling but not outright hostile to the audience; a great reveal but not one that feels like a gotcha… And that decapitation scene: the perfect choice. We’ve all thought about it when we stick our hands out the car window.</p>
 
           <p>The daughter did remind me a lot of <a href="https://www.imdb.com/title/tt5501104/">Border</a>.</p>
@@ -3810,9 +3628,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt2866360/">
             <img src="/assets/movies/coherence-2013.jpg" loading="lazy" alt="Coherence" />
           </a>
@@ -3821,8 +3637,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you liked Primer or Clue.</p>
           <p class="watched" title="2023-11-30">
             watched 2023-11-30
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This movie feels like a lovely small-scale mashup of Primer and, I suppose, Clue. Or like game of hidden identity, except fun. Minimal props, minimal sets, minimal effects: just a bunch of people as confused as the audience trying to figure things out. I loved the idea that the alternate universes varied wildly from “nobody left the house and has any idea that anything is amiss” to “murder body doubles”. Plus, blackouts are (usually) fun.</p>
 
           <p>Fun fact: the movie was filmed in a few days in the filmmaker’s house, and he only gave each actor their own parts and only the parts they needed for <em>that day</em> of filming. So they’re as surprised as you are.</p>
@@ -3838,9 +3653,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt4263482/">
             <img src="/assets/movies/the-witch-2015.jpg" loading="lazy" alt="The Witch" />
           </a>
@@ -3849,8 +3662,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for a claustrophobic, period-piece horror.</p>
           <p class="watched" title="2023-11-28">
             watched 2023-11-28
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Is the witch… the good guy? The family members were all pretty terrible to one another, and I can’t entire blame Thomasin for deciding it would be better if she really <em>were</em> a witch, if they were going to accuse her of it anyway. Most of them got what they deserved, I suppose.</p>
         </div></div>
       </div>
@@ -3864,9 +3676,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0256009/">
             <img src="/assets/movies/the-devils-backbone-2001.jpg" loading="lazy" alt="The Devil's Backbone" />
           </a>
@@ -3875,8 +3685,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because it’s just an okay ghost story that clashes with the Spanish Civil War backdrop.</p>
           <p class="watched" title="2023-11-27">
             watched 2023-11-27
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Ghosts are my least favorite kind of scare. They require a lot of suspension of disbelief but usually offer little storytelling oomph in return, often less than pagan gods, or witches, or zombies, or those sorts of things.</p>
 
           <p>I did like some elements and characters of this film, especially the older couple running the orphanage. The child actors are not bad, though the makeup on the ghost boy sure is. I wanted to like it more than I did, and it still feels a little harsh to recommend not watching it, but I’d pick most other horror movies on this list first, for sure.</p>
@@ -3892,9 +3701,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt10638522/">
             <img src="/assets/movies/talk-to-me-2022.jpg" loading="lazy" alt="Talk to Me" />
           </a>
@@ -3903,8 +3710,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for a fresh, truly disturbing concept with a realistic execution.</p>
           <p class="watched" title="2023-11-26">
             watched 2023-11-26
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Yes, a thousand times yes, I adored this movie. The core supernatural concept was deliciously unsettling to the point where I almost regretted watching it alone in the dark. Framing the hand as a party drug was, to my knowledge, a unique approach that allowed to characters to behave like realistically risky, smartphone-wielding teenagers.</p>
 
           <p>The visual effects struck the perfect balance of creepy without going overboard, and the increasingly-unsubtle audio-visual cues of the possessive underworld woman were a nice touch.</p>
@@ -3920,9 +3726,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt8772262/">
             <img src="/assets/movies/midsommar-2019.jpg" loading="lazy" alt="Midsommar" />
           </a>
@@ -3931,8 +3735,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> to witness the feat of a horror movie done entirely in the daytime.</p>
           <p class="watched" title="2023-11-25">
             watched 2023-11-25
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I love the self-imposed challenge of making a horror movie in broad daylight. I think folk horror, or at least, this strain of it, is all about the pacing, and Midsommar absolutely nails the pacing. You can’t come on too quickly, otherwise you’d scare off the characters/audience who are largely pretty reasonable. Midsommar takes its time, but it never stops: the ramp-up is relentlessly steady; every scene just a little more weird than the last until you realize you’re way past your comfort zone and how did we get here?</p>
         </div></div>
       </div>
@@ -3946,9 +3749,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt5700672/">
             <img src="/assets/movies/train-to-busan-2016.jpg" loading="lazy" alt="Train to Busan" />
           </a>
@@ -3969,9 +3770,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt2400463/">
             <img src="/assets/movies/the-invitation-2015.jpg" loading="lazy" alt="The Invitation" />
           </a>
@@ -3980,8 +3779,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you’re considering joining a new-age cult.</p>
           <p class="watched" title="2023-11-22">
             watched 2023-11-22
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>This reminded me of The Man From Earth, at least before the killings started, but maybe that’s just because that was the first low-budget chamber piece I saw. I’m surprised at how engaging this format could be: I was glued to the TV the whole time, even though the majority of the movie was just… talking. At a dinner party. I do that all the time on my own!</p>
 
           <p>This movie did remind me quite a bit of a small-scale Us, but it’s different enough (and that’s potentially spoiler-y enough) that I didn’t mention it in the one-liner.</p>
@@ -3997,9 +3795,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0180093/">
             <img src="/assets/movies/requiem-for-a-dream-2000.jpg" loading="lazy" alt="Requiem for a Dream" />
           </a>
@@ -4008,8 +3804,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> to scare yourself off drugs forever and get clinically depressed at the same time.</p>
           <p class="watched" title="2023-11-21">
             watched 2023-11-21
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>What a mind fuck. This is Aronofsky at his finest. The thing that stuck out the most to me was the visual metaphors for euphoria, paranoia and hallucinations. The editing and camerawork for those did an excellent job conveying a <em>feeling</em> that put you in the character’s shoes.</p>
 
           <p>The parallel storylines showing four different versions of the same idea, and four different ways they can all go horribly wrong (and worse when they play off of each other), weave together into a surprisingly coherent storyline. At least, as coherent as it can be through the drug haze. I didn’t even find the moral of the story too blunt: we all know where this leads, and the movie did all showing and no telling.</p>
@@ -4025,9 +3820,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt10954984/">
             <img src="/assets/movies/nope-2022.jpg" loading="lazy" alt="Nope" />
           </a>
@@ -4036,8 +3829,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because it’s unsure if it’s a sci-fi action movie or a horror movie, but doesn’t excel at either.</p>
           <p class="watched" title="2023-11-20">
             watched 2023-11-20
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Full disclosure: I was told, and went in expecting, that this was a horror movie. It’s not. It starts out sort of like one, but once they figure out it’s a UFO-alien, it becomes almost like a heist movie where you spend the first two thirds of the movie gathering the team and the equipment and the last third of the movie executing the heist. Which is fine, and kind of an interesting idea when mashed up like this, but I would rather they just did that from the start and made a different movie instead.</p>
 
           <p>There were some clever storywriting bits in the “heist” section of the movie, for sure, but the rules felt a little arbitrary and the I-guess-horror-related shots of the inside of the UFO-alien felt more gratuitous and irrelevant to the story than anything else.</p>
@@ -4053,9 +3845,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt6857112/">
             <img src="/assets/movies/us-2019.jpg" loading="lazy" alt="Us" />
           </a>
@@ -4064,8 +3854,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> for that Get Out feel, but in a completely different setting.</p>
           <p class="watched" title="2023-11-19">
             watched 2023-11-19
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>You know how you have that band where you love the first album, and you wish they would just do the same thing again? Some bands do, and it turns out that that’s usually just boring. Some bands go the complete opposite direction and lose the plot. But some bands strike that perfect balance. Those are the best.</p>
 
           <p>Us is like Jordan Peele’s perfect second follow up album to his #1 charting Get Out. It has a very similar feel but otherwise bears no relation. It’s got quite a bit of worldbuilding, and the fantastical bent of it permits the more overtly weird aspects – like the scissors, or the raspy voices – to blend and contribute rather than stick out as awkward. I really liked the raspy voices in particular: how creepy, that you talk so little that you aren’t even sure how to do it properly anymore.</p>
@@ -4081,9 +3870,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt3581920/">
             <img src="/assets/movies/the-last-of-us-2023.jpg" loading="lazy" alt="The Last of Us (Season 1)" />
           </a>
@@ -4092,8 +3879,7 @@
             <p class="one-liner">👍 <b>Watch this…</b> if you liked the game, or thought the Walking Dead was a good idea, badly executed.</p>
           <p class="watched" title="2023-03-12">
             watched early 2023
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>I loved that the show stayed true to the game. I wanted to like the game-as-story more than I did, but the uncanny valley was too strong for me. Having it done live action and non-interactively (so the pacing and delivery can be perfected) is definitely what the doctor ordered. The casting is excellent all around.</p>
 
           <p>This show did everything right that the Walking Dead did wrong. The zombies are scarier and used more effectively and convincingly (instead of treated as necessary nuisance for the setting), and the tight focus on only one complex relationship is far more compelling than a glorified soap opera ensemble cast.</p>
@@ -4111,9 +3897,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0478160/">
             <img src="/assets/movies/into-great-silence-2005.jpg" loading="lazy" alt="Into Great Silence" />
           </a>
@@ -4122,8 +3906,7 @@
             <p class="one-liner">👎 <b>Don’t watch this…</b> because while it’s an interesting gimmick, it’s just boring; maybe put it on in the background?</p>
           <p class="watched" title="2023-01-01">
             watched sometime in 2023
-          </p>
-            <div class="more-thoughts spoiler">
+          </p><div class="more-thoughts spoiler">
           <p>Chartreuse the liqueur never appears even once, which I think was a condition of filming as well.</p>
 
           <p>But hey, apparently the monks loved it, so good for them!</p>
@@ -4139,9 +3922,7 @@
           🔗&nbsp;&nbsp;<span class="underlineable">[permalink]</span>
         </a>
       </div>
-      <div class="content">
-        
-        <div class="poster ">
+      <div class="content"><div class="poster ">
           <a href="https://www.imdb.com/title/tt0452039/">
             <img src="/assets/movies/mind-game-2004.jpg" loading="lazy" alt="Mind Game" />
           </a>
