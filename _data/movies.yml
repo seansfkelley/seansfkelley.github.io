@@ -4,18 +4,18 @@
   link: https://www.imdb.com/title/tt8421278/
   poster: phil-tippett-mad-dreams-and-monsters-2019.jpg
   watched: 2025-06-22
-  watch-this:
-  more-thoughts: |
-
+  watch-this: for some behind-the-scenes on the practical effects of Jaws, Star Wars, etc.
+  hide-spoilers: false
 - title: Becoming Led Zeppelin
   year: 2025
   kind: movie
   link: https://www.imdb.com/title/tt10365912/
   poster: becoming-led-zeppelin-2025.jpg
   watched: 2025-06-20
-  watch-this:
+  watch-this: if you like Led Zeppelin, duh.
+  hide-spoilers: false
   more-thoughts: |
-
+    Apparently people have wanted to make a documentary for a long time but could never get permission. This one succeeded because it focuses strongly on the music and music-making process itself, and only talks about the band members themselves a little bit.
 - title: The Yellow Sea
   year: 2011
   kind: movie
@@ -54,6 +54,7 @@
   poster: hearts-of-darkness-1991.jpg
   watched: 2025-06-03
   watch-this: if you liked Apocalypse Now, of course.
+  hide-spoilers: false
   more-thoughts: |
     It's remarkable both how much the making of the movie reflected the arc of the movie itself, and also how much the making of the movie influenced said arc.
 
@@ -158,6 +159,7 @@
   watch-this: for a couple seasons of better-than-most, high-production-value, hard-ish-science-fiction tangle of spacefaring storylines, but stop before it starts to coast.
   watched-display: mid 2024 - early 2025
   watched: 2025-04-11 # season 6 finale, also, I watched the first season in two days starting 2024-06-04
+  hide-spoilers: false
   more-thoughts: |
     <details markdown="1">
     <summary>👍 Season 1</summary>

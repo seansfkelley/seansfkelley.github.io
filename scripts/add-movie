@@ -139,6 +139,7 @@ fi
   # watched-display:
   watch-this:
   # dont-watch-this:
+  # hide-spoilers: false
   more-thoughts: |
     ") < _data/movies.yml | sponge _data/movies.yml
 
