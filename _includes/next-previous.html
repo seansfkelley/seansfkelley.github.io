@@ -1,4 +1,12 @@
 <hr />
+{% if page.changelog %}
+  <section class="changelog" markdown="1">
+    {% for entry in page.changelog %}
+_Updated {{ entry[0] }}: {{ entry[1] }}_
+    {% endfor %}
+  </section>
+<hr />
+{% endif %}
 <section class="next-previous">
   {% if page.previous %}
   <a

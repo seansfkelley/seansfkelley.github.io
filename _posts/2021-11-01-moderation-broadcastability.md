@@ -6,7 +6,7 @@ excerpt_separator: ""
 changelog:
   2022-01-07: added another link to the reading list.
   2023-10-07: ~~Twitter~~ ~~X~~ Twitter.
-  2024-08-31: added reference to and editorial on the recent Section 230 ruling from the Third Circuit.
+  2024-08-31: added reference to an editorial on the recent Section 230 ruling from the Third Circuit.
 ---
 
 <figure>
@@ -60,8 +60,6 @@ If you'd like to read more like this, check out:
 - [If your website's full of assholes, it's your fault](https://anildash.com/2011/07/20/if_your_websites_full_of_assholes_its_your_fault-2/) -- Anil Dash
 - [People Aren’t Meant to Talk This Much](https://www.theatlantic.com/technology/archive/2021/10/fix-facebook-making-it-more-like-google/620456/) -- The Atlantic (and at times eerily similar to this post)
 - [The Largest Autocracy on Earth](https://www.theatlantic.com/magazine/archive/2021/11/facebook-authoritarian-hostile-foreign-power/620168/) -- The Atlantic (originally published as _Facebookland_, and yes, I like the Atlantic)
-
-{% include changelog.html %}
 
 {% include next-previous.html %}
 
