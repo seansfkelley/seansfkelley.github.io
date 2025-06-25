@@ -13,8 +13,8 @@ layout: base
     {% assign anchor_headings = page.anchor_headings %}
   {%- endif -%}
   {%- if anchor_headings -%}
-    {% include anchor_headings.html 
-      html=content 
+    {% include anchor_headings.html
+      html=content
       anchorBody=anchor_headings.anchor_body
       anchorClass=anchor_headings.anchor_class
       beforeHeading=anchor_headings.before_heading
