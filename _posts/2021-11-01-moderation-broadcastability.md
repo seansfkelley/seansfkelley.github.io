@@ -7,6 +7,7 @@ changelog:
   2022-01-07: added another link to the reading list.
   2023-10-07: ~~Twitter~~ ~~X~~ Twitter.
   2024-08-31: added reference to an editorial on the recent Section 230 ruling from the Third Circuit.
+  2025-06-25: added a video to the, uh, "reading" list.
 ---
 
 <figure>
@@ -54,16 +55,17 @@ We've been trained to expect non-moderation and broadcastability almost as an in
 
 -------------------------------------------------------------------------------
 
-If you'd like to read more like this, check out:
+If you'd like to see more like this, check out:
 
 - [Judges Rule Big Tech's Free Ride on Section 230 Is Over](https://www.thebignewsletter.com/p/judges-rule-big-techs-free-ride-on) -- Matt Stoller
 - [If your website's full of assholes, it's your fault](https://anildash.com/2011/07/20/if_your_websites_full_of_assholes_its_your_fault-2/) -- Anil Dash
 - [People Aren’t Meant to Talk This Much](https://www.theatlantic.com/technology/archive/2021/10/fix-facebook-making-it-more-like-google/620456/) -- The Atlantic (and at times eerily similar to this post)
 - [The Largest Autocracy on Earth](https://www.theatlantic.com/magazine/archive/2021/11/facebook-authoritarian-hostile-foreign-power/620168/) -- The Atlantic (originally published as _Facebookland_, and yes, I like the Atlantic)
+- [Facebook & Content Moderation](https://www.youtube.com/watch?v=nf7XHR3EVHo) -- Last Week Tonight with John Oliver
 
 {% include common-footer.html %}
 
-[^1]: I was drafting this post in the weeks leading up to The Announcement. I don't think the name Facebook is going any any time soon, and I don't think a regulation-dodging rename makes any of these observations less relevant. So I'll continue to use the name Facebook.
+[^1]: I was drafting this post in the weeks leading up to The Announcement. I don't think the name Facebook is going away any time soon, and I don't think a regulation-dodging rename makes any of these observations less relevant. So I'll continue to use the name Facebook.
 [^2]: Since at least [{{ "2021-01-06" | date: site.date_format }}](https://en.wikipedia.org/wiki/2021_United_States_Capitol_attack), if not [{{ "2018-03-17" | date: site.date_format }}](https://en.wikipedia.org/wiki/Facebook%E2%80%93Cambridge_Analytica_data_scandal).
 [^3]: I realize there are other problems with old-school mass-media gatekeeping, but let's stay on topic for now.
 [^4]: Via [Cornell Law School](https://www.law.cornell.edu/uscode/text/47/230).
