@@ -76,7 +76,7 @@ We're so conditioned to associate digital convenience and safety with the big na
 
 It feels liberating to take back some control over this stuff. For my data to (largely) be my own, insulated from the risk of my online life being smashed underfoot as Google lumbers around locking accounts without recourse because you did one thing that makes you look like a statistical outlier.
 
-{% include next-previous.html %}
+{% include common-footer.html %}
 
 [^1]: As of this writing, the [top 7 blocked domains](https://kagi.com/stats?stat=leaderboard) on Kagi are different flavors of Pinterest. Good to know I'm not the only one who feels this way.
 [^2]: I've actually got a post on this planned for the future... I just have to collect some browsing data on myself first.

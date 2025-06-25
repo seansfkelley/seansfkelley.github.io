@@ -48,7 +48,7 @@ You can use stainless steel. I don't know why some people say you can't. Commerc
 
 Fun fact: if you got your starter from me (and if you're reading this, you probably did), you should know it's old enough to vote at this point. The person I got it with told me it was from 2005-ish!
 
-{% include next-previous.html %}
+{% include common-footer.html %}
 
 [^1]: In my experience this schedule would be optimal for an 18-20 hour cycle, but 24 hours is well within the zone of acceptability.
 [^2]: Starters are actually [symbiotic cultures of bacteria and yeast](https://en.wikipedia.org/wiki/SCOBY), not just yeast. The yeast responds to feedings quickly and produces a sweeter taste; the bacteria comes in later and produces the sour taste.

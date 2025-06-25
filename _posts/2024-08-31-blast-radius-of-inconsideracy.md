@@ -48,6 +48,6 @@ I think you get the analogy,[^1] but I want to put a finer point on that last pa
 
 And that's it, really. I don't have any bright ideas on how to improve it. Do you?
 
-{% include next-previous.html %}
+{% include common-footer.html %}
 
 [^1]: But if you don't, I did the work for you: "it's not enough to have angry people spreading negativity, you also need enough people crammed into a small enough space that bad interactions are frequent enough to keep the whole thing going, and in fact, you can start such a self-sustaining culture simply by piling enough people into one place _without_ any explicit inciting event."

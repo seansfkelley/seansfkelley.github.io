@@ -55,4 +55,4 @@ This map also makes some unrelated proposals around filling in large lakes in No
   - assigns Crimea to Ukraine
 - name which disputes are covered by each item and include ea little preview for reference
 
-{% include next-previous.html %}
+{% include common-footer.html %}

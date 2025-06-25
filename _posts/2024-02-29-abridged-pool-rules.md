@@ -34,4 +34,4 @@ All fouls are ball in hand without restriction, except as noted during the break
 - Bad play from behind the head string. \[6.11]
 - Jump shots by "scooping". \[8.16]
 
-{% include next-previous.html %}
+{% include common-footer.html %}

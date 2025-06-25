@@ -61,7 +61,7 @@ If you'd like to read more like this, check out:
 - [People Aren’t Meant to Talk This Much](https://www.theatlantic.com/technology/archive/2021/10/fix-facebook-making-it-more-like-google/620456/) -- The Atlantic (and at times eerily similar to this post)
 - [The Largest Autocracy on Earth](https://www.theatlantic.com/magazine/archive/2021/11/facebook-authoritarian-hostile-foreign-power/620168/) -- The Atlantic (originally published as _Facebookland_, and yes, I like the Atlantic)
 
-{% include next-previous.html %}
+{% include common-footer.html %}
 
 [^1]: I was drafting this post in the weeks leading up to The Announcement. I don't think the name Facebook is going any any time soon, and I don't think a regulation-dodging rename makes any of these observations less relevant. So I'll continue to use the name Facebook.
 [^2]: Since at least [{{ "2021-01-06" | date: site.date_format }}](https://en.wikipedia.org/wiki/2021_United_States_Capitol_attack), if not [{{ "2018-03-17" | date: site.date_format }}](https://en.wikipedia.org/wiki/Facebook%E2%80%93Cambridge_Analytica_data_scandal).

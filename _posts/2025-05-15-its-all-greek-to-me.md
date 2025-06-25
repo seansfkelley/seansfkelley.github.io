@@ -60,4 +60,4 @@ content="This page is interactive, and only works with JavaScript enabled!"
   </p>
 </div>
 
-{% include next-previous.html %}
+{% include common-footer.html %}

@@ -95,7 +95,7 @@ Take the bread out of the oven and place on a wire rack.
 
 Let cool completely before slicing. The inside is still cooking! (Yeah, it's difficult.)
 
-{% include next-previous.html %}
+{% include common-footer.html %}
 
 [^1]: All-purpose flour _does_ work, it's just less forgiving and the texture is slightly different (but still good!). Bread flour is just high-protein flour, usually about 13%. Some flours state the protein percentage on their package; others mention it on their site. [King Arthur's bread flour](https://shop.kingarthurbaking.com/items/bread-flour) is 12.7%. Trader Joe's all purpose was, [in 2014](https://www.pizzamaking.com/forum/index.php?topic=30417.msg305351#msg305351), 11.8%.
 [^2]: Don't forget to save some to feed it again!

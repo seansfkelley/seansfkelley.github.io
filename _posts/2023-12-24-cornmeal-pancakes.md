@@ -35,4 +35,4 @@ Cook until the other side has golden brown patches. (This side will be unavoidab
 
 Serve face up.
 
-{% include next-previous.html %}
+{% include common-footer.html %}

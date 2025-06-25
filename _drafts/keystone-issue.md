@@ -24,6 +24,6 @@ And for completeness' sake, a few ideas that come up that I think are out of sco
 - **Universal healthcare.** Implementation is a logistical nightmare and requires coordination with entrenched insurance companies.
 - **Campaign finance reform.** Too far-ranging.
 
-{% include next-previous.html %}
+{% include common-footer.html %}
 
 [^1]: This one is its own, nested opinion question. -- There is then the follow up question of, what is _X_? I like to pick a number that is so astronomical that nobody could reasonably do anything with all of it, but would still serve a role in our capitalist system of transmuting greed into theoretically "productive" uses, and is yet small enough that it would find huge amounts of money to put to the public good. $1 billion seems like a good pick for this as it would generate upwards of $1 _trillion_ from just the [top 10 richest people](https://www.forbes.com/real-time-billionaires/#5cc8c2773d78). And really, are these absentee tech billionaires (plus Warren Buffet) _actually_ providing any value these days?

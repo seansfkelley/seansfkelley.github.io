@@ -64,7 +64,7 @@ I was surprised to find that many of these shapes, written at speed, are near in
   </div>
 </div>
 
-{% include next-previous.html %}
+{% include common-footer.html %}
 
 [^1]: According to the infallible Wikipedia, 7-segment displays were invented decades before the Nixie tube, but were not practical until LEDs were invented decades _after_ the Nixie tube. It's also worth noting that the Nixie tube is a more flexible design, should you need to display a wider or different range of characters.
 

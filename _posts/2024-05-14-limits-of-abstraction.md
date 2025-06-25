@@ -39,4 +39,4 @@ So much of programming is creating abstractions that operate on higher-level pri
 
     A little tangentially, have you ever seen the types for Redux and Redux-adajacent libraries? I mean, [look](https://github.com/reduxjs/redux-toolkit/blob/0246f788ef964a6afb5071f5b9a651d48630f3e0/packages/toolkit/src/configureStore.ts#L118-L126) [at](https://github.com/reduxjs/react-redux/blob/a128c5ebb30bda6e60d597dc37ab97992f8e0d8d/src/types.ts#L110-L124) [these](https://github.com/reduxjs/reselect/blob/1223a1b0997a6b248ccbac3ba4e2a544a7a676d8/src/createSelectorCreator.ts#L80-L104). They say so little, with so much.
 
-{% include next-previous.html %}
+{% include common-footer.html %}

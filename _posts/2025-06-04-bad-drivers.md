@@ -21,4 +21,4 @@ I think disagreements happen when your bad drivers and their bad drivers are at 
 
 Interestingly, while it's obvious that minimal incompetence and minimal negligence is objectively good, the same is not true for aggression. Drivers that are too passive cause traffic flow problems and annoy other drivers -- rightfully, I'd say, if you won't pull into the intersection on green when you're waiting to turn left.
 
-{% include next-previous.html %}
+{% include common-footer.html %}
