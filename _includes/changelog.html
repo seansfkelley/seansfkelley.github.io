@@ -1,0 +1,6 @@
+{% if page.changelog %}
+  <hr />
+  {% for entry in page.changelog %}
+_Updated {{ entry[0] }}: {{ entry[1] }}_
+  {% endfor %}
+{% endif %}
