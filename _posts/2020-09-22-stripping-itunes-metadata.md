@@ -2,7 +2,8 @@
 layout: post
 title: Stripping iTunes Music Store Metadata from Purchased Music
 tags: reference
-last_modified_at: 2024-02-17
+changelog:
+    2024-02-17: total rewrite to use a script instead.
 ---
 
 When Apple announced many years ago that the iTunes Store was going DRM-free, I was ecstatic. This was during the height of DRM controversies, and it was nice to see a company with clout taking a stand against it. (It's pretty perverse to be rooting for one abusive corporation to stick it to other abusive corporations, but I guess I'll take what I can get.)

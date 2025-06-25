@@ -32,12 +32,12 @@ layout: base
       >
         {{ page.date | date: site.date_format }}
       </time>
-      {%- if page.last_modified_at -%} // updated
+      {%- if page.changelog -%} // updated
       <time
-        datetime="{{ page.last_modified_at | date_to_xmlschema }}"
+        datetime="{{ page.changelog | keys | last | date_to_xmlschema }}"
         itemprop="dateModified"
       >
-        {{ page.last_modified_at | date: site.date_format }}
+        {{ page.changelog | keys | last | date: site.date_format }}
       </time>
       {%- endif -%} ~
     </p>

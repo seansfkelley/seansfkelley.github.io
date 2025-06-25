@@ -3,7 +3,10 @@ layout: post
 title: Facebook's Problem is That It's Too Big
 # disable the excerpt because it picks the image caption and I can't choose anything more specific
 excerpt_separator: ""
-last_modified_at: 2024-08-31
+changelog:
+  2022-01-07: added another link to the reading list.
+  2023-10-07: ~~Twitter~~ ~~X~~ Twitter.
+  2024-08-31: added reference to and editorial on the recent Section 230 ruling from the Third Circuit.
 ---
 
 <figure>
@@ -58,13 +61,7 @@ If you'd like to read more like this, check out:
 - [People Aren’t Meant to Talk This Much](https://www.theatlantic.com/technology/archive/2021/10/fix-facebook-making-it-more-like-google/620456/) -- The Atlantic (and at times eerily similar to this post)
 - [The Largest Autocracy on Earth](https://www.theatlantic.com/magazine/archive/2021/11/facebook-authoritarian-hostile-foreign-power/620168/) -- The Atlantic (originally published as _Facebookland_, and yes, I like the Atlantic)
 
--------------------------------------------------------------------------------
-
-_Updated 2022-01-07: added another link to the reading list._
-
-_Updated 2023-10-07: ~~Twitter~~ ~~X~~ Twitter._
-
-_Updated 2024-08-31: added reference to and editorial on the recent Section 230 ruling from the Third Circuit._
+{% include changelog.html %}
 
 {% include next-previous.html %}
 
