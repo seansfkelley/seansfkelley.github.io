@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>A Primer on Sideloading Your Own iPhone Apps | fiddlybits</title>
+<meta name="generator" content="Jekyll v4.3.3" />
+<meta property="og:title" content="A Primer on Sideloading Your Own iPhone Apps" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="This (brief) tutorial is for anyone with a Mac who wants to make iPhone apps for personal use1 but doesn’t want to subject themselves to Apple’s lengthy and capricious publishing process (while paying $100 for the privilege)2 or deal with jailbreaking. You can do this trivially in stock Xcode… for 7 days at a time. We grovel at your feet for your magnanimity, oh Grand High Beancounter Tim Cook. &#8617; Short version of my stance on app store gatekeeping, since I can’t resist: Apple can and should provide an official distribution channel with tight rules in addition to allowing other app stores and drag-and-drop app installation. There is merit in walled gardens, but the 30% fee (or 27%, yeah, fuck you too, Tim Cook) in absence of competition is (literally) extortionate, their “reviews” seem to let plenty of scams and low-quality garbage through anyway, and these policies stifle small-time operators.[^4] &#8617;" />
+<meta property="og:description" content="This (brief) tutorial is for anyone with a Mac who wants to make iPhone apps for personal use1 but doesn’t want to subject themselves to Apple’s lengthy and capricious publishing process (while paying $100 for the privilege)2 or deal with jailbreaking. You can do this trivially in stock Xcode… for 7 days at a time. We grovel at your feet for your magnanimity, oh Grand High Beancounter Tim Cook. &#8617; Short version of my stance on app store gatekeeping, since I can’t resist: Apple can and should provide an official distribution channel with tight rules in addition to allowing other app stores and drag-and-drop app installation. There is merit in walled gardens, but the 30% fee (or 27%, yeah, fuck you too, Tim Cook) in absence of competition is (literally) extortionate, their “reviews” seem to let plenty of scams and low-quality garbage through anyway, and these policies stifle small-time operators.[^4] &#8617;" />
+<link rel="canonical" href="https://blog.sea.nkelley.me/sideloading-iphone-apps" />
+<meta property="og:url" content="https://blog.sea.nkelley.me/sideloading-iphone-apps" />
+<meta property="og:site_name" content="fiddlybits" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-16T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="A Primer on Sideloading Your Own iPhone Apps" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-07-16T00:00:00+00:00","datePublished":"2025-07-16T00:00:00+00:00","description":"This (brief) tutorial is for anyone with a Mac who wants to make iPhone apps for personal use1 but doesn’t want to subject themselves to Apple’s lengthy and capricious publishing process (while paying $100 for the privilege)2 or deal with jailbreaking. You can do this trivially in stock Xcode… for 7 days at a time. We grovel at your feet for your magnanimity, oh Grand High Beancounter Tim Cook. &#8617; Short version of my stance on app store gatekeeping, since I can’t resist: Apple can and should provide an official distribution channel with tight rules in addition to allowing other app stores and drag-and-drop app installation. There is merit in walled gardens, but the 30% fee (or 27%, yeah, fuck you too, Tim Cook) in absence of competition is (literally) extortionate, their “reviews” seem to let plenty of scams and low-quality garbage through anyway, and these policies stifle small-time operators.[^4] &#8617;","headline":"A Primer on Sideloading Your Own iPhone Apps","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.sea.nkelley.me/sideloading-iphone-apps"},"url":"https://blog.sea.nkelley.me/sideloading-iphone-apps"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/style.css">
+  <link type="application/atom+xml" rel="alternate" href="https://blog.sea.nkelley.me/feed.xml" title="fiddlybits" /></head>
+<body data-theme="auto" data-unit="imperial"><header class="site-header">
+  <div class="centering-wrapper">
+    <a class="site-title" href="/">fiddlybits</a>
+    <span class="site-controls">
+      <a href="https://github.com/seansfkelley">github</a>
+      &nbsp;•&nbsp;
+      <a href="/feed.xml">rss</a>
+      <!-- Only show theme switcher if js is enabled: hide by default. -->
+      <span id="theme-switcher-wrapper" style="display: none;">
+        &nbsp;•&nbsp;
+        <a href="#" id="theme-switcher"></a>
+      </span>
+    </span>
+  </div>
+</header>
+<main class="centering-wrapper">
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">A Primer on Sideloading Your Own iPhone Apps</h1>
+    <h3 class="post-subtitle"></h3>
+  </header><p>This (brief) tutorial is for anyone with a Mac who wants to make iPhone apps for personal use<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> but doesn’t want to subject themselves to Apple’s lengthy and capricious publishing process (while paying $100 for the privilege)<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> or deal with jailbreaking.</p>
+
+<h3 id="caveats">Caveats</h3>
+
+<ul>
+  <li>You can only do this for 3 apps at a time.</li>
+  <li>You have to put your phone into “developer mode”, which Apple describes in vaguely threatening language regarding security.</li>
+  <li>You need to leave something running on your computer and be on the same network as it at least one a week.</li>
+</ul>
+
+<p>Alternately, you could just move to the EU or lobby your congressperson to get off their fucking asses and do something useful instead of vomiting something about “innovation” and “small businesses” while sucking off a billionaire.</p>
+
+<h3 id="the-actual-tutorial">The Actual Tutorial</h3>
+
+<ol>
+  <li>Install <a href="https://altstore.io/#Downloads">AltServer</a> on your computer and AltStore on your iPhone. <a href="https://faq.altstore.io/altstore-classic/how-to-install-altstore-macos">Details.</a>
+    <ul>
+      <li>You probably to enable the AltServer &gt; Launch at Login menu option.</li>
+      <li>If you can’t see your phone in Finder after unplugging it, try Apple menu &gt; Force Quit… &gt; Finder &gt; Relaunch.</li>
+    </ul>
+  </li>
+  <li>Build an unsigned <code class="language-plaintext highlighter-rouge">.ipa</code> bundle using Xcode (as far as it’s willing to help).
+    <ol>
+      <li>Product &gt; Archive (in Xcode 16), which should open the Xcode Organizer showing the build.</li>
+      <li>Right-click the build and Show in Finder to reveal the <code class="language-plaintext highlighter-rouge">.xcarchive</code>. It’s a directory, so pop it open (right-click &gt; Show Package Contents, or just <code class="language-plaintext highlighter-rouge">cd</code>) and find the <code class="language-plaintext highlighter-rouge">.app</code> under <code class="language-plaintext highlighter-rouge">Products/Applications</code>.</li>
+      <li>Pull the <code class="language-plaintext highlighter-rouge">.app</code> out and plop it in a new empty directory somewhere called <code class="language-plaintext highlighter-rouge">Payload</code>.</li>
+      <li><code class="language-plaintext highlighter-rouge">zip -r &lt;app&gt;.ipa Payload</code> to finish the unsigned bundle.</li>
+    </ol>
+  </li>
+  <li>Get the <code class="language-plaintext highlighter-rouge">.ipa</code> onto your phone somehow.
+    <ul>
+      <li>Apple makes this really fucking annoying to do through the Files app,<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup> so I just used my Dropbox. iCloud Drive (and other similar things) probably also work.</li>
+    </ul>
+  </li>
+  <li>In AltStore, go to My Apps &gt; + &gt; navigate to the <code class="language-plaintext highlighter-rouge">.ipa</code>.
+    <ul>
+      <li>Note that it starts you down a directory – hit the back button to see other file systems.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>That should be it! You can test the wireless refreshing by tapping “7 Days” in the newly-installed app listing.</p>
+
+<hr />
+
+<section class="next-previous">
+  
+  <a href="/bad-drivers" class="next-previous-link next-previous-previous" title="Previous Post: A Refined Theory of Bad Drivers">
+    <span class="next-previous-icon">←</span>
+    <div class="next-previous-name">
+      <div class="next-previous-label">
+        <span class="next-previous-icon">←</span> Previous Post
+      </div>
+      <div class="next-previous-title">A Refined Theory of Bad Drivers</div>
+    </div>
+  </a>
+   
+  <div class="next-previous-placeholder"></div>
+  
+</section>
+<hr />
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>You can do this trivially in stock Xcode… for 7 days at a time. We grovel at your feet for your magnanimity, oh Grand High Beancounter Tim Cook. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>Short version of my stance on app store gatekeeping, since I can’t resist: Apple can and should provide an official distribution channel with tight rules <em>in addition to</em> allowing other app stores and drag-and-drop app installation. There is merit in walled gardens, but the 30% fee (or <a href="https://www.axios.com/2025/05/01/apple-epic-lawsuit-app-store-offsite-fees">27%</a>, yeah, fuck you too, Tim Cook) in absence of competition is (literally) extortionate, their “reviews” seem to let plenty of scams and low-quality garbage through anyway, and these policies stifle small-time operators.<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>I would feel stupid that I can’t figure out how to just… move a file onto my iPhone, but I’m pretty sure this is Apple being purposely obstructive. The Files tab in Finder can only drop files into apps that register themselves as file-using, rather than the general Files area. AirDropping an <code class="language-plaintext highlighter-rouge">.ipa</code> is a black hole, I guess either because it’s a blacklisted file type or it’s not a whitelisted file type. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:4" role="doc-endnote">
+      <p>I finally finished an iOS app on the third try in as many years, but I almost gave up again on the way there. The blame for <em>every</em> nontrivial frustration and roadblock is laid squarely at the feet of Xcode or the App Store – <em>never</em> the iPhone itself, the iPhone SDK, or Swift/SwiftUI. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+<footer>
+    <p class="post-date">
+      ~
+      <time
+        datetime="2025-07-16T00:00:00+00:00"
+        itemprop="datePublished"
+      >
+        2025-07-16
+      </time>~
+    </p>
+  </footer>
+</article>
+
+      <!--
+        This filthy trick makes sure that the content always weakly tries to expand to the full
+        width available, but allows for linebreaks if the viewport is too small. It produces a
+        better result than, say, width: 100%; or width: some-fixed-pixel-amount; and doesn't require
+        rewriting everything to flexbox (which would mess with the <html>-level scroll behavior and
+        sticky header) or adding extra DOM (which I'm trying to minimize to make myself feel good).
+      -->
+      <div class="horizontal-expander" aria-hidden="true">
+        Throughout human history, we have been dependent on machines to survive.
+        Fate, it seems, is not without a sense of irony.
+      </div>
+    </main>
+  </body>
+  <script src="/assets/js/theme-switcher.js"></script>
+  <script src="/assets/js/copy-code-block.js"></script>
+  <script src="/assets/js/unit-switcher.js"></script>
+  
+</html>
