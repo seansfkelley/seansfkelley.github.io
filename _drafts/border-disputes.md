@@ -1,6 +1,6 @@
 ---
 layout: post
-title: A Survey of Border Dispute Resolutions
+title: A Survey of Border Dispute Resolutions Through the Lens of Consumer Goods and Services
 ---
 
 In this post, we will explore solutions to long-standing border disputes proposed by a variety of different consumer goods and services. While there is a [huge list of ongoing border disputes](https://en.wikipedia.org/wiki/List_of_territorial_disputes), we will, for the sake of brevity, consider only the following ones (in alphabetical order):
