@@ -16,7 +16,7 @@ Alternately, you could just move to the EU or lobby your congressperson to get o
 ### The Actual Tutorial
 
 1. Install [AltServer](https://altstore.io/#Downloads) on your computer and AltStore on your iPhone. [Details.](https://faq.altstore.io/altstore-classic/how-to-install-altstore-macos)
-  - You probably to enable the AltServer > Launch at Login menu option.
+  - You probably want to enable the AltServer > Launch at Login menu option.
   - If you can't see your phone in Finder after unplugging it, try Apple menu > Force Quit... > Finder > Relaunch.
 2. Build an unsigned `.ipa` bundle using Xcode (as far as it's willing to help).
    1. Product > Archive (in Xcode 16), which should open the Xcode Organizer showing the build.

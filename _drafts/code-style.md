@@ -10,9 +10,9 @@ anchor_headings: true
 
 # What This Is
 
-This is my code style. Style in the sense of concepts represented in code, and how they are placed relative to each other and explained to the reader, not in the sense of where I put the curly brackets.
+This is my code style. "Style" in the sense of concepts represented in code, and how they are placed relative to each other and explained to the reader, not in the sense of where I put the curly brackets.
 
-There is no objectively correct answer for this kind code style, but this document outlines the main pillars of mine. As such, they are also the things I look for in code reviews. I refer to this document when doing code reviews (which is probably why you're here).
+There is no objectively correct answer regarding this kind code of style, but this document outlines the main pillars of mine. As such, they are also the things I look for in code reviews. I refer to this document when doing code reviews (which is probably why you're here).
 
 Yes, this document is very dry.
 
@@ -58,9 +58,9 @@ If I sent you this page, you aren't the first employee of an underfunded startup
 
 ## Perfect is the Enemy of Good
 
-You've probably heard this before, stated as "don't let perfect be the enemy of good". I like the more assertive phrasing because _you are in control_. Misguidedly seeking perfection isn't happening _to_ you.
+The standard phrasing of this -- "don't let perfect be the enemy of good" -- isn't assertive enough for my tastes. You are in control. Misguidedly seeking perfection isn't happening _to_ you.
 
-What's usually missed when this is cited is that (1) it takes a lot experience to learn where the line is and (2) where you draw the line is probably not exactly where I do. Keep that in mind and learn to be a little flexible without compromising on the principles that truly make a difference.
+What's usually missed when this is cited is that (1) it takes a lot experience to learn where the line is and (2) where you draw the line is probably not exactly where I do. Keep this in mind and learn to be a little flexible without compromising on the principles that truly make a difference.
 
 # Superficial Code Style
 
@@ -68,11 +68,11 @@ What's usually missed when this is cited is that (1) it takes a lot experience t
 
 Whoever said "consistency is the hobgoblin of little minds" never had to work in a multi-million line codebase. Counterintuitively, it is a tool of the practitioner, rather than a fetish of the theoretician.
 
-Consistency enables quick and dirty regexes when you can't rely on types to find usages.
-
 Consistency is how you can do massive code reviews and not trip over every line (such reviews _do_ happen: sorry idealists).
 
-Consistency is why I can use inconsistency to draw attention where necessary.
+Consistency enables quick and dirty regexes when you can't rely on types to find usages.
+
+Consistency is why I can use inconsistency to draw attention to unavoiably peculiar code.
 
 Consistency is how I stay sane.
 
