@@ -1,13 +1,15 @@
-# - title: The French Connection
-#   year: 1971
-#   kind: movie
-#   link: https://www.imdb.com/title/tt0067116/
-#   poster: the-french-connection-1971.jpg
-#   poster-class: spoiler
-#   watched: 2025-07-30
-#   watch-this:
-#   more-thoughts: |
+- title: The French Connection
+  year: 1971
+  kind: movie
+  link: https://www.imdb.com/title/tt0067116/
+  poster: the-french-connection-1971.jpg
+  poster-class: spoiler
+  watched: 2025-07-30
+  watch-this: for a classic, no-nonsense thriller à la [Bullitt](#bullitt-1968) that's aged well.
+  more-thoughts: |
+    The frequent comparisons to Bullitt by people other than me make total sense. Cop thriller, crazy car chase, 1970-ish snapshot of a city... I immediately noticed both the Watchtower (RIP?) and the Ottomanelli van. And yes, it was [a real thing](https://en.wikipedia.org/wiki/French_Connection). I, too, was surprised that France had anything to do with hard drug trafficking.
 
+    Read up on the wildly illegal making of the car chase (and other car scenes). Bribery, speeding, helicopters, it's all in there. ([1](https://nypost.com/2021/10/04/secrets-of-the-french-connection-on-50th-anniversary/), [2](https://www.tcm.com/this-month/article/97174), [3](https://en.wikipedia.org/wiki/The_French_Connection_(film)#Car_chase))
 - title: Dark City
   year: 1998
   kind: movie
