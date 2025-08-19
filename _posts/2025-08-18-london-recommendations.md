@@ -4,8 +4,6 @@ title: London Recommendations
 tags: recommendations
 ---
 
-<!-- TODO: https://msmarmitelover.com/2017/01/in-conversation-with-meera-sodha-andre.html -->
-
 I <3 London, so let's not dally.
 
 ### First Up: Pubs
@@ -42,6 +40,8 @@ Anyway:
 - Bone Daddies: ramen, in particular, the dipping ramen which I've never seen anywhere else, and the Soho one is the original.
 - Pick & Cheese: sushi belt cheese. Also nearby the famous Neal's Yard Dairy so you can just... buy cheese. To eat.
 - Dishoom: the Indian restaurant on every "best Indian in London" list. It is good, though.
+- Lahore Kebab House: recommended by Meera Sodha in [this interview](https://msmarmitelover.com/2017/01/in-conversation-with-meera-sodha-andre.html) (and [previously on her site](https://web.archive.org/web/20210801031009/http://meerasodha.com/where-to-eat/uk/)). Was excellently delicious, but the next day was not so great.
+- Gunpowder: also recommended by Meera Sodha. Trendy and and a little fusion-y.
 - Abeno: okonomiyaki/teppanyaki place right next to the British Museum.
 - Savory pie, in general: the one I would have recommended had the chef die (!) while I was there last. (I don't know if this is the same thing as a hand pie.)
 
