@@ -15,7 +15,8 @@ At the time of writing it's been four years since I went to Edinburgh, so the li
 - **Arthur's Seat:** a mild hike located right in the city with nice views. Great for sunset.
 - **Haggis:** the weirdness of haggis is way overblown. I think Americans are just afraid of off-cuts. If anything, it's actually kind of boring -- but give it a try anyway just to know.
 - **Cullen skink:** classic dish that's basically fish chowder. Not bad if you're into that kind of thing.
-- **Harry Potter walking tour:** honestly you could just look it up on the internet and do it yourself... even as a mild Harry Potter fan it's still kind of interesting to see the subtle or not-so-subtle references made to Edinburgh in the book.
+- **Harry Potter walking tour** (or just Victoria Street and Greyfriars Kirkyard Cemetery): honestly you could just look it up on the internet and do it yourself... even as a mild Harry Potter fan it's still kind of interesting to see the subtle or not-so-subtle references made to Edinburgh in the book.
+- **National Museum of Scotland:** Celts, Anglo-Saxons, and a surprising amount of Industrial Revolution (given the size of the country).
 - **Fringe Festival:** I haven't gone, but it sounds like a ton of fun. You'll probably know if you are accidentally going when it's on because of the prices of everything.
 
 _Slàinte mhath!_[^1]
