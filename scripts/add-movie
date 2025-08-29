@@ -144,3 +144,5 @@ fi
     ") < _data/movies.yml | sponge _data/movies.yml
 
 echo "added entry to beginning of movies.yml"
+
+code _data/movies.yml
