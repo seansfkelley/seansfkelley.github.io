@@ -7,34 +7,55 @@ _Updated {{ entry[0] }}: {{ entry[1] }}_
   </section>
 <hr />
 {% endif %}
+
+{%- comment -%}No while loops in Liquid, so do this dumb shit.{%- endcomment -%}
+
+{%- assign previous = page.previous -%}
+{%- for counter in (0...100) -%}
+  {%- if previous and previous.draft -%}
+    {%- assign previous = previous.previous -%}
+  {%- else -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- assign next = page.next -%}
+{%- for counter in (0...100) -%}
+  {%- if next and next.draft -%}
+    {%- assign next = next.next -%}
+  {%- else -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
 <section class="next-previous">
-  {% if page.previous %}
+  {% if previous %}
   <a
-    href="{{ page.previous.url }}"
+    href="{{ previous.url }}"
     class="next-previous-link next-previous-previous"
-    title="Previous Post: {{ page.previous.title }}"
+    title="Previous Post: {{ previous.title }}"
   >
     <span class="next-previous-icon">←</span>
     <div class="next-previous-name">
       <div class="next-previous-label">
         <span class="next-previous-icon">←</span> Previous Post
       </div>
-      <div class="next-previous-title">{{ page.previous.title }}</div>
+      <div class="next-previous-title">{{ previous.title }}</div>
     </div>
   </a>
   {% else %}
   <div class="next-previous-placeholder"></div>
-  {% endif %} {% if page.next %}
+  {% endif %} {% if next %}
   <a
-    href="{{ page.next.url }}"
+    href="{{ next.url }}"
     class="next-previous-link next-previous-next"
-    title="Next Post: {{ page.next.title }}"
+    title="Next Post: {{ next.title }}"
   >
     <div class="next-previous-name">
       <div class="next-previous-label">
         Next Post <span class="next-previous-icon">→</span>
       </div>
-      <div class="next-previous-title">{{ page.next.title }}</div>
+      <div class="next-previous-title">{{ next.title }}</div>
     </div>
     <span class="next-previous-icon">→</span>
   </a>
