@@ -6,11 +6,13 @@ layout: base
   <h2>Tag: <span class="tag">{{ page.tag }}</span></h2>
 
   <ul>
-    {% for post in site.tags[page.tag] %}
-    <li>
-      <a href="{{ post.url }}">{{ post.title }}</a> –
-      <span class="post-date">{{ post.date | date: site.date_format }}</span>
-    </li>
-    {% endfor %}
+    {%- for post in site.tags[page.tag] -%}
+    {%- unless post.draft -%}
+      <li>
+        <a href="{{ post.url }}">{{ post.title }}</a> –
+        <span class="post-date">{{ post.date | date: site.date_format }}</span>
+      </li>
+    {%- endunless -%}
+    {%- endfor -%}
   </ul>
 </article>

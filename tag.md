@@ -6,10 +6,10 @@ layout: base
   <h2>Tags:</h2>
 
   <ul>
-    {% for pair in site.tags %}
+    {%- for pair in site.tags -%}
     <li>
       <a href="/tag/{{ pair | first }}">{{ pair | first }}</a>
     </li>
-    {% endfor %}
+    {%- endfor -%}
   </ul>
 </article>
