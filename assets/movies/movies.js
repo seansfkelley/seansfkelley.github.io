@@ -2,7 +2,18 @@
  * @typedef {"tv" | "movie" | "both"} Kind
  * @typedef {"recommended" | "not-recommended" | "both"} Recommendation
  * @typedef {"watched-asc" | "watched-desc" | "year-asc" | "year-desc" | "title-asc" | "title-desc"} Sort
+ * @typedef {{ kind: Kind; recommendation: Recommendation; sort: Sort; }} Filters
  */
+
+function compactObject(obj) {
+  const newObj = {};
+  for (const [k, v] of Object.entries(obj)) {
+    if (v != null) {
+      newObj[k] = v;
+    }
+  }
+  return newObj;
+}
 
 const TITLE_IGNORE_REGEX = /^the /i;
 
@@ -28,6 +39,14 @@ for (const e of document.querySelectorAll(".spoiler")) {
     event.preventDefault();
   });
 }
+/** @type Filters */
+const defaultFilters = {
+  kind: form.elements.kind.value,
+  recommendation: form.elements.recommendation.value,
+  sort: form.elements.sort.value,
+};
+/** @type (keyof Filters)[] */
+const FILTER_KEYS = Object.keys(defaultFilters);
 
 function updateSortAndFilter() {
   /** @type Kind */
@@ -88,27 +107,41 @@ function updateSortAndFilter() {
     sort,
     timestamp: new Date().toISOString(),
   });
+
+  const params = compactObject({
+    kind: kind === defaultFilters.kind ? undefined : kind,
+    recommendation: recommendation === defaultFilters.recommendation ? undefined : recommendation,
+    sort: sort === defaultFilters.sort ? undefined : sort,
+  });
+  if (Object.entries(params).length > 0) {
+    window.history.replaceState(null, "", "?" + new URLSearchParams(params) + window.location.hash);
+  } else {
+    window.history.replaceState(null, "", window.location.pathname + window.location.hash);
+  }
 }
 
 try {
-  const { kind, recommendation, sort, timestamp } = JSON.parse(
-    localStorage["movie-sort-filter"] || "{}"
-  );
+  const params = new URLSearchParams(window.location.search);
+  if (FILTER_KEYS.some((k) => params.has(k))) {
+    console.log("setting filters from URL", params);
+    for (const k of FILTER_KEYS) {
+      form.elements[k].value = params.get(k) || defaultFilters[k];
+    }
+  } else {
+    const storedFilters = JSON.parse(localStorage["movie-sort-filter"] || "{}");
 
-  if (
-    typeof timestamp === "string" &&
-    // If this fails to parse, it will yield NaN which will propagate and fail the conditional, so
-    // we'll end up with only defaults, which is fine.
-    new Date() - new Date(timestamp) < 24 * 60 * 60 * 1000 &&
-    typeof kind === "string" &&
-    typeof recommendation === "string" &&
-    typeof sort === "string"
-  ) {
-    // If any of these are invalid, the browser will just default to what the DOM says to, so no
-    // need to be too clever.
-    form.elements.kind.value = kind;
-    form.elements.recommendation.value = recommendation;
-    form.elements.sort.value = sort;
+    if (
+      typeof storedFilters.timestamp === "string" &&
+      // If this fails to parse, it will yield NaN which will propagate and fail the conditional, so
+      // we'll end up with only defaults, which is fine.
+      new Date() - new Date(storedFilters.timestamp) < 24 * 60 * 60 * 1000 &&
+      FILTER_KEYS.every((k) => typeof storedFilters[k] === "string")
+    ) {
+      console.log("setting filters from localStorage", storedFilters);
+      for (const k of FILTER_KEYS) {
+        form.elements[k].value = storedFilters[k];
+      }
+    }
   }
 } catch (e) {
   console.error("not setting default sort/filter values due to error", e);
