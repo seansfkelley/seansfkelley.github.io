@@ -5,17 +5,24 @@
 @use "sass:math";
 @import "variables";
 
-#sort-filter {
+#sort-filter-container {
   border: 1px solid var(--input-border-color);
   border-radius: $input-border-radius;
+}
 
-  fieldset {
-    padding: 0;
-    margin: $spacing;
-    display: flex;
-    flex-direction: column;
-    border: none;
-  }
+#sort-filter-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: $spacing;
+}
+
+#sort-filter fieldset {
+  padding: 0;
+  margin: $spacing;
+  display: flex;
+  flex-direction: column;
+  border: none;
 }
 
 @media screen and (min-width: $width-mobile) {
