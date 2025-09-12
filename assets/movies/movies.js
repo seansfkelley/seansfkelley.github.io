@@ -23,6 +23,8 @@ const form = document.querySelector("#sort-filter");
 const list = document.querySelector(".list-container");
 /** @type HTMLElement[] */
 const entries = [...document.querySelectorAll(".entry")];
+/** @type HTMLElement */
+const summary = document.querySelector("#sort-filter-summary");
 
 list.classList.remove("reveal-spoilers-on-hover");
 
@@ -95,10 +97,38 @@ function updateSortAndFilter() {
 
   entries.sort(comparator);
 
+  let movieCount = 0;
+  let tvCount = 0;
   for (const e of entries) {
-    e.classList.toggle("hidden", !matches(e));
+    if (matches(e)) {
+      e.classList.remove("hidden");
+
+      if (e.dataset.kind === "movie") {
+        movieCount++;
+      } else if (e.dataset.kind === "tv") {
+        tvCount++;
+      } else {
+        throw new Error(`unrecognized type: ${e.dataset.kind}`);
+      }
+    } else {
+      e.classList.add("hidden");
+    }
+
     // Will move the item from its original position, thereby reordering the entire list.
     list.appendChild(e);
+  }
+
+  if (movieCount > 0 || tvCount > 0) {
+    summary.textContent =
+      "showing " +
+      [
+        movieCount > 0 ? `${movieCount} movies` : undefined,
+        tvCount > 0 ? `${tvCount} TV shows` : undefined,
+      ]
+        .filter((v) => v != null)
+        .join(" and ");
+  } else {
+    summary.textContent = `no matches`;
   }
 
   localStorage["movie-sort-filter"] = JSON.stringify({

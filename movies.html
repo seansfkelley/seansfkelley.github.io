@@ -47,46 +47,50 @@
 
 <p><strong>In general, I don’t recommend watching trailers for any movies.</strong> If you’re here for my recommendations, try to triangulate if you’ll like it from my one-liners or the <a href="https://en.wikipedia.org/wiki/Log_line">log line</a> on IMDb. It’s always more fun to go in without expectations (and without spoilers).</p>
 
-<form style="display: none;" id="sort-filter" action="javascript:void(0);">
-  <fieldset>
-    <select name="sort">
-      <option value="watched-asc">watch date (earliest first)</option>
-      <option value="watched-desc" selected="">watch date (latest first)</option>
-      <option value="year-asc">release year (earliest first)</option>
-      <option value="year-desc">release year (latest first)</option>
-      <option value="title-asc">name (a-z)</option>
-      <option value="title-desc">name (z-a)</option>
-    </select>
-  </fieldset>
-  <fieldset>
-    <label for="movie">
-      <input type="radio" id="movie" value="movie" name="kind" />
-      movie
-    </label>
-    <label for="tv">
-      <input type="radio" id="tv" value="tv" name="kind" />
-      TV show
-    </label>
-    <label for="kind-both">
-      <input type="radio" id="kind-both" value="both" name="kind" checked="" />
-      both
-    </label>
-  </fieldset>
-  <fieldset>
-    <label for="recommended">
-      <input type="radio" id="recommended" value="recommended" name="recommendation" />
-      recommended
-    </label>
-    <label for="not-recommended">
-      <input type="radio" id="not-recommended" value="not-recommended" name="recommendation" />
-      not recommended
-    </label>
-    <label for="recommended-both">
-      <input type="radio" id="recommended-both" value="both" name="recommendation" checked="" />
-      both
-    </label>
-  </fieldset>
-</form>
+<div id="sort-filter-container">
+  <form style="display: none;" id="sort-filter" action="javascript:void(0);">
+    <fieldset>
+      <select name="sort">
+        <option value="watched-asc">watch date (earliest first)</option>
+        <option value="watched-desc" selected="">watch date (latest first)</option>
+        <option value="year-asc">release year (earliest first)</option>
+        <option value="year-desc">release year (latest first)</option>
+        <option value="title-asc">name (a-z)</option>
+        <option value="title-desc">name (z-a)</option>
+      </select>
+    </fieldset>
+    <fieldset>
+      <label for="movie">
+        <input type="radio" id="movie" value="movie" name="kind" />
+        movie
+      </label>
+      <label for="tv">
+        <input type="radio" id="tv" value="tv" name="kind" />
+        TV show
+      </label>
+      <label for="kind-both">
+        <input type="radio" id="kind-both" value="both" name="kind" checked="" />
+        both
+      </label>
+    </fieldset>
+    <fieldset>
+      <label for="recommended">
+        <input type="radio" id="recommended" value="recommended" name="recommendation" />
+        recommended
+      </label>
+      <label for="not-recommended">
+        <input type="radio" id="not-recommended" value="not-recommended" name="recommendation" />
+        not recommended
+      </label>
+      <label for="recommended-both">
+        <input type="radio" id="recommended-both" value="both" name="recommendation" checked="" />
+        both
+      </label>
+    </fieldset>
+  </form>
+  <hr />
+  <div id="sort-filter-summary"></div>
+</div>
 
 <div class="list-container reveal-spoilers-on-hover">
   <div id="lock-stock-and-two-smoking-barrels-1998" class="entry" data-year="1998" data-title="Lock, Stock and Two Smoking Barrels" data-watched="2025-09-11" data-kind="movie" data-recommendation="recommended">

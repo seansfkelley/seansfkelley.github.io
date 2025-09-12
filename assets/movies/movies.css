@@ -126,10 +126,18 @@ body[data-theme=dark] {
   --sol-mono01: var(--sol-base1);
 }
 
-#sort-filter {
+#sort-filter-container {
   border: 1px solid var(--input-border-color);
   border-radius: 2px;
 }
+
+#sort-filter-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 14px;
+}
+
 #sort-filter fieldset {
   padding: 0;
   margin: 14px;
