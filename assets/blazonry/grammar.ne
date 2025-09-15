@@ -99,6 +99,7 @@ NonOrdinaryCharge ->
   | SIMPLE_CHARGE["fret", "frets"]                                                        {% spread({ charge: 'fret' }) %}
   | SIMPLE_CHARGE["escallop", "escallops"]                                                {% spread({ charge: 'escallop' }) %}
   | SIMPLE_CHARGE[("fleur-de-lys" | "fleur-de-lis"), ("fleurs-de-lys" | "fleurs-de-lis")] {% spread({ charge: 'fleur-de-lys' }) %}
+  | SIMPLE_CHARGE[("tree eradicated"), ("trees eradicated")]                              {% spread({ charge: 'tree-eradicated' }) %}
   | SIMPLE_UNCOLORED_CHARGE["bezant", "bezants"]                                          {% spread({ charge: 'rondel', coloration: { tincture: 'or' } }) %}
   | SIMPLE_UNCOLORED_CHARGE["torteau", ("torteaus" | "torteaux")]                         {% spread({ charge: 'rondel', coloration: { tincture: 'gules' } }) %}
   | SIMPLE_UNCOLORED_CHARGE["fountain", "fountains"]                                      {% spread({ charge: 'rondel', coloration: { type: 'barry', treatment: 'wavy', first: 'azure', second: 'argent', count: 8 } }) %}
