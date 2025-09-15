@@ -1314,8 +1314,8 @@ async function escallop({ coloration }) {
 }
 async function fleurDeLys({ coloration }) {
     const { fill, pattern } = await resolveColoration(coloration, [30.117, 41.528], {
-        translate: [0, 10],
         scale: 0.5,
+        translate: [0, 10],
     });
     const fleurDeLys = await fetchMutableComplexSvg("fleur-de-lys");
     maybeAppendChild(fleurDeLys, pattern);
@@ -1326,6 +1326,30 @@ async function fleurDeLys({ coloration }) {
         applySvgAttributes(fleurDeLys, fill);
     }
     return fleurDeLys;
+}
+async function tree({ coloration }) {
+    const { fill, pattern } = await resolveColoration(coloration, [40.9, 41.994]);
+    const tree = await fetchMutableComplexSvg("tree");
+    maybeAppendChild(tree, pattern);
+    if ("classes" in fill) {
+        tree.classList.add(fill.classes.fill);
+    }
+    else {
+        applySvgAttributes(tree, fill);
+    }
+    return tree;
+}
+async function treeEradicated({ coloration }) {
+    const { fill, pattern } = await resolveColoration(coloration, [40.9, 41.994]);
+    const treeEradiated = await fetchMutableComplexSvg("tree", "eradicated");
+    maybeAppendChild(treeEradiated, pattern);
+    if ("classes" in fill) {
+        treeEradiated.classList.add(fill.classes.fill);
+    }
+    else {
+        applySvgAttributes(treeEradiated, fill);
+    }
+    return treeEradiated;
 }
 // The lion SVGs are pulled from https://en.wikipedia.org/wiki/Attitude_(heraldry).
 // In the future, they should probably be aggressively deduplicated -- whoever made the heads and
@@ -1395,7 +1419,15 @@ const CHARGE_LOCATORS = {
     saltire: saltire.on,
     cross: cross.on,
 };
-const SIMPLE_CHARGES = { rondel, mullet, fret, escallop, "fleur-de-lys": fleurDeLys };
+const SIMPLE_CHARGES = {
+    rondel,
+    mullet,
+    fret,
+    escallop,
+    "fleur-de-lys": fleurDeLys,
+    tree: tree,
+    "tree-eradicated": treeEradicated,
+};
 // A little unfortunate this dispatching wrapper is necessary, but it's the only way to type-safety
 // render based on the string. Throwing all charges, simple and otherwise, into a constant mapping
 // together means the inferred type of the function has `never` as the first argument. :(
@@ -1406,6 +1438,8 @@ async function nonOrdinaryCharge(charge) {
         case "fleur-de-lys":
         case "escallop":
         case "fret":
+        case "tree":
+        case "tree-eradicated":
             return SIMPLE_CHARGES[charge.charge](charge);
         case "lion":
             return lion(charge);
@@ -2236,6 +2270,8 @@ async function escutcheonContent(content) {
                 case "fleur-de-lys":
                 case "escallop":
                 case "fret":
+                case "tree":
+                case "tree-eradicated":
                 case "lion":
                     return {
                         ...charge,

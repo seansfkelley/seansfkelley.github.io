@@ -250,7 +250,9 @@ interface BaseCharge {
 }
 
 interface SimpleCharge extends BaseCharge {
-  charge: "mullet" | "rondel" | "fleur-de-lys" | "escallop" | "fret";
+  // "tree-eradicated" should be a variant of "tree" but while there is only one such case, it's
+  // much easier in the grammar to treat it as a totally distinct charge.
+  charge: "mullet" | "rondel" | "fleur-de-lys" | "escallop" | "fret" | "tree" | "tree-eradicated";
   coloration: Coloration;
 }
 
@@ -2066,8 +2068,8 @@ async function escallop({ coloration }: WithSvgColoration<SimpleCharge>) {
 
 async function fleurDeLys({ coloration }: WithSvgColoration<SimpleCharge>) {
   const { fill, pattern } = await resolveColoration(coloration, [30.117, 41.528], {
-    translate: [0, 10],
     scale: 0.5,
+    translate: [0, 10],
   });
   const fleurDeLys = await fetchMutableComplexSvg("fleur-de-lys");
   maybeAppendChild(fleurDeLys, pattern);
@@ -2077,6 +2079,30 @@ async function fleurDeLys({ coloration }: WithSvgColoration<SimpleCharge>) {
     applySvgAttributes(fleurDeLys, fill);
   }
   return fleurDeLys;
+}
+
+async function tree({ coloration }: WithSvgColoration<SimpleCharge>) {
+  const { fill, pattern } = await resolveColoration(coloration, [40.9, 41.994]);
+  const tree = await fetchMutableComplexSvg("tree");
+  maybeAppendChild(tree, pattern);
+  if ("classes" in fill) {
+    tree.classList.add(fill.classes.fill);
+  } else {
+    applySvgAttributes(tree, fill);
+  }
+  return tree;
+}
+
+async function treeEradicated({ coloration }: WithSvgColoration<SimpleCharge>) {
+  const { fill, pattern } = await resolveColoration(coloration, [40.9, 41.994]);
+  const treeEradiated = await fetchMutableComplexSvg("tree", "eradicated");
+  maybeAppendChild(treeEradiated, pattern);
+  if ("classes" in fill) {
+    treeEradiated.classList.add(fill.classes.fill);
+  } else {
+    applySvgAttributes(treeEradiated, fill);
+  }
+  return treeEradiated;
 }
 
 // The lion SVGs are pulled from https://en.wikipedia.org/wiki/Attitude_(heraldry).
@@ -2168,7 +2194,15 @@ const SIMPLE_CHARGES: {
   [K in SimpleCharge["charge"]]: NonOrdinaryChargeRenderer<
     WithSvgColoration<DiscriminateUnion<NonOrdinaryCharge, "charge", K>>
   >;
-} = { rondel, mullet, fret, escallop, "fleur-de-lys": fleurDeLys };
+} = {
+  rondel,
+  mullet,
+  fret,
+  escallop,
+  "fleur-de-lys": fleurDeLys,
+  tree: tree,
+  "tree-eradicated": treeEradicated,
+};
 
 // A little unfortunate this dispatching wrapper is necessary, but it's the only way to type-safety
 // render based on the string. Throwing all charges, simple and otherwise, into a constant mapping
@@ -2182,6 +2216,8 @@ async function nonOrdinaryCharge(
     case "fleur-de-lys":
     case "escallop":
     case "fret":
+    case "tree":
+    case "tree-eradicated":
       return SIMPLE_CHARGES[charge.charge](charge);
     case "lion":
       return lion(charge);
@@ -3332,6 +3368,8 @@ async function escutcheonContent(
         case "fleur-de-lys":
         case "escallop":
         case "fret":
+        case "tree":
+        case "tree-eradicated":
         case "lion":
           return {
             ...charge,

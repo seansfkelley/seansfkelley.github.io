@@ -615,3 +615,33 @@ a[data-example]:not(:hover) {
 .fleur-de-lys.cendree .highlight {
   fill: #a6a6a6;
 }
+
+.tree path {
+  stroke: black;
+  stroke-width: 0.15;
+  stroke-linejoin: round;
+}
+.tree.argent {
+  fill: whitesmoke;
+}
+.tree.sable {
+  fill: black;
+}
+.tree.gules {
+  fill: crimson;
+}
+.tree.vert {
+  fill: green;
+}
+.tree.azure {
+  fill: mediumblue;
+}
+.tree.or {
+  fill: gold;
+}
+.tree.purpure {
+  fill: blueviolet;
+}
+.tree.cendree {
+  fill: grey;
+}
