@@ -241,8 +241,16 @@ a[data-example]:not(:hover) {
   }
 }
 
-.tree path {
-  stroke: black;
-  stroke-opacity: 0.3;
-  stroke-width: 0.75;
+.tree {
+  path {
+    stroke: black;
+    stroke-width: 0.15;
+    stroke-linejoin: round;
+  }
+
+  @each $key, $val in $colors {
+    &.#{"" + $key} {
+      fill: $val;
+    }
+  }
 }
