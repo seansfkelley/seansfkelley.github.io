@@ -250,7 +250,9 @@ interface BaseCharge {
 }
 
 interface SimpleCharge extends BaseCharge {
-  charge: "mullet" | "rondel" | "fleur-de-lys" | "escallop" | "fret" | "tree-eradicated";
+  // "tree-eradicated" should be a variant of "tree" but while there is only one such case, it's
+  // much easier in the grammar to treat it as a totally distinct charge.
+  charge: "mullet" | "rondel" | "fleur-de-lys" | "escallop" | "fret" | "tree" | "tree-eradicated";
   coloration: Coloration;
 }
 
@@ -2079,6 +2081,18 @@ async function fleurDeLys({ coloration }: WithSvgColoration<SimpleCharge>) {
   return fleurDeLys;
 }
 
+async function tree({ coloration }: WithSvgColoration<SimpleCharge>) {
+  const { fill, pattern } = await resolveColoration(coloration, [40.9, 41.994]);
+  const tree = await fetchMutableComplexSvg("tree");
+  maybeAppendChild(tree, pattern);
+  if ("classes" in fill) {
+    tree.classList.add(fill.classes.fill);
+  } else {
+    applySvgAttributes(tree, fill);
+  }
+  return tree;
+}
+
 async function treeEradicated({ coloration }: WithSvgColoration<SimpleCharge>) {
   const { fill, pattern } = await resolveColoration(coloration, [40.9, 41.994]);
   const treeEradiated = await fetchMutableComplexSvg("tree", "eradicated");
@@ -2186,6 +2200,7 @@ const SIMPLE_CHARGES: {
   fret,
   escallop,
   "fleur-de-lys": fleurDeLys,
+  tree: tree,
   "tree-eradicated": treeEradicated,
 };
 
@@ -2201,6 +2216,7 @@ async function nonOrdinaryCharge(
     case "fleur-de-lys":
     case "escallop":
     case "fret":
+    case "tree":
     case "tree-eradicated":
       return SIMPLE_CHARGES[charge.charge](charge);
     case "lion":
@@ -3352,6 +3368,7 @@ async function escutcheonContent(
         case "fleur-de-lys":
         case "escallop":
         case "fret":
+        case "tree":
         case "tree-eradicated":
         case "lion":
           return {
