@@ -2079,11 +2079,10 @@ async function fleurDeLys({ coloration }: WithSvgColoration<SimpleCharge>) {
   return fleurDeLys;
 }
 
+// translate 32.805 37.5003
+
 async function treeEradicated({ coloration }: WithSvgColoration<SimpleCharge>) {
-  const { fill, pattern } = await resolveColoration(coloration, [30.117, 41.528], {
-    scale: 0.1,
-    translate: [0, 0],
-  });
+  const { fill, pattern } = await resolveColoration(coloration, [30.117, 41.528]);
   const treeEradiated = await fetchMutableComplexSvg("tree", "eradicated");
   maybeAppendChild(treeEradiated, pattern);
   if ("classes" in fill) {
