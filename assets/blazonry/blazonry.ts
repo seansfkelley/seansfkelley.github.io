@@ -1050,6 +1050,7 @@ async function fetchMutableComplexSvg(kind: string, variant?: string): Promise<S
     complexSvgCache[key] = fetch(`/assets/blazonry/svg/${key}.svg`).then(async (response) => {
       const root = new DOMParser().parseFromString(await response.text(), "image/svg+xml")
         .documentElement as any as SVGElement;
+      console.log(root.getAttribute("width"), root.getAttribute("height"));
       const wrapper = svg.g({ kind: key });
       wrapper.classList.add(kind);
       // Shallow copy: appendChild also deletes it from the source node, so this is modifying the
@@ -2082,7 +2083,9 @@ async function fleurDeLys({ coloration }: WithSvgColoration<SimpleCharge>) {
 }
 
 async function tree({ coloration }: WithSvgColoration<SimpleCharge>) {
-  const { fill, pattern } = await resolveColoration(coloration, [40.9, 41.994]);
+  const { fill, pattern } = await resolveColoration(coloration, [40.9, 41.994], {
+    scale: 0.4,
+  });
   const tree = await fetchMutableComplexSvg("tree");
   maybeAppendChild(tree, pattern);
   if ("classes" in fill) {
@@ -2094,7 +2097,9 @@ async function tree({ coloration }: WithSvgColoration<SimpleCharge>) {
 }
 
 async function treeEradicated({ coloration }: WithSvgColoration<SimpleCharge>) {
-  const { fill, pattern } = await resolveColoration(coloration, [40.9, 41.994]);
+  const { fill, pattern } = await resolveColoration(coloration, [40.9, 41.994], {
+    scale: 0.4,
+  });
   const treeEradiated = await fetchMutableComplexSvg("tree", "eradicated");
   maybeAppendChild(treeEradiated, pattern);
   if ("classes" in fill) {
