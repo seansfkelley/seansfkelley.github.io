@@ -270,12 +270,20 @@ interface LionCharge extends BaseCharge {
     | "passant-reguardant";
 }
 
+interface PantherCharge extends BaseCharge {
+  charge: "panther";
+  coloration: Coloration;
+  armed?: Tincture;
+  langued?: Tincture;
+  attitude: "rampant";
+}
+
 interface EscutcheonCharge extends BaseCharge {
   charge: "escutcheon";
   content: EscutcheonContent;
 }
 
-type NonOrdinaryCharge = SimpleCharge | LionCharge | EscutcheonCharge;
+type NonOrdinaryCharge = SimpleCharge | LionCharge | PantherCharge | EscutcheonCharge;
 
 interface Canton {
   canton: Coloration;
@@ -2111,7 +2119,7 @@ async function treeEradicated(charge: WithSvgColoration<SimpleCharge>) {
 // In the future, they should probably be aggressively deduplicated -- whoever made the heads and
 // bodies did a good job reusing the same elements across the different images, but at the moment
 // we just hardcode each one individually instead of combining N heads * M bodies.
-const HORIZONTALLY_STRETCHED_ATTITUDES: Set<LionCharge["attitude"]> = new Set([
+const HORIZONTALLY_STRETCHED_LION_ATTITUDES: Set<LionCharge["attitude"]> = new Set([
   "passant",
   "passant-guardant",
   "passant-reguardant",
@@ -2129,7 +2137,7 @@ async function lion({
   lion.classList.add(`armed-${armed ?? "gules"}`);
   lion.classList.add(`langued-${langued ?? "gules"}`);
 
-  if (placement === "pale" && HORIZONTALLY_STRETCHED_ATTITUDES.has(attitude)) {
+  if (placement === "pale" && HORIZONTALLY_STRETCHED_LION_ATTITUDES.has(attitude)) {
     // This is a bit of a hack! But it makes the Bavarian arms look a little less stupid overall.
     // Really, the passant variants should be naturally wider, as that is how they are typically shown.
     Transforms.apply(lion, { scale: [2, 1] });
@@ -2137,6 +2145,23 @@ async function lion({
   } else {
     return lion;
   }
+}
+
+// SVGs originally sourced from Heraldicon, but heavily modified to fit our requirements.
+async function panther({
+  coloration,
+  armed,
+  langued,
+  attitude,
+  placement,
+}: WithSvgColoration<PantherCharge>) {
+  // TODO: When hitting applySvgAttributes branch, How to make sure the lines end up masking, just lighter?
+  const panther = await genericSvgCharge("panther", attitude, { coloration }, { scale: 0.4 });
+
+  panther.classList.add(`armed-${armed ?? "gules"}`);
+  panther.classList.add(`langued-${langued ?? "gules"}`);
+
+  return panther;
 }
 
 async function escutcheon({ content }: WithSvgColoration<EscutcheonCharge>) {
@@ -2201,6 +2226,8 @@ async function nonOrdinaryCharge(
       return SIMPLE_CHARGES[charge.charge](charge);
     case "lion":
       return lion(charge);
+    case "panther":
+      return panther(charge);
     case "escutcheon":
       return escutcheon(charge);
     default:
@@ -3344,6 +3371,11 @@ async function escutcheonContent(
         case "tree":
         case "tree-eradicated":
         case "lion":
+          return {
+            ...charge,
+            coloration: counterchangeColoration(charge.coloration),
+          };
+        case "panther":
           return {
             ...charge,
             coloration: counterchangeColoration(charge.coloration),
