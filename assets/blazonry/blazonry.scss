@@ -193,6 +193,13 @@ a[data-example]:not(:hover) {
   }
 }
 
+.panther {
+  path {
+    stroke: black;
+    fill: orange;
+  }
+}
+
 .escallop {
   .outline {
     stroke: black;

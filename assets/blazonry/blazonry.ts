@@ -1072,10 +1072,17 @@ async function fetchMutableComplexSvg(
       //   argent a lion rampant or
       // then selecting the <g> that represents the charge and running this in the console:
       // $0.removeAttribute('transform') ; console.log(`[${($0.getBoundingClientRect().width / 3).toFixed(3)}, ${($0.getBoundingClientRect().height / 3).toFixed(3)}]`)
-      const width = +(root.getAttribute("width") ?? "");
-      const height = +(root.getAttribute("height") ?? "");
-      assert(!Number.isNaN(width), "width should exist and be numerical");
-      assert(!Number.isNaN(height), "height should exist and be numerical");
+      // Make sure the charge has strokes and fills set, otherwise it will be invisible without size.
+      const width = +(root.getAttribute("width") ?? "nan");
+      const height = +(root.getAttribute("height") ?? "nan");
+      assert(
+        !Number.isNaN(width),
+        `width should exist and be numerical; got ${root.getAttribute("width")}`
+      );
+      assert(
+        !Number.isNaN(height),
+        `height should exist and be numerical; got ${root.getAttribute("height")}`
+      );
       return [wrapper, [width, height]];
     });
   }
