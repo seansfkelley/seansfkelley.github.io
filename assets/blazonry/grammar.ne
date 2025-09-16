@@ -105,6 +105,7 @@ NonOrdinaryCharge ->
   | SIMPLE_UNCOLORED_CHARGE["torteau", ("torteaus" | "torteaux")]                         {% spread({ charge: 'rondel', coloration: { tincture: 'gules' } }) %}
   | SIMPLE_UNCOLORED_CHARGE["fountain", "fountains"]                                      {% spread({ charge: 'rondel', coloration: { type: 'barry', treatment: 'wavy', first: 'azure', second: 'argent', count: 8 } }) %}
   | Lion                                                                                  {% id %}
+  | Panther                                                                               {% id %}
   | Escutcheon                                                                            {% id %}
 
 Lion ->
@@ -141,6 +142,35 @@ LionModifiers ->
     LionModifier __ Tincture __ "and" __ LionModifier __ Tincture {% (d) => ({ [d[0]]: d[2], [d[6]]: d[8] }) %}
   | LionModifier __ Tincture                                      {% (d) => ({ [d[0]]: d[2] }) %}
   | LionModifier __ "and" __ LionModifier __ Tincture             {% (d) => ({ [d[0]]: d[6], [d[4]]: d[6] }) %}
+
+Panther ->
+  (
+      # Don't bother to restrict to "a" as singular, this makes it easier to play with different charges.
+      Singular __ "panther" {% literal(1) %}
+    | Plural __ "panthers"  {% nth(0) %}
+  ) (__ PantherAttitude {% nth(1) %}):? (__ Posture {% nth(1) %}):? __ Coloration (__ PantherModifiers {% nth(1) %}):? (__ Placement {% nth(1) %}):? {% (d) => ({
+    charge: "panther",
+    count: d[0],
+    attitude: d[1] ?? "rampant",
+    posture: d[2],
+    coloration: d[4],
+    ...d[5],
+    placement: d[6],
+  }) %}
+
+PantherAttitude ->
+    "rampant" {% slugify %}
+
+PantherModifier ->
+    "armed"   {% id %}
+  | "langued" {% id %}
+
+PantherModifiers ->
+  # This is unfortunately rather repetitive, due to the optional nature of the tincture
+  # specification when using both "armed" and "langued". Not sure how to tighten it up.
+    PantherModifier __ Tincture __ "and" __ PantherModifier __ Tincture {% (d) => ({ [d[0]]: d[2], [d[6]]: d[8] }) %}
+  | PantherModifier __ Tincture                                         {% (d) => ({ [d[0]]: d[2] }) %}
+  | PantherModifier __ "and" __ PantherModifier __ Tincture             {% (d) => ({ [d[0]]: d[6], [d[4]]: d[6] }) %}
 
 Escutcheon ->
   (
