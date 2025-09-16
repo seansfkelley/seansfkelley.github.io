@@ -194,9 +194,46 @@ a[data-example]:not(:hover) {
 }
 
 .panther {
-  path {
+  .background {
+    fill: black;
+  }
+
+  .teeth,
+  .white {
+    // white, as in, whites of the eyes
+    fill: white;
+  }
+
+  .white {
+    stroke-width: 0.1;
     stroke: black;
-    fill: orange;
+  }
+
+  .eye,
+  .pupil {
+    fill: black;
+  }
+
+  @each $key, $val in $colors {
+    &.#{"" + $key} {
+      fill: none;
+
+      .body,
+      .claw,
+      .langue {
+        fill: $val;
+      }
+    }
+
+    &.armed-#{"" + $key} .claw {
+      // Fucking CSS specificity rules. I DON'T HAVE ANY MORE CLASSES TO INCREASE SPECIFICITY WITH.
+      // JUST LET ME MAKE THIS RULE TAKE PRECEDENCE.
+      fill: $val !important;
+    }
+
+    &.langued-#{"" + $key} .langue {
+      fill: $val !important;
+    }
   }
 }
 
