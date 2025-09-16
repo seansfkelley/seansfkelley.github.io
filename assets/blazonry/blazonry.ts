@@ -1043,14 +1043,16 @@ const svg = {
   },
 };
 
-const complexSvgCache: Record<string, Promise<SVGGElement>> = {};
-async function fetchMutableComplexSvg(kind: string, variant?: string): Promise<SVGGElement> {
+const complexSvgCache: Record<string, Promise<[SVGGElement, Coordinate]>> = {};
+async function fetchMutableComplexSvg(
+  kind: string,
+  variant?: string
+): Promise<[SVGGElement, Coordinate]> {
   const key = variant ? `${kind}-${variant}` : kind;
   if (!(key in complexSvgCache)) {
     complexSvgCache[key] = fetch(`/assets/blazonry/svg/${key}.svg`).then(async (response) => {
       const root = new DOMParser().parseFromString(await response.text(), "image/svg+xml")
         .documentElement as any as SVGElement;
-      console.log(root.getAttribute("width"), root.getAttribute("height"));
       const wrapper = svg.g({ kind: key });
       wrapper.classList.add(kind);
       // Shallow copy: appendChild also deletes it from the source node, so this is modifying the
@@ -1058,12 +1060,20 @@ async function fetchMutableComplexSvg(kind: string, variant?: string): Promise<S
       for (const c of [...root.children]) {
         wrapper.appendChild(c);
       }
-      return wrapper;
+      // These values can be fetched from the browser by rendering a single charge:
+      //   argent a lion rampant or
+      // then selecting the <g> that represents the charge and running this in the console:
+      // $0.removeAttribute('transform') ; console.log(`[${($0.getBoundingClientRect().width / 3).toFixed(3)}, ${($0.getBoundingClientRect().height / 3).toFixed(3)}]`)
+      const width = +(root.getAttribute("width") ?? "");
+      const height = +(root.getAttribute("height") ?? "");
+      assert(!Number.isNaN(width), "width should exist and be numerical");
+      assert(!Number.isNaN(height), "height should exist and be numerical");
+      return [wrapper, [width, height]];
     });
   }
 
-  const loadedSvg = await complexSvgCache[key];
-  return loadedSvg.cloneNode(true);
+  const [loadedSvg, dimensions] = await complexSvgCache[key];
+  return [loadedSvg.cloneNode(true), [...dimensions]];
 }
 
 // #endregion
@@ -2053,61 +2063,61 @@ async function fret({ coloration }: WithSvgColoration<SimpleCharge>) {
 }
 
 async function escallop({ coloration }: WithSvgColoration<SimpleCharge>) {
-  const { fill, pattern } = await resolveColoration(coloration, [39.089, 40.967], {
+  const [svg, dimensions] = await fetchMutableComplexSvg("escallop");
+  const { fill, pattern } = await resolveColoration(coloration, dimensions, {
     scale: 0.6,
     translate: [0, -15],
   });
-  const escallop = await fetchMutableComplexSvg("escallop");
-  maybeAppendChild(escallop, pattern);
+  maybeAppendChild(svg, pattern);
   if ("classes" in fill) {
-    escallop.classList.add(fill.classes.fill);
+    svg.classList.add(fill.classes.fill);
   } else {
-    applySvgAttributes(escallop, fill);
+    applySvgAttributes(svg, fill);
   }
-  return escallop;
+  return svg;
 }
 
 async function fleurDeLys({ coloration }: WithSvgColoration<SimpleCharge>) {
-  const { fill, pattern } = await resolveColoration(coloration, [30.117, 41.528], {
+  const [svg, dimensions] = await fetchMutableComplexSvg("fleur-de-lys");
+  const { fill, pattern } = await resolveColoration(coloration, dimensions, {
     scale: 0.5,
     translate: [0, 10],
   });
-  const fleurDeLys = await fetchMutableComplexSvg("fleur-de-lys");
-  maybeAppendChild(fleurDeLys, pattern);
+  maybeAppendChild(svg, pattern);
   if ("classes" in fill) {
-    fleurDeLys.classList.add(fill.classes.fill);
+    svg.classList.add(fill.classes.fill);
   } else {
-    applySvgAttributes(fleurDeLys, fill);
+    applySvgAttributes(svg, fill);
   }
-  return fleurDeLys;
+  return svg;
 }
 
 async function tree({ coloration }: WithSvgColoration<SimpleCharge>) {
-  const { fill, pattern } = await resolveColoration(coloration, [40.9, 41.994], {
+  const [svg, dimensions] = await fetchMutableComplexSvg("tree");
+  const { fill, pattern } = await resolveColoration(coloration, dimensions, {
     scale: 0.4,
   });
-  const tree = await fetchMutableComplexSvg("tree");
-  maybeAppendChild(tree, pattern);
+  maybeAppendChild(svg, pattern);
   if ("classes" in fill) {
-    tree.classList.add(fill.classes.fill);
+    svg.classList.add(fill.classes.fill);
   } else {
-    applySvgAttributes(tree, fill);
+    applySvgAttributes(svg, fill);
   }
-  return tree;
+  return svg;
 }
 
 async function treeEradicated({ coloration }: WithSvgColoration<SimpleCharge>) {
-  const { fill, pattern } = await resolveColoration(coloration, [40.9, 41.994], {
+  const [svg, dimensions] = await fetchMutableComplexSvg("tree", "eradicated");
+  const { fill, pattern } = await resolveColoration(coloration, dimensions, {
     scale: 0.4,
   });
-  const treeEradiated = await fetchMutableComplexSvg("tree", "eradicated");
-  maybeAppendChild(treeEradiated, pattern);
+  maybeAppendChild(svg, pattern);
   if ("classes" in fill) {
-    treeEradiated.classList.add(fill.classes.fill);
+    svg.classList.add(fill.classes.fill);
   } else {
-    applySvgAttributes(treeEradiated, fill);
+    applySvgAttributes(svg, fill);
   }
-  return treeEradiated;
+  return svg;
 }
 
 // The lion SVGs are pulled from https://en.wikipedia.org/wiki/Attitude_(heraldry).
@@ -2119,18 +2129,6 @@ const HORIZONTALLY_STRETCHED_ATTITUDES: Set<LionCharge["attitude"]> = new Set([
   "passant-guardant",
   "passant-reguardant",
 ] satisfies LionCharge["attitude"][]);
-const LION_SIZES: Record<LionCharge["attitude"], Coordinate> = {
-  // These values can be fetched from the browser by rendering a single charge:
-  //   argent a lion rampant or
-  // then selecting the <g> that represents the charge and running this in the console:
-  // $0.removeAttribute('transform') ; console.log(`"${$0.dataset.kind.slice(5)}": [${($0.getBoundingClientRect().width / 3).toFixed(3)}, ${($0.getBoundingClientRect().height / 3).toFixed(3)}],`)
-  rampant: [36.706, 39.128],
-  "rampant-guardant": [36.706, 39.128],
-  "rampant-reguardant": [36.706, 39.128],
-  passant: [47.894, 39.028],
-  "passant-guardant": [47.894, 39.028],
-  "passant-reguardant": [47.894, 39.028],
-};
 async function lion({
   coloration,
   armed,
@@ -2138,8 +2136,8 @@ async function lion({
   attitude,
   placement,
 }: WithSvgColoration<LionCharge>) {
-  const lion = await fetchMutableComplexSvg("lion", attitude);
-  const { fill, pattern } = await resolveColoration(coloration, LION_SIZES[attitude], {
+  const [lion, dimensions] = await fetchMutableComplexSvg("lion", attitude);
+  const { fill, pattern } = await resolveColoration(coloration, dimensions, {
     scale: 0.4,
   });
   maybeAppendChild(lion, pattern);
@@ -2205,7 +2203,7 @@ const SIMPLE_CHARGES: {
   fret,
   escallop,
   "fleur-de-lys": fleurDeLys,
-  tree: tree,
+  tree,
   "tree-eradicated": treeEradicated,
 };
 
@@ -2238,21 +2236,14 @@ async function nonOrdinaryCharge(
 // #region TINCTURES
 // ----------------------------------------------------------------------------
 
-// Hardcoded to match the specifics of this SVG. Calculated with largest/smallest-running-sum of the
-// path commands making up the pattern. Note that for doing that calculation, the `c` commands
-// should only use every third coordinate, as the first two of each triplet are control points.
-const ERMINE_WIDTH = 14.69366;
-const ERMINE_HEIGHT = 23.71317;
-
 // Returns a pattern that is centered on the whole shield's width/height. Plan accordingly when
 // using scale/transform on the element that refers to this pattern, as it may behave unexpectedly.
 async function getErmineTincture(
   foreground: ColorOrMetal,
   background: ColorOrMetal
 ): Promise<SVGPatternElement> {
-  const spacing = ERMINE_WIDTH / 3;
-
-  const topLeft = await fetchMutableComplexSvg("ermine");
+  const [topLeft, [svgWidth, svgHeight]] = await fetchMutableComplexSvg("ermine");
+  const spacing = svgWidth / 3;
   // n.b. fill will be inherited by the copy.
   applyClasses(topLeft, { fill: foreground });
   const bottomRight = topLeft.cloneNode(true);
@@ -2261,11 +2252,11 @@ async function getErmineTincture(
     translate: [spacing, spacing],
   });
   Transforms.apply(bottomRight, {
-    translate: [3 * spacing + ERMINE_WIDTH, 3 * spacing + ERMINE_HEIGHT],
+    translate: [3 * spacing + svgWidth, 3 * spacing + svgHeight],
   });
 
-  const width = 4 * spacing + 2 * ERMINE_WIDTH;
-  const height = 4 * spacing + 2 * ERMINE_HEIGHT;
+  const width = 4 * spacing + 2 * svgWidth;
+  const height = 4 * spacing + 2 * svgHeight;
 
   return svg.pattern(
     {
