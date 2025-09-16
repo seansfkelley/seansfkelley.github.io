@@ -2062,62 +2062,49 @@ async function fret({ coloration }: WithSvgColoration<SimpleCharge>) {
   );
 }
 
-async function escallop({ coloration }: WithSvgColoration<SimpleCharge>) {
-  const [svg, dimensions] = await fetchMutableComplexSvg("escallop");
-  const { fill, pattern } = await resolveColoration(coloration, dimensions, {
+async function genericSvgCharge(
+  kind: string,
+  variant: string | undefined,
+  { coloration }: Pick<WithSvgColoration<SimpleCharge>, "coloration">,
+  // TODO: Should these transforms be defined as (optional) SVG attributes instead of hardcoded here?
+  // It's not clear that that's necessarily more single-source-of-truth-y in a useful way.
+  patternTransform: Transforms
+): Promise<SVGGElement> {
+  const [svg, dimensions] = await fetchMutableComplexSvg(kind, variant);
+  const { fill, pattern } = await resolveColoration(coloration, dimensions, patternTransform);
+  maybeAppendChild(svg, pattern);
+  if ("classes" in fill) {
+    svg.classList.add(fill.classes.fill);
+  } else {
+    applySvgAttributes(svg, fill);
+  }
+  return svg;
+}
+
+function escallop(charge: WithSvgColoration<SimpleCharge>) {
+  return genericSvgCharge("escallop", undefined, charge, {
     scale: 0.6,
     translate: [0, -15],
   });
-  maybeAppendChild(svg, pattern);
-  if ("classes" in fill) {
-    svg.classList.add(fill.classes.fill);
-  } else {
-    applySvgAttributes(svg, fill);
-  }
-  return svg;
 }
 
-async function fleurDeLys({ coloration }: WithSvgColoration<SimpleCharge>) {
-  const [svg, dimensions] = await fetchMutableComplexSvg("fleur-de-lys");
-  const { fill, pattern } = await resolveColoration(coloration, dimensions, {
+async function fleurDeLys(charge: WithSvgColoration<SimpleCharge>) {
+  return genericSvgCharge("fleur-de-lys", undefined, charge, {
     scale: 0.5,
     translate: [0, 10],
   });
-  maybeAppendChild(svg, pattern);
-  if ("classes" in fill) {
-    svg.classList.add(fill.classes.fill);
-  } else {
-    applySvgAttributes(svg, fill);
-  }
-  return svg;
 }
 
-async function tree({ coloration }: WithSvgColoration<SimpleCharge>) {
-  const [svg, dimensions] = await fetchMutableComplexSvg("tree");
-  const { fill, pattern } = await resolveColoration(coloration, dimensions, {
+async function tree(charge: WithSvgColoration<SimpleCharge>) {
+  return genericSvgCharge("tree", undefined, charge, {
     scale: 0.4,
   });
-  maybeAppendChild(svg, pattern);
-  if ("classes" in fill) {
-    svg.classList.add(fill.classes.fill);
-  } else {
-    applySvgAttributes(svg, fill);
-  }
-  return svg;
 }
 
-async function treeEradicated({ coloration }: WithSvgColoration<SimpleCharge>) {
-  const [svg, dimensions] = await fetchMutableComplexSvg("tree", "eradicated");
-  const { fill, pattern } = await resolveColoration(coloration, dimensions, {
+async function treeEradicated(charge: WithSvgColoration<SimpleCharge>) {
+  return genericSvgCharge("tree", "eradicated", charge, {
     scale: 0.4,
   });
-  maybeAppendChild(svg, pattern);
-  if ("classes" in fill) {
-    svg.classList.add(fill.classes.fill);
-  } else {
-    applySvgAttributes(svg, fill);
-  }
-  return svg;
 }
 
 // The lion SVGs are pulled from https://en.wikipedia.org/wiki/Attitude_(heraldry).
@@ -2136,18 +2123,8 @@ async function lion({
   attitude,
   placement,
 }: WithSvgColoration<LionCharge>) {
-  const [lion, dimensions] = await fetchMutableComplexSvg("lion", attitude);
-  const { fill, pattern } = await resolveColoration(coloration, dimensions, {
-    scale: 0.4,
-  });
-  maybeAppendChild(lion, pattern);
-
-  if ("classes" in fill) {
-    lion.classList.add(fill.classes.fill);
-  } else {
-    // TODO: How to make sure the lines end up masking, just lighter?
-    applySvgAttributes(lion, fill);
-  }
+  // TODO: When hitting applySvgAttributes branch, How to make sure the lines end up masking, just lighter?
+  const lion = await genericSvgCharge("lion", attitude, { coloration }, { scale: 0.4 });
 
   lion.classList.add(`armed-${armed ?? "gules"}`);
   lion.classList.add(`langued-${langued ?? "gules"}`);
