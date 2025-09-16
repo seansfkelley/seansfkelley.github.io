@@ -645,11 +645,20 @@ async function fetchMutableComplexSvg(kind, variant) {
             for (const c of [...root.children]) {
                 wrapper.appendChild(c);
             }
-            return wrapper;
+            // These values can be fetched from the browser by rendering a single charge:
+            //   argent a lion rampant or
+            // then selecting the <g> that represents the charge and running this in the console:
+            // $0.removeAttribute('transform') ; console.log(`[${($0.getBoundingClientRect().width / 3).toFixed(3)}, ${($0.getBoundingClientRect().height / 3).toFixed(3)}]`)
+            // Make sure the charge has strokes and fills set, otherwise it will be invisible without size.
+            const width = +(root.getAttribute("width") ?? "nan");
+            const height = +(root.getAttribute("height") ?? "nan");
+            assert(!Number.isNaN(width), `width should exist and be numerical; got ${root.getAttribute("width")}`);
+            assert(!Number.isNaN(height), `height should exist and be numerical; got ${root.getAttribute("height")}`);
+            return [wrapper, [width, height]];
         });
     }
-    const loadedSvg = await complexSvgCache[key];
-    return loadedSvg.cloneNode(true);
+    const [loadedSvg, dimensions] = await complexSvgCache[key];
+    return [loadedSvg.cloneNode(true), [...dimensions]];
 }
 // #endregion
 // #region ORDINARIES
@@ -1297,97 +1306,58 @@ async function fret({ coloration }) {
     // Bump this out to be longer so that it doesn't produce visual artifacts.
     [-strokeWidth - 1, -strokeWidth - 1], [strokeWidth + 1, strokeWidth + 1], { ...stroke, strokeWidth }));
 }
-async function escallop({ coloration }) {
-    const { fill, pattern } = await resolveColoration(coloration, [39.089, 40.967], {
+async function genericSvgCharge(kind, variant, { coloration }, 
+// TODO: Should these transforms be defined as (optional) SVG attributes instead of hardcoded here?
+// It's not clear that that's necessarily more single-source-of-truth-y in a useful way.
+patternTransform) {
+    const [svg, dimensions] = await fetchMutableComplexSvg(kind, variant);
+    const { fill, pattern } = await resolveColoration(coloration, dimensions, patternTransform);
+    maybeAppendChild(svg, pattern);
+    if ("classes" in fill) {
+        svg.classList.add(fill.classes.fill);
+    }
+    else {
+        applySvgAttributes(svg, fill);
+    }
+    return svg;
+}
+function escallop(charge) {
+    return genericSvgCharge("escallop", undefined, charge, {
         scale: 0.6,
         translate: [0, -15],
     });
-    const escallop = await fetchMutableComplexSvg("escallop");
-    maybeAppendChild(escallop, pattern);
-    if ("classes" in fill) {
-        escallop.classList.add(fill.classes.fill);
-    }
-    else {
-        applySvgAttributes(escallop, fill);
-    }
-    return escallop;
 }
-async function fleurDeLys({ coloration }) {
-    const { fill, pattern } = await resolveColoration(coloration, [30.117, 41.528], {
+async function fleurDeLys(charge) {
+    return genericSvgCharge("fleur-de-lys", undefined, charge, {
         scale: 0.5,
         translate: [0, 10],
     });
-    const fleurDeLys = await fetchMutableComplexSvg("fleur-de-lys");
-    maybeAppendChild(fleurDeLys, pattern);
-    if ("classes" in fill) {
-        fleurDeLys.classList.add(fill.classes.fill);
-    }
-    else {
-        applySvgAttributes(fleurDeLys, fill);
-    }
-    return fleurDeLys;
 }
-async function tree({ coloration }) {
-    const { fill, pattern } = await resolveColoration(coloration, [40.9, 41.994]);
-    const tree = await fetchMutableComplexSvg("tree");
-    maybeAppendChild(tree, pattern);
-    if ("classes" in fill) {
-        tree.classList.add(fill.classes.fill);
-    }
-    else {
-        applySvgAttributes(tree, fill);
-    }
-    return tree;
+async function tree(charge) {
+    return genericSvgCharge("tree", undefined, charge, {
+        scale: 0.4,
+    });
 }
-async function treeEradicated({ coloration }) {
-    const { fill, pattern } = await resolveColoration(coloration, [40.9, 41.994]);
-    const treeEradiated = await fetchMutableComplexSvg("tree", "eradicated");
-    maybeAppendChild(treeEradiated, pattern);
-    if ("classes" in fill) {
-        treeEradiated.classList.add(fill.classes.fill);
-    }
-    else {
-        applySvgAttributes(treeEradiated, fill);
-    }
-    return treeEradiated;
+async function treeEradicated(charge) {
+    return genericSvgCharge("tree", "eradicated", charge, {
+        scale: 0.4,
+    });
 }
 // The lion SVGs are pulled from https://en.wikipedia.org/wiki/Attitude_(heraldry).
 // In the future, they should probably be aggressively deduplicated -- whoever made the heads and
 // bodies did a good job reusing the same elements across the different images, but at the moment
 // we just hardcode each one individually instead of combining N heads * M bodies.
-const HORIZONTALLY_STRETCHED_ATTITUDES = new Set([
+const HORIZONTALLY_STRETCHED_LION_ATTITUDES = new Set([
     "passant",
     "passant-guardant",
     "passant-reguardant",
 ]);
-const LION_SIZES = {
-    // These values can be fetched from the browser by rendering a single charge:
-    //   argent a lion rampant or
-    // then selecting the <g> that represents the charge and running this in the console:
-    // $0.removeAttribute('transform') ; console.log(`"${$0.dataset.kind.slice(5)}": [${($0.getBoundingClientRect().width / 3).toFixed(3)}, ${($0.getBoundingClientRect().height / 3).toFixed(3)}],`)
-    rampant: [36.706, 39.128],
-    "rampant-guardant": [36.706, 39.128],
-    "rampant-reguardant": [36.706, 39.128],
-    passant: [47.894, 39.028],
-    "passant-guardant": [47.894, 39.028],
-    "passant-reguardant": [47.894, 39.028],
-};
 async function lion({ coloration, armed, langued, attitude, placement, }) {
-    const lion = await fetchMutableComplexSvg("lion", attitude);
-    const { fill, pattern } = await resolveColoration(coloration, LION_SIZES[attitude], {
-        scale: 0.4,
-    });
-    maybeAppendChild(lion, pattern);
-    if ("classes" in fill) {
-        lion.classList.add(fill.classes.fill);
-    }
-    else {
-        // TODO: How to make sure the lines end up masking, just lighter?
-        applySvgAttributes(lion, fill);
-    }
+    // TODO: When hitting applySvgAttributes branch, How to make sure the lines end up masking, just lighter?
+    const lion = await genericSvgCharge("lion", attitude, { coloration }, { scale: 0.4 });
     lion.classList.add(`armed-${armed ?? "gules"}`);
     lion.classList.add(`langued-${langued ?? "gules"}`);
-    if (placement === "pale" && HORIZONTALLY_STRETCHED_ATTITUDES.has(attitude)) {
+    if (placement === "pale" && HORIZONTALLY_STRETCHED_LION_ATTITUDES.has(attitude)) {
         // This is a bit of a hack! But it makes the Bavarian arms look a little less stupid overall.
         // Really, the passant variants should be naturally wider, as that is how they are typically shown.
         Transforms.apply(lion, { scale: [2, 1] });
@@ -1396,6 +1366,14 @@ async function lion({ coloration, armed, langued, attitude, placement, }) {
     else {
         return lion;
     }
+}
+// SVGs originally sourced from Heraldicon, but heavily modified to fit our requirements.
+async function panther({ coloration, armed, langued, attitude, placement, }) {
+    // TODO: When hitting applySvgAttributes branch, How to make sure the lines end up masking, just lighter?
+    const panther = await genericSvgCharge("panther", attitude, { coloration }, { scale: 0.4 });
+    panther.classList.add(`armed-${armed ?? "gules"}`);
+    panther.classList.add(`langued-${langued ?? "gules"}`);
+    return panther;
 }
 async function escutcheon({ content }) {
     const escutcheon = svg.g({ kind: "escutcheon" }, ...(await escutcheonContent(content)), svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }));
@@ -1425,7 +1403,7 @@ const SIMPLE_CHARGES = {
     fret,
     escallop,
     "fleur-de-lys": fleurDeLys,
-    tree: tree,
+    tree,
     "tree-eradicated": treeEradicated,
 };
 // A little unfortunate this dispatching wrapper is necessary, but it's the only way to type-safety
@@ -1443,6 +1421,8 @@ async function nonOrdinaryCharge(charge) {
             return SIMPLE_CHARGES[charge.charge](charge);
         case "lion":
             return lion(charge);
+        case "panther":
+            return panther(charge);
         case "escutcheon":
             return escutcheon(charge);
         default:
@@ -1452,16 +1432,11 @@ async function nonOrdinaryCharge(charge) {
 // #endregion
 // #region TINCTURES
 // ----------------------------------------------------------------------------
-// Hardcoded to match the specifics of this SVG. Calculated with largest/smallest-running-sum of the
-// path commands making up the pattern. Note that for doing that calculation, the `c` commands
-// should only use every third coordinate, as the first two of each triplet are control points.
-const ERMINE_WIDTH = 14.69366;
-const ERMINE_HEIGHT = 23.71317;
 // Returns a pattern that is centered on the whole shield's width/height. Plan accordingly when
 // using scale/transform on the element that refers to this pattern, as it may behave unexpectedly.
 async function getErmineTincture(foreground, background) {
-    const spacing = ERMINE_WIDTH / 3;
-    const topLeft = await fetchMutableComplexSvg("ermine");
+    const [topLeft, [svgWidth, svgHeight]] = await fetchMutableComplexSvg("ermine");
+    const spacing = svgWidth / 3;
     // n.b. fill will be inherited by the copy.
     applyClasses(topLeft, { fill: foreground });
     const bottomRight = topLeft.cloneNode(true);
@@ -1469,10 +1444,10 @@ async function getErmineTincture(foreground, background) {
         translate: [spacing, spacing],
     });
     Transforms.apply(bottomRight, {
-        translate: [3 * spacing + ERMINE_WIDTH, 3 * spacing + ERMINE_HEIGHT],
+        translate: [3 * spacing + svgWidth, 3 * spacing + svgHeight],
     });
-    const width = 4 * spacing + 2 * ERMINE_WIDTH;
-    const height = 4 * spacing + 2 * ERMINE_HEIGHT;
+    const width = 4 * spacing + 2 * svgWidth;
+    const height = 4 * spacing + 2 * svgHeight;
     return svg.pattern({
         viewBox: [
             [0, 0],
@@ -2273,6 +2248,11 @@ async function escutcheonContent(content) {
                 case "tree":
                 case "tree-eradicated":
                 case "lion":
+                    return {
+                        ...charge,
+                        coloration: counterchangeColoration(charge.coloration),
+                    };
+                case "panther":
                     return {
                         ...charge,
                         coloration: counterchangeColoration(charge.coloration),

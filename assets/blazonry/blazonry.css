@@ -436,6 +436,134 @@ a[data-example]:not(:hover) {
   fill: grey !important;
 }
 
+.panther .background {
+  fill: black;
+}
+.panther .teeth,
+.panther .white {
+  fill: white;
+}
+.panther .white {
+  stroke-width: 0.1;
+  stroke: black;
+}
+.panther .eye,
+.panther .pupil {
+  fill: black;
+}
+.panther.argent {
+  fill: none;
+}
+.panther.argent .body,
+.panther.argent .claw,
+.panther.argent .langue {
+  fill: whitesmoke;
+}
+.panther.armed-argent .claw {
+  fill: whitesmoke !important;
+}
+.panther.langued-argent .langue {
+  fill: whitesmoke !important;
+}
+.panther.sable {
+  fill: none;
+}
+.panther.sable .body,
+.panther.sable .claw,
+.panther.sable .langue {
+  fill: black;
+}
+.panther.armed-sable .claw {
+  fill: black !important;
+}
+.panther.langued-sable .langue {
+  fill: black !important;
+}
+.panther.gules {
+  fill: none;
+}
+.panther.gules .body,
+.panther.gules .claw,
+.panther.gules .langue {
+  fill: crimson;
+}
+.panther.armed-gules .claw {
+  fill: crimson !important;
+}
+.panther.langued-gules .langue {
+  fill: crimson !important;
+}
+.panther.vert {
+  fill: none;
+}
+.panther.vert .body,
+.panther.vert .claw,
+.panther.vert .langue {
+  fill: green;
+}
+.panther.armed-vert .claw {
+  fill: green !important;
+}
+.panther.langued-vert .langue {
+  fill: green !important;
+}
+.panther.azure {
+  fill: none;
+}
+.panther.azure .body,
+.panther.azure .claw,
+.panther.azure .langue {
+  fill: mediumblue;
+}
+.panther.armed-azure .claw {
+  fill: mediumblue !important;
+}
+.panther.langued-azure .langue {
+  fill: mediumblue !important;
+}
+.panther.or {
+  fill: none;
+}
+.panther.or .body,
+.panther.or .claw,
+.panther.or .langue {
+  fill: gold;
+}
+.panther.armed-or .claw {
+  fill: gold !important;
+}
+.panther.langued-or .langue {
+  fill: gold !important;
+}
+.panther.purpure {
+  fill: none;
+}
+.panther.purpure .body,
+.panther.purpure .claw,
+.panther.purpure .langue {
+  fill: blueviolet;
+}
+.panther.armed-purpure .claw {
+  fill: blueviolet !important;
+}
+.panther.langued-purpure .langue {
+  fill: blueviolet !important;
+}
+.panther.cendree {
+  fill: none;
+}
+.panther.cendree .body,
+.panther.cendree .claw,
+.panther.cendree .langue {
+  fill: grey;
+}
+.panther.armed-cendree .claw {
+  fill: grey !important;
+}
+.panther.langued-cendree .langue {
+  fill: grey !important;
+}
+
 .escallop .outline {
   stroke: black;
   stroke-opacity: 0.3;
