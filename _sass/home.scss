@@ -35,6 +35,10 @@
     border-bottom: 1px solid var(--brand-color-light);
   }
 
+  .post-empty {
+    color: var(--text-color-faded);
+  }
+
   @media screen and (min-width: $width-mobile) {
     .post-item {
       flex-direction: row;

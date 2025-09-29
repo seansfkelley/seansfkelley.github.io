@@ -11,7 +11,7 @@ _Updated {{ entry[0] }}: {{ entry[1] }}_
 {%- comment -%}No while loops in Liquid, so do this dumb shit.{%- endcomment -%}
 
 {%- assign previous = page.previous -%}
-{%- for counter in (0...100) -%}
+{%- for counter in (0..100) -%}
   {%- if previous and previous.draft -%}
     {%- assign previous = previous.previous -%}
   {%- else -%}
