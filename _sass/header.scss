@@ -7,10 +7,11 @@ html {
   // mathmathmath
   // this reproduces the various bits that contribute to the height of the site header in a DRY way
   // this is so when following anchors, we scroll to the right place, since the header is sticky!
-  scroll-padding-top: calc(
-    #{$line-height-base * $font-size-site-title} + #{$header-vertical-spacing * 2 +
-      1}
+  --site-header-height: calc(
+    #{$line-height-base * $font-size-site-title} + #{$header-vertical-spacing * 2 + 1}
   );
+
+  scroll-padding-top: var(--site-header-height);
 }
 
 .site-header {

@@ -1,19 +1,22 @@
+@use "sass:math";
+
 .post-list {
   margin-left: 0;
   padding-left: 0;
   margin: 10px 0;
   list-style: none;
 
-  .post-heading {
-    margin: 0;
+  .post-item {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    align-items: flex-start;
   }
 
   .post-link {
     display: block;
+    font-family: $font-family-header;
     font-weight: 300;
+    line-height: 1.4;
     font-size: 1.5rem;
     margin-right: $spacing;
   }
@@ -21,29 +24,22 @@
   .post-date {
     font-size: $font-size-small;
     color: var(--text-color-faded);
+  }
 
-    &.desktop-only {
-      display: none;
-    }
-
-    &.mobile-only {
-      margin-left: auto;
-    }
+  .post-year-divider {
+    position: sticky;
+    top: var(--site-header-height);
+    font-family: $font-family-header;
+    font-size: 1.5rem;
+    background-color: var(--background-color);
+    border-bottom: 1px solid var(--brand-color-light);
   }
 
   @media screen and (min-width: $width-mobile) {
-    .post-heading {
-      width: unset;
-    }
-
-    .post-date {
-      &.desktop-only {
-        display: block;
-      }
-
-      &.mobile-only {
-        display: none;
-      }
+    .post-item {
+      flex-direction: row;
+      align-items: center;
+      line-height: $line-height-base;
     }
   }
 
