@@ -670,6 +670,9 @@ body[data-theme=light] #theme-switcher:after {
   background-color: var(--background-color);
   border-bottom: 1px solid var(--brand-color-light);
 }
+.post-list .post-empty {
+  color: var(--text-color-faded);
+}
 @media screen and (min-width: 600px) {
   .post-list .post-item {
     flex-direction: row;
