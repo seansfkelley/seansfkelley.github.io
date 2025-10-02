@@ -29,6 +29,7 @@
   .post-year-divider {
     position: sticky;
     top: var(--site-header-height);
+    font-weight: 300;
     font-family: $font-family-header;
     font-size: 1.5rem;
     background-color: var(--background-color);
