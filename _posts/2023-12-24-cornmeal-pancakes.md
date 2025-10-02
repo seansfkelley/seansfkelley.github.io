@@ -29,7 +29,7 @@ Pour the wet ingredients into the dry ones and combine throughly. Add:
 
 - milk
 
-until you have a (mostly) smooth, thick and pourable-with-just-a-little-lumpiness batter. When in doubt, err on the side of thicker: you can always add more milk.
+until you have a (mostly) smooth, thick and pourable-with-just-a-little-lumpiness batter, about ¾ to 1 cup. When in doubt, err on the side of thicker: you can always add more milk.
 
 To make a pancake, put about ¼ cup batter into the center of the pan. (Use a ⅓ cup measure to pour quickly without having to scrape down the sides.)
 
