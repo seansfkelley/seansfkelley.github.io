@@ -39,6 +39,6 @@ Cook until the other side has golden brown patches. (This side will be unavoidab
 
 Serve face up.
 
-![](/assets/cornmeal-pancakes/finished.jpeg)
+![](/assets/cornmeal-pancakes/plated.jpeg)
 
 {% include common-footer.html %}
