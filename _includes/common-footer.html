@@ -28,42 +28,44 @@ _Updated {{ entry[0] }}: {{ entry[1] }}_
   {%- endif -%}
 {%- endfor -%}
 
-<section class="next-previous">
-  {% if previous %}
-  <a
-    href="{{ previous.url }}"
-    class="next-previous-link next-previous-previous"
-    title="Previous Post: {{ previous.title }}"
-  >
-    <span class="next-previous-icon">←</span>
-    <div class="next-previous-name">
-      <div class="next-previous-label">
-        <span class="next-previous-icon">←</span> Previous Post
+{%- unless page.hidden -%}
+  <section class="next-previous">
+    {% if previous %}
+    <a
+      href="{{ previous.url }}"
+      class="next-previous-link next-previous-previous"
+      title="Previous Post: {{ previous.title }}"
+    >
+      <span class="next-previous-icon">←</span>
+      <div class="next-previous-name">
+        <div class="next-previous-label">
+          <span class="next-previous-icon">←</span> Previous Post
+        </div>
+        <div class="next-previous-title">{{ previous.title }}</div>
       </div>
-      <div class="next-previous-title">{{ previous.title }}</div>
-    </div>
-  </a>
-  {% else %}
-  <div class="next-previous-placeholder"></div>
-  {% endif %} {% if next %}
-  <a
-    href="{{ next.url }}"
-    class="next-previous-link next-previous-next"
-    title="Next Post: {{ next.title }}"
-  >
-    <div class="next-previous-name">
-      <div class="next-previous-label">
-        Next Post <span class="next-previous-icon">→</span>
+    </a>
+    {% else %}
+    <div class="next-previous-placeholder"></div>
+    {% endif %} {% if next %}
+    <a
+      href="{{ next.url }}"
+      class="next-previous-link next-previous-next"
+      title="Next Post: {{ next.title }}"
+    >
+      <div class="next-previous-name">
+        <div class="next-previous-label">
+          Next Post <span class="next-previous-icon">→</span>
+        </div>
+        <div class="next-previous-title">{{ next.title }}</div>
       </div>
-      <div class="next-previous-title">{{ next.title }}</div>
-    </div>
-    <span class="next-previous-icon">→</span>
-  </a>
-  {% else %}
-  <div class="next-previous-placeholder"></div>
-  {% endif %}
-</section>
-<hr />
+      <span class="next-previous-icon">→</span>
+    </a>
+    {% else %}
+    <div class="next-previous-placeholder"></div>
+    {% endif %}
+  </section>
+  <hr />
+{%- endunless -%}
 {% if page.tags.size != 0 %}
 <section class="tag-list">
   <i class="tag-label">tags:</i>
