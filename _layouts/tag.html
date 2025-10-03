@@ -7,7 +7,7 @@ layout: base
 
   <ul>
     {%- for post in site.tags[page.tag] -%}
-    {%- unless post.draft -%}
+    {%- unless post.hidden -%}
       <li>
         <a href="{{ post.url }}">{{ post.title }}</a> –
         <span class="post-date">{{ post.date | date: site.date_format }}</span>

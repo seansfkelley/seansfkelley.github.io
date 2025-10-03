@@ -50,6 +50,10 @@
   {% unless site.show_drafts %}
     {% assign posts = posts | where_exp: "post", "post.draft != true" %}
   {% endunless %}
+  {%- comment -%}
+    Added the following line for the forked template.
+  {%- endcomment -%}
+  {% assign posts = posts | where_exp: "post", "post.hidden != true" %}
   {% assign posts = posts | sort: "date" | reverse %}
   {% assign posts_limit = site.feed.posts_limit | default: 10 %}
   {% for post in posts limit: posts_limit %}

@@ -12,7 +12,7 @@ _Updated {{ entry[0] }}: {{ entry[1] }}_
 
 {%- assign previous = page.previous -%}
 {%- for counter in (0..100) -%}
-  {%- if previous and previous.draft -%}
+  {%- if previous and previous.hidden -%}
     {%- assign previous = previous.previous -%}
   {%- else -%}
     {%- break -%}
@@ -21,7 +21,7 @@ _Updated {{ entry[0] }}: {{ entry[1] }}_
 
 {%- assign next = page.next -%}
 {%- for counter in (0...100) -%}
-  {%- if next and next.draft -%}
+  {%- if next and next.hidden -%}
     {%- assign next = next.next -%}
   {%- else -%}
     {%- break -%}
