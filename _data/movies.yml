@@ -1,3 +1,12 @@
+- title: Snatch
+  year: 2000
+  kind: movie
+  link: https://www.imdb.com/title/tt0208092/
+  poster: snatch-2000.jpg
+  watched: 2025-10-03
+  dont-watch-this: because it's just not as good as [Lock, Stock and Two Smoking Barrels](#lock-stock-and-two-smoking-barrels-1998).
+  more-thoughts: |
+    I had remembered this as a more refined version of Lock, Stock, but it's actually the reverse: it feels like ideas that didn't make it into Lock, Stock were cobbled together here but didn't cohere. The plot was surprisingly difficult to follow and while any given scene was a good time, I won't remember much beyond Benicio del Toro's and Brad Pitt's excellent characters.
 - title: The Accountant
   year: 2016
   kind: movie
