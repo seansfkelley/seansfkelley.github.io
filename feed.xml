@@ -1,4 +1,65 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-10-05T08:23:53+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Hummus Recipe</title><link href="https://blog.sea.nkelley.me/hummus" rel="alternate" type="text/html" title="Hummus Recipe" /><published>2025-09-22T00:00:00+00:00</published><updated>2025-09-22T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/hummus</id><content type="html" xml:base="https://blog.sea.nkelley.me/hummus"><![CDATA[<!-- Only show unit switcher if js is enabled: hide by default. -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-10-13T18:28:47+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Yogurt Recipe</title><link href="https://blog.sea.nkelley.me/yogurt" rel="alternate" type="text/html" title="Yogurt Recipe" /><published>2025-10-13T00:00:00+00:00</published><updated>2025-10-13T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/yogurt</id><content type="html" xml:base="https://blog.sea.nkelley.me/yogurt"><![CDATA[<p>Makes as much yogurt as milk you put in. Scales up or down indefinitely.</p>
+
+<p>In addition to the ingredients, you’ll need one or more containers equalling the volume of milk you use, an ice bath, and a sous vide machine (or a few towels).</p>
+
+<p>If you use a sous vide machine, this recipe will require about 4 hours of fermentation. Make sure the containers are tall enough or seal tightly enough that they will not leak into the bath.</p>
+
+<p>If you do not use a sous vide machine, the recipe will probably require more than 4 hours of fermentation, and the final product will likely be thinner. You may also want to start the fermentation <span class="unit metric">3°C</span><span class="unit imperial">5°F</span> hotter, to keep the yogurt cultures in their preferred temperature range for longer (but not too hot!).</p>
+
+<p>You can reculture some store-bought yogurts, as long as they specify they have live cultures, which you can find in both cheap and expensive yogurts.</p>
+
+<hr />
+
+<p>Heat</p>
+
+<ul>
+  <li>½ gallon whole milk</li>
+</ul>
+
+<p>in a pot over medium heat until it reaches <span class="unit metric">95°C</span><span class="unit imperial">200°F</span>, stirring frequently to minimize scalding, and skimming off the skin as necessary.</p>
+
+<p>Prepare an ice bath for the milk. Chill, stirring frequently to ensure even cooling, until it reaches <span class="unit metric">45°C</span><span class="unit imperial">110°F</span>.</p>
+
+<p>Add</p>
+
+<ul>
+  <li>½ cup yogurt</li>
+</ul>
+
+<p>to a small bowl. Spoon approximately ¼ cup of milk into the yogurt, stirring to combine, then repeat a couple more times until the yogurt is warmed and diluted.</p>
+
+<p>Pour the yogurt mixture back into the milk pot, and stir thoroughly.</p>
+
+<p>If you’re using a sous vide machine, set it to <span class="unit metric">45°C</span><span class="unit imperial">110°F</span>. Divide the milk mixture into your containers, and put them in the sous vide bath. Sous vide for 4 hours.</p>
+
+<p>If you are not using a sous vide machine, leave the milk mixture in the pot and wrap it completely with towels. Set it in a warm place in the kitchen for at least 4 hours.</p>
+
+<p>The yogurt is done when it reaches your desired consistency and tartness. Longer fermentations will thicken the yogurt (to a limit) and make it more tart. Remember that cold yogurt is thicker! If you want to make Greek yogurt, strain through cheesecloth or a fine mesh strainer until your desired consistency is reached.</p>
+
+<hr />
+
+<section class="next-previous">
+    
+    <a href="/hummus" class="next-previous-link next-previous-previous" title="Previous Post: Hummus Recipe">
+      <span class="next-previous-icon">←</span>
+      <div class="next-previous-name">
+        <div class="next-previous-label">
+          <span class="next-previous-icon">←</span> Previous Post
+        </div>
+        <div class="next-previous-title">Hummus Recipe</div>
+      </div>
+    </a>
+     
+    <div class="next-previous-placeholder"></div>
+    
+  </section>
+<hr />
+
+<section class="tag-list">
+  <i class="tag-label">tags:</i>
+  
+  <a class="tag-link" href="/tag/recipe">recipe</a> 
+</section>]]></content><author><name></name></author><category term="recipe" /><summary type="html"><![CDATA[Makes as much yogurt as milk you put in. Scales up or down indefinitely.]]></summary></entry><entry><title type="html">Hummus Recipe</title><link href="https://blog.sea.nkelley.me/hummus" rel="alternate" type="text/html" title="Hummus Recipe" /><published>2025-09-22T00:00:00+00:00</published><updated>2025-09-22T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/hummus</id><content type="html" xml:base="https://blog.sea.nkelley.me/hummus"><![CDATA[<!-- Only show unit switcher if js is enabled: hide by default. -->
 <p><span id="unit-switcher-wrapper" style="display: none">
   Units: 
   <a href="#" id="unit-switcher-metric">metric</a>
@@ -38,7 +99,15 @@
       </div>
     </a>
      
-    <div class="next-previous-placeholder"></div>
+    <a href="/yogurt" class="next-previous-link next-previous-next" title="Next Post: Yogurt Recipe">
+      <div class="next-previous-name">
+        <div class="next-previous-label">
+          Next Post <span class="next-previous-icon">→</span>
+        </div>
+        <div class="next-previous-title">Yogurt Recipe</div>
+      </div>
+      <span class="next-previous-icon">→</span>
+    </a>
     
   </section>
 <hr />
@@ -1216,88 +1285,4 @@
       <p>My threat model does not include someone going to the effort to correlate things like IPs and time of access to figure out that my multiple Google accounts are actually the same physical person. I want to not be okay with that, but I have to draw the line somewhere. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
-</div>]]></content><author><name></name></author><summary type="html"><![CDATA[Internet privacy is something I have been thinking about increasingly often over the last decade, during which I’ve been slowly reducing my digital footprint (and, more aggressively, the subtly-different digital exhaust). The process is tedious, it’s difficult to understand how well it’s working, and I sometimes wonder if it’s worth it, since credit bureaus and insurance companies are basically handing out your PII to hackers.]]></summary></entry><entry><title type="html">The Blast Radius of Inconsideracy</title><link href="https://blog.sea.nkelley.me/blast-radius-of-inconsideracy" rel="alternate" type="text/html" title="The Blast Radius of Inconsideracy" /><published>2024-08-31T00:00:00+00:00</published><updated>2024-08-31T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/blast-radius-of-inconsideracy</id><content type="html" xml:base="https://blog.sea.nkelley.me/blast-radius-of-inconsideracy"><![CDATA[<p>Two well-known facts:</p>
-
-<ul>
-  <li>New Yorkers are assholes.</li>
-  <li>Anyone, put behind the wheel of a car, becomes a monster.</li>
-</ul>
-
-<p>The unholy combination of these things yields some of the most <em>effortful</em> douchebaggery you’ll find anywhere in the world. Take, for instance, my Halloween 2022: literally hundreds of children and their parents milling around combined with a partial street closure created some bad traffic on the block, which some jackass in a minivan decided to keep everyone within earshot informed about by leaning on his horn for ten straight minutes uninterrupted. Un. <em>In.</em> <strong><em>Terr.</em></strong> <strong><em>UPTED.</em></strong> TENFULLMINUTES.</p>
-
-<p>While unnecessarily excessive honking is one of the more archetypical New York examples, the city provides triggers for any pet peeve imaginable:</p>
-
-<ul>
-  <li>standing in doorways</li>
-  <li>blocking the sidewalk</li>
-  <li>blasting music</li>
-  <li>blindingly bright signage</li>
-  <li>4 AM yelling</li>
-  <li>bad parking jobs</li>
-  <li>name-calling</li>
-  <li>walking too slowly</li>
-  <li>entering while people are exiting</li>
-  <li>cutting lines</li>
-  <li>video advertisements</li>
-  <li>manspreading</li>
-  <li>not holding doors</li>
-</ul>
-
-<p>…you get the point. If it’s obnoxious and in public, New York has it in spades.</p>
-
-<p>Moving along from the venting, I present you another true fact:</p>
-
-<ul>
-  <li><a href="https://en.wikipedia.org/wiki/Negativity_bias">Negative events are remembered and internalized better than positive ones.</a></li>
-</ul>
-
-<p>This is some kind of reptile-brain survival instinct we’re stuck with. What it means is that the only way to tolerate life in New York is to at least become inured to it – “it” being New York and everything in it, to be clear, in case you’re still uncertain of my stance on this matter. Most likely, you’ll participate passively since some amount of assholery just inadvertently happens in the course of trying to get where you’re going. For a chosen few, like our minivan driver, you’ll make it a point to participate actively.</p>
-
-<p>It does not take many people doing this, passive or active, to make life miserable in what I call the</p>
-
-<p><em><strong>~ ~ ~ Blast Radius of Inconsideracy ~ ~ ~</strong></em></p>
-
-<p>(Hey, it’s the title of the post!)</p>
-
-<p>For an explanatory example, I return to honking (for which <a href="/honking">I have already developed a solution</a>, by the way, and you’re welcome): if someone cuts you off, you become angry. If you honk at them, you reflect some of that anger back at them, which is fine, but also at everyone within earshot. Venting does help, but not much, so all-in it’s actually <em>you</em> that has contributed far more shittiness to the environment than the person who cut you off. Congratulations, you’re the villain now. It escalates from there.</p>
-
-<p>These interactions happen everywhere. What’s unique about New York in my experience is the frequency of them observed by any one person. If you saw the correct half of Barbenheimer, you may have learned a thing or two about self-sustaining nuclear reactions: it’s not enough to have high-energy matter flying about, you also need enough matter crammed into a small enough space that collisions are frequent enough to keep the whole thing going, and in fact, you can start such a self-sustaining reaction simply by piling enough matter in one place <em>without</em> any explicit ignition.</p>
-
-<p>I think you get the analogy,<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> but I want to put a finer point on that last part: the culture of the schmuck emerges not necessarily from something inherent about New Yorkers, even ones who voluntarily move or stay there presumably knowing what they’re signing up for, but from both the sheer quantity of people and their density, compounded over the years. It arises from the blast radius of inconsideracy, from inevitable negative interactions that irradiate everyone nearby with their negativity. It’s not good.</p>
-
-<p>And that’s it, really. I don’t have any bright ideas on how to improve it. Do you?</p>
-
-<hr />
-
-<section class="next-previous">
-    
-    <a href="/trivia" class="next-previous-link next-previous-previous" title="Previous Post: What Makes Good Trivia?">
-      <span class="next-previous-icon">←</span>
-      <div class="next-previous-name">
-        <div class="next-previous-label">
-          <span class="next-previous-icon">←</span> Previous Post
-        </div>
-        <div class="next-previous-title">What Makes Good Trivia?</div>
-      </div>
-    </a>
-     
-    <a href="/degoogling" class="next-previous-link next-previous-next" title="Next Post: Extricating Myself from Google">
-      <div class="next-previous-name">
-        <div class="next-previous-label">
-          Next Post <span class="next-previous-icon">→</span>
-        </div>
-        <div class="next-previous-title">Extricating Myself from Google</div>
-      </div>
-      <span class="next-previous-icon">→</span>
-    </a>
-    
-  </section>
-<hr />
-
-<div class="footnotes" role="doc-endnotes">
-  <ol>
-    <li id="fn:1" role="doc-endnote">
-      <p>But if you don’t, I did the work for you: “it’s not enough to have angry people spreading negativity, you also need enough people crammed into a small enough space that bad interactions are frequent enough to keep the whole thing going, and in fact, you can start such a self-sustaining culture simply by piling enough people into one place <em>without</em> any explicit inciting event.” <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
-  </ol>
-</div>]]></content><author><name></name></author><summary type="html"><![CDATA[Two well-known facts:]]></summary></entry></feed>
+</div>]]></content><author><name></name></author><summary type="html"><![CDATA[Internet privacy is something I have been thinking about increasingly often over the last decade, during which I’ve been slowly reducing my digital footprint (and, more aggressively, the subtly-different digital exhaust). The process is tedious, it’s difficult to understand how well it’s working, and I sometimes wonder if it’s worth it, since credit bureaus and insurance companies are basically handing out your PII to hackers.]]></summary></entry></feed>
