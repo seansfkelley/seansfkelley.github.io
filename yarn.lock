@@ -793,6 +793,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"juxtaposejs@npm:^1.1.6":
+  version: 1.1.6
+  resolution: "juxtaposejs@npm:1.1.6"
+  checksum: 10/d93806ec3fd1ea999168f880a3fec950725d15a1eee7f54b9199aad337a7d90b4dd1d36c5f9c6e22f52ab950d5c9611a10236560303bcb6d3c2b972db88165ef
+  languageName: node
+  linkType: hard
+
 "lru-cache@npm:^10.0.1, lru-cache@npm:^10.2.0":
   version: 10.4.3
   resolution: "lru-cache@npm:10.4.3"
@@ -1128,6 +1135,7 @@ __metadata:
   dependencies:
     "@types/nearley": "npm:^2.11.2"
     "@types/node": "npm:^22.14.1"
+    juxtaposejs: "npm:^1.1.6"
     nearley: "npm:^2.20.1"
     node-html-parser: "npm:^6.1.13"
     tsx: "npm:^4.19.0"

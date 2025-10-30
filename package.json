@@ -6,6 +6,7 @@
   "dependencies": {
     "@types/nearley": "^2.11.2",
     "@types/node": "^22.14.1",
+    "juxtaposejs": "^1.1.6",
     "nearley": "^2.20.1",
     "node-html-parser": "^6.1.13",
     "tsx": "^4.19.0",
