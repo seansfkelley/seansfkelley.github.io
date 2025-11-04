@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-11-04T22:05:48+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">My Code Style</title><link href="https://blog.sea.nkelley.me/code-style" rel="alternate" type="text/html" title="My Code Style" /><published>2025-11-04T00:00:00+00:00</published><updated>2025-11-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/code-style</id><content type="html" xml:base="https://blog.sea.nkelley.me/code-style"><![CDATA[<ul id="markdown-toc">
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-11-04T22:13:33+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">My Code Style</title><link href="https://blog.sea.nkelley.me/code-style" rel="alternate" type="text/html" title="My Code Style" /><published>2025-11-04T00:00:00+00:00</published><updated>2025-11-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/code-style</id><content type="html" xml:base="https://blog.sea.nkelley.me/code-style"><![CDATA[<ul id="markdown-toc">
   <li><a href="#what-this-is" id="markdown-toc-what-this-is">What This Is</a>    <ul>
       <li><a href="#use-engineering-judgement" id="markdown-toc-use-engineering-judgement">Use Engineering Judgement</a></li>
     </ul>
@@ -476,7 +476,15 @@
       <p>I tried to come up with non <em>-tion</em> words, but those nounified verbs come up all the time! <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
-</div>]]></content><author><name></name></author><category term="programming" /><category term="reference" /></entry><entry><title type="html">Yogurt Recipe</title><link href="https://blog.sea.nkelley.me/yogurt" rel="alternate" type="text/html" title="Yogurt Recipe" /><published>2025-10-13T00:00:00+00:00</published><updated>2025-10-13T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/yogurt</id><content type="html" xml:base="https://blog.sea.nkelley.me/yogurt"><![CDATA[<p>Makes as much yogurt as milk you put in. Scales up or down indefinitely.</p>
+</div>]]></content><author><name></name></author><category term="programming" /><category term="reference" /></entry><entry><title type="html">Yogurt Recipe</title><link href="https://blog.sea.nkelley.me/yogurt" rel="alternate" type="text/html" title="Yogurt Recipe" /><published>2025-10-13T00:00:00+00:00</published><updated>2025-10-13T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/yogurt</id><content type="html" xml:base="https://blog.sea.nkelley.me/yogurt"><![CDATA[<!-- Only show unit switcher if js is enabled: hide by default. -->
+<p><span id="unit-switcher-wrapper" style="display: none">
+  Units: 
+  <a href="#" id="unit-switcher-metric">metric</a>
+   • 
+  <a href="#" id="unit-switcher-imperial">stupid</a>
+</span></p>
+
+<p>Makes as much yogurt as milk you put in. Scales up or down indefinitely.</p>
 
 <p>In addition to the ingredients, you’ll need one or more containers equalling the volume of milk you use, an ice bath, and a sous vide machine (or a few towels).</p>
 
@@ -491,7 +499,7 @@
 <p>Heat</p>
 
 <ul>
-  <li>½ gallon whole milk</li>
+  <li><span class="unit metric">2 liters</span><span class="unit imperial">½ gallon</span> whole milk</li>
 </ul>
 
 <p>in a pot over medium heat until it reaches <span class="unit metric">95°C</span><span class="unit imperial">200°F</span>, stirring frequently to minimize scalding, and skimming off the skin as necessary.</p>
@@ -501,10 +509,10 @@
 <p>Add</p>
 
 <ul>
-  <li>½ cup yogurt</li>
+  <li><span class="unit metric">125ml</span><span class="unit imperial">½ cup</span> yogurt</li>
 </ul>
 
-<p>to a small bowl. Spoon approximately ¼ cup of milk into the yogurt, stirring to combine, then repeat a couple more times until the yogurt is warmed and diluted.</p>
+<p>to a small bowl. Spoon approximately <span class="unit metric">50ml</span><span class="unit imperial">¼ cup</span> of milk into the yogurt, stirring to combine, then repeat a couple more times until the yogurt is warmed and diluted.</p>
 
 <p>Pour the yogurt mixture back into the milk pot, and stir thoroughly.</p>
 
@@ -545,7 +553,7 @@
   <i class="tag-label">tags:</i>
   
   <a class="tag-link" href="/tag/recipe">recipe</a> 
-</section>]]></content><author><name></name></author><category term="recipe" /><summary type="html"><![CDATA[Makes as much yogurt as milk you put in. Scales up or down indefinitely.]]></summary></entry><entry><title type="html">Hummus Recipe</title><link href="https://blog.sea.nkelley.me/hummus" rel="alternate" type="text/html" title="Hummus Recipe" /><published>2025-09-22T00:00:00+00:00</published><updated>2025-09-22T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/hummus</id><content type="html" xml:base="https://blog.sea.nkelley.me/hummus"><![CDATA[<!-- Only show unit switcher if js is enabled: hide by default. -->
+</section>]]></content><author><name></name></author><category term="recipe" /><summary type="html"><![CDATA[Units:  metric  •  stupid]]></summary></entry><entry><title type="html">Hummus Recipe</title><link href="https://blog.sea.nkelley.me/hummus" rel="alternate" type="text/html" title="Hummus Recipe" /><published>2025-09-22T00:00:00+00:00</published><updated>2025-09-22T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/hummus</id><content type="html" xml:base="https://blog.sea.nkelley.me/hummus"><![CDATA[<!-- Only show unit switcher if js is enabled: hide by default. -->
 <p><span id="unit-switcher-wrapper" style="display: none">
   Units: 
   <a href="#" id="unit-switcher-metric">metric</a>
