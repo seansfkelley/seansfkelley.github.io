@@ -10,7 +10,7 @@ anchor_headings: true
 
 # What This Is
 
-This is my code style. "Style" in the sense of concepts represented in code, and how they are placed relative to each other and explained to the reader, not in the sense of where I put the curly brackets.
+This is my code style. "Style" here means how concepts are represented, structured and explained to the reader, not where I put the curly brackets.
 
 There is no objectively correct answer regarding this kind code of style, but this document outlines the main pillars of mine. As such, they are also the things I look for in code reviews. I refer to this document when doing code reviews (which is probably why you're here).
 
@@ -46,9 +46,9 @@ Don't do manually what can be done automatically. Put the work in now to find, c
 
 ## Strive to Explain Intent
 
-Code is an unambiguous, precise specification of behavior, so treat it like one. Computers don't need to have code explained to them, but people do. Write your code so it's clear what you intend to have happen, so that when it inevitably doesn't, someone can understand what you were trying to do. You might not be there to explain what you meant.
+Code is an unambiguous, precise specification of behavior, so treat it like one. Computers don't need to have code explained to them, but people do. Write your code so it's clear what you _intend_ to have happen, so that when it inevitably doesn't, someone besides you -- or just your future self -- can understand how to fix it properly.
 
-This is an umbrella term, broader than the oft-cited "don't be clever". Removing or avoiding cleverness is often a consequence of striving to explain intent.
+This supersedes the oft-cited "don't be clever": removing or avoiding cleverness is common result of striving to explain intent.
 
 ## Write Quality Code the First Time
 
@@ -64,9 +64,11 @@ What's usually missed when this is cited is that (1) it takes a lot experience t
 
 # Superficial Code Style
 
+A quick diversion into what "style" usually means to state some core high-level principles. We're still not talking about curly brackets.
+
 ## Consistency
 
-Whoever said "consistency is the hobgoblin of little minds" never had to work in a multi-million line codebase. Counterintuitively, it is a tool of the practitioner, rather than a fetish of the theoretician.
+Whoever said "consistency is the hobgoblin of little minds" never had to work in a multi-million line codebase. Rather, it is a tool of the practitioner, not a fetish of the theoretician.
 
 Consistency is how you can do massive code reviews and not trip over every line (such reviews _do_ happen: sorry idealists).
 
@@ -78,23 +80,23 @@ Consistency is how I stay sane.
 
 ## Automated Formatters
 
-Automated formatters like Prettier and Black are to be considered correct, _even in weird edge cases_. When there is a conflict on style, the automated formatter is correct. Modern bikesheds come pre-painted.
+Automated formatters like Prettier and Black are to be considered correct, _even in weird edge cases_. When there is a conflict on style, the automated formatter is correct. Modern bikesheds come pre-painted. Spend your valuable time elsewhere.
 
 ### Exception: Multi-line Regexes
 
-Regexes are always hard to read. Unfortunately, long regexes are sometimes necessary. In the case where you cannot comment on a long nasty regex by pointing to some documentation (e.g. the classic [email regex StackOverflow question](https://stackoverflow.com/questions/201323/how-to-validate-an-email-address-using-a-regular-expression)), it's probably a good idea to break your regex up onto multiple lines and explain what each piece is doing.
+Regexes are always hard to read. Unfortunately, long regexes are sometimes necessary. In the case where you cannot comment on a long nasty regex by pointing to [some documentation](https://stackoverflow.com/questions/201323/how-to-validate-an-email-address-using-a-regular-expression) (or your language doesn't have [`RegexBuilder`](https://developer.apple.com/documentation/regexbuilder) _\*swoon\*_), it's probably a good idea to break your regex up onto multiple lines and explain what each piece is doing.
 
 In this case, automated formatters are likely to wreck your significant indentation or inline sections that were separated for clarity and should therefore be disabled if they do not understand your multi-line regex.
 
 ### Exception: Cross-language, Byte-identical Find-replace
 
-Some languages have syntactic overlap, but often have differing formatting rules. In the _exceptionally rare_\* circumstances where it's valuable to have the same sequence of characters across two languages, disable the formatter for that block.
-
-\* This has happened exactly once in my programming life (both professional and personal), but I want this document to be complete, so here it is. In particular, I wanted to find exact matches across JavaScript and JSON files, but JSON only permits double-quotes while JavaScript's Prettier formatter was configured for single quotes. Notably, this linting tool was later rewritten to something simpler and more expressive such that maintaining formatting consistency became irrelevant (and impossible), which is the ideal outcome.
+Some languages have syntactic overlap, but often have differing formatting rules. In the _exceptionally rare_[^1] circumstances where it's valuable to have the same sequence of characters across two languages, disable the formatter for that block.
 
 # Comments
 
 Comments should be used to explain _why_, not _what_ and definitely never _how_.
+
+This section refers only to regular comments, not doc comments, which serve an entirely different purpose.
 
 ## When to Use Comments
 
@@ -106,34 +108,34 @@ Comments are suitable only when there is no reasonable naming or organization of
 
 ## Examples of Useful Comments
 
-Useful comments are those that explain necessary but unusual code constructs, such as:
+Useful comments are those that explain necessary but unusual code constructs, such as those that:
 
-- Code taken from the internet.
-- Working around weird APIs.
-- Non-obvious side-effects.
-- Satisfying some automated tool such as a linter.
-- Magic constants.
-- Hacks.
+- are hacks
+- have magic constants
+- have non-obvious side-effects
+- work around weird APIs
+- satisfy some automated tool, such as a linter
+- intentionally preserve style for compatibility or historical reasons
 
 ## Examples of Extraneous Comments
 
-Common cases where comments are used and shouldn't be:
+Common instance of unjustifiable comments are those that:
 
-- Explaining an inline constant.
+- explain an inline constant
   - Instead, hoist it to a SHOUTING_CASE value, and if it still needs explanation, then consider a comment.
   - In the specific cases of numbers or strings, it can sometimes be useful to break the derivation of the value out into steps for emphasis, e.g., `const FIFTEEN_MINUTES = 15 * 60 * 1000;`
-- Explaining a boolean parameter at a call site.
-  - Instead, consider rewriting the called function to accept an enumeration or keyword arguments, forcing the call site to be clearer.
-- Restating adjacent code, e.g., annotating the line `sorted_values = sorted(values, key=lambda v: v.name)` with `# sort the values by name`.
+- explain a boolean parameter at a call site
+  - Instead, consider [rewriting the called function to accept an enumeration](#enumerations-v-booleans) (or keyword arguments), forcing the call site to be clearer.
+- restate adjacent code in prose
   - Instead, delete the comment.
 
 # Naming
 
-Good names go a long way towards pre-empting comments. Following certain conventions make the code-reading experience smoother by not surprising your reader. They can even speed up code-writing by making you think _"What exactly am I trying to express here?"_ rather than barging ahead into a dead end with the first thing that comes to mind.
+Good names go a long way towards pre-empting reader questions and code comments. Following certain conventions make the code-reading experience smoother by not surprising your reader. They can even speed up code-writing by forcing you to stop and think _"What exactly am I trying to express here?"_ rather than barging ahead into a dead end with whatever control flow first comes to mind.
 
 ## Names Should Be At Least Two Words
 
-The clarity of any given name goes _way_ up from one word to two. Look around you: how many tables, chairs, windows, devices, utensils, tools, vehicles or people can you uniquely identify by adding just one adjective or locator to, well, "table", "chair", "window", etc.? When in doubt, overshare.
+The clarity of any given name goes _way_ up from one word to two. Look around you: how many tables, chairs, windows, devices, utensils, tools, vehicles or people can you uniquely identify in your current "scope" by adding just one adjective or locator to, well, "table", "chair", "window", etc.? When in doubt, overshare.
 
 **Exception:** in highly-generic contexts, you might not be able to come up with a better name than `row` or `data`.
 
@@ -149,18 +151,16 @@ Prefer well-known words like "get" rather than synonyms like "obtain". Use borin
 
 ## Avoid Most Abbreviations
 
-Your editor has autocomplete and your ability to parse streams of letters is not the bottleneck to your understanding. Don't be afraid of _authentication_, _rasterization_ or even _canonicalization_.\* It's better to spend the extra milliseconds now and avoid ambiguity and confusion later.
+Your editor has autocomplete and your ability to parse streams of letters is not the bottleneck to your understanding. Don't be afraid of _authentication_, _rasterization_ or even _canonicalization_.[^2] It's better to spend the extra milliseconds now and avoid ambiguity and confusion later.
 
 If you really want to abbreviate things, only do it if they are at least one of:
   - _common in English_, such as "appt" for "appointment"
   - _obvious in context_, such as referring to the `mag` of a `Vector3`
   - _idiomatic_, such as looping with `i` and `j`
 
-\* I tried to come up with non _-tion_ words, but those nounified verbs come up all the time!
-
 ## Initialisms are Words
 
-Treat initialisms and acronyms as words for the purposes of casing. Don't write `OWASPVPNHTTPHandler`; write `OwaspVpnHttpHandler`. I hope this example is self-explanatory.
+Treat initialisms and acronyms as words for the purposes of casing. Don't write `AWSIAMJSONParser`; write `AwsIamJsonParser`. I hope this example is self-explanatory. (If not, how about `JPEGEXIFGPSLookup` or `XMLDTDURIResolver`?)
 
 As a bonus, some tools (e.g. IntelliJ) have built-in fuzzy-search behavior that returns higher-quality results when initialisms are capitalized as words.
 
@@ -176,11 +176,11 @@ Variables and parameters should have noun-y names that communicate _what_ role t
 
 Empirically, boolean functions and values benefit from some special considerations. They should be phrased...
   - _declaratively_, like `is_something()` rather than `check_if_something()`.
-  - _positively_, e.g. `is_something_enabled`, not negatively, e.g., `is_something_disabled`. This reduces indirection by one level and helps avoid confusing double negatives.
+  - _positively_, e.g. `is_something_enabled`, not negatively, e.g., `is_something_disabled`. This reduces indirection by one level and helps avoid unnecessary double negatives.
 
 Consider [replacing boolean values by a two-state enumeration](#enumerations-v-booleans).
 
-# Managing Complexity
+# Managing State
 
 In most run-of-the-mill programming, the complexity you and your reader have to deal with comes from having to track three things:
 
@@ -190,24 +190,31 @@ In most run-of-the-mill programming, the complexity you and your reader have to 
 
 Designing your code in order to reduce the size of the state space introduced by these three things can significantly reduce the surface area for bugs and make the code easier to both read and write.
 
+All three of these have overlap with each other and with [types](#types), so I have tried to assign each pattern to the context it interacts with the most.
+
 ## Control Flow
 
 Reduce the number of possible paths control can take through a given piece of code (the [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity)). Ideally, this means eliminating branches entirely.
 
 ### Match `if` with `else` Whenever Possible
 
-`if` blocks without `else`s often look like a mistake. The entire rest of the scope is still controlled by the `if`, but now implicitly. If you must use a standalone `if`, spend the space saying `else { /* noop */ }` so there is no doubt. Fall-through in `switch` is widely disliked and usually only permitted with an explanation or at least acknowledgement; this is little different.
+`if` blocks without `else`s often look like a mistake. The entire rest of the scope is still controlled by the `if`, but implicitly. If you must use a standalone `if`, spend the space saying `else { /* noop */ }` so there is no doubt. Fall-through in `switch` is widely disliked and usually only permitted with an explanation or at least acknowledgement; this is little different.
 
-As a special case, many `if`s-without-`else`s are early returns, and can almost always be:
+Many `if`s-without-`else`s are early returns. If these are grouped at the top of a function, they are permissible, but they will often be better expressed by one of the constructs described in the next sections, such as [assertions](#use-assertions-to-supplement-types) or [eliminating redundant cases](#combine-and-eliminate-cases).
 
-- reframed as an assertion, which unlike a corresponding `if`-then-`throw`/`raise` will be phrased both positively and declaratively
-- rolled into one of the existing edge or common cases you already handle, such as not giving special treatment to empty collection types
+Early returns anywhere but at the top of a function are usually more surprising than helpful, and should be avoided if the function is more than a loop or two.
 
 Avoiding lone `if`s has the added benefit of being able to more reliably use indentation as a reminder and emphasis for which statements are subject to which control flow.
 
+### Use Assertions to Supplement Types
+
+Not all valid inputs can be expressed in the type system. Assertions are a clear and compact expression of those preconditions which cannot be. They should be phrased positively -- "this must be true to continue" not "if this is not true, stop" -- and are necessarily declarative in style.
+
+Standalone `if`s whose body is a `throw`/`raise` are assertions in disguise, but phrased in reverse and introducing additional unnecessary scopes.
+
 ### Combine (and Eliminate) Cases
 
-All techniques for eliminating branches boil down to identifying cases which appear distinct, but are not. Essentially distinct things often manifest as distinct types, and cannot be handled the same way. If you have multiple cases handling values of the same type, look closer: the cases may be more similar than they first appear. Finding a way to combine them might reveal and underlying truth and more correspondingly more elegant solution.
+All techniques for eliminating branches boil down to identifying cases which appear distinct, but are not. Essentially distinct things often manifest as distinct types, and cannot be handled the same way. If you have multiple cases handling values of the same type, look closer: the cases may be more similar than they first appear. Finding a way to combine them might reveal an underlying truth and a correspondingly more elegant solution.
 
 A very common case of unnecessarily distinct cases is nullable collection types. Is a null array a meaningfully distinct thing from an empty one? Usually, not: in both cases, you are going to do zero iterations. Use an empty array, and unconditionally iterate, instead of null checking.
 
@@ -219,7 +226,7 @@ A series of three independent `if`s in a row doing is-instance checks will not a
 
 This technique can often be used to great effect inside loop bodies that would otherwise have to be written with `break` or `continue`.
 
-### Branch in the Right Place
+### Branch in the Right Place (or: Inline _and_ Factor Out)
 
 Moving a branch higher or lower in the control flow can make a huge difference.
 
@@ -229,11 +236,21 @@ This can go the other way, too: sometimes readability is improved if you drop an
 
 In both cases, the goal is to find that crossover point that minimizes both the number of branches, and the number of _kinds_ of branches (or things that are being branched on).
 
+When considering functions specifically, this manifests as the decision to inline or factor out a function body. Inlining can eliminate redundancy such as large parameter sets, whereas factoring out can reduce variable scopes, and both can eliminate control flow redundancy in surrounding code.
+
 ### Functions Decide _or_ Act, Not Both
 
 One generally thinks of a function as code that effects a change to something, but oftentimes the complexity instead comes in _choosing_ which change to make. Unless one or both of "decide" and "act" are simple, split them into separate functions, perhaps even one-use functions. This almost always yields a very clear separation of concerns that can be effectively tested and might enable some deduplication (e.g. multiple decisions that end up acting the same).
 
+You may have to introduce a new type if the decision cannot be represented as a primitive type. This is often a blessing in disguise; this new type will likely make it easier to identify which cases are meaningfully distinct and may point the way to a simpler implementation of either or both of the "decide" or "act" phases.
+
 In rare cases, making this change and noticing that many decisions boil down to the same act with tiny variations can lead to noticing that _all_ decisions boil down to the same act, which removes the "decide" part entirely.
+
+### Use Exhaustiveness Checking
+
+Instead of carefully inspecting whether every input type has as corresponding branch, make the type checker do it. Many languages have first-class exhaustiveness checking ([1](https://gibbok.github.io/typescript-book/book/exhaustiveness-checking/), [2](https://rustc-dev-guide.rust-lang.org/pat-exhaustive-checking.html), [3](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow/#Switch)...), so when you modify your type, which is the source of truth for what your code is capable of, the language ensures all usages are up-to-date.
+
+Exhaustiveness checking is so useful that I routinely reshape or augment existing types specifically so that they can fit the language's preferred style for it. This falls under "solve all problems once". Yes, I am an admitted [type system maximalist](https://brooker.co.za/blog/2020/06/23/code.html).
 
 ## Variable Scope
 
@@ -261,37 +278,77 @@ Some languages make this more ergonomic than others. Languages with blocks-as-va
 
 ## Mutation and Side Effects
 
-Try to reduce the number of possible states your program can be in. Ideally, values can be initialized onces and never changed.
+Try to reduce the number of possible states your program can be in. Ideally, values can be initialized once and never changed.
 
-TODO: In languages that support it, declaring variables constant (the irony!) is recommended in all cases where it's possible. The majority of modern application glue code is not a performance bottleneck, and writing fast but unreadable code is rarely the best way to scale.
+### Prefer Constant Variables
 
-### Techniques
+In languages that support it, declaring variables constant (heh) is recommended in all cases where it's possible. The majority of modern application glue code is not a performance bottleneck, and making the computer go slightly out of the way to compute and store a series of constants is rarely going to harm scalability.
 
-TODO
+Constants are both easier for a human to reason about, and may allow compilers and other tools to make optimizations under the hood to reclaim any lost performance. In extreme cases, code without mutation may run faster than faster-looking mutation-based code because optimizations like vectorization become possible.
 
-- declare variables requiring complex control flow in blocks or dedicated functions
-- eliminate variables that can be derived from another
+### Minimize Mutations' Blast Radius
 
-# Inlining v. Factoring Out
+Where mutation cannot be avoided for practical reasons, encapsulate it in a (testable!) implementation where consumers can mostly or entirely ignore the grisly details. In many languages, this is a perfect application of classes, which can hide all intermediate/book-keeping values away from the consumer and only allow known-good operations at the right times. See also: [state machines](https://en.wikipedia.org/wiki/State_machine).
 
-# Lean on the Type System
+Functional-like programming is increasingly prevalent in historically-imperative languages. This is a Good Thing, and means that classes can be reserved as a signpost saying "here be dragons", rather than a Java-style code organization catch-all.
 
-A blog post once used the phrase "type system maximalist". I am a type system maximalist, to the degree that our languages are able to express it.
+# Types
 
-https://brooker.co.za/blog/2020/06/23/code.html
+This section is general recommendations for types that do not fit in a narrower context.
 
-## Something About Assertions
+See also [exhaustiveness checking](#use-exhaustiveness-checking).
 
-# Enumerations v. Booleans
+## Enumerations v. Booleans
 
-A common place I've seen this distinction sneak up on people is when boolean user settings have defaults. Do you support a "don't care, always use the default" option? This is often represented as a nullable boolean value. A nullable boolean value has 3 states. Doesn't sound much like a boolean anymore, and as code changes accumulate over time and the team changes, it can be hard to understand if these nullable booleans were intentional or an oversight (perhaps because your SQL dialect defaults columns to being nullable and you didn't know). If you store a 3-value enumeration, all ambiguity is removed at lowest level and source of truth.
+Booleans are a two-valued enumeration. Some languages make compilation decisions based on which you choose, but by and large which to use is a stylistic decision.
 
-# Git and Version Control
+Nullable booleans should be avoided. They are a three-valued enumeration, where the null value has potentially-unclear or even accidental semantics and depending on the language/database/protocol support for null handling, may be an unnecessary footgun. Consider a user-controlled setting: does null mean "use the default at the time I close the settings page" or "use the default at the time the setting is used"? Instead of answering that question directly, either explicitly default the boolean at write time or define an enumeration with a member called `use_current_default` (respectively).
 
-## Squash v. True Merge
+Boolean parameters should be used sparingly, as many call sites with boolean literals are reader-unfriendly. This is extra true if there are multiple boolean parameters.
 
-## Merge v. Rebase
+## Keyword Arguments
 
-## Force-pushing
+Functions with many parameters are sometimes unavoidable. Mitigate the readability difficulty and ordering sensitivity by using keyword arguments, so the call sites are clearer to read and easier to write correctly.
+
+In some languages this may require you to define a new type. These types often end up as [union types](https://en.wikipedia.org/wiki/Union_type), since it's rare that every parameter in a large parameter list is used in every code path, which may point to a beneficial refactor to split the methods or even re-combine the different paths (and corresponding parameters) back together.
+
+Keyword arguments can even amplify the readability of good names where they are not strictly necessary to mitigate large parameter lists, as seen frequently in Swift.
+
+# Version Control (i.e. Git)
+
+With apologies to Mercurial, Perforce, Fossil, and (extra apologies) SVN/CVS users.
+
+## Squash v. Rebase v. Merge into Mainline
+
+Between squashes and merges I prefer merges, but _consistency_ is more important. If your team uses squashes, you must permit an escape hatch for occasional merges. Rebasing is never correct, both lying about development history while still cluttering it with non-"atomic" commits.
+
+Consistency across the team means I always know where to go to get the development history of a change -- either in-repo or the code review tool -- and I can write/use automated tooling knowing what to expect. Mixing styles makes every dive into code history an unpleasant surprise.
+
+Squash-based workflows must have an escape hatch for true merges to deal with scripted changes. This is for a few reasons:
+
+- The script should _always_ be present in the history nearby the change it made, but it's likely undesirable to have it in the repo right now.
+- The automated changes may be uninteresting for e.g. blame, and Git supports mechanisms to ignore named commits for blames and diffs.
+- When debugging the change in the future, it is important to know if the issue originated in automated changes or related manual changes.
+
+Squashing fails at all three.
+
+## Force-pushing/Rebasing Feature Branches
+
+Depends on the current state of the code review and quality of the review tools.
+
+If nobody has reviewed your code, force-pushing is acceptable, and possibly even desirable in order to present the best-organized history to the first reviewer(s).
+
+If a review is in progress, force-push only if the review tools support it in a first-class way. At the time of writing GitHub completely shits the bed, losing comments and unsetting review state all over the place, which is a huge waste of time for reviewers. A competitor I have used and like, [Reviewable](https://reviewable.io), supports force-pushes first-class and will show your reviewer the actual diff, even from a commit they saw previously that is no longer on the branch.
+
+# Debuggability and Observability
 
 ## String Literal Log Lines
+
+Log lines should have a (hopefully unique) string literal explaining their purpose. Pass relevant values in a separate parameter.
+
+Interpolating relevant values into the primary log message makes it difficult for a human to quickly grep for the log's source, introduces unnecessary formatting uncertainty (do you quote string-type values? what if the string has a quote in it? what if your string is the word "null"?) and can make it difficult or impossible for logging tools to extract and search/aggregate on those values.
+
+{% include common-footer.html %}
+
+[^1]: Useful cross-language byte-identical find-replace has happened exactly once in my programming life (both professional and personal), but I want this document to be complete, so it's included. I wanted to find exact matches across JavaScript and JSON files, but JSON only permits double-quotes while JavaScript's Prettier formatter was configured for single quotes. Notably, the tool with this code was later rewritten to something simpler and more expressive such that maintaining formatting consistency became irrelevant (and impossible), which is the ideal outcome.
+[^2]: I tried to come up with non _-tion_ words, but those nounified verbs come up all the time!
