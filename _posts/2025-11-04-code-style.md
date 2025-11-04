@@ -1,7 +1,7 @@
 ---
 layout: post
 title: My Code Style
-tags: programming
+tags: programming reference
 anchor_headings: true
 ---
 
@@ -314,6 +314,14 @@ In some languages this may require you to define a new type. These types often e
 
 Keyword arguments can even amplify the readability of good names where they are not strictly necessary to mitigate large parameter lists, as seen frequently in Swift.
 
+# Debuggability and Observability
+
+## String Literal Log Lines
+
+Log lines should have a (hopefully unique) string literal explaining their purpose. Pass relevant values in a separate parameter.
+
+Interpolating relevant values into the primary log message makes it difficult for a human to quickly grep for the log's source, introduces unnecessary formatting uncertainty (do you quote string-type values? what if the string has a quote in it? what if your string is the word "null"?) and can make it difficult or impossible for logging tools to extract and search/aggregate on those values.
+
 # Version Control (i.e. Git)
 
 With apologies to Mercurial, Perforce, Fossil, and (extra apologies) SVN/CVS users.
@@ -339,14 +347,6 @@ Depends on the current state of the code review and quality of the review tools.
 If nobody has reviewed your code, force-pushing is acceptable, and possibly even desirable in order to present the best-organized history to the first reviewer(s).
 
 If a review is in progress, force-push only if the review tools support it in a first-class way. At the time of writing GitHub completely shits the bed, losing comments and unsetting review state all over the place, which is a huge waste of time for reviewers. A competitor I have used and like, [Reviewable](https://reviewable.io), supports force-pushes first-class and will show your reviewer the actual diff, even from a commit they saw previously that is no longer on the branch.
-
-# Debuggability and Observability
-
-## String Literal Log Lines
-
-Log lines should have a (hopefully unique) string literal explaining their purpose. Pass relevant values in a separate parameter.
-
-Interpolating relevant values into the primary log message makes it difficult for a human to quickly grep for the log's source, introduces unnecessary formatting uncertainty (do you quote string-type values? what if the string has a quote in it? what if your string is the word "null"?) and can make it difficult or impossible for logging tools to extract and search/aggregate on those values.
 
 {% include common-footer.html %}
 
