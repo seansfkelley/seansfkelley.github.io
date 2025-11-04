@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-11-04T22:04:02+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">My Code Style</title><link href="https://blog.sea.nkelley.me/code-style" rel="alternate" type="text/html" title="My Code Style" /><published>2025-11-04T00:00:00+00:00</published><updated>2025-11-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/code-style</id><content type="html" xml:base="https://blog.sea.nkelley.me/code-style"><![CDATA[<ul id="markdown-toc">
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-11-04T22:05:48+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">My Code Style</title><link href="https://blog.sea.nkelley.me/code-style" rel="alternate" type="text/html" title="My Code Style" /><published>2025-11-04T00:00:00+00:00</published><updated>2025-11-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/code-style</id><content type="html" xml:base="https://blog.sea.nkelley.me/code-style"><![CDATA[<ul id="markdown-toc">
   <li><a href="#what-this-is" id="markdown-toc-what-this-is">What This Is</a>    <ul>
       <li><a href="#use-engineering-judgement" id="markdown-toc-use-engineering-judgement">Use Engineering Judgement</a></li>
     </ul>
@@ -463,7 +463,8 @@
 <section class="tag-list">
   <i class="tag-label">tags:</i>
   
-  <a class="tag-link" href="/tag/programming">programming</a> 
+  <a class="tag-link" href="/tag/programming">programming</a>,  
+  <a class="tag-link" href="/tag/reference">reference</a> 
 </section>
 
 <div class="footnotes" role="doc-endnotes">
@@ -475,7 +476,7 @@
       <p>I tried to come up with non <em>-tion</em> words, but those nounified verbs come up all the time! <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
-</div>]]></content><author><name></name></author><category term="programming" /></entry><entry><title type="html">Yogurt Recipe</title><link href="https://blog.sea.nkelley.me/yogurt" rel="alternate" type="text/html" title="Yogurt Recipe" /><published>2025-10-13T00:00:00+00:00</published><updated>2025-10-13T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/yogurt</id><content type="html" xml:base="https://blog.sea.nkelley.me/yogurt"><![CDATA[<p>Makes as much yogurt as milk you put in. Scales up or down indefinitely.</p>
+</div>]]></content><author><name></name></author><category term="programming" /><category term="reference" /></entry><entry><title type="html">Yogurt Recipe</title><link href="https://blog.sea.nkelley.me/yogurt" rel="alternate" type="text/html" title="Yogurt Recipe" /><published>2025-10-13T00:00:00+00:00</published><updated>2025-10-13T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/yogurt</id><content type="html" xml:base="https://blog.sea.nkelley.me/yogurt"><![CDATA[<p>Makes as much yogurt as milk you put in. Scales up or down indefinitely.</p>
 
 <p>In addition to the ingredients, you’ll need one or more containers equalling the volume of milk you use, an ice bath, and a sous vide machine (or a few towels).</p>
 
