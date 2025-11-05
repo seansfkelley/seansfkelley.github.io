@@ -119,7 +119,7 @@ Useful comments are those that explain necessary but unusual code constructs, su
 
 ## Examples of Extraneous Comments
 
-Common instance of unjustifiable comments are those that:
+Common occurences of unjustifiable comments are those that:
 
 - explain an inline constant
   - Instead, hoist it to a SHOUTING_CASE value, and if it still needs explanation, then consider a comment.
@@ -131,7 +131,7 @@ Common instance of unjustifiable comments are those that:
 
 # Naming
 
-Good names go a long way towards pre-empting reader questions and code comments. Following certain conventions make the code-reading experience smoother by not surprising your reader. They can even speed up code-writing by forcing you to stop and think _"What exactly am I trying to express here?"_ rather than barging ahead into a dead end with whatever control flow first comes to mind.
+Good names go a long way towards pre-empting reader questions and code comments. Following certain conventions makes the code-reading experience smoother by not surprising your reader. They can even speed up code-writing by forcing you to stop and think _"What exactly am I trying to express here?"_ rather than barging ahead into a dead end with whatever control flow first comes to mind.
 
 ## Names Should Be At Least Two Words
 
