@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-11-05T08:26:20+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">My Code Style</title><link href="https://blog.sea.nkelley.me/code-style" rel="alternate" type="text/html" title="My Code Style" /><published>2025-11-04T00:00:00+00:00</published><updated>2025-11-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/code-style</id><content type="html" xml:base="https://blog.sea.nkelley.me/code-style"><![CDATA[<ul id="markdown-toc">
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-11-06T20:14:52+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">My Code Style</title><link href="https://blog.sea.nkelley.me/code-style" rel="alternate" type="text/html" title="My Code Style" /><published>2025-11-04T00:00:00+00:00</published><updated>2025-11-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/code-style</id><content type="html" xml:base="https://blog.sea.nkelley.me/code-style"><![CDATA[<ul id="markdown-toc">
   <li><a href="#what-this-is" id="markdown-toc-what-this-is">What This Is</a>    <ul>
       <li><a href="#use-engineering-judgement" id="markdown-toc-use-engineering-judgement">Use Engineering Judgement</a></li>
     </ul>
@@ -687,7 +687,14 @@
     </a>
     
   </section>
-<hr />]]></content><author><name></name></author><summary type="html"><![CDATA[Ebonzing wood is the process of putting a black finish on woods by wetting them with an iron solution, which reacts with tannins in the wood to turn black. I referenced two guides:]]></summary></entry><entry><title type="html">Edinburgh Recommendations</title><link href="https://blog.sea.nkelley.me/edinburgh-recommendations" rel="alternate" type="text/html" title="Edinburgh Recommendations" /><published>2025-08-21T00:00:00+00:00</published><updated>2025-08-21T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/edinburgh-recommendations</id><content type="html" xml:base="https://blog.sea.nkelley.me/edinburgh-recommendations"><![CDATA[<p>First things first: <em>edin-burruh</em>. That way people know what you’re talking about. Second things second: it’s “whisky”, not “whiskey”.</p>
+<hr />
+
+<section class="tag-list">
+  <i class="tag-label">tags:</i>
+  
+  <a class="tag-link" href="/tag/reference">reference</a>,  
+  <a class="tag-link" href="/tag/woodworking">woodworking</a> 
+</section>]]></content><author><name></name></author><category term="reference" /><category term="woodworking" /><summary type="html"><![CDATA[Ebonzing wood is the process of putting a black finish on woods by wetting them with an iron solution, which reacts with tannins in the wood to turn black. I referenced two guides:]]></summary></entry><entry><title type="html">Edinburgh Recommendations</title><link href="https://blog.sea.nkelley.me/edinburgh-recommendations" rel="alternate" type="text/html" title="Edinburgh Recommendations" /><published>2025-08-21T00:00:00+00:00</published><updated>2025-08-21T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/edinburgh-recommendations</id><content type="html" xml:base="https://blog.sea.nkelley.me/edinburgh-recommendations"><![CDATA[<p>First things first: <em>edin-burruh</em>. That way people know what you’re talking about. Second things second: it’s “whisky”, not “whiskey”.</p>
 
 <p>At the time of writing it’s been four years since I went to Edinburgh, so the list has slimmed down quite a bit from what it might have been due to cognitive attrition. Anyway, in no particular order:</p>
 
@@ -875,6 +882,12 @@
   </section>
 <hr />
 
+<section class="tag-list">
+  <i class="tag-label">tags:</i>
+  
+  <a class="tag-link" href="/tag/opinion">opinion</a> 
+</section>
+
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
@@ -884,7 +897,7 @@
       <p>My rule of thumb is that any interaction requiring three cards should be considered pure bonus upside, perhaps shading into win-more, and not required for the deck to work. (Unless one of them is lands, since they are always around.) Three-card interactions are often too fragile to be fun or end up with the deck being a tedious tutor/control/delay shell around those three cards. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
-</div>]]></content><author><name></name></author><summary type="html"><![CDATA[Hello fellow dork. If you’re here, I probably sent you because you nagged me to play Commander. But I don’t like Commander, and here’s why.]]></summary></entry><entry><title type="html">A Primer on Sideloading Your Own iPhone Apps</title><link href="https://blog.sea.nkelley.me/sideloading-iphone-apps" rel="alternate" type="text/html" title="A Primer on Sideloading Your Own iPhone Apps" /><published>2025-07-16T00:00:00+00:00</published><updated>2025-07-16T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/sideloading-iphone-apps</id><content type="html" xml:base="https://blog.sea.nkelley.me/sideloading-iphone-apps"><![CDATA[<p>This (brief) tutorial is for anyone with a Mac who wants to make iPhone apps for personal use<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> but doesn’t want to subject themselves to Apple’s lengthy and capricious publishing process (while paying $100 for the privilege)<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> or deal with jailbreaking.</p>
+</div>]]></content><author><name></name></author><category term="opinion" /><summary type="html"><![CDATA[Hello fellow dork. If you’re here, I probably sent you because you nagged me to play Commander. But I don’t like Commander, and here’s why.]]></summary></entry><entry><title type="html">A Primer on Sideloading Your Own iPhone Apps</title><link href="https://blog.sea.nkelley.me/sideloading-iphone-apps" rel="alternate" type="text/html" title="A Primer on Sideloading Your Own iPhone Apps" /><published>2025-07-16T00:00:00+00:00</published><updated>2025-07-16T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/sideloading-iphone-apps</id><content type="html" xml:base="https://blog.sea.nkelley.me/sideloading-iphone-apps"><![CDATA[<p>This (brief) tutorial is for anyone with a Mac who wants to make iPhone apps for personal use<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> but doesn’t want to subject themselves to Apple’s lengthy and capricious publishing process (while paying $100 for the privilege)<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> or deal with jailbreaking.</p>
 
 <h3 id="caveats">Caveats</h3>
 
@@ -954,6 +967,13 @@
   </section>
 <hr />
 
+<section class="tag-list">
+  <i class="tag-label">tags:</i>
+  
+  <a class="tag-link" href="/tag/reference">reference</a>,  
+  <a class="tag-link" href="/tag/programming">programming</a> 
+</section>
+
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
@@ -969,7 +989,7 @@
       <p>I finally finished an iOS app on the third try in as many years, but I almost gave up again on the way there. The blame for <em>every</em> nontrivial frustration and roadblock is laid squarely at the feet of Xcode or the App Store – <em>never</em> the iPhone itself, the iPhone SDK, or Swift/SwiftUI. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
-</div>]]></content><author><name></name></author><summary type="html"><![CDATA[This (brief) tutorial is for anyone with a Mac who wants to make iPhone apps for personal use1 but doesn’t want to subject themselves to Apple’s lengthy and capricious publishing process (while paying $100 for the privilege)2 or deal with jailbreaking. You can do this trivially in stock Xcode… for 7 days at a time. We grovel at your feet for your magnanimity, oh Grand High Beancounter Tim Cook. &#8617; Short version of my stance on app store gatekeeping, since I can’t resist: Apple can and should provide an official distribution channel with tight rules in addition to allowing other app stores and drag-and-drop app installation. There is merit in walled gardens, but the 30% fee (or 27%, yeah, fuck you too, Tim Cook) in absence of competition is (literally) extortionate, their “reviews” seem to let plenty of scams and low-quality garbage through anyway, and these policies stifle small-time operators.[^4] &#8617;]]></summary></entry><entry><title type="html">A Refined Theory of Bad Drivers</title><link href="https://blog.sea.nkelley.me/bad-drivers" rel="alternate" type="text/html" title="A Refined Theory of Bad Drivers" /><published>2025-06-04T00:00:00+00:00</published><updated>2025-06-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/bad-drivers</id><content type="html" xml:base="https://blog.sea.nkelley.me/bad-drivers"><![CDATA[<p>Everyone likes to claim that the drivers where they come from are the worst, but we can’t all be right. I think the problem is that we’re talking past each other: there are different ways to be a bad driver.</p>
+</div>]]></content><author><name></name></author><category term="reference" /><category term="programming" /><summary type="html"><![CDATA[This (brief) tutorial is for anyone with a Mac who wants to make iPhone apps for personal use1 but doesn’t want to subject themselves to Apple’s lengthy and capricious publishing process (while paying $100 for the privilege)2 or deal with jailbreaking. You can do this trivially in stock Xcode… for 7 days at a time. We grovel at your feet for your magnanimity, oh Grand High Beancounter Tim Cook. &#8617; Short version of my stance on app store gatekeeping, since I can’t resist: Apple can and should provide an official distribution channel with tight rules in addition to allowing other app stores and drag-and-drop app installation. There is merit in walled gardens, but the 30% fee (or 27%, yeah, fuck you too, Tim Cook) in absence of competition is (literally) extortionate, their “reviews” seem to let plenty of scams and low-quality garbage through anyway, and these policies stifle small-time operators.[^4] &#8617;]]></summary></entry><entry><title type="html">A Refined Theory of Bad Drivers</title><link href="https://blog.sea.nkelley.me/bad-drivers" rel="alternate" type="text/html" title="A Refined Theory of Bad Drivers" /><published>2025-06-04T00:00:00+00:00</published><updated>2025-06-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/bad-drivers</id><content type="html" xml:base="https://blog.sea.nkelley.me/bad-drivers"><![CDATA[<p>Everyone likes to claim that the drivers where they come from are the worst, but we can’t all be right. I think the problem is that we’re talking past each other: there are different ways to be a bad driver.</p>
 
 <p>I hereby propose a rating system with three axes:</p>
 
@@ -1016,7 +1036,14 @@
     </a>
     
   </section>
-<hr />]]></content><author><name></name></author><summary type="html"><![CDATA[Everyone likes to claim that the drivers where they come from are the worst, but we can’t all be right. I think the problem is that we’re talking past each other: there are different ways to be a bad driver.]]></summary></entry><entry><title type="html">It’s All Greek to Me</title><link href="https://blog.sea.nkelley.me/its-all-greek-to-me" rel="alternate" type="text/html" title="It’s All Greek to Me" /><published>2025-05-15T00:00:00+00:00</published><updated>2025-05-15T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/its-all-greek-to-me</id><content type="html" xml:base="https://blog.sea.nkelley.me/its-all-greek-to-me"><![CDATA[<p>I learned recently that there are more than a few Greek mythological figures whose names are, <em>verbatim</em>, English words. It thought this would be a good excuse for an internet quiz, so here you go.</p>
+<hr />
+
+<section class="tag-list">
+  <i class="tag-label">tags:</i>
+  
+  <a class="tag-link" href="/tag/opinion">opinion</a>,  
+  <a class="tag-link" href="/tag/theory">theory</a> 
+</section>]]></content><author><name></name></author><category term="opinion" /><category term="theory" /><summary type="html"><![CDATA[Everyone likes to claim that the drivers where they come from are the worst, but we can’t all be right. I think the problem is that we’re talking past each other: there are different ways to be a bad driver.]]></summary></entry><entry><title type="html">It’s All Greek to Me</title><link href="https://blog.sea.nkelley.me/its-all-greek-to-me" rel="alternate" type="text/html" title="It’s All Greek to Me" /><published>2025-05-15T00:00:00+00:00</published><updated>2025-05-15T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/its-all-greek-to-me</id><content type="html" xml:base="https://blog.sea.nkelley.me/its-all-greek-to-me"><![CDATA[<p>I learned recently that there are more than a few Greek mythological figures whose names are, <em>verbatim</em>, English words. It thought this would be a good excuse for an internet quiz, so here you go.</p>
 
 <p>The quoted definitions are all from Merriam Webster, but I exercised some editorial control to pick recognizable versions and keep them short (and to skip any mythological definitions, obviously).</p>
 
@@ -1665,4 +1692,10 @@
     </a>
     
   </section>
-<hr />]]></content><author><name></name></author><summary type="html"><![CDATA[I learned recently that there are more than a few Greek mythological figures whose names are, verbatim, English words. It thought this would be a good excuse for an internet quiz, so here you go.]]></summary></entry></feed>
+<hr />
+
+<section class="tag-list">
+  <i class="tag-label">tags:</i>
+  
+  <a class="tag-link" href="/tag/interactive">interactive</a> 
+</section>]]></content><author><name></name></author><category term="interactive" /><summary type="html"><![CDATA[I learned recently that there are more than a few Greek mythological figures whose names are, verbatim, English words. It thought this would be a good excuse for an internet quiz, so here you go.]]></summary></entry></feed>
