@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Resurrecting an Old iMac for $27
+tags: hardware
 ---
 
 Years ago, my family's iMac died a sudden and ignoble death, crashing the head of the hard drive and taking years of pictures with it. This was the beginning of the era of personal backups, and we didn't yet have one. It's still a sore spot, and the offending hard drive is still sitting around somewhere, waiting for someone to transfer the platters to another housing to recover the data. The cause was a blown capacitor, presumably part of the great [capacitor plague](https://en.wikipedia.org/wiki/Capacitor_plague) of the early 2000s.

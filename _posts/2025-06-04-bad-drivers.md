@@ -1,6 +1,7 @@
 ---
 layout: post
 title: A Refined Theory of Bad Drivers
+tags: opinion theory
 ---
 
 Everyone likes to claim that the drivers where they come from are the worst, but we can't all be right. I think the problem is that we're talking past each other: there are different ways to be a bad driver.

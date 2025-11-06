@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "passprompt: Nag Yourself to Remember Your Passwords"
+tags: programming
 ---
 
 Recently I've been working through some security debt in my personal accounts. Most notably, until recently I didn't have a good strategy for recovering access in the case of a disaster where all my devices were lost or destroyed.

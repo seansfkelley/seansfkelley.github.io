@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Why Constructed, Not Commander
+tags: opinion
 ---
 
 Hello fellow dork. If you're here, I probably sent you because you nagged me to play Commander. But I don't like Commander, and here's why.

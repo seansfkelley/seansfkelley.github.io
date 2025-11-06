@@ -1,6 +1,7 @@
 ---
 layout: post
 title: The Blast Radius of Inconsideracy
+tags: opinion theory
 ---
 
 Two well-known facts:

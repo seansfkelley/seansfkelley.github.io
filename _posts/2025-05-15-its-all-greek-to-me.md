@@ -1,6 +1,7 @@
 ---
 layout: post
 title: It's All Greek to Me
+tags: interactive
 custom-js-list:
   - /assets/its-all-greek-to-me/its-all-greek-to-me.js
 custom-css-list:

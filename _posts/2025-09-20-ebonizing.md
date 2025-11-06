@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Notes on Ebonizing Wood
+tags: reference woodworking
 ---
 
 Ebonzing wood is the process of putting a black finish on woods by wetting them with an iron solution, which reacts with tannins in the wood to turn black. I referenced two guides:

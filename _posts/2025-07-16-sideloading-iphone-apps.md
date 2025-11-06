@@ -1,6 +1,7 @@
 ---
 layout: post
 title: A Primer on Sideloading Your Own iPhone Apps
+tags: reference programming
 ---
 
 This (brief) tutorial is for anyone with a Mac who wants to make iPhone apps for personal use[^1] but doesn't want to subject themselves to Apple's lengthy and capricious publishing process (while paying $100 for the privilege)[^2] or deal with jailbreaking.

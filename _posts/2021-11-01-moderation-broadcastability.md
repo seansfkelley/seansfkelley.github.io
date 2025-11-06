@@ -3,6 +3,7 @@ layout: post
 title: Facebook's Problem is That It's Too Big
 # disable the excerpt because it picks the image caption and I can't choose anything more specific
 excerpt_separator: ""
+tags: opinion
 changelog:
   2022-01-07: added another link to the reading list.
   2023-10-07: ~~Twitter~~ ~~X~~ Twitter.
