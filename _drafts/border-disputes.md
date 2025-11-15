@@ -49,10 +49,24 @@ This map also makes some unrelated proposals around filling in large lakes in No
 
 ## TODO
 
-- https://www.amazon.com/Wood-World-Wall-Large-D%C3%A9cor/dp/B09BR3WFP7/ref=sr_1_9
-- include a section that shows what Apple maps shows
-  - only uses dotted lines for Kashmir
-  - assigns Crimea to Ukraine
-- name which disputes are covered by each item and include ea little preview for reference
+- show what the disputed regions look like
+  - juxtaposejs before/after?
+  - separate reference images?
+  - transparent overlay?
+- show how American/Western sources display the conflict
+  - e.g. Kashmir is dotted lines of control
+  - e.g. Crimea is unambiguously Ukrainian
+- other regions to look into
+  - Western Sahara
+- kinds of items to look for
+  - https://enjoythewood.com/
+  - https://www.uncommongoods.com/product/world-map-coloring-tablecloth
+  - https://directionallychallengedtraveler.com/map-gift-ideas/
+  - https://www.amazon.com/Wood-World-Wall-Large-D%C3%A9cor/dp/B09BR3WFP7/ref=sr_1_9
+  - gift wrap
+  - notebooks
+  - cheese boards
+  - lamp shades
+  - sheets/carpets
 
 {% include common-footer.html %}
