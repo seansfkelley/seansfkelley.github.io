@@ -3,6 +3,9 @@ layout: post
 title: The Complete List of Everything That Can Go Wrong When Making a Wooden Table
 ---
 
+I made a table and two desks from hardwood, simultaneously, with minimal prior experience. Turns out, there's a lot of things that can go wrong. I mean, really:
+
+- not owning or having access to a planer or jointer
 - having to buy more wood than strictly necessary because you need pieces that are impossible for a mill to fuckup
 - having the mill fuck up it up anyway by planing the boards thinner than you asked
 - by thinning the boards more than you asked they reveal a knot that you were hoping wouldn't make it through to the other side
@@ -18,11 +21,13 @@ title: The Complete List of Everything That Can Go Wrong When Making a Wooden Ta
 - using a hot steam iron and fabric to raise the dent, only to leave an iron-shaped light spot on the board
 - knot plugs that shear off when planing and need to be drilled back out
 - putting too much tung oil on too fast and having it end up textured and weird
-- shearing off the jig you use to install threaded inserts and needing to go buy more
+- shearing off the nut-bolt jig you use to install threaded inserts and needing to go buy more
 - the wood is too hard for threaded inserts to go in at their stated size
 - you buy the next larger drill bit without realizing it doesn't fit in the chuck and need to go and buy another drill bit with a reduced shank but they don't sell them at the hardware store
 - the threaded inserts are too large and don't leave enough room for error given that you already have to crank them in at very high torque so you buy smaller ones
 - you buy all the bolts and nuts you need to install the smaller ones, and then find out that the hex head you're using to crank them in is an in-between size that you don't have and you need to go to the hardware store for the 47th time to get another part
+- not having the legs ready in time so the table leans against the wall and gets dented by passing traffic
+- choosing to use pure Tung oil which takes literal weeks to cure, and then when you inaugurate it, the Tung oil doesn't protect it from oil spots
 
 the complete list of stuff I bought to complete this project
 
