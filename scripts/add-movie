@@ -33,7 +33,7 @@ TARGET_WIDTH=600
 
 movie_id="$(curl "https://www.imdb.com/find/?q=$(echo "$title" | tr ' ' '+')+$year"  --compressed -s -H "$USER_AGENT_HEADER" \
   | hxnormalize -x \
-  | hxselect -s '\n' '.ipc-metadata-list-summary-item__t::attr(href)' \
+  | hxselect -s '\n' '.ipc-title-link-wrapper::attr(href)' \
   | sed -E 's|.*title/(tt[[:digit:]]+)/.*|\1|g' \
   | head -n1)"
 movie_url="https://www.imdb.com/title/$movie_id/"
