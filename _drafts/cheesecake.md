@@ -4,8 +4,8 @@ title: Cheesecake Recipe
 tags: recipe
 ---
 
-
-1 c (7 cookies) grahams4 tablespoons butter, melted
+1 c (7 cookies) grahams
+4 tablespoons butter, melted
 1/4 tsp cinnamon
 1/4 tsp nutmeg
 1 1/4 c sugar

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: The Complete List of Everything That Can Go Wrong When Making Building a Table
+title: The Complete List of Everything That Can Go Wrong When Making a Wooden Table
 ---
 
 - having to buy more wood than strictly necessary because you need pieces that are impossible for a mill to fuckup
