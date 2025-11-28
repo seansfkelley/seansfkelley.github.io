@@ -1,4 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-11-28T20:35:55+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Some Venting About Corpo-speak</title><link href="https://blog.sea.nkelley.me/corpo-speak" rel="alternate" type="text/html" title="Some Venting About Corpo-speak" /><published>2025-11-23T00:00:00+00:00</published><updated>2025-11-23T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/corpo-speak</id><content type="html" xml:base="https://blog.sea.nkelley.me/corpo-speak"><![CDATA[<p>Fair warning: this post doesn’t really have any technical, aesthetic, or argumentative merit. I just wanted to complain, and complaining in an ostensibly public place does actually work better than the “write it and throw it away” crowd may think.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-11-28T20:43:54+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Pumpkin Pie Recipe</title><link href="https://blog.sea.nkelley.me/pumpkin-pie" rel="alternate" type="text/html" title="Pumpkin Pie Recipe" /><published>2025-11-28T00:00:00+00:00</published><updated>2025-11-28T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/pumpkin-pie</id><content type="html" xml:base="https://blog.sea.nkelley.me/pumpkin-pie"><![CDATA[<p>Preheat oven to 425°F.</p>
+
+<p>Combine</p>
+
+<ul>
+  <li>1 ¾ c (15oz can) mashed cooked pumpkin</li>
+  <li>½ tsp salt</li>
+  <li>2 large eggs, plus 1 yolk</li>
+  <li>⅔ cup brown sugar</li>
+  <li>scant ⅔ cup evaporated* milk (small 5oz can; substitute whole milk)</li>
+  <li>1 ¼ tsp cinnamon</li>
+  <li>½ tsp ginger</li>
+  <li>½ tsp nutmeg</li>
+  <li>¼ tsp ground cloves</li>
+</ul>
+
+<p>in a medium bowl and mix until combined.</p>
+
+<p>Pour into a <a href="/pie-dough">blind-baked crust</a> and bake for 45 minutes or until a toothpick inserted in the center comes out clean and the outer 2-3” of the custard looks drier than the middle. After 15 minutes, tent with foil, either perforated extensively or with a large hole in the middle, to prevent the crust from burning or the top discoloring.</p>
+
+<p>*Not condensed!</p>
+
+<hr />
+
+<section class="next-previous">
+    
+    <a href="/corpo-speak" class="next-previous-link next-previous-previous" title="Previous Post: Some Venting About Corpo-speak">
+      <span class="next-previous-icon">←</span>
+      <div class="next-previous-name">
+        <div class="next-previous-label">
+          <span class="next-previous-icon">←</span> Previous Post
+        </div>
+        <div class="next-previous-title">Some Venting About Corpo-speak</div>
+      </div>
+    </a>
+     
+    <div class="next-previous-placeholder"></div>
+    
+  </section>
+<hr />
+
+<section class="tag-list">
+  <i class="tag-label">tags:</i>
+  
+  <a class="tag-link" href="/tag/recipe">recipe</a> 
+</section>]]></content><author><name></name></author><category term="recipe" /><summary type="html"><![CDATA[Preheat oven to 425°F.]]></summary></entry><entry><title type="html">Some Venting About Corpo-speak</title><link href="https://blog.sea.nkelley.me/corpo-speak" rel="alternate" type="text/html" title="Some Venting About Corpo-speak" /><published>2025-11-23T00:00:00+00:00</published><updated>2025-11-23T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/corpo-speak</id><content type="html" xml:base="https://blog.sea.nkelley.me/corpo-speak"><![CDATA[<p>Fair warning: this post doesn’t really have any technical, aesthetic, or argumentative merit. I just wanted to complain, and complaining in an ostensibly public place does actually work better than the “write it and throw it away” crowd may think.</p>
 
 <p>There are certain phrases that, for reasons I will attempt (and likely fail) to touch on, I find disproportionately, perhaps unreasonably, obnoxious. These excretions are the textual – and really unfortunately, sometimes verbal – equivalent of <a href="https://en.wikipedia.org/wiki/Corporate_Memphis">Corporate Memphis</a>, both blandly generic and carefully obscure.</p>
 
@@ -32,7 +77,15 @@
       </div>
     </a>
      
-    <div class="next-previous-placeholder"></div>
+    <a href="/pumpkin-pie" class="next-previous-link next-previous-next" title="Next Post: Pumpkin Pie Recipe">
+      <div class="next-previous-name">
+        <div class="next-previous-label">
+          Next Post <span class="next-previous-icon">→</span>
+        </div>
+        <div class="next-previous-title">Pumpkin Pie Recipe</div>
+      </div>
+      <span class="next-previous-icon">→</span>
+    </a>
     
   </section>
 <hr />
@@ -1049,58 +1102,4 @@
       <p>I finally finished an iOS app on the third try in as many years, but I almost gave up again on the way there. The blame for <em>every</em> nontrivial frustration and roadblock is laid squarely at the feet of Xcode or the App Store – <em>never</em> the iPhone itself, the iPhone SDK, or Swift/SwiftUI. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
-</div>]]></content><author><name></name></author><category term="reference" /><category term="programming" /><summary type="html"><![CDATA[This (brief) tutorial is for anyone with a Mac who wants to make iPhone apps for personal use1 but doesn’t want to subject themselves to Apple’s lengthy and capricious publishing process (while paying $100 for the privilege)2 or deal with jailbreaking. You can do this trivially in stock Xcode… for 7 days at a time. We grovel at your feet for your magnanimity, oh Grand High Beancounter Tim Cook. &#8617; Short version of my stance on app store gatekeeping, since I can’t resist: Apple can and should provide an official distribution channel with tight rules in addition to allowing other app stores and drag-and-drop app installation. There is merit in walled gardens, but the 30% fee (or 27%, yeah, fuck you too, Tim Cook) in absence of competition is (literally) extortionate, their “reviews” seem to let plenty of scams and low-quality garbage through anyway, and these policies stifle small-time operators.[^4] &#8617;]]></summary></entry><entry><title type="html">A Refined Theory of Bad Drivers</title><link href="https://blog.sea.nkelley.me/bad-drivers" rel="alternate" type="text/html" title="A Refined Theory of Bad Drivers" /><published>2025-06-04T00:00:00+00:00</published><updated>2025-06-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/bad-drivers</id><content type="html" xml:base="https://blog.sea.nkelley.me/bad-drivers"><![CDATA[<p>Everyone likes to claim that the drivers where they come from are the worst, but we can’t all be right. I think the problem is that we’re talking past each other: there are different ways to be a bad driver.</p>
-
-<p>I hereby propose a rating system with three axes:</p>
-
-<ul>
-  <li><strong>incompetence</strong></li>
-  <li><strong>negligence</strong></li>
-  <li><strong>aggression</strong></li>
-</ul>
-
-<p>Here are some example applications for some places I’m familiar with:</p>
-
-<ul>
-  <li><strong>NorCal:</strong> incompetent and negligent, but emphatically passive</li>
-  <li><strong>Italy:</strong> hyper-aggressive, but by and large competent and usually attentive</li>
-  <li><strong>New York City:</strong> all sliders to <em>maximum</em></li>
-</ul>
-
-<p>I think disagreements happen when your bad drivers and their bad drivers are at even moderately-different positions along these axes.</p>
-
-<p>Interestingly, while it’s obvious that minimal incompetence and minimal negligence is objectively good, the same is not true for aggression. Drivers that are too passive cause traffic flow problems and annoy other drivers – rightfully, I’d say, if you won’t pull into the intersection on green when you’re waiting to turn left.</p>
-
-<hr />
-
-<section class="next-previous">
-    
-    <a href="/its-all-greek-to-me" class="next-previous-link next-previous-previous" title="Previous Post: It's All Greek to Me">
-      <span class="next-previous-icon">←</span>
-      <div class="next-previous-name">
-        <div class="next-previous-label">
-          <span class="next-previous-icon">←</span> Previous Post
-        </div>
-        <div class="next-previous-title">It's All Greek to Me</div>
-      </div>
-    </a>
-     
-    <a href="/sideloading-iphone-apps" class="next-previous-link next-previous-next" title="Next Post: A Primer on Sideloading Your Own iPhone Apps">
-      <div class="next-previous-name">
-        <div class="next-previous-label">
-          Next Post <span class="next-previous-icon">→</span>
-        </div>
-        <div class="next-previous-title">A Primer on Sideloading Your Own iPhone Apps</div>
-      </div>
-      <span class="next-previous-icon">→</span>
-    </a>
-    
-  </section>
-<hr />
-
-<section class="tag-list">
-  <i class="tag-label">tags:</i>
-  
-  <a class="tag-link" href="/tag/opinion">opinion</a>,  
-  <a class="tag-link" href="/tag/theory">theory</a> 
-</section>]]></content><author><name></name></author><category term="opinion" /><category term="theory" /><summary type="html"><![CDATA[Everyone likes to claim that the drivers where they come from are the worst, but we can’t all be right. I think the problem is that we’re talking past each other: there are different ways to be a bad driver.]]></summary></entry></feed>
+</div>]]></content><author><name></name></author><category term="reference" /><category term="programming" /><summary type="html"><![CDATA[This (brief) tutorial is for anyone with a Mac who wants to make iPhone apps for personal use1 but doesn’t want to subject themselves to Apple’s lengthy and capricious publishing process (while paying $100 for the privilege)2 or deal with jailbreaking. You can do this trivially in stock Xcode… for 7 days at a time. We grovel at your feet for your magnanimity, oh Grand High Beancounter Tim Cook. &#8617; Short version of my stance on app store gatekeeping, since I can’t resist: Apple can and should provide an official distribution channel with tight rules in addition to allowing other app stores and drag-and-drop app installation. There is merit in walled gardens, but the 30% fee (or 27%, yeah, fuck you too, Tim Cook) in absence of competition is (literally) extortionate, their “reviews” seem to let plenty of scams and low-quality garbage through anyway, and these policies stifle small-time operators.[^4] &#8617;]]></summary></entry></feed>
