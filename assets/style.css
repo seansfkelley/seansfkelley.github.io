@@ -781,6 +781,24 @@ body[data-theme=light] #theme-switcher:after {
   }
 }
 
+.tag-list {
+  margin-bottom: 14px;
+  margin-top: -7px;
+  font-size: 14px;
+}
+.tag-list .tag-link {
+  border: 1px solid var(--link-color-underline);
+  border-radius: 4px;
+  padding: 2px 6px 3px;
+  text-decoration: none;
+}
+.tag-list .tag-link:first-child {
+  margin-left: 4px;
+}
+.tag-list .tag-link:hover {
+  border-color: var(--link-color-hover);
+}
+
 .tag-page {
   margin-top: 14px;
 }
@@ -1111,10 +1129,6 @@ a.reversefootnote {
     transform: translateX(7px);
   }
 }
-.tag-list {
-  margin-bottom: 28px;
-}
-
 pre,
 pre:hover {
   white-space: pre-wrap;

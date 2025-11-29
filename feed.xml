@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-11-28T20:43:54+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Pumpkin Pie Recipe</title><link href="https://blog.sea.nkelley.me/pumpkin-pie" rel="alternate" type="text/html" title="Pumpkin Pie Recipe" /><published>2025-11-28T00:00:00+00:00</published><updated>2025-11-28T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/pumpkin-pie</id><content type="html" xml:base="https://blog.sea.nkelley.me/pumpkin-pie"><![CDATA[<p>Preheat oven to 425°F.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-11-29T19:00:28+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Pumpkin Pie Recipe</title><link href="https://blog.sea.nkelley.me/pumpkin-pie" rel="alternate" type="text/html" title="Pumpkin Pie Recipe" /><published>2025-11-28T00:00:00+00:00</published><updated>2025-11-28T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/pumpkin-pie</id><content type="html" xml:base="https://blog.sea.nkelley.me/pumpkin-pie"><![CDATA[<p>Preheat oven to 425°F.</p>
 
 <p>Combine</p>
 
@@ -37,13 +37,7 @@
     <div class="next-previous-placeholder"></div>
     
   </section>
-<hr />
-
-<section class="tag-list">
-  <i class="tag-label">tags:</i>
-  
-  <a class="tag-link" href="/tag/recipe">recipe</a> 
-</section>]]></content><author><name></name></author><category term="recipe" /><summary type="html"><![CDATA[Preheat oven to 425°F.]]></summary></entry><entry><title type="html">Some Venting About Corpo-speak</title><link href="https://blog.sea.nkelley.me/corpo-speak" rel="alternate" type="text/html" title="Some Venting About Corpo-speak" /><published>2025-11-23T00:00:00+00:00</published><updated>2025-11-23T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/corpo-speak</id><content type="html" xml:base="https://blog.sea.nkelley.me/corpo-speak"><![CDATA[<p>Fair warning: this post doesn’t really have any technical, aesthetic, or argumentative merit. I just wanted to complain, and complaining in an ostensibly public place does actually work better than the “write it and throw it away” crowd may think.</p>
+<hr />]]></content><author><name></name></author><category term="recipe" /><summary type="html"><![CDATA[Preheat oven to 425°F.]]></summary></entry><entry><title type="html">Some Venting About Corpo-speak</title><link href="https://blog.sea.nkelley.me/corpo-speak" rel="alternate" type="text/html" title="Some Venting About Corpo-speak" /><published>2025-11-23T00:00:00+00:00</published><updated>2025-11-23T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/corpo-speak</id><content type="html" xml:base="https://blog.sea.nkelley.me/corpo-speak"><![CDATA[<p>Fair warning: this post doesn’t really have any technical, aesthetic, or argumentative merit. I just wanted to complain, and complaining in an ostensibly public place does actually work better than the “write it and throw it away” crowd may think.</p>
 
 <p>There are certain phrases that, for reasons I will attempt (and likely fail) to touch on, I find disproportionately, perhaps unreasonably, obnoxious. These excretions are the textual – and really unfortunately, sometimes verbal – equivalent of <a href="https://en.wikipedia.org/wiki/Corporate_Memphis">Corporate Memphis</a>, both blandly generic and carefully obscure.</p>
 
@@ -88,13 +82,7 @@
     </a>
     
   </section>
-<hr />
-
-<section class="tag-list">
-  <i class="tag-label">tags:</i>
-  
-  <a class="tag-link" href="/tag/opinion">opinion</a> 
-</section>]]></content><author><name></name></author><category term="opinion" /><summary type="html"><![CDATA[Fair warning: this post doesn’t really have any technical, aesthetic, or argumentative merit. I just wanted to complain, and complaining in an ostensibly public place does actually work better than the “write it and throw it away” crowd may think.]]></summary></entry><entry><title type="html">My Code Style</title><link href="https://blog.sea.nkelley.me/code-style" rel="alternate" type="text/html" title="My Code Style" /><published>2025-11-04T00:00:00+00:00</published><updated>2025-11-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/code-style</id><content type="html" xml:base="https://blog.sea.nkelley.me/code-style"><![CDATA[<ul id="markdown-toc">
+<hr />]]></content><author><name></name></author><category term="opinion" /><summary type="html"><![CDATA[Fair warning: this post doesn’t really have any technical, aesthetic, or argumentative merit. I just wanted to complain, and complaining in an ostensibly public place does actually work better than the “write it and throw it away” crowd may think.]]></summary></entry><entry><title type="html">My Code Style</title><link href="https://blog.sea.nkelley.me/code-style" rel="alternate" type="text/html" title="My Code Style" /><published>2025-11-04T00:00:00+00:00</published><updated>2025-11-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/code-style</id><content type="html" xml:base="https://blog.sea.nkelley.me/code-style"><![CDATA[<ul id="markdown-toc">
   <li><a href="#what-this-is" id="markdown-toc-what-this-is">What This Is</a>    <ul>
       <li><a href="#use-engineering-judgement" id="markdown-toc-use-engineering-judgement">Use Engineering Judgement</a></li>
     </ul>
@@ -564,13 +552,6 @@
   </section>
 <hr />
 
-<section class="tag-list">
-  <i class="tag-label">tags:</i>
-  
-  <a class="tag-link" href="/tag/programming">programming</a>,  
-  <a class="tag-link" href="/tag/reference">reference</a> 
-</section>
-
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
@@ -651,13 +632,7 @@
     </a>
     
   </section>
-<hr />
-
-<section class="tag-list">
-  <i class="tag-label">tags:</i>
-  
-  <a class="tag-link" href="/tag/recipe">recipe</a> 
-</section>]]></content><author><name></name></author><category term="recipe" /><summary type="html"><![CDATA[Units:  metric  •  stupid]]></summary></entry><entry><title type="html">Hummus Recipe</title><link href="https://blog.sea.nkelley.me/hummus" rel="alternate" type="text/html" title="Hummus Recipe" /><published>2025-09-22T00:00:00+00:00</published><updated>2025-09-22T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/hummus</id><content type="html" xml:base="https://blog.sea.nkelley.me/hummus"><![CDATA[<!-- Only show unit switcher if js is enabled: hide by default. -->
+<hr />]]></content><author><name></name></author><category term="recipe" /><summary type="html"><![CDATA[Units:  metric  •  stupid]]></summary></entry><entry><title type="html">Hummus Recipe</title><link href="https://blog.sea.nkelley.me/hummus" rel="alternate" type="text/html" title="Hummus Recipe" /><published>2025-09-22T00:00:00+00:00</published><updated>2025-09-22T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/hummus</id><content type="html" xml:base="https://blog.sea.nkelley.me/hummus"><![CDATA[<!-- Only show unit switcher if js is enabled: hide by default. -->
 <p><span id="unit-switcher-wrapper" style="display: none">
   Units: 
   <a href="#" id="unit-switcher-metric">metric</a>
@@ -708,13 +683,7 @@
     </a>
     
   </section>
-<hr />
-
-<section class="tag-list">
-  <i class="tag-label">tags:</i>
-  
-  <a class="tag-link" href="/tag/recipe">recipe</a> 
-</section>]]></content><author><name></name></author><category term="recipe" /><summary type="html"><![CDATA[Units:  metric  •  stupid]]></summary></entry><entry><title type="html">Notes on Ebonizing Wood</title><link href="https://blog.sea.nkelley.me/ebonizing" rel="alternate" type="text/html" title="Notes on Ebonizing Wood" /><published>2025-09-20T00:00:00+00:00</published><updated>2025-09-20T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/ebonizing</id><content type="html" xml:base="https://blog.sea.nkelley.me/ebonizing"><![CDATA[<p>Ebonzing wood is the process of putting a black finish on woods by wetting them with an iron solution, which reacts with tannins in the wood to turn black. I referenced two guides:</p>
+<hr />]]></content><author><name></name></author><category term="recipe" /><summary type="html"><![CDATA[Units:  metric  •  stupid]]></summary></entry><entry><title type="html">Notes on Ebonizing Wood</title><link href="https://blog.sea.nkelley.me/ebonizing" rel="alternate" type="text/html" title="Notes on Ebonizing Wood" /><published>2025-09-20T00:00:00+00:00</published><updated>2025-09-20T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/ebonizing</id><content type="html" xml:base="https://blog.sea.nkelley.me/ebonizing"><![CDATA[<p>Ebonzing wood is the process of putting a black finish on woods by wetting them with an iron solution, which reacts with tannins in the wood to turn black. I referenced two guides:</p>
 
 <ol>
   <li><a href="https://timberbiscuitwoodworks.com/blog/how-to-ebonize-wood">Timber Biscuit Woodworks</a></li>
@@ -791,14 +760,7 @@
     </a>
     
   </section>
-<hr />
-
-<section class="tag-list">
-  <i class="tag-label">tags:</i>
-  
-  <a class="tag-link" href="/tag/reference">reference</a>,  
-  <a class="tag-link" href="/tag/woodworking">woodworking</a> 
-</section>]]></content><author><name></name></author><category term="reference" /><category term="woodworking" /><summary type="html"><![CDATA[Ebonzing wood is the process of putting a black finish on woods by wetting them with an iron solution, which reacts with tannins in the wood to turn black. I referenced two guides:]]></summary></entry><entry><title type="html">Edinburgh Recommendations</title><link href="https://blog.sea.nkelley.me/edinburgh-recommendations" rel="alternate" type="text/html" title="Edinburgh Recommendations" /><published>2025-08-21T00:00:00+00:00</published><updated>2025-08-21T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/edinburgh-recommendations</id><content type="html" xml:base="https://blog.sea.nkelley.me/edinburgh-recommendations"><![CDATA[<p>First things first: <em>edin-burruh</em>. That way people know what you’re talking about. Second things second: it’s “whisky”, not “whiskey”.</p>
+<hr />]]></content><author><name></name></author><category term="reference" /><category term="woodworking" /><summary type="html"><![CDATA[Ebonzing wood is the process of putting a black finish on woods by wetting them with an iron solution, which reacts with tannins in the wood to turn black. I referenced two guides:]]></summary></entry><entry><title type="html">Edinburgh Recommendations</title><link href="https://blog.sea.nkelley.me/edinburgh-recommendations" rel="alternate" type="text/html" title="Edinburgh Recommendations" /><published>2025-08-21T00:00:00+00:00</published><updated>2025-08-21T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/edinburgh-recommendations</id><content type="html" xml:base="https://blog.sea.nkelley.me/edinburgh-recommendations"><![CDATA[<p>First things first: <em>edin-burruh</em>. That way people know what you’re talking about. Second things second: it’s “whisky”, not “whiskey”.</p>
 
 <p>At the time of writing it’s been four years since I went to Edinburgh, so the list has slimmed down quite a bit from what it might have been due to cognitive attrition. Anyway, in no particular order:</p>
 
@@ -843,12 +805,6 @@
     
   </section>
 <hr />
-
-<section class="tag-list">
-  <i class="tag-label">tags:</i>
-  
-  <a class="tag-link" href="/tag/recommendations">recommendations</a> 
-</section>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
@@ -937,13 +893,7 @@
     </a>
     
   </section>
-<hr />
-
-<section class="tag-list">
-  <i class="tag-label">tags:</i>
-  
-  <a class="tag-link" href="/tag/recommendations">recommendations</a> 
-</section>]]></content><author><name></name></author><category term="recommendations" /><summary type="html"><![CDATA[I &lt;3 London, so let’s not dally.]]></summary></entry><entry><title type="html">Why Constructed, Not Commander</title><link href="https://blog.sea.nkelley.me/mtg-constructed" rel="alternate" type="text/html" title="Why Constructed, Not Commander" /><published>2025-07-30T00:00:00+00:00</published><updated>2025-07-30T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/mtg-constructed</id><content type="html" xml:base="https://blog.sea.nkelley.me/mtg-constructed"><![CDATA[<p>Hello fellow dork. If you’re here, I probably sent you because you nagged me to play Commander. But I don’t like Commander, and here’s why.</p>
+<hr />]]></content><author><name></name></author><category term="recommendations" /><summary type="html"><![CDATA[I &lt;3 London, so let’s not dally.]]></summary></entry><entry><title type="html">Why Constructed, Not Commander</title><link href="https://blog.sea.nkelley.me/mtg-constructed" rel="alternate" type="text/html" title="Why Constructed, Not Commander" /><published>2025-07-30T00:00:00+00:00</published><updated>2025-07-30T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/mtg-constructed</id><content type="html" xml:base="https://blog.sea.nkelley.me/mtg-constructed"><![CDATA[<p>Hello fellow dork. If you’re here, I probably sent you because you nagged me to play Commander. But I don’t like Commander, and here’s why.</p>
 
 <p><strong>The board states are massively overcomplicated.</strong> I <em>do</em> like intricate multi-hour Euro games, but that’s not the itch that Magic scratches for me. I think Magic is at its best when games are quick and spunky and where the opponents bring clearly-distinct styles, like tennis. The ~400 unique cards in a Commander game dramatically amplify the complexity that Wizards keeps adding<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> when compared to the ~40 unique cards in a Constructed game.</p>
 
@@ -994,12 +944,6 @@
     
   </section>
 <hr />
-
-<section class="tag-list">
-  <i class="tag-label">tags:</i>
-  
-  <a class="tag-link" href="/tag/opinion">opinion</a> 
-</section>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
@@ -1079,13 +1023,6 @@
     
   </section>
 <hr />
-
-<section class="tag-list">
-  <i class="tag-label">tags:</i>
-  
-  <a class="tag-link" href="/tag/reference">reference</a>,  
-  <a class="tag-link" href="/tag/programming">programming</a> 
-</section>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
