@@ -99,3 +99,24 @@
     }
   }
 }
+
+.tag-list {
+  margin-bottom: $spacing;
+  margin-top: math.div(-$spacing, 2);
+  font-size: $font-size-small;
+
+  .tag-link {
+    border: 1px solid var(--link-color-underline);
+    border-radius: 4px;
+    padding: 2px 6px 3px;
+    text-decoration: none;
+
+    &:first-child {
+      margin-left: 4px;
+    }
+
+    &:hover {
+      border-color: var(--link-color-hover);
+    }
+  }
+}

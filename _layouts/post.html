@@ -7,6 +7,12 @@ layout: base
     <h1 class="post-title">{{ page.title | escape }}</h1>
     <h3 class="post-subtitle">{{ page.subtitle | escape }}</h3>
   </header>
+  {% if page.tags.size != 0 %}
+  <section class="tag-list">
+    📌
+    {% for t in page.tags %}<a class="tag-link" href="/tag/{{ t }}">{{ t }}</a>{% endfor %}
+  </section>
+  {% endif %}
   {%- if page.anchor_headings == true -%}
     {% assign anchor_headings = site.default_anchor_headings %}
   {%- else -%}
