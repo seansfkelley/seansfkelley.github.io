@@ -106,14 +106,11 @@
   font-size: $font-size-small;
 
   .tag-link {
+    text-decoration: none;
     border: 1px solid var(--link-color-underline);
     border-radius: 4px;
     padding: 2px 6px 3px;
-    text-decoration: none;
-
-    &:first-child {
-      margin-left: 4px;
-    }
+    margin-left: math.div($spacing, 2);
 
     &:hover {
       border-color: var(--link-color-hover);
