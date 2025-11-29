@@ -787,13 +787,11 @@ body[data-theme=light] #theme-switcher:after {
   font-size: 14px;
 }
 .tag-list .tag-link {
+  text-decoration: none;
   border: 1px solid var(--link-color-underline);
   border-radius: 4px;
   padding: 2px 6px 3px;
-  text-decoration: none;
-}
-.tag-list .tag-link:first-child {
-  margin-left: 4px;
+  margin-left: 7px;
 }
 .tag-list .tag-link:hover {
   border-color: var(--link-color-hover);
