@@ -1,24 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-11-30T16:05:37+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Pumpkin Pie Recipe</title><link href="https://blog.sea.nkelley.me/pumpkin-pie" rel="alternate" type="text/html" title="Pumpkin Pie Recipe" /><published>2025-11-28T00:00:00+00:00</published><updated>2025-11-28T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/pumpkin-pie</id><content type="html" xml:base="https://blog.sea.nkelley.me/pumpkin-pie"><![CDATA[<p>Preheat oven to 425°F.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2025-12-02T20:44:26+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Pumpkin Pie Recipe</title><link href="https://blog.sea.nkelley.me/pumpkin-pie" rel="alternate" type="text/html" title="Pumpkin Pie Recipe" /><published>2025-11-28T00:00:00+00:00</published><updated>2025-11-28T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/pumpkin-pie</id><content type="html" xml:base="https://blog.sea.nkelley.me/pumpkin-pie"><![CDATA[<p>Preheat oven to 425°F.</p>
 
 <p>Combine</p>
 
 <ul>
   <li>1 ¾ c (15oz can) mashed cooked pumpkin</li>
   <li>½ tsp salt</li>
-  <li>2 large eggs, plus 1 yolk</li>
+  <li>2 large eggs, plus 1 yolk<sup id="fnref:eggs" role="doc-noteref"><a href="#fn:eggs" class="footnote" rel="footnote">1</a></sup></li>
   <li>⅔ cup brown sugar</li>
-  <li>scant ⅔ cup evaporated* milk (small 5oz can; substitute whole milk)</li>
+  <li>scant ⅔ cup (5oz can) evaporated milk<sup id="fnref:milk" role="doc-noteref"><a href="#fn:milk" class="footnote" rel="footnote">2</a></sup></li>
   <li>1 ¼ tsp cinnamon</li>
   <li>½ tsp ginger</li>
   <li>½ tsp nutmeg</li>
-  <li>¼ tsp ground cloves</li>
+  <li>¼ tsp ground cloves<sup id="fnref:cloves" role="doc-noteref"><a href="#fn:cloves" class="footnote" rel="footnote">3</a></sup></li>
 </ul>
 
 <p>in a medium bowl and mix until combined.</p>
 
-<p>Pour into a <a href="/pie-dough">blind-baked crust</a> and bake for 45 minutes or until a toothpick inserted in the center comes out clean and the outer 2-3” of the custard looks drier than the middle. After 15 minutes, tent with foil, either perforated extensively or with a large hole in the middle, to prevent the crust from burning or the top discoloring.</p>
-
-<p>*Not condensed!</p>
+<p>Pour into a <a href="/pie-dough">blind-baked crust</a>, tent with foil just for the crust, and bake for 45 minutes or until a toothpick inserted in the center comes out clean and the outer 2-3” of the custard looks drier than the middle.</p>
 
 <hr />
 
@@ -37,7 +35,21 @@
     <div class="next-previous-placeholder"></div>
     
   </section>
-<hr />]]></content><author><name></name></author><category term="recipe" /><summary type="html"><![CDATA[Preheat oven to 425°F.]]></summary></entry><entry><title type="html">Some Venting About Corpo-speak</title><link href="https://blog.sea.nkelley.me/corpo-speak" rel="alternate" type="text/html" title="Some Venting About Corpo-speak" /><published>2025-11-23T00:00:00+00:00</published><updated>2025-11-23T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/corpo-speak</id><content type="html" xml:base="https://blog.sea.nkelley.me/corpo-speak"><![CDATA[<p>Fair warning: this post doesn’t really have any technical, aesthetic, or argumentative merit. I just wanted to complain, and complaining in an ostensibly public place does actually work better than the “write it and throw it away” crowd may think.</p>
+<hr />
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:eggs" role="doc-endnote">
+      <p>If you have extra-large/jumbo eggs, or particularly wet eggs, do one full egg and two yolks. <a href="#fnref:eggs" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:milk" role="doc-endnote">
+      <p>Not the same thing as condensed! Substitute whole milk. <a href="#fnref:milk" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:cloves" role="doc-endnote">
+      <p>Approximately 8 whole cloves, if you’re grinding fresh. <a href="#fnref:cloves" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>]]></content><author><name></name></author><category term="recipe" /><summary type="html"><![CDATA[Preheat oven to 425°F.]]></summary></entry><entry><title type="html">Some Venting About Corpo-speak</title><link href="https://blog.sea.nkelley.me/corpo-speak" rel="alternate" type="text/html" title="Some Venting About Corpo-speak" /><published>2025-11-23T00:00:00+00:00</published><updated>2025-11-23T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/corpo-speak</id><content type="html" xml:base="https://blog.sea.nkelley.me/corpo-speak"><![CDATA[<p>Fair warning: this post doesn’t really have any technical, aesthetic, or argumentative merit. I just wanted to complain, and complaining in an ostensibly public place does actually work better than the “write it and throw it away” crowd may think.</p>
 
 <p>There are certain phrases that, for reasons I will attempt (and likely fail) to touch on, I find disproportionately, perhaps unreasonably, obnoxious. These excretions are the textual – and really unfortunately, sometimes verbal – equivalent of <a href="https://en.wikipedia.org/wiki/Corporate_Memphis">Corporate Memphis</a>, both blandly generic and carefully obscure.</p>
 
