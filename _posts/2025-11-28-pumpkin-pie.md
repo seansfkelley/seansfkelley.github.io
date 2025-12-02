@@ -10,18 +10,20 @@ Combine
 
 - 1 ¾ c (15oz can) mashed cooked pumpkin
 - ½ tsp salt
-- 2 large eggs, plus 1 yolk
+- 2 large eggs, plus 1 yolk[^eggs]
 - ⅔ cup brown sugar
-- scant ⅔ cup evaporated* milk (small 5oz can; substitute whole milk)
+- scant ⅔ cup (5oz can) evaporated milk[^milk]
 - 1 ¼ tsp cinnamon
 - ½ tsp ginger
 - ½ tsp nutmeg
-- ¼ tsp ground cloves
+- ¼ tsp ground cloves[^cloves]
+
+[^eggs]: If you have extra-large/jumbo eggs, or particularly wet eggs, do one full egg and two yolks.
+[^milk]: Not the same thing as condensed! Substitute whole milk.
+[^cloves]: Approximately 8 whole cloves, if you're grinding fresh.
 
 in a medium bowl and mix until combined.
 
-Pour into a [blind-baked crust]({% post_url 2023-11-22-pie-dough %}) and bake for 45 minutes or until a toothpick inserted in the center comes out clean and the outer 2-3" of the custard looks drier than the middle. After 15 minutes, tent with foil, either perforated extensively or with a large hole in the middle, to prevent the crust from burning or the top discoloring.
-
-\*Not condensed!
+Pour into a [blind-baked crust]({% post_url 2023-11-22-pie-dough %}), tent with foil just for the crust, and bake for 45 minutes or until a toothpick inserted in the center comes out clean and the outer 2-3" of the custard looks drier than the middle.
 
 {% include common-footer.html %}
