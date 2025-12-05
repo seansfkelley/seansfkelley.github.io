@@ -126,6 +126,11 @@ body[data-theme=dark] {
   --sol-mono01: var(--sol-base1);
 }
 
+.juxtapose {
+  position: relative;
+  z-index: 0;
+}
+
 .jx-knightlab {
   display: none !important;
 }
