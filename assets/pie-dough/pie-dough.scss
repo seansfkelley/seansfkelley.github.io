@@ -4,6 +4,11 @@
 
 @import "variables";
 
+.juxtapose {
+  position: relative;
+  z-index: 0; // force new stacking context to keep z-indices from leaking out
+}
+
 .jx-knightlab {
   display: none !important;
 }
