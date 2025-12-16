@@ -24,6 +24,6 @@ Combine
 
 in a medium bowl and mix until combined.
 
-Pour into a [blind-baked crust]({% post_url 2023-11-22-pie-dough %}), tent with foil just for the crust, and bake for 45 minutes or until a toothpick inserted in the center comes out clean and the outer 2-3" of the custard looks drier than the middle.
+Pour into a [blind-baked crust]({% post_url 2023-11-22-pie-dough %}), tent with foil just for the crust, and bake for 45 minutes or until the middle few inches jiggles slightly when shaken.
 
 {% include common-footer.html %}
