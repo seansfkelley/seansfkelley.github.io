@@ -1,4 +1,95 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2026-01-27T23:17:52+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Pumpkin Pie Recipe</title><link href="https://blog.sea.nkelley.me/pumpkin-pie" rel="alternate" type="text/html" title="Pumpkin Pie Recipe" /><published>2025-11-28T00:00:00+00:00</published><updated>2025-11-28T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/pumpkin-pie</id><content type="html" xml:base="https://blog.sea.nkelley.me/pumpkin-pie"><![CDATA[<p>Preheat oven to 425°F.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2026-02-04T19:02:29+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Xcode is Hot Garbage</title><link href="https://blog.sea.nkelley.me/xcode" rel="alternate" type="text/html" title="Xcode is Hot Garbage" /><published>2026-02-04T00:00:00+00:00</published><updated>2026-02-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/xcode</id><content type="html" xml:base="https://blog.sea.nkelley.me/xcode"><![CDATA[<p>Xcode is the worst code editor I have ever used, hands down, including NetBeans, and I firmly believe that anyone who says otherwise has Stockholm Syndrome or has never used a good editor/terminal/IDE/compiler setup. Here is a barely-edited list of my accumulated complaints, serving as a reference next time a long-time iOS dev asks me why I think it’s so awful.</p>
+
+<ul>
+  <li>It crashes…
+    <ul>
+      <li>at least once a day, every day.</li>
+      <li>if you right-click a tab at the wrong time.</li>
+      <li>so hard, that sometimes you can’t even boot it without digging around in <code class="language-plaintext highlighter-rouge">~/Library</code> and/or <code class="language-plaintext highlighter-rouge">.xcodeproj</code> to delete random corrupted files.</li>
+    </ul>
+  </li>
+  <li>Canvas…
+    <ul>
+      <li>fails randomly and can be fixed by randomly closing and reopening it and/or the tabs its on.</li>
+      <li>doesn’t pick up any but the most cosmetic of changes without a full restart.</li>
+      <li>is so unbelievably slow that it’s faster to rebuild the app onto my phone.</li>
+    </ul>
+  </li>
+  <li>Rename refactors…
+    <ul>
+      <li>have such a flashy accordion animation that my 2025 computer bogs down to 3-5fps for precisely zero utility while I wait for it to complete.</li>
+      <li>rarely work if they involve more than a couple files, tending to spin for a while before giving up.</li>
+      <li>sometimes look like they’re working, renaming 49/50 instances before giving up because one file is in a weird state so now you have to do all 50 by hand.</li>
+      <li>often close the tab you’re currently looking at.</li>
+    </ul>
+  </li>
+  <li>Coding assistant chat (oh boy)…
+    <ul>
+      <li>pops in code in an animation that frequently gets stuck halfway through so I’m looking at a orange-purple rainbow of non-syntax-highlighted slop.</li>
+      <li>is clearly getting lied to by Xcode, often stating the changes it made on the previous turn that I’m currently looking at are not there, so it reapplies them, doubling the time that everything takes and burning through my quota.</li>
+      <li>usually stomps any tweaks you make to its changes, if you have the gall to ask for more edits afterwards, even if you preemptively point out that you made changes you’d like to keep.</li>
+      <li>hangs, all the time but especially if you *gasp* scroll the window while it’s writing to it, often so hard that the only resolution is to kill Xcode.</li>
+      <li>logs you out frequently and provides zero indication that this has happened until you try to continue a conversation, which fails with an error.</li>
+      <li>is tacked on at a higher UI level than the entire existing sidebar, so everything else useful on the sidebar is buried an extra layer down.</li>
+      <li>obscures code with a hovering status bar for the current conversation even when that conversation is idle and waiting for your input.</li>
+      <li>seems to keep cancelled turns in the conversation, meaning if it goes off the rails you are forced to decide between (1) throwing out the entire conversation because it’s impossible to get back on track with that in the context or (2) letting it waste time and tokens churning before you revert everything, which more reliably keeps it from retrying the same garbage.</li>
+      <li>may or may not remember any of the conversations you had in progress when Xcode opens or logs back in, which combines well with the frequent crashes, hangs, and log-outs.</li>
+    </ul>
+  </li>
+  <li>Find/replace…
+    <ul>
+      <li>seems to be hardcoded to default to symbol-type search, which often cannot actually find the symbols.</li>
+      <li>is <em>constantly</em> reindexing, burning CPU cycles and delaying other jobs supporting a broken feature.</li>
+      <li>doesn’t retrigger a search when you switch the search mode, which seems like an obvious oversight, thereby requiring additional rounds of switching your hands between mouse and keyboard.</li>
+    </ul>
+  </li>
+  <li>Type-based navigation…
+    <ul>
+      <li>like go-to-definition or “quick info” frequently silently fails for no discernable reason.</li>
+      <li>fails if you have a legal function name with an illegal parameter list, which is incidentally one of the times it is most useful.</li>
+      <li>frequently cannot locate every usage of a symbol across the project.</li>
+      <li>frequently does not highlight every usage of a selected symbol within the current file.</li>
+    </ul>
+  </li>
+  <li>And just reams of missing or broken quality-of-life features:
+    <ul>
+      <li>Format-on-save doesn’t exist, so formatting and linting are chores you have to remember.</li>
+      <li>Linting errors are not shown inline like compiler errors, so failures are always a fun surprise.</li>
+      <li>Inline compiler errors seem to dismiss themselves whenever they feel like it, no matter how long ago you fixed the problem or deleted the error from the sidebar.</li>
+      <li>Cross-target compiler errors seem to stick around basically forever, regardless of how many builds, rebuilds, or cleans you do – fresh builds will sometimes bring the errors back <em>even when they are successful</em>. Sometimes this causes test builds to erroneously fail because they refuse to acknowledge changed function signatures, even when you’ve cleaned and rebuilt all targets.</li>
+      <li>The missing multiple-cursor features mean I frequently copy an entire file to VS Code, edit it, and copy it back. This is still twice as fast and more reliable than the aforementioned garbage find-replace.</li>
+      <li>Despite the hilariously large number of keyboard-bindable commands it is quite hostile to keyboard-only workflows for the core editing experience, even after binding the all-important “run command by name”.</li>
+      <li>“Back” and “forward” navigation is per-file, not per-location, which makes it much less useful if you do crazy things like “jump to definition for a function in this file” and then want to go back to where you came from.</li>
+      <li>Tab pinning behavior is inferior to VS Code; for one, it doesn’t pin a tab when you put a breakpoint in it which seems like a pretty obvious indication you intend to return to this file.</li>
+      <li>Predictive autocomplete is so slow that it’s completely useless. The only thing I <em>ever</em> use it for is typing out a batch of <code class="language-plaintext highlighter-rouge">case</code>s in a <code class="language-plaintext highlighter-rouge">switch</code> but even then it’s a tossup if it’s faster.</li>
+      <li>Parameterized tests cause the inline test-case-input and failed-assertion informational elements to appear at the top of the test case list and the function body, respectively, so long blocks of a parameterized tests will split this information many viewports apart.</li>
+      <li>Changing branches causes tabs pointing to files that no longer exist to stick around but revert to the useless Start Page, meaning that a brief aside looking at another branch will throw out half of your view state. Sometimes this happens even if the file is still there, but changed.</li>
+    </ul>
+  </li>
+  <li>Leaving it idling in the background quadruples my idle CPU load and halves my battery life. It’s IDLE.</li>
+  <li><code class="language-plaintext highlighter-rouge">lldb-rpc-server</code> pegs a CPU <em>in the background</em> with near-100% reliability if you hit an uncaught exception and then attempt to “resume”. You will have no idea until your computer dies 30 minutes later.</li>
+</ul>
+
+<p>As a wise man once said: <em>The compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions.</em></p>
+
+<hr />
+
+<section class="next-previous">
+    
+    <a href="/pumpkin-pie" class="next-previous-link next-previous-previous" title="Previous Post: Pumpkin Pie Recipe">
+      <span class="next-previous-icon">←</span>
+      <div class="next-previous-name">
+        <div class="next-previous-label">
+          <span class="next-previous-icon">←</span> Previous Post
+        </div>
+        <div class="next-previous-title">Pumpkin Pie Recipe</div>
+      </div>
+    </a>
+     
+    <div class="next-previous-placeholder"></div>
+    
+  </section>
+<hr />]]></content><author><name></name></author><category term="programming" /><category term="opinion" /><category term="complaining" /><summary type="html"><![CDATA[Xcode is the worst code editor I have ever used, hands down, including NetBeans, and I firmly believe that anyone who says otherwise has Stockholm Syndrome or has never used a good editor/terminal/IDE/compiler setup. Here is a barely-edited list of my accumulated complaints, serving as a reference next time a long-time iOS dev asks me why I think it’s so awful.]]></summary></entry><entry><title type="html">Pumpkin Pie Recipe</title><link href="https://blog.sea.nkelley.me/pumpkin-pie" rel="alternate" type="text/html" title="Pumpkin Pie Recipe" /><published>2025-11-28T00:00:00+00:00</published><updated>2025-11-28T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/pumpkin-pie</id><content type="html" xml:base="https://blog.sea.nkelley.me/pumpkin-pie"><![CDATA[<p>Preheat oven to 425°F.</p>
 
 <p>Combine</p>
 
@@ -32,7 +123,15 @@
       </div>
     </a>
      
-    <div class="next-previous-placeholder"></div>
+    <a href="/xcode" class="next-previous-link next-previous-next" title="Next Post: Xcode is Hot Garbage">
+      <div class="next-previous-name">
+        <div class="next-previous-label">
+          Next Post <span class="next-previous-icon">→</span>
+        </div>
+        <div class="next-previous-title">Xcode is Hot Garbage</div>
+      </div>
+      <span class="next-previous-icon">→</span>
+    </a>
     
   </section>
 <hr />
@@ -95,7 +194,7 @@
     </a>
     
   </section>
-<hr />]]></content><author><name></name></author><category term="opinion" /><summary type="html"><![CDATA[Fair warning: this post doesn’t really have any technical, aesthetic, or argumentative merit. I just wanted to complain, and complaining in an ostensibly public place does actually work better than the “write it and throw it away” crowd may think.]]></summary></entry><entry><title type="html">My Code Style</title><link href="https://blog.sea.nkelley.me/code-style" rel="alternate" type="text/html" title="My Code Style" /><published>2025-11-04T00:00:00+00:00</published><updated>2025-11-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/code-style</id><content type="html" xml:base="https://blog.sea.nkelley.me/code-style"><![CDATA[<ul id="markdown-toc">
+<hr />]]></content><author><name></name></author><category term="opinion" /><category term="complaining" /><summary type="html"><![CDATA[Fair warning: this post doesn’t really have any technical, aesthetic, or argumentative merit. I just wanted to complain, and complaining in an ostensibly public place does actually work better than the “write it and throw it away” crowd may think.]]></summary></entry><entry><title type="html">My Code Style</title><link href="https://blog.sea.nkelley.me/code-style" rel="alternate" type="text/html" title="My Code Style" /><published>2025-11-04T00:00:00+00:00</published><updated>2025-11-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/code-style</id><content type="html" xml:base="https://blog.sea.nkelley.me/code-style"><![CDATA[<ul id="markdown-toc">
   <li><a href="#what-this-is" id="markdown-toc-what-this-is">What This Is</a>    <ul>
       <li><a href="#use-engineering-judgement" id="markdown-toc-use-engineering-judgement">Use Engineering Judgement</a></li>
     </ul>
@@ -967,89 +1066,4 @@
       <p>My rule of thumb is that any interaction that only happens when three cards are present should be considered pure bonus upside, perhaps shading into win-more, and not required for the deck to work. (Unless one of them is lands, since they are always around.) Three-card interactions are often too fragile to be fun or end up with the deck being a tedious tutor/control/delay shell around those three cards. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
-</div>]]></content><author><name></name></author><category term="opinion" /><summary type="html"><![CDATA[Hello fellow dork. If you’re here, I probably sent you because you nagged me to play Commander. But I don’t like Commander, and here’s why.]]></summary></entry><entry><title type="html">A Primer on Sideloading Your Own iPhone Apps</title><link href="https://blog.sea.nkelley.me/sideloading-iphone-apps" rel="alternate" type="text/html" title="A Primer on Sideloading Your Own iPhone Apps" /><published>2025-07-16T00:00:00+00:00</published><updated>2025-07-16T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/sideloading-iphone-apps</id><content type="html" xml:base="https://blog.sea.nkelley.me/sideloading-iphone-apps"><![CDATA[<p>This (brief) tutorial is for anyone with a Mac who wants to make iPhone apps for personal use<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> but doesn’t want to subject themselves to Apple’s lengthy and capricious publishing process (while paying $100 for the privilege)<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> or deal with jailbreaking.</p>
-
-<h3 id="caveats">Caveats</h3>
-
-<ul>
-  <li>You can only do this for 3 apps at a time.</li>
-  <li>You have to put your phone into “developer mode”, which Apple describes in vaguely threatening language regarding security.</li>
-  <li>You need to leave something running on your computer and be on the same network as it at least one a week.</li>
-</ul>
-
-<p>Alternately, you could just move to the EU or lobby your congressperson to get off their fucking asses and do something useful instead of vomiting something about “innovation” and “small businesses” while sucking off a billionaire.</p>
-
-<h3 id="the-actual-tutorial">The Actual Tutorial</h3>
-
-<ol>
-  <li>Install <a href="https://altstore.io/#Downloads">AltServer</a> on your computer and AltStore on your iPhone. <a href="https://faq.altstore.io/altstore-classic/how-to-install-altstore-macos">Details.</a>
-    <ul>
-      <li>You probably want to enable the AltServer &gt; Launch at Login menu option.</li>
-      <li>If you can’t see your phone in Finder after unplugging it, try Apple menu &gt; Force Quit… &gt; Finder &gt; Relaunch.</li>
-    </ul>
-  </li>
-  <li>Build an unsigned <code class="language-plaintext highlighter-rouge">.ipa</code> bundle using Xcode (as far as it’s willing to help).
-    <ol>
-      <li>Product &gt; Archive (in Xcode 16), which should open the Xcode Organizer showing the build.</li>
-      <li>Right-click the build and Show in Finder to reveal the <code class="language-plaintext highlighter-rouge">.xcarchive</code>. It’s a directory, so pop it open (right-click &gt; Show Package Contents, or just <code class="language-plaintext highlighter-rouge">cd</code>) and find the <code class="language-plaintext highlighter-rouge">.app</code> under <code class="language-plaintext highlighter-rouge">Products/Applications</code>.</li>
-      <li>Pull the <code class="language-plaintext highlighter-rouge">.app</code> out and plop it in a new empty directory somewhere called <code class="language-plaintext highlighter-rouge">Payload</code>.</li>
-      <li><code class="language-plaintext highlighter-rouge">zip -r &lt;app&gt;.ipa Payload</code> to finish the unsigned bundle.</li>
-    </ol>
-  </li>
-  <li>Get the <code class="language-plaintext highlighter-rouge">.ipa</code> onto your phone somehow.
-    <ul>
-      <li>Apple makes this really fucking annoying to do through the Files app,<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup> so I just used my Dropbox. iCloud Drive (and other similar things) probably also work.</li>
-    </ul>
-  </li>
-  <li>In AltStore, go to My Apps &gt; + &gt; navigate to the <code class="language-plaintext highlighter-rouge">.ipa</code>.
-    <ul>
-      <li>Note that it starts you down a directory – hit the back button to see other file systems.</li>
-    </ul>
-  </li>
-</ol>
-
-<p>That should be it! You can test the wireless refreshing by tapping “7 Days” in the newly-installed app listing.</p>
-
-<hr />
-
-<section class="next-previous">
-    
-    <a href="/bad-drivers" class="next-previous-link next-previous-previous" title="Previous Post: A Refined Theory of Bad Drivers">
-      <span class="next-previous-icon">←</span>
-      <div class="next-previous-name">
-        <div class="next-previous-label">
-          <span class="next-previous-icon">←</span> Previous Post
-        </div>
-        <div class="next-previous-title">A Refined Theory of Bad Drivers</div>
-      </div>
-    </a>
-     
-    <a href="/mtg-constructed" class="next-previous-link next-previous-next" title="Next Post: Why Constructed, Not Commander">
-      <div class="next-previous-name">
-        <div class="next-previous-label">
-          Next Post <span class="next-previous-icon">→</span>
-        </div>
-        <div class="next-previous-title">Why Constructed, Not Commander</div>
-      </div>
-      <span class="next-previous-icon">→</span>
-    </a>
-    
-  </section>
-<hr />
-
-<div class="footnotes" role="doc-endnotes">
-  <ol>
-    <li id="fn:1" role="doc-endnote">
-      <p>You can do this trivially in stock Xcode… for 7 days at a time. We grovel at your feet for your magnanimity, oh Grand High Beancounter Tim Cook. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
-    <li id="fn:2" role="doc-endnote">
-      <p>Short version of my stance on app store gatekeeping, since I can’t resist: Apple can and should provide an official distribution channel with tight rules <em>in addition to</em> allowing other app stores and drag-and-drop app installation. There is merit in walled gardens, but the 30% fee (or <a href="https://www.axios.com/2025/05/01/apple-epic-lawsuit-app-store-offsite-fees">27%</a>, yeah, fuck you too, Tim Cook) in absence of competition is (literally) extortionate, their “reviews” seem to let plenty of scams and low-quality garbage through anyway, and these policies stifle small-time operators.<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
-    <li id="fn:3" role="doc-endnote">
-      <p>I would feel stupid that I can’t figure out how to just… move a file onto my iPhone, but I’m pretty sure this is Apple being purposely obstructive. The Files tab in Finder can only drop files into apps that register themselves as file-using, rather than the general Files area. AirDropping an <code class="language-plaintext highlighter-rouge">.ipa</code> is a black hole, I guess either because it’s a blacklisted file type or it’s not a whitelisted file type. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
-    <li id="fn:4" role="doc-endnote">
-      <p>I finally finished an iOS app on the third try in as many years, but I almost gave up again on the way there. The blame for <em>every</em> nontrivial frustration and roadblock is laid squarely at the feet of Xcode or the App Store – <em>never</em> the iPhone itself, the iPhone SDK, or Swift/SwiftUI. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
-  </ol>
-</div>]]></content><author><name></name></author><category term="reference" /><category term="programming" /><summary type="html"><![CDATA[This (brief) tutorial is for anyone with a Mac who wants to make iPhone apps for personal use1 but doesn’t want to subject themselves to Apple’s lengthy and capricious publishing process (while paying $100 for the privilege)2 or deal with jailbreaking. You can do this trivially in stock Xcode… for 7 days at a time. We grovel at your feet for your magnanimity, oh Grand High Beancounter Tim Cook. &#8617; Short version of my stance on app store gatekeeping, since I can’t resist: Apple can and should provide an official distribution channel with tight rules in addition to allowing other app stores and drag-and-drop app installation. There is merit in walled gardens, but the 30% fee (or 27%, yeah, fuck you too, Tim Cook) in absence of competition is (literally) extortionate, their “reviews” seem to let plenty of scams and low-quality garbage through anyway, and these policies stifle small-time operators.[^4] &#8617;]]></summary></entry></feed>
+</div>]]></content><author><name></name></author><category term="opinion" /><summary type="html"><![CDATA[Hello fellow dork. If you’re here, I probably sent you because you nagged me to play Commander. But I don’t like Commander, and here’s why.]]></summary></entry></feed>

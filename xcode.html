@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Xcode is Hot Garbage | fiddlybits</title>
+<meta name="generator" content="Jekyll v4.3.3" />
+<meta property="og:title" content="Xcode is Hot Garbage" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Xcode is the worst code editor I have ever used, hands down, including NetBeans, and I firmly believe that anyone who says otherwise has Stockholm Syndrome or has never used a good editor/terminal/IDE/compiler setup. Here is a barely-edited list of my accumulated complaints, serving as a reference next time a long-time iOS dev asks me why I think it’s so awful." />
+<meta property="og:description" content="Xcode is the worst code editor I have ever used, hands down, including NetBeans, and I firmly believe that anyone who says otherwise has Stockholm Syndrome or has never used a good editor/terminal/IDE/compiler setup. Here is a barely-edited list of my accumulated complaints, serving as a reference next time a long-time iOS dev asks me why I think it’s so awful." />
+<link rel="canonical" href="https://blog.sea.nkelley.me/xcode" />
+<meta property="og:url" content="https://blog.sea.nkelley.me/xcode" />
+<meta property="og:site_name" content="fiddlybits" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-02-04T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Xcode is Hot Garbage" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2026-02-04T00:00:00+00:00","datePublished":"2026-02-04T00:00:00+00:00","description":"Xcode is the worst code editor I have ever used, hands down, including NetBeans, and I firmly believe that anyone who says otherwise has Stockholm Syndrome or has never used a good editor/terminal/IDE/compiler setup. Here is a barely-edited list of my accumulated complaints, serving as a reference next time a long-time iOS dev asks me why I think it’s so awful.","headline":"Xcode is Hot Garbage","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.sea.nkelley.me/xcode"},"url":"https://blog.sea.nkelley.me/xcode"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/style.css">
+  <link type="application/atom+xml" rel="alternate" href="https://blog.sea.nkelley.me/feed.xml" title="fiddlybits" /></head>
+<body data-theme="auto" data-unit="imperial"><header class="site-header">
+  <div class="centering-wrapper">
+    <a class="site-title" href="/">fiddlybits</a>
+    <span class="site-controls">
+      <a href="/tag">tags</a>
+      &nbsp;•&nbsp;
+      <a href="https://github.com/seansfkelley">github</a>
+      &nbsp;•&nbsp;
+      <a href="/feed.xml">rss</a>
+      <!-- Only show theme switcher if js is enabled: hide by default. -->
+      <span id="theme-switcher-wrapper" style="display: none;">
+        &nbsp;•&nbsp;
+        <a href="#" id="theme-switcher"></a>
+      </span>
+    </span>
+  </div>
+</header>
+<main class="centering-wrapper">
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Xcode is Hot Garbage</h1>
+    <h3 class="post-subtitle"></h3>
+  </header>
+  
+  <section class="tag-list">
+    📌
+    <a class="tag-link" href="/tag/programming">programming</a><a class="tag-link" href="/tag/opinion">opinion</a><a class="tag-link" href="/tag/complaining">complaining</a>
+  </section>
+  <p>Xcode is the worst code editor I have ever used, hands down, including NetBeans, and I firmly believe that anyone who says otherwise has Stockholm Syndrome or has never used a good editor/terminal/IDE/compiler setup. Here is a barely-edited list of my accumulated complaints, serving as a reference next time a long-time iOS dev asks me why I think it’s so awful.</p>
+
+<ul>
+  <li>It crashes…
+    <ul>
+      <li>at least once a day, every day.</li>
+      <li>if you right-click a tab at the wrong time.</li>
+      <li>so hard, that sometimes you can’t even boot it without digging around in <code class="language-plaintext highlighter-rouge">~/Library</code> and/or <code class="language-plaintext highlighter-rouge">.xcodeproj</code> to delete random corrupted files.</li>
+    </ul>
+  </li>
+  <li>Canvas…
+    <ul>
+      <li>fails randomly and can be fixed by randomly closing and reopening it and/or the tabs its on.</li>
+      <li>doesn’t pick up any but the most cosmetic of changes without a full restart.</li>
+      <li>is so unbelievably slow that it’s faster to rebuild the app onto my phone.</li>
+    </ul>
+  </li>
+  <li>Rename refactors…
+    <ul>
+      <li>have such a flashy accordion animation that my 2025 computer bogs down to 3-5fps for precisely zero utility while I wait for it to complete.</li>
+      <li>rarely work if they involve more than a couple files, tending to spin for a while before giving up.</li>
+      <li>sometimes look like they’re working, renaming 49/50 instances before giving up because one file is in a weird state so now you have to do all 50 by hand.</li>
+      <li>often close the tab you’re currently looking at.</li>
+    </ul>
+  </li>
+  <li>Coding assistant chat (oh boy)…
+    <ul>
+      <li>pops in code in an animation that frequently gets stuck halfway through so I’m looking at a orange-purple rainbow of non-syntax-highlighted slop.</li>
+      <li>is clearly getting lied to by Xcode, often stating the changes it made on the previous turn that I’m currently looking at are not there, so it reapplies them, doubling the time that everything takes and burning through my quota.</li>
+      <li>usually stomps any tweaks you make to its changes, if you have the gall to ask for more edits afterwards, even if you preemptively point out that you made changes you’d like to keep.</li>
+      <li>hangs, all the time but especially if you *gasp* scroll the window while it’s writing to it, often so hard that the only resolution is to kill Xcode.</li>
+      <li>logs you out frequently and provides zero indication that this has happened until you try to continue a conversation, which fails with an error.</li>
+      <li>is tacked on at a higher UI level than the entire existing sidebar, so everything else useful on the sidebar is buried an extra layer down.</li>
+      <li>obscures code with a hovering status bar for the current conversation even when that conversation is idle and waiting for your input.</li>
+      <li>seems to keep cancelled turns in the conversation, meaning if it goes off the rails you are forced to decide between (1) throwing out the entire conversation because it’s impossible to get back on track with that in the context or (2) letting it waste time and tokens churning before you revert everything, which more reliably keeps it from retrying the same garbage.</li>
+      <li>may or may not remember any of the conversations you had in progress when Xcode opens or logs back in, which combines well with the frequent crashes, hangs, and log-outs.</li>
+    </ul>
+  </li>
+  <li>Find/replace…
+    <ul>
+      <li>seems to be hardcoded to default to symbol-type search, which often cannot actually find the symbols.</li>
+      <li>is <em>constantly</em> reindexing, burning CPU cycles and delaying other jobs supporting a broken feature.</li>
+      <li>doesn’t retrigger a search when you switch the search mode, which seems like an obvious oversight, thereby requiring additional rounds of switching your hands between mouse and keyboard.</li>
+    </ul>
+  </li>
+  <li>Type-based navigation…
+    <ul>
+      <li>like go-to-definition or “quick info” frequently silently fails for no discernable reason.</li>
+      <li>fails if you have a legal function name with an illegal parameter list, which is incidentally one of the times it is most useful.</li>
+      <li>frequently cannot locate every usage of a symbol across the project.</li>
+      <li>frequently does not highlight every usage of a selected symbol within the current file.</li>
+    </ul>
+  </li>
+  <li>And just reams of missing or broken quality-of-life features:
+    <ul>
+      <li>Format-on-save doesn’t exist, so formatting and linting are chores you have to remember.</li>
+      <li>Linting errors are not shown inline like compiler errors, so failures are always a fun surprise.</li>
+      <li>Inline compiler errors seem to dismiss themselves whenever they feel like it, no matter how long ago you fixed the problem or deleted the error from the sidebar.</li>
+      <li>Cross-target compiler errors seem to stick around basically forever, regardless of how many builds, rebuilds, or cleans you do – fresh builds will sometimes bring the errors back <em>even when they are successful</em>. Sometimes this causes test builds to erroneously fail because they refuse to acknowledge changed function signatures, even when you’ve cleaned and rebuilt all targets.</li>
+      <li>The missing multiple-cursor features mean I frequently copy an entire file to VS Code, edit it, and copy it back. This is still twice as fast and more reliable than the aforementioned garbage find-replace.</li>
+      <li>Despite the hilariously large number of keyboard-bindable commands it is quite hostile to keyboard-only workflows for the core editing experience, even after binding the all-important “run command by name”.</li>
+      <li>“Back” and “forward” navigation is per-file, not per-location, which makes it much less useful if you do crazy things like “jump to definition for a function in this file” and then want to go back to where you came from.</li>
+      <li>Tab pinning behavior is inferior to VS Code; for one, it doesn’t pin a tab when you put a breakpoint in it which seems like a pretty obvious indication you intend to return to this file.</li>
+      <li>Predictive autocomplete is so slow that it’s completely useless. The only thing I <em>ever</em> use it for is typing out a batch of <code class="language-plaintext highlighter-rouge">case</code>s in a <code class="language-plaintext highlighter-rouge">switch</code> but even then it’s a tossup if it’s faster.</li>
+      <li>Parameterized tests cause the inline test-case-input and failed-assertion informational elements to appear at the top of the test case list and the function body, respectively, so long blocks of a parameterized tests will split this information many viewports apart.</li>
+      <li>Changing branches causes tabs pointing to files that no longer exist to stick around but revert to the useless Start Page, meaning that a brief aside looking at another branch will throw out half of your view state. Sometimes this happens even if the file is still there, but changed.</li>
+    </ul>
+  </li>
+  <li>Leaving it idling in the background quadruples my idle CPU load and halves my battery life. It’s IDLE.</li>
+  <li><code class="language-plaintext highlighter-rouge">lldb-rpc-server</code> pegs a CPU <em>in the background</em> with near-100% reliability if you hit an uncaught exception and then attempt to “resume”. You will have no idea until your computer dies 30 minutes later.</li>
+</ul>
+
+<p>As a wise man once said: <em>The compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions.</em></p>
+
+<hr />
+
+<section class="next-previous">
+    
+    <a href="/pumpkin-pie" class="next-previous-link next-previous-previous" title="Previous Post: Pumpkin Pie Recipe">
+      <span class="next-previous-icon">←</span>
+      <div class="next-previous-name">
+        <div class="next-previous-label">
+          <span class="next-previous-icon">←</span> Previous Post
+        </div>
+        <div class="next-previous-title">Pumpkin Pie Recipe</div>
+      </div>
+    </a>
+     
+    <div class="next-previous-placeholder"></div>
+    
+  </section>
+<hr />
+
+<footer>
+    <p class="post-date">
+      ~
+      <time
+        datetime="2026-02-04T00:00:00+00:00"
+        itemprop="datePublished"
+      >
+        2026-02-04
+      </time>~
+    </p>
+  </footer>
+</article>
+
+      <!--
+        This filthy trick makes sure that the content always weakly tries to expand to the full
+        width available, but allows for linebreaks if the viewport is too small. It produces a
+        better result than, say, width: 100%; or width: some-fixed-pixel-amount; and doesn't require
+        rewriting everything to flexbox (which would mess with the <html>-level scroll behavior and
+        sticky header) or adding extra DOM (which I'm trying to minimize to make myself feel good).
+      -->
+      <div class="horizontal-expander" aria-hidden="true">
+        Throughout human history, we have been dependent on machines to survive.
+        Fate, it seems, is not without a sense of irony.
+      </div>
+    </main>
+  </body>
+  <script src="/assets/js/theme-switcher.js"></script>
+  <script src="/assets/js/copy-code-block.js"></script>
+  <script src="/assets/js/unit-switcher.js"></script>
+  
+</html>
