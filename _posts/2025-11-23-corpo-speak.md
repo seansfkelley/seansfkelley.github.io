@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Some Venting About Corpo-speak
-tags: opinion
+tags: opinion complaining
 ---
 
 Fair warning: this post doesn't really have any technical, aesthetic, or argumentative merit. I just wanted to complain, and complaining in an ostensibly public place does actually work better than the "write it and throw it away" crowd may think.
