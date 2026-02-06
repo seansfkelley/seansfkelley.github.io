@@ -8,6 +8,8 @@ custom-css-list:
   - /assets/literate-recipe/literate-recipe.css
 ---
 
+![collage](/assets/sourdough/collage.jpg)
+
 This recipe is my transcription and adaptation of [A Non-Baker's Guide To Making Sourdough Bread](https://www.youtube.com/watch?v=APEavQg8rMw), written in a style loosely inspired by [literate programming](https://en.wikipedia.org/wiki/Literate_programming). A bit more background on what this "literate recipe" thing is at [my focaccia recipe]({% post_url 2021-05-17-focaccia %}).
 
 This recipe is intended as a terse reference for those already familiar with the recipe, or sourdough breads in general. If you aren't very experienced, you can watch the full video recipe linked above (also great as a visual reference), follow [Tartine's Country Bread](https://tartinebakery.com/stories/country-bread) recipe, and/or check out [my advice on maintaining a starter]({% post_url 2021-04-28-sourdough-starter %}).
