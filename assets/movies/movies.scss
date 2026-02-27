@@ -69,8 +69,12 @@
         display: block;
         margin-bottom: $spacing;
         align-self: center;
-        min-width: 200px;
-        width: 200px;
+
+        img {
+          min-width: 200px;
+          width: 200px;
+          height: auto;
+        }
       }
     }
 

@@ -13,4 +13,5 @@ group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.12"
   gem "jekyll-seo-tag", "~> 2"
   gem "jekyll-redirect-from", "~> 0.16"
+  gem "jekyll-image-size", "~> 1.2.1"
 end
