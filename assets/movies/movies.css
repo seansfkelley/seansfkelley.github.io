@@ -184,8 +184,11 @@ body[data-theme=dark] {
   display: block;
   margin-bottom: 14px;
   align-self: center;
+}
+.entry .content .poster a img {
   min-width: 200px;
   width: 200px;
+  height: auto;
 }
 .entry .content .watched {
   font-size: 14px;
