@@ -7,13 +7,15 @@ layout: base
     {%- assign id = entry.title | slugify: "latin" -%}
     <li href="#{{ id }}">
       <div class="title-container">
-        <h3>
+        <h2>
           <a href="{{ entry.url }}">{{ entry.title }}</a>
-        </h3>
-        <span class="date">
-          {{ entry.publish_date | date: site.date_format }}
+        </h2>
+        <span class="metadata">
+          <span class="date">
+            {{ entry.publish_date | date: site.date_format }}
+          </span>
+          {%- if entry.archive -%}[<a class="archive" href="{{ entry.archive }}">archive</a>]{%- endif -%}
         </span>
-        {%- if entry.archive -%}<span>[<a class="archive" href="{{ entry.archive }}">archive</a>]</span>{%- endif -%}
       </div>
       <blockquote class="excerpt" markdown="1">{{ entry.excerpt }}</blockquote>
     </li>

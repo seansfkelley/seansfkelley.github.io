@@ -10,3 +10,51 @@
     \[...\]
 
     We've got enough content to infinite-scroll for the rest of our waking lives. Yet so much of it is pointless, undesirable, lacking substance, or actively harmful. It is above all joyless—like listening to a Breaking Rust album while eating a sleeve of unsalted saltines and somehow forgetting that it wasn't always this way.
+- title: cooler screens
+  url: https://computer.rip/2023-10-22-cooler-screens.html
+  archive: https://web.archive.org/web/20260227154700/https://computer.rip/2023-10-22-cooler-screens.html
+  publish_date: 2023-10-22
+  excerpt: |
+    Still, I find myself looking at a Walgreens cooler that just two years ago was covered in clear glass, admitting direct inspection of which tall-boy teas were in stock. Today, it's an impenetrable black void. Some Walgreens employee has printed a sheet of paper, "TEA" in 96-point Cambria, and taped it to the wall above the door. Taking in this spectacle, of a multi-million dollar effort that took our coolers and made them more difficult to use, of a retail employee's haphazard effort to mitigate the hostility of their employer's merchandising, it is hard not to indulge in that escape. Surely, things can't get much worse. _Surely, these must be the latter days._
+- title: The 'Enshittification' of TikTok
+  url: https://www.wired.com/story/tiktok-platforms-cory-doctorow/
+  archive: https://web.archive.org/web/20260228052526/https://www.wired.com/story/tiktok-platforms-cory-doctorow/
+  publish_date: 2023-01-23
+  excerpt: |
+    Here is how platforms die: First, they are good to their users; then they abuse their users to make things better for their business customers; finally, they abuse those business customers to claw back all the value for themselves. Then, they die.
+
+    I call this _enshittification_, and it is a seemingly inevitable consequence arising from the combination of the ease of changing how a platform allocates value, combined with the nature of a "two-sided market," where a platform sits between buyers and sellers, hold each hostage to the other, raking off an ever-larger share of the value that passes between them.
+- title: Code Only Says What it Does
+  url: https://brooker.co.za/blog/2020/06/23/code.html
+  archive: https://web.archive.org/web/20260120210504/https://brooker.co.za/blog/2020/06/23/code.html
+  publish_date: 2020-06-23
+  excerpt: |
+    Code says what it does. That's important for the computer, because code is the way that we ask the computer to do something. It's OK for humans, as long as we never have to modify or debug the code. As soon as we do, we have a problem. Fundamentally, debugging is an exercise in changing what a program does to match what it should do. It requires us to know what a program should do, which isn't captured in the code. Sometimes that's easy: What it does is crash, what it should do is _not crash_. Outside those trivial cases, discovering intent is harder.
+- title: An app can be a home-cooked meal
+  url: https://www.robinsloan.com/notes/home-cooked-app/
+  archive: https://archive.is/lLPC6
+  publish_date: 2020-02
+  excerpt: |
+    The exhortation “learn to code” has its foundations in market value. “Learn to code” is suggested as a way up, a way out. “Learn to code” offers economic leverage, professional transformation. “Learn to code” goes on your resume.
+
+    But let's substitute a different phrase: “learn to cook”. People don't only learn to cook so they can become chefs. Some do! But many more people learn to cook so they can eat better, or more affordably. Because they want to carry on a tradition. Sometimes they learn because they're bored! Or even because they enjoy spending time with the person who's teaching them.
+- title: Programming Sucks
+  url: https://www.stilldrinking.org/programming-sucks
+  archive: https://web.archive.org/web/20260301145223/https://www.stilldrinking.org/programming-sucks
+  publish_date: 2014-04-27
+  excerpt: |
+    Every programmer starts out writing some perfect little snowflake like this. Then they're told on Friday they need to have six hundred snowflakes written by Tuesday, so they cheat a bit here and there and maybe copy a few snowflakes and try to stick them together or they have to ask a coworker to work on one who melts it and then all the programmers' snowflakes get dumped together in some inscrutable shape and somebody leans a Picasso on it because nobody wants to see the cat urine soaking into all your broken snowflakes melting in the light of day. Next week, everybody shovels more snow on it to keep the Picasso from falling over.
+- title: "PHP: a fractal of bad design"
+  url: https://eev.ee/blog/2012/04/09/php-a-fractal-of-bad-design/
+  archive: https://web.archive.org/web/20260227034103/https://eev.ee/blog/2012/04/09/php-a-fractal-of-bad-design/
+  publish_date: 2012-04-09
+  excerpt: |
+    I can't even say what's _wrong_ with PHP, because—  okay.  Imagine you have uh, a toolbox.  A set of tools.  Looks okay, standard stuff in there.
+
+    You pull out a screwdriver, and you see it's one of those weird tri-headed things.  Okay, well, that's not very useful to you, but you guess it comes in handy sometimes.
+
+    You pull out the hammer, but to your dismay, it has the claw part on _both_ sides.  Still serviceable though, I mean, you can hit nails with the middle of the head holding it sideways.
+
+    You pull out the pliers, but they don't have those serrated surfaces; it's flat and smooth.  That's less useful, but it still turns bolts well enough, so whatever.
+
+    And on you go.  Everything in the box is kind of weird and quirky, but maybe not enough to make it _completely_ worthless.  And there's no clear problem with the set as a whole; it still has all the tools.
