@@ -1,0 +1,26 @@
+.link-list {
+  list-style: none;
+  margin: $spacing * 2 0;
+
+  .title-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: $spacing;
+
+    h3 {
+      margin: 0;
+    }
+
+    .date {
+      margin-left: auto;
+      margin-right: $spacing;
+      font-size: $font-size-small;
+      color: var(--text-color-faded);
+    }
+  }
+
+  .excerpt {
+    margin-left: $spacing;
+    font-size: $font-size-small;
+  }
+}
