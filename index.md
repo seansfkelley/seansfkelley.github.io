@@ -1,3 +1,46 @@
 ---
-layout: home
+layout: base
 ---
+
+<ul class="post-list">
+  {%- for post in site.posts -%}
+    {%- unless post.hidden -%}
+      {%- comment -%}`plus`ing a numeric string will convert it into a number. I don't know any other way to do it.{%- endcomment -%}
+      {%- assign this_year = post.date | date: '%Y' | plus: 0 -%}
+      {%- assign next_year = post.next.date | date: '%Y' | plus: 0 -%}
+      {%- assign delta = next_year | minus: this_year -%}
+
+      {%- comment -%}No while loops in Liquid, so do this dumb shit.{%- endcomment -%}
+      {%- for counter in (2..10) -%}
+        {%- if delta >= counter -%}
+          <li class="post-year-divider">
+            {{ next_year | minus: counter | plus: 1 }}
+          </li>
+          <li class="post-empty">
+            nothing to see here :(
+          </li>
+        {%- else -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if next_year == nil or this_year != next_year -%}
+        <li class="post-year-divider">
+          {{ this_year }}
+        </li>
+      {%- endif -%}
+      <li class="post-item">
+        <a class="post-link" href="{{ post.url | relative_url }}">
+          {{ post.title | escape }}
+        </a>
+        <time
+          class="post-date"
+          datetime="{{ post.date | date_to_xmlschema }}"
+          itemprop="datePublished"
+        >
+          {{ post.date | date: site.date_format }}
+        </time>
+      </li>
+    {%- endunless -%}
+  {%- endfor -%}
+</ul>
