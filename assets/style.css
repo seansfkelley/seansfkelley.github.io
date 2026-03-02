@@ -808,6 +808,39 @@ body[data-theme=light] #theme-switcher:after {
   color: var(--text-color-faded);
 }
 
+.link-list {
+  list-style: none;
+  margin: 28px 0;
+}
+.link-list .title-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+}
+.link-list .title-container h2 {
+  margin: 0;
+}
+.link-list .title-container .metadata {
+  margin-left: auto;
+  margin-right: 14px;
+  padding-left: 14px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.link-list .title-container .metadata .date {
+  color: var(--text-color-faded);
+}
+@media screen and (min-width: 600px) {
+  .link-list .title-container {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+.link-list .excerpt {
+  margin-left: 14px;
+  font-size: 14px;
+}
+
 .alert {
   background-color: var(--intent-default-background-color);
   padding: 14px;
