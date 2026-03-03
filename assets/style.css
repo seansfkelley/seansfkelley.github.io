@@ -813,32 +813,35 @@ body[data-theme=light] #theme-switcher:after {
   margin: 28px 0;
 }
 .link-list .title-container {
-  display: flex;
-  flex-direction: column;
   margin-bottom: 14px;
+  display: flow-root;
+  line-height: 1.5;
 }
-.link-list .title-container h2 {
+.link-list .title-container .title {
   margin: 0;
+  font-family: "Lufga", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.5;
 }
 .link-list .title-container .metadata {
-  margin-left: auto;
-  margin-right: 14px;
   padding-left: 14px;
   font-size: 14px;
   white-space: nowrap;
+  float: right;
+  line-height: 1.5;
+  position: relative;
+  top: calc((1.5rem - 1ex) / 2);
 }
 .link-list .title-container .metadata .date {
   color: var(--text-color-faded);
 }
-@media screen and (min-width: 600px) {
-  .link-list .title-container {
-    flex-direction: row;
-    align-items: center;
-  }
-}
 .link-list .excerpt {
   margin-left: 14px;
   font-size: 14px;
+}
+.link-list li {
+  margin-bottom: 56px;
 }
 
 .alert {
