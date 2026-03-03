@@ -1,36 +1,46 @@
+@use "sass:math";
+
 .link-list {
   list-style: none;
   margin: $spacing * 2 0;
 
   .title-container {
-    display: flex;
-    flex-direction: column;
     margin-bottom: $spacing;
+    display: flow-root;
+    line-height: 1.5;
 
-    h2 {
+    .title {
       margin: 0;
+      font-family: $font-family-header;
+      font-weight: 300;
+      font-size: 1.5rem;
+      line-height: 1.5;
     }
 
     .metadata {
-      margin-left: auto;
-      margin-right: $spacing;
       padding-left: $spacing;
       font-size: $font-size-small;
       white-space: nowrap;
+      float: right;
+      line-height: 1.5;
+
+      position: relative;
+      // I don't think this is quite right but it is very close and has a nice symmetry with the
+      // line-height, so I'm going to pretend it is so I don't have to push 1 pixel at a time.
+      top: calc((1.5rem - 1ex) / 2);
 
       .date {
         color: var(--text-color-faded);
       }
-    }
-
-    @media screen and (min-width: $width-mobile) {
-      flex-direction: row;
-      align-items: center;
     }
   }
 
   .excerpt {
     margin-left: $spacing;
     font-size: $font-size-small;
+  }
+
+  li {
+    margin-bottom: $spacing * 4;
   }
 }
