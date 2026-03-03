@@ -820,7 +820,7 @@ body[data-theme=light] #theme-switcher:after {
 .link-list .title-container .title {
   margin: 0;
   font-family: "Lufga", Helvetica, Arial, sans-serif;
-  font-weight: 400;
+  font-weight: 300;
   font-size: 1.5rem;
   line-height: 1.5;
 }
