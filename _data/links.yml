@@ -78,7 +78,7 @@
     \[...\]
 
     "One, it doesn't actually work," she said. "The people using platforms to organize real harm are pretty good at figuring out how to get around these systems. And two, it leads to collateral damage of literal speech." Attempting to regulate human speech at a scale of billions of people in dozens of different languages and trying to contend with things such as humor, sarcasm, local context and slang can't be done by simply down-ranking certain words, Greer argues.
-- title: What Games Are Like For Someone Who Doesn't Play Games [video]
+- title: What Games Are Like For Someone Who Doesn't Play Games \[video]
   url: https://www.youtube.com/watch?v=ax7f3JZJHSw
   publish_date: 2019-09-28
   excerpt: |
@@ -91,12 +91,28 @@
   publish_date: 2019-08-08
   excerpt: |
     The site's now characteristic tone of performative erudition—hyperrational, dispassionate, contrarian, authoritative—often masks a deeper recklessness. Ill-advised citations proliferate; thought experiments abound; humane arguments are dismissed as emotional or irrational. Logic, applied narrowly, is used to justify broad moral positions. The most admired arguments are made with data, but the origins, veracity, and malleability of those data tend to be ancillary concerns. The message-board intellectualism that might once have impressed V.C. observers like Graham has developed into an intellectual style all its own. Hacker News readers who visit the site to learn how engineers and entrepreneurs talk, and what they talk about, can find themselves immersed in conversations that resemble the output of duelling Markov bots trained on libertarian economics blogs, "The Tim Ferriss Show," and the work of Yuval Noah Harari.
+- title: What _Is_ Code?
+  url: https://www.bloomberg.com/graphics/2015-paul-ford-what-is-code/
+  archive: https://web.archive.org/web/20260102130146/https://www.bloomberg.com/graphics/2015-paul-ford-what-is-code/
+  publish_date: 2015-06-11
+  excerpt: |
+    You, using a pen and paper, can do anything a computer can; you just can't do those things billions of times per second. And those billions of tiny operations add up. They can cause a phone to boop, elevate an elevator, or redirect a missile. That raw speed makes it possible to pull off not one but multiple sleights of hand, card tricks on top of card tricks. Take a bunch of pulses of light reflected from an optical disc, apply some math to unsqueeze them, and copy the resulting pile of expanded impulses into some memory cells—then read from those cells to paint light on the screen. Millions of pulses, 60 times a second. That's how you make the rubes believe they're watching a movie.
 - title: Programming Sucks
   url: https://www.stilldrinking.org/programming-sucks
   archive: https://web.archive.org/web/20260301145223/https://www.stilldrinking.org/programming-sucks
   publish_date: 2014-04-27
   excerpt: |
     Every programmer starts out writing some perfect little snowflake like this. Then they're told on Friday they need to have six hundred snowflakes written by Tuesday, so they cheat a bit here and there and maybe copy a few snowflakes and try to stick them together or they have to ask a coworker to work on one who melts it and then all the programmers' snowflakes get dumped together in some inscrutable shape and somebody leans a Picasso on it because nobody wants to see the cat urine soaking into all your broken snowflakes melting in the light of day. Next week, everybody shovels more snow on it to keep the Picasso from falling over.
+- title: The Night Watch \[pdf]
+  url: https://www.usenix.org/system/files/1311_05-08_mickens.pdf
+  archive: https://web.archive.org/web/20260228065707/https://www.usenix.org/system/files/1311_05-08_mickens.pdf
+  publish_date: 2013-11
+  excerpt: |
+    As a highly trained academic researcher, I spend a lot of time trying to advance the frontiers of human knowledge. However, as someone who was born in the South, I secretly believe that true progress is a fantasy, and that I need to prepare for the end times, and for the chickens coming home to roost, and fast zombies, and slow zombies, and the polite zombies who say “sir” and “ma'am” but then try to eat your brain to acquire your skills.
+
+    \[...]
+
+    However, the most important person in my gang will be a systems programmer. A person who can debug a device driver or a distributed system is a person who can be trusted in a Hobbesian nightmare of breathtaking scope; a systems programmer has seen the terrors of the world and understood the intrinsic horror of existence.
 - title: "PHP: a fractal of bad design"
   url: https://eev.ee/blog/2012/04/09/php-a-fractal-of-bad-design/
   archive: https://web.archive.org/web/20260227034103/https://eev.ee/blog/2012/04/09/php-a-fractal-of-bad-design/
@@ -111,7 +127,7 @@
     You pull out the pliers, but they don't have those serrated surfaces; it's flat and smooth.  That's less useful, but it still turns bolts well enough, so whatever.
 
     And on you go.  Everything in the box is kind of weird and quirky, but maybe not enough to make it _completely_ worthless.  And there's no clear problem with the set as a whole; it still has all the tools.
-- title: Mathematics of Juggling [video]
+- title: Mathematics of Juggling \[video]
   url: https://www.youtube.com/watch?v=38rf9FLhl-8
   # originally from https://www.cornell.edu/video/mathematics-of-juggling but the warning on the page makes it sound like it might be taken down soon
   publish_date: 2010-04-21

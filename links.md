@@ -7,7 +7,7 @@ layout: base
     {%- assign id = entry.title | slugify: "latin" -%}
     <li href="#{{ id }}">
       <div class="title-container">
-        <a class="title" href="{{ entry.url }}">{{ entry.title }}</a>
+        <a class="title" href="{{ entry.url }}" markdown="1">{{ entry.title }}</a>
         <span class="metadata">
           <span class="date">
             {{ entry.publish_date | date: site.date_format }}
