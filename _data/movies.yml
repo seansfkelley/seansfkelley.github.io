@@ -1,3 +1,36 @@
+- title: The Witcher
+  year: 2019
+  kind: tv
+  link: https://www.imdb.com/title/tt5180504/
+  poster: the-witcher-2019.jpg
+  watched: 2026-03-06 # season 1 was 2025-09-09; season 2 was 2025-10-02
+  watched-display: summer 2025 through spring 2026
+  watch-this: as fantasy monster-hunting eye candy, only, until it stops being that.
+  more-thoughts: |
+    Generally, Netflix shows are garbage. This show is a partial exception: it's definitely overproduced and the writing definitely underdelivers, but if you haven't read the books or played the games (as I have not), then it's a perfectly fun ride for a while, hunting fantasy monsters with fantasy gimmicks. The overproduction works in this setting, and the show _mostly_ avoids becoming trashy softcore porn.
+
+    Whoever is in charge of the audio mixing should be summarily fired, because [half the dialogue is unintelligible](https://www.vox.com/videos/23564218/subtitles-sound-downmixing-dialogue-movies-tv). This pairs badly with the exposition, which is unforgiving and poorly executed: much is told instead of shown, nothing is ever repeated, character introductions are brief and there are enough simultaneous plotlines being run through fast enough that you don't have time to internalize what you've been told. If you miss a name, which you will because the dialogue is often difficult to understand, it'll take a _while_ to work back out what or who is being referred to.
+
+    <details markdown="1">
+    <summary>👍 Season 1</summary>
+    Costumes and worldbuilding are A+, even if it's unnecessarily convoluted to keep track of the multiple timelines... once you figure out they're even there. Geralt is great. Yennefer is not. Their romance is poorly motivated -- isn't Geralt supposed to be non-emotional? -- and I think her arc was most harmed by the subpar writing (and acting).
+
+    The bard speaks too modernly and often becomes cloying. People swear in a way that sounds really out of place. Queen Calanthe is a great character!
+    </details>
+
+    <details markdown="1">
+    <summary>👍 Season 2</summary>
+    Ciri follows the classic TV fantasy plotline from-insufferable-princess-to-badass-warrior, though I still don't particularly like her scenes and this isn't the best rendition I've seen (compare Arya Stark). I'd still rather do without her.
+
+    Yennefer is a bit more tolerable and the bard is mostly gone. There's less Geralt than I would like because the show has to juggle all these other plotlines now. Wah.
+    </details>
+
+    <details markdown="1">
+    <summary>👎 Season 3</summary>
+    It's getting the Game of Thrones treatment. All the characters we liked or at least worked together to fill out the world and help drive the plot forward are being killed off. As expected, we're getting a lot less of fun monster-hunting and battle sequences and a lot more meaningful glances and political machinations, but without the finesse and gravitas of the early GoT seasons.
+
+    In all this season was forgettable, excepting the late-season Aretuza party-battle episode. The narrative was even more ham-fisted and rush-job than usual: the Chekhov's bazooka of fake-Ciri being introduced then supposedly dealt with early on; Tissaia's completely undermotivated suicide; Geralt's injuries (which for plot reasons are cripplingly bad but only _this time_) being left untreated by the mages then him refusing treatment inexplicably until okay he's treated by the mages -- and that's just the final episode.
+    </details>
 - title: Time Lapse
   year: 2014
   kind: movie
@@ -175,35 +208,6 @@
     For the long-lost-brother-on-the-other-side trope in particular, worse movies do it better, lke F9, or most likely multiple Nicholas Cage movies.
 
     The product placement was obvious, and the Corsair one in particular was _super_ weird because they actually warped the dialogue around it in a _completely_ plot-irrelevant way. Gross.
-- title: The Witcher
-  year: 2019
-  kind: tv
-  link: https://www.imdb.com/title/tt5180504/
-  poster: the-witcher-2019.jpg
-  watched: 2025-10-02 # season 2; season 1 was 2025-09-09
-  watched-display: summer-fall 2025
-  watch-this: as fantasy monster-hunting eye candy, only.
-  more-thoughts: |
-    Generally, Netflix shows are garbage. This show is a partial exception: it's definitely overproduced and the writing definitely underdelivers, but if you haven't read the books or played the games (as I have not), then it's a perfectly fun ride hunting fantasy monsters with fantasy gimmicks.
-
-    The overproduction works in this setting, and the show _mostly_ avoids becoming trashy softcore porn.
-
-    Whoever is in charge of the audio mixing should be summarily fired, because [half the dialogue is unintelligible](https://www.vox.com/videos/23564218/subtitles-sound-downmixing-dialogue-movies-tv).
-
-    <details markdown="1">
-    <summary>👍 Season 1</summary>
-    Costumes and worldbuilding are A+, even if it's unnecessarily convoluted to keep track of the multiple timelines... once you figure out they're even there. Geralt is great. Yennefer is not. Their romance is poorly motivated -- isn't Geralt supposed to be non-emotional? -- and I think her arc was most harmed by the subpar writing (and acting).
-
-    The bard speaks too modernly and often becomes cloying. People swear in a way that sounds really out of place. Queen Calanthe is a great character!
-    </details>
-
-    <details markdown="1">
-    <summary>👍 Season 2</summary>
-    Ciri follows the classic TV fantasy plotline from-insufferable-princess-to-badass-warrior, though I still don't particularly like her scenes and this isn't the best rendition I've seen (compare Arya Stark). I'd still rather do without her.
-
-    Yennefer is a bit more tolerable and the bard is mostly gone. There's less Geralt than I would like because the show has to juggle all these other plotlines now. Wah.
-    </details>
-
 - title: The Death of Stalin
   year: 2017
   kind: movie
