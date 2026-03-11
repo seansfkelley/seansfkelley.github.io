@@ -1,3 +1,15 @@
+- title: Inside Job
+  year: 2010
+  kind: movie
+  link: https://www.imdb.com/title/tt1645089/
+  poster: inside-job-2010.jpg
+  watched: 2026-03-10
+  dont-watch-this: because it's more of a hit piece on (deserving) individuals than an indictment of a (deserving) system.
+  hide-spoilers: false
+  more-thoughts: |
+    Don't get me wrong: fuck these people in general and the ones in the movie in specific. But while it talks about some of the (largely intentional) system failures that allowed this to happen, it seems more concerned with scoring Michael Moore points by hammering people personally in interviews. And I do love watching some of them get grilled, but it does not a compelling or actionable narrative make.
+
+    I did learn for the first time of some specifics of what went on, especially with regards to the unabashed gambling that credit default swaps were, but I could have done that on Wikipedia. I suspect the Big Short is a better vehicle for education simply by virtue of being comparably educational but more entertaining and less self-congratulatory. This movie probably would have been better as drier, digestible documentation of what happened -- in part because the shamelessness and insanity already speaks for itself -- but it was made before the Big Short and after Michael Moore was popular, so this is what we got.
 - title: The Witcher
   year: 2019
   kind: tv
