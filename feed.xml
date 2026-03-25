@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2026-03-25T19:06:18+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Xcode is Hot Garbage</title><link href="https://blog.sea.nkelley.me/xcode" rel="alternate" type="text/html" title="Xcode is Hot Garbage" /><published>2026-02-04T00:00:00+00:00</published><updated>2026-02-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/xcode</id><content type="html" xml:base="https://blog.sea.nkelley.me/xcode"><![CDATA[<p>Xcode is the worst code editor I have ever used, hands down, including NetBeans, and I firmly believe that anyone who says otherwise has Stockholm Syndrome or has never used a good editor/terminal/IDE/compiler setup. Here is a barely-edited list of my accumulated complaints, serving as a reference next time a long-time iOS dev asks me why I think it’s so awful.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://blog.sea.nkelley.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.sea.nkelley.me/" rel="alternate" type="text/html" /><updated>2026-03-25T19:37:55+00:00</updated><id>https://blog.sea.nkelley.me/feed.xml</id><title type="html">fiddlybits</title><entry><title type="html">Xcode is Hot Garbage</title><link href="https://blog.sea.nkelley.me/xcode" rel="alternate" type="text/html" title="Xcode is Hot Garbage" /><published>2026-02-04T00:00:00+00:00</published><updated>2026-02-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/xcode</id><content type="html" xml:base="https://blog.sea.nkelley.me/xcode"><![CDATA[<p>Xcode is the worst code editor I have ever used, hands down, including NetBeans, and I firmly believe that anyone who says otherwise has Stockholm Syndrome or has never used a good editor/terminal/IDE/compiler setup. Here is a barely-edited list of my accumulated complaints, serving as a reference next time a long-time iOS dev asks me why I think it’s so awful.</p>
 
 <ul>
   <li>It crashes…
@@ -173,13 +173,13 @@
 
 <section class="next-previous">
     
-    <a href="/code-style" class="next-previous-link next-previous-previous" title="Previous Post: My Code Style">
+    <a href="/section-230" class="next-previous-link next-previous-previous" title="Previous Post: Thoughts on Section 230 and the Corporate Death Penalty">
       <span class="next-previous-icon">←</span>
       <div class="next-previous-name">
         <div class="next-previous-label">
           <span class="next-previous-icon">←</span> Previous Post
         </div>
-        <div class="next-previous-title">My Code Style</div>
+        <div class="next-previous-title">Thoughts on Section 230 and the Corporate Death Penalty</div>
       </div>
     </a>
      
@@ -194,7 +194,172 @@
     </a>
     
   </section>
-<hr />]]></content><author><name></name></author><category term="opinion" /><category term="complaining" /><summary type="html"><![CDATA[Fair warning: this post doesn’t really have any technical, aesthetic, or argumentative merit. I just wanted to complain, and complaining in an ostensibly public place does actually work better than the “write it and throw it away” crowd may think.]]></summary></entry><entry><title type="html">My Code Style</title><link href="https://blog.sea.nkelley.me/code-style" rel="alternate" type="text/html" title="My Code Style" /><published>2025-11-04T00:00:00+00:00</published><updated>2025-11-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/code-style</id><content type="html" xml:base="https://blog.sea.nkelley.me/code-style"><![CDATA[<ul id="markdown-toc">
+<hr />]]></content><author><name></name></author><category term="opinion" /><category term="complaining" /><summary type="html"><![CDATA[Fair warning: this post doesn’t really have any technical, aesthetic, or argumentative merit. I just wanted to complain, and complaining in an ostensibly public place does actually work better than the “write it and throw it away” crowd may think.]]></summary></entry><entry><title type="html">Thoughts on Section 230 and the Corporate Death Penalty</title><link href="https://blog.sea.nkelley.me/section-230" rel="alternate" type="text/html" title="Thoughts on Section 230 and the Corporate Death Penalty" /><published>2025-11-20T00:00:00+00:00</published><updated>2025-11-20T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/section-230</id><content type="html" xml:base="https://blog.sea.nkelley.me/section-230"><![CDATA[<figure>
+<img src="/assets/section-230/street-art.jpg" alt="Street art showing Facebook logo as a cigarette." />
+<figcaption>
+    <p>I stumbled upon this years ago. It’s now gone, but maybe there’s something equally optionated there instead. <a href="https://www.google.com/maps/@51.5202286,-0.0698805,3a,75y,217.99h,83.46t/data=!3m6!1e1!3m4!1sxbE6TVddeSAo-bMuVBrl1A!2e0!7i16384!8i8192?coh=205409&amp;entry=ttu&amp;g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D">51° 31’ 12.89” N, 0° 4’ 11.65” W</a></p>
+  </figcaption>
+</figure>
+
+<p>In a <a href="/moderation-broadcastability">previous post</a> I made a mealy-mouthed argument that implied, among other things, that Facebook was somehow inherently talented at tearing apart our social fabric, and that <a href="https://en.wikipedia.org/wiki/Section_230">Section 230</a>, or maybe Facebook, or Twitter, or maybe actually Section 230, was the root cause of the problem.</p>
+
+<p>As I have had time in the years since to sit with Twitter, Snapchat, TikTok and the quickly eroding journalistic standards of most traditional media, especially in the aftermath of Covid and while waiting for <em>The Orange Man II: This Time It’s Even More Personal Than Last Time</em> to be over, it’s become clear to me that while Facebook enjoys a monopoly on certain types of social fabric destruction more or less as an accident of history, this is a fundamental issue with “lots of people talking to lots of other people on the internet completely unfiltered”, more commonly known as “social media”.</p>
+
+<p>Section 230 contributes. Here it is in its entirety:</p>
+
+<blockquote>
+  <p>No provider or user of an interactive computer service shall be treated as the publisher or speaker of any information provided by another information content provider.</p>
+</blockquote>
+
+<p>In other words, internet companies aren’t liable for things their users say using them. Generally.</p>
+
+<p>With that background established, here is my current take:</p>
+
+<ul>
+  <li>Section 230 has its heart in the right place, but naively relies too much on an implied sense of common decency.</li>
+  <li>Facebook is the vehicle by which we have learned and continue to learn about the above, but only because it was (and still often is) in the “right” place at the “right” time, not because of e.g. a uniquely visionary founder.</li>
+  <li>Corporations that create massive problems they are unable to solve should be commensurately penalized, up to and including the <a href="https://en.wikipedia.org/wiki/Judicial_dissolution">corporate death penalty</a>.</li>
+</ul>
+
+<p>Just to get ahead of some potential tangents, I don’t want to talk about:</p>
+
+<ul>
+  <li>The near-total elimination of our collective attention span.<sup id="fnref:attention-span" role="doc-noteref"><a href="#fn:attention-span" class="footnote" rel="footnote">1</a></sup></li>
+  <li>Our collective desensitization towards increasingly violent media.<sup id="fnref:desensitization" role="doc-noteref"><a href="#fn:desensitization" class="footnote" rel="footnote">2</a></sup></li>
+</ul>
+
+<p>Let’s tackle this in order.</p>
+
+<hr />
+
+<blockquote>
+  <p>Section 230 has its heart in the right place…</p>
+</blockquote>
+
+<p>The EFF has <a href="https://www.eff.org/deeplinks/2020/12/publisher-or-platform-it-doesnt-matter">a great article on the non-distinction between “publisher” and “platform”</a><sup id="fnref:hecklers-veto" role="doc-noteref"><a href="#fn:hecklers-veto" class="footnote" rel="footnote">3</a></sup> that is often invoked in the context of Section 230 to protect media companies by categorizing them as a “platform” and not a “publisher”. This is, if you didn’t read that whole EFF article, irrelevant, and misunderstands the intent behind Section 230. Aggressively eliding to get to the point (emphasis original):</p>
+
+<blockquote>
+  <p>Historically, there is some legal distinction between “publishers” and more passive “distributors” of others’ speech […] “distributor liability” applied to those like booksellers […] who merely served as fairly passive conduits for others’ speech […]. Because one was treated a bit better if they were a passive distributor, the law actually disincentivized editing, curation, or reviewing content for any reason. […] Former Rep. Chris Cox, one of the co-authors of Section 230, recalls finding it “surpassingly stupid” that before Section 230, courts effectively disincentivized platforms from engaging in <em>any</em> speech moderation.</p>
+</blockquote>
+
+<p>Section 230 was changed to provide cover specifically so that moderation could happen, since before these changes internet companies were liable for everything as soon as they touched anything.</p>
+
+<hr />
+
+<blockquote>
+  <p>…but naively relies too much on an implied sense of common decency.</p>
+</blockquote>
+
+<p>The EFF has another great article stressing that <a href="https://www.eff.org/deeplinks/2018/04/no-section-230-does-not-require-platforms-be-neutral">while Section 230 actually <em>shields</em> media companies should they engage in aggressive and/or biased content moderation</a>, they obviously do not. While they <em>can</em> be bothered to rouse themselves enough to (try to) eliminate, say, child pornography, <a href="https://apnews.com/article/myanmar-business-d55600bf3f683d863682c0480a298a0a">not spreading pro-genocide propaganda</a> is evidently asking too much.</p>
+
+<p>Rage generates clicks, clicks are engagement, engagement is advertising dollars. Facebook, specifically, <a href="https://usatoday.com/story/tech/2020/11/05/facebook-election-misinformation-crackdown-emergency-measures-trump/6182001002/">volunteered at least once that it intentionally manipulates the ever-inscrutable Algorithm</a> to put its thumb on the scale. You can rest assured Facebook does this regularly to steer users towards whatever maximizes advertising revenue – generally, the rage-bait <em>du jour</em> – as there is <a href="https://www.cnbc.com/2025/11/18/meta-wins-ftc-antitrust-trial-that-focused-on-whatsapp-instagram.html">no real punishment for abusing your position of power</a> when you get caught beyond <a href="https://www.cnn.com/2018/03/25/europe/facebook-zuckerberg-cambridge-analytica-sorry-ads-newspapers-intl">saying “sorry” really loudly</a>. (More on punishment later.)</p>
+
+<p>The tools are there, but they only use them for public good when it is <a href="https://www.npr.org/2024/12/13/nx-s1-5227874/trump-bezos-zuckerberg-amazon-facebook-open-ai-meta-inauguration-fund">politically expedient</a><sup id="fnref:tim-cook-debases-himself" role="doc-noteref"><a href="#fn:tim-cook-debases-himself" class="footnote" rel="footnote">4</a></sup> to do so.</p>
+
+<hr />
+
+<blockquote>
+  <p>Facebook is the vehicle by which we have learned and continue to learn about the above, but only because it was (and still often is) in the “right” place at the “right” time, not because of e.g. a uniquely visionary founder.</p>
+</blockquote>
+
+<p>Facebook is very obviously the first <em>truly</em> successful social media company. It has objectively done a remarkable job staying relevant, as measured purely by market capitalization, despite <a href="https://www.wired.com/story/fake-metaverse-good-real-metaverse-bad/">spending the GDP of a small country to add legs to their Metaverse’s avatars</a>.<sup id="fnref:snow-crash" role="doc-noteref"><a href="#fn:snow-crash" class="footnote" rel="footnote">5</a></sup></p>
+
+<p>Facebook, as distinct from Meta, already contains several separate products that compete directly with other companies specializing in only that thing: Groups, Events, Marketplace, and Messenger (before it was spun off to a brand directly under Meta).</p>
+
+<p>It didn’t invent any of these ideas, but it’s fair to say it introduced a lot of its users to them by refining them and handing them out for free. Even the strategy itself is not novel; this is the same playbook used by Apple, who did not invent the MP3 player, touchscreen smartphone or tablet, but often gets credit for all of them.</p>
+
+<p>In this way, Facebook parlayed success with friends, pokes, likes and the capital-f Feed into being the first company to show everyone what happens when over a billion people can <em>easily</em> – and that is a key feature that cannot be emphasized enough – form interest groups with each other, <a href="https://www.theguardian.com/technology/2018/mar/29/facebook-memo-mission-andrew-bosworth">consequences be damned</a>.</p>
+
+<hr />
+
+<blockquote>
+  <p>Corporations that create massive problems they are unable to solve should be commensurately penalized, up to and including the <a href="https://en.wikipedia.org/wiki/Judicial_dissolution">corporate death penalty</a>.</p>
+</blockquote>
+
+<p>I stated this intentionally broadly because it is both something I believe in as written, and something that you may consider <a href="https://en.wikipedia.org/wiki/Deepwater_Horizon">more obviously true in other domains</a>. We (try to?) punish companies that dump toxic waste into the environment. If a company <em>must</em> dump toxic waste into the environment as part of its business model, or is so foundationally negligent that it would be prohibitively expensive to reform it, why do we permit such a company to exist? “Shareholder value” should not be a <a href="https://en.wikipedia.org/wiki/Thought-terminating_clich%C3%A9">thought-terminating cliché</a>; negative externalities for non-shareholders<sup id="fnref:non-shareholders" role="doc-noteref"><a href="#fn:non-shareholders" class="footnote" rel="footnote">6</a></sup> are real and sometimes severe. Corporations <em>are not</em> people and have no right to life.</p>
+
+<p>Social media companies escape some deserved scrutiny because it is difficult to measure their negative effects in dollars or lives lost. This is where things start to get thorny, especially because I am not a lawyer, and because “speech” is a lot more loosey-goosey than the relatively cut-and-dried “environmental damage”. Given humanity’s long history of killing the messenger, it’s not immediately obvious how, or even if, media companies <em>should</em> be held liable for the types of various abuses I’ve already enumerated above.<sup id="fnref:hate-speech" role="doc-noteref"><a href="#fn:hate-speech" class="footnote" rel="footnote">7</a></sup></p>
+
+<p>That said, most or all of these aforementioned abuses are only feasible because social media companies exist. <em>Feasible</em> is doing a lot of heavy lifting here; tech companies love to defend their negative effects on the grounds that <a href="https://www.thetimes.com/uk/technology-uk/article/nick-clegg-algorithms-fake-news-kn0d90hjv">whatever the negative thing is, it was always possible, so it’s not really relevant that they made it easier</a>. Such a black-and-white worldview is obvious bullshit, but it persists because nobody can put their finger on where, between texting racist screeds to someone else and posting racist screeds that are amplified by thousands of other users, someone besides the poster may be liable. You could call this “diffusion of responsibility as a business model”, not that Facebook has any interest in unilaterally suppressing such abuse anyway, because <a href="https://about.fb.com/news/2017/04/working-to-stop-misinformation-and-false-news/">the phrase “arbiter of truth” sounds scary</a>.</p>
+
+<p>I would like us to punish Facebook commensurately to the damage is has obviously done to various societies around the planet – even ignoring its contributions to the vague but increasing internet-enabled malaise of younger generations that is, again, difficult to quantify. But I do not know on what grounds it is possible.</p>
+
+<hr />
+
+<p>If you’ve followed me this far, consider these questions:</p>
+
+<ol>
+  <li>What is the cultural/social value of Facebook?</li>
+  <li>How does Facebook compare to other social media companies on that question? Traditional media? Other, more-personal communication methods?</li>
+  <li>Are Facebook’s benefits worth it? Are they that much better than less-abusable services like iMessage or YouTube?</li>
+  <li>Would it be easier to get these benefits from a more-focused competitor with different incentives and avenues for abuse than monolithic, advertising-driven Facebook?</li>
+</ol>
+
+<p>(Where Facebook is a stand-in for any social media company, though nevertheless the best single example.)</p>
+
+<hr />
+
+<p>I want to give my partial answers to these questions specifically for Facebook Events, because it was the only thing I missed after deleting my Facebook account. I hope this will spur some introspection on your part, as well, if the questions haven’t already.</p>
+
+<ol>
+  <li>Facebook Events is an excellent way to plan a gathering of friends. Word-of-mouth, emails, texts, calendar invites are all some combination of unreliable, easily forgotten, spammy and (from the perspective of the event host) too decentralized to be easily managed. Facebook Events made it easy for me and guests to have a single place to check and chat, send reminders and updates, and give the event a bit of personality with banner images and such. In this way, Facebook Events did actually live up to the promise to foster interpersonal connections.</li>
+  <li>At the time I deleted my account, Facebook Events was by far the best way to plan events like this. More-personal communication methods were messy, as mentioned, and traditional media are irrelevant. (Though perhaps if I were planning something like a public rally, they may apply.)</li>
+  <li>The benefits were not worth it, which is why I deleted my Facebook account and ate the cost of it being more difficult to plan and host events. Other media were indeed more annoying to use, but people have been planning events for thousands of years without Facebook, so I muddled through.</li>
+  <li>Last year I learned about <a href="https://partiful.com/">Partiful</a>, which is emphatically better to use than Facebook Events. I already have an implied social network through my phone contacts and these events are all one-offs, so Partiful’s focus on ephemeral-ish events managed only with phone numbers and having only the features necessary to actually host an event and give it some personality hits the nail <em>squarely</em> on the head. <a href="https://techcrunch.com/2015/04/18/the-unbundling-of-everything/">Unbundling</a> Facebook Events is, in my book, a huge win for everyone involved that isn’t Facebook, even without considering the merits of removing this category of personal data from Facebook’s reach.</li>
+</ol>
+
+<hr />
+
+<section class="next-previous">
+    
+    <a href="/code-style" class="next-previous-link next-previous-previous" title="Previous Post: My Code Style">
+      <span class="next-previous-icon">←</span>
+      <div class="next-previous-name">
+        <div class="next-previous-label">
+          <span class="next-previous-icon">←</span> Previous Post
+        </div>
+        <div class="next-previous-title">My Code Style</div>
+      </div>
+    </a>
+     
+    <a href="/corpo-speak" class="next-previous-link next-previous-next" title="Next Post: Some Venting About Corpo-speak">
+      <div class="next-previous-name">
+        <div class="next-previous-label">
+          Next Post <span class="next-previous-icon">→</span>
+        </div>
+        <div class="next-previous-title">Some Venting About Corpo-speak</div>
+      </div>
+      <span class="next-previous-icon">→</span>
+    </a>
+    
+  </section>
+<hr />
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:attention-span" role="doc-endnote">
+      <p>I got my fill of this during the 1990s moral panic over the early internet. There is historical precedent for this type of hand-wringing <a href="https://en.wikipedia.org/wiki/Information_overload#History">going back to at least the invention of the printing press</a>. I think the point on attention span is largely, though not entirely, illegitimate. Only when it rises to the level of people being unable to sustain a coherent conversation or argument – be it at the kitchen table or over broadcast media – does it become a problem worth addressing. If you want to waste your life on shallow memes you won’t remember five minutes from now, that’s your prerogative. <a href="#fnref:attention-span" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:desensitization" role="doc-endnote">
+      <p>My take here is largely in line with that of <sup id="fnref:attention-span:1" role="doc-noteref"><a href="#fn:attention-span" class="footnote" rel="footnote">1</a></sup>, especially in regards to the 1990s moral panic, but this time about video games. Analogously to attention spans and coherent conversation, I think it’s only a problem when it spills over into the real world. Which it very much has, to be clear, but let’s be sure that we blame, in priority order, (1) those committing the violence, (2) those inciting others to violence, (3) weapons manufacturers, when relevant, who make and sell <em>machines designed specifically and exclusively for killing other people</em>, (4) easily-abused systems intentionally designed to do violence; only at that point will I entertain discussing (5) media normalizing depictions of violence. <a href="#fnref:desensitization" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:hecklers-veto" role="doc-endnote">
+      <p>This article also introduced me to the phrase “heckler’s veto”, which is an <em>excellent</em> pithy title for what amounts to tattling to Big Tech when someone says something you don’t like. <a href="#fnref:hecklers-veto" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:tim-cook-debases-himself" role="doc-endnote">
+      <p>This isn’t the <a href="https://www.theverge.com/news/737757/apple-president-donald-trump-ceo-tim-cook-glass-corning">most egregious example of a tech company prostrating itself</a> at the orange altar, but it very much still counts. <a href="#fnref:tim-cook-debases-himself" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:snow-crash" role="doc-endnote">
+      <p>In case you didn’t already know, “metaverse” was coined by Neal Stephenson in <em>Snow Crash</em> and is intended to be <em>satire</em>. I assume Mark Zuckerberg has figured this out by now. <a href="#fnref:snow-crash" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:non-shareholders" role="doc-endnote">
+      <p>Obviously, non-shareholders have no say in how a company functions except either through voting for a government that will impose restrictions on said company, which assumes a functioning regulatory apparatus, or bad publicity, which in turn assumes the existence of widely-trusted news outlets and consequently a common understanding of facts. Uh oh. <a href="#fnref:non-shareholders" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:hate-speech" role="doc-endnote">
+      <p>It seems to me that <a href="https://en.wikipedia.org/wiki/Matal_v._Tam">hate speech is not illegal in the United States</a> though there is some kind of <a href="https://en.wikipedia.org/wiki/Brandenburg_v._Ohio">allowance for punishing speech that incites “imminent lawless action”</a>. More thorns. Also, again, still not a lawyer. <a href="#fnref:hate-speech" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>]]></content><author><name></name></author><category term="opinion" /><summary type="html"><![CDATA[I stumbled upon this years ago. It’s now gone, but maybe there’s something equally optionated there instead. 51° 31’ 12.89” N, 0° 4’ 11.65” W]]></summary></entry><entry><title type="html">My Code Style</title><link href="https://blog.sea.nkelley.me/code-style" rel="alternate" type="text/html" title="My Code Style" /><published>2025-11-04T00:00:00+00:00</published><updated>2025-11-04T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/code-style</id><content type="html" xml:base="https://blog.sea.nkelley.me/code-style"><![CDATA[<ul id="markdown-toc">
   <li><a href="#what-this-is" id="markdown-toc-what-this-is">What This Is</a>    <ul>
       <li><a href="#use-engineering-judgement" id="markdown-toc-use-engineering-judgement">Use Engineering Judgement</a></li>
     </ul>
@@ -651,12 +816,12 @@
       </div>
     </a>
      
-    <a href="/corpo-speak" class="next-previous-link next-previous-next" title="Next Post: Some Venting About Corpo-speak">
+    <a href="/section-230" class="next-previous-link next-previous-next" title="Next Post: Thoughts on Section 230 and the Corporate Death Penalty">
       <div class="next-previous-name">
         <div class="next-previous-label">
           Next Post <span class="next-previous-icon">→</span>
         </div>
-        <div class="next-previous-title">Some Venting About Corpo-speak</div>
+        <div class="next-previous-title">Thoughts on Section 230 and the Corporate Death Penalty</div>
       </div>
       <span class="next-previous-icon">→</span>
     </a>
@@ -1005,65 +1170,4 @@
     </a>
     
   </section>
-<hr />]]></content><author><name></name></author><category term="recommendations" /><summary type="html"><![CDATA[I &lt;3 London, so let’s not dally.]]></summary></entry><entry><title type="html">Why Constructed, Not Commander</title><link href="https://blog.sea.nkelley.me/mtg-constructed" rel="alternate" type="text/html" title="Why Constructed, Not Commander" /><published>2025-07-30T00:00:00+00:00</published><updated>2025-07-30T00:00:00+00:00</updated><id>https://blog.sea.nkelley.me/mtg-constructed</id><content type="html" xml:base="https://blog.sea.nkelley.me/mtg-constructed"><![CDATA[<p>Hello fellow dork. If you’re here, I probably sent you because you nagged me to play Commander. But I don’t like Commander, and here’s why.</p>
-
-<p><strong>The board states are massively overcomplicated.</strong> I <em>do</em> like intricate multi-hour Euro games, but that’s not the itch that Magic scratches for me. I think Magic is at its best when games are quick and spunky and where the opponents bring clearly-distinct styles, like tennis. The ~400 unique cards in a Commander game dramatically amplify the complexity that Wizards keeps adding<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> when compared to the ~40 unique cards in a Constructed game.</p>
-
-<p><strong>Games quickly become crude, swingy slugfests.</strong> Board wipes followed by dumping huge sorceries (or whatever) using stacks and stacks of lands, mana value be damned. Lurching between different piles of cards is inelegant and loses out on all the fun subtleties in navigating a well-built deck between your opponent’s swings to land a fatal blow. Hitting your curve perfectly and outracing your opponent with 3 life remaining is much more rewarding than crushing them with an overwhelming force of eleven 9/9 tramplers while you sit at 39 life.</p>
-
-<p><strong>Board wipes as the one-size-fits-all solution to all problems is unfun.</strong> It’s unfun from a deckbuilding perspective, since it’s yet another formulaic must-have a la Command Tower. It’s more unfun to play against since, with three opponents, you have to eat a lot of board wipes – not all of which will be even aimed at you – and repeatedly restart from near-zero before you can finally get your game plan online. Board wipes are an expensive commitment in Constructed, so removal is typically more surgical. Plus, being one-on-one, you don’t get caught in any crossfire from someone else looking threatening.</p>
-
-<p><strong>I don’t like politicking and managing social dynamics.</strong> In Commander, I avoid knocking someone out of a game early even if that’s the right strategy because it sucks when that happens to you. You don’t generally have to worry about peoples’ feelings in Constructed. (I also can’t stand Diplomacy.)</p>
-
-<p><strong>Like the much-loathed companion cycle, a commander negatively warps deckbuilding around it.</strong> A lot of decks feel like random in-color cards that are good with the commander and bad without it. Decks with single points of failure (success?) are antithetical to my deckbuilding style, which is also a big part of the reason I don’t like combo decks or tutors.<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> I want, and build, decks with lots of little synergies so that there’s always something available, but not the same thing every time.</p>
-
-<p><strong>The decks take a <em>long</em> time to hone.</strong> To be clear, I still spend a lot of time refining my Constructed decks, but you can get a working first draft pretty quickly. In a Constructed deck, substituting even a single playset will often change the feel of a deck noticeably in a way that keeps the feedback loop rewarding and lets you explore more adjacent playstyles without being held back by the required interactions with (or color restrictions of) the commander.</p>
-
-<p><strong>Old cards are ugly.</strong> There, I said it. (To be fair, a lot of new card frames are downright hideous and/or completely unreadable. At least the old cards are consistent and usable, but I’d prefer neither.)</p>
-
-<p>Last time I tried to build a Commander deck, I ended up throwing out the 80% of it that was chaff, and kept the 20% that was fun. And then I put in 4 copies of each card. Oops.</p>
-
-<hr />
-
-<section class="changelog">
-
-  <p><em>Updated 2025-11-16: added comments on board wipes.</em></p>
-
-</section>
-<hr />
-
-<section class="next-previous">
-    
-    <a href="/sideloading-iphone-apps" class="next-previous-link next-previous-previous" title="Previous Post: A Primer on Sideloading Your Own iPhone Apps">
-      <span class="next-previous-icon">←</span>
-      <div class="next-previous-name">
-        <div class="next-previous-label">
-          <span class="next-previous-icon">←</span> Previous Post
-        </div>
-        <div class="next-previous-title">A Primer on Sideloading Your Own iPhone Apps</div>
-      </div>
-    </a>
-     
-    <a href="/london-recommendations" class="next-previous-link next-previous-next" title="Next Post: London Recommendations">
-      <div class="next-previous-name">
-        <div class="next-previous-label">
-          Next Post <span class="next-previous-icon">→</span>
-        </div>
-        <div class="next-previous-title">London Recommendations</div>
-      </div>
-      <span class="next-previous-icon">→</span>
-    </a>
-    
-  </section>
-<hr />
-
-<div class="footnotes" role="doc-endnotes">
-  <ol>
-    <li id="fn:1" role="doc-endnote">
-      <p>There’s nothing inherently wrong with increasing the complexity of the game, if it’s done tastefully. But recently Wizards has started adding a lot of state to manage, some of which doesn’t have a good physical representation. Exert is one such mechanic (how many times I have accidentally untapped an exerted thing…), and good luck remembering the 4,000 different types of behaviors available to cards in exile depending on how they got there. All of this before we even get to Wizards printing new sets at <em>breakneck</em> speed with some straight-up shitty mechanics, then having the gall to “reprint” the set <em>while it’s being printed for the first time</em> because Daddy Hasbro is too cheap to shell out for all the rights to Spiderman. Fuck you, Hasbro. (Note that this should not be taken to mean I would prefer more Spiderman cards. Universes Beyond is fucking awful, and I’ve hamstrung my own decks a few times just to avoid some of the more egregious crossovers.) <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
-    <li id="fn:2" role="doc-endnote">
-      <p>My rule of thumb is that any interaction that only happens when three cards are present should be considered pure bonus upside, perhaps shading into win-more, and not required for the deck to work. (Unless one of them is lands, since they are always around.) Three-card interactions are often too fragile to be fun or end up with the deck being a tedious tutor/control/delay shell around those three cards. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
-  </ol>
-</div>]]></content><author><name></name></author><category term="opinion" /><summary type="html"><![CDATA[Hello fellow dork. If you’re here, I probably sent you because you nagged me to play Commander. But I don’t like Commander, and here’s why.]]></summary></entry></feed>
+<hr />]]></content><author><name></name></author><category term="recommendations" /><summary type="html"><![CDATA[I &lt;3 London, so let’s not dally.]]></summary></entry></feed>
