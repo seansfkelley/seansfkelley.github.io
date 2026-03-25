@@ -9,15 +9,16 @@ changelog:
   2023-10-07: ~~Twitter~~ ~~X~~ Twitter.
   2024-08-31: added reference to an editorial on the recent Section 230 ruling from the Third Circuit.
   2025-06-25: added a video to the, uh, "reading" list.
+  2026-03-25: deprecated in favor of a newer post.
 ---
 
-<figure>
-<!-- I wanted to call this post facebook-moderation-broadcastability but then uBlock Origin saw `facebook` in the URL and blocked it. :( -->
-<img src="/assets/moderation-broadcastability/street-art.jpg" alt="Street art showing Facebook logo as a cigarette." />
-<figcaption markdown="1">
-In an excellent happenstance, I found this on the street while drafting this post. It's now gone, but maybe there's something equally optionated there instead. [51° 31' 12.89" N, 0° 4' 11.65" W](https://www.google.com/maps/@51.5202286,-0.0698805,3a,75y,217.99h,83.46t/data=!3m6!1e1!3m4!1sxbE6TVddeSAo-bMuVBrl1A!2e0!7i16384!8i8192?coh=205409&entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D)
-</figcaption>
-</figure>
+<p class="alert alert-info">
+  <span class="alert-title">There's a Better Version of This</span>
+  <br/>
+  <span markdown="1">
+  I've refined my opinions and arguments. Check them out at the [newer post]({% post_url 2025-11-20-section-230 %}).
+  </span>
+</p>
 
 The stream of bad press for ~~Facebook~~ ~~Meta~~ Facebook[^1] has been going steady for a while now.[^2] As someone who finally deleted my Facebook account some time around or after the Cambridge Analytica scandal, I'd say: deservedly so.
 

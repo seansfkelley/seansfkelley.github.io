@@ -34,7 +34,7 @@ _Updated {{ entry[0] }}: {{ entry[1] }}_
     <a
       href="{{ previous.url }}"
       class="next-previous-link next-previous-previous"
-      title="Previous Post: {{ previous.title }}"
+      title="Previous Post: {{ previous.title | escape }}"
     >
       <span class="next-previous-icon">←</span>
       <div class="next-previous-name">
@@ -50,7 +50,7 @@ _Updated {{ entry[0] }}: {{ entry[1] }}_
     <a
       href="{{ next.url }}"
       class="next-previous-link next-previous-next"
-      title="Next Post: {{ next.title }}"
+      title="Next Post: {{ next.title | escape }}"
     >
       <div class="next-previous-name">
         <div class="next-previous-label">
