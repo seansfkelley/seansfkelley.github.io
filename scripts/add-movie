@@ -29,7 +29,7 @@ fi
 
 if ! node --input-type=module -e "import 'playwright'" 2>/dev/null; then
   echo 'playwright not installed; please run:'
-  echo '  yarn add -D playwright'
+  echo '  yarn install'
   exit 1
 fi
 
