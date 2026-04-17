@@ -27,11 +27,40 @@ if ! command -v hxselect > /dev/null ; then
   exit 1
 fi
 
+if ! node --input-type=module -e "import 'playwright'" 2>/dev/null; then
+  echo 'playwright not installed; please run:'
+  echo '  yarn add -D playwright'
+  exit 1
+fi
+
+if ! node --input-type=module -e "
+  import { chromium } from 'playwright';
+  import { existsSync } from 'fs';
+  if (!existsSync(chromium.executablePath())) process.exit(1);
+" 2>/dev/null; then
+  echo 'playwright chromium not installed; please run:'
+  echo '  yarn playwright install chromium'
+  exit 1
+fi
+
 USER_AGENT_HEADER='User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:123.0) Gecko/20100101 Firefox/123.0'
 MAXIMUM_FILE_SIZE=204800 # 200KB; arbitrary
 TARGET_WIDTH=600
 
-movie_id="$(curl "https://www.imdb.com/find/?q=$(echo "$title" | tr ' ' '+')+$year"  --compressed -s -H "$USER_AGENT_HEADER" \
+IMDB_COOKIES="$(node --input-type=module <<'EOF'
+import { chromium } from 'playwright';
+const browser = await chromium.launch();
+const page = await browser.newPage();
+await page.goto('https://www.imdb.com');
+await page.waitForLoadState('networkidle');
+const cookies = await page.context().cookies();
+process.stdout.write(cookies.map(c => `${c.name}=${c.value}`).join('; '));
+await browser.close();
+EOF
+)"
+COOKIE_HEADER="Cookie: $IMDB_COOKIES"
+
+movie_id="$(curl "https://www.imdb.com/find/?q=$(echo "$title" | tr ' ' '+')+$year"  --compressed -s -H "$USER_AGENT_HEADER" -H "$COOKIE_HEADER" \
   | hxnormalize -x \
   | hxselect -s '\n' '.ipc-title-link-wrapper::attr(href)' \
   | sed -E 's|.*title/(tt[[:digit:]]+)/.*|\1|g' \
@@ -39,7 +68,7 @@ movie_id="$(curl "https://www.imdb.com/find/?q=$(echo "$title" | tr ' ' '+')+$ye
 movie_url="https://www.imdb.com/title/$movie_id/"
 echo "movie URL: $movie_url"
 
-curl "$movie_url" --compressed -s -H "$USER_AGENT_HEADER" > /tmp/movie_page.html
+curl "$movie_url" --compressed -s -H "$USER_AGENT_HEADER" -H "$COOKIE_HEADER" > /tmp/movie_page.html
 
 inferred_year="$(cat /tmp/movie_page.html \
   | hxnormalize -x \
@@ -84,7 +113,7 @@ poster_viewer_id="$(cat /tmp/movie_page.html \
 poster_url="https://www.imdb.com/title/$movie_id/mediaviewer/$poster_viewer_id/"
 echo "poster viewer URL: $poster_url"
 
-image_url="$(curl "$poster_url" --compressed -s -H "$USER_AGENT_HEADER" \
+image_url="$(curl "$poster_url" --compressed -s -H "$USER_AGENT_HEADER" -H "$COOKIE_HEADER" \
   | hxnormalize -x \
   | hxselect -s '\n' 'img[data-image-id]:not(.peek)::attr(src)' \
   | sed -E 's|src="([^"]+)"|\1|g' \

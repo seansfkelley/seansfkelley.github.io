@@ -9,6 +9,7 @@
     "juxtaposejs": "^1.1.6",
     "nearley": "^2.20.1",
     "node-html-parser": "^6.1.13",
+    "playwright": "^1.59.1",
     "tsx": "^4.19.0",
     "typescript": "^5.8.2"
   },
