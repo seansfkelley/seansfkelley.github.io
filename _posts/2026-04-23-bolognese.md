@@ -26,7 +26,7 @@ Then brown[^browning]
 
 - 3 pounds ground beef[^wagyu]
 
-[^wagyu]: The first time I made this recipe as written I used Costco 75-25 wagyu (it was cheap!) and it was so. good. At no point was it watery nor did it ever have the typical ¼-½" thick fat cap on top. At all points it looked like it was already a delicious sauce.
+[^wagyu]: The first time I made this recipe as written I used Costco 75-25 wagyu (it was cheap!) and it. was. so. good. At no point was it watery nor did it ever have the typical ¼" of fat floating on top, surprisingly. At all points it looked like it was already a delicious sauce, instead of the usual where it doesn't look good until it finally comes together near the end.
 
 in a large stock pot over medium high.
 
@@ -35,7 +35,9 @@ Remove the the beef from the pot. Turn it down to medium then put in
 - 8 tbsp butter
 - 4 tbsp olive oil
 
-and melt, then add the onions. Cook and stir until it has become translucent, then add the chopped celery and carrot. Cook, stirring frequently, until it smells delicious.
+and melt, then add the onions. Cook and stir until it has become translucent, then add the chopped celery and carrot. Cook, stirring frequently, until it smells delicious.[^burned]
+
+[^burned]: Burning the soffritto _ever so slightly_ adds a little depth of flavor that helps balance the sweetness of the onions and carrots.
 
 Add the beef, a few large pinches of salt and pepper, and cook, breaking up clumps, until it is no longer red. Add
 
@@ -51,7 +53,7 @@ and stir. Add
 
 and let it simmer until it has evaporated. Add
 
-- 6 cups (2 28-ounce cans) whole canned tomatoes
+- 6 cups (two 28-ounce cans) whole canned tomatoes
 
 crushing them with your hands before putting them into the pot. Stir thoroughly to coat all ingredients well.
 
