@@ -22,7 +22,7 @@ _Mise en place_ the soffritto ingredients[^food-processor]:
 
 Then brown[^browning]
 
-[^browning]: Recommended technique: working one pound at a time, drop it in the pot without any oil, break it up into 6-8 meatballs, then brown all sides until it looks like a tasty burger. Break them up and brown the insides briefly, then deglaze with a splash of white wine, trying to break up any clumps.
+[^browning]: Recommended technique: working one pound at a time, drop it in the pot without any oil, break it up into 6-8 meatballs, then brown all sides until it looks like a tasty burger. Break them up and brown the insides briefly, then deglaze with a splash of white wine, trying to break up any clumps. Alternate technique: working one pound at a time, break it up in the pot with a splash of water to loosen it and spread it evenly, then cook until the water is gone and a nice fond has formed.
 
 - 3 pounds ground beef[^wagyu]
 
