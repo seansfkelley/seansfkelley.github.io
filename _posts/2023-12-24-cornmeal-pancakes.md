@@ -8,9 +8,7 @@ tags: recipe
 
 Makes about a dozen 4"-5" pancakes.
 
-Preheat a non-stick or well-seasoned griddle or small pan to medium-low. Pancakes are very sensitive to uneven heating, so use multiple small pans instead of one large one if you need more space. (This will allow centering the pancakes over the burners.) Pancakes are more like baking than cooking, so having an evenly heated surface ready to go will make it much easier to dial in the temperature as you cook.
-
-You shouldn't need to oil or butter the pan, but if it would make you feel better, wipe on just the *tiniest* amount. Even a small amount of excess fat will make the first couple pancakes come out splotchy.
+Preheat a non-stick or well-seasoned griddle or small pan to medium-low. Pancakes are very sensitive to uneven heating, so use multiple small pans instead of one large one if you need more space. (This will allow centering the pancakes over the burners.) Pancakes are more like baking than cooking, so preheating makes it easier to cook evenly and dial in the temperature.
 
 In a large bowl, mix:
 
@@ -31,7 +29,7 @@ Pour the wet ingredients into the dry ones and combine throughly. Add:
 
 until you have a (mostly) smooth, thick and pourable-with-just-a-little-lumpiness batter, about ¾ to 1 cup. When in doubt, err on the side of thicker: you can always add more milk.
 
-To make a pancake, put about ¼ cup batter into the center of the pan. (Use a ⅓ cup measure to pour quickly without having to scrape down the sides.)
+To make a pancake, briefly wipe the pan with a pat of butter to get just a thin layer -- too much fat will make the pancakes splotchy. Pour about ¼ cup batter into the center of the pan. (Use a ⅓ cup measure to pour quickly without having to scrape down the sides.)
 
 Cook a couple minutes, checking the bottom with a spatula and flipping when it’s an even, deep golden brown. The top should be bubbling lightly, but without the bubbles bursting.
 
