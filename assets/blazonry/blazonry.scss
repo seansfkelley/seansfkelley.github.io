@@ -15,6 +15,9 @@ $colors: (
   cendree: grey,
 );
 
+$svg-viewbox-width: 104px;
+$svg-viewbox-height: 124px;
+
 .hidden {
   display: none !important;
 }
@@ -49,8 +52,9 @@ a[data-example]:not(:hover) {
 }
 
 #rendered {
-  width: 300px;
-  height: 360px;
+  // Integer multiple avoids visual artifacts from anti-aliasing or other fractional-pixel issues.
+  width: $svg-viewbox-width * 3;
+  height: $svg-viewbox-height * 3;
 }
 
 #rendered,
@@ -130,8 +134,8 @@ a[data-example]:not(:hover) {
   }
 
   svg {
-    width: 100px;
-    height: 120px;
+    width: $svg-viewbox-width;
+    height: $svg-viewbox-height;
   }
 
   @media screen and (min-width: $width-mobile) {
