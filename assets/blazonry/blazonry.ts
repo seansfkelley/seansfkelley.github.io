@@ -3737,16 +3737,16 @@ form.addEventListener("submit", async (e) => {
 // These must be integers since the implementation uses a multiset to realize the different values.
 const TINCTURE_WEIGHTS: Record<CounterchangeableTincture, number> = {
   // Common colors.
-  argent: 8,
-  azure: 8,
-  gules: 8,
-  or: 8,
-  sable: 8,
+  argent: 12,
+  azure: 12,
+  gules: 12,
+  or: 12,
+  sable: 12,
 
   // Uncommon colors.
-  vert: 4,
-  purpure: 1,
-  cendree: 1,
+  vert: 6,
+  purpure: 2,
+  cendree: 2,
 
   // Furs.
   ermine: 2,
