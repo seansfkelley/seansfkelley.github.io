@@ -321,11 +321,8 @@ type RenderableVariation = Variation & {
   height: number;
 };
 
-interface VariationPatternGenerator {
-  generate(variation: RenderableVariation): Promise<SVGPatternElement>;
-  nonRepeatingElements:
-    | ((variation: RenderableVariation) => Promise<SVGGeometryElement[]>)
-    | undefined;
+interface VariationMaskGenerator {
+  generate(variation: RenderableVariation): SVGMaskElement;
   defaultCount: number;
 }
 
@@ -367,7 +364,7 @@ const TreatmentRelativePath = {
           !(
             (c.type === "l" && c.loc[0] === 0 && c.loc[1] === 0) ||
             (c.type === "m" && c.loc[0] === 0 && c.loc[1] === 0)
-          )
+          ),
       ),
     ];
   },
@@ -387,7 +384,7 @@ interface TreatmentPathGenerator {
     // This is only for 'embattled'. It has special rules that means it should only render on the
     // _top_ of ordinaries. "Primary" means top.
     side: "primary" | "secondary",
-    alignment?: "start" | "end" | "center"
+    alignment?: "start" | "end" | "center",
   ): TreatmentRelativePath;
 }
 
@@ -464,7 +461,7 @@ namespace PathCommand {
 
   const SVG_ELEMENT_TO_COORDINATES: {
     [K in PathCommand.Any["type"]]: (
-      e: DiscriminateUnion<PathCommand.Any, "type", K>
+      e: DiscriminateUnion<PathCommand.Any, "type", K>,
     ) => Coordinate[];
   } = {
     l: (e) => [e.loc],
@@ -485,7 +482,7 @@ namespace PathCommand {
           `${e.type} ${SVG_ELEMENT_TO_COORDINATES[e.type](e as never)
             .map(([x, y]) => `${roundToPrecision(x, 3)},${roundToPrecision(y, 3)}`)
             .join(" ")
-            .trim()}`
+            .trim()}`,
       )
       .join(" ");
   }
@@ -530,7 +527,11 @@ class NullLocator implements ParametricLocator {
 }
 
 class LineSegmentLocator implements ParametricLocator {
-  constructor(private a: Coordinate, private b: Coordinate, private scales: number[]) {}
+  constructor(
+    private a: Coordinate,
+    private b: Coordinate,
+    private scales: number[],
+  ) {}
 
   public *forCount(total: number): Generator<[Coordinate, number]> {
     if (total <= 0 || total > this.scales.length) {
@@ -549,11 +550,11 @@ class SequenceLocator implements ParametricLocator {
   constructor(
     private sequence: Coordinate[],
     private scales: number[],
-    private exceptions: Record<number, Coordinate[] | typeof SequenceLocator.EMPTY> = {}
+    private exceptions: Record<number, Coordinate[] | typeof SequenceLocator.EMPTY> = {},
   ) {
     assert(
       sequence.length === scales.length,
-      "must have the same number of coordinates in sequence as scales"
+      "must have the same number of coordinates in sequence as scales",
     );
   }
 
@@ -575,7 +576,10 @@ class SequenceLocator implements ParametricLocator {
 }
 
 class ExhaustiveLocator implements ParametricLocator {
-  constructor(private sequences: Coordinate[][], private scales: number[]) {
+  constructor(
+    private sequences: Coordinate[][],
+    private scales: number[],
+  ) {
     assert(sequences.length === scales.length, "must have the same number of sequences as scales");
     for (let i = 0; i < sequences.length; ++i) {
       assert(sequences[i].length === i + 1, `sequence at index ${i} must have ${i + 1} elements`);
@@ -594,7 +598,11 @@ class ExhaustiveLocator implements ParametricLocator {
 }
 
 class AlternatingReflectiveLocator implements ParametricLocator {
-  constructor(private delegate: ParametricLocator, private a: Coordinate, private b: Coordinate) {}
+  constructor(
+    private delegate: ParametricLocator,
+    private a: Coordinate,
+    private b: Coordinate,
+  ) {}
 
   public *forCount(total: number): Generator<[Coordinate, number]> {
     if (total <= 0) {
@@ -622,7 +630,7 @@ class AlternatingReflectiveLocator implements ParametricLocator {
   }
 
   private *reflectSequence(
-    generator: Generator<[Coordinate, number]>
+    generator: Generator<[Coordinate, number]>,
   ): Generator<[Coordinate, number]> {
     for (const [translate, scale] of generator) {
       yield [Coordinate.reflect(translate, this.a, this.b), scale];
@@ -631,7 +639,11 @@ class AlternatingReflectiveLocator implements ParametricLocator {
 }
 
 class ReflectiveLocator implements ParametricLocator {
-  constructor(private delegate: ParametricLocator, private a: Coordinate, private b: Coordinate) {}
+  constructor(
+    private delegate: ParametricLocator,
+    private a: Coordinate,
+    private b: Coordinate,
+  ) {}
 
   public *forCount(total: number): Generator<[Coordinate, number]> {
     for (const [translate, scale] of this.delegate.forCount(total)) {
@@ -645,7 +657,7 @@ class OnChevronLocator implements ParametricLocator {
     private left: Coordinate,
     private midpoint: Coordinate,
     private right: Coordinate,
-    private scales: number[]
+    private scales: number[],
   ) {}
 
   public *forCount(total: number): Generator<[Coordinate, number]> {
@@ -698,7 +710,10 @@ class DefaultChargeLocator implements ParametricLocator {
     0.5,
   ];
 
-  constructor(private horizontal: [number, number], private vertical: [number, number]) {}
+  constructor(
+    private horizontal: [number, number],
+    private vertical: [number, number],
+  ) {}
 
   public *forCount(total: number): Generator<[Coordinate, number]> {
     if (total <= 0 || total > DefaultChargeLocator.ROWS.length) {
@@ -776,10 +791,10 @@ function roundUpToEven(n: number) {
 type DeeplyRewrite<T, TFrom, TTo> = T extends TFrom
   ? TTo
   : T extends string | number | boolean | null | undefined
-  ? T
-  : T extends object | any[]
-  ? { [K in keyof T]: DeeplyRewrite<T[K], TFrom, TTo> }
-  : T;
+    ? T
+    : T extends object | any[]
+      ? { [K in keyof T]: DeeplyRewrite<T[K], TFrom, TTo> }
+      : T;
 
 // This is obviously not exhaustive, but the gist of it is that it's anything that can be slapped
 // right into a `fill` or `stroke` rule unmodified.
@@ -809,8 +824,8 @@ const Transforms = {
       typeof scale === "number" && scale !== 1
         ? `scale(${scale})`
         : Array.isArray(scale)
-        ? `scale(${scale[0]}, ${scale[1]})`
-        : undefined,
+          ? `scale(${scale[0]}, ${scale[1]})`
+          : undefined,
       rotate != null ? `rotate(${Radians.toDeg(rotate)})` : undefined,
       // TODO: Unsure if this is the correct location for skew to make it less surprising.
       skewX != null ? `skewX(${Radians.toDeg(skewX)})` : undefined,
@@ -820,7 +835,7 @@ const Transforms = {
   },
   apply: (
     element: SVGElement,
-    { origin, ...transforms }: Transforms & { origin?: Coordinate }
+    { origin, ...transforms }: Transforms & { origin?: Coordinate },
   ): void => {
     if (origin != null) {
       element.setAttribute("transform-origin", `${origin[0]} ${origin[1]}`);
@@ -837,7 +852,7 @@ function roundToPrecision(n: number, precision: number = 0): number {
 
 function applySvgAttributes(
   element: SVGElement,
-  attributes: Record<string, string | number | undefined>
+  attributes: Record<string, string | number | undefined>,
 ): void {
   for (const [attribute, value] of Object.entries(attributes)) {
     if (value != null) {
@@ -848,7 +863,7 @@ function applySvgAttributes(
 
 function applyClasses(
   element: SVGElement,
-  classes: { fill?: ColorOrMetal; stroke?: ColorOrMetal } | undefined
+  classes: { fill?: ColorOrMetal; stroke?: ColorOrMetal } | undefined,
 ): void {
   if (classes?.fill != null) {
     element.classList.add(`fill-${classes.fill}`);
@@ -874,7 +889,7 @@ const svg = {
     }: {
       fill?: SvgColor;
       classes?: { fill?: ColorOrMetal };
-    } = {}
+    } = {},
   ): SVGCircleElement => {
     const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     applySvgAttributes(circle, { r, cx, cy, fill });
@@ -895,7 +910,7 @@ const svg = {
       strokeLinecap?: "butt" | "round" | "square";
       fill?: SvgColor;
       classes?: { fill?: ColorOrMetal; stroke?: ColorOrMetal };
-    } = {}
+    } = {},
   ): SVGPathElement => {
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     applySvgAttributes(path, {
@@ -925,7 +940,7 @@ const svg = {
       classes?: {
         stroke?: ColorOrMetal;
       };
-    } = {}
+    } = {},
   ): SVGLineElement => {
     const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
     applySvgAttributes(line, {
@@ -949,12 +964,14 @@ const svg = {
       stroke,
       strokeWidth = 1,
       classes,
+      mask,
     }: {
       fill?: SvgColor;
       stroke?: SvgColor;
       strokeWidth?: number;
       classes?: { fill?: ColorOrMetal };
-    } = {}
+      mask?: `url(#${string})`;
+    } = {},
   ): SVGRectElement => {
     const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     applySvgAttributes(rect, {
@@ -965,6 +982,7 @@ const svg = {
       fill,
       stroke,
       "stroke-width": strokeWidth,
+      mask,
     });
     applyClasses(rect, classes);
     return rect;
@@ -1054,7 +1072,7 @@ const svg = {
 const complexSvgCache: Record<string, Promise<[SVGGElement, Coordinate]>> = {};
 async function fetchMutableComplexSvg(
   kind: string,
-  variant?: string
+  variant?: string,
 ): Promise<[SVGGElement, Coordinate]> {
   const key = variant ? `${kind}-${variant}` : kind;
   if (!(key in complexSvgCache)) {
@@ -1077,11 +1095,11 @@ async function fetchMutableComplexSvg(
       const height = +(root.getAttribute("height") ?? "nan");
       assert(
         !Number.isNaN(width),
-        `width should exist and be numerical; got ${root.getAttribute("width")}`
+        `width should exist and be numerical; got ${root.getAttribute("width")}`,
       );
       assert(
         !Number.isNaN(height),
-        `height should exist and be numerical; got ${root.getAttribute("height")}`
+        `height should exist and be numerical; got ${root.getAttribute("height")}`,
       );
       return [wrapper, [width, height]];
     });
@@ -1124,10 +1142,10 @@ const bend: OrdinaryRenderer = {
       svg.path(
         TreatmentRelativePath.toClosedLoop(
           TreatmentRelativePath.offset([-W_2, -H_2]),
-          ...treatments
+          ...treatments,
         ),
-        fill
-      )
+        fill,
+      ),
     );
 
     if (cotised != null) {
@@ -1143,13 +1161,13 @@ const bend: OrdinaryRenderer = {
         svg.line([-W_2 + offset, -H_2 - offset], [H - W_2 + offset, H_2 - offset], {
           ...stroke,
           strokeWidth: COTISED_WIDTH,
-        })
+        }),
       );
       bend.appendChild(
         svg.line([-W_2 - offset, -H_2 + offset], [H - W_2 - offset, H_2 + offset], {
           ...stroke,
           strokeWidth: COTISED_WIDTH,
-        })
+        }),
       );
     }
 
@@ -1159,7 +1177,7 @@ const bend: OrdinaryRenderer = {
   on: new LineSegmentLocator(
     [-W_2, -H_2],
     [W_2, -H_2 + W],
-    [0.5, 0.5, 0.5, 0.5, 0.4, 0.35, 0.3, 0.25]
+    [0.5, 0.5, 0.5, 0.5, 0.4, 0.35, 0.3, 0.25],
   ),
 
   between: new AlternatingReflectiveLocator(
@@ -1178,10 +1196,10 @@ const bend: OrdinaryRenderer = {
           [W_2 - 15, -H_2 + 35],
         ],
       ],
-      [0.7, 0.5, 0.4]
+      [0.7, 0.5, 0.4],
     ),
     [-W_2, -H_2],
-    [W_2, -H_2 + W]
+    [W_2, -H_2 + W],
   ),
 
   partition(treatment: Treatment | undefined): PathCommand.Any[] {
@@ -1248,8 +1266,8 @@ const chief: OrdinaryRenderer = {
           ...main,
           { type: "l", loc: Coordinate.add([0, -CHIEF_WIDTH], end.loc) },
         ],
-        fill
-      )
+        fill,
+      ),
     );
 
     if (cotised != null) {
@@ -1260,8 +1278,8 @@ const chief: OrdinaryRenderer = {
         svg.line(
           [-W_2, -H_2 + CHIEF_WIDTH + (COTISED_WIDTH * 3) / 2],
           [W_2, -H_2 + CHIEF_WIDTH + (COTISED_WIDTH * 3) / 2],
-          { ...stroke, strokeWidth: COTISED_WIDTH }
-        )
+          { ...stroke, strokeWidth: COTISED_WIDTH },
+        ),
       );
     }
 
@@ -1271,7 +1289,7 @@ const chief: OrdinaryRenderer = {
   on: new LineSegmentLocator(
     [-W_2, -H_2 + H_2 / 3],
     [W_2, -H_2 + H_2 / 3],
-    [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]
+    [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18],
   ),
 
   between: new NullLocator(),
@@ -1301,14 +1319,14 @@ const chevron: OrdinaryRenderer = {
       -bottomLength,
       true,
       "secondary",
-      "start"
+      "start",
     );
     TreatmentRelativePath.rotate(bottomLeft, Radians.NEG_QUARTER_TURN);
     const bottomRight = TREATMENTS[treatment ?? "untreated"](
       -bottomLength,
       true,
       "secondary",
-      "end"
+      "end",
     );
 
     const treatments = [
@@ -1351,10 +1369,10 @@ const chevron: OrdinaryRenderer = {
             0,
             -Math.sqrt((CHEVRON_WIDTH * CHEVRON_WIDTH) / 2) - (H_2 - W_2),
           ]),
-          ...treatments
+          ...treatments,
         ),
-        fill
-      )
+        fill,
+      ),
     );
 
     if (cotised != null) {
@@ -1370,8 +1388,8 @@ const chevron: OrdinaryRenderer = {
             svg.line(
               Coordinate.add(end, [0, sign * offset]),
               Coordinate.add(mid, [0, sign * offset]),
-              { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
-            )
+              { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" },
+            ),
           );
         }
       }
@@ -1384,7 +1402,7 @@ const chevron: OrdinaryRenderer = {
     [-W_2, W_2 - 10],
     [0, -10],
     [W_2, W_2 - 10],
-    [0.4, 0.4, 0.4, 0.4, 0.35, 0.35, 0.3, 0.25]
+    [0.4, 0.4, 0.4, 0.4, 0.35, 0.35, 0.3, 0.25],
   ),
 
   between: new ExhaustiveLocator(
@@ -1408,7 +1426,7 @@ const chevron: OrdinaryRenderer = {
         [30, -H_2 + 30],
       ],
     ],
-    [0.5, 0.5, 0.5, 0.5]
+    [0.5, 0.5, 0.5, 0.5],
   ),
 
   partition(treatment: Treatment | undefined): PathCommand.Any[] {
@@ -1435,13 +1453,13 @@ const chevron: OrdinaryRenderer = {
         Coordinate.length(midLeft, mid),
         false,
         "primary",
-        "end"
+        "end",
       );
       const [rightStart, rightMain, rightEnd] = TREATMENTS[treatment](
         Coordinate.length(mid, midRight),
         false,
         "primary",
-        "start"
+        "start",
       );
       leftMain.forEach((c) => PathCommand.rotate(c, Radians.NEG_EIGHTH_TURN));
       rightMain.forEach((c) => PathCommand.rotate(c, Radians.EIGHTH_TURN));
@@ -1452,7 +1470,7 @@ const chevron: OrdinaryRenderer = {
           type: "l",
           loc: Coordinate.rotate(
             Coordinate.add(leftStart.loc, leftEnd.loc),
-            Radians.NEG_EIGHTH_TURN
+            Radians.NEG_EIGHTH_TURN,
           ),
         },
         ...leftMain,
@@ -1514,10 +1532,10 @@ const cross: OrdinaryRenderer = {
           // Offset the path itself rather than translating the entire cross so that fur patterns are
           // not shifted off-center.
           TreatmentRelativePath.offset([CROSS_WIDTH / 2, H_2]),
-          ...treatments
+          ...treatments,
         ),
-        fill
-      )
+        fill,
+      ),
     );
 
     if (cotised != null) {
@@ -1537,15 +1555,15 @@ const cross: OrdinaryRenderer = {
           svg.line(
             Coordinate.add(p, [offset * x1sign, offset * y1sign]),
             Coordinate.add(mid, [offset * x1sign, offset * y1sign]),
-            { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
-          )
+            { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" },
+          ),
         );
         cross.appendChild(
           svg.line(
             Coordinate.add(p, [offset * x2sign, offset * y2sign]),
             Coordinate.add(mid, [offset * x2sign, offset * y2sign]),
-            { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
-          )
+            { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" },
+          ),
         );
       }
     }
@@ -1564,7 +1582,7 @@ const cross: OrdinaryRenderer = {
     [0.4, 0.4, 0.4, 0.4, 0.4],
     {
       1: [[0, -CROSS_VERTICAL_OFFSET]],
-    }
+    },
   ),
 
   between: new SequenceLocator(
@@ -1577,7 +1595,7 @@ const cross: OrdinaryRenderer = {
     [0.5, 0.5, 0.5, 0.5],
     {
       1: SequenceLocator.EMPTY,
-    }
+    },
   ),
 
   // Technically this is synonymous with "quarterly", but the code architecture makes it annoying to
@@ -1607,11 +1625,11 @@ const fess: OrdinaryRenderer = {
               [{ type: "l", loc: [0, FESS_WIDTH] }],
               { type: "m", loc: [0, 0] },
             ],
-            TREATMENTS[treatment ?? "untreated"](-W, true, "secondary", "center")
+            TREATMENTS[treatment ?? "untreated"](-W, true, "secondary", "center"),
           ),
         ],
-        fill
-      )
+        fill,
+      ),
     );
 
     if (cotised != null) {
@@ -1624,13 +1642,13 @@ const fess: OrdinaryRenderer = {
         svg.line([-W_2, FESS_VERTICAL_OFFSET - offset], [W_2, FESS_VERTICAL_OFFSET - offset], {
           ...stroke,
           strokeWidth: COTISED_WIDTH,
-        })
+        }),
       );
       fess.appendChild(
         svg.line([-W_2, FESS_VERTICAL_OFFSET + offset], [W_2, FESS_VERTICAL_OFFSET + offset], {
           ...stroke,
           strokeWidth: COTISED_WIDTH,
-        })
+        }),
       );
     }
 
@@ -1640,17 +1658,17 @@ const fess: OrdinaryRenderer = {
   on: new LineSegmentLocator(
     [-W_2, FESS_VERTICAL_OFFSET],
     [W_2, FESS_VERTICAL_OFFSET],
-    [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18]
+    [0.6, 0.6, 0.5, 0.4, 0.3, 0.25, 0.2, 0.18],
   ),
 
   between: new AlternatingReflectiveLocator(
     new LineSegmentLocator(
       [-W_2, -H_2 + FESS_WIDTH / 2],
       [W_2, -H_2 + FESS_WIDTH / 2],
-      [0.6, 0.5, 0.4, 0.4]
+      [0.6, 0.5, 0.4, 0.4],
     ),
     [-W_2, FESS_VERTICAL_OFFSET],
-    [W_2, FESS_VERTICAL_OFFSET]
+    [W_2, FESS_VERTICAL_OFFSET],
   ),
 
   partition(treatment: Treatment | undefined): PathCommand.Any[] {
@@ -1699,10 +1717,10 @@ const pale: OrdinaryRenderer = {
           TreatmentRelativePath.offset([PALE_WIDTH / 2, -H_2]),
           right,
           TreatmentRelativePath.line([-PALE_WIDTH, 0]),
-          left
+          left,
         ),
-        fill
-      )
+        fill,
+      ),
     );
 
     if (cotised != null) {
@@ -1715,13 +1733,13 @@ const pale: OrdinaryRenderer = {
         svg.line([offset, -H_2], [offset, H_2], {
           ...stroke,
           strokeWidth: COTISED_WIDTH,
-        })
+        }),
       );
       pale.appendChild(
         svg.line([-offset, -H_2], [-offset, H_2], {
           ...stroke,
           strokeWidth: COTISED_WIDTH,
-        })
+        }),
       );
     }
 
@@ -1734,10 +1752,10 @@ const pale: OrdinaryRenderer = {
     new LineSegmentLocator(
       [-W_2 + PALE_WIDTH / 2, -H_2],
       [-W_2 + PALE_WIDTH / 2, H_2],
-      [0.6, 0.5, 0.4, 0.4]
+      [0.6, 0.5, 0.4, 0.4],
     ),
     [0, -H_2],
-    [0, H_2]
+    [0, H_2],
   ),
 
   partition(treatment: Treatment | undefined): PathCommand.Any[] {
@@ -1811,10 +1829,10 @@ const saltire: OrdinaryRenderer = {
             -W_2 - Math.sqrt((SALTIRE_WIDTH * SALTIRE_WIDTH) / 2),
             W_2 - (H_2 - W_2),
           ]),
-          ...treatments
+          ...treatments,
         ),
-        fill
-      )
+        fill,
+      ),
     );
 
     if (cotised != null) {
@@ -1836,15 +1854,15 @@ const saltire: OrdinaryRenderer = {
           svg.line(
             Coordinate.add(p, [offset * x1sign, offset * y1sign]),
             Coordinate.add(mid, [offset * x1sign, offset * y1sign]),
-            { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
-          )
+            { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" },
+          ),
         );
         saltire.appendChild(
           svg.line(
             Coordinate.add(p, [offset * x2sign, offset * y2sign]),
             Coordinate.add(mid, [offset * x2sign, offset * y2sign]),
-            { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" }
-          )
+            { ...stroke, strokeWidth: COTISED_WIDTH, strokeLinecap: "square" },
+          ),
         );
       }
     }
@@ -1863,7 +1881,7 @@ const saltire: OrdinaryRenderer = {
     [0.5, 0.5, 0.5, 0.5, 0.5],
     {
       1: [[0, -10]],
-    }
+    },
   ),
   between: new SequenceLocator(
     [
@@ -1875,7 +1893,7 @@ const saltire: OrdinaryRenderer = {
     [0.5, 0.5, 0.5, 0.5],
     {
       1: SequenceLocator.EMPTY,
-    }
+    },
   ),
   partition(treatment: Treatment | undefined): PathCommand.Any[] {
     const [topLeft, topRight, bottomLeft, bottomRight] = [
@@ -1903,7 +1921,7 @@ const saltire: OrdinaryRenderer = {
         Math.hypot(W, W),
         true,
         "primary",
-        "center"
+        "center",
       );
       TreatmentRelativePath.rotate([start1, main1, end1], (Radians.EIGHTH_TURN * 3) as Radians);
 
@@ -1911,7 +1929,7 @@ const saltire: OrdinaryRenderer = {
         Math.hypot(W, W),
         true,
         "primary",
-        "center"
+        "center",
       );
       TreatmentRelativePath.rotate([start2, main2, end2], (Radians.NEG_EIGHTH_TURN * 3) as Radians);
 
@@ -1961,7 +1979,7 @@ async function rondel({ coloration }: WithSvgColoration<SimpleCharge>) {
     pattern,
     // Not quite the full 40x40. Since these are the more visually heavyweight and fill out their
     // allotted space entirely without natural negative spaces, shrink them so they don't crowd too much.
-    svg.circle([0, 0], 18, fill)
+    svg.circle([0, 0], 18, fill),
   );
 }
 
@@ -1988,8 +2006,8 @@ async function mullet({ coloration }: WithSvgColoration<SimpleCharge>) {
         { type: "L", loc: [-5, -4.6] },
         { type: "Z" },
       ],
-      fill
-    )
+      fill,
+    ),
   );
 }
 
@@ -2021,7 +2039,7 @@ async function fret({ coloration }: WithSvgColoration<SimpleCharge>) {
       {
         strokeWidth: strokeWidth + outlineWidth * 2,
         classes: { stroke: "sable" },
-      }
+      },
     ),
     svg.line([-halfWidth, -halfWidth], [halfWidth, halfWidth], {
       ...stroke,
@@ -2038,7 +2056,7 @@ async function fret({ coloration }: WithSvgColoration<SimpleCharge>) {
       {
         strokeWidth: strokeWidth + outlineWidth * 2,
         classes: { stroke: "sable" },
-      }
+      },
     ),
     svg.path(
       [
@@ -2048,7 +2066,7 @@ async function fret({ coloration }: WithSvgColoration<SimpleCharge>) {
         { type: "L", loc: [0, thirdWidth] },
         { type: "Z" },
       ],
-      { ...stroke, strokeWidth: strokeWidth }
+      { ...stroke, strokeWidth: strokeWidth },
     ),
     svg.line(
       [-halfWidth - outlineWidth, halfWidth + outlineWidth],
@@ -2056,7 +2074,7 @@ async function fret({ coloration }: WithSvgColoration<SimpleCharge>) {
       {
         strokeWidth: strokeWidth + outlineWidth * 2,
         classes: { stroke: "sable" },
-      }
+      },
     ),
     svg.line([-halfWidth, halfWidth], [halfWidth, -halfWidth], {
       ...stroke,
@@ -2066,14 +2084,14 @@ async function fret({ coloration }: WithSvgColoration<SimpleCharge>) {
       // Patch up the first line to have it appear over the last one, as is the style.
       [-strokeWidth, -strokeWidth],
       [strokeWidth, strokeWidth],
-      { strokeWidth: strokeWidth + 0.5, classes: { stroke: "sable" } }
+      { strokeWidth: strokeWidth + 0.5, classes: { stroke: "sable" } },
     ),
     svg.line(
       // Bump this out to be longer so that it doesn't produce visual artifacts.
       [-strokeWidth - 1, -strokeWidth - 1],
       [strokeWidth + 1, strokeWidth + 1],
-      { ...stroke, strokeWidth }
-    )
+      { ...stroke, strokeWidth },
+    ),
   );
 }
 
@@ -2083,7 +2101,7 @@ async function genericSvgCharge(
   { coloration }: Pick<WithSvgColoration<SimpleCharge>, "coloration">,
   // TODO: Should these transforms be defined as (optional) SVG attributes instead of hardcoded here?
   // It's not clear that that's necessarily more single-source-of-truth-y in a useful way.
-  patternTransform: Transforms
+  patternTransform: Transforms,
 ): Promise<SVGGElement> {
   const [svg, dimensions] = await fetchMutableComplexSvg(kind, variant);
   const { fill, pattern } = await resolveColoration(coloration, dimensions, patternTransform);
@@ -2175,11 +2193,11 @@ async function escutcheon({ content }: WithSvgColoration<EscutcheonCharge>) {
   const escutcheon = svg.g(
     { kind: "escutcheon" },
     ...(await escutcheonContent(content)),
-    svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } })
+    svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }),
   );
   escutcheon.setAttribute(
     "clip-path",
-    `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`
+    `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`,
   );
   Transforms.apply(escutcheon, {
     scale: 0.35,
@@ -2220,7 +2238,7 @@ const SIMPLE_CHARGES: {
 // render based on the string. Throwing all charges, simple and otherwise, into a constant mapping
 // together means the inferred type of the function has `never` as the first argument. :(
 async function nonOrdinaryCharge(
-  charge: WithSvgColoration<NonOrdinaryCharge>
+  charge: WithSvgColoration<NonOrdinaryCharge>,
 ): Promise<SVGElement> {
   switch (charge.charge) {
     case "rondel":
@@ -2251,7 +2269,7 @@ async function nonOrdinaryCharge(
 // using scale/transform on the element that refers to this pattern, as it may behave unexpectedly.
 async function getErmineTincture(
   foreground: ColorOrMetal,
-  background: ColorOrMetal
+  background: ColorOrMetal,
 ): Promise<SVGPatternElement> {
   const [topLeft, [svgWidth, svgHeight]] = await fetchMutableComplexSvg("ermine");
   const spacing = svgWidth / 3;
@@ -2286,7 +2304,7 @@ async function getErmineTincture(
     },
     svg.rect([0, 0], [width, height], { classes: { fill: background } }),
     topLeft,
-    bottomRight
+    bottomRight,
   );
 }
 
@@ -2333,8 +2351,8 @@ function getVairTincture() {
         { type: "l", loc: [width / 2, 0] },
         { type: "z" },
       ],
-      { classes: { fill: "azure" } }
-    )
+      { classes: { fill: "azure" } },
+    ),
   );
 }
 
@@ -2345,15 +2363,12 @@ interface ResolvedColoration {
   fill: { fill: SvgColor } | { classes: { fill: ColorOrMetal } };
   stroke: { stroke: SvgColor } | { classes: { stroke: ColorOrMetal } };
   pattern?: SVGPatternElement;
-  // Used for touching up the edges of the pattern where they might look bad against the clipping
-  // frame, like paly wavy just barely dipping into view on the left and right edges.
-  nonRepeatingElements?: SVGGeometryElement[];
 }
 
 async function resolveColoration(
   coloration: SvgColorableColoration,
   [width, height]: Coordinate = [W, H],
-  patternTransform: Transforms = {}
+  patternTransform: Transforms = {},
 ): Promise<ResolvedColoration> {
   if ("color" in coloration) {
     return {
@@ -2403,23 +2418,56 @@ async function resolveColoration(
     }
   } else if ("type" in coloration) {
     const count = coloration.count ?? VARIATIONS[coloration.type].defaultCount;
-    const pattern = await VARIATIONS[coloration.type].generate({
+    const mask = VARIATIONS[coloration.type].generate({
       ...coloration,
       count,
       width,
       height,
     });
+    // The pattern below neither tiles nor rescales, so the tinctures resolve with the same context
+    // the variation itself was handed. The transform is what sizes a fur inside a variation to the
+    // charge it's filling, rather than to the whole field. Dimensions are read only by variations,
+    // which can't nest, so they're forwarded for consistency (and future-proofing?).
+    const { fill: firstFill, pattern: firstPattern } = await resolveColoration(
+      { tincture: coloration.first },
+      [width, height],
+      patternTransform,
+    );
+    const { fill: secondFill, pattern: secondPattern } = await resolveColoration(
+      { tincture: coloration.second },
+      [width, height],
+      patternTransform,
+    );
+
+    const [origin, size] = variationOverrun([width, height]);
+    const pattern = svg.pattern(
+      {
+        // This pattern exists only to turn the two rects below into something referencable as a
+        // fill; it deliberately doesn't tile anything, which is why the viewBox restates the tile
+        // exactly. Keeping it an identity transform is what lets the furs referenced inside keep
+        // the alignment they define themselves in, relative to the whole (origin-centered) field.
+        viewBox: [origin, size],
+        x: origin[0],
+        y: origin[1],
+        width: size[0],
+        height: size[1],
+        kind: "variation",
+      },
+      mask,
+      firstPattern,
+      secondPattern,
+      svg.rect(origin, size, secondFill),
+      svg.rect(origin, size, {
+        mask: `url(#${mask.id})`,
+        ...firstFill,
+      }),
+    );
+
     const color = `url(#${pattern.id})` as const;
     return {
       fill: { fill: color },
       stroke: { stroke: color },
       pattern,
-      nonRepeatingElements: await VARIATIONS[coloration.type].nonRepeatingElements?.({
-        ...coloration,
-        count,
-        width,
-        height,
-      }),
     };
   } else {
     assertNever(coloration);
@@ -2434,7 +2482,7 @@ async function resolveColoration(
 function wrapSimpleTreatment(
   treatment: (length: number) => TreatmentRelativePath,
   isPatternCycleComposite: boolean,
-  onlyRenderPrimary: boolean
+  onlyRenderPrimary: boolean,
 ): TreatmentPathGenerator {
   function mutatinglyApplyTransforms(
     [start, main, end]: TreatmentRelativePath,
@@ -2446,7 +2494,7 @@ function wrapSimpleTreatment(
       invertX?: boolean;
       invertY?: boolean;
       alignToEnd?: boolean;
-    }
+    },
   ): TreatmentRelativePath {
     if (alignToEnd) {
       [start, end] = [end, start];
@@ -2651,189 +2699,194 @@ const IS_VARIATION_TREATMENT_ALIGNED: Record<Treatment | "untreated", boolean> =
   untreated: false,
 };
 
-const barry: VariationPatternGenerator = {
-  async generate({
-    treatment,
-    count,
-    first,
-    second,
-    width: fillWidth,
-    height: fillHeight,
-  }: RenderableVariation) {
-    const { fill: firstFill } = await resolveColoration({ tincture: first });
-    const { fill: secondFill } = await resolveColoration({ tincture: second });
+// Variations get painted over more area than the width/height they're described in terms of: the
+// lower quarters of a quartered escutcheon, for instance, are taller than the field the variation
+// sized itself against. Everything that composes a variation is drawn oversized so that the seam
+// where it would otherwise start over is well outside anything that gets drawn.
+//
+// Chosen somewhat arbitrarily.
+const VARIATION_OVERRUN = 1.5;
+
+function variationOverrun([width, height]: Coordinate): [Coordinate, Coordinate] {
+  return [
+    [(-width * VARIATION_OVERRUN) / 2, (-height * VARIATION_OVERRUN) / 2],
+    [width * VARIATION_OVERRUN, height * VARIATION_OVERRUN],
+  ];
+}
+
+// Variations are defined as a mask over the whole given area, rather than baking a specific
+// tincture into a pattern, so that furs can be used in variations too. Patterns referenced by
+// patterns cause havoc with the coordinate system, so it's easier to just render both halves of a
+// variation and then mask between them.
+function variationMask(
+  { width, height }: RenderableVariation,
+  tiling: SVGPatternElement,
+  // Used for touching up the edges of the tiling where they might look bad against the clipping
+  // frame, like paly wavy just barely dipping into view on the left and right edges.
+  ...edges: SVGElement[]
+): SVGMaskElement {
+  return svg.mask(
+    {},
+    tiling,
+    svg.rect(...variationOverrun([width, height]), { fill: `url(#${tiling.id})` }),
+    ...edges,
+  );
+}
+
+const barry: VariationMaskGenerator = {
+  generate(variation: RenderableVariation) {
+    const { treatment, count, width: fillWidth, height: fillHeight } = variation;
 
     const width = fillWidth * 1.5; // 1.5: overrun to prevent visual artifacts around the left/right edges.
     const height = fillHeight / (count / 2);
 
-    return svg.pattern(
-      {
-        viewBox: [
-          [0, 0],
-          [width, height],
-        ],
-        x: -width / 2,
-        y: -(fillHeight / 2) - height / 4,
-        width,
-        height,
-        kind: "barry",
-      },
-      svg.rect([0, 0], [width, height], secondFill),
-      svg.path(
-        TreatmentRelativePath.toClosedLoop(
-          TreatmentRelativePath.offset([0, height / 4]),
-          TREATMENTS[treatment ?? "untreated"](
-            width,
-            !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"],
-            "secondary",
-            "center"
+    return variationMask(
+      variation,
+      svg.pattern(
+        {
+          viewBox: [
+            [0, 0],
+            [width, height],
+          ],
+          x: -width / 2,
+          y: -(fillHeight / 2) - height / 4,
+          width,
+          height,
+          kind: "barry",
+        },
+        svg.path(
+          TreatmentRelativePath.toClosedLoop(
+            TreatmentRelativePath.offset([0, height / 4]),
+            TREATMENTS[treatment ?? "untreated"](
+              width,
+              !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"],
+              "secondary",
+              "center",
+            ),
+            TreatmentRelativePath.line([0, height / 2]),
+            TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center"),
           ),
-          TreatmentRelativePath.line([0, height / 2]),
-          TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center")
+          { fill: "white" },
         ),
-        firstFill
-      )
-    );
-  },
-  async nonRepeatingElements({ count, first, second }: RenderableVariation) {
-    const { fill: firstFill } = await resolveColoration({ tincture: first });
-    const { fill: secondFill } = await resolveColoration({ tincture: second });
-
-    return [
-      // Hide dips from e.g. wavy on the top edge.
-      svg.rect([-W_2, -H_2], [W, H / count / 2], firstFill),
-      // Same, but note that the bottom bar changes color depending on the parity.
-      svg.rect(
-        [-W_2, H_2 - H / count / 2],
-        [W, H / count / 2],
-        count % 2 === 0 ? secondFill : firstFill
       ),
-    ];
+      // Hide dips from e.g. wavy on the top edge.
+      svg.rect([-fillWidth / 2, -fillHeight / 2], [fillWidth, height / 4], { fill: "white" }),
+      // Same, but note that the bottom bar changes color depending on the parity.
+      svg.rect([-fillWidth / 2, fillHeight / 2 - height / 4], [fillWidth, height / 4], {
+        fill: count % 2 === 0 ? "black" : "white",
+      }),
+    );
   },
   defaultCount: 6,
 };
 
-const barryBendy: VariationPatternGenerator = {
-  async generate({
-    count,
-    first,
-    second,
-    width: fillWidth,
-    height: fillHeight,
-  }: RenderableVariation) {
-    const { fill: firstFill } = await resolveColoration({ tincture: first });
-    const { fill: secondFill } = await resolveColoration({ tincture: second });
+const barryBendy: VariationMaskGenerator = {
+  generate(variation: RenderableVariation) {
+    const { count, width: fillWidth, height: fillHeight } = variation;
 
     const size = (2 * fillWidth) / count; // Assume W <= H, so we'll step based on that.
     // This angle allows nice patterning where a 2x2 checkered unit shifts horizontally by half a unit
     // (0.5) for every full checked unit height (2). So it lines up vertically nicely.
     const angle = Math.asin(1 / Math.sqrt(5)) as Radians;
-    return svg.pattern(
-      {
-        viewBox: [
-          [0, 0],
-          [2, 2],
-        ],
-        width: size,
-        height: size,
-        // The height component compensates for the horizontal shift due to the shifting y. Since we
-        // skew, shifting by y also shifts horizontally. The chosen angle has a nice 2-to-1 ratio, so
-        // we can return the horizontal shift to the center by just dividing by 2. Once there, we
-        // shift horizontally according to how many size-sized units we can fit.
-        // dead center according to the size, so it's lined up with the edges.
-        x: fillHeight / 4 - ((fillWidth / 2) % size),
-        y: -fillHeight / 2,
-        patternTransform: { skewX: angle },
-        kind: "barry bendy",
-      },
-      svg.rect([0, 0], [2, 2], secondFill),
-      svg.rect([0, 0], [1, 1], firstFill),
-      svg.rect([1, 1], [1, 1], firstFill)
+
+    return variationMask(
+      variation,
+      svg.pattern(
+        {
+          viewBox: [
+            [0, 0],
+            [2, 2],
+          ],
+          width: size,
+          height: size,
+          // The height component compensates for the horizontal shift due to the shifting y. Since we
+          // skew, shifting by y also shifts horizontally. The chosen angle has a nice 2-to-1 ratio, so
+          // we can return the horizontal shift to the center by just dividing by 2. Once there, we
+          // shift horizontally according to how many size-sized units we can fit.
+          // dead center according to the size, so it's lined up with the edges.
+          x: fillHeight / 4 - ((fillWidth / 2) % size),
+          y: -fillHeight / 2,
+          patternTransform: { skewX: angle },
+          kind: "barry bendy",
+        },
+        svg.rect([0, 0], [1, 1], { fill: "white" }),
+        svg.rect([1, 1], [1, 1], { fill: "white" }),
+      ),
     );
   },
-  nonRepeatingElements: undefined,
   defaultCount: 8,
 };
 
-const bendy: VariationPatternGenerator = {
-  async generate({
-    treatment,
-    first,
-    second,
-    count,
-    width: fillWidth,
-    height: fillHeight,
-  }: RenderableVariation) {
-    const { fill: firstFill } = await resolveColoration({ tincture: first });
-    const { fill: secondFill } = await resolveColoration({ tincture: second });
+// Bendy and bendy sinister differ only in which way they're rotated; the corner each of them has to
+// touch up is the caller's job.
+function bendyTiling(
+  { treatment, count, width: fillWidth, height: fillHeight }: RenderableVariation,
+  kind: string,
+  rotate: Radians,
+): SVGPatternElement {
+  // Ensure it's wide enough for the full diagonal extent to avoid any weird artifacting between
+  // adjacent repeats of the pattern that would otherwise be visible.
+  const width = Math.hypot(fillHeight, fillHeight);
+  const height = Math.hypot(fillWidth, fillWidth) / (count / 2);
 
-    // Ensure it's wide enough for the full diagonal extent to avoid any weird artifacting between
-    // adjacent repeats of the pattern that would otherwise be visible.
-    const width = Math.hypot(fillHeight, fillHeight);
-    const height = Math.hypot(fillWidth, fillWidth) / (count / 2);
-
-    return svg.pattern(
-      {
-        viewBox: [
-          [0, 0],
-          [width, height],
+  return svg.pattern(
+    {
+      viewBox: [
+        [0, 0],
+        [width, height],
+      ],
+      // Offset to hide the horizontal pattern boundary out beyond the clipping zone -- we don't
+      // know if the treatment pattern will tile horizontally well as that isn't part of their
+      // contract.
+      x: -width / 2,
+      // n.b. that a vertical offset might help with a visual artifact: "bendy wavy of two" will
+      // show the boundary between repeat pattern tiles near the bottom right of the bend.
+      width,
+      height,
+      patternTransform: {
+        rotate,
+        // Subtract W and H to move the center towards the W x W upper square of the shield, which
+        // centers a bend in the top left corner, then offset further by half vertical distance of
+        // a bend, which is a quarter of the total vertical distance, where the vertical distance
+        // is Pythagoras'd from the width of the bend. But only if we're an even number of bends,
+        // otherwise we want to be centered.
+        translate: [
+          0,
+          fillWidth / 2 -
+            fillHeight / 2 -
+            (count % 2 === 0 ? Math.sqrt(2 * height * height) / 4 : 0),
         ],
-        // Offset to hide the horizontal pattern boundary out beyond the clipping zone -- we don't
-        // know if the treatment pattern will tile horizontally well as that isn't part of their
-        // contract.
-        x: -width / 2,
-        // n.b. that a vertical offset might help with a visual artifact: "bendy wavy of two" will
-        // show the boundary between repeat pattern tiles near the bottom right of the bend.
-        width,
-        height,
-        patternTransform: {
-          rotate: Radians.EIGHTH_TURN,
-          // Subtract W and H to move the center towards the W x W upper square of the shield, which
-          // centers a bend in the top left corner, then offset further by half vertical distance of
-          // a bend, which is a quarter of the total vertical distance, where the vertical distance
-          // is Pythagoras'd from the width of the bend. But only if we're an even number of bends,
-          // otherwise we want to be centered.
-          translate: [
-            0,
-            fillWidth / 2 -
-              fillHeight / 2 -
-              (count % 2 === 0 ? Math.sqrt(2 * height * height) / 4 : 0),
-          ],
-        },
-        kind: "bendy",
       },
-      svg.rect([0, 0], [width, height], secondFill),
-      svg.path(
-        TreatmentRelativePath.toClosedLoop(
-          TreatmentRelativePath.offset([0, height / 4]),
-          TREATMENTS[treatment ?? "untreated"](
-            width,
-            !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"],
-            "secondary",
-            "center"
-          ),
-          TreatmentRelativePath.line([0, height / 2]),
-          TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center")
+      kind,
+    },
+    svg.path(
+      TreatmentRelativePath.toClosedLoop(
+        TreatmentRelativePath.offset([0, height / 4]),
+        TREATMENTS[treatment ?? "untreated"](
+          width,
+          !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"],
+          "secondary",
+          "center",
         ),
-        firstFill
-      )
-    );
-  },
-  async nonRepeatingElements({
-    count,
-    first,
-    second,
-    width: fillWidth,
-    height: fillHeight,
-  }: RenderableVariation) {
-    const { fill: firstFill } = await resolveColoration({ tincture: first });
-    const { fill: secondFill } = await resolveColoration({ tincture: second });
+        TreatmentRelativePath.line([0, height / 2]),
+        TREATMENTS[treatment ?? "untreated"](-width, false, "primary", "center"),
+      ),
+      { fill: "white" },
+    ),
+  );
+}
+
+const bendy: VariationMaskGenerator = {
+  generate(variation: RenderableVariation) {
+    const { count, width: fillWidth, height: fillHeight } = variation;
 
     const bendHeight = Math.hypot(fillWidth, fillWidth) / count;
     // hypot -> hypot transforms back to vertical/horizontal instead of 45 degree space.
     const edgeHeight = Math.hypot(bendHeight / 2, bendHeight / 2);
 
-    return [
+    return variationMask(
+      variation,
+      bendyTiling(variation, "bendy", Radians.EIGHTH_TURN),
       svg.polygon({
         points: [
           [fillWidth / 2, -fillHeight / 2],
@@ -2842,109 +2895,69 @@ const bendy: VariationPatternGenerator = {
         ],
         // I wrote out a table to prove this, but basically, the color of the top right corner only
         // changes every two counts, hence the rounding up to even.
-        ...((roundUpToEven(count) / 2) % 2 === 0 ? firstFill : secondFill),
+        fill: (roundUpToEven(count) / 2) % 2 === 0 ? "white" : "black",
       }),
-    ];
+    );
   },
   defaultCount: 8,
 };
 
-const bendySinister: VariationPatternGenerator = {
-  async generate(variation: RenderableVariation) {
-    const pattern = await bendy.generate(variation);
-
-    const height = Math.hypot(variation.width, variation.width) / (variation.count / 2);
-    applySvgAttributes(pattern, {
-      // There's no good way to DRY up this calculation and just override the rotation, so we have to
-      // restate the translation as well. Unless we want to being doing string manipulation on the
-      // transform rule itself (we don't).
-      patternTransform: Transforms.toString({
-        rotate: Radians.NEG_EIGHTH_TURN,
-        translate: [
-          0,
-          variation.width / 2 -
-            variation.height / 2 -
-            (variation.count % 2 === 0 ? Math.sqrt(2 * height * height) / 4 : 0),
-        ],
-      }),
-    });
-
-    return pattern;
-  },
-  async nonRepeatingElements({
-    count,
-    first,
-    second,
-    width: fillWidth,
-    height: fillHeight,
-  }: RenderableVariation) {
-    const { fill: firstFill } = await resolveColoration({ tincture: first });
-    const { fill: secondFill } = await resolveColoration({ tincture: second });
+const bendySinister: VariationMaskGenerator = {
+  generate(variation: RenderableVariation) {
+    const { count, width: fillWidth, height: fillHeight } = variation;
 
     // Copy-pasta-signflip from the bendy version. I couldn't think of a good way define this in terms
     // of the result of calling the other function, so I didn't.
-
     const bendHeight = Math.hypot(fillWidth, fillHeight) / count;
     const edgeHeight = Math.hypot(bendHeight / 2, bendHeight / 2);
 
-    return [
+    return variationMask(
+      variation,
+      bendyTiling(variation, "bendy sinister", Radians.NEG_EIGHTH_TURN),
       svg.polygon({
         points: [
           [-fillWidth / 2, -fillHeight / 2],
           [-fillWidth / 2, -fillHeight / 2 + edgeHeight],
           [-fillWidth / 2 + edgeHeight, -fillHeight / 2],
         ],
-        ...((roundUpToEven(count) / 2) % 2 === 0 ? firstFill : secondFill),
+        fill: (roundUpToEven(count) / 2) % 2 === 0 ? "white" : "black",
       }),
-    ];
+    );
   },
   defaultCount: 8,
 };
 
-const checky: VariationPatternGenerator = {
-  async generate({
-    count,
-    first,
-    second,
-    width: fillWidth,
-    height: fillHeight,
-  }: RenderableVariation) {
-    const { fill: firstFill } = await resolveColoration({ tincture: first });
-    const { fill: secondFill } = await resolveColoration({ tincture: second });
+const checky: VariationMaskGenerator = {
+  generate(variation: RenderableVariation) {
+    const { count, width: fillWidth, height: fillHeight } = variation;
 
     const size = (2 * fillWidth) / count; // W < H, so we'll step based on that.
-    return svg.pattern(
-      {
-        viewBox: [
-          [0, 0],
-          [2, 2],
-        ],
-        width: size,
-        height: size,
-        x: -fillWidth / 2,
-        y: -fillHeight / 2,
-        kind: "checky",
-      },
-      svg.rect([0, 0], [2, 2], secondFill),
-      svg.rect([1, 0], [1, 1], firstFill),
-      svg.rect([0, 1], [1, 1], firstFill)
+
+    return variationMask(
+      variation,
+      svg.pattern(
+        {
+          viewBox: [
+            [0, 0],
+            [2, 2],
+          ],
+          width: size,
+          height: size,
+          x: -fillWidth / 2,
+          y: -fillHeight / 2,
+          kind: "checky",
+        },
+        svg.rect([1, 0], [1, 1], { fill: "white" }),
+        svg.rect([0, 1], [1, 1], { fill: "white" }),
+      ),
     );
   },
-  nonRepeatingElements: undefined,
   defaultCount: 6,
 };
 
-const chevronny: VariationPatternGenerator = {
-  async generate({
-    treatment,
-    first,
-    second,
-    count,
-    width: fillWidth,
-    height: fillHeight,
-  }: RenderableVariation) {
-    const { fill: firstFill } = await resolveColoration({ tincture: first });
-    const { fill: secondFill } = await resolveColoration({ tincture: second });
+const chevronny: VariationMaskGenerator = {
+  generate(variation: RenderableVariation) {
+    const { treatment, count, width: fillWidth, height: fillHeight } = variation;
 
     // -2 because the nature of chevrons means that even if you have exactly `count` bands along the
     // center line, you'll see more off to the sides. -2 empirally splits the difference, where the
@@ -2991,170 +3004,148 @@ const chevronny: VariationPatternGenerator = {
         svg.path(
           TreatmentRelativePath.toClosedLoop(
             TreatmentRelativePath.offset([fillWidth / 2, i * 2 * chevronHeight]),
-            ...template
+            ...template,
           ),
-          firstFill
-        )
+          { fill: "white" },
+        ),
       );
     }
 
-    return svg.pattern(
-      {
-        viewBox: [
-          [0, 0],
-          [fillWidth, height],
-        ],
-        width: fillWidth,
-        height,
-        x: -fillWidth / 2,
-        y: -fillHeight / 2,
-        kind: "chevronny",
-      },
-      svg.rect([0, 0], [fillWidth, height], secondFill),
-      ...paths
+    return variationMask(
+      variation,
+      svg.pattern(
+        {
+          viewBox: [
+            [0, 0],
+            [fillWidth, height],
+          ],
+          width: fillWidth,
+          height,
+          x: -fillWidth / 2,
+          y: -fillHeight / 2,
+          kind: "chevronny",
+        },
+        ...paths,
+      ),
     );
   },
-  nonRepeatingElements: undefined,
   defaultCount: 6,
 };
 
-const fusilly: VariationPatternGenerator = {
-  async generate({
-    count,
-    first,
-    second,
-    width: fillWidth,
-    height: fillHeight,
-  }: RenderableVariation) {
-    const { fill: firstFill } = await resolveColoration({ tincture: first });
-    const { fill: secondFill } = await resolveColoration({ tincture: second });
+const fusilly: VariationMaskGenerator = {
+  generate(variation: RenderableVariation) {
+    const { count, width: fillWidth, height: fillHeight } = variation;
 
     const width = fillWidth / count;
-    return svg.pattern(
-      {
-        viewBox: [
-          [0, 0],
-          [2, 8],
-        ],
-        x: -width / 2 - fillWidth / 2,
-        y: -fillHeight / 2,
-        width,
-        height: width * 4,
-        kind: "fusilly",
-      },
-      svg.rect([0, 0], [2, 8], secondFill),
-      svg.polygon({
-        points: [
-          [1, 0],
-          [2, 4],
-          [1, 8],
-          [0, 4],
-        ],
-        ...firstFill,
-      })
+
+    return variationMask(
+      variation,
+      svg.pattern(
+        {
+          viewBox: [
+            [0, 0],
+            [2, 8],
+          ],
+          x: -width / 2 - fillWidth / 2,
+          y: -fillHeight / 2,
+          width,
+          height: width * 4,
+          kind: "fusilly",
+        },
+        svg.polygon({
+          points: [
+            [1, 0],
+            [2, 4],
+            [1, 8],
+            [0, 4],
+          ],
+          fill: "white",
+        }),
+      ),
     );
   },
-  nonRepeatingElements: undefined,
   defaultCount: 8,
 };
 
 // There is no visual reference I could find for this besides the arms of Bavaria, so the precise
 // positioning of the variations relative to the corners and edges matches the appearance there.
-const fusillyInBends: VariationPatternGenerator = {
-  async generate({
-    count,
-    first,
-    second,
-    width: fillWidth,
-    height: fillHeight,
-  }: RenderableVariation) {
-    const { fill: firstFill } = await resolveColoration({ tincture: first });
-    const { fill: secondFill } = await resolveColoration({ tincture: second });
+const fusillyInBends: VariationMaskGenerator = {
+  generate(variation: RenderableVariation) {
+    const { count, width: fillWidth, height: fillHeight } = variation;
 
     const width = fillWidth / count;
-    return svg.pattern(
-      {
-        viewBox: [
-          [0, 0],
-          [2, 8],
-        ],
-        x: -fillWidth / 2,
-        y: -fillHeight / 2,
-        width,
-        height: width * 4,
-        patternTransform: {
-          rotate: Radians.NEG_EIGHTH_TURN,
-          translate: [-width, -width - (fillHeight / 2 - fillWidth / 2)],
+
+    return variationMask(
+      variation,
+      svg.pattern(
+        {
+          viewBox: [
+            [0, 0],
+            [2, 8],
+          ],
+          x: -fillWidth / 2,
+          y: -fillHeight / 2,
+          width,
+          height: width * 4,
+          patternTransform: {
+            rotate: Radians.NEG_EIGHTH_TURN,
+            translate: [-width, -width - (fillHeight / 2 - fillWidth / 2)],
+          },
+          kind: "fusilly in bends",
         },
-        kind: "fusilly in bends",
-      },
-      svg.rect([0, 0], [2, 8], secondFill),
-      svg.polygon({
-        points: [
-          [1, 0],
-          [2, 4],
-          [1, 8],
-          [0, 4],
-        ],
-        ...firstFill,
-      })
+        svg.polygon({
+          points: [
+            [1, 0],
+            [2, 4],
+            [1, 8],
+            [0, 4],
+          ],
+          fill: "white",
+        }),
+      ),
     );
   },
-  nonRepeatingElements: undefined,
   defaultCount: 8,
 };
 
-const lozengy: VariationPatternGenerator = {
-  async generate({
-    count,
-    first,
-    second,
-    width: fillWidth,
-    height: fillHeight,
-  }: RenderableVariation) {
-    const { fill: firstFill } = await resolveColoration({ tincture: first });
-    const { fill: secondFill } = await resolveColoration({ tincture: second });
+const lozengy: VariationMaskGenerator = {
+  generate(variation: RenderableVariation) {
+    const { count, width: fillWidth, height: fillHeight } = variation;
 
     const width = fillWidth / count;
-    return svg.pattern(
-      {
-        viewBox: [
-          [0, 0],
-          [2, 4],
-        ],
-        x: -width / 2 - fillWidth / 2,
-        y: -fillHeight / 2,
-        width,
-        height: width * 2,
-        kind: "lozengy",
-      },
-      svg.rect([0, 0], [2, 4], secondFill),
-      svg.polygon({
-        points: [
-          [1, 0],
-          [2, 2],
-          [1, 4],
-          [0, 2],
-        ],
-        ...firstFill,
-      })
+
+    return variationMask(
+      variation,
+      svg.pattern(
+        {
+          viewBox: [
+            [0, 0],
+            [2, 4],
+          ],
+          x: -width / 2 - fillWidth / 2,
+          y: -fillHeight / 2,
+          width,
+          height: width * 2,
+          kind: "lozengy",
+        },
+        svg.polygon({
+          points: [
+            [1, 0],
+            [2, 2],
+            [1, 4],
+            [0, 2],
+          ],
+          fill: "white",
+        }),
+      ),
     );
   },
-  nonRepeatingElements: undefined,
   defaultCount: 8,
 };
 
-const paly: VariationPatternGenerator = {
-  async generate({
-    treatment,
-    first,
-    second,
-    count,
-    width: fillWidth,
-    height: fillHeight,
-  }: RenderableVariation) {
-    const { fill: firstFill } = await resolveColoration({ tincture: first });
-    const { fill: secondFill } = await resolveColoration({ tincture: second });
+const paly: VariationMaskGenerator = {
+  generate(variation: RenderableVariation) {
+    const { treatment, count, width: fillWidth, height: fillHeight } = variation;
 
     const width = fillWidth / (count / 2);
     const height = fillHeight * 1.5; // 1.5: overrun to prevent visual artifacts around the top/bottom edges.
@@ -3166,59 +3157,46 @@ const paly: VariationPatternGenerator = {
       -height,
       !IS_VARIATION_TREATMENT_ALIGNED[treatment ?? "untreated"],
       "secondary",
-      "center"
+      "center",
     );
     TreatmentRelativePath.rotate(right, Radians.QUARTER_TURN);
 
-    return svg.pattern(
-      {
-        viewBox: [
-          [0, 0],
-          [width, height],
-        ],
-        x: -(fillWidth / 2) - width / 4,
-        y: -height / 2,
-        width,
-        height,
-        kind: "paly",
-      },
-      svg.rect([0, 0], [width, height], secondFill),
-      svg.path(
-        TreatmentRelativePath.toClosedLoop(
-          TreatmentRelativePath.offset([width / 4, 0]),
-          left,
-          TreatmentRelativePath.line([width / 2, 0]),
-          right
+    return variationMask(
+      variation,
+      svg.pattern(
+        {
+          viewBox: [
+            [0, 0],
+            [width, height],
+          ],
+          x: -(fillWidth / 2) - width / 4,
+          y: -height / 2,
+          width,
+          height,
+          kind: "paly",
+        },
+        svg.path(
+          TreatmentRelativePath.toClosedLoop(
+            TreatmentRelativePath.offset([width / 4, 0]),
+            left,
+            TreatmentRelativePath.line([width / 2, 0]),
+            right,
+          ),
+          { fill: "white" },
         ),
-        firstFill
-      )
-    );
-  },
-  async nonRepeatingElements({
-    count,
-    first,
-    second,
-    width: fillWidth,
-    height: fillHeight,
-  }: RenderableVariation) {
-    const { fill: firstFill } = await resolveColoration({ tincture: first });
-    const { fill: secondFill } = await resolveColoration({ tincture: second });
-
-    return [
-      // Hide dips from e.g. wavy on the left edge.
-      svg.rect([-fillWidth / 2, -fillHeight / 2], [fillWidth / count / 2, fillHeight], firstFill),
-      // Same, but note that the right bar changes color depending on the parity.
-      svg.rect(
-        [fillWidth / 2 - fillWidth / count / 2, -fillHeight / 2],
-        [fillWidth / count / 2, fillHeight],
-        count % 2 === 0 ? secondFill : firstFill
       ),
-    ];
+      // Hide dips from e.g. wavy on the left edge.
+      svg.rect([-fillWidth / 2, -height], [width / 4, height * 2], { fill: "white" }),
+      // Same, but note that the right bar changes color depending on the parity.
+      svg.rect([fillWidth / 2 - width / 4, -height], [width / 4, height * 2], {
+        fill: count % 2 === 0 ? "black" : "white",
+      }),
+    );
   },
   defaultCount: 6,
 };
 
-const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
+const VARIATIONS: Record<VariationName, VariationMaskGenerator> = {
   barry,
   "barry bendy": barryBendy,
   bendy,
@@ -3237,13 +3215,12 @@ const VARIATIONS: Record<VariationName, VariationPatternGenerator> = {
 // ----------------------------------------------------------------------------
 
 async function field(coloration: SvgColorableColoration) {
-  const { fill, pattern, nonRepeatingElements } = await resolveColoration(coloration);
+  const { fill, pattern } = await resolveColoration(coloration);
   return svg.g(
     { kind: "field" },
     pattern,
     // Expand the height so that when this is rendered on the extra-tall quarter segments it still fills.
     svg.rect([-W_2, -H_2], [W, H + 2 * (H_2 - W_2)], fill),
-    ...(nonRepeatingElements ?? [])
   );
 }
 
@@ -3325,7 +3302,7 @@ async function charge(element: WithSvgColoration<Charge>): Promise<SVGElement[]>
 }
 
 async function escutcheonContent(
-  content: WithSvgColoration<EscutcheonContent>
+  content: WithSvgColoration<EscutcheonContent>,
 ): Promise<SVGElement[]> {
   // Note that counterchanging happens shallowly. If you have e.g. "per pale argent and gules on a
   // bend counterchanged a mullet counterchanged", both will receive the _same_ patterning, even
@@ -3333,14 +3310,14 @@ async function escutcheonContent(
   // background variation).
   function counterchangeCharge(
     element: WithSvgColoration<Charge>,
-    coloration: SvgColorableColoration
+    coloration: SvgColorableColoration,
   ): WithSvgColoration<Charge> {
     function counterchangeColoration(c: SvgColorableColoration): SvgColorableColoration;
     function counterchangeColoration(
-      c: SvgColorableColoration | undefined
+      c: SvgColorableColoration | undefined,
     ): SvgColorableColoration | undefined;
     function counterchangeColoration(
-      c: SvgColorableColoration | undefined
+      c: SvgColorableColoration | undefined,
     ): SvgColorableColoration | undefined {
       if (c == null || "color" in c || "type" in c) {
         return c;
@@ -3352,7 +3329,7 @@ async function escutcheonContent(
     }
 
     function counterchangeOrdinary(
-      ordinary: WithSvgColoration<Ordinary>
+      ordinary: WithSvgColoration<Ordinary>,
     ): WithSvgColoration<Ordinary> {
       return {
         ...ordinary,
@@ -3363,7 +3340,7 @@ async function escutcheonContent(
     }
 
     function counterchangeNonOrdinaryCharge<
-      T extends WithSvgColoration<NonOrdinaryCharge> | undefined
+      T extends WithSvgColoration<NonOrdinaryCharge> | undefined,
     >(charge: T): T {
       if (charge == null) {
         return undefined as T;
@@ -3463,9 +3440,9 @@ async function escutcheonContent(
               { kind: "masked-counterchanged" },
               // This is reversed (counterchanged!) from the field -- second is the one that gets
               // the mask and it must appear later.
-              ...(await charge(counterchangeCharge(c, content.second)))
-            )
-          )
+              ...(await charge(counterchangeCharge(c, content.second))),
+            ),
+          ),
         );
       }
     }
@@ -3604,11 +3581,11 @@ async function inescutcheon({ location, content }: Inescutcheon) {
   const escutcheon = svg.g(
     { kind: "inescutcheon" },
     ...(await escutcheonContent(content)),
-    svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } })
+    svg.path(ESCUTCHEON_PATH, { strokeWidth: 2, classes: { stroke: "sable" } }),
   );
   escutcheon.setAttribute(
     "clip-path",
-    `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`
+    `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`,
   );
   Transforms.apply(escutcheon, {
     scale: 0.25,
@@ -3656,7 +3633,7 @@ function initializePreview() {
     },
     // threshold: 1 doesn't work properly if the viewport is smaller than the height of the shield.
     // But this won't happen on any real device.
-    { threshold: 1 }
+    { threshold: 1 },
   ).observe(rendered);
 
   new IntersectionObserver(
@@ -3664,7 +3641,7 @@ function initializePreview() {
       isAboveFootnotes = boundingClientRect.top > document.documentElement.clientHeight;
       update();
     },
-    { threshold: 0 }
+    { threshold: 0 },
   ).observe(document.querySelector(".footnotes")!);
 }
 
@@ -3678,7 +3655,7 @@ async function parseAndRenderBlazon(initialAmbiguousIndex: number = 0) {
     const container = svg.g(
       { kind: "container" },
       ...(await escutcheonContent(blazon.main)),
-      blazon.inescutcheon != null ? await inescutcheon(blazon.inescutcheon) : undefined
+      blazon.inescutcheon != null ? await inescutcheon(blazon.inescutcheon) : undefined,
     );
     container.style.clipPath = `path("${PathCommand.toDString(ESCUTCHEON_PATH)}") view-box`;
 
@@ -3689,7 +3666,7 @@ async function parseAndRenderBlazon(initialAmbiguousIndex: number = 0) {
         strokeWidth: 2,
         classes: { stroke: "sable" },
       }),
-      container
+      container,
     );
 
     const clonedRendered = rendered.cloneNode(true);
@@ -3755,7 +3732,7 @@ const random: HTMLButtonElement = document.querySelector("#random-blazon")!;
 const form: HTMLFormElement = document.querySelector("#form")!;
 const rendered: SVGSVGElement = document.querySelector("#rendered")!;
 const renderedPreviewContainer: HTMLDivElement = document.querySelector(
-  "#rendered-preview-container"
+  "#rendered-preview-container",
 )!;
 const error: HTMLPreElement = document.querySelector("#error")!;
 const ast: HTMLPreElement = document.querySelector("#ast")!;
@@ -3778,16 +3755,16 @@ form.addEventListener("submit", async (e) => {
 // These must be integers since the implementation uses a multiset to realize the different values.
 const TINCTURE_WEIGHTS: Record<CounterchangeableTincture, number> = {
   // Common colors.
-  argent: 8,
-  azure: 8,
-  gules: 8,
-  or: 8,
-  sable: 8,
+  argent: 12,
+  azure: 12,
+  gules: 12,
+  or: 12,
+  sable: 12,
 
   // Uncommon colors.
-  vert: 4,
-  purpure: 1,
-  cendree: 1,
+  vert: 6,
+  purpure: 2,
+  cendree: 2,
 
   // Furs.
   ermine: 2,
@@ -3804,7 +3781,7 @@ const TINCTURE_WEIGHTS: Record<CounterchangeableTincture, number> = {
 
 const WEIGHTED_TINCTURE_ARRAY = Object.entries(TINCTURE_WEIGHTS).reduce<Tincture[]>(
   (prev, [tincture, weight]) => [...prev, ...Array(weight).fill(tincture)],
-  []
+  [],
 );
 function randomTincture(): Tincture {
   return WEIGHTED_TINCTURE_ARRAY[Math.floor(Math.random() * WEIGHTED_TINCTURE_ARRAY.length)];
@@ -3814,7 +3791,7 @@ const TINCTURES = Object.keys(TINCTURE_WEIGHTS) as Tincture[];
 const TINCTURE_REGEX = new RegExp(`\\b(${TINCTURES.join("|")})\\b`, "g");
 const TINCTURE_PAIR_REGEX = new RegExp(
   `\\b(${TINCTURES.join("|")}) and (${TINCTURES.join("|")})\\b`,
-  "g"
+  "g",
 );
 const TINCTURE_ONLY_SKIP_RATIO = 0.8;
 const INESCUTCHEON_SKIP_RATIO = 0.6;
@@ -3846,7 +3823,7 @@ function generateRandomBlazon() {
           // Gross and duplicative, but the entire grammar is written in lowercase and I don't want to
           // sprinkle case-insensitive markers EVERYWHERE just so the tinctures can be generated with
           // typical casing by the unparser.
-          (tincture) => `${tincture[0].toUpperCase()}${tincture.slice(1)}`
+          (tincture) => `${tincture[0].toUpperCase()}${tincture.slice(1)}`,
         )
         // Re-convert the special case. Note it's capitalized due to the previous transformation.
         .replaceAll(/\bCendree\b/g, "Cendrée")
@@ -3904,7 +3881,7 @@ try {
 
 rendered.setAttribute(
   "viewBox",
-  `${-W_2 - MARGIN} ${-H_2 - MARGIN} ${W + 2 * MARGIN} ${H + 2 * MARGIN}`
+  `${-W_2 - MARGIN} ${-H_2 - MARGIN} ${W + 2 * MARGIN} ${H + 2 * MARGIN}`,
 );
 
 if (typeof text === "string" && (index === undefined || typeof index === "number")) {

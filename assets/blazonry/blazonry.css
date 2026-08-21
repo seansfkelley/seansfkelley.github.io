@@ -214,8 +214,8 @@ a[data-example]:not(:hover) {
 }
 
 #rendered {
-  width: 300px;
-  height: 360px;
+  width: 312px;
+  height: 372px;
 }
 
 #rendered,
@@ -288,8 +288,8 @@ a[data-example]:not(:hover) {
   pointer-events: initial;
 }
 #rendered-preview-container svg {
-  width: 100px;
-  height: 120px;
+  width: 104px;
+  height: 124px;
 }
 @media screen and (min-width: 600px) {
   #rendered-preview-container {
