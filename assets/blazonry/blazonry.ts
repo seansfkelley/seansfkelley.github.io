@@ -3168,9 +3168,9 @@ const paly: VariationMaskGenerator = {
         )
       ),
       // Hide dips from e.g. wavy on the left edge.
-      svg.rect([-fillWidth / 2, -fillHeight / 2], [width / 4, fillHeight], { fill: "white" }),
+      svg.rect([-fillWidth / 2, -height], [width / 4, height * 2], { fill: "white" }),
       // Same, but note that the right bar changes color depending on the parity.
-      svg.rect([fillWidth / 2 - width / 4, -fillHeight / 2], [width / 4, fillHeight], {
+      svg.rect([fillWidth / 2 - width / 4, -height], [width / 4, height * 2], {
         fill: count % 2 === 0 ? "black" : "white",
       })
     );
