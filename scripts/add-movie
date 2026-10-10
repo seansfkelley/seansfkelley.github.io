@@ -21,103 +21,42 @@ fi
 title="$1"
 year="${2:-}"
 
-if ! command -v hxselect > /dev/null ; then
-  echo 'hxselect not installed; please run:'
-  echo '  brew install html-xml-utils'
-  exit 1
-fi
-
-if ! node --input-type=module -e "import 'playwright'" 2>/dev/null; then
-  echo 'playwright not installed; please run:'
-  echo '  yarn install'
-  exit 1
-fi
-
-if ! node --input-type=module -e "
-  import { chromium } from 'playwright';
-  import { existsSync } from 'fs';
-  if (!existsSync(chromium.executablePath())) process.exit(1);
-" 2>/dev/null; then
-  echo 'playwright chromium not installed; please run:'
-  echo '  yarn playwright install chromium'
-  exit 1
-fi
-
-USER_AGENT_HEADER='User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:123.0) Gecko/20100101 Firefox/123.0'
 MAXIMUM_FILE_SIZE=204800 # 200KB; arbitrary
 TARGET_WIDTH=600
 
-IMDB_COOKIES="$(node --input-type=module <<'EOF'
-import { chromium } from 'playwright';
-const browser = await chromium.launch();
-const page = await browser.newPage();
-await page.goto('https://www.imdb.com');
-await page.waitForLoadState('networkidle');
-const cookies = await page.context().cookies();
-process.stdout.write(cookies.map(c => `${c.name}=${c.value}`).join('; '));
-await browser.close();
-EOF
-)"
-COOKIE_HEADER="Cookie: $IMDB_COOKIES"
+# IMDb's HTML pages sit behind an AWS WAF CAPTCHA, but the JSON endpoint that powers the search box
+# autocomplete does not, and it has everything we need.
+suggestion="$(curl "https://v3.sg.media-imdb.com/suggestion/x/$(jq -rn --arg q "$title" '$q | @uri').json" -s \
+  | jq --arg year "$year" '
+      [.d[] | select(.id | startswith("tt")) | select($year == "" or (.y | tostring) == $year)]
+      | first')"
 
-movie_id="$(curl "https://www.imdb.com/find/?q=$(echo "$title" | tr ' ' '+')+$year"  --compressed -s -H "$USER_AGENT_HEADER" -H "$COOKIE_HEADER" \
-  | hxnormalize -x \
-  | hxselect -s '\n' '.ipc-title-link-wrapper::attr(href)' \
-  | sed -E 's|.*title/(tt[[:digit:]]+)/.*|\1|g' \
-  | head -n1)"
-movie_url="https://www.imdb.com/title/$movie_id/"
-echo "movie URL: $movie_url"
-
-curl "$movie_url" --compressed -s -H "$USER_AGENT_HEADER" -H "$COOKIE_HEADER" > /tmp/movie_page.html
-
-inferred_year="$(cat /tmp/movie_page.html \
-  | hxnormalize -x \
-  | hxselect -s '\n' "a[href^='/title/$movie_id/releaseinfo']" \
-  | tr -d '\n' \
-  | tr -d ' ' \
-  | sed -E 's/.*>([A-Z][a-z]+[[:digit:]]+,)?([[:digit:]]{4}).?([[:digit:]]{4})?(\([A-Za-z]+\))?<.*/\2/g')"
-# The horrible regex above tries to match the following formats as narrowly as possible:
-#   YYYY
-#   YYYY-
-#   YYYY-YYYY
-#   MMM DD, YYYY (Country)
-
-if ! [[ "$inferred_year" =~ '^[[:digit:]]{4}$' ]] ; then
-  echo "$inferred_year"
-  echo "unable to infer year (see above); the script probably needs to be updated"
-  exit 1
-elif [ -z "$year" ] ; then
-  year="$inferred_year"
-  echo "inferred year as $year"
-elif [ "$year" -ne "$inferred_year" ] ; then
-  echo "inferred year ($inferred_year) is different from given ($year); we probably have the wrong movie"
+if [ "$suggestion" = "null" ] ; then
+  echo "no title found matching \"$title\"${year:+ in $year}"
   exit 1
 fi
 
-if cat /tmp/movie_page.html \
-  | hxnormalize -x \
-  | hxselect -c -s '\n' '[data-testid="hero__pageTitle"] + *' \
-  | tr -d '\n' \
-  | grep -q 'TV' ; then
+movie_id="$(jq -r '.id' <<< "$suggestion")"
+movie_url="https://www.imdb.com/title/$movie_id/"
+echo "movie URL: $movie_url ($(jq -r '.l' <<< "$suggestion"))"
+
+if [ -z "$year" ] ; then
+  year="$(jq -r '.y' <<< "$suggestion")"
+  echo "inferred year as $year"
+fi
+
+if jq -e '.q // "" | test("TV")' <<< "$suggestion" > /dev/null ; then
   kind="tv"
 else
   kind="movie"
 fi
 echo "media kind: $kind"
 
-poster_viewer_id="$(cat /tmp/movie_page.html \
-  | hxnormalize -x \
-  | hxselect -s '\n' '.ipc-poster a.ipc-lockup-overlay::attr(href)' \
-  | sed -E 's|.*mediaviewer/(rm[[:digit:]]+)/.*|\1|g' \
-  | head -n1)"
-poster_url="https://www.imdb.com/title/$movie_id/mediaviewer/$poster_viewer_id/"
-echo "poster viewer URL: $poster_url"
-
-image_url="$(curl "$poster_url" --compressed -s -H "$USER_AGENT_HEADER" -H "$COOKIE_HEADER" \
-  | hxnormalize -x \
-  | hxselect -s '\n' 'img[data-image-id]:not(.peek)::attr(src)' \
-  | sed -E 's|src="([^"]+)"|\1|g' \
-  | head -n1)"
+image_url="$(jq -r '.i.imageUrl // empty' <<< "$suggestion")"
+if [ -z "$image_url" ] ; then
+  echo "no poster image found for $movie_id"
+  exit 1
+fi
 echo "poster image URL: $image_url"
 
 # this is some garbage bash-ism
