@@ -47,6 +47,14 @@ This map also makes some unrelated proposals around filling in large lakes in No
 
 [^css]: The original source for this is a vector image, meaning that you can inspect the internals for more information. Unsurprisingly, it secretly includes all the missing countries noted above (as well as some parts of North Africa), but the tidbit of most interest is that Russia gets a unique `ru` marker (CSS class). No other countries have unique markings, country code or otherwise. I wonder what that means.
 
+### [World Map Coloring Tablecloth](https://www.uncommongoods.com/product/world-map-coloring-tablecloth)
+
+![World Map Coloring Tablecloth](/assets/border-disputes/tablecloth.jpg)
+
+Yet another product that assigns almost all the Kashmir to India. Not much more to say here.
+
+I would like to draw your attention to the carefully placed jar full of markers. None of the pictures on this site make it clear what this map has decided to do about Israel and Palestine.
+
 ## TODO
 
 - show what the disputed regions look like
@@ -60,7 +68,6 @@ This map also makes some unrelated proposals around filling in large lakes in No
   - Western Sahara
 - kinds of items to look for
   - https://enjoythewood.com/
-  - https://www.uncommongoods.com/product/world-map-coloring-tablecloth
   - https://directionallychallengedtraveler.com/map-gift-ideas/
   - https://www.amazon.com/Wood-World-Wall-Large-D%C3%A9cor/dp/B09BR3WFP7/ref=sr_1_9
   - gift wrap
