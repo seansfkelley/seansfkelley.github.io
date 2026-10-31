@@ -14,6 +14,8 @@ Also in that song, the range from Bangkok to Calgary is... confusing? Is the ide
 
 I don't know about him, but when ideas are "drilled" into _my_ head, there's always someone/something else there to do it to me. I don't think pictures you find in the glove compartment while looking for your [Title and Registration](https://genius.com/Death-cab-for-cutie-title-and-registration-lyrics) really have the agency to do any "drilling".
 
+Similarly, in [Sound of Settling](https://genius.com/Death-cab-for-cutie-the-sound-of-settling-lyrics) one would usually have ideas not make it past your _lips_, but for Ben Gibbard, they don't make it past his _mouth_, which sounds ungainly and probably why the song is about how he's embarrassed to say things.
+
 The mismatch between "shrillest highs" and "lowest lows" makes it sound to me like he never finished the lyrics to [Such Great Heights](https://genius.com/The-postal-service-such-great-heights-lyrics).
 
 Surely the Berlin Wall reference in [Crooked Teeth](https://genius.com/Death-cab-for-cutie-crooked-teeth-lyrics) means he's on the East German side, but does that mean the state line, his state line, makes him feel like a... prisoner? Is he confusing the purpose of the Berlin Wall and the Great Wall, which has the intended meaning of "insurmountable barrier" instead of "open-air prison with death squads"?
